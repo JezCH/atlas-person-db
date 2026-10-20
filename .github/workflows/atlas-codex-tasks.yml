@@ -1,6 +1,7 @@
 name: ATLAS Codex approved task runner
 
-# Dormant by default. Explicit reviewed tasks only; never a recurring scheduler.
+# Explicit reviewed tasks only. One manual action or an exact owner-authored
+# launcher-PR comment; neither is a recurring scheduler.
 on:
   workflow_dispatch:
     inputs:
@@ -17,8 +18,14 @@ jobs:
   dispatch:
     if: >-
       github.repository == 'JezCH/atlas-person-db' &&
-      github.event_name == 'workflow_dispatch' &&
-      github.ref == 'refs/heads/main' && github.run_attempt == 1
+      github.ref == 'refs/heads/main' && github.run_attempt == 1 &&
+      (github.event_name == 'workflow_dispatch' ||
+       (github.event_name == 'issue_comment' &&
+        github.event.comment.user.id == 281085255 &&
+        github.event.comment.user.login == 'JezCH' &&
+        github.event.comment.user.type == 'User' &&
+        github.event.issue.pull_request != null &&
+        startsWith(github.event.comment.body, 'ATLAS-CODEX-RUN-V1')))
     permissions:
       contents: write
       pull-requests: read

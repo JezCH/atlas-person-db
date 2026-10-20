@@ -68,7 +68,7 @@ test('offline pipeline selects, claims, submits once, rejects artifact substitut
     const base=exec('git',['rev-parse','HEAD'],repo);
     exec('git',['init','--bare','-q',remote],tmp);exec('git',['remote','add','origin',remote],repo);exec('git',['push','-q','origin','main'],repo);
     const state=path.join(tmp,'state.json');fs.writeFileSync(state,JSON.stringify({base,launcher,blobs,refs:{},commands:[],prs:[],calls:[]}));
-    const env={...process.env,PATH:bin+path.delimiter+process.env.PATH,FAKE_GH_STATE:state,GITHUB_REPOSITORY:'JezCH/atlas-person-db',GITHUB_REF:'refs/heads/main',GITHUB_RUN_ATTEMPT:'1',GITHUB_SHA:base,GITHUB_RUN_ID:'1',RUNNER_TEMP:tmp,GH_TOKEN:'fixture-only'};
+    const env={...process.env,PATH:bin+path.delimiter+process.env.PATH,FAKE_GH_STATE:state,GITHUB_REPOSITORY:'JezCH/atlas-person-db',GITHUB_EVENT_NAME:'workflow_dispatch',GITHUB_REF:'refs/heads/main',GITHUB_RUN_ATTEMPT:'1',GITHUB_SHA:base,GITHUB_RUN_ID:'1',RUNNER_TEMP:tmp,GH_TOKEN:'fixture-only'};
     const prepared=path.join(tmp,'prepared.json');
     const renameState=JSON.parse(fs.readFileSync(state));
     renameState.openFiles=[{filename:'scripts/renamed.mjs',previous_filename:'scripts/example.mjs'}];
@@ -77,14 +77,26 @@ test('offline pipeline selects, claims, submits once, rejects artifact substitut
     assert.equal(fs.existsSync(prepared),false);
     const clearRename=JSON.parse(fs.readFileSync(state));delete clearRename.openFiles;
     fs.writeFileSync(state,JSON.stringify(clearRename));
-    exec(process.execPath,[runner,'prepare',prepared],repo,env);
-    exec(process.execPath,[runner,'claim',prepared],repo,env);
+    const approved={action:'created',repository:{full_name:'JezCH/atlas-person-db'},issue:{number:101,pull_request:{}},
+      comment:{id:501,user:{id:281085255,login:'JezCH',type:'User'},body:'ATLAS-CODEX-RUN-V1\natlas-offline-pipeline\nEND-ATLAS-CODEX-RUN-V1'}};
+    const trigger=path.join(tmp,'run-event.json');
+    fs.writeFileSync(trigger,JSON.stringify(approved));
+    const commentEnv={...env,GITHUB_EVENT_NAME:'issue_comment',GITHUB_EVENT_PATH:trigger};
+    const unauthorized=structuredClone(approved);unauthorized.comment.user.id=0;
+    fs.writeFileSync(trigger,JSON.stringify(unauthorized));
+    const rejected=spawnSync(process.execPath,[runner,'prepare',prepared],{cwd:repo,env:commentEnv,encoding:'utf8'});
+    assert.notEqual(rejected.status,0);assert.match(rejected.stderr,/run comment GitHub author/);
+    assert.equal(fs.existsSync(prepared),false);
+    assert.equal(Object.keys(JSON.parse(fs.readFileSync(state)).refs).length,0);
+    fs.writeFileSync(trigger,JSON.stringify(approved));
+    exec(process.execPath,[runner,'prepare',prepared],repo,commentEnv);
+    exec(process.execPath,[runner,'claim',prepared],repo,commentEnv);
     const beforeSubmit=JSON.parse(fs.readFileSync(state)).calls.length;
-    exec(process.execPath,[runner,'submit',prepared],repo,env);
+    exec(process.execPath,[runner,'submit',prepared],repo,commentEnv);
     let s=JSON.parse(fs.readFileSync(state));
     assert.equal(s.commands.length,1);
     assert.deepEqual(s.calls.slice(beforeSubmit),['POST issues/101/comments']); // PAT needs no Contents reads
-    const retry=spawnSync(process.execPath,[runner,'claim',prepared],{cwd:repo,env,encoding:'utf8'});
+    const retry=spawnSync(process.execPath,[runner,'claim',prepared],{cwd:repo,env:commentEnv,encoding:'utf8'});
     assert.notEqual(retry.status,0);assert.equal(JSON.parse(fs.readFileSync(state)).commands.length,1);
     function hash(value){return crypto.createHash('sha256').update(value).digest('hex');}
     const plan={version:1,task_id:task.id,base_sha:base,files:task.paths.map((p,i)=>({path:p,before_sha256:hash(i?beforeTest:before),after_base64:Buffer.from(i?afterTest:after).toString('base64')}))};

@@ -4,7 +4,7 @@ import crypto from 'node:crypto';
 import {spawnSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 import {applyPlan, verifyPlanFromEvent} from './atlas-codex-patch-relay.mjs';
-import {validateRegistry, selectTask, policyForEvent, claimDispatch, dayKey, taskRef, budgetRef, resultBranch, REPOSITORY} from './atlas-codex-task-policy.mjs';
+import {validateRegistry, selectTask, policyForEvent, claimDispatch, authorizedRunComment, dayKey, taskRef, budgetRef, resultBranch, REPOSITORY} from './atlas-codex-task-policy.mjs';
 
 const REGISTRY = 'config/atlas-codex-tasks.v1.json';
 function fail(message) {throw new Error('ATLAS_TASK_BLOCKED: '+message);}
@@ -49,6 +49,20 @@ function trustedRun() {
   if(base!==process.env.GITHUB_SHA || mainSha()!==base)fail('main advanced');
   return base;
 }
+function dispatchRequest() {
+  if(process.env.GITHUB_EVENT_NAME==='workflow_dispatch')return {requestedId:process.env.TASK_ID||'',launcherPr:null};
+  if(process.env.GITHUB_EVENT_NAME==='issue_comment') {
+    if(!process.env.GITHUB_EVENT_PATH)fail('comment event path missing');
+    const cmd=authorizedRunComment(JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH,'utf8')));
+    if(process.env.TASK_ID)fail('unexpected workflow input on comment trigger');
+    return {requestedId:cmd.task_id,launcherPr:cmd.launcher_pr};
+  }
+  fail('unapproved dispatch event');
+}
+function checkRequestedTask(request,task) {
+  if(request.requestedId && request.requestedId!==task.id)fail('comment task mismatch');
+  if(request.launcherPr!==null && request.launcherPr!==task.launcher_pr)fail('comment launcher mismatch');
+}
 function activeTask(r,id,now) {
   const selection=selectTask(r,{now,requestedId:id});
   if(!selection.task)fail(selection.reason);return selection.task;
@@ -75,11 +89,12 @@ export function run(mode,file,artifact) {
   if(mode==='prepare') {
     // A disabled queue must be a clean no-op, including no remote API reads.
     if(!r.enabled){output('selected','false');console.log('NO WORK: disabled');return;}
-    const base=trustedRun(), now=Date.now();
+    const base=trustedRun(), now=Date.now(), request=dispatchRequest();
     const attempted=pages('git/matching-refs/heads/codex/task-attempt/',2).map(x=>x.ref.split('/').at(-1));
-    const selected=selectTask(r,{now,attempted,openPaths:openPaths(),budgetUsed:Boolean(refSha(budgetRef(now))),requestedId:process.env.TASK_ID||''});
+    const selected=selectTask(r,{now,attempted,openPaths:openPaths(),budgetUsed:Boolean(refSha(budgetRef(now))),requestedId:request.requestedId});
     if(!selected.task){output('selected','false');console.log('NO WORK: '+selected.reason);return;}
-    const task=selected.task, launcher=api('GET','pulls/'+task.launcher_pr);
+    const task=selected.task;checkRequestedTask(request,task);
+    const launcher=api('GET','pulls/'+task.launcher_pr);
     if(launcher.state!=='open' || !launcher.draft || launcher.head.sha!==task.launcher_sha)fail('launcher mismatch');
     for(const p of task.snapshot_paths) {
       git('ls-files','--error-unmatch','--',p);
@@ -93,6 +108,7 @@ export function run(mode,file,artifact) {
   if(mode==='claim' || mode==='submit') {
     const prepared=JSON.parse(fs.readFileSync(file,'utf8')), now=Date.now();
     const task=activeTask(r,prepared.task_id,now);
+    checkRequestedTask(dispatchRequest(),task);
     // The PAT step only POSTs the command; it needs no new Contents permission.
     const base=mode==='claim'?trustedRun():git('rev-parse','HEAD');
     if(process.env.GITHUB_REPOSITORY!==REPOSITORY || process.env.GITHUB_REF!=='refs/heads/main' || process.env.GITHUB_RUN_ATTEMPT!=='1' || base!==process.env.GITHUB_SHA)fail('untrusted submit context');
