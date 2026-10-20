@@ -78,7 +78,7 @@ test('offline pipeline selects, claims, submits once, rejects artifact substitut
     const clearRename=JSON.parse(fs.readFileSync(state));delete clearRename.openFiles;
     fs.writeFileSync(state,JSON.stringify(clearRename));
     const approved={action:'created',repository:{full_name:'JezCH/atlas-person-db'},issue:{number:101,pull_request:{}},
-      comment:{id:501,user:{id:281085255,login:'JezCH',type:'User'},body:'ATLAS-CODEX-RUN-V1\\natlas-offline-pipeline\\nEND-ATLAS-CODEX-RUN-V1'}};
+      comment:{id:501,user:{id:281085255,login:'JezCH',type:'User'},body:'ATLAS-CODEX-RUN-V1\natlas-offline-pipeline\nEND-ATLAS-CODEX-RUN-V1'}};
     const trigger=path.join(tmp,'run-event.json');
     fs.writeFileSync(trigger,JSON.stringify(approved));
     const commentEnv={...env,GITHUB_EVENT_NAME:'issue_comment',GITHUB_EVENT_PATH:trigger};
