@@ -63,7 +63,7 @@ test('registry rejects duplicate identities, broad mutation paths and unsafe inv
 
 test('comment dispatch requires exact user ID, real launcher PR, canonical command and event',()=>{
   const valid={action:'created',repository:{full_name:'JezCH/atlas-person-db'},issue:{number:101,pull_request:{}},
-    comment:{id:500,user:{id:281085255,login:'JezCH',type:'User'},body:'ATLAS-CODEX-RUN-V1\\natlas-one\\nEND-ATLAS-CODEX-RUN-V1'}};
+    comment:{id:500,user:{id:281085255,login:'JezCH',type:'User'},body:'ATLAS-CODEX-RUN-V1\natlas-one\nEND-ATLAS-CODEX-RUN-V1'}};
   assert.deepEqual(authorizedRunComment(valid),{task_id:'atlas-one',launcher_pr:101,comment_id:500});
   const mutators=[
     e=>e.action='edited',
@@ -73,7 +73,7 @@ test('comment dispatch requires exact user ID, real launcher PR, canonical comma
     e=>e.comment.user.id=42,
     e=>e.comment.user.login='attacker',
     e=>e.comment.user.type='Bot',
-    e=>e.comment.body+='\\nadditional instructions',
+    e=>e.comment.body+='\nadditional instructions',
     e=>e.comment.body='@codex atlas-one',
     e=>e.comment.body=e.comment.body.replace('atlas-one','atlas-ONE'),
   ];
