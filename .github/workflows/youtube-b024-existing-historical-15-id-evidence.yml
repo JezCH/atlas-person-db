@@ -1,0 +1,96 @@
+name: YouTube B024 Existing Historical 15 Original-ID Evidence (No Crawl)
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/youtube-b024-prior-reviewed-historical-candidates.py'
+      - 'tests/test_youtube_b024_reviewed_historical_15_original_ids.py'
+      - 'tests/atlas-youtube-b024-existing-reviewed-historical-15.test.mjs'
+      - '.github/workflows/youtube-b024-existing-historical-15-id-evidence.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: atlas-b024-reviewed-historical-15-existing-original-id-evidence
+  cancel-in-progress: false
+
+jobs:
+  actually_map_15_to_original_videos:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Offline verified historical names, exact Video ID sets and new registration HOLDS
+        run: python3 -m unittest discover -s tests -p test_youtube_b024_reviewed_historical_15_original_ids.py -v
+      - name: Verify exact retained 2,766-name original-ID artifact instead of rereading original 2.23m videos
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/12245075061" | jq -e '
+            .id==12245075061 and .expired==false and
+            .name=="youtube-b024-reviewed-existing-original-id-identity-status-39379112371" and
+            .digest=="sha256:faa1f30b67805bd356b6509c81f400b7f02bf6b6c8ab32a028d22f62fad55ebc"
+          ' > /dev/null
+      - uses: actions/download-artifact@v4
+        with:
+          name: youtube-b024-reviewed-existing-original-id-identity-status-39379112371
+          run-id: '39379112371'
+          repository: ${{ github.repository }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: previous
+      - name: Actually link previously reviewed 15 historical people to original Video/Channel IDs
+        run: |
+          set -euo pipefail
+          python3 scripts/youtube-b024-prior-reviewed-historical-candidates.py \
+            --already-reviewed-id-cohorts previous/youtube-b024-actual-reviewed-original-id-cohorts.json \
+            --output /tmp/youtube-b024-15-historical-person-original-video-ids.json \
+            | tee /tmp/youtube-b024-historical-15-person-output.log
+      - name: Verify and display actual historical source people, not a fictional live rank
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json,os
+          from pathlib import Path
+          d=json.loads(Path('/tmp/youtube-b024-15-historical-person-original-video-ids.json').read_text())
+          assert d['prior_historical_identity_reviewed']==15
+          assert d['prior_full_2026_10_10_Production_persons_checked']==2145
+          assert d['source_video_id_population_input']==10706
+          assert d['live_complete_registration_screened_today'] is False
+          assert d['actual_video_media_content_verified']==0
+          assert d['confirmed_current_unregistered_historical_Persons']==0
+          assert d['new_videos_searched_or_scraped']==0
+          assert d['Production_rank_published'] is False
+          assert len(d['reviewed_candidates'])==15
+          lines=[
+            '# REAL existing B024 historical Person candidates linked to archived original Video IDs',
+            '- **0 new YouTube collection. 0 full source recrawls.**',
+            '- **15 independently reviewed historical identities** tested against Oct 10 full 2,145 Production Person roster (not today)',
+            '- Actual original title-cue Video IDs from prior saved 10,706-original-ID set',
+            '- Eligible only for further review, not a new official rank or current missing-person certification',
+            '',
+            '| Historically reviewed Person | Original channels with explicit bio TITLE | Original Video IDs | Example original video | Prior registered-state review |',
+            '|---|---:|---:|---|---|'
+          ]
+          for r in d['reviewed_candidates']:
+            sample=r['examples_original_video_id_and_title'][0].get('video_id','') if r['examples_original_video_id_and_title'] else ''
+            lines.append('| '+r['historical_identity_for_review'].replace('|',' ')+' | '+
+              str(r['original_distinct_channels_with_explicit_biography_title'])+' | '+
+              str(r['original_distinct_videos_with_explicit_biography_title'])+' | '+
+              sample+' | '+r['eligibility']+' |')
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a',encoding='utf8') as f:
+              f.write('\n'.join(lines)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: youtube-b024-historical-15-source-first-original-video-id-review-${{ github.run_id }}
+          path: /tmp/youtube-b024-15-historical-person-original-video-ids.json
+          if-no-files-found: error
+          retention-days: 60
