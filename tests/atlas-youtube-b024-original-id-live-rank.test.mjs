@@ -112,7 +112,7 @@ test("pagination and 3/5/10/15/20 channel thresholds reflect the filtered ORIGIN
  assert.equal(first.rows[0].raw_name,"Mother Teresa");
  assert.equal(second.rows[0].raw_name,first.rows[1].raw_name);
  assert.equal(second.rows[0].rank,2);
- assert.equal(first.threshold_counts["3"],797);
+ assert.equal(first.threshold_counts["3"],791); // 799 original; 2 current registered and 6 reviewed living removed
  assert.equal(first.available_count,first.threshold_counts["10"]);
  assert.equal(first.threshold_counts["3"]>=first.threshold_counts["5"],true);
  assert.equal(first.threshold_counts["5"]>=first.threshold_counts["10"],true);
