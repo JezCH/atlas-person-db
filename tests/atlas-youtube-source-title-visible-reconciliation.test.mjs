@@ -94,7 +94,7 @@ test("existing ONE discovery API now screens archived ORIGINAL video/channel IDs
  const result=await discovery.readYoutubeUnregisteredDiscovery({client:db});
  assert.equal(n,2);
  assert.equal(result.ranking_evidence_type,
-  "ORIGINAL_ID_EXPLICIT_BIOGRAPHY_TITLE_UNVERIFIED_CONTENT");
+  "ORIGINAL_ID_EXPLICIT_BIOGRAPHY_AND_PROFILE_TITLE_UNVERIFIED_CONTENT");
  assert.equal(result.source_candidate_count,2241);
  assert.ok(!result.rows.some(r=>r.raw_name==="Malcolm X"));
  assert.equal(result.rows[0].raw_name,"Stephen Hawking");
@@ -104,6 +104,7 @@ test("existing ONE discovery API now screens archived ORIGINAL video/channel IDs
  assert.equal(result.registered_excluded_count,1);
  assert.equal(result.current_registry_distinct_persons,2101);
  assert.equal(result.source_original_biography_title_video_ids,10706);
+ assert.equal(result.source_additional_profile_title_original_video_ids,536);
  assert.equal(result.video_person_centeredness_certified,false);
  assert.ok(result.available_count>500);
 });
