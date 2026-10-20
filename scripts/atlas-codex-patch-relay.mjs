@@ -3,6 +3,7 @@ import path from "node:path";
 import crypto from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { isDeepStrictEqual } from "node:util";
 
 export const PATCH_MARKER = "ATLAS-CODEX-PATCH-V1";
 export const TASK_ID = "atlas-patch-relay-pilot-20261020";
@@ -108,16 +109,29 @@ export function createPlanFromEvent(event) {
   return validatePlan(validateEnvelope(event));
 }
 
+// The test runner can write its own artifact. Schema/preimage checks alone do
+// not bind that artifact to the bot's original proposal. Call this only with
+// the publishing job's independent GitHub event and trusted checkout.
+export function verifyPlanFromEvent(event, candidate) {
+  const original = createPlanFromEvent(event);
+  validatePlan(candidate);
+  requireValid(isDeepStrictEqual(candidate, original), "artifact differs from original event");
+  return original;
+}
+
 const invoked = process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1]);
 if (invoked) {
   const [mode, source, destination] = process.argv.slice(2);
   try {
-    requireValid(["extract", "apply"].includes(mode) && source && destination, "usage");
+    requireValid(["extract", "verify", "apply"].includes(mode) && source && destination, "usage");
     const data = JSON.parse(fs.readFileSync(source, "utf8"));
     if (mode === "extract") {
       const plan = createPlanFromEvent(data);
       fs.writeFileSync(destination, JSON.stringify(plan) + "\n", {flag:"wx", mode:0o600});
       console.log("ATLAS_PATCH_ACCEPTED: envelope + plan validated");
+    } else if (mode === "verify") {
+      verifyPlanFromEvent(data, JSON.parse(fs.readFileSync(destination, "utf8")));
+      console.log("ATLAS_PATCH_VERIFIED: artifact matches original GitHub event");
     } else {
       const result = applyPlan(data, process.cwd());
       fs.writeFileSync(destination, JSON.stringify(result) + "\n", {flag:"wx", mode:0o600});
@@ -128,3 +142,4 @@ if (invoked) {
     process.exitCode = 1;
   }
 }
+

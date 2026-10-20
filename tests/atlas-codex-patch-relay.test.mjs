@@ -4,7 +4,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import crypto from "node:crypto";
-import {extractPatchComment, validateEnvelope, validatePlan, applyPlan, TASK_ID, PATCH_MARKER} from "../scripts/atlas-codex-patch-relay.mjs";
+import {extractPatchComment, validateEnvelope, validatePlan, applyPlan, verifyPlanFromEvent, TASK_ID, PATCH_MARKER} from "../scripts/atlas-codex-patch-relay.mjs";
 
 const sha = s => crypto.createHash("sha256").update(s).digest("hex");
 const after = s => Buffer.from(s).toString("base64");
@@ -37,6 +37,27 @@ test("valid GitHub Codex bot comment carries a strict one-shot two-file bundle",
   const p=plan();
   assert.deepEqual(validateEnvelope(eventOf(p)),p);
   assert.deepEqual(validatePlan(extractPatchComment(eventOf(p).comment.body)),p);
+});
+
+test("publisher binds a schema-valid artifact to its independently received event", () => {
+  const original = plan();
+  assert.deepEqual(verifyPlanFromEvent(eventOf(original), structuredClone(original)), original);
+  // A test can rewrite the runner-temp artifact without touching the Git diff.
+  // Valid paths, original hashes and base SHA do not detect a different payload.
+  const changed = structuredClone(original);
+  changed.files[0].after_base64 = after("export const n = 999;\n");
+  assert.deepEqual(validatePlan(changed), changed);
+  assert.throws(() => verifyPlanFromEvent(eventOf(original), changed), /artifact differs from original event/);
+  const swapped = structuredClone(original);
+  swapped.files[1].after_base64 = after("import test from 'node:test';\ntest('unchecked', () => {});\n");
+  assert.throws(() => verifyPlanFromEvent(eventOf(original), swapped), /artifact differs from original event/);
+});
+
+test("publisher verifies bot identity again instead of trusting artifact provenance", () => {
+  assert.throws(() => verifyPlanFromEvent(eventOf(plan(), "JezCH"), plan()), /sender/);
+  const wrongTask = eventOf(plan());
+  wrongTask.issue.number++;
+  assert.throws(() => verifyPlanFromEvent(wrongTask, plan()), /launcher PR/);
 });
 test("reject spoofed senders, other repositories, wrong PRs, edited actions and malformed comments", () => {
   const samples=[
@@ -102,3 +123,4 @@ test("accept one embedded payload with the connector's View task footer; reject 
   e.comment.body+="\n"+PATCH_MARKER+"\n{}\nEND-"+PATCH_MARKER;
   assert.throws(()=>validateEnvelope(e),/unique complete markers required/);
 });
+

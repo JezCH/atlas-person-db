@@ -5,10 +5,6 @@ name: ATLAS Codex Patch Relay — bounded one-shot
 on:
   issue_comment:
     types: [created]
-  push:
-    branches: [main]
-    paths:
-      - .github/workflows/atlas-codex-patch-relay.yml
 
 permissions: {}
 
@@ -60,7 +56,7 @@ jobs:
     if: needs.validate-without-secrets.result == 'success'
     permissions:
       contents: write
-      pull-requests: write
+      pull-requests: read
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -81,6 +77,9 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
+          # The validation test could rewrite its artifact. Bind it to this
+          # fresh runner's original event before any credentialed publication.
+          node scripts/atlas-codex-patch-relay.mjs verify "$GITHUB_EVENT_PATH" "$RUNNER_TEMP/relay/plan.json"
           node scripts/atlas-codex-patch-relay.mjs apply "$RUNNER_TEMP/relay/plan.json" "$RUNNER_TEMP/published.json"
           git diff --check
           SOURCE="$(node -e 'const fs=require("fs");process.stdout.write(JSON.parse(fs.readFileSync(process.argv[1])).changed_paths[0])' "$RUNNER_TEMP/published.json")"
@@ -125,53 +124,3 @@ jobs:
             --title 'fix: Codex patch relay pilot (review required)' \
             --body "Codex patch relay v1. Only $SOURCE and $TEST. Credential-free validation and focused test PASS; exact preimage and source SHA rechecked. Full CI and human review required. Production NOT LIVE; no merge. Source: PR #2560 bot patch proposal."
 
-  recover-existing-verified-branch-once:
-    # One-time completion of previously validated run #39404578493.
-    # This job never starts a model or modifies source; branch was pushed by the prior run.
-    if: >-
-      github.repository == 'JezCH/atlas-person-db' &&
-      github.event_name == 'push' &&
-      github.ref == 'refs/heads/main' &&
-      startsWith(github.event.head_commit.message, 'fix(ci): finalize one Codex relay Draft PR [atlas-relay-final-20261020]')
-    permissions:
-      contents: read
-    runs-on: ubuntu-latest
-    timeout-minutes: 4
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: codex/relay-pilot-20261020
-          fetch-depth: 2
-          persist-credentials: false
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-      - name: Reverify prior Codex bot patch and regression without secrets
-        run: |
-          set -euo pipefail
-          [[ "$(git rev-parse HEAD)" == 'd9803689eef8271fef639152d623a330d3a6cd0c' ]]
-          [[ "$(git rev-parse HEAD^)" == '916ecf86821f2760a0610f894d760c4a5d77fc46' ]]
-          diff -u <(printf '%s\n' 'scripts/classify-ci-impact.mjs' 'tests/ci-impact-routing.test.mjs' | sort) <(git diff --name-only HEAD^ HEAD | sort)
-          git diff --check HEAD^ HEAD
-          node --test tests/ci-impact-routing.test.mjs
-      - name: Open exactly one Draft PR using limited GitHub user PAT
-        env:
-          GH_TOKEN: ${{ secrets.ATLAS_CODEX_TRIGGER_PAT }}
-        run: |
-          set -euo pipefail
-          [[ -n "${GH_TOKEN:-}" ]] || { echo 'BLOCKED: PR-create PAT secret unavailable'; exit 1; }
-          BRANCH='codex/relay-pilot-20261020'
-          ALREADY="$(gh api "repos/${GITHUB_REPOSITORY}/pulls?head=JezCH:${BRANCH}&state=all&per_page=100" --jq 'length')"
-          [[ "$ALREADY" == '0' ]] || { echo 'NO CHANGE: a PR already exists for this branch'; exit 0; }
-          gh api --paginate "repos/${GITHUB_REPOSITORY}/pulls?state=open&per_page=100" --jq '.[].number' > "$RUNNER_TEMP/open-prs"
-          while IFS= read -r PR; do
-            [[ -z "$PR" ]] && continue
-            gh api --paginate "repos/${GITHUB_REPOSITORY}/pulls/${PR}/files?per_page=100" --jq '.[].filename' > "$RUNNER_TEMP/pr-files"
-            if grep -Fxq 'scripts/classify-ci-impact.mjs' "$RUNNER_TEMP/pr-files" || grep -Fxq 'tests/ci-impact-routing.test.mjs' "$RUNNER_TEMP/pr-files"; then
-              echo "BLOCKED: open PR ${PR} conflicts with exact verified pilot paths"
-              exit 1
-            fi
-          done < "$RUNNER_TEMP/open-prs"
-          gh pr create --draft --base main --head "$BRANCH" \
-            --title 'fix(ci): Codex relay automated draft (review required)' \
-            --body 'This Draft PR contains exactly the two files submitted by the Codex GitHub App in PR #2560 comment 6288359769. GitHub Actions #39404578493 validated exact bot identity, base and preimage SHA, safe paths, focused Node test without credentials, then committed and pushed d9803689eef8271fef639152d623a330d3a6cd0c. GitHub default token denied PR creation; this bounded continuation revalidated exact branch SHA and test and uses the previously configured repo-scoped GitHub user PAT for PR creation ONLY. Requires independent full CI and review. DO NOT MERGE automatically. Production NOT LIVE.'
