@@ -56,6 +56,8 @@ function normalizePaths(paths) {
 export function isSafeToSkipPath(value) {
   const file = normalizePath(value);
   if (!file) return true;
+  // Git paths are literal. Suspicious edge whitespace must never become safe.
+  if (/^\s|\s$/u.test(file)) return false;
   if (SAFE_SKIP_EXACT.has(file)) return true;
   if (SAFE_SKIP_PREFIXES.some((prefix) => file.startsWith(prefix))) return true;
   if (file.endsWith(".md")) return true;
@@ -81,6 +83,7 @@ export function isRuntimeDataOnly(paths) {
 export function isSafeForDeployedAuthoringRuntimePath(value) {
   const file = normalizePath(value);
   if (!file) return true;
+  if (/^\s|\s$/u.test(file)) return false;
   if (AUTHORING_RUNTIME_SAFE_EXACT.has(file)) return true;
   if (AUTHORING_RUNTIME_SAFE_PREFIXES.some((prefix) => file.startsWith(prefix))) return true;
   if (file.endsWith(".md")) return true;
@@ -123,11 +126,21 @@ function exitSkip(reason) {
 }
 
 function git(args) {
-  return execFileSync("git", args, { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] }).trim();
+  // Never trim Git filenames: leading/trailing whitespace is significant.
+  return execFileSync("git", args, { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
 }
 
 function parsePaths(output) {
-  return output ? output.split(/\r?\n/).map(normalizePath).filter(Boolean) : [];
+  if (!output) return [];
+  // Both callers use -z. Any truncated/lossy response must force BUILD.
+  if (!output.endsWith("\0")) throw Error("unterminated Git -z path output");
+  const paths = output.slice(0, -1).split("\0");
+  // Literal backslashes/control characters and malformed UTF-8 fail closed;
+  // converting them into directory separators could incorrectly authorize SKIP.
+  if (paths.some(file => !file || /[\\\u0001-\u001f\u007f\ufffd]/u.test(file))) {
+    throw Error("unsafe or lossy Git path encoding");
+  }
+  return paths;
 }
 
 export function main(env = process.env) {
@@ -153,7 +166,7 @@ export function main(env = process.env) {
   // clone. Any inability to prove the current commit delta falls back to the
   // conservative build path below.
   try {
-    const currentOutput = git(["diff-tree", "--no-commit-id", "--name-only", "-r", "-m", "--first-parent", currentSha, "--"]);
+    const currentOutput = git(["diff-tree", "--no-commit-id", "--name-only", "-z", "-r", "-m", "--first-parent", currentSha, "--"]);
     const currentPaths = parsePaths(currentOutput);
     if (isRuntimeDataOnly(currentPaths)) {
       exitSkip(`current commit contains only reviewed runtime-safe data (${currentPaths.length} path${currentPaths.length === 1 ? "" : "s"})`);
@@ -185,7 +198,7 @@ export function main(env = process.env) {
 
   let changedPaths;
   try {
-    changedPaths = parsePaths(git(["diff", "--name-only", "--diff-filter=ACDMRTUXB", previousSha, currentSha, "--"]));
+    changedPaths = parsePaths(git(["diff", "--name-only", "-z", "--diff-filter=ACDMRTUXB", previousSha, currentSha, "--"]));
   } catch {
     exitBuild("git diff failed");
     return;
