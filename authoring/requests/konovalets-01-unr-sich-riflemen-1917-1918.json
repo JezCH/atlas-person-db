@@ -1,0 +1,76 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:yevhen-konovalets:unr-sich-riflemen-first-1917-1918:v1",
+  "person": {
+    "canonical_name_en": "Yevhen Konovalets",
+    "display_name_ko": "예우헨 코노발레츠",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-20",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Ukrainian People's Republic",
+    "display_name_ko": "우크라이나 인민공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "f670686c-2f25-41b2-b085-20f0dc536acd"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Commander of the Galician-Bukovinian Battalion and First Regiment of Sich Riflemen in the Ukrainian People's Republic",
+    "role_display_name_ko": "우크라이나 인민공화국 시치 소총병 대대·제1연대 지휘관",
+    "start_year": 1917,
+    "start_month": 12,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1918,
+    "end_month": 4,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "notes": "First UNR-linked command starts in early December 1917, with First Sich Riflemen Regiment command by March 1918. Distinct from the later 1918 Hetmanate phase: after the 29 April 1918 coup the regiment refused allegiance and was disarmed around 30 April–1 May. The April endpoint is approximate to avoid asserting the coup day itself was his final commander day; no continuous UNR officer tenure is claimed across the Hetmanate interruption.",
+    "confidence": "well_established",
+    "chronology_status": "reviewed"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Коновалець Євген — Ukrainian Institute of National Memory, UNR 1917–1921",
+      "canonical_url": "https://unr.uinp.gov.ua/figures/konovalets-evgen",
+      "citation_text": "Official Ukrainian history record dates his Galician-Bukovinian Sich Riflemen command from early December 1917, regiment command from 17 March 1918, Siege Corps from 21 November 1918, eastern-front command January 1919 and renewed corps command February 1919."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Sich Riflemen — Encyclopedia of Ukraine",
+      "canonical_url": "https://www.encyclopediaofukraine.com/display.asp?linkpath=pages%2FS%2FI%2FSichRiflemen.htm",
+      "citation_text": "Records KSS refusal to recognize Hetmanate and April 1918 disarmament; renewed formation and 1918–1919 Ukrainian People's Republic military command."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Konovalets, Yevhen — Encyclopedia of Ukraine",
+      "canonical_url": "https://www.encyclopediaofukraine.com/pages/K/O/KonovaletsYevhen.htm",
+      "citation_text": "Confirms death on 23 May 1938, two Sich Riflemen command phases across the Hetmanate rupture, UVO underground leadership, and founding OUN chairmanship in 1929."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "I. Ya. Khoma (2012), Military and Political Activities of Yevhen Konovalets (November 1917–November 1918)",
+      "canonical_url": "https://asv.mil.gov.ua/en/biblioteka/virtual/book-exhibition-ukrainian-sich-riflemen-first-ukrainian-army/military-and-political-activities-yevhen-konovalets-november-1917-november-1918",
+      "citation_text": "Military scholarly bibliography explicitly covers changing state and military command contexts from November 1917 to November 1918."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-20",
+      "document_title": "예우헨 코노발레츠",
+      "url": "https://namu.wiki/w/%EC%98%88%EC%9A%B0%ED%97%A8%20%EC%BD%94%EB%85%B8%EB%B0%9C%EB%A0%88%EC%B8%A0"
+    }
+  }
+}
