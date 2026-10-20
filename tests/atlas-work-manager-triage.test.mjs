@@ -102,3 +102,10 @@ test('spoofed bot/task/launcher/receipt/head/file evidence is blocked',()=>{
     assert.equal(triage(s,now).decision,'BLOCKED');
   }
 });
+
+test('historical Codex relay branch without independently checked task proof blocks new work',()=>{
+  const s=snapshot();
+  s.pulls[0].head_ref='codex/relay-pilot-20261020';
+  delete s.pulls[0].codex_evidence;
+  assert.equal(triage(s,now).decision,'BLOCKED');
+});
