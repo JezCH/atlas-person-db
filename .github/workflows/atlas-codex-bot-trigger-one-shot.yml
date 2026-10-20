@@ -4,7 +4,7 @@ name: ATLAS Codex Bot-Origin Trigger — One Shot
 # No cron, workflow_dispatch, production access, deployments or retries.
 on:
   pull_request:
-    types: [opened]
+    types: [synchronize]
     branches: [main]
     paths:
       - .github/workflows/atlas-codex-bot-trigger-one-shot.yml
@@ -12,11 +12,15 @@ on:
 permissions:
   contents: read
   issues: write
+  pull-requests: write
 
 jobs:
   codex-bot-origin-smoke:
     if: >-
       github.repository == 'JezCH/atlas-person-db' &&
+      github.event.action == 'synchronize' &&
+      github.event.pull_request.number == 2556 &&
+      github.event.pull_request.commits == 2 &&
       github.event.pull_request.draft == true &&
       github.event.pull_request.user.login == 'JezCH' &&
       github.event.pull_request.head.ref == 'experiment/codex-bot-trigger-20261020' &&
