@@ -128,7 +128,7 @@ test("partial current DB or mismatched running snapshot fails closed rather than
 
 test("single existing UI states the exact original title evidence, registration and content uncertainty",()=>{
  const ui=fs.readFileSync(new URL("../atlas-registration-review.js",import.meta.url),"utf8");
- assert.match(ui,/원본 Video ID·Channel ID로 집계/);
+ assert.match(ui,/원본 Video ID · 채널 ID로 집계/);
  assert.match(ui,/등록 Person/);
  assert.match(ui,/내용 미검증/);
  assert.doesNotMatch(ui,/youtubeSignalMode|인물별 통합 순위|원시명 순위/);
