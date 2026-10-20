@@ -56,15 +56,20 @@ const VERIFIED_SOURCE_ROWS=validArchive();
 
 function renderCurrentRegistryRank({
   snapshot,registryRows,identityKey,now=Date.now(),sourceRows=VERIFIED_SOURCE_ROWS,
-  minDistinctRegisteredPersons=2000
+  minDistinctRegisteredPersons=2000,expectedCurrentRegisteredPersons
 }={}){
   if(!matchesSnapshot(snapshot))
     throw Error("B024_SINGLE_RANK_GLOBAL_SOURCE_SNAPSHOT_MISMATCH");
   if(!Array.isArray(registryRows)||typeof identityKey!=="function")
     throw Error("B024_SINGLE_RANK_CURRENT_REGISTRY_REQUIRED");
   const uniqueIds=new Set(registryRows.map(r=>String(r.person_id||"")).filter(Boolean));
-  if(uniqueIds.size<minDistinctRegisteredPersons)
+  if(!Number.isSafeInteger(expectedCurrentRegisteredPersons) ||
+     expectedCurrentRegisteredPersons<minDistinctRegisteredPersons ||
+     uniqueIds.size!==expectedCurrentRegisteredPersons)
     throw Error("B024_SINGLE_RANK_CURRENT_REGISTRY_INCOMPLETE");
+  // Counting 2,000 rows is NOT a full-roster proof. The authoritative live
+  // Person table must have exactly as many UUIDs as the complete roster query
+  // returned. A partial read with 2,100 / 2,145 rows must fail closed.
   const index=new Map();
   for(const row of registryRows){
     const key=identityKey(row.alias_name),id=String(row.person_id||"").trim();
@@ -131,6 +136,8 @@ function renderCurrentRegistryRank({
     ambiguous_current_registration_holds:rejected.ambiguous,
     unreviewed_name_normalization_holds:rejected.collision,
     current_registry_distinct_persons:uniqueIds.size,
+    current_registry_authoritative_person_count:expectedCurrentRegisteredPersons,
+    current_registry_person_count_parity_verified:true,
     exact_source_snapshot_matched:true,
     ranking_evidence_type:SOURCE_PROOF,
     video_person_centeredness_certified:false,
