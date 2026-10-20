@@ -68,3 +68,18 @@ The manager now uses **evidence-based selection**, not the branch as an authoriz
 - This is a **read-only review prioritizer**: a `REVIEW_DRAFT` output authorizes only independent manual/Work review, not a merge, fresh Codex execution, deployment, provider spend or Production mutation. A supplied snapshot remains observational; it is not a signed attestation of GitHub API facts. Verify source API records independently before any mutation.
 
 The Work manager should now prioritize unreviewed, genuinely supported PRs rather than treating already merged #2573 or #2579 as outstanding. **Exact next incomplete unit** after this merge: a new actual one-shot Work Cloud invocation collecting the verified evidence fields, then evidence-backed selection of the next nonconflicting task. Preserve disabled Codex runner and do not replay historical attempts.
+
+
+## 2026-10-21: Live GitHub read-only discovery bridge
+
+The first manager script required manually curated GitHub JSON. The new script scripts/atlas-work-manager-live-scan.mjs reads GitHub data directly with GET-only requests: latest main and registry, all open PRs (strictly fewer than 100), exact changed files and head-scoped Integrity runs for suspected Codex output, original trusted Codex App launcher comment, immutable attempt ref, and exact before/after source/test bytes when a canonical closed task uniquely matches. It rereads main at the end and blocks if any critical evidence is incomplete or main moved.
+
+Invocation from an authorized environment with Node.js 22+:
+
+    node scripts/atlas-work-manager-live-scan.mjs
+
+The public GitHub API can be queried without GITHUB_TOKEN subject to GitHub rate limits. An authorized isolated GitHub Actions/Work environment may supply GITHUB_TOKEN from its own protected environment; never paste it into a Chat conversation. This script makes at most 35 REST GET requests, does not invoke Codex, does not mutate GitHub or Production, does not schedule anything, and outputs only main SHA, open PR count, read count, and one decision. A BLOCKED decision never approves spending or dispatch.
+
+Known legacy Codex relay pilot PR #2568 lacks a matching canonical closed task, so a live scan must flag it BLOCKED for independent review rather than silently ignoring it. This is not a reason to revive or redo prior model commands. Launcher-only PRs explicitly marked DO NOT MERGE are outside the result queue. The naming heuristic covers canonical, legacy result and relay branch families; other custom branch names still require independent Work review and are not universally discoverable.
+
+The focused test suite uses a fake GET-only API to verify no mutations, correct scope and blocking on stale/partial/foreign/403 data. Passing tests are NOT evidence that a real Work Cloud session has run. The next major milestone is a genuine Work Cloud one-shot using this bridge or equivalent direct GitHub connector, followed by evidence of cloud execution. No recurring Work task, Codex call, or credit spending is authorized here.
