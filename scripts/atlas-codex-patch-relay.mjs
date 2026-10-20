@@ -27,7 +27,7 @@ export function extractPatchComment(body) {
   const start = body.indexOf(begin);
   const finish = start < 0 ? -1 : body.indexOf(end, start + begin.length);
   requireValid(start >= 0 && finish > start &&
-    body.indexOf(begin, start + begin.length) === -1 &&
+    body.indexOf("\n" + begin, start + begin.length) === -1 &&
     body.indexOf(end, finish + end.length) === -1, "unique complete markers required");
   const payload = body.slice(start + begin.length, finish);
   requireValid(payload.length > 2 && payload.length < MAX_BODY_BYTES, "invalid payload");
