@@ -72,6 +72,12 @@ test('path normalization is platform-neutral', () => {
   assert.equal(classifyPath('.\\docs\\example.md'), 'governance');
 });
 
+test('leading whitespace in Git paths is preserved and fails closed', () => {
+  assert.equal(classifyPath(' docs/ops.txt'), 'full');
+  assert.equal(classifyPath(' authoring/requests/example.json'), 'full');
+  assert.equal(classifyPath(' public/icon.svg'), 'full');
+});
+
 test('GitHub output format exposes only stable validation lanes', () => {
   assert.equal(
     formatGithubOutputs({ registration: true, governance: false, ui: true, full: false }),
