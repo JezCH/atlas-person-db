@@ -1,0 +1,111 @@
+name: ATLAS Codex Patch Relay — bounded one-shot
+
+# Receives a machine-readable patch ONLY from the verified Codex GitHub App.
+# No schedule; it neither dispatches agents nor accesses Vercel/Production/Supabase.
+on:
+  issue_comment:
+    types: [created]
+
+permissions: {}
+
+concurrency:
+  group: atlas-codex-patch-relay-20261020
+  cancel-in-progress: false
+
+jobs:
+  validate-without-secrets:
+    if: >-
+      github.repository == 'JezCH/atlas-person-db' &&
+      github.event.action == 'created' &&
+      github.event.issue.number == 2560 &&
+      github.event.issue.pull_request != null &&
+      github.event.comment.user.id == 199175422 &&
+      github.event.comment.user.login == 'chatgpt-codex-connector[bot]' &&
+      startsWith(github.event.comment.body, 'ATLAS-CODEX-PATCH-V1')
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify bot envelope, base SHA, allowed files and original hashes
+        run: |
+          set -euo pipefail
+          node scripts/atlas-codex-patch-relay.mjs extract "$GITHUB_EVENT_PATH" "$RUNNER_TEMP/plan.json"
+          node scripts/atlas-codex-patch-relay.mjs apply "$RUNNER_TEMP/plan.json" "$RUNNER_TEMP/applied.json"
+          TEST_PATH="$(node -e 'const fs=require("fs");process.stdout.write(JSON.parse(fs.readFileSync(process.argv[1],"utf8")).test_path)' "$RUNNER_TEMP/applied.json")"
+          node --test "$TEST_PATH"
+          git diff --check
+          diff -u <(node -e 'const fs=require("fs");console.log(JSON.parse(fs.readFileSync(process.argv[1])).changed_paths.sort().join("\n"))' "$RUNNER_TEMP/applied.json") <(git diff --name-only | sort)
+      - name: Carry only validated plan to credentialed publishing stage
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-codex-patch-${{ github.event.comment.id }}
+          path: ${{ runner.temp }}/plan.json
+          retention-days: 1
+          if-no-files-found: error
+
+  publish-one-draft:
+    needs: validate-without-secrets
+    if: needs.validate-without-secrets.result == 'success'
+    permissions:
+      contents: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Receive validated plan
+        uses: actions/download-artifact@v4
+        with:
+          name: atlas-codex-patch-${{ github.event.comment.id }}
+          path: ${{ runner.temp }}/relay
+      - name: Strict revalidation, conflicts gate and Draft PR only
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          node scripts/atlas-codex-patch-relay.mjs apply "$RUNNER_TEMP/relay/plan.json" "$RUNNER_TEMP/published.json"
+          git diff --check
+          SOURCE="$(node -e 'const fs=require("fs");process.stdout.write(JSON.parse(fs.readFileSync(process.argv[1])).changed_paths[0])' "$RUNNER_TEMP/published.json")"
+          TEST="$(node -e 'const fs=require("fs");process.stdout.write(JSON.parse(fs.readFileSync(process.argv[1])).changed_paths[1])' "$RUNNER_TEMP/published.json")"
+          EXPECTED="$(node -e 'const fs=require("fs");process.stdout.write(JSON.parse(fs.readFileSync(process.argv[1])).base_sha)' "$RUNNER_TEMP/published.json")"
+          CURRENT="$(gh api "repos/${GITHUB_REPOSITORY}/branches/main" --jq '.commit.sha')"
+          if [[ "$CURRENT" != "$EXPECTED" ]]; then echo 'BLOCKED: main advanced since proposed patch'; exit 1; fi
+          diff -u <(printf '%s\n' "$SOURCE" "$TEST" | sort) <(git diff --name-only | sort)
+          # Resource-scoped optimistic concurrency: any open PR touching either file blocks publication.
+          while IFS= read -r PR; do
+            [[ -z "$PR" ]] && continue
+            while IFS= read -r FILE; do
+              if [[ "$FILE" == "$SOURCE" || "$FILE" == "$TEST" ]]; then
+                echo "BLOCKED: conflicting open PR #${PR} touches ${FILE}"
+                exit 1
+              fi
+            done < <(gh api --paginate "repos/${GITHUB_REPOSITORY}/pulls/${PR}/files?per_page=100" --jq '.[].filename')
+          done < <(gh api --paginate "repos/${GITHUB_REPOSITORY}/pulls?state=open&per_page=100" --jq '.[].number')
+          BRANCH='codex/relay-pilot-20261020'
+          if [[ -n "$(git ls-remote --heads origin "$BRANCH")" ]]; then
+            echo 'BLOCKED: idempotency branch already exists'
+            exit 1
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git switch -c "$BRANCH"
+          git add -- "$SOURCE" "$TEST"
+          git commit -m 'fix: apply bounded Codex patch proposal (draft only)'
+          git push origin "HEAD:refs/heads/$BRANCH"
+          gh pr create --draft --base main --head "$BRANCH" \
+            --title 'fix: Codex patch relay pilot (review required)' \
+            --body "Codex patch relay v1. Only $SOURCE and $TEST. Exact base: $EXPECTED. Validation job passed focused tests without credentials. Revalidate full CI and review independently. NOT MERGED; Production NOT LIVE. Source: PR #2560 bot patch proposal."
