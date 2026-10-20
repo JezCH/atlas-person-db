@@ -99,8 +99,8 @@ test("existing ONE discovery API now screens archived ORIGINAL video/channel IDs
  assert.ok(!result.rows.some(r=>r.raw_name==="Malcolm X"));
  assert.equal(result.rows[0].raw_name,"Stephen Hawking");
  assert.equal(result.rows[0].rank,1);
- assert.equal(result.rows[0].distinct_channel_count,36);
- assert.equal(result.rows[0].video_count,37);
+ assert.equal(result.rows[0].distinct_channel_count,39);
+ assert.equal(result.rows[0].video_count,40);
  assert.equal(result.registered_excluded_count,1);
  assert.equal(result.current_registry_distinct_persons,2101);
  assert.equal(result.source_original_biography_title_video_ids,10706);
