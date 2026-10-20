@@ -36,6 +36,8 @@ function payload(){
   registration_checked:true,
   source_candidate_count:2241,
   source_original_biography_title_video_ids:10706,
+  source_additional_profile_title_original_video_ids:536,
+  source_total_profile_and_biography_original_video_ids:6698,
   current_registry_person_count_parity_verified:true,
   current_registry_authoritative_person_count:2100,
   current_registry_distinct_persons:2100,
@@ -52,7 +54,7 @@ function mockResponse(body,status=200){
  return {status,ok:status>=200&&status<300,
   async json(){return body;},async text(){return String(body);}};
 }
-function mockTransport({result=payload(),sha=expectedSha,asset="mode=discovery ORIGINAL_ID_EXPLICIT_BIOGRAPHY_TITLE_UNVERIFIED_CONTENT 원본 Video ID · 채널 ID로 집계",statuses={}}={}){
+function mockTransport({result=payload(),sha=expectedSha,asset="mode=discovery ORIGINAL_ID_EXPLICIT_BIOGRAPHY_AND_PROFILE_TITLE_UNVERIFIED_CONTENT 원본 Video ID · 채널 ID로 집계",statuses={}}={}){
  const calls=[];
  const identity={ok:true,schema:"atlas-runtime-identity/v1",
   identity:{git_commit_ref:"main",git_commit_sha:sha}};
@@ -74,8 +76,10 @@ test("pre-restoration OFFLINE release rehearsal validates ALL 2241-source title 
  assert.equal(r.pre_registry_source_candidate_names,2241);
  assert.equal(r.source_original_video_titles,2230031);
  assert.equal(r.source_biography_title_video_ids,10706);
+ assert.equal(r.additional_profile_title_original_video_ids,536);
+ assert.equal(r.total_filtered_source_title_evidence_original_video_ids,6698);
  assert.equal(r.authoritative_persons,2100);
- assert.equal(r.current_three_channel_title_candidate_count,793); // 799 original minus 6 reviewed living (no registered matches in mock)
+ assert.equal(r.current_three_channel_title_candidate_count,855); // 861 screened after 62 holds, minus 6 reviewed living
  assert.equal(r.historical_personhood_confirmed_for_all,false);
  assert.equal(r.actual_video_content_confirmed,0);
 });
@@ -118,7 +122,7 @@ test("partial registered roster and fake current total cannot validate",()=>{
   x=>x.video_person_centeredness_certified=true,
   x=>x.rows[0].presently_unregistered_historical_person_certified=true,
   x=>x.rows[0].distinct_channel_count=1,
-  x=>x.threshold_counts["3"]=800,
+  x=>x.threshold_counts["3"]=862,
  ]){
   const d=structuredClone(r);mutate(d);
   assert.throws(()=>validateDiscovery(d),/B024_RELEASE_/);
