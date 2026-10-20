@@ -77,8 +77,38 @@ export function triage(snapshot,now=Date.now()){
       next_step:'Independently inspect diff/current main, semantic conflicts and CI; human review is required before merge; no deployment claim.',
       model_calls:0};
   }
-  return {decision:'DISCOVER_OFFLINE_TASK',reason:'no open verified Codex result awaiting review; investigate non-Codex work and new offline defects',
-    next_step:'Work may propose a task and evidence but must not approve it, enable the runner, call Codex or claim zero credit spending.',
+  // A small, existing CI-passing fix deserves review before any new model task.
+  // This is review prioritization only: GitHub success and matching paths are
+  // NOT independent code review and never authorize merge/Production changes.
+  const ordinary=snapshot.pulls.filter(pr=>pr.review_evidence!=null)
+    .sort((a,b)=>b.number-a.number);
+  for(const pr of ordinary){
+    const e=pr.review_evidence;
+    const paths=e?.changed_paths;
+    if(!pr.draft || !pr.head_ref.startsWith('fix/') ||
+      !Array.isArray(paths) || paths.length!==2 ||
+      !/^scripts\/[A-Za-z0-9_-]+\.mjs$/.test(paths[0]) ||
+      !/^tests\/[A-Za-z0-9._-]+\.test\.mjs$/.test(paths[1]) ||
+      !identicalPaths(paths,pr.changed_paths) ||
+      !SHA.test(e?.integrity_head_sha??'') ||
+      e.integrity_head_sha!==pr.head_sha ||
+      !RUN_URL.test(e?.integrity_run_url??'')){
+      return {decision:'BLOCKED',reason:'incomplete scoped existing PR review evidence',
+        pr_number:pr.number,model_calls:0};
+    }
+    if(e.integrity_conclusion!=='success'){
+      return {decision:'INSPECT_CI',reason:'existing PR has no proven successful head CI',
+        pr_number:pr.number,ci:e.integrity_conclusion??'unknown',model_calls:0};
+    }
+    return {decision:'REVIEW_EXISTING_PR',
+      reason:'existing two-file fix with matched CI requires independent review before new development',
+      pr_number:pr.number,head_sha:pr.head_sha,main_sha:snapshot.main_sha,
+      changed_paths:[...paths],ci_run_url:e.integrity_run_url,
+      next_step:'Independently inspect diff, owner instructions, current main preimage, semantic overlap and CI. REVIEW ONLY; no automatic merge or Codex call.',
+      model_calls:0};
+  }
+  return {decision:'DISCOVER_OFFLINE_TASK',reason:'no currently observed verified Codex result or scoped fix; investigate remaining PRs before proposing a new offline task',
+    next_step:'Work must review all non-scoped and parked PRs before proposing new model work; no approval, runner enablement or spending.',
     model_calls:0};
 }
 
