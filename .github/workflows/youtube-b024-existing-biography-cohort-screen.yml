@@ -1,0 +1,111 @@
+name: YouTube B024 Screen Existing Biography Cohorts (NO NEW CRAWL)
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/youtube-b024-screen-existing-biography-cohorts.py'
+      - 'tests/test_youtube_b024_existing_biography_cohort_screen.py'
+      - 'tests/atlas-youtube-b024-existing-biography-cohort-screen.test.mjs'
+      - '.github/workflows/youtube-b024-existing-biography-cohort-screen.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: atlas-b024-existing-only-person-registration-screen
+  cancel-in-progress: false
+
+jobs:
+  actual_2766_name_screen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test prior registered UUID and reviewed aliases offline
+        run: python3 -m unittest discover -s tests -p test_youtube_b024_existing_biography_cohort_screen.py -v
+      - name: Check exact PREEXISTING 2766-name artifact provenance (no crawling)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/12238850322" | jq -e '
+            .id==12238850322 and
+            .expired==false and
+            .name=="youtube-b024-existing-2230031-original-title-biography-cues-39363669516" and
+            .digest=="sha256:b068306a9d89b332020d72117d144b48f4255c890f75511855be45529c60529b"
+          ' > /dev/null
+      - name: Download earlier FULL 2766-name / 10706 original-ID result ONLY
+        uses: actions/download-artifact@v4
+        with:
+          name: youtube-b024-existing-2230031-original-title-biography-cues-39363669516
+          run-id: '39363669516'
+          repository: ${{ github.repository }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: previous
+      - name: Screen already processed 2766 source names without YouTube or DB writes
+        run: |
+          set -euo pipefail
+          python3 scripts/youtube-b024-screen-existing-biography-cohorts.py \
+            --existing-cue-json previous/youtube-b024-original-biography-title-reprocess.json \
+            --output /tmp/youtube-b024-screened-biography-cohorts.json \
+            | tee /tmp/youtube-b024-screen-summary.log
+      - name: Display actual screen and top remaining original-ID candidates
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json,os
+          from pathlib import Path
+          d=json.loads(Path('/tmp/youtube-b024-screened-biography-cohorts.json').read_text())
+          assert d['input_biography_title_name_labels']==2766
+          assert d['input_biography_title_video_ids']==10706
+          assert d['registered_evidence_as_of']=='2026-10-09'
+          assert d['registered_evidence_not_current'] is True
+          assert d['actual_person_primary_content_verified_video_count']==0
+          assert d['confirmed_current_unregistered_historical_person_count']==0
+          assert d['production_rank_published'] is False
+          assert d['new_youtube_videos_fetched']==0
+          assert d['result_reviewed_identity_cohorts']<=2766
+          assert len(d['rows'])==d['result_reviewed_identity_cohorts']
+          pending={'PRIOR_2026_10_09_NEEDS_REVIEW_NOT_PROVEN_UNREGISTERED',
+                   'NO_2026_10_09_EXACT_SCREEN_ROW_RECHECK'}
+          lines=[
+            '# REAL existing B024 2766 title-cue name screen',
+            '- 0 new video searches/crawls; no source archive re-scan',
+            '- Historical 2026-10-09 registered/living evidence only, NOT current atlas_v2 status',
+            '2,766 source name labels reduced to reviewed ID-union cohorts: '+str(d['result_reviewed_identity_cohorts']),
+            'Historical registered/living exclusions: '+str(d['previously_registered_or_living_excluded_cohorts']),
+            'Remaining review worklist (not certified unregistered): '+str(d['provisional_unscreened_review_cohort_count']),
+            '- 0 independently content-certified videos; 0 confirmed current unregistered people; 0 Production writes',
+            '',
+            '## Evidence statuses'
+          ]
+          for k,v in sorted(d['screen_status_counts'].items()):
+            lines.append('- '+k+': '+str(v))
+          lines+=['','## First 30 surviving name reviews grounded in ORIGINAL video/channel IDs',
+                  '| Source name | Original channels | Biography-title videos | Original Video ID | Historic evidence |',
+                  '|---|---:|---:|---|---|']
+          added=0
+          for row in d['rows']:
+            if row['registration_screen_status'] not in pending:continue
+            if added>=30:break
+            sample=row['source_examples'][0]['video_id'] if row['source_examples'] else ''
+            lines.append('| '+row['identity_label_for_review'].replace('|',' ')+' | '+
+                         str(row['strong_biography_title_distinct_channels'])+' | '+
+                         str(row['strong_biography_title_distinct_videos'])+' | '+
+                         sample+' | '+row['registration_screen_status']+' |')
+            added+=1
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a',encoding='utf8') as f:
+            f.write('\n'.join(lines)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: youtube-b024-existing-biography-identity-screen-${{ github.run_id }}
+          path: /tmp/youtube-b024-screened-biography-cohorts.json
+          if-no-files-found: error
+          retention-days: 30
