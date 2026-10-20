@@ -9,7 +9,7 @@
 - [Bounded recovery #39405329950](https://github.com/JezCH/atlas-person-db/actions/runs/39405329950) revalidated that exact commit and used the existing repository-scoped user PAT only to create [Draft PR #2568](https://github.com/JezCH/atlas-person-db/pull/2568). [Integrity #39405374881](https://github.com/JezCH/atlas-person-db/actions/runs/39405374881) succeeded. The PR remains draft/unmerged; no automatic merge is authorized.
 - Current publisher already separates branch publication under `GITHUB_TOKEN` from PR creation under `ATLAS_CODEX_TRIGGER_PAT`. The obsolete main-push recovery job is retired; its observed outcome above is retained as evidence. The old model dispatcher is an inert manual archive, with no PAT access or automatic trigger.
 - [Draft PR #2563](https://github.com/JezCH/atlas-person-db/pull/2563) is a separate manually orchestrated fix, not a Codex unattended success. Launcher #2560 remains open and must not be merged as a code delivery.
-- **Next incomplete unit:** design a fresh task identity, approved snapshot/paths, duplicate-call prevention and usage stop conditions before one bounded integrated Actions dispatch → Codex patch → Draft PR experiment. The origin of command comment `6288311565` is not established as scheduled dispatch. Do not rerun the completed pilot, reuse its output branch, or enable cron. There is no proven hard cap for shared model usage.
+- **Next incomplete unit:** review/integrate the cleanup and event-bound publishing guard, then design a fresh task identity, approved snapshot/paths, duplicate-call prevention and usage stop conditions before one bounded integrated Actions dispatch → Codex patch → Draft PR experiment. The origin of command comment `6288311565` is not established as scheduled dispatch. Do not rerun the completed pilot, reuse its output branch, or enable cron. There is no proven hard cap for shared model usage.
 - Production, Supabase, deployments and Vercel Sandbox are outside this unit. CI success is not Production acceptance.
 
 ## Proven starting capabilities
@@ -34,11 +34,17 @@ This is **complete-file replacement**, not a shell script or arbitrary diff. Onl
 
 1. **Receive** — `issue_comment:created`, gated by exact PR, GitHub App numeric identity and exact marker. All other comments skip the job.
 2. **Unprivileged validate** — checkout trusted `main` without persisted credentials. Reject stale HEAD, invalid hashes, encodings, wrong paths, pre-existing symlinks or dirty checkout. Write both files only after all validations. Run only the focused Node test and `git diff --check`. No repository write permission and no PAT.
-3. **Handoff** — one short-lived GitHub Actions artifact carries the validated JSON plan, not an executable script.
-4. **Privileged publish** — fresh checkout `main`; revalidate the entire plan, compare current remote `main` against exact base, reject file overlap with any open PR, then commit only two allowed paths to a **deterministic one-off branch**. Create one **Draft** PR in a separate step using the existing repository-scoped user PAT; the default Actions token was observed to deny PR creation. No model-authored program/test is executed with a write-capable token.
+3. **Handoff** — one short-lived GitHub Actions artifact carries the JSON plan. Treat it as untrusted: the model-authored test can rewrite any writable file in its own runner, including this plan.
+4. **Privileged publish** — fresh trusted checkout `main`; first re-parse the publishing job's independently received `GITHUB_EVENT_PATH`, revalidate the exact bot/repository/launcher envelope and require deep equality between the original proposal and artifact. Reject any artifact substitution before applying files. Then revalidate the entire plan, compare current remote `main` against exact base, reject file overlap with any open PR, then commit only two allowed paths to a **deterministic one-off branch**. Create one **Draft** PR in a separate step using the existing repository-scoped user PAT; the default Actions token was observed to deny PR creation. No model-authored program/test is executed with a write-capable token.
 5. **Stop** — no automatic merge, Production request, Supabase mutation, Codex repeat, polling schedule or self-healing retries.
 
 The GitHub Actions `GITHUB_TOKEN` is distinct from `ATLAS_CODEX_TRIGGER_PAT`. Validation has read-only repository permission and no PAT; branch publication has contents write and pull-requests read. Only the separate Draft-PR creation step receives the previously configured PAT. Missing or expired PAT is a terminal blocker; never print it or broaden its permissions automatically. Model-authored tests are never executed in the credentialed publishing job.
+
+## Publishing trust boundary
+
+The no-PAT test job and the publisher are separate runners. A passing model-authored test is not an authority for what gets published. Before this guard, a test could replace `runner.temp/plan.json` with a different schema-valid two-file plan retaining the same base/preimage hashes. The old publisher would accept that substituted content. The publisher now calls trusted `verify` against its own event before `apply`, so modified source or test replacements abort publication even when their schema and preimage checks pass. Model code never runs in the publisher.
+
+Focused regression covers a valid unchanged handoff, substituted source, substituted test, spoofed author and wrong launcher. This closes artifact substitution; it does not prove semantic correctness or honesty of AI-generated tests. Independent PR CI/review remain required. No new model invocation is needed to verify this boundary.
 
 ## Fail-closed rules and verification
 

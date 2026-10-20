@@ -77,6 +77,9 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
+          # The validation test could rewrite its artifact. Bind it to this
+          # fresh runner's original event before any credentialed publication.
+          node scripts/atlas-codex-patch-relay.mjs verify "$GITHUB_EVENT_PATH" "$RUNNER_TEMP/relay/plan.json"
           node scripts/atlas-codex-patch-relay.mjs apply "$RUNNER_TEMP/relay/plan.json" "$RUNNER_TEMP/published.json"
           git diff --check
           SOURCE="$(node -e 'const fs=require("fs");process.stdout.write(JSON.parse(fs.readFileSync(process.argv[1])).changed_paths[0])' "$RUNNER_TEMP/published.json")"
