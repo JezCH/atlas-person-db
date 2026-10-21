@@ -9,7 +9,7 @@
 | 인물 | Wikidata Person | 실제 원본 표기 수 | 고유 Channel ID(인물별) | 원본 Video ID | 중복 채널 차감 |
 |---|---|---:|---:|---:|---:|
 | Carl Jung | [Q41532](https://www.wikidata.org/wiki/Q41532) | 2 | 10 | 10 | 0 |
-| Muhammad Iqbal | [Q12823513](https://www.wikidata.org/wiki/Q12823513) | 2 | 12 | 13 | 0 |
+| Muhammad Iqbal | [Q484141](https://www.wikidata.org/wiki/Q484141) | 2 | 12 | 13 | 0 |
 | Francis of Assisi | [Q676555](https://www.wikidata.org/wiki/Q676555) | 2 | 7 | 7 | 0 |
 | Khaleda Zia | [Q234814](https://www.wikidata.org/wiki/Q234814) | 2 | 6 | 8 | 1 |
 | Saladin | [Q8581](https://www.wikidata.org/wiki/Q8581) | 2 | 5 | 5 | 0 |
@@ -23,7 +23,7 @@
 ## 판정 근거와 예외
 
 - **Carl Jung** — `Carl Jung / Carl Gustav Jung`를 동일 인물 이명으로 판정. <https://www.wikidata.org/wiki/Q41532>
-- **Muhammad Iqbal** — `Allama Muhammad Iqbal / Allama Iqbal`를 동일 인물 이명으로 판정. <https://www.wikidata.org/wiki/Q12823513>
+- **Muhammad Iqbal** — `Allama Muhammad Iqbal / Allama Iqbal`를 동일 인물 이명으로 판정. <https://www.wikidata.org/wiki/Q484141>
 - **Francis of Assisi** — `Saint Francis of Assisi / Francis of Assisi`를 동일 인물 이명으로 판정. <https://www.wikidata.org/wiki/Q676555>
 - **Khaleda Zia** — `Begum Khaleda Zia / Khaleda Zia`를 동일 인물 이명으로 판정. <https://www.wikidata.org/wiki/Q234814> ; <https://www.reuters.com/world/asia-pacific/obituary-khaleda-zia-bangladeshs-first-female-prime-minister-dies-80-2025-12-30/> 사망 2025-12-30 (Reuters 2025-12-30).
 - **Saladin** — `Salahuddin Ayyubi / Sultan Salahuddin Ayyubi`를 동일 인물 이명으로 판정. <https://www.wikidata.org/wiki/Q8581>
