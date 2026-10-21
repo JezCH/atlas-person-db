@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {createRequire} from "node:module";
+import {readFileSync} from "node:fs";
 const require=createRequire(import.meta.url);
 
 const next=require("../audits/youtube-b024-next-eight-source-identity-unions-20261021.json");
@@ -17,6 +18,24 @@ const alreadyReviewed=new Set(earlier.reviewed_same_person_groups.flatMap(r=>r.s
 const alreadyUsedVideos=new Set(earlier.reviewed_same_person_groups.flatMap(r=>r.unique_original_video_ids));
 const historicalRegisteredLabels=new Set([...Object.keys(olderRegistered.registered_exact),...Object.keys(olderRegistered.registered_reviewed_alias)]);
 const sorted=x=>[...x].sort();
+
+test("Markdown table and evidence Wikidata identities match each reviewed JSON person",()=>{
+ const markdown=readFileSync(new URL("../audits/youtube-b024-next-eight-source-identity-unions-20261021.md",import.meta.url),"utf8");
+ const lines=markdown.split(/\r?\n/);
+ const tableRows=lines.filter(line=>line.startsWith("|")).map(line=>line.split("|").slice(1,-1).map(cell=>cell.trim()));
+ for(const {canonical_identity_name:name,external_identity:{qid}} of next.reviewed_groups){
+  const rows=tableRows.filter(cells=>cells[0]===name);
+  assert.equal(rows.length,1,name+": exactly one identity table row required");
+  const links=[...rows[0][1].matchAll(/\[([^\]]*)\]\(([^)]*)\)/g)];
+  assert.equal(links.length,1,name+": exactly one table identity link required");
+  assert.equal(links[0][1],qid,name+": table displayed QID");
+  assert.equal(links[0][2],"https://www.wikidata.org/wiki/"+qid,name+": table URL QID");
+  const evidence=lines.filter(line=>line.startsWith("- **"+name+"** — "));
+  assert.equal(evidence.length,1,name+": exactly one person evidence paragraph required");
+  const urls=[...evidence[0].matchAll(/https:\/\/www\.wikidata\.org\/wiki\/([^\s<>\])]+)/g)].map(match=>match[0]);
+  assert.deepEqual(urls,["https://www.wikidata.org/wiki/"+qid],name+": exactly one matching evidence URL required");
+ }
+});
 
 test("same immutable B024 source, no Production claims and separate existing review tranche",()=>{
  assert.equal(next.schema,"atlas-youtube-b024-additional-source-identity-unions/v1");
