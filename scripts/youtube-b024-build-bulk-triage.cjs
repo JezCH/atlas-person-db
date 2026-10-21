@@ -14,6 +14,7 @@ const history=require("../audits/youtube-b024-source-first-36-final-registered-i
 const normalized=require("../audits/youtube-b024-normalized-label-disposition-review.json");
 const living=require("../audits/youtube-live-16-reviewed-living-people-20261011.json");
 const supplementaryReview=require("../audits/youtube-b024-reviewed-prior-registration-and-nonperson-20261021.json");
+const domainRegistryReview=require("../audits/youtube-b024-historical-person-domain-positive-20261021.json");
 const OUTPUT=path.resolve(__dirname,"../audits/youtube-b024-bulk-triage-all-candidates-20261021.json");
 function invariant(test,why){if(!test)throw Error("YOUTUBE_B024_BULK_TRIAGE_"+why);}
 const fold=s=>s.normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]/g,"");
@@ -27,6 +28,7 @@ function build(){
  invariant(second.reviewed_groups.length===8,"SECOND_REVIEW_COUNT");
  invariant(archive===extra.source_archive_sha256 && archive===holds.source_archive_sha256 && archive===first.source_archive_sha256 && archive===second.source.archive_sha256,"ARCHIVE_SHA");
  invariant(archive===supplementaryReview.source_archive_sha256,"SUPPLEMENTARY_ARCHIVE");
+ invariant(domainRegistryReview.schema==="atlas-youtube-b024-prior-production-person-domain-identity-positive/v1"&&domainRegistryReview.prior_registered_positive_matches.length===25&&archive===domainRegistryReview.source_archive_sha256,"DOMAIN_PRIOR_ROSTER_MANIFEST");
  const addon=new Map(extra.rows.map(r=>[r[0],r]));
  const raw=new Map(source.rows.map((r,i)=>[r[0],{r,i:i+1}]));
  invariant(raw.size===2241,"DUPLICATE_NAME");
@@ -45,8 +47,28 @@ function build(){
   positives.set(p.source_name,p);
  }
  invariant(positives.size===14,"SUPPLEMENTARY_POSITIVE_COUNT");
+ const domainPositives=new Map();
+ for(const p of domainRegistryReview.prior_registered_positive_matches){
+  invariant(!domainPositives.has(p.source_name)&&raw.has(p.source_name)&&!hold.has(p.source_name)&&!old.has(p.source_name)&&!positives.has(p.source_name),"DOMAIN_PRIOR_SOURCE_DISJOINT");
+  invariant(/^proposals\/person-representative-domain\/batch-\d{3}\.json$/.test(p.provenance_file),"DOMAIN_PRIOR_PATH");
+  const observed=JSON.parse(fs.readFileSync(path.resolve(__dirname,"../"+p.provenance_file),"utf8"));
+  const rows=[...(observed.entries||[]),...(observed.science_retained||[])];
+  const nameKey=fold(p.registered_canonical_name);
+  const personMatches=rows.filter(x=>fold(x.canonical_name_en||"")===nameKey);
+  invariant(personMatches.length>0&&new Set(personMatches.map(x=>x.person_id)).size===1&&personMatches[0].person_id===p.registered_uuid,"DOMAIN_PRIOR_UUID_PROVENANCE");
+  invariant(fold(p.source_name)===nameKey,"DOMAIN_PRIOR_EXACT_FULL_NAME");
+  const evidence=rowDataForAudit(p.source_name);
+  invariant(evidence.ch===p.original_title_channel_count&&evidence.vid===p.original_title_video_count,"DOMAIN_PRIOR_ORIGINAL_COUNTS");
+  domainPositives.set(p.source_name,p);
+ }
+ invariant(domainPositives.size===25,"DOMAIN_PRIOR_COUNT");
  for(const name of reviewedHolds)invariant(raw.has(name)&&!old.has(name)&&!positives.has(name),"REVIEWED_NONPERSON_SOURCE");
  invariant(historicalExact.length===11,"PRIOR_REGISTERED_MATCH_COUNT");
+ function rowDataForAudit(name){
+  const record=raw.get(name);const addonRow=addon.get(name);
+  invariant(!!record,"DOMAIN_PRIOR_SOURCE_MISSING");
+  return {ch:new Set([...record.r[2],...(addonRow?.[1]||[])]).size,vid:new Set([...record.r[3],...(addonRow?.[2]||[])]).size};
+ }
  const unionedVideoIds=new Set(),sourceVideoIds=new Set();let strictVideo=0,addedVideo=0;
  for(const r of source.rows){const add=addon.get(r[0]);strictVideo+=r[3].length;addedVideo+=add?.[2]?.length||0;
   for(const id of [...r[3],...(add?.[2]||[])]){invariant(!sourceVideoIds.has(id),"ORIGINAL_VIDEO_DUPLICATED");sourceVideoIds.add(id);}
@@ -75,21 +97,22 @@ function build(){
   units.push({name:g.name,labels:g.labels,rows:index,ch:ch.size,vid:vid.size,ex:[...vid].sort().slice(0,2),qid:g.q,screen:g.anchor?"PRIOR_REGISTERED_RECHECK":"CURRENT_PRODUCTION_NOT_CHECKED",reg:g.anchor});
  }
  for(const r of source.rows){const n=r[0];
-  if(assigned.has(n)||hold.has(n)||old.has(n)||positives.has(n))continue;
+  if(assigned.has(n)||hold.has(n)||old.has(n)||positives.has(n)||domainPositives.has(n))continue;
   const x=rowData(n),isLiving=knownLiving.has(n)||livingNormalized.has(fold(n));
   units.push({name:n,labels:[n],rows:[x.row],ch:x.ch.size,vid:x.vid.size,ex:[...x.vid].sort().slice(0,2),qid:"",screen:isLiving?"PRIOR_REVIEWED_LIVING_HOLD":"CURRENT_PRODUCTION_NOT_CHECKED",reg:""});
  }
  const candidate=units.filter(g=>g.screen==="CURRENT_PRODUCTION_NOT_CHECKED").sort((a,b)=>b.ch-a.ch||b.vid-a.vid||a.name.localeCompare(b.name,"en"));
  const three=candidate.filter(x=>x.ch>=3);
- const counts={original_source_labels:2241,held_exact_source_labels:hold.size,prior_registered_exact_source_labels:historicalExact.length,prior_registered_manifest_nameforms:old.size,source_labels_in_reviewed_groups:assigned.size,reviewed_identity_groups:grp.length,prior_registered_reviewed_source_labels:positives.size,supplementary_clear_nonindividual_source_labels:reviewedHolds.size,ungrouped_source_labels:source.rows.length-hold.size-historicalExact.length-assigned.size-positives.size,all_review_units:units.length,reviewed_registration_linked_groups:units.filter(x=>x.reg).length,reviewed_living_units:units.filter(x=>x.screen==="PRIOR_REVIEWED_LIVING_HOLD").length,remaining_priority_units:candidate.length,remaining_priority_3plus_channels:three.length};
- invariant(JSON.stringify([counts.held_exact_source_labels,counts.prior_registered_exact_source_labels,counts.source_labels_in_reviewed_groups,counts.ungrouped_source_labels,counts.all_review_units,counts.remaining_priority_units,counts.remaining_priority_3plus_channels])===JSON.stringify([75,11,32,2109,2124,2121,821]),"COUNT_RECONCILIATION");
+ const counts={original_source_labels:2241,held_exact_source_labels:hold.size,prior_registered_exact_source_labels:historicalExact.length,prior_registered_manifest_nameforms:old.size,source_labels_in_reviewed_groups:assigned.size,reviewed_identity_groups:grp.length,prior_registered_reviewed_source_labels:positives.size,supplementary_clear_nonindividual_source_labels:reviewedHolds.size,prior_domain_registered_positive_source_labels:domainPositives.size,ungrouped_source_labels:source.rows.length-hold.size-historicalExact.length-assigned.size-positives.size-domainPositives.size,all_review_units:units.length,reviewed_registration_linked_groups:units.filter(x=>x.reg).length,reviewed_living_units:units.filter(x=>x.screen==="PRIOR_REVIEWED_LIVING_HOLD").length,remaining_priority_units:candidate.length,remaining_priority_3plus_channels:three.length};
+ invariant(JSON.stringify([counts.held_exact_source_labels,counts.prior_registered_exact_source_labels,counts.source_labels_in_reviewed_groups,counts.ungrouped_source_labels,counts.all_review_units,counts.remaining_priority_units,counts.remaining_priority_3plus_channels])===JSON.stringify([75,11,32,2084,2099,2096,816]),"COUNT_RECONCILIATION");
  return {
- schema:"atlas-youtube-b024-bulk-research-triage/v3-compact",
+ schema:"atlas-youtube-b024-bulk-research-triage/v4-compact",
  created_on:"2026-10-21",provenance_sha256:archive,
  goal:"READ_ONLY_RESEARCH_PRIORITY_NOT_A_NEW_PRODUCTION_LEADERBOARD",
  content_media_watched:0,current_production_complete_person_registry_checked:false,
- counts,prior_registered_source_labels:[...historicalExact,...positives.keys()].sort(),
- supplementary_review_manifest:"audits/youtube-b024-reviewed-prior-registration-and-nonperson-20261021.json",group_membership:grp,
+ counts,prior_registered_source_labels:[...historicalExact,...positives.keys(),...domainPositives.keys()].sort(),
+ supplementary_review_manifest:"audits/youtube-b024-reviewed-prior-registration-and-nonperson-20261021.json",
+ domain_prior_registered_review_manifest:"audits/youtube-b024-historical-person-domain-positive-20261021.json",group_membership:grp,
  priority100:three.slice(0,100).map((r,i)=>({rank:i+1,...r})),
  candidate_rows:candidate.map((r,i)=>[i+1,r.name,r.rows,r.ch,r.vid,r.qid,r.ex]),
  safeguard:"Rows are name-group research proposals with explicit title-based original ID evidence. Not authenticated videos, not confirmed deceased Persons and not current unregistered Persons. Incomplete prior registry never establishes absence. LIVE registered Person + aliases check LAST."
@@ -100,7 +123,7 @@ if(require.main===module){
  if(process.argv.includes("--check")){
   invariant(fs.existsSync(OUTPUT),"MISSING_OUTPUT");
   invariant(JSON.stringify(JSON.parse(fs.readFileSync(OUTPUT,"utf8")))===expected,"OUTPUT_STALE");
-  process.stdout.write("B024 all source-labels; 14 prior registered identities and 13 additional nonindividual holds checked.\n");
+  process.stdout.write("B024 all source-labels; 14 reviewed older registry identities, 25 prior domain UUID identities, 13 additional nonindividual holds checked.\n");
  }else process.stdout.write(expected+"\n");
 }
 module.exports={build};

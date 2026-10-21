@@ -8,6 +8,7 @@ const source=require("../audits/youtube-b024-original-id-runtime-source-20261020
 const extra=require("../audits/youtube-b024-added-profile-title-runtime-source-20261020.json");
 const holds=require("../audits/youtube-b024-clear-nonindividual-and-identity-holds-20261020.json");
 const supplementary=require("../audits/youtube-b024-reviewed-prior-registration-and-nonperson-20261021.json");
+const domainReview=require("../audits/youtube-b024-historical-person-domain-positive-20261021.json");
 
 test("all 2241 name labels are reconciled in one offline pass; committed output is reproducible",()=>{
  const live=build();
@@ -15,16 +16,17 @@ test("all 2241 name labels are reconciled in one offline pass; committed output 
  assert.equal(live.counts.original_source_labels,2241);
  assert.equal(live.counts.held_exact_source_labels,75);
  assert.equal(live.counts.prior_registered_reviewed_source_labels,14);
+ assert.equal(live.counts.prior_domain_registered_positive_source_labels,25);
  assert.equal(live.counts.supplementary_clear_nonindividual_source_labels,13);
  assert.equal(live.counts.prior_registered_exact_source_labels,11);
  assert.equal(live.counts.source_labels_in_reviewed_groups,32);
  assert.equal(live.counts.reviewed_identity_groups,15);
- assert.equal(live.counts.ungrouped_source_labels,2109);
- assert.equal(live.counts.all_review_units,2124);
- assert.equal(live.counts.remaining_priority_units,2121);
- assert.equal(live.counts.remaining_priority_3plus_channels,821);
+ assert.equal(live.counts.ungrouped_source_labels,2084);
+ assert.equal(live.counts.all_review_units,2099);
+ assert.equal(live.counts.remaining_priority_units,2096);
+ assert.equal(live.counts.remaining_priority_3plus_channels,816);
  assert.equal(live.priority100.length,100);
- assert.equal(live.candidate_rows.length,2121);
+ assert.equal(live.candidate_rows.length,2096);
  assert.equal(live.current_production_complete_person_registry_checked,false);
  assert.equal(live.content_media_watched,0);
 });
@@ -37,6 +39,7 @@ test("rank uses ORIGINAL unique IDs and held/registered labels never appear as c
  for(const x of reg)assert(!candidate.has(x));
  assert(!candidate.has("Khalid ibn al-Walid"));
  for(const p of supplementary.registered_positive_matches){assert(!candidate.has(p.source_name));assert(reg.has(p.source_name));}
+ for(const p of domainReview.prior_registered_positive_matches){assert(!candidate.has(p.source_name));assert(reg.has(p.source_name));}
  for(const p of supplementary.clear_nonindividual_source_holds)assert(!candidate.has(p.source_name));
  for(const name of ["Muhammad Ali","King David","King Solomon","Queen Elizabeth","Emperor Claudius"])assert(candidate.has(name));
  const originals=new Map(source.rows.map(x=>[x[0],x]));

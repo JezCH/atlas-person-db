@@ -1,0 +1,222 @@
+{
+  "schema": "atlas-youtube-b024-prior-production-person-domain-identity-positive/v1",
+  "reviewed_at": "2026-10-21",
+  "authority": "historical person_id/canonical_name_en from preserved 2026-09..10 Production-read domain proposals; NEVER present-tense Production absence/completeness",
+  "source_archive_sha256": "8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946",
+  "match_rule": "uniquely identified exact case/punctuation-accent normalized FULL person name; NO substring/prefix/fuzzy/regnal extrapolation",
+  "production_reads": 0,
+  "person_registrations_or_deletions": 0,
+  "video_content_confirmed": 0,
+  "prior_registered_positive_matches": [
+    {
+      "source_name": "Xerxes I",
+      "registered_canonical_name": "Xerxes I",
+      "registered_uuid": "b38b88f4-2292-5705-9651-7c997d462a51",
+      "provenance_file": "proposals/person-representative-domain/batch-007.json",
+      "original_title_channel_count": 1,
+      "original_title_video_count": 1
+    },
+    {
+      "source_name": "Peter the Great",
+      "registered_canonical_name": "Peter the Great",
+      "registered_uuid": "072f2262-acbb-53a8-a63f-d3e798c24132",
+      "provenance_file": "proposals/person-representative-domain/batch-011.json",
+      "original_title_channel_count": 4,
+      "original_title_video_count": 23
+    },
+    {
+      "source_name": "Baldwin IV",
+      "registered_canonical_name": "Baldwin IV",
+      "registered_uuid": "cb98f3c1-126c-4147-98b6-01044624679e",
+      "provenance_file": "proposals/person-representative-domain/batch-013.json",
+      "original_title_channel_count": 2,
+      "original_title_video_count": 2
+    },
+    {
+      "source_name": "Mahathir Mohamad",
+      "registered_canonical_name": "Mahathir Mohamad",
+      "registered_uuid": "4057482e-ba8e-43c5-8681-5edda912df15",
+      "provenance_file": "proposals/person-representative-domain/batch-020.json",
+      "original_title_channel_count": 2,
+      "original_title_video_count": 2
+    },
+    {
+      "source_name": "Gustavus Adolphus",
+      "registered_canonical_name": "Gustavus Adolphus",
+      "registered_uuid": "64e4d6fc-e2d5-5deb-84a2-cb0e50aab9a4",
+      "provenance_file": "proposals/person-representative-domain/batch-018.json",
+      "original_title_channel_count": 1,
+      "original_title_video_count": 1
+    },
+    {
+      "source_name": "Harold Godwinson",
+      "registered_canonical_name": "Harold Godwinson",
+      "registered_uuid": "b7a244ee-cee2-4877-a4e2-267f6769e274",
+      "provenance_file": "proposals/person-representative-domain/batch-025.json",
+      "original_title_channel_count": 2,
+      "original_title_video_count": 2
+    },
+    {
+      "source_name": "John Hunyadi",
+      "registered_canonical_name": "John Hunyadi",
+      "registered_uuid": "d4351b4c-4463-42c2-b943-27ac20f429a9",
+      "provenance_file": "proposals/person-representative-domain/batch-021.json",
+      "original_title_channel_count": 2,
+      "original_title_video_count": 2
+    },
+    {
+      "source_name": "Prince Eugene of Savoy",
+      "registered_canonical_name": "Prince Eugene of Savoy",
+      "registered_uuid": "24be4ff2-9b28-4f58-8d12-083d3adc5368",
+      "provenance_file": "proposals/person-representative-domain/batch-043.json",
+      "original_title_channel_count": 1,
+      "original_title_video_count": 1
+    },
+    {
+      "source_name": "Justin Trudeau",
+      "registered_canonical_name": "Justin Trudeau",
+      "registered_uuid": "8b814f82-e4bf-438e-9e7e-189905524d43",
+      "provenance_file": "proposals/person-representative-domain/batch-052.json",
+      "original_title_channel_count": 6,
+      "original_title_video_count": 6
+    },
+    {
+      "source_name": "Aung San",
+      "registered_canonical_name": "Aung San",
+      "registered_uuid": "ca1172c3-bf7f-4fbd-bb92-357327137951",
+      "provenance_file": "proposals/person-representative-domain/batch-054.json",
+      "original_title_channel_count": 3,
+      "original_title_video_count": 3
+    },
+    {
+      "source_name": "Quanah Parker",
+      "registered_canonical_name": "Quanah Parker",
+      "registered_uuid": "0715d47f-3446-4aaa-99d9-78c2f2fbfe39",
+      "provenance_file": "proposals/person-representative-domain/batch-049.json",
+      "original_title_channel_count": 2,
+      "original_title_video_count": 2
+    },
+    {
+      "source_name": "Bashar al-Assad",
+      "registered_canonical_name": "Bashar al-Assad",
+      "registered_uuid": "0fbcbfbf-5190-4edc-8143-05fbcd2d98eb",
+      "provenance_file": "proposals/person-representative-domain/batch-052.json",
+      "original_title_channel_count": 1,
+      "original_title_video_count": 1
+    },
+    {
+      "source_name": "Jair Bolsonaro",
+      "registered_canonical_name": "Jair Bolsonaro",
+      "registered_uuid": "e1c12fec-6665-4cd0-b410-01d4e1683a01",
+      "provenance_file": "proposals/person-representative-domain/batch-050.json",
+      "original_title_channel_count": 1,
+      "original_title_video_count": 1
+    },
+    {
+      "source_name": "Joseph McCarthy",
+      "registered_canonical_name": "Joseph McCarthy",
+      "registered_uuid": "f72e8f3c-fa7d-4e08-97a3-023b65882050",
+      "provenance_file": "proposals/person-representative-domain/batch-052.json",
+      "original_title_channel_count": 1,
+      "original_title_video_count": 1
+    },
+    {
+      "source_name": "Zumbi dos Palmares",
+      "registered_canonical_name": "Zumbi dos Palmares",
+      "registered_uuid": "303b4b36-004f-459a-abe7-816382766cef",
+      "provenance_file": "proposals/person-representative-domain/batch-049.json",
+      "original_title_channel_count": 1,
+      "original_title_video_count": 1
+    },
+    {
+      "source_name": "Edward IV",
+      "registered_canonical_name": "Edward IV",
+      "registered_uuid": "aa89b9aa-4701-441a-b091-5e8e62adc3fa",
+      "provenance_file": "proposals/person-representative-domain/batch-067.json",
+      "original_title_channel_count": 1,
+      "original_title_video_count": 1
+    },
+    {
+      "source_name": "Mary, Mother of Jesus",
+      "registered_canonical_name": "Mary, mother of Jesus",
+      "registered_uuid": "8e24ea34-006e-4143-91b2-bbb4443c55f8",
+      "provenance_file": "proposals/person-representative-domain/batch-068.json",
+      "original_title_channel_count": 1,
+      "original_title_video_count": 1
+    },
+    {
+      "source_name": "Rani Durgavati",
+      "registered_canonical_name": "Rani Durgavati",
+      "registered_uuid": "19a14c1f-7551-46d8-99b9-8d5b6c4d71f1",
+      "provenance_file": "proposals/person-representative-domain/batch-068.json",
+      "original_title_channel_count": 1,
+      "original_title_video_count": 1
+    },
+    {
+      "source_name": "Túpac Amaru II",
+      "registered_canonical_name": "Túpac Amaru II",
+      "registered_uuid": "4578536e-f89f-4040-b502-0c7d28896224",
+      "provenance_file": "proposals/person-representative-domain/batch-067.json",
+      "original_title_channel_count": 1,
+      "original_title_video_count": 1
+    },
+    {
+      "source_name": "Steven Spielberg",
+      "registered_canonical_name": "Steven Spielberg",
+      "registered_uuid": "aa76779b-7d49-423a-bd7a-160977916ec6",
+      "provenance_file": "proposals/person-representative-domain/batch-088.json",
+      "original_title_channel_count": 5,
+      "original_title_video_count": 5
+    },
+    {
+      "source_name": "George Lucas",
+      "registered_canonical_name": "George Lucas",
+      "registered_uuid": "7bd4ccad-b602-40d1-b971-df694e550e1e",
+      "provenance_file": "proposals/person-representative-domain/batch-088.json",
+      "original_title_channel_count": 3,
+      "original_title_video_count": 3
+    },
+    {
+      "source_name": "Alauddin Khalji",
+      "registered_canonical_name": "Alauddin Khalji",
+      "registered_uuid": "826ba15d-12dc-45a2-952e-23a9a205163c",
+      "provenance_file": "proposals/person-representative-domain/batch-091.json",
+      "original_title_channel_count": 1,
+      "original_title_video_count": 1
+    },
+    {
+      "source_name": "Gian Lorenzo Bernini",
+      "registered_canonical_name": "Gian Lorenzo Bernini",
+      "registered_uuid": "2112d485-894f-4a74-812d-7229483fc9df",
+      "provenance_file": "proposals/person-representative-domain/batch-084.json",
+      "original_title_channel_count": 1,
+      "original_title_video_count": 1
+    },
+    {
+      "source_name": "Robert Goddard",
+      "registered_canonical_name": "Robert Goddard",
+      "registered_uuid": "04e1166c-32bb-4aca-accf-3400c1a767ee",
+      "provenance_file": "proposals/person-representative-domain/batch-088.json",
+      "original_title_channel_count": 1,
+      "original_title_video_count": 1
+    },
+    {
+      "source_name": "William of Ockham",
+      "registered_canonical_name": "William of Ockham",
+      "registered_uuid": "5b200bf9-e2af-49d3-9861-b8e2e6eeabdf",
+      "provenance_file": "proposals/person-representative-domain/batch-089.json",
+      "original_title_channel_count": 1,
+      "original_title_video_count": 1
+    }
+  ],
+  "current_production_person_and_alias_registry_fully_checked": false,
+  "hold_unreviewed_homonyms": [
+    "Muhammad Ali",
+    "King David",
+    "Queen Elizabeth",
+    "Emperor Claudius",
+    "Philip II",
+    "Queen Mary I"
+  ],
+  "notes": "Reconcile these 25 historical UUID positives against an authorized current roster before publishing any unregistered ranking; maintain immutable raw original video IDs."
+}
