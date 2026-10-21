@@ -40,6 +40,15 @@ function optionalYear(value) {
   return year;
 }
 
+function validPublicationDate(value) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const [year, month, day] = value.split("-").map(Number);
+  if (year === 0 || month < 1 || month > 12 || day < 1) return false;
+  const leap = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+  const days = [31, leap ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  return day <= days[month - 1];
+}
+
 function optionalJson(value, code) {
   if (value == null) return null;
   if (typeof value !== "object" || Array.isArray(value)) throw new Error(code);
@@ -56,7 +65,7 @@ function normalizeBibliographicSource(raw, { requireKeyWithoutUrl = true } = {})
   const citationText = text(raw?.citation_text) || title;
   const publicationDate = text(raw?.publication_date) || null;
   const publicationYear = optionalYear(raw?.publication_year);
-  if (publicationDate && !/^\d{4}-\d{2}-\d{2}$/.test(publicationDate)) throw new Error("SOURCE_PUBLICATION_DATE_INVALID");
+  if (publicationDate && !validPublicationDate(publicationDate)) throw new Error("SOURCE_PUBLICATION_DATE_INVALID");
   return Object.freeze({
     source_key:sourceKey,
     source_type:sourceType,
