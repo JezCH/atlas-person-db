@@ -64,10 +64,10 @@
       "checked_at": "2026-10-20",
       "document_title": "예우헨 코노발레츠",
       "url": "https://namu.wiki/w/%EC%98%88%EC%9A%B0%ED%97%A8%20%EC%BD%94%EB%85%B8%EB%B0%9C%EB%A0%88%EC%B8%A0"
-    },
-    "spatial_disposition": {
-      "state": "reviewed_hold",
-      "evidence": "OUN (1929–1938) was a cross-border Ukrainian nationalist organization with exiled leadership, not an independent sovereign state or one bounded territorial polity. No vetted canonical Place UUID or approved geometry resolved; spatial representation deferred explicitly. Do not reuse the later OUN-B faction UUID d1a74157-2c32-4a5d-8c67-955bed1dda68."
     }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "OUN (1929–1938) was a cross-border Ukrainian nationalist organization with exiled leadership, not an independent sovereign state or one bounded territorial polity. No vetted canonical Place UUID or approved geometry resolved; spatial representation deferred explicitly. Do not reuse the later OUN-B faction UUID d1a74157-2c32-4a5d-8c67-955bed1dda68."
   }
 }
