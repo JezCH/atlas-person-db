@@ -1,0 +1,212 @@
+{
+  "schema": "atlas-youtube-b024-offline-registered-positive-and-nonperson-review/v1",
+  "reviewed_at": "2026-10-21",
+  "source_archive_sha256": "8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946",
+  "prior_registered_roster": "audits/youtube-6358-registration-living-screen-20261009.csv",
+  "registry_scope": "2026-10-09 PRIOR_REGISTERED_POSITIVE_ONLY_NOT_CURRENT_COMPLETE_REGISTRY",
+  "registered_positive_matches": [
+    {
+      "source_name": "Quaid e Azam Muhammad Ali Jinnah",
+      "registered_name": "Muhammad Ali Jinnah",
+      "registered_uuid": "ffc3f4be-bfa3-4b3b-8abe-16a5231883be",
+      "review_basis": "specific founder, not boxer",
+      "original_title_channel_count": 9,
+      "original_title_video_count": 10
+    },
+    {
+      "source_name": "Martin Luther King",
+      "registered_name": "Martin Luther King Jr",
+      "registered_uuid": "50599a52-741a-4d48-aec9-0c0c735a49bf",
+      "review_basis": "civil-rights leader, not reformer Martin Luther",
+      "original_title_channel_count": 8,
+      "original_title_video_count": 8
+    },
+    {
+      "source_name": "Jesus of Nazareth",
+      "registered_name": "Jesus",
+      "registered_uuid": "594d772b-bd67-5741-bbad-2df4e580eb0c",
+      "review_basis": "reviewed religious-historical epithet",
+      "original_title_channel_count": 7,
+      "original_title_video_count": 7
+    },
+    {
+      "source_name": "King Tut",
+      "registered_name": "Tutankhamun",
+      "registered_uuid": "f9518a4b-bd24-48eb-9e42-55fb89eef03d",
+      "review_basis": "specific Egyptian pharaoh nickname",
+      "original_title_channel_count": 5,
+      "original_title_video_count": 6
+    },
+    {
+      "source_name": "Gautam Buddha",
+      "registered_name": "Gautama Buddha",
+      "registered_uuid": "8e006020-b055-5d7c-8d18-2bf962a15396",
+      "review_basis": "one Buddha identity",
+      "original_title_channel_count": 5,
+      "original_title_video_count": 5
+    },
+    {
+      "source_name": "King Henry VIII",
+      "registered_name": "Henry VIII",
+      "registered_uuid": "328e74e4-3d75-56fd-be02-ae85b6114ed3",
+      "review_basis": "regnal numeral VIII",
+      "original_title_channel_count": 4,
+      "original_title_video_count": 4
+    },
+    {
+      "source_name": "Emperor Nero",
+      "registered_name": "Nero",
+      "registered_uuid": "f2dfd2c6-febe-4fcf-aea4-dd90fdbc57ef",
+      "review_basis": "Roman emperor Nero",
+      "original_title_channel_count": 3,
+      "original_title_video_count": 3
+    },
+    {
+      "source_name": "Mughal Emperor Aurangzeb",
+      "registered_name": "Aurangzeb",
+      "registered_uuid": "e4deb023-5426-4268-9f82-286349dae9a1",
+      "review_basis": "Mughal emperor Aurangzeb",
+      "original_title_channel_count": 3,
+      "original_title_video_count": 3
+    },
+    {
+      "source_name": "Queen Cleopatra",
+      "registered_name": "Cleopatra VII",
+      "registered_uuid": "c1e67378-d8c2-51d4-855c-112f98827268",
+      "review_basis": "Egyptian queen Cleopatra VII",
+      "original_title_channel_count": 3,
+      "original_title_video_count": 3
+    },
+    {
+      "source_name": "SIDDHARTHA GAUTAMA",
+      "registered_name": "Gautama Buddha",
+      "registered_uuid": "8e006020-b055-5d7c-8d18-2bf962a15396",
+      "review_basis": "Gautama Buddha personal name",
+      "original_title_channel_count": 3,
+      "original_title_video_count": 3
+    },
+    {
+      "source_name": "Mao Tse Tung",
+      "registered_name": "Mao Zedong",
+      "registered_uuid": "44078197-7f99-5f12-a0cf-48c402798023",
+      "review_basis": "Wade–Giles and pinyin romanizations",
+      "original_title_channel_count": 3,
+      "original_title_video_count": 3
+    },
+    {
+      "source_name": "Emperor Hadrian",
+      "registered_name": "Hadrian",
+      "registered_uuid": "6505a79c-7d91-587b-8c0b-7e057a5e0b83",
+      "review_basis": "Roman emperor Hadrian",
+      "original_title_channel_count": 2,
+      "original_title_video_count": 2
+    },
+    {
+      "source_name": "Maulana Rumi",
+      "registered_name": "Rumi",
+      "registered_uuid": "db71eca3-9ce5-40a3-9d9d-fbc7ec8a8ddf",
+      "review_basis": "poet honorific",
+      "original_title_channel_count": 1,
+      "original_title_video_count": 1
+    },
+    {
+      "source_name": "Queen Isabella I",
+      "registered_name": "Isabella I of Castile",
+      "registered_uuid": "eb02f6c0-14c7-59bc-8e7e-c54ef2536c9c",
+      "review_basis": "Castilian Queen Isabella I",
+      "original_title_channel_count": 1,
+      "original_title_video_count": 1
+    }
+  ],
+  "clear_nonindividual_source_holds": [
+    {
+      "source_name": "National Geographic",
+      "reason": "media publisher/organization",
+      "original_title_channel_count": 8,
+      "original_title_video_count": 27
+    },
+    {
+      "source_name": "Book of Enoch",
+      "reason": "text not individual",
+      "original_title_channel_count": 6,
+      "original_title_video_count": 6
+    },
+    {
+      "source_name": "Fall of Rome",
+      "reason": "event not individual",
+      "original_title_channel_count": 5,
+      "original_title_video_count": 5
+    },
+    {
+      "source_name": "Silk Road",
+      "reason": "trade route not individual",
+      "original_title_channel_count": 5,
+      "original_title_video_count": 5
+    },
+    {
+      "source_name": "Adam and Eve",
+      "reason": "pair, not one person",
+      "original_title_channel_count": 5,
+      "original_title_video_count": 6
+    },
+    {
+      "source_name": "Big Bang Theory",
+      "reason": "concept/media title not individual",
+      "original_title_channel_count": 3,
+      "original_title_video_count": 4
+    },
+    {
+      "source_name": "Bronze Age Collapse",
+      "reason": "historical process not individual",
+      "original_title_channel_count": 3,
+      "original_title_video_count": 4
+    },
+    {
+      "source_name": "Bangladesh Crisis",
+      "reason": "event not individual",
+      "original_title_channel_count": 4,
+      "original_title_video_count": 4
+    },
+    {
+      "source_name": "Freedom Fighter",
+      "reason": "generic category, no single named person",
+      "original_title_channel_count": 3,
+      "original_title_video_count": 8
+    },
+    {
+      "source_name": "Cupid and Psyche",
+      "reason": "mythological pair",
+      "original_title_channel_count": 3,
+      "original_title_video_count": 3
+    },
+    {
+      "source_name": "Manipur violence",
+      "reason": "event not individual",
+      "original_title_channel_count": 3,
+      "original_title_video_count": 3
+    },
+    {
+      "source_name": "James Webb Space Telescope",
+      "reason": "instrument not individual",
+      "original_title_channel_count": 3,
+      "original_title_video_count": 3
+    },
+    {
+      "source_name": "Library of Alexandria",
+      "reason": "institution/place not individual",
+      "original_title_channel_count": 3,
+      "original_title_video_count": 3
+    }
+  ],
+  "source_video_ids_preserved": true,
+  "production_or_person_write_permitted": false,
+  "complete_current_registered_screen_performed": false,
+  "video_content_playback_verified": false,
+  "manual_collision_holds_preserved": [
+    "Muhammad Ali",
+    "King David",
+    "King Solomon",
+    "Queen Elizabeth",
+    "Emperor Claudius"
+  ]
+}
