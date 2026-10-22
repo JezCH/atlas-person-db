@@ -108,6 +108,11 @@ test("the 2026-10-10 Khalid registered UUID is preserved as HISTORICAL ONLY; Kha
  assert.equal(khalid.historical_registration_anchor.prior_registered_person_uuid,olderRegistered.registered_exact["Khalid Ibn Al Walid"].uuid);
  assert.equal(khalid.atlas_registry_state,"PRIOR_REGISTERED_UUID_CURRENT_STATE_UNVERIFIED");
  assert.equal(khalid.historical_registration_anchor.current_registered_person_recheck_required,true);
+ const saladin=group("Saladin");
+ assert.equal(saladin.external_identity.qid,"Q8581");
+ assert.equal(saladin.historical_registration_anchor.prior_source_name,"Saladin");
+ assert.equal(saladin.historical_registration_anchor.prior_registered_person_uuid,"54e55076-a03c-5d43-9cb9-40d9953c910c");
+ assert.equal(saladin.atlas_registry_state,"PRIOR_REGISTERED_UUID_CURRENT_STATE_UNVERIFIED");
  const zia=group("Khaleda Zia");
  assert.equal(zia.death_date,"2025-12-30");
  assert(zia.person_identity_source_urls.some(x=>x.includes("reuters.com/")));

@@ -347,8 +347,15 @@
       "deceased_as_of_20261021": true,
       "death_date": null,
       "death_reference": null,
-      "historical_registration_anchor": null,
-      "atlas_registry_state": "FULL_CURRENT_REGISTRY_NOT_SCREENED",
+      "historical_registration_anchor": {
+        "prior_source_name": "Saladin",
+        "prior_registered_canonical_name": "Saladin",
+        "prior_registered_person_uuid": "54e55076-a03c-5d43-9cb9-40d9953c910c",
+        "prior_review_source_path": "audits/youtube-6358-registration-living-screen-20261009.csv",
+        "reviewed_on": "2026-10-09",
+        "current_registered_person_recheck_required": true
+      },
+      "atlas_registry_state": "PRIOR_REGISTERED_UUID_CURRENT_STATE_UNVERIFIED",
       "content_evidence": "ORIGINAL_BIOGRAPHY_OR_PROFILE_TITLE_ONLY_NOT_WATCHED_OR_CAPTION_AUTHENTICATED"
     },
     {

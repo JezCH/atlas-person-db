@@ -23,10 +23,10 @@ test("all 2241 name labels are reconciled in one offline pass; committed output 
  assert.equal(live.counts.reviewed_identity_groups,15);
  assert.equal(live.counts.ungrouped_source_labels,2084);
  assert.equal(live.counts.all_review_units,2099);
- assert.equal(live.counts.remaining_priority_units,2096);
- assert.equal(live.counts.remaining_priority_3plus_channels,816);
+ assert.equal(live.counts.remaining_priority_units,2095);
+ assert.equal(live.counts.remaining_priority_3plus_channels,815);
  assert.equal(live.priority100.length,100);
- assert.equal(live.candidate_rows.length,2096);
+ assert.equal(live.candidate_rows.length,2095);
  assert.equal(live.current_production_complete_person_registry_checked,false);
  assert.equal(live.content_media_watched,0);
 });
@@ -38,6 +38,8 @@ test("rank uses ORIGINAL unique IDs and held/registered labels never appear as c
  for(const x of h)assert(!candidate.has(x));
  for(const x of reg)assert(!candidate.has(x));
  assert(!candidate.has("Khalid ibn al-Walid"));
+ assert(!candidate.has("Saladin"));
+ assert.equal(live.counts.reviewed_registration_linked_groups,2);
  for(const p of supplementary.registered_positive_matches){assert(!candidate.has(p.source_name));assert(reg.has(p.source_name));}
  for(const p of domainReview.prior_registered_positive_matches){assert(!candidate.has(p.source_name));assert(reg.has(p.source_name));}
  for(const p of supplementary.clear_nonindividual_source_holds)assert(!candidate.has(p.source_name));
@@ -61,4 +63,22 @@ test("rank uses ORIGINAL unique IDs and held/registered labels never appear as c
   assert(a.ch>=b.ch);
   if(a.ch===b.ch)assert(a.vid>=b.vid);
  }
+});
+
+// The entire dated-prior-roster crosscheck is an auditable disposition ledger,
+// not a complete current atlas_v2 Person + person_names proof.
+test("all remaining candidates are explicitly classified by older source-name evidence without claiming current absence",()=>{
+ const saved=require("../audits/youtube-b024-dated-prior-registry-2095-full-screen-20261022.json");
+ assert.equal(saved.counts.remaining_review_units,2095);
+ assert.equal(saved.counts.remaining_matched_to_old_needs_review_labels,1605);
+ assert.equal(saved.counts.remaining_absent_from_old_source_name_list,490);
+ assert.equal(saved.counts.remaining_unique_video_ids,6189);
+ assert.equal(saved.screened_rows.length,2095);
+ assert.equal(saved.current_production_full_person_and_alias_registry_checked,false);
+ assert.equal(saved.video_content_verified,0);
+ const old=require("node:fs").readFileSync(new URL("../audits/youtube-6358-registration-living-screen-20261009.csv",import.meta.url),"utf8").trimEnd().split(/\r?\n/).slice(1);
+ assert.equal(old.length,6358);
+ assert(old.some(line=>line.startsWith('"57","Saladin","')&&line.includes('"REGISTERED"')&&line.includes('"54e55076-a03c-5d43-9cb9-40d9953c910c"')));
+ const all=build().candidate_rows;
+ assert.deepEqual(saved.screened_rows.map(x=>x[1]),all.map(x=>x[1]));
 });

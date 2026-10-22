@@ -39,6 +39,10 @@ function build(){
  const old=new Map([...Object.entries(history.registered_exact),...Object.entries(history.registered_reviewed_alias)]);
  const historicalExact=source.rows.filter(r=>old.has(r[0])).map(r=>r[0]);
  const oldRegistry=fs.readFileSync(path.resolve(__dirname,"../"+supplementaryReview.prior_registered_roster),"utf8").split(/\r?\n/);
+ const saladinLegacy=oldRegistry.filter(line=>line.startsWith('"57","Saladin","')&&line.includes('"REGISTERED"')&&line.includes('"54e55076-a03c-5d43-9cb9-40d9953c910c"'));
+ invariant(saladinLegacy.length===1,"SALADIN_OLD_REGISTERED_PROOF");
+ const saladinGroup=second.reviewed_groups.find(g=>g.canonical_identity_name==="Saladin");
+ invariant(saladinGroup?.external_identity?.qid==="Q8581"&&saladinGroup.historical_registration_anchor?.prior_registered_person_uuid==="54e55076-a03c-5d43-9cb9-40d9953c910c"&&saladinGroup.historical_registration_anchor?.current_registered_person_recheck_required===true,"SALADIN_GROUP_PRIOR_REGISTERED_ANCHOR");
  const positives=new Map();
  for(const p of supplementaryReview.registered_positive_matches){
   invariant(!positives.has(p.source_name)&&raw.has(p.source_name)&&!hold.has(p.source_name)&&!old.has(p.source_name),"REVIEWED_POSITIVE_SOURCE");
@@ -104,7 +108,7 @@ function build(){
  const candidate=units.filter(g=>g.screen==="CURRENT_PRODUCTION_NOT_CHECKED").sort((a,b)=>b.ch-a.ch||b.vid-a.vid||a.name.localeCompare(b.name,"en"));
  const three=candidate.filter(x=>x.ch>=3);
  const counts={original_source_labels:2241,held_exact_source_labels:hold.size,prior_registered_exact_source_labels:historicalExact.length,prior_registered_manifest_nameforms:old.size,source_labels_in_reviewed_groups:assigned.size,reviewed_identity_groups:grp.length,prior_registered_reviewed_source_labels:positives.size,supplementary_clear_nonindividual_source_labels:reviewedHolds.size,prior_domain_registered_positive_source_labels:domainPositives.size,ungrouped_source_labels:source.rows.length-hold.size-historicalExact.length-assigned.size-positives.size-domainPositives.size,all_review_units:units.length,reviewed_registration_linked_groups:units.filter(x=>x.reg).length,reviewed_living_units:units.filter(x=>x.screen==="PRIOR_REVIEWED_LIVING_HOLD").length,remaining_priority_units:candidate.length,remaining_priority_3plus_channels:three.length};
- invariant(JSON.stringify([counts.held_exact_source_labels,counts.prior_registered_exact_source_labels,counts.source_labels_in_reviewed_groups,counts.ungrouped_source_labels,counts.all_review_units,counts.remaining_priority_units,counts.remaining_priority_3plus_channels])===JSON.stringify([75,11,32,2084,2099,2096,816]),"COUNT_RECONCILIATION");
+ invariant(JSON.stringify([counts.held_exact_source_labels,counts.prior_registered_exact_source_labels,counts.source_labels_in_reviewed_groups,counts.ungrouped_source_labels,counts.all_review_units,counts.remaining_priority_units,counts.remaining_priority_3plus_channels])===JSON.stringify([75,11,32,2084,2099,2095,815]),"COUNT_RECONCILIATION");
  return {
  schema:"atlas-youtube-b024-bulk-research-triage/v4-compact",
  created_on:"2026-10-21",provenance_sha256:archive,
