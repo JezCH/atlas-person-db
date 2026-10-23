@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-youtube39-20261023:carl-jung:representative:v1",
+  "person": {
+    "canonical_name_en": "Carl Gustav Jung",
+    "display_name_ko": "카를 융",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-23",
+    "life_status_basis": "documented_death",
+    "representative_domain": "science",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Switzerland",
+    "display_name_ko": "스위스",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Psychiatrist and author of Psychological Types",
+    "role_display_name_ko": "《심리 유형》 저자·정신의학자",
+    "start_year": 1921,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1921,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Carl Jung Institute Stuttgart chronology dates Psychologische Typen to 1921. This is a representative publication point, not full lifetime Swiss clinical practice."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Historical reference — Carl Gustav Jung",
+      "canonical_url": "https://www.cgjung-stuttgart.de/analytische-psychologie/leben-und-werk-c-g-jungs",
+      "citation_text": "Carl Jung Institute Stuttgart chronology dates Psychologische Typen to 1921. This is a representative publication point, not full lifetime Swiss clinical practice."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-23",
+      "document_title": "카를 융",
+      "url": "https://namu.wiki/w/%EC%B9%B4%EB%A5%BC%20%EC%9C%B5"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Identity/alias, specific historical Polity/Place, source and NamuWiki-title canonical readback required before final apply. This is an offline pre-Production reviewed authoring draft; no auto-write or invented coordinates."
+  }
+}

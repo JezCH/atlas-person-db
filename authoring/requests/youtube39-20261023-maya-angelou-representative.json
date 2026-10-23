@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-youtube39-20261023:maya-angelou:representative:v1",
+  "person": {
+    "canonical_name_en": "Maya Angelou",
+    "display_name_ko": "마야 안젤루",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-23",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Writer, I Know Why the Caged Bird Sings",
+    "role_display_name_ko": "《새장에 갇힌 새가 왜 노래하는지 나는 아네》 저자",
+    "start_year": 1969,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1969,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Poetry Foundation dates the autobiography to 1969. Distinct from multi-decade arts and civil-rights career."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Historical reference — Maya Angelou",
+      "canonical_url": "https://www.poetryfoundation.org/poets/maya-angelou",
+      "citation_text": "Poetry Foundation dates the autobiography to 1969. Distinct from multi-decade arts and civil-rights career."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-23",
+      "document_title": "마야 안젤루",
+      "url": "https://namu.wiki/w/%EB%A7%88%EC%95%BC%20%EC%95%88%EC%A0%A4%EB%A3%A8"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Identity/alias, specific historical Polity/Place, source and NamuWiki-title canonical readback required before final apply. This is an offline pre-Production reviewed authoring draft; no auto-write or invented coordinates."
+  }
+}

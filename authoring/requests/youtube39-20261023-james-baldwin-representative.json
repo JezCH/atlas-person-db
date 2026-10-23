@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-youtube39-20261023:james-baldwin:representative:v1",
+  "person": {
+    "canonical_name_en": "James Baldwin",
+    "display_name_ko": "제임스 볼드윈",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-23",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Essayist, The Fire Next Time",
+    "role_display_name_ko": "《다음번에는 불》 집필·사회비평가",
+    "start_year": 1963,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1963,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "US Library of Congress documents 1963 The Fire Next Time, distinct from Baldwin's activism and all other works."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Historical reference — James Baldwin",
+      "canonical_url": "https://www.loc.gov/exhibits/civil-rights-act/civil-rights-era.html",
+      "citation_text": "US Library of Congress documents 1963 The Fire Next Time, distinct from Baldwin's activism and all other works."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-23",
+      "document_title": "제임스 볼드윈",
+      "url": "https://namu.wiki/w/%EC%A0%9C%EC%9E%84%EC%8A%A4%20%EB%B3%BC%EB%93%9C%EC%9C%88"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Identity/alias, specific historical Polity/Place, source and NamuWiki-title canonical readback required before final apply. This is an offline pre-Production reviewed authoring draft; no auto-write or invented coordinates."
+  }
+}

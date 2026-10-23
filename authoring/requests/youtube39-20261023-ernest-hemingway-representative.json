@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-youtube39-20261023:ernest-hemingway:representative:v1",
+  "person": {
+    "canonical_name_en": "Ernest Hemingway",
+    "display_name_ko": "어니스트 헤밍웨이",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-23",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Novelist, The Old Man and the Sea",
+    "role_display_name_ko": "소설 《노인과 바다》 작가",
+    "start_year": 1952,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1952,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Old Man and the Sea published in 1952. Publication point only, separate from Hemingway's other works and overseas activities."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Historical reference — Ernest Hemingway",
+      "canonical_url": "https://wwws.loc.gov/exhibits/america-reads/1950-to-2009.html",
+      "citation_text": "The Old Man and the Sea published in 1952. Publication point only, separate from Hemingway's other works and overseas activities."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-23",
+      "document_title": "어니스트 헤밍웨이",
+      "url": "https://namu.wiki/w/%EC%96%B4%EB%8B%88%EC%8A%A4%ED%8A%B8%20%ED%97%A4%EB%B0%8D%EC%9B%A8%EC%9D%B4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Identity/alias, specific historical Polity/Place, source and NamuWiki-title canonical readback required before final apply. This is an offline pre-Production reviewed authoring draft; no auto-write or invented coordinates."
+  }
+}

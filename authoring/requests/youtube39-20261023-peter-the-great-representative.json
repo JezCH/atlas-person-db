@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-youtube39-20261023:peter-the-great:representative:v1",
+  "person": {
+    "canonical_name_en": "Peter I of Russia",
+    "display_name_ko": "표트르 대제",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-23",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Tsardom of Russia",
+    "display_name_ko": "러시아 차르국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Joint tsar with Ivan V (initial Sophia regency)",
+    "role_display_name_ko": "러시아 공동 차르·이반 5세와 공동통치",
+    "start_year": 1682,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1696,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "1682 co-enthronement with Ivan V. Sophia served as regent during part of this shared office; this is the formal co-tsar period ending 1696, not proof of independent effective control throughout."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Historical reference — Peter I of Russia",
+      "canonical_url": "https://history.ru/encyclopedia/petr-i-alekseevich",
+      "citation_text": "1682 co-enthronement with Ivan V. Sophia served as regent during part of this shared office; this is the formal co-tsar period ending 1696, not proof of independent effective control throughout."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-23",
+      "document_title": "표트르 1세",
+      "url": "https://namu.wiki/w/%ED%91%9C%ED%8A%B8%EB%A5%B4%201%EC%84%B8"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Identity/alias, specific historical Polity/Place, source and NamuWiki-title canonical readback required before final apply. This is an offline pre-Production reviewed authoring draft; no auto-write or invented coordinates."
+  }
+}
