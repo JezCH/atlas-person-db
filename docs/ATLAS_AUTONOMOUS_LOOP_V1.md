@@ -37,3 +37,9 @@ The new \`.github/workflows/atlas-autonomous-outcome.yml\` receives a **complete
 6. Records persist per observed CI run rather than mutating the authoritative task registry or Issue automatically. No credentials are granted to AI-authored code; the reconciliation workflow uses trusted \`main\`, read-only GitHub permissions, and no model, Production, Supabase, Vercel or PR merge operations.
 
 This closes **P0-C/P0-D for independent CI outcome classification and reporting**, but not for a verified live autonomous cycle. The underlying approved task queue and model dispatch switches remain disabled. First live file pilot still requires a new reviewed Issue/launcher pair, confirmed provider-plan cost/credential availability and deliberate activation. Do not interpret completed CI, an outcome artifact, or a model-written test as Production release.
+
+## Durable review-only outcome journal (no new model calls)
+
+After the independent outcome workflow succeeds, a separate job with `issues:write` re-evaluates the **original GitHub CI run** using the same trusted `scripts/atlas-autonomous-outcome.mjs` verifier. It never trusts the prior job's artifact as authorization. Only a validated `CI_PASS_REVIEW_REQUIRED` result can create one idempotency-marked comment on the exact **still-open matching Draft PR**. The marker includes PR number, run ID and head SHA; existing comments are scanned boundedly before posting.
+
+The PR comment records the real Codex patch source, admitted base, CI run, and `REVIEW_DRAFT_NO_MODEL_RETRY`. A GitHub comment is a durable checkpoint beyond the 30-day artifact retention, but **does not** automatically approve or merge the PR, close an Issue, launch another model task or verify Production. Failed/unknown CI outcomes remain in the original workflow run summary and artifact, with the explicit stop decision. Next model-task selection remains under the separate approved-task registry and daily command budget.
