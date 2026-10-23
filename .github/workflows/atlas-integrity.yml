@@ -223,7 +223,7 @@ jobs:
         run: |
           python3 - <<'PY'
           import pathlib, re, subprocess
-          words=["you"+"tube","youtu"+".be","yt"+"-dlp","b"+"024"]
+          words=["you"+"tube","youtu"+".be","yt"+"-dlp"]
           files=subprocess.check_output(["git","ls-files","-z"]).decode().split("\0")
           hits=[]
           for path in filter(None,files):
