@@ -1,16 +1,11 @@
 ---
 name: atlas-code-intelligence
-description: Locate an exact ATLAS code symbol, the likely owner, direct relative imports, nearby declarations, relevant test paths, and verified prior fixes before an isolated source change. Invoke for code navigation, not for whole-repository audits.
+description: Locate exact code symbols, literal relative module importers, potential affected consumers and related tests.
 ---
 
-# ATLAS targeted code intelligence
+# ATLAS code intelligence
 
-1. Start from the user-provided symbol/path or the latest task resume point. Do **not** replay all issues or generate a whole-repo index.
-2. From a Node 22+ checkout, run `node scripts/atlas-agent-context.mjs --query 'exactNameOrErrorCode'`. This is **read-only**, uses local Git, and does not make AI/API calls.
-3. Read the returned `files[].matches` in actual source, check `relative_imports` for direct dependencies, inspect the relevant test, then edit only the smallest required paths.
-4. `symbols` and `relative_imports` are **lexical hints**, not a complete AST, call graph, or verified semantic linkage. A missing symbol is not proof of absence. If needed, use precise `git grep`/`rg` and inspect source directly.
-5. `lessons` are historical precedents, **not** permission to copy a fix blindly; compare the exact current behavior. Follow `WORK_EXECUTION.md` for source preconditions and a focused test.
-
-Examples: `normalizeBibliographicSource`, `crossCheckActivity`, `retirement`, `atlas-work-manager`.
-
-Never use this command as evidence that a remote Work/Codex job ran, and never equate CI success with Production release.
+1. Search one exact symbol with `node scripts/atlas-agent-context.mjs --query 'symbolName'`.
+2. Inspect the exact source file; run `node scripts/atlas-agent-dependency-map.mjs --path scripts/example.mjs` to find tracked literal imports, direct and two-hop reverse importers, and candidate tests.
+3. **Limit:** This is not an AST parser, function-call graph, route/DB dependency proof or test-coverage report. Dynamic or computed imports, aliasing and template-interpolated module paths may be missing. Inspect cited files directly.
+4. Review affected source and actual tests before changing anything; keep the smallest touch set and follow `WORK_EXECUTION.md`. Existing verified experience is advisory only.

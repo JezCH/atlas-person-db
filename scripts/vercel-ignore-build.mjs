@@ -20,6 +20,7 @@ const AGENT_NON_RUNTIME = new Set([
   "scripts/atlas-agent-context.mjs",
   "scripts/atlas-agent-experience.mjs",
   "scripts/atlas-agent-lesson-harvest.mjs",
+  "scripts/atlas-agent-dependency-map.mjs",
   "scripts/atlas-codex-task-runner.mjs"
 ]);
 const AGENT_SKIP_GATE = "scripts/vercel-ignore-build.mjs";
