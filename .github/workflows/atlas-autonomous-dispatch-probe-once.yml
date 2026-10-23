@@ -1,6 +1,6 @@
 name: ATLAS V1 — One-shot Safe Actions Dispatch Probe
 # Proves Actions -> workflow_dispatch -> independent read-only preflight.
-# Triggers ONLY when this exact new workflow file is first added to main.
+# Triggers ONLY for the reviewed, uniquely titled correction squash-merge on main.
 # No Codex model route, PAT usage, registry changes, DB or Production access.
 on:
   push:
@@ -16,7 +16,7 @@ jobs:
       github.repository == 'JezCH/atlas-person-db' &&
       github.ref == 'refs/heads/main' &&
       github.run_attempt == 1 &&
-      contains(github.event.head_commit.added, '.github/workflows/atlas-autonomous-dispatch-probe-once.yml')
+      startsWith(github.event.head_commit.message, 'test(agent): run one-shot safe Actions dispatch proof')
     runs-on: ubuntu-latest
     timeout-minutes: 3
     permissions:
