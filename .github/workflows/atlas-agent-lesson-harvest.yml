@@ -1,0 +1,35 @@
+name: ATLAS Experience Candidate Harvest
+# The trusted default-branch script never checks out or executes PR-head code.
+on:
+  pull_request_target:
+    types: [closed]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: atlas-experience-pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  harvest:
+    if: >-
+      github.event.pull_request.merged == true &&
+      github.event.pull_request.base.ref == 'main' &&
+      github.event.pull_request.base.repo.full_name == 'JezCH/atlas-person-db'
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Capture one advisory candidate comment from verified merged PR metadata
+        env:
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/atlas-agent-lesson-harvest.mjs

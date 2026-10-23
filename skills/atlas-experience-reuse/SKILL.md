@@ -1,16 +1,16 @@
 ---
 name: atlas-experience-reuse
-description: Reuse verified ATLAS bug-fix and workflow lessons to avoid repeated failed approaches; add concise, evidence-backed procedural knowledge only after an actual completed task.
+description: Reuse verified ATLAS fixes and review auto-extracted merged PR experience candidates before promoting reusable lessons.
 ---
 
 # ATLAS experience reuse
 
-The persistent memory file is `agent-memory/lessons.v1.json`. It is **advisory**, version-controlled, and is never a new authority over `WORK_EXECUTION.md`, canonical data or GitHub's current state.
+Verified procedural knowledge lives in agent-memory/lessons.v1.json and supplements, never overrides, WORK_EXECUTION.md.
 
-1. Run `node scripts/atlas-agent-context.mjs --query 'relevantSymbolOrFailure'` and use only lessons returned for this exact task. Avoid loading the entire history.
-2. Each lesson includes a concrete failure mode, successful remedy, limited scope, and a real merged PR/commit. Treat the current file and task version as authoritative if they disagree.
-3. After an actually completed improvement, add **one short reusable rule** only when it would prevent repetition. Include `id`, `status: verified`, `scope`, `keywords`, `lesson`, and `evidence` (merged PR/commit or equivalent). Do not record guesses as verified.
-4. A new unresolved failure may be placed in the task checkpoint, **not** added to verified long-term lessons. Never create entries just to satisfy a quota, and do not expand this into another management system.
-5. Review changes in a normal isolated PR; the memory file grants no merge, model-dispatch or Production authority.
+1. The approved Codex dispatcher loads up to three scoped verified lessons via scripts/atlas-agent-experience.mjs.
+2. After a fix PR merges into main, .github/workflows/atlas-agent-lesson-harvest.yml runs only the trusted main script, gathers exact source/test paths and merged commit, and leaves one durable candidate comment on the merged PR.
+3. Root-cause and remedy claims are extracted from author-supplied PR body headings. Those claims remain unverified and **cannot** enter Codex prompts.
+4. Promote one concise, generalizable lesson to the verified memory JSON only after reading its real source, cause and regression coverage. Record merged PR/commit evidence. Never promote from title alone.
+5. Docs-only, data-only, nonmerged, foreign-repository and incomplete code/test PRs are not knowledge candidates.
 
-This adapts the procedural-skill and reflective-memory ideas from Voyager/Reflexion without invoking an additional AI API or memory server.
+No model calls, Production writes, new paid resources or automatic task activation are added by this capture pipeline.
