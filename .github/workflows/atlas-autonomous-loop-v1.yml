@@ -1,0 +1,75 @@
+name: ATLAS Autonomous Loop V1 — Approved Selection Bridge
+# A bounded daily probe; all model execution remains OFF until both gates are
+# explicitly reviewed and enabled. Only a dispatch request uses Actions write.
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Audit or request one pre-approved dispatch
+        type: choice
+        options: [audit, dispatch]
+        default: audit
+        required: true
+  schedule:
+    - cron: '23 1 * * *'
+
+permissions: {}
+
+concurrency:
+  group: atlas-autonomous-bridge-v1
+  cancel-in-progress: false
+
+jobs:
+  select:
+    if: >-
+      github.repository == 'JezCH/atlas-person-db' &&
+      github.ref == 'refs/heads/main' && github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    permissions:
+      contents: read
+      issues: read
+      pull-requests: read
+      actions: read
+    outputs:
+      eligible: ${{ steps.audit.outputs.eligible }}
+      task_id: ${{ steps.audit.outputs.task_id }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Bounded authorized task snapshot and selection (no writes)
+        id: audit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/atlas-autonomous-loop-bridge.mjs audit
+
+  dispatch:
+    needs: select
+    if: >-
+      needs.select.outputs.eligible == 'true' &&
+      (github.event_name == 'schedule' || inputs.mode == 'dispatch')
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    permissions:
+      contents: read
+      issues: read
+      pull-requests: read
+      actions: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Recheck live authority and request one existing Codex workflow
+        env:
+          GH_TOKEN: ${{ github.token }}
+          APPROVED_TASK: ${{ needs.select.outputs.task_id }}
+        run: node scripts/atlas-autonomous-loop-bridge.mjs dispatch "$APPROVED_TASK"
