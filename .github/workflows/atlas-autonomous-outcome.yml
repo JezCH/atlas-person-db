@@ -57,3 +57,32 @@ jobs:
           path: ${{ runner.temp }}/atlas-autonomous-outcome.json
           retention-days: 30
           if-no-files-found: warn
+
+
+  journal-verified-draft:
+    needs: independent-outcome
+    if: needs.independent-outcome.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    permissions:
+      contents: read
+      actions: read
+      pull-requests: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Fresh independent re-verification and idempotent PR outcome journal
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CI_RUN_ID: ${{ github.event.workflow_run.id || inputs.run_id }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$CI_RUN_ID" =~ ^[1-9][0-9]*$ ]] || exit 1
+          node scripts/atlas-autonomous-outcome-journal.mjs --run "$CI_RUN_ID"
