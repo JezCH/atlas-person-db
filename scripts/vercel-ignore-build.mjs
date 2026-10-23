@@ -12,6 +12,18 @@ const SAFE_SKIP_PREFIXES = Object.freeze([
   "authoring/requests/"
 ]);
 
+// GitHub-only agent tooling must not produce a Vercel build when an agent
+// integration is merged, even if an older deployed runtime SHA still differs.
+// Strictly match known non-runtime files; never skip a mixed app/API change.
+const AGENT_NON_RUNTIME = new Set([
+  "agent-memory/lessons.v1.json",
+  "scripts/atlas-agent-context.mjs",
+  "scripts/atlas-agent-experience.mjs",
+  "scripts/atlas-agent-lesson-harvest.mjs",
+  "scripts/atlas-codex-task-runner.mjs"
+]);
+const AGENT_SKIP_GATE = "scripts/vercel-ignore-build.mjs";
+
 const SAFE_SKIP_EXACT = new Set([
   ".github/workflows/atlas-integrity.yml",
   ".github/workflows/atlas-spacetime-production-visual.yml",
@@ -63,6 +75,14 @@ export function isSafeToSkipPath(value) {
   if (file.endsWith(".md")) return true;
   if (/^migration\/[^/]+\/(?:reports|evidence)\//.test(file)) return true;
   return false;
+}
+
+export function isAgentCapabilityOnly(paths) {
+  const normalized = normalizePaths(paths);
+  // The skip-gate file alone must never bypass the normal deployment check.
+  return normalized.some((file) => AGENT_NON_RUNTIME.has(file)) &&
+    normalized.every((file) => AGENT_NON_RUNTIME.has(file) ||
+      file === AGENT_SKIP_GATE || isSafeToSkipPath(file));
 }
 
 export function isAuthoringDataOnly(paths) {
@@ -168,8 +188,8 @@ export function main(env = process.env) {
   try {
     const currentOutput = git(["diff-tree", "--no-commit-id", "--name-only", "-z", "-r", "-m", "--first-parent", currentSha, "--"]);
     const currentPaths = parsePaths(currentOutput);
-    if (isRuntimeDataOnly(currentPaths)) {
-      exitSkip(`current commit contains only reviewed runtime-safe data (${currentPaths.length} path${currentPaths.length === 1 ? "" : "s"})`);
+    if (isRuntimeDataOnly(currentPaths) || isAgentCapabilityOnly(currentPaths)) {
+      exitSkip(`current commit contains only reviewed non-deployable data or agent tooling (${currentPaths.length} path${currentPaths.length === 1 ? "" : "s"})`);
       for (const file of currentPaths) console.log(`[atlas-vercel-ignore]   ${file}`);
       return;
     }
