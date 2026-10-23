@@ -190,4 +190,3 @@ if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.ur
     console.log(JSON.stringify(await recordOutcome({result,github,post})));
   })().catch(e=>{console.error(e.message);process.exitCode=1});
 }
-}
