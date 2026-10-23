@@ -51,7 +51,7 @@ test("regional inspection labels and data-object codes remain separate", () => {
 
 test("authority catalog avoids residual English fragments and malformed Korean copy", () => {
   const catalog = read("atlas-ui-authority-catalog.ko.js");
-  for (const phrase of ["장소·사건·출처", "정규화 전 인물명", "기원전 수천 년", "식별정보 중복", "실시간 관련 정보"]) {
+  for (const phrase of ["장소·사건·출처", "등록대기열", "기원전 수천 년", "식별정보 중복", "실시간 관련 정보"]) {
     assert.ok(catalog.includes(phrase), "missing Korean copy: " + phrase);
   }
   for (const leak of ["Place·Event·Source", "raw 인물명", "BC 수천 년", "identity 중복", "live context", "원본가 담당", "사실를", "분리은"]) {

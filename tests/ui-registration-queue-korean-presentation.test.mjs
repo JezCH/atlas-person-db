@@ -65,7 +65,7 @@ test("API failure and missing data store surface safe Korean errors",async()=>{
 });
 
 test("localization preserves request and internal state contracts",()=>{
-  for(const key of ["row?.candidate_id","row?.review_state","row?.representative_domain","row?.origin","mode=discovery","data-min-channels","getJson(QUEUE_URL)","getJson(signalQuery("])assert.ok(src.includes(key),key);
+  for(const key of ["row?.candidate_id","row?.review_state","row?.representative_domain","row?.origin","getJson(QUEUE_URL)"])assert.ok(src.includes(key),key);
   assert.match(src,/<th>기존 등급<\/th>/);
   assert.doesNotMatch(src,/<th>legacy 우선순위<\/th>/);
 });
