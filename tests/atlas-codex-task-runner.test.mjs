@@ -59,6 +59,7 @@ test('offline pipeline selects, claims, submits once, rejects artifact substitut
     const afterTest="import test from 'node:test'; import assert from 'node:assert/strict'; import fs from 'node:fs'; import {answer} from '../scripts/example.mjs'; if(process.env.PUBLISH_SENTINEL)fs.writeFileSync(process.env.PUBLISH_SENTINEL,'model code ran'); test('answer',()=>assert.equal(answer,2));\n";
     write(repo,'scripts/example.mjs',before);write(repo,'tests/example.test.mjs',beforeTest);
     write(repo,'AGENTS.md','Offline fixture policy\n');write(repo,'WORK_EXECUTION.md','No live services\n');
+    write(repo,'agent-memory/lessons.v1.json',JSON.stringify({version:1,lessons:[{id:'fixture-learned',status:'verified',scope:'scripts/example.mjs',keywords:['fixture','answer'],lesson:'Learned fixture answer must be derived from validated source and focused test.',evidence:'Merged PR #2579, main commit b8b20bc95 (2026-10-20)'}]}));
     exec('git',['add','.'],repo);exec('git',['commit','-qm','fixture snapshot'],repo);
     const launcher=exec('git',['rev-parse','HEAD'],repo), now=Date.now();
     const task={id:'atlas-offline-pipeline',status:'approved',priority:0,launcher_pr:101,launcher_sha:launcher,paths:['scripts/example.mjs','tests/example.test.mjs'],snapshot_paths:['scripts/example.mjs','tests/example.test.mjs','AGENTS.md','WORK_EXECUTION.md'],not_before:new Date(now-3600000).toISOString(),expires_at:new Date(now+3600000).toISOString(),instructions:'Fix fixture answer.'};
@@ -95,6 +96,7 @@ test('offline pipeline selects, claims, submits once, rejects artifact substitut
     exec(process.execPath,[runner,'submit',prepared],repo,commentEnv);
     let s=JSON.parse(fs.readFileSync(state));
     assert.equal(s.commands.length,1);
+    assert.match(s.commands[0].body,/fixture-learned/); // actual dispatch receives retrieved memory
     assert.deepEqual(s.calls.slice(beforeSubmit),['POST issues/101/comments']); // PAT needs no Contents reads
     const retry=spawnSync(process.execPath,[runner,'claim',prepared],{cwd:repo,env:commentEnv,encoding:'utf8'});
     assert.notEqual(retry.status,0);assert.equal(JSON.parse(fs.readFileSync(state)).commands.length,1);

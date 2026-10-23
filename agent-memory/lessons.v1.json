@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "purpose": "Small verified procedural experience, not authoritative task state or historical data",
+  "lessons": [
+    {
+      "id": "reject-boolean-historical-years",
+      "status": "verified",
+      "scope": "scripts/stage2-baseline-a-intake.mjs",
+      "keywords": [
+        "year",
+        "boolean",
+        "crossCheckActivity",
+        "chronology",
+        "연도"
+      ],
+      "lesson": "Reject Boolean chronology boundaries before Number coercion; Number(true) becomes 1 and bypasses simple integer guards. Retain BCE and valid integer boundaries.",
+      "evidence": "Merged PR #2579, main commit b8b20bc95 (2026-10-20)"
+    },
+    {
+      "id": "require-explicit-authoring-root",
+      "status": "verified",
+      "scope": "scripts/person-domain-authoring-origin.mjs",
+      "keywords": [
+        "root",
+        "resolve",
+        "authoring",
+        "cwd",
+        "경로"
+      ],
+      "lesson": "Check that a caller-supplied root is nonblank before path.resolve; resolving an empty root first silently turns it into cwd.",
+      "evidence": "Merged PR #2573, main commit 81b87601d (2026-10-20)"
+    },
+    {
+      "id": "bind-codex-handoff-to-original-event",
+      "status": "verified",
+      "scope": "scripts/atlas-codex-patch-relay.mjs",
+      "keywords": [
+        "codex",
+        "artifact",
+        "publisher",
+        "patch",
+        "handoff",
+        "relay"
+      ],
+      "lesson": "A model-authored test can alter files in its unprivileged runner, including an output artifact. Rebind and independently verify the handoff against the original trusted GitHub event before privileged publication.",
+      "evidence": "Merged PR #2569, main commit c4811ad15 (2026-10-20)"
+    },
+    {
+      "id": "prefer-existing-scoped-pr-before-new-model-task",
+      "status": "verified",
+      "scope": "scripts/atlas-work-manager-triage.mjs",
+      "keywords": [
+        "work",
+        "triage",
+        "fix",
+        "review",
+        "codex",
+        "pr",
+        "중복"
+      ],
+      "lesson": "Review existing relevant scoped CI-passing PRs before requesting a new model patch. An unrelated or parked PR is not a global lock, and CI never authorizes automatic merge.",
+      "evidence": "Merged PR #2587, main commit 25b73e12b (2026-10-20)"
+    }
+  ]
+}

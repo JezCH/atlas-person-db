@@ -7,11 +7,39 @@ import { fileURLToPath } from "node:url";
 import assert from "node:assert/strict";
 import {
   isSafeToSkipPath,
+  isAgentCapabilityOnly,
   isAuthoringDataOnly,
   isSafeForDeployedAuthoringRuntimePath,
   requiresAuthoringRuntimeDeployment,
   shouldBuildForChangedPaths
 } from "../scripts/vercel-ignore-build.mjs";
+
+test("agent-only GitHub development integration never consumes a Vercel build", () => {
+  const integration = [
+    "AGENTS.md",
+    "agent-memory/lessons.v1.json",
+    "skills/atlas-code-intelligence/SKILL.md",
+    "skills/atlas-experience-reuse/SKILL.md",
+    "skills/atlas-polity-identity/SKILL.md",
+    "scripts/atlas-agent-context.mjs",
+    "scripts/atlas-agent-experience.mjs",
+    "scripts/atlas-agent-lesson-harvest.mjs",
+    "scripts/atlas-codex-task-runner.mjs",
+    "scripts/vercel-ignore-build.mjs",
+    "tests/atlas-agent-context.test.mjs",
+    "tests/atlas-agent-experience.test.mjs",
+    "tests/atlas-agent-lesson-harvest.test.mjs",
+    "tests/atlas-codex-task-runner.test.mjs",
+    "tests/vercel-ignore-build.test.mjs",
+    ".github/workflows/atlas-agent-lesson-harvest.yml"
+  ];
+  assert.equal(isAgentCapabilityOnly(integration), true);
+  assert.equal(isAgentCapabilityOnly(["scripts/vercel-ignore-build.mjs"]), false);
+  assert.equal(isAgentCapabilityOnly([...integration, "server/atlas-authoring-service.js"]), false);
+  assert.equal(isAgentCapabilityOnly(["scripts/atlas-agent-context.mjs", "index.html"]), false);
+  assert.equal(isAgentCapabilityOnly(["scripts/atlas-agent-context.mjs", "vercel.json"]), false);
+  assert.equal(isAgentCapabilityOnly(["scripts/atlas-agent-context.mjs", "scripts/unreviewed-agent-tool.mjs"]), false);
+});
 
 test("documentation, research evidence, reviewed authoring data and integrity-only changes are safe to skip", () => {
   for (const file of [

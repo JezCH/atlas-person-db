@@ -25,3 +25,8 @@ This file is an entry point, not a second source of project policy.
 
 ## Automation-specific constraint
 GitHub issue dispatch, tests, and status checks are not proof of an AI execution trigger. Never claim a Codex Cloud or ChatGPT Work agent was automatically launched unless an actual supported integration was invoked and its run was verified. Do not use unofficial ChatGPT UI scripting, credential sharing, or a ChatGPT Plus subscription as an API key.
+
+## On-demand agent capability kit
+- For an exact code symbol or defect, first use `node scripts/atlas-agent-context.mjs --query 'symbol'` in the checkout; its file hits, imports and symbols are lexical hints, not final evidence. Read returned source before editing.
+- Load only a matching repository skill: `skills/atlas-code-intelligence/SKILL.md`, `skills/atlas-polity-identity/SKILL.md`, or `skills/atlas-experience-reuse/SKILL.md`. These supplement rather than override `WORK_EXECUTION.md`.
+- `agent-memory/lessons.v1.json` contains concise merged-fix precedents only. It is not a live task queue, evidence of current Production state, or permission to mutate. Do not start whole-repo scanning or new model calls just to populate memory.

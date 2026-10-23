@@ -4,6 +4,7 @@ import crypto from 'node:crypto';
 import {spawnSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 import {applyPlan, verifyPlanFromEvent} from './atlas-codex-patch-relay.mjs';
+import {renderTaskLessons} from './atlas-agent-experience.mjs';
 import {validateRegistry, selectTask, policyForEvent, claimDispatch, authorizedRunComment, dayKey, taskRef, budgetRef, resultBranch, REPOSITORY} from './atlas-codex-task-policy.mjs';
 
 const REGISTRY = 'config/atlas-codex-tasks.v1.json';
@@ -77,7 +78,7 @@ function prompt(task,base) {
   const files=task.paths.map((p,i)=>({path:p,before_sha256:hashes[i],after_base64:'<complete tested file in canonical base64>'}));
   return '@codex '+task.id+' — one bounded development task, not a review. Actions run '+process.env.GITHUB_RUN_ID+'.\n\n'+
     'Read local AGENTS.md and WORK_EXECUTION.md. Launcher HEAD must be '+task.launcher_sha+'. Dispatcher verified target, dependency and policy snapshot parity with main '+base+'. Do not fetch. Verify local SHA256 before editing:\n'+
-    task.paths.map((p,i)=>p+': '+hashes[i]).join('\n')+'\n\n'+task.instructions+'\n\n'+
+    task.paths.map((p,i)=>p+': '+hashes[i]).join('\n')+'\n\n'+task.instructions+renderTaskLessons(task)+'\n\n'+
     'Edit exactly the two approved files; demonstrate red then green and run node --test '+task.paths[1]+' and git diff --check. Do not commit/push the launcher or create a PR. On failure return BLOCKED or NO CHANGE without a payload. No child agents, retries, internet, credentials, paid API, Vercel/Production/Supabase/Sandbox, data mutation, deployment or merge.\n'+
     'Return exactly one actual tested complete-file payload in the App response. Use the verified target preimages and the dispatcher-verified base below; do not claim local HEAD equals main.\n\nATLAS-CODEX-PATCH-V1\n'+
     JSON.stringify({version:1,task_id:task.id,base_sha:base,files})+'\nEND-ATLAS-CODEX-PATCH-V1\n\n'+
