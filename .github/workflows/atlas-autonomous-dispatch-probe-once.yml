@@ -15,8 +15,7 @@ jobs:
     if: >-
       github.repository == 'JezCH/atlas-person-db' &&
       github.ref == 'refs/heads/main' &&
-      github.run_attempt == 1 &&
-      startsWith(github.event.head_commit.message, 'test(agent): run one-shot safe Actions dispatch proof')
+      github.run_attempt == 1
     runs-on: ubuntu-latest
     timeout-minutes: 3
     permissions:
@@ -29,6 +28,11 @@ jobs:
           github-token: ${{ github.token }}
           script: |
             const {owner,repo}=context.repo;
+            const eventCommit=(await github.rest.repos.getCommit({owner,repo,ref:context.sha})).data;
+            if(!eventCommit.commit.message.startsWith('test(agent): run one-shot safe Actions dispatch proof')){
+              core.info('SKIPPED: commit is not the uniquely authorized one-shot probe');
+              return;
+            }
             const sha=(await github.rest.repos.getBranch({owner,repo,branch:'main'})).data.commit.sha;
             if(sha!==context.sha)throw Error('ATLAS_PROBE_BLOCKED: main moved');
             const target='atlas-autonomous-pilot-preflight.yml';
