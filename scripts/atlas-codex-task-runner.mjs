@@ -73,12 +73,34 @@ function verifyClaims(task,base,now=Date.now()) {
   // A response just after UTC midnight may belong to yesterday's admission.
   if(![now,now-86400000].some(t=>refSha(budgetRef(t))===base))fail('daily admission receipt missing');
 }
+// Deterministic, advisory tools in the approved local launcher snapshot.
+// No new model/API request, external fetch, mutation or task authorization.
+export function taskCapabilityHints(task) {
+  const paths=Array.isArray(task?.paths)?task.paths:[];
+  const description=String(task?.id||'')+' '+String(task?.instructions||'')+' '+paths.join(' ');
+  const choose=[
+    ['atlas-temporal-evidence',/chronolog|year|bce|reign|period|activity|timeline|연도|연대|통치기간/i],
+    ['atlas-person-identity',/person|homonym|alias|registration|인물|동명이인|등록/i],
+    ['atlas-polity-identity',/polity|retire|tombstone|political|정치체|퇴역/i],
+    ['atlas-source-provenance',/bibliograph|source|provenance|citation|evidence|사료|출처/i],
+    ['atlas-experience-reuse',/regress|fix|repair|bug|defect|failure|재발|오류|수정/i]
+  ].filter(([,re])=>re.test(description)).slice(0,3).map(([name])=>'skills/'+name+'/SKILL.md');
+  const target=paths.find(p=>/^(?:scripts|server|api)\/[a-zA-Z0-9._/-]+\.(?:js|mjs|cjs)$/.test(p)&&!p.includes('..'));
+  const graph=target?
+    'If present locally, run node scripts/atlas-agent-dependency-map.mjs --path '+target+
+    ' to identify static direct importers and affected-test candidates before changing source. '+
+    'The map is NOT an AST, permission to edit other paths, or proof of runtime callers.\\n':'';
+  const skills=choose.length?'If present locally, consult only matching Agent Skills: '+choose.join(', ')+
+    '. They are advisory, not authority over the exact approved task.\\n':'';
+  return graph||skills?'\\n\\nATLAS scoped capability hints (local optional tools, no network):\\n'+graph+skills:'';
+}
+
 function prompt(task,base) {
   const hashes=task.paths.map(p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex'));
   const files=task.paths.map((p,i)=>({path:p,before_sha256:hashes[i],after_base64:'<complete tested file in canonical base64>'}));
   return '@codex '+task.id+' — one bounded development task, not a review. Actions run '+process.env.GITHUB_RUN_ID+'.\n\n'+
     'Read local AGENTS.md and WORK_EXECUTION.md. Launcher HEAD must be '+task.launcher_sha+'. Dispatcher verified target, dependency and policy snapshot parity with main '+base+'. Do not fetch. Verify local SHA256 before editing:\n'+
-    task.paths.map((p,i)=>p+': '+hashes[i]).join('\n')+'\n\n'+task.instructions+renderTaskLessons(task)+'\n\n'+
+    task.paths.map((p,i)=>p+': '+hashes[i]).join('\n')+'\n\n'+task.instructions+renderTaskLessons(task)+taskCapabilityHints(task)+'\n\n'+
     'Edit exactly the two approved files; demonstrate red then green and run node --test '+task.paths[1]+' and git diff --check. Do not commit/push the launcher or create a PR. On failure return BLOCKED or NO CHANGE without a payload. No child agents, retries, internet, credentials, paid API, Vercel/Production/Supabase/Sandbox, data mutation, deployment or merge.\n'+
     'Return exactly one actual tested complete-file payload in the App response. Use the verified target preimages and the dispatcher-verified base below; do not claim local HEAD equals main.\n\nATLAS-CODEX-PATCH-V1\n'+
     JSON.stringify({version:1,task_id:task.id,base_sha:base,files})+'\nEND-ATLAS-CODEX-PATCH-V1\n\n'+
