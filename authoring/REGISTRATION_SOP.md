@@ -47,6 +47,10 @@ Legacy `ATLAS-PHFC-4.2`, `ATLAS-PHFC-4.1`, `ATLAS-PHFP-4.0`, earlier PHFC/PRV ve
 
 A merged PR, green CI, Vercel deployment, authoring response without read-back, or workflow start is not completion by itself.
 
+## Retired discovery origin (2026-10-23)
+
+These standard Human Authoring requests may originate from a **retired external video-discovery research cohort**. The origin is historical provenance only, not a currently supported discovery, crawling, ranking, ingestion, storage, or publishing feature. Do not restore removed discovery workflows, services, APIs, database migrations, or UI assets to register these Persons. Existing reviewed historical Person candidates remain eligible for the ordinary canonical preflight, Authoring, Compile, Runtime, and Production read-back process. A legacy request filename or immutable `request_id` containing `youtube39`/`youtube48` is only a retained authoring identity, not a dependency on a removed discovery subsystem. Keep those immutable request IDs unchanged for idempotency; renaming source requests is unnecessary and risks duplicates. No Production write or automatic merge follows merely from this designation.
+
 ## 2. Safety gates that are never removed
 
 Every ordinary registration keeps these invariants:
