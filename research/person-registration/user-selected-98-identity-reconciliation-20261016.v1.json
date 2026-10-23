@@ -4,7 +4,7 @@
   "snapshot_reviewed_at": "2026-10-16",
   "scope": "Explicit user-selected 98 Civ great people / rulers from October 2026 conversation",
   "authority": "historical_evidence_only_not_current_production",
-  "snapshot_evidence": "Historical Production Person evidence: 50 exact identity UUIDs from proposals/person-representative-domain/batch-001..129; five additional exact reviewed REGISTERED UUIDs from audits/youtube-6358-registration-living-screen-20261009.csv; and prior merged PR #686 Ramkhamhaeng. None proves present-tense 2026-10-16 survival due to Vercel HTTP 402. Additional historical Production Person UUID directly observed in docs/POLITY_P2_04D_GORKHA_NEPAL_UNIFICATION_20261010.md (Prithvi Narayan Shah). Prior committed/Production-Person-ID confirmation for Mannerheim PR #296 and Ahmad ibn Majid PR #1683; UUID unavailable from these PR review bodies, still require live rematching. Additionally exact Person UUID f39ebb79-783e-4d03-b941-af5605144691 for Muhammad V of Granada was proved by 2026-09-02 actual Authoring Apply #33648098873 output, with both individual 1354–1359 and 1362–1391 Production readbacks; the overall workflow failure was caused by another user's unrelated blocked request.",
+  "snapshot_evidence": "Historical Production Person evidence: 50 exact identity UUIDs from proposals/person-representative-domain/batch-001..129; five additional exact reviewed REGISTERED UUIDs from Historical Production Person identity UUID snapshot dated 2026-10-09; and prior merged PR #686 Ramkhamhaeng. None proves present-tense 2026-10-16 survival due to Vercel HTTP 402. Additional historical Production Person UUID directly observed in docs/POLITY_P2_04D_GORKHA_NEPAL_UNIFICATION_20261010.md (Prithvi Narayan Shah). Prior committed/Production-Person-ID confirmation for Mannerheim PR #296 and Ahmad ibn Majid PR #1683; UUID unavailable from these PR review bodies, still require live rematching. Additionally exact Person UUID f39ebb79-783e-4d03-b941-af5605144691 for Muhammad V of Granada was proved by 2026-09-02 actual Authoring Apply #33648098873 output, with both individual 1354–1359 and 1362–1391 Production readbacks; the overall workflow failure was caused by another user's unrelated blocked request.",
   "counts": {
     "snapshot_uuid": 57,
     "pr_confirmed": 3,
@@ -189,8 +189,8 @@
       "historical_uuid_evidence": [
         "b73e669a-550b-4a43-98a5-f2103de4a92b"
       ],
-      "prior_evidence_kind": "production_youtube_20261009_registered",
-      "historical_evidence_source": "audits/youtube-6358-registration-living-screen-20261009.csv; exact name+registered_uuids, review_lane=REGISTERED"
+      "prior_evidence_kind": "historical_live_person_uuid_20261009",
+      "historical_evidence_source": "Historical Production Person identity UUID snapshot dated 2026-10-09; exact name+registered_uuids, review_lane=REGISTERED"
     },
     {
       "ordinal": 15,
@@ -253,8 +253,8 @@
       "historical_uuid_evidence": [
         "682ba25a-e12e-48a5-bc79-9739b28f2562"
       ],
-      "prior_evidence_kind": "production_youtube_20261009_registered",
-      "historical_evidence_source": "audits/youtube-6358-registration-living-screen-20261009.csv; exact name+registered_uuids, review_lane=REGISTERED"
+      "prior_evidence_kind": "historical_live_person_uuid_20261009",
+      "historical_evidence_source": "Historical Production Person identity UUID snapshot dated 2026-10-09; exact name+registered_uuids, review_lane=REGISTERED"
     },
     {
       "ordinal": 21,
@@ -450,8 +450,8 @@
       "historical_uuid_evidence": [
         "57d86cbf-38f3-4f07-ae51-7501d8f5f818"
       ],
-      "prior_evidence_kind": "production_youtube_20261009_registered",
-      "historical_evidence_source": "audits/youtube-6358-registration-living-screen-20261009.csv; exact name+registered_uuids, review_lane=REGISTERED"
+      "prior_evidence_kind": "historical_live_person_uuid_20261009",
+      "historical_evidence_source": "Historical Production Person identity UUID snapshot dated 2026-10-09; exact name+registered_uuids, review_lane=REGISTERED"
     },
     {
       "ordinal": 39,
@@ -917,9 +917,9 @@
       "historical_uuid_evidence": [
         "1137412e-532c-472c-a5ec-e32d9e530499"
       ],
-      "prior_evidence_kind": "production_youtube_20261009_registered",
+      "prior_evidence_kind": "historical_live_person_uuid_20261009",
       "identity_or_chronology_caveat": "Previously merged person-only request; completion requires Production runtime read-back.",
-      "historical_evidence_source": "audits/youtube-6358-registration-living-screen-20261009.csv; exact name+registered_uuids, review_lane=REGISTERED"
+      "historical_evidence_source": "Historical Production Person identity UUID snapshot dated 2026-10-09; exact name+registered_uuids, review_lane=REGISTERED"
     },
     {
       "ordinal": 86,
@@ -1040,8 +1040,8 @@
       "historical_uuid_evidence": [
         "6e8defc2-6ee9-4f94-9ed5-3f4be96e7066"
       ],
-      "prior_evidence_kind": "production_youtube_20261009_registered",
-      "historical_evidence_source": "audits/youtube-6358-registration-living-screen-20261009.csv; exact name+registered_uuids, review_lane=REGISTERED"
+      "prior_evidence_kind": "historical_live_person_uuid_20261009",
+      "historical_evidence_source": "Historical Production Person identity UUID snapshot dated 2026-10-09; exact name+registered_uuids, review_lane=REGISTERED"
     },
     {
       "ordinal": 97,
@@ -1068,7 +1068,7 @@
   ],
   "production_snapshot_uuid_provenance": {
     "person_representative_domain_review": 50,
-    "youtube_6358_registration_screen_20261009": 5,
+    "historical_person_identity_review_20261009": 5,
     "polity_p2_04d_exact_person_readback_20261010": 1,
     "authoring_apply_33648098873_commit_and_readback_20260902": 1
   }

@@ -1,56 +1,9 @@
 "use strict";
 
-// Reviewed Person identities. Each value must resolve to exactly one current
-// canonical Person. These aliases are *not* candidate-name substring guesses,
-// and do not mutate atlas_v2.persons or atlas_v2.person_names.
-const SOURCE_FIRST_LIVE_REGISTERED_ALIASES=require("../audits/youtube-source-first-live-registered-aliases-50.json");
-const ADDITIONAL_REVIEWED_28_ALIASES=require("../audits/youtube-v5-registered-28-nonoverlap-specific-aliases.json");
-if(ADDITIONAL_REVIEWED_28_ALIASES.schema!=="atlas-youtube-v5-registered-person-28-nonoverlap-aliases/v1"||
-   ADDITIONAL_REVIEWED_28_ALIASES.novel_exact_alias_count!==28||
-   ADDITIONAL_REVIEWED_28_ALIASES.aliases.length!==28)
-  throw Error("YOUTUBE_REGISTERED_ADDITIONAL_28_MANIFEST_INVALID");
-const first50Keys=new Set(SOURCE_FIRST_LIVE_REGISTERED_ALIASES.reviewed_aliases.map(r=>r.source_name));
-if(new Set(ADDITIONAL_REVIEWED_28_ALIASES.aliases.map(r=>r.alias_name)).size!==28||
-   ADDITIONAL_REVIEWED_28_ALIASES.aliases.some(r=>first50Keys.has(r.alias_name)))
-  throw Error("YOUTUBE_REGISTERED_28_OVERLAPS_EXISTING_50");
-if(SOURCE_FIRST_LIVE_REGISTERED_ALIASES.schema!=="atlas-youtube-live-registered-person-alias-lookup/v1"||
-   SOURCE_FIRST_LIVE_REGISTERED_ALIASES.reviewed_aliases.length!==50)
-  throw Error("YOUTUBE_SOURCE_FIRST_REGISTERED_ALIAS_MANIFEST_INVALID");
-const newAliasNames=SOURCE_FIRST_LIVE_REGISTERED_ALIASES.reviewed_aliases.map(r=>r.source_name);
-if(new Set(newAliasNames).size!==50||
-   SOURCE_FIRST_LIVE_REGISTERED_ALIASES.reviewed_aliases.some(r=>
-     !r.source_name||!r.registered_name||!/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(r.registered_uuid)))
-  throw Error("YOUTUBE_SOURCE_FIRST_REGISTERED_ALIAS_PROVENANCE_INVALID");
-
+// Canonical Person name forms for registration queue screening.
 const REVIEWED_REGISTRATION_ALIASES=Object.freeze([
-  // Verified ORIGINAL history-YouTube source-first identity review:
-  // B024 raw historical names DO NOT become new Persons when these exact
-  // aliases resolve to the registered canonical historical individuals.
-  // Source reviewed: audits/youtube-b024-source-first-36-final-registered-identity-review.json
-  // Production Person UUID confirmation re-checked 2026-10-11.
-  Object.freeze({alias_name:"Imam Bukhari",canonical_key:"Al-Bukhari",representative_default:false}),
-  Object.freeze({alias_name:"Imam Malik",canonical_key:"Malik ibn Anas",representative_default:false}),
-  Object.freeze({alias_name:"King Leonidas",canonical_key:"Leonidas I",representative_default:false}),
-  // 50 exact source-derived title names resolve to a single registered Person
-  // by independently checked live Person UUID, not by substring resemblance.
-  // They suppress already-registered People in the ONE live discovery feed.
-  ...SOURCE_FIRST_LIVE_REGISTERED_ALIASES.reviewed_aliases.map(row=>Object.freeze({
-    alias_name:row.source_name,canonical_key:row.registered_name,
-    representative_default:false
-  })),
-  // Twenty-eight more reviewed aliases, explicitly disjoint from the 50
-  // already merged in another lane. This remains the FINAL registered
-  // exclusion, never a source candidate generation dictionary.
-  ...ADDITIONAL_REVIEWED_28_ALIASES.aliases.map(row=>Object.freeze({
-    alias_name:row.alias_name,canonical_key:row.canonical_key,
-    representative_default:false
-  })),
-  // Verified 2026-10-10 live Person identity Muhammad Ali Jinnah:
-  // honorific Quaid-e-Azam variants are NOT new Person registrations.
   Object.freeze({alias_name:"Quaid-e-Azam Muhammad Ali Jinnah",canonical_key:"Muhammad Ali Jinnah",representative_default:true}),
   Object.freeze({alias_name:"Quaid e Azam Muhammad Ali Jinnah",canonical_key:"Muhammad Ali Jinnah",representative_default:true}),
-  // Live Production Person-UUID matches for 51-row filtered YouTube audit, 2026-10-09.
-  // Full 6,358-label Production audit: 38 additionally verified canonical UUID targets.
   Object.freeze({alias_name:"Al-Jazari",canonical_key:"Ismail al-Jazari",representative_default:true}),
   Object.freeze({alias_name:"Bismarck",canonical_key:"Otto von Bismarck",representative_default:true}),
   Object.freeze({alias_name:"Botticelli",canonical_key:"Sandro Botticelli",representative_default:true}),

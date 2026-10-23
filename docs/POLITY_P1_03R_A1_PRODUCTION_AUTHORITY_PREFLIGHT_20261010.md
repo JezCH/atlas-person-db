@@ -55,6 +55,6 @@ This gate is still **open**. The next worker should complete a **single scoped p
 ## 5. Parallel non-interference and closeout
 
 - The source of truth remains [current workstreams](ATLAS_CURRENT_WORKSTREAMS.md) and [Polity issue #1895](https://github.com/JezCH/atlas-person-db/issues/1895); this report is **evidence only**, not another global tracker.
-- Concurrent Oman identity review, UI design work, Person registration and YouTube discovery are independent; **no file or state owned by those lanes was changed**.
+- Concurrent Oman identity review, UI design work, Person registration and retired data collection discovery are independent; **no file or state owned by those lanes was changed**.
 - **Closed unit:** P1-03R-A1 source-integrity and deployment-metadata preflight.
 - **Unfinished acceptance blocker:** P1-03R-A2 proof of exact Production DB identity and current UUID census; P1-03R-B historical/collision review; P1-03R-C apply and verified read-back remain gated.

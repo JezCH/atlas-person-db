@@ -104,7 +104,7 @@ For each candidate PR: record exact source SHA and deployed runtime SHA, viewpor
 
 **Why four capture PRs were required:** #2167 added baseline recorder + workflow; #2170 reused canonical Spacetime selection/clear order; #2171 made loaded Detail content a hard screenshot precondition; #2172 switched name-link click to the existing verified Person-row click. These PRs changed only read-only test/capture tooling, not historical data, UI appearance, semantic colors, world coordinates or navigation logic.
 
-**Current-base direct dependency delta:** between runtime SHA `2c97830d...` and follow-up source check `c74c02ea...`, changed paths were Polity review workstream metadata/research and a YouTube audit document only, not the visual/CSS/renderer paths. Do not refresh all captures merely because unrelated main moved.
+**Current-base direct dependency delta:** between runtime SHA `2c97830d...` and follow-up source check `c74c02ea...`, changed paths were Polity review workstream metadata/research and an unrelated historical audit document only, not the visual/CSS/renderer paths. Do not refresh all captures merely because unrelated main moved.
 
 ### Known scenario additions before each affected visual PR
 
