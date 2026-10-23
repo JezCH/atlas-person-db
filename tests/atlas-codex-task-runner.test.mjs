@@ -97,6 +97,7 @@ test('offline pipeline selects, claims, submits once, rejects artifact substitut
     let s=JSON.parse(fs.readFileSync(state));
     assert.equal(s.commands.length,1);
     assert.match(s.commands[0].body,/fixture-learned/); // actual dispatch receives retrieved memory
+    assert.match(s.commands[0].body,/atlas-agent-dependency-map/); // approved task receives local code intelligence hint
     assert.deepEqual(s.calls.slice(beforeSubmit),['POST issues/101/comments']); // PAT needs no Contents reads
     const retry=spawnSync(process.execPath,[runner,'claim',prepared],{cwd:repo,env:commentEnv,encoding:'utf8'});
     assert.notEqual(retry.status,0);assert.equal(JSON.parse(fs.readFileSync(state)).commands.length,1);
