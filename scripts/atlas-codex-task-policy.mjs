@@ -35,6 +35,7 @@ export function validateRegistry(value) {
   const ids=new Set(), launchers=new Set();
   for (const t of value.tasks) {
     requireValid(t && ID.test(t.id) && !ids.has(t.id), 'unique task id');ids.add(t.id);
+    if (t.issue_number !== undefined) requireValid(Number.isSafeInteger(t.issue_number) && t.issue_number > 0, 'bound Issue number');
     requireValid(['approved','hold','closed'].includes(t.status), 'task status');
     requireValid(Number.isSafeInteger(t.launcher_pr) && t.launcher_pr>0 && !launchers.has(t.launcher_pr), 'unique launcher');launchers.add(t.launcher_pr);
     requireValid(SHA.test(t.launcher_sha), 'launcher SHA');
