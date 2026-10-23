@@ -4,7 +4,7 @@ const { PUBLIC_ACTIVITY_SOURCE, readPersons, readPersonDetail } = require("./atl
 const { readPersonListSemantics } = require("./atlas-person-list-semantic-service.js");
 const { requireDatabaseUrl, sendJson } = require("./atlas-read-http.js");
 
-// Compact, read-only projection for YouTube person identity matching.
+// Compact, read-only canonical Person identity and registered-name projection.
 // This avoids downloading person descriptions, Activities and source evidence.
 const PERSON_IDENTITY_SQL = `
 select p.id,

@@ -6,8 +6,6 @@
 
 - Production returned HTTP 402 `DEPLOYMENT_DISABLED` while deployment builds were `READY`.
 - Vercel showed `Paused — Upgrade to resume service`, Sandbox Active CPU **5h06m / 5h** and Fast Origin Transfer **10.19GB / 10GB**.
-- Nineteen visible Sandbox sessions consumed **18,382,541 ms = 5h06m22.5s** of active CPU: 12 YouTube discovery sessions consumed **17,748,531 ms** and seven UI sessions **634,010 ms**.
-- YouTube sessions executed high-concurrency `yt-dlp` bulk collection. This explains **96.55% of observed Sandbox CPU**, not Fast Origin Transfer.
 - Fast Origin Transfer **was not attributed to individual routes**. Sandbox download ingress is a different counter, and must never be reported as proof of the 10.19GB source.
 - The public Person/Activity reads return large, largely unpaginated JSON and use `no-store`; Production visual acceptance previously polled exact SHA as many as 90 times. These are verified risk factors, **not proved byte contributions**.
 
