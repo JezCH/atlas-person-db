@@ -1,0 +1,59 @@
+name: ATLAS Autonomous Loop — Independent PR Outcome
+
+# Separately completes only after the existing ATLAS Integrity workflow ends.
+# Never checks out the untrusted model PR head. No model calls or repo writes.
+on:
+  workflow_run:
+    workflows: ["ATLAS Integrity"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: Exact completed Integrity workflow run ID (read-only)
+        type: string
+        required: true
+
+permissions: {}
+
+jobs:
+  independent-outcome:
+    if: >-
+      github.repository == 'JezCH/atlas-person-db' &&
+      github.run_attempt == 1 &&
+      ((github.event_name == 'workflow_run' &&
+        github.event.workflow_run.event == 'pull_request' &&
+        github.event.workflow_run.head_repository.full_name == 'JezCH/atlas-person-db' &&
+        startsWith(github.event.workflow_run.head_branch, 'codex/task-result/')) ||
+       github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    permissions:
+      actions: read
+      contents: read
+      pull-requests: read
+      issues: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Independently classify CI, patch source, admission SHA and changed bytes
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CI_RUN_ID: ${{ github.event.workflow_run.id || inputs.run_id }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$CI_RUN_ID" =~ ^[1-9][0-9]*$ ]] || exit 1
+          node scripts/atlas-autonomous-outcome.mjs --run "$CI_RUN_ID"
+      - name: Preserve bounded evidence artifact even on blocked report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-outcome-${{ github.event.workflow_run.id || inputs.run_id }}
+          path: ${{ runner.temp }}/atlas-autonomous-outcome.json
+          retention-days: 30
+          if-no-files-found: warn
