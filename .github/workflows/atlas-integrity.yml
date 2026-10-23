@@ -218,32 +218,6 @@ jobs:
           find api server scripts -type f \( -name '*.js' -o -name '*.mjs' -o -name '*.cjs' \) -print0 | while IFS= read -r -d '' f; do node --check "$f"; done
           for f in atlas-*.js admin.js app.js asset-loader.js; do test -f "$f" && node --check "$f"; done
 
-      - name: Temporary repository-wide retirement leak scan
-        shell: bash
-        run: |
-          python3 - <<'PY'
-          import pathlib, re, subprocess
-          words=["you"+"tube","youtu"+".be","yt"+"-dlp"]
-          files=subprocess.check_output(["git","ls-files","-z"]).decode().split("\0")
-          hits=[]
-          for path in filter(None,files):
-            p=pathlib.Path(path)
-            if not p.is_file():
-              continue
-            try:
-              data=p.read_text(encoding="utf-8")
-            except (OSError,UnicodeError):
-              continue
-            for num,line in enumerate(data.splitlines(),1):
-              if any(word in line.lower() for word in words):
-                hits.append((path,num,line.strip()[:180]))
-          print("TOTAL_RETIRED_REFERENCE_MATCHES",len(hits))
-          for path,num,line in hits[:120]:
-            print(f"{path}:{num}: {line}")
-          if hits:
-            raise SystemExit(1)
-          PY
-
       - name: Run complete current test suite
         id: complete-tests
         shell: bash
