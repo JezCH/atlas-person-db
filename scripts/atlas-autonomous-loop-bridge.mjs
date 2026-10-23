@@ -80,7 +80,10 @@ export async function githubRequest(endpoint,{token,fetchImpl=globalThis.fetch,m
   if(result?.status===404&&endpoint.startsWith('git/ref/'))return null;
   if(result?.status!==200)blocked('GitHub GET HTTP '+result?.status+' '+endpoint.split('?')[0]);
   const boundedPrPage=/^pulls\/[1-9][0-9]*\/files\?per_page=100&page=[1-3]$/.test(endpoint);
-  if(/rel="next"/.test(result.headers?.get?.('link')??'')&&!boundedPrPage)
+  // Actions CI list is deliberately sampled (recent 30), never used for
+  // approval or dispatch authority. Other inventory lists must be complete.
+  const sampledCi=endpoint==='actions/runs?per_page=30';
+  if(/rel="next"/.test(result.headers?.get?.('link')??'')&&!boundedPrPage&&!sampledCi)
     blocked('partial paginated evidence');
   return result.json();
 }

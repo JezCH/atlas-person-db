@@ -124,6 +124,8 @@ test('GitHub next-page headers are allowed only for bounded PR-file pages',async
   const first=await githubRequest('pulls/2549/files?per_page=100&page=1',
     {token:'fixture',fetchImpl});
   assert.equal(first.length,1);
+  const sample=await githubRequest('actions/runs?per_page=30',{token:'fixture',fetchImpl});
+  assert.equal(sample.length,1); // CI is intentionally a recent sample, not task authority
   await assert.rejects(()=>githubRequest('issues?state=open&per_page=100',
     {token:'fixture',fetchImpl}),/partial paginated evidence/);
 });
