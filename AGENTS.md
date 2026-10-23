@@ -34,3 +34,6 @@ GitHub issue dispatch, tests, and status checks are not proof of an AI execution
 ## Scoped capability expansion
 - For a specific module, run `node scripts/atlas-agent-dependency-map.mjs --path scripts/exact-file.mjs` to see static literal importers and candidate tests. This is not a JS call graph or Runtime/Supabase proof.
 - Select matching specialist skills only: `skills/atlas-temporal-evidence/SKILL.md`, `skills/atlas-person-identity/SKILL.md`, or `skills/atlas-source-provenance/SKILL.md`; they never authorize canonical writes.
+
+## Optional experience review
+- For merged code fixes only, `node scripts/atlas-agent-lesson-suggest.mjs --pr NUMBER` creates a read-only candidate JSON for human inspection. Do not auto-promote into `agent-memory/lessons.v1.json` or run this on every unrelated PR.

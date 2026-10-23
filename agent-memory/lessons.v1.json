@@ -60,6 +60,22 @@
       ],
       "lesson": "Review existing relevant scoped CI-passing PRs before requesting a new model patch. An unrelated or parked PR is not a global lock, and CI never authorizes automatic merge.",
       "evidence": "Merged PR #2587, main commit 25b73e12b (2026-10-20)"
+    },
+    {
+      "id": "validate-calendar-publication-dates",
+      "status": "verified",
+      "scope": "server/atlas-source-service.js",
+      "keywords": [
+        "publication",
+        "date",
+        "calendar",
+        "leap",
+        "bibliography",
+        "day",
+        "month"
+      ],
+      "lesson": "An ISO YYYY-MM-DD format regex does not reject impossible calendar dates. Validate actual Gregorian month lengths and leap-year rules before any database query; preserve valid early CE dates and independent BCE publication years.",
+      "evidence": "Merged PR #2588, main commit 7c918bf7e0f10525359230469096f0b5756ca4c5 (2026-10-21)"
     }
   ]
 }
