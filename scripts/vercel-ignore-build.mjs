@@ -188,8 +188,13 @@ export function main(env = process.env) {
   try {
     const currentOutput = git(["diff-tree", "--no-commit-id", "--name-only", "-z", "-r", "-m", "--first-parent", currentSha, "--"]);
     const currentPaths = parsePaths(currentOutput);
-    if (isRuntimeDataOnly(currentPaths) || isAgentCapabilityOnly(currentPaths)) {
-      exitSkip(`current commit contains only reviewed non-deployable data or agent tooling (${currentPaths.length} path${currentPaths.length === 1 ? "" : "s"})`);
+    if (isRuntimeDataOnly(currentPaths)) {
+      exitSkip(`current commit contains only reviewed runtime-safe data (${currentPaths.length} path${currentPaths.length === 1 ? "" : "s"})`);
+      for (const file of currentPaths) console.log(`[atlas-vercel-ignore]   ${file}`);
+      return;
+    }
+    if (isAgentCapabilityOnly(currentPaths)) {
+      exitSkip(`current commit contains only GitHub agent tooling (${currentPaths.length} path${currentPaths.length === 1 ? "" : "s"})`);
       for (const file of currentPaths) console.log(`[atlas-vercel-ignore]   ${file}`);
       return;
     }
