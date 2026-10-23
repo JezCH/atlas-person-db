@@ -1,0 +1,72 @@
+name: ATLAS Autonomous Result Verification V1
+# Default-branch-only workflow_run event; never checkout/execute PR head code.
+on:
+  workflow_run:
+    workflows: [ATLAS Integrity]
+    types: [completed]
+
+permissions: {}
+
+concurrency:
+  group: atlas-result-${{ github.event.workflow_run.id }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    if: >-
+      github.repository == 'JezCH/atlas-person-db' &&
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.name == 'ATLAS Integrity' &&
+      github.event.action == 'completed' &&
+      github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    permissions:
+      contents: read
+      pull-requests: read
+      actions: read
+    outputs:
+      recordable: ${{ steps.provenance.outputs.recordable }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Independently verify original Codex App patch and immutable receipts
+        id: provenance
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/atlas-autonomous-result-verifier.mjs evaluate
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: autonomous-result-${{ github.event.workflow_run.id }}
+          path: ${{ runner.temp }}/atlas-autonomous-result.json
+          if-no-files-found: ignore
+          retention-days: 7
+
+  journal:
+    needs: verify
+    if: needs.verify.outputs.recordable == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    permissions:
+      contents: read
+      pull-requests: read
+      actions: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Recheck live Codex origin and record idempotent result
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/atlas-autonomous-result-verifier.mjs record

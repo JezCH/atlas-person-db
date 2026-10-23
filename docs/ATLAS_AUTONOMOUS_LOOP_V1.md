@@ -24,3 +24,11 @@ Scope: safe development task discovery and **one** external workflow dispatch, n
 2. Separately review and approve one *new* offline source+test task with a fresh Issue, launcher Draft PR/SHA and at most 24-hour registration window.
 3. Enable the existing Codex registry **and** `dispatch_enabled` in a reviewed commit. A daily or manually requested dispatch can then run once, subject to the old atomic UTC budget receipt.
 4. Independently inspect the actual model comment, original patch and Integrity CI. Draft PR creation remains review-required; no automatic task-close or second model dispatch.
+
+## P0-C / P0-D independent results and stop behavior
+
+- After **ATLAS Integrity** finishes a pull-request run, the trusted-default-branch `.github/workflows/atlas-autonomous-result-v1.yml` evaluates only actual `codex/task-result/atlas-*` Draft PRs. Ordinary UI/data/feature PRs are not candidates.
+- Read-only verification binds current run ID/head SHA, exact approved two-file diff, immutable per-task and UTC-day receipts, real Codex GitHub App identity and original launcher comment, original base file SHA-256, and resulting Git blob content to the original **bot patch payload**.
+- A separate job with `issues:write` reruns the verification against fresh GitHub data, and posts an idempotency-marked PR comment stating either `CI_PASS_REVIEW_REQUIRED` or `CI_FAILED`. No PR head code is checked out or run in these jobs, and no model call or PR merge occurs.
+- GitHub issues with missing verified evidence stay unrecorded and blocked; a GitHub CI result never grants independent semantic review. CI failure yields `STOP_NO_AUTOMATIC_MODEL_RETRY`; success yields `INDEPENDENT_REVIEW_REQUIRED_BEFORE_MERGE`. In either case selection/dispatch is independently gated by the existing approval + daily-budget checks.
+- The observer records completion of the **Draft/CI checkpoint**, not a merged code release or Production completion. It does not automatically close the original Issue or run the next Codex task. A fresh manually reviewed task approval and normal selection pass remain necessary.
