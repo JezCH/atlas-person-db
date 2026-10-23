@@ -24,3 +24,16 @@ Scope: safe development task discovery and **one** external workflow dispatch, n
 2. Separately review and approve one *new* offline source+test task with a fresh Issue, launcher Draft PR/SHA and at most 24-hour registration window.
 3. Enable the existing Codex registry **and** `dispatch_enabled` in a reviewed commit. A daily or manually requested dispatch can then run once, subject to the old atomic UTC budget receipt.
 4. Independently inspect the actual model comment, original patch and Integrity CI. Draft PR creation remains review-required; no automatic task-close or second model dispatch.
+
+## P0-C/P0-D — independent result classification and completion checkpoint
+
+The new \`.github/workflows/atlas-autonomous-outcome.yml\` receives a **completed** \`ATLAS Integrity\` run via \`workflow_run\` and only starts its job when the head belongs to \`codex/task-result/...\` in the authorized repository. Manual read-only inspection accepts an exact CI run ID.
+
+1. Read the *completed* Integrity run from GitHub. Any non-success result is \`CI_NOT_PASSED\`, stop and never retry the model.
+2. A success result is **not** self-approval. Read the trusted registry task, exact currently open Draft PR, single result branch, atomic original task-attempt ref, result commit with that exact one parent, and the exact approved source/test change paths.
+3. Confirm the model patch comment really comes from the Codex GitHub App account on the reviewed launcher PR. Parse the same bounded patch envelope as the original trusted relay; independently compare the original base file SHA256 and **both** current PR head file bodies to the bot's immutable proposed complete-file bytes.
+4. Only then emit \`CI_PASS_REVIEW_REQUIRED\` with task, PR, immutable SHA, CI run and source comment IDs. The next action is **human review**, not auto-merge or closing a Production task.
+5. An immutable per-run \`atlas-autonomous-outcome.json\` is uploaded as a 30-day GitHub Actions artifact, with the status and next action in the run summary. Missing/contradictory evidence produces \`BLOCKED\`, not a green completion.
+6. Records persist per observed CI run rather than mutating the authoritative task registry or Issue automatically. No credentials are granted to AI-authored code; the reconciliation workflow uses trusted \`main\`, read-only GitHub permissions, and no model, Production, Supabase, Vercel or PR merge operations.
+
+This closes **P0-C/P0-D for independent CI outcome classification and reporting**, but not for a verified live autonomous cycle. The underlying approved task queue and model dispatch switches remain disabled. First live file pilot still requires a new reviewed Issue/launcher pair, confirmed provider-plan cost/credential availability and deliberate activation. Do not interpret completed CI, an outcome artifact, or a model-written test as Production release.
