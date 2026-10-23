@@ -60,7 +60,7 @@ test('five historical Production identity UUID confirmations exclude registratio
     const row=roster.entries[n-1];
     assert.equal(row.prior_evidence_kind,'historical_live_person_uuid_20261009');
     assert.equal(row.historical_uuid_evidence.length,1);
-    assert.match(row.historical_evidence_source,/20261009\.csv/);
+    assert.match(row.historical_evidence_source,/2026-10-09/);
   }
   assert.equal(roster.production_snapshot_uuid_provenance.person_representative_domain_review,50);
   assert.equal(roster.production_snapshot_uuid_provenance.historical_person_identity_review_20261009,5);
