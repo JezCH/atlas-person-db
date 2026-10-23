@@ -39,8 +39,11 @@ export function decideBridge({config,registry,issues=[],pulls=[],pathsByPr={},
   const openPaths=new Set();
   for(const pr of pulls){
     if(!Number.isSafeInteger(pr?.number)||pr.number<1||
-      pr.base?.ref!=='main'||!Array.isArray(pathsByPr[pr.number])||
-      pathsByPr[pr.number].length>=100)blocked('incomplete or foreign open PR files');
+      pr.base?.ref!=='main'||!Number.isSafeInteger(pr.changed_files)||
+      pr.changed_files<0||pr.changed_files>300||
+      !Array.isArray(pathsByPr[pr.number])||
+      pathsByPr[pr.number].length!==pr.changed_files)
+      blocked('incomplete or foreign open PR files');
     for(const f of pathsByPr[pr.number]){
       if(typeof f?.filename!=='string'||!f.filename)blocked('malformed PR path');
       openPaths.add(f.filename);
@@ -76,9 +79,35 @@ export async function githubRequest(endpoint,{token,fetchImpl=globalThis.fetch,m
   }
   if(result?.status===404&&endpoint.startsWith('git/ref/'))return null;
   if(result?.status!==200)blocked('GitHub GET HTTP '+result?.status+' '+endpoint.split('?')[0]);
-  if(/rel="next"/.test(result.headers?.get?.('link')??''))blocked('partial paginated evidence');
+  const boundedPrPage=/^pulls\/[1-9][0-9]*\/files\?per_page=100&page=[1-3]$/.test(endpoint);
+  if(/rel="next"/.test(result.headers?.get?.('link')??'')&&!boundedPrPage)
+    blocked('partial paginated evidence');
   return result.json();
 }
+// GitHub PRs can legitimately modify over 100 files. Examine the *whole* declared
+// change set rather than blocking unrelated small tasks on a large Draft PR.
+// Per-page link headers may say next, but a fixed 300-file ceiling and an exact
+// independent GitHub changed_files total prevent silent partial evidence.
+export async function completePrFiles(pr,github){
+  if(!Number.isSafeInteger(pr?.number)||pr.number<1||
+    !Number.isSafeInteger(pr.changed_files)||pr.changed_files<0||pr.changed_files>300)
+    blocked('PR change count outside bounded inventory');
+  if(pr.changed_files===0)return [];
+  const out=[];
+  for(let page=1;page<=Math.ceil(pr.changed_files/100);page++){
+    const items=await github('pulls/'+pr.number+'/files?per_page=100&page='+page);
+    if(!Array.isArray(items)||items.length>100)
+      blocked('unexpected PR files page');
+    out.push(...items);
+    if(out.length>pr.changed_files)blocked('PR files exceed declared change count');
+  }
+  if(out.length!==pr.changed_files||
+    out.some(f=>typeof f?.filename!=='string'||!f.filename)||
+    new Set(out.map(f=>f.filename)).size!==out.length)
+    blocked('PR change inventory incomplete or duplicated');
+  return out;
+}
+
 export async function inspect({config,registry,github,now=Date.now(),expectedSha}={}){
   validateBridgeConfig(config);validateRegistry(registry);
   if(!config.enabled||!registry.enabled||!registry.tasks.some(t=>t.status==='approved'))
@@ -96,8 +125,7 @@ export async function inspect({config,registry,github,now=Date.now(),expectedSha
   if(issues.length>=100||pulls.length>=100)blocked('incomplete open inventory');
   const pathsByPr={};
   for(const pr of pulls){
-    if(!Number.isSafeInteger(pr.number)||pr.changed_files>=100)blocked('large or invalid PR');
-    pathsByPr[pr.number]=await github('pulls/'+pr.number+'/files?per_page=100');
+    pathsByPr[pr.number]=await completePrFiles(pr,github);
   }
   const approved=registry.tasks.filter(t=>t.status==='approved');
   const attempted=[],resultBranches=[];
