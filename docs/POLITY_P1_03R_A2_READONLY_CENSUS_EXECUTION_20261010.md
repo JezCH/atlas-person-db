@@ -28,4 +28,4 @@ A Supabase connector can independently perform a **read-only** census of the con
 
 - **Completed:** designed/committed an independently executable, mock-tested, read-only target-aware audit with strict fail-closed checks. This is preparation/instrumentation within P1-03R-A2, **not completion of its Production attestation**.
 - **Unfinished exact resume:** execute it in a genuinely authorized **Production-bound read-only session**, capture sanitized result including matched target and all UUID counts, then, *only if positive*, move into separately reviewed P1-03R-B evidence/source/identity validation. Never automatically proceed to P1-03R-C apply/cleanup or user-parked P14.
-- No other active Polity registry seed, UI, YouTube, Person or Production configuration was edited.
+- No other active Polity registry seed, UI, retired data collection, Person or Production configuration was edited.

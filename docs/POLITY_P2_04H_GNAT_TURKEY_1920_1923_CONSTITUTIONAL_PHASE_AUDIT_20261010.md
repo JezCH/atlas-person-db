@@ -11,7 +11,7 @@ The overarching #1895 polity program aims at **historically justified normalized
 3. Correct actionable errors with bounded, source-preserving exact-before canonical Authoring writer transactions, while preserving stable Person/Activity/Source IDs, chronology certainty and genuine repeated reigns.
 4. Compile and **verify** Authoring→Runtime publication AND scoped field/content integrity; align review registry, source audits and UI display where relevant.
 5. Resolve pending Japan tombstones, France legacy UUIDs, Oman duplicate/Omani Empire, Liberia duplicate Republic, Place DB authority and other applicable blockers; never delete or retire historical records without explicit user approval.
-6. Final-accept only after all above; P14 Geometry remains explicitly user-parked. UI #1896 and Person/YouTube discovery have independent acceptance owners.
+6. Final-accept only after all above; P14 Geometry remains explicitly user-parked. UI #1896 and Person/retired data collection discovery have independent acceptance owners.
 
 This bounded GNAT review is step 1 only. A closed GNAT seed does not certify the whole Turkish history or the full atlas database.
 

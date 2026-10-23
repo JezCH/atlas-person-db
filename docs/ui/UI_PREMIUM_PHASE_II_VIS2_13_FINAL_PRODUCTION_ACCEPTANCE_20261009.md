@@ -62,7 +62,7 @@ Inspected in a combined **16-screen keyboard/density contact sheet** and an addi
 
 The exact-sha visual workflow #37899108152 **SUCCESS** is the authoritative Phase II production gate. Feature PR #2284 and verifier repair #2286 each passed their own ATLAS Integrity checks. Independent **main-push** CORE and Integrity runs for this visual SHA were **cancelled** under concurrent CI activity; they are **not** claimed green.
 
-Concurrently, later `main` advanced by three separate YouTube workstream workflow/test edits and a Brazil Polity review-registry/audit update. The changed paths do **not** include Phase II design CSS, Person main register source, Spacetime renderer/camera/axis or visual acceptance scripts. This decision certifies the **exact pinned and inspected deployed visual SHA** above; it does not mislabel later unrelated commits as the SHA inspected. The user’s concurrent data/Polity work is a separate acceptance surface.
+Concurrently, later `main` advanced by three separate retired data collection workstream workflow/test edits and a Brazil Polity review-registry/audit update. The changed paths do **not** include Phase II design CSS, Person main register source, Spacetime renderer/camera/axis or visual acceptance scripts. This decision certifies the **exact pinned and inspected deployed visual SHA** above; it does not mislabel later unrelated commits as the SHA inspected. The user’s concurrent data/Polity work is a separate acceptance surface.
 
 ## 6. Final decision and work-unit boundary
 
