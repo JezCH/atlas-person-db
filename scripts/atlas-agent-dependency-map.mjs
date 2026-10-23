@@ -70,9 +70,9 @@ export function relativeSpecifiers(source){
       if(!/\b(?:import|export)\b/.test(prefix))continue;
     }
     let j=i+token.length;
-    while(/\s/.test(mask[j]||'!'))j++;
+    while(/\s/.test(source[j]||'!'))j++;
     if(token!=='from'){
-      if(mask[j]==='(')j++;
+      if(source[j]==='(')j++;
       else if(token==='require')continue;
     }
     const found=literal(source,j);
