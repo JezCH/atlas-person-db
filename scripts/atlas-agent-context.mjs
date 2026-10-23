@@ -10,6 +10,9 @@ const SKILL_TAGS = {
   'atlas-code-intelligence': /./,
   'atlas-polity-identity': /polity|political|retire|tombstone|identity|uuid|정치체|퇴역|동일성/i,
   'atlas-experience-reuse': /fix|regress|bug|error|failure|defect|test|root|year|수정|오류|재발/i,
+  'atlas-temporal-evidence': /activity|year|chronolog|period|reign|bce|ce|연대|연도|통치기간|시대/i,
+  'atlas-person-identity': /person|alias|identity|homonym|registration|인물|동명이인|별칭|등록/i,
+  'atlas-source-provenance': /source|provenance|evidence|citation|record|사료|출처|근거|출전/i,
 };
 function readText(file, maxBytes = 196608) {
   try {

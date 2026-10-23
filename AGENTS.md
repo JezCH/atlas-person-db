@@ -30,3 +30,7 @@ GitHub issue dispatch, tests, and status checks are not proof of an AI execution
 - For an exact code symbol or defect, first use `node scripts/atlas-agent-context.mjs --query 'symbol'` in the checkout; its file hits, imports and symbols are lexical hints, not final evidence. Read returned source before editing.
 - Load only a matching repository skill: `skills/atlas-code-intelligence/SKILL.md`, `skills/atlas-polity-identity/SKILL.md`, or `skills/atlas-experience-reuse/SKILL.md`. These supplement rather than override `WORK_EXECUTION.md`.
 - `agent-memory/lessons.v1.json` contains concise merged-fix precedents only. It is not a live task queue, evidence of current Production state, or permission to mutate. Do not start whole-repo scanning or new model calls just to populate memory.
+
+## Scoped capability expansion
+- For a specific module, run `node scripts/atlas-agent-dependency-map.mjs --path scripts/exact-file.mjs` to see static literal importers and candidate tests. This is not a JS call graph or Runtime/Supabase proof.
+- Select matching specialist skills only: `skills/atlas-temporal-evidence/SKILL.md`, `skills/atlas-person-identity/SKILL.md`, or `skills/atlas-source-provenance/SKILL.md`; they never authorize canonical writes.
