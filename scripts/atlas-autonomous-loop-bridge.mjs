@@ -111,6 +111,34 @@ export async function completePrFiles(pr,github){
   return out;
 }
 
+// The GitHub pull-list API does NOT include changed_files. Always re-read each
+// current open PR through GET /pulls/:number before bounding its file pages.
+// Compare list and detail identity/head to prevent stale or partial conflict
+// evidence from authorizing a model dispatch.
+export async function detailedOpenPulls(summaries,github){
+  if(!Array.isArray(summaries)||summaries.length>=100)
+    blocked('incomplete open PR list');
+  const seen=new Set(),full=[];
+  for(const summary of summaries){
+    if(!Number.isSafeInteger(summary?.number)||summary.number<1||
+      seen.has(summary.number)||summary.state!=='open'||
+      summary.base?.ref!=='main'||summary.base?.repo?.full_name!==REPOSITORY||
+      !SHA.test(summary.head?.sha??''))
+      blocked('invalid or changing PR list identity');
+    seen.add(summary.number);
+    const detail=await github('pulls/'+summary.number);
+    if(detail?.number!==summary.number||detail.state!=='open'||
+      detail.base?.ref!==summary.base.ref||
+      detail.base?.repo?.full_name!==REPOSITORY||
+      detail.head?.sha!==summary.head.sha||
+      !Number.isSafeInteger(detail.changed_files)||
+      detail.changed_files<0||detail.changed_files>300)
+      blocked('incomplete or changed PR detail');
+    full.push(detail);
+  }
+  return full;
+}
+
 export async function inspect({config,registry,github,now=Date.now(),expectedSha}={}){
   validateBridgeConfig(config);validateRegistry(registry);
   if(!config.enabled||!registry.enabled||!registry.tasks.some(t=>t.status==='approved'))
@@ -126,8 +154,9 @@ export async function inspect({config,registry,github,now=Date.now(),expectedSha
   if(!Array.isArray(issues)||!Array.isArray(pulls)||!Array.isArray(runs?.workflow_runs))
     blocked('GitHub inventory schema');
   if(issues.length>=100||pulls.length>=100)blocked('incomplete open inventory');
+  const detailedPulls=await detailedOpenPulls(pulls,github);
   const pathsByPr={};
-  for(const pr of pulls){
+  for(const pr of detailedPulls){
     pathsByPr[pr.number]=await completePrFiles(pr,github);
   }
   const approved=registry.tasks.filter(t=>t.status==='approved');
@@ -138,7 +167,7 @@ export async function inspect({config,registry,github,now=Date.now(),expectedSha
     if(await github('git/ref/heads/'+resultBranch(t.id)))resultBranches.push(resultBranch(t.id));
   }
   const budget=await github('git/ref/heads/codex/daily-attempt/'+new Date(now).toISOString().slice(0,10));
-  return decideBridge({config,registry,issues,pulls,pathsByPr,attempted,
+  return decideBridge({config,registry,issues,pulls:detailedPulls,pathsByPr,attempted,
     budgetUsed:!!budget,resultBranches,ciRuns:runs.workflow_runs,now});
 }
 export async function executeBridge({mode,config,registry,github,now=Date.now(),
