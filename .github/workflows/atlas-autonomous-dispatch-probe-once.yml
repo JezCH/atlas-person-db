@@ -1,0 +1,48 @@
+name: ATLAS V1 — One-shot Safe Actions Dispatch Probe
+# Proves Actions -> workflow_dispatch -> independent read-only preflight.
+# Triggers ONLY when this exact new workflow file is first added to main.
+# No Codex model route, PAT usage, registry changes, DB or Production access.
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/atlas-autonomous-dispatch-probe-once.yml
+
+permissions: {}
+
+jobs:
+  request-read-only-preflight:
+    if: >-
+      github.repository == 'JezCH/atlas-person-db' &&
+      github.ref == 'refs/heads/main' &&
+      github.run_attempt == 1 &&
+      contains(github.event.head_commit.added, '.github/workflows/atlas-autonomous-dispatch-probe-once.yml')
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - name: Request only the existing safe no-model preflight
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ github.token }}
+          script: |
+            const {owner,repo}=context.repo;
+            const sha=(await github.rest.repos.getBranch({owner,repo,branch:'main'})).data.commit.sha;
+            if(sha!==context.sha)throw Error('ATLAS_PROBE_BLOCKED: main moved');
+            const target='atlas-autonomous-pilot-preflight.yml';
+            const r=await github.rest.actions.createWorkflowDispatch({
+              owner,repo,workflow_id:target,ref:'main'
+            });
+            if(r.status!==204)throw Error('ATLAS_PROBE_BLOCKED: dispatch status '+r.status);
+            core.info(JSON.stringify({
+              status:'SAFE_PREFLIGHT_WORKFLOW_DISPATCH_ACCEPTED',
+              target,
+              main_sha:sha,
+              http_status:r.status,
+              model_dispatches:0,
+              model_calls:0,
+              purchased_credits:'NOT_ACCESSED',
+              note:'HTTP 204 proves GitHub request acceptance, not downstream success'
+            }));
