@@ -43,3 +43,12 @@ This closes **P0-C/P0-D for independent CI outcome classification and reporting*
 After the independent outcome workflow succeeds, a separate job with `issues:write` re-evaluates the **original GitHub CI run** using the same trusted `scripts/atlas-autonomous-outcome.mjs` verifier. It never trusts the prior job's artifact as authorization. Only a validated `CI_PASS_REVIEW_REQUIRED` result can create one idempotency-marked comment on the exact **still-open matching Draft PR**. The marker includes PR number, run ID and head SHA; existing comments are scanned boundedly before posting.
 
 The PR comment records the real Codex patch source, admitted base, CI run, and `REVIEW_DRAFT_NO_MODEL_RETRY`. A GitHub comment is a durable checkpoint beyond the 30-day artifact retention, but **does not** automatically approve or merge the PR, close an Issue, launch another model task or verify Production. Failed/unknown CI outcomes remain in the original workflow run summary and artifact, with the explicit stop decision. Next model-task selection remains under the separate approved-task registry and daily command budget.
+
+
+## V1 one-shot live admission preflight (HOLD; read-only)
+
+The default-branch workflow \`.github/workflows/atlas-autonomous-pilot-preflight.yml\` runs once upon introduction to \`main\`, with optional manual \`workflow_dispatch\` repeats. Its only GitHub capabilities are READ for contents, issues, PRs and Actions. It uses \`actions/github-script@v7\` and does not checkout/execute PR head source or send Codex comments.
+
+It verifies the existing \`enabled:false\` real task registry and \`dispatch_enabled:false\` switch, the exact unmerged \`hold\` task from Draft PR #2605, the immutable launcher Draft #2604, the still-open Issue #2603, all four snapshot Git blob SHAs, task expiry and unconsumed Git task/day/result refs, and all bounded open PR file inventories including the 129-file PR #2549. Unexpected or partial GitHub evidence blocks the check. Nothing is promoted from HOLD or dispatched.
+
+The configured presence of \`ATLAS_CODEX_TRIGGER_PAT\` is evaluated as a **boolean by GitHub Actions**; the secret itself is never passed to this script. Presence does **not** prove scope, GitHub App delivery, available included ChatGPT/Codex quota, or whether purchased credits would be consumed. A preflight PASS is **not** model execution, new paid API permission, Draft result PR success, or semantic approval. Actual model activation still requires a separately reviewed time-limited approval and externally checked cost/credit policy.
