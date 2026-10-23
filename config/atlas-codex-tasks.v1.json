@@ -44,6 +44,27 @@
       "not_before": "2026-10-20T12:00:00Z",
       "expires_at": "2026-10-21T12:00:00Z",
       "instructions": "Fix one real offline Baseline A intake defect only. crossCheckActivity currently coerces row.activity_start and row.activity_end with Number; Number(true) is 1, so Boolean true boundaries can pass the integer, nonzero and ordered chronology guard when the fixture digest is recomputed. In tests/stage2-baseline-a-intake.test.mjs add an explicit red/green regression for true/true Activity boundaries with a consistent recalculated digest, and in scripts/stage2-baseline-a-intake.mjs reject Boolean year input before coercion. Preserve valid BCE and CE integer years, existing year-zero rejection, digest/catalog/UUID guarantees and current accepted historic fixture semantics. Modify exactly this source and this test. Run node --test tests/stage2-baseline-a-intake.test.mjs and git diff --check, report BLOCKED on any uncertainty. No data writes, Production, Vercel, Sandbox, paid APIs, deployment, merge, retry or child agents. Patch V1 complete-file response only; Draft PR for independent review. The launcher is documentation-only and must not be merged. Provider-plan spend control remains unverified: DO NOT invoke unless zero new paid API/credit usage and intended one-command shared-plan policy have been checked externally. Finished: Codex patch received and validated; Draft PR #2579 created; ATLAS Integrity run #39427140872 SUCCESS. Original task and daily receipts are immutable; never reissue."
+    },
+    {
+      "id": "atlas-commented-imports-20261023",
+      "status": "hold",
+      "priority": 2,
+      "issue_number": 2603,
+      "launcher_pr": 2604,
+      "launcher_sha": "241a8859f125402256816e2238c4a1d4aca7b300",
+      "paths": [
+        "scripts/atlas-agent-dependency-map.mjs",
+        "tests/atlas-agent-dependency-map.test.mjs"
+      ],
+      "snapshot_paths": [
+        "scripts/atlas-agent-dependency-map.mjs",
+        "tests/atlas-agent-dependency-map.test.mjs",
+        "AGENTS.md",
+        "WORK_EXECUTION.md"
+      ],
+      "not_before": "2026-10-23T13:30:00Z",
+      "expires_at": "2026-10-24T13:30:00Z",
+      "instructions": "HOLD PENDING VERIFIED SHARED-PLAN ZERO-NEW-PAID-API/CREDIT USAGE AND EXPLICIT TASK ACTIVATION. Issue #2603. Fix only the reproducible static literal import-scanning defect in relativeSpecifiers: valid JavaScript admits comments between import/from/require( and the adjacent quoted relative specifier, but current scanner misses those edges. Add a failing then passing Node regression covering inline and line comments and ensure comments/strings cannot create phantom import edges. Preserve existing import, export-from, require and dynamic literal import cases and safe bounded read-only scanner behavior. Modify exactly scripts/atlas-agent-dependency-map.mjs and tests/atlas-agent-dependency-map.test.mjs. Run node --test tests/atlas-agent-dependency-map.test.mjs and git diff --check. Do not touch AGENTS/WORK_EXECUTION or snapshot files outside the two approved paths. No new dependencies, model retry, external network, credentials, Vercel, Sandbox, DB, Production, historical data edits, git merge or API billing. Return only one canonical ATLAS-CODEX-PATCH-V1 payload via existing one-shot relay; if uncertain return BLOCKED. Human review is required before merge."
     }
   ]
 }
