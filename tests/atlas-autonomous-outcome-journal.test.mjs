@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {journalMarker,journalBody,postJournal,githubWrite,classifyJournalFailure,journalFailureArtifact} from '../scripts/atlas-autonomous-outcome-journal.mjs';
+import {journalMarker,journalBody,postJournal,githubWrite,classifyJournalFailure,journalFailureArtifact,requireJournalWriter} from '../scripts/atlas-autonomous-outcome-journal.mjs';
 
 const SHA='a'.repeat(40);
 const report={status:'CI_PASS_REVIEW_REQUIRED',task_id:'atlas-fixture-unit',
@@ -125,4 +125,18 @@ test('P1 privileged POST adapter refuses unrelated targets or unsigned bodies',a
       async()=>{attempts++;return {status:201}}),/unexpected write endpoint/);
   }
   assert.equal(attempts,0);
+});
+
+test('P1 CLI preflight reports the real missing PAT category before any POST',()=>{
+  for(const candidate of [undefined,null,'','   ',0]){
+    let error;
+    try{requireJournalWriter(candidate)}catch(e){error=e}
+    assert.ok(error,'invalid writer must stop before GitHub');
+    const evidence=classifyJournalFailure(error);
+    assert.equal(evidence.failure_code,'JOURNAL_WRITE_TOKEN_MISSING');
+    assert.equal(evidence.recovery,'CONFIGURE_REVIEWED_JOURNAL_WRITER_THEN_REVERIFY_ORIGINAL_CI');
+    assert.equal(evidence.automatic_journal_retry,false);
+    assert.equal(evidence.automatic_model_retry,false);
+  }
+  assert.equal(requireJournalWriter('fixture-secret'),'fixture-secret');
 });
