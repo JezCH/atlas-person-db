@@ -1,0 +1,81 @@
+{
+  "schema": "atlas-civilwar-four-source-review/v1",
+  "reviewed_at": "2026-10-20",
+  "review_checkpoint": "https://github.com/JezCH/atlas-person-db/issues/1374#issuecomment-6270116498",
+  "production_access": false,
+  "executable": false,
+  "automatic_apply": false,
+  "registration_complete": false,
+  "existing_pr": "#2549 remains independent; no overlapping identities or paths",
+  "snapshot": {
+    "name": "atlas-persons-2026-10-18.xlsx",
+    "sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+    "rows": 2646,
+    "limitations": "Dated export, no UUID/full aliases. No exact match is NOT proof of current nonregistration."
+  },
+  "entries": [
+    {
+      "name_en": "Anton Denikin",
+      "name_ko": "안톤 데니킨",
+      "status": "NEEDS_PREFLIGHT",
+      "review_state": "APPROVED",
+      "manifest": "authoring/requests/civilwar-four-20261020-denikin.json",
+      "sha256": "4b6f546c8612e3213d719efa286b5d53c9b4affc641c9c2132c552952f1c488e",
+      "aliases": [
+        "Anton Ivanovich Denikin"
+      ],
+      "dated_export_matches": []
+    },
+    {
+      "name_en": "Alexander Kolchak",
+      "name_ko": "알렉산드르 콜차크",
+      "status": "NEEDS_PREFLIGHT",
+      "review_state": "APPROVED",
+      "manifest": "authoring/requests/civilwar-four-20261020-kolchak.json",
+      "sha256": "f0a3b09093fa2dfb4b1bcce859e79d0e773ca9e3994d320eef6f111184a2fb46",
+      "aliases": [
+        "Aleksandr Vasilyevich Kolchak",
+        "Aleksandr Kolchak"
+      ],
+      "dated_export_matches": []
+    },
+    {
+      "name_en": "Nikolai Yudenich",
+      "name_ko": "니콜라이 유데니치",
+      "status": "NEEDS_PREFLIGHT",
+      "review_state": "APPROVED",
+      "manifest": "authoring/requests/civilwar-four-20261020-yudenich.json",
+      "sha256": "93be194e6ed9b04868caae224c2e4a9e56af8ee5180afd8b8a6481de89330f4a",
+      "aliases": [
+        "Nikolay Yudenich",
+        "Nikolai Nikolayevich Yudenich"
+      ],
+      "dated_export_matches": []
+    },
+    {
+      "name_en": "Alexander Antonov",
+      "name_ko": "알렉산드르 안토노프",
+      "status": "NEEDS_PREFLIGHT",
+      "review_state": "APPROVED",
+      "manifest": "authoring/requests/civilwar-four-20261020-antonov.json",
+      "sha256": "5a88ea271ae706ec76ea27d1f6a9b302016da42ba2d2718c7f254d08ec23400d",
+      "aliases": [
+        "Aleksandr Stepanovich Antonov",
+        "Alexander Stepanovich Antonov"
+      ],
+      "dated_export_matches": []
+    }
+  ],
+  "remaining_gates": [
+    "Fresh canonical Person/alias/Activity identity checks",
+    "Resolve/reuse exact canonical Polity/Place identifiers; proposed labels do not authorize new Polities",
+    "Queue admission only through canonical DB writer after service recovery",
+    "Governed Apply then authoring/compiled runtime readback; do not merge/apply automatically"
+  ],
+  "validation": {
+    "manifest_validator": "4/4 passed",
+    "strict_prepare": "4/4 passed after Antonov primary relation correction; no DB calls",
+    "existing_focused_regression": "26/26 passed",
+    "production": "not accessed"
+  }
+}
