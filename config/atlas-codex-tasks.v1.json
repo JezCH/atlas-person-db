@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "enabled": true,
+  "enabled": false,
   "max_commands_per_utc_day": 1,
   "tasks": [
     {
@@ -47,7 +47,7 @@
     },
     {
       "id": "atlas-commented-imports-20261023",
-      "status": "approved",
+      "status": "closed",
       "priority": 2,
       "issue_number": 2603,
       "launcher_pr": 2604,
@@ -64,7 +64,7 @@
       ],
       "not_before": "2026-10-24T15:20:00Z",
       "expires_at": "2026-10-25T15:20:00Z",
-      "instructions": "ONE AUTHORIZED MODEL REQUEST ONLY; MAX UTC ONE COMMAND; ZERO AUTOMATIC RETRIES. EXISTING CHATGPT CODEX CONNECTOR ONLY; NO NEW API CONTRACT OR TOP-UP. Issue #2603. Fix only the reproducible static literal import-scanning defect in relativeSpecifiers: valid JavaScript admits comments between import/from/require( and the adjacent quoted relative specifier, but current scanner misses those edges. Add a failing then passing Node regression covering inline and line comments and ensure comments/strings cannot create phantom import edges. Preserve existing import, export-from, require and dynamic literal import cases and safe bounded read-only scanner behavior. Modify exactly scripts/atlas-agent-dependency-map.mjs and tests/atlas-agent-dependency-map.test.mjs. Run node --test tests/atlas-agent-dependency-map.test.mjs and git diff --check. Do not touch AGENTS/WORK_EXECUTION or snapshot files outside the two approved paths. No new dependencies, model retry, external network, credentials, Vercel, Sandbox, DB, Production, historical data edits, git merge or API billing. Return only one canonical ATLAS-CODEX-PATCH-V1 payload via existing one-shot relay; if uncertain return BLOCKED. Human review is required before merge."
+      "instructions": "ONE AUTHORIZED MODEL REQUEST ONLY; MAX UTC ONE COMMAND; ZERO AUTOMATIC RETRIES. EXISTING CHATGPT CODEX CONNECTOR ONLY; NO NEW API CONTRACT OR TOP-UP. Issue #2603. Fix only the reproducible static literal import-scanning defect in relativeSpecifiers: valid JavaScript admits comments between import/from/require( and the adjacent quoted relative specifier, but current scanner misses those edges. Add a failing then passing Node regression covering inline and line comments and ensure comments/strings cannot create phantom import edges. Preserve existing import, export-from, require and dynamic literal import cases and safe bounded read-only scanner behavior. Modify exactly scripts/atlas-agent-dependency-map.mjs and tests/atlas-agent-dependency-map.test.mjs. Run node --test tests/atlas-agent-dependency-map.test.mjs and git diff --check. Do not touch AGENTS/WORK_EXECUTION or snapshot files outside the two approved paths. No new dependencies, model retry, external network, credentials, Vercel, Sandbox, DB, Production, historical data edits, git merge or API billing. Return only one canonical ATLAS-CODEX-PATCH-V1 payload via existing one-shot relay; if uncertain return BLOCKED. Human review is required before merge.\nRESULT RECORDED: Codex App patch comment #6386059166; independent receiver #40107413687 SUCCESS; Draft result PR #2611 head 7c55723bfbd00287a516f240a572ac95772b7155; Integrity #40107456297 SUCCESS. One original model command #6386029595 consumed task/day refs. PR review required; NEVER REISSUE THIS TASK, NEVER AUTO MERGE. Outcome journal permission repair/replay tracked separately."
     }
   ]
 }

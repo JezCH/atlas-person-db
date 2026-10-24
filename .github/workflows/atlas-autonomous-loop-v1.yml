@@ -2,10 +2,6 @@ name: ATLAS Autonomous Loop V1 — Approved Selection Bridge
 # A bounded daily probe; all model execution remains OFF until both gates are
 # explicitly reviewed and enabled. Only a dispatch request uses Actions write.
 on:
-  push:
-    branches: [main]
-    paths:
-      - .github/workflows/atlas-autonomous-loop-v1.yml
   workflow_dispatch:
     inputs:
       mode:
@@ -27,9 +23,7 @@ jobs:
   select:
     if: >-
       github.repository == 'JezCH/atlas-person-db' &&
-      github.ref == 'refs/heads/main' && github.run_attempt == 1 &&
-      (github.event_name != 'push' ||
-       startsWith(github.event.head_commit.message, 'feat(agent): activate one-shot ATLAS V1 pilot #2603'))
+      github.ref == 'refs/heads/main' && github.run_attempt == 1
     runs-on: ubuntu-latest
     timeout-minutes: 4
     permissions:
@@ -58,9 +52,7 @@ jobs:
     needs: select
     if: >-
       needs.select.outputs.eligible == 'true' &&
-      (github.event_name == 'schedule' || inputs.mode == 'dispatch' ||
-       (github.event_name == 'push' &&
-        startsWith(github.event.head_commit.message, 'feat(agent): activate one-shot ATLAS V1 pilot #2603')))
+      (github.event_name == 'schedule' || inputs.mode == 'dispatch')
     runs-on: ubuntu-latest
     timeout-minutes: 4
     permissions:

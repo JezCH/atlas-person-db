@@ -52,7 +52,7 @@ export async function postJournal({outcome,github,post}={}){
   return {status:'RECORDED',pr_number:outcome.pr_number,
     ci_run_id:outcome.ci_run_id,next_action:'REVIEW_DRAFT_NO_MODEL_RETRY',model_calls:0};
 }
-async function githubWrite(endpoint,body,token,fetchImpl=globalThis.fetch){
+export async function githubWrite(endpoint,body,token,fetchImpl=globalThis.fetch){
   if(!token||typeof fetchImpl!=='function')block('GitHub authorizing token missing');
   const response=await fetchImpl(API+'/'+endpoint,{
     method:'POST',redirect:'error',headers:{
@@ -76,13 +76,15 @@ if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.ur
       process.env.GITHUB_REF!=='refs/heads/main'||
       process.env.GITHUB_RUN_ATTEMPT!=='1')block('untrusted workflow context');
     const token=process.env.GH_TOKEN;
-    if(!token)block('missing GitHub token');
+    const writer=process.env.JOURNAL_WRITE_TOKEN;
+    if(!token)block('missing read-only GitHub token');
+    if(!writer)block('missing independently scoped PR-journal writer token');
     const github=e=>githubRead(e,{token});
     const main=await github('branches/main');
     if(main?.commit?.sha!==checkoutSha())block('main moved during trusted checkout');
     const registry=JSON.parse(fs.readFileSync('config/atlas-codex-tasks.v1.json','utf8'));
     const outcome=await inspectRun({runId:Number(args[1]),registry,github});
     console.log(JSON.stringify(await postJournal({outcome,github,
-      post:(e,b)=>githubWrite(e,b,token)})));
+      post:(e,b)=>githubWrite(e,b,writer)})));
   })().catch(e=>{console.error(e.message);process.exitCode=1});
 }

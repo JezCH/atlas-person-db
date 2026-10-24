@@ -80,6 +80,9 @@ jobs:
       - name: Fresh independent re-verification and idempotent PR outcome journal
         env:
           GH_TOKEN: ${{ github.token }}
+          # This PAT was already authorized for Codex task comments + Draft PR creation.
+          # Only this trusted-main journal POST job receives it; GETs use github.token.
+          JOURNAL_WRITE_TOKEN: ${{ secrets.ATLAS_CODEX_TRIGGER_PAT }}
           CI_RUN_ID: ${{ github.event.workflow_run.id || inputs.run_id }}
         shell: bash
         run: |

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {journalMarker,journalBody,postJournal} from '../scripts/atlas-autonomous-outcome-journal.mjs';
+import {journalMarker,journalBody,postJournal,githubWrite} from '../scripts/atlas-autonomous-outcome-journal.mjs';
 
 const SHA='a'.repeat(40);
 const report={status:'CI_PASS_REVIEW_REQUIRED',task_id:'atlas-fixture-unit',
@@ -50,4 +50,20 @@ test('failed or irrelevant CI reports are never credentialed writes',async()=>{
     assert.equal((await postJournal({outcome:{...report,status},github:adapter,post:adapter})).status,'NOT_RECORDABLE');
   }
   assert.equal(api,0);
+});
+
+test('journal POST uses its own bounded writer token, accepts only 201, never retries denied writes',async()=>{
+  const requests=[];
+  const post=async(url,options)=>{requests.push({url,options});return {status:201}};
+  await githubWrite('issues/88/comments',{body:journalBody(report)},'fixture-writer',post);
+  assert.equal(requests.length,1);
+  assert.equal(requests[0].options.method,'POST');
+  assert.equal(requests[0].options.headers.Authorization,'Bearer fixture-writer');
+  assert.equal(requests[0].url,'https://api.github.com/repos/JezCH/atlas-person-db/issues/88/comments');
+  let denied=0;
+  await assert.rejects(()=>githubWrite('issues/88/comments',{body:'test'},'fixture-writer',
+    async()=>{denied++;return {status:403};}),/GitHub journal POST HTTP 403/);
+  assert.equal(denied,1,'no hidden retry after denied write');
+  await assert.rejects(()=>githubWrite('issues/88/comments',{body:'test'},'',post),/token missing/);
+  assert.equal(requests.length,1);
 });
