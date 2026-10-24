@@ -1,7 +1,7 @@
 {
   "version": 1,
   "enabled": true,
-  "dispatch_enabled": false,
+  "dispatch_enabled": true,
   "max_dispatches_per_utc_day": 1,
   "approval_source": "reviewed_task_registry_only"
 }
