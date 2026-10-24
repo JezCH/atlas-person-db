@@ -60,3 +60,13 @@ The configured presence of \`ATLAS_CODEX_TRIGGER_PAT\` is evaluated as a **boole
 - First independent outcome workflow #40107543662: readonly verification succeeded; **journal POST failed HTTP 403** with `github.token` despite job `issues:write`. No second model call is authorized or needed.
 - The journal writer now uses the existing `ATLAS_CODEX_TRIGGER_PAT` **only for the post-verified GitHub PR comment**, with `github.token` retained for all independent GETs. A single reviewed push-triggered replay requests `workflow_dispatch` of the original outcome workflow for **CI run #40107456297 only**, after validating the immutable CI head and open Draft PR #2611. The replay performs no Codex invocation.
 - Both model admission gates are disabled and the pilot task is marked closed before replay. Leave Draft PR #2611 review-required, never auto merge or claim Production. A subsequent journal comment must be independently verified before marking V1 completed.
+
+## P1 bounded journal failure classification and no-model recovery
+
+The first live Codex loop succeeded but its original post-CI evidence journal got GitHub HTTP 403, despite `issues:write`; a separate, reviewed PAT-based journal POST and exact-CI replay finished the checkpoint without calling Codex twice. That incident is classified as `JOURNAL_WRITER_PERMISSION_DENIED`, never as failed AI code.
+
+The trusted journal CLI now emits a small `atlas-journal-failure.json` evidence artifact and step summary when blocked. It distinguishes permission failures (401/403), missing writer credential, ambiguous POST state (409/422), unavailable GitHub/transport (429/5xx), and precondition/provenance failures. All classes explicitly set `automatic_model_retry=false` and `automatic_journal_retry=false`. Never include raw GitHub response bodies, PATs or arbitrary error messages in the published evidence.
+
+**Recovery is deliberately narrower than re-running development:** only a separately authorized replay of the exact completed Integrity CI run after rechecking the existing PR head, original Codex patch receipt, and comment idempotency marker. A remote POST timeout may already have succeeded; read back PR comments before any approved replay. A missing/invalid source patch or mismatched SHA blocks recovery. Never retry the original model command.
+
+The outcome workflow serializes concurrent automatic/manual observers by the immutable **CI run ID** and rechecks existing journal comments in the writer job. The 7-day failure artifact reports the stop reason; the pre-existing verified PR comment and 30-day original outcome artifact are the durable success evidence. No additional recurrent polling, paid API, Production mutation or automatic merge is introduced.
