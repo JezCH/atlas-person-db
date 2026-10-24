@@ -1,0 +1,73 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:yevhen-konovalets:oun-leadership-1929-1938:v1",
+  "person": {
+    "canonical_name_en": "Yevhen Konovalets",
+    "display_name_ko": "예우헨 코노발레츠",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-20",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Organization of Ukrainian Nationalists",
+    "display_name_ko": "우크라이나 민족주의자 조직(OUN)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Founding head of the Leadership of Ukrainian Nationalists (PUN) and first leader of the Organization of Ukrainian Nationalists (OUN)",
+    "role_display_name_ko": "우크라이나 민족주의자 조직(OUN) 초대 지도자·PUN 수장",
+    "start_year": 1929,
+    "start_month": 2,
+    "start_day": 3,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1938,
+    "end_month": 5,
+    "end_day": 23,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "notes": "The first OUN congress of 28 January–3 February 1929 elected Konovalets to lead the PUN; he remained leader until his assassination in Rotterdam on 23 May 1938. This concerns the original OUN, not the later post-1940 Bandera faction already registered separately in ATLAS. OUN was a radical Ukrainian nationalist political movement using clandestine and violent methods, not a sovereign Ukrainian state. Do not attribute later World War II acts after his death to him personally.",
+    "confidence": "well_established",
+    "chronology_status": "reviewed"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Organization of Ukrainian Nationalists — Encyclopedia of Ukraine",
+      "canonical_url": "https://www.encyclopediaofukraine.com/display.asp?linkpath=pages%5CO%5CR%5COrganizationofUkrainianNationalists.htm",
+      "citation_text": "First OUN founding congress in Vienna 28 January–3 February 1929 elected Yevhen Konovalets to lead the Leadership of Ukrainian Nationalists (PUN)."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Konovalets, Yevhen — Encyclopedia of Ukraine",
+      "canonical_url": "https://www.encyclopediaofukraine.com/pages/K/O/KonovaletsYevhen.htm",
+      "citation_text": "Confirms death on 23 May 1938, two Sich Riflemen command phases across the Hetmanate rupture, UVO underground leadership, and founding OUN chairmanship in 1929."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Коновалець, Євген Михайлович — Great Ukrainian Encyclopedia",
+      "canonical_url": "https://vue.gov.ua/%D0%9A%D0%BE%D0%BD%D0%BE%D0%B2%D0%B0%D0%BB%D0%B5%D1%86%D1%8C%2C_%D0%84%D0%B2%D0%B3%D0%B5%D0%BD_%D0%9C%D0%B8%D1%85%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2%D0%B8%D1%87",
+      "citation_text": "Biographical reference verifies 1891–1938 chronology, UPR military service, and OUN foundational leadership; distinguishes organization leadership from sovereign rule."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-20",
+      "document_title": "예우헨 코노발레츠",
+      "url": "https://namu.wiki/w/%EC%98%88%EC%9A%B0%ED%97%A8%20%EC%BD%94%EB%85%B8%EB%B0%9C%EB%A0%88%EC%B8%A0"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "OUN (1929–1938) was a cross-border Ukrainian nationalist organization with exiled leadership, not an independent sovereign state or one bounded territorial polity. No vetted canonical Place UUID or approved geometry resolved; spatial representation deferred explicitly. Do not reuse the later OUN-B faction UUID d1a74157-2c32-4a5d-8c67-955bed1dda68."
+  }
+}
