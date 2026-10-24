@@ -38,6 +38,10 @@ test('recognizes static imports and ignores comment and string decoys',()=>{
   assert.deepEqual(relativeSpecifiers(s).sort(),['./a.js','./b.mjs','./c.js','./d.cjs','./e.js'].sort());
   assert.equal(codeMask(s).length,s.length);
 });
+test('recognizes commented literal imports without creating phantom edges',()=>{
+  const s="import /* inline */ './a.js';\nimport {x} from /* inline */ './b.mjs';\nexport {y} from // line\n './c.js';\nconst x=require( /* inline */ './d.cjs');\nconst z=import(// line\n './e.js');\n// import /* decoy */ './bad.js'\n/* require(// decoy\n './bad2.js') */\nconst q=\"import /* decoy */ './bad3.js'\";\n";
+  assert.deepEqual(relativeSpecifiers(s).sort(),['./a.js','./b.mjs','./c.js','./d.cjs','./e.js'].sort());
+});
 test('rejects outside paths and excessive traversal depth',t=>{
   const {root}=fixture(t);
   for(const target of ['../escape','/etc/passwd','scripts/missing.mjs'])
