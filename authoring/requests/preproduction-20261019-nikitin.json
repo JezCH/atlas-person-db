@@ -1,0 +1,75 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:preproduction-20261019:nikitin:representative:v1",
+  "person": {
+    "canonical_name_en": "Afanasy Nikitin",
+    "display_name_ko": "아파나시 니키틴",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "exploration",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Bahmani Sultanate",
+    "display_name_ko": "바흐마니 술탄국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Merchant and traveller",
+    "role_display_name_ko": "상인·여행가",
+    "start_year": 1469,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1469,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Representative arrival/exploration in India conventionally dated 1469, approximate rather than a fabricated exact day or full journey interval. Southern Indian activity context; exact local political binding requires source/identity preflight. Tver was not yet annexed by Muscovy. Distinct from modern athletes named Nikitin. The 1469 conventional date is approximate and follows the Indian presidential historical account; scholarly departure chronology varies. Bahmani/Bidar location is independently reviewed through Karttunen, not inferred from modern India."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "President of India — 2015 Russia address recalling Nikitin’s 1469 India journey",
+      "canonical_url": "https://presidentofindia.nic.in/sites/default/files/sp080515_01_0.pdf",
+      "citation_text": "Representative arrival/exploration in India conventionally dated 1469, approximate rather than a fabricated exact day or full journey interval."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Klaus Karttunen — Persons of Indian Studies: Nikitin",
+      "canonical_url": "https://whowaswho-indology.info/4382/nikitin-afanasij/?print=print",
+      "citation_text": "Identifies the Russian traveller and his Bahmani-capital Bidar stay; explicitly preserves competing 1466/1469/1471 departure chronologies."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "아파나시 니키틴",
+      "url": "https://namu.wiki/w/%EC%95%84%ED%8C%8C%EB%82%98%EC%8B%9C%20%EB%8B%88%ED%82%A4%ED%8B%B4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Source-reviewed context only. No current canonical Person/alias/Activity/Polity/Place preflight permitted before Production. Resolve/reuse exact IDs and current reviewed external reference; no fabricated coordinates or new political entities."
+  },
+  "review_context": {
+    "registration_state": "NEEDS_PREFLIGHT",
+    "production_access": false,
+    "source_review_only": true,
+    "namuwiki_method": "Exact independent Person article reviewed in external-index or namu.moe mirror; origin fetch not claimed.",
+    "namuwiki_evidence_url": "https://namu.moe/w/%EC%95%84%ED%8C%8C%EB%82%98%EC%8B%9C%20%EB%8B%88%ED%82%A4%ED%8B%B4",
+    "apply_gate": "DRAFT DO NOT APPLY OR MERGE; fresh canonical duplicate/Polity preflight after recovery. Importance is not identity/chronology proof. No PHFC /36 completeness claim."
+  }
+}

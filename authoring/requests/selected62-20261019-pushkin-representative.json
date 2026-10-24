@@ -1,0 +1,77 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:selected62-20261019:pushkin:representative-literary-point:1833:v1",
+  "person": {
+    "canonical_name_en": "Alexander Pushkin",
+    "display_name_ko": "알렉산드르 푸시킨",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Russian Empire",
+    "display_name_ko": "러시아 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Poet and author of Eugene Onegin",
+    "role_display_name_ko": "시인·예브게니 오네긴 저자",
+    "start_year": 1833,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1833,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The 1833 first complete edition of Eugene Onegin is one representative literary publication point under the Russian Empire, not the beginning or end of Pushkin's career. Earlier serial publication 1825–1832 and the 1837 revision are contextual. The author Alexander Sergeyevich Pushkin (1799–1837) is distinct from his namesake son, later namesakes, the city, and the character Eugene Onegin; Tchaikovsky's later opera is not Pushkin's Activity. Saint Petersburg is the publication context; Russian cultural affiliation does not imply continuous residence throughout composition."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Metropolitan Opera — The Opera’s Plot and Creation: Eugene Onegin",
+      "canonical_url": "https://www.metopera.org/discover/education/educator-guides/eugene-onegin/the-operas-plot-and-creation/",
+      "citation_text": "Institutional educator guide distinguishes the 1825–1832 serial, first complete edition in 1833 and revision in 1837."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Metropolitan Opera — Pushkin Timeline",
+      "canonical_url": "https://www.metopera.org/discover/education/educator-guides/eugene-onegin/the-life-and-work-of-alexander-pushkin/",
+      "citation_text": "Institutional biography identifies the poet and documents his death in 1837."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "알렉산드르 푸시킨",
+      "url": "https://namu.wiki/w/%EC%95%8C%EB%A0%89%EC%82%B0%EB%93%9C%EB%A5%B4%20%ED%91%B8%EC%8B%9C%ED%82%A8"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "NEEDS_PREFLIGHT: source-reviewed historical locality, but no current Production Person/alias/Activity/Polity/Place UUID reads permitted during Vercel suspension. Reuse exact canonical identities after restoration; do not create regional surrogate Polities or coordinates."
+  },
+  "review_context": {
+    "task": "USER-SELECTED-62 / issue #2545",
+    "registration_state": "NEEDS_PREFLIGHT",
+    "draft_only": true,
+    "production_screen": "NOT_PERFORMED_THIS_UNIT_USER_PROHIBITED",
+    "review_scope": "Source-based identity, deceased status, independent NamuWiki title, representative Activity and historical context; no PHFC /36 score claimed.",
+    "namuwiki_evidence_method": "external indexed NamuWiki mirror, identity-specific content reviewed; canonical namu.wiki URL follows verified independent title; not a claim of direct origin fetch",
+    "namuwiki_evidence_url": "https://www.namu.moe/w/알렉산드르%20푸시킨",
+    "apply_gate": "DRAFT ONLY; no merge, Apply, DB write, compile, deployment or readback authorized in this unit. Fresh alias/semantic Activity/Polity preflight mandatory after restoration."
+  }
+}

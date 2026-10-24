@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-cultural20-20261019:monet:1874:v1",
+  "person": {
+    "canonical_name_en": "Claude Monet",
+    "display_name_ko": "클로드 모네",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "France",
+    "display_name_ko": "프랑스",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Painter and co-founder of Impressionism",
+    "role_display_name_ko": "화가·인상주의 선구자",
+    "start_year": 1874,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1874,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative historical PERSON-SPECIFIC milestone point (not a claim of a single year of career). 1874 first Impressionist group exhibition in Paris, named after Monet's Impression, Sunrise (painted 1872). The point records influence in France during the Third Republic; it is not a claim that his entire oeuvre was produced only in 1874."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "The Metropolitan Museum of Art — Claude Monet (1840–1926)",
+      "canonical_url": "https://www.metmuseum.org/essays/claude-monet-1840-1926",
+      "citation_text": "Met biographical essay identifies Claude Monet as an Impressionism pioneer and documents his exhibited painting Impression, Sunrise and 1874 exhibition."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "클로드 모네",
+      "url": "https://namu.wiki/w/%ED%81%B4%EB%A1%9C%EB%93%9C%20%EB%AA%A8%EB%84%A4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Historical cultural/science activity period and source reviewed. Exact current Production Person, alias, Polity and Person→PlaceFunction IDs UNKNOWN due user-confirmed Vercel 402 pause; must reuse current exact matching canonical IDs on writer preflight, not create any substitute modern state, duplicate entity or fabricated coordinate. Existing reviewed user CORE40 queue id user-core40-20261004-monet is reused; no duplicate queue entry."
+  }
+}

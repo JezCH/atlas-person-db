@@ -1,0 +1,77 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:selected62-20261019:milton:representative-literary-point:1667:v1",
+  "person": {
+    "canonical_name_en": "John Milton",
+    "display_name_ko": "존 밀턴",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of England",
+    "display_name_ko": "잉글랜드 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Poet and author of Paradise Lost",
+    "role_display_name_ko": "시인·실낙원 저자",
+    "start_year": 1667,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1667,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "London publication of Paradise Lost in 1667 is one representative literary milestone, not a claim that the whole poem was composed in one year. The 1674 revision and 1671 Paradise Regained / Samson Agonistes remain contextual, not separate rails. The event belongs to Restoration England, not the Commonwealth or post-1707 Great Britain. This is the English poet (1608–1674), not the Florida governor John Milton (1807–1865)."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Poetry Foundation — John Milton",
+      "canonical_url": "https://www.poetryfoundation.org/poets/john-milton",
+      "citation_text": "Biographical account identifies the English poet and the 1667 first publication and 1674 restructuring of Paradise Lost."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Poetry Foundation — Introduction to Paradise Lost",
+      "canonical_url": "https://www.poetryfoundation.org/articles/69378/introduction-to-paradise-lost",
+      "citation_text": "Editorial introduction dates the epic first publication to 1667 and distinguishes the subsequent 1674 edition."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "존 밀턴",
+      "url": "https://namu.wiki/w/%EC%A1%B4%20%EB%B0%80%ED%84%B4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "NEEDS_PREFLIGHT: source-reviewed historical locality, but no current Production Person/alias/Activity/Polity/Place UUID reads permitted during Vercel suspension. Reuse exact canonical identities after restoration; do not create regional surrogate Polities or coordinates."
+  },
+  "review_context": {
+    "task": "USER-SELECTED-62 / issue #2545",
+    "registration_state": "NEEDS_PREFLIGHT",
+    "draft_only": true,
+    "production_screen": "NOT_PERFORMED_THIS_UNIT_USER_PROHIBITED",
+    "review_scope": "Source-based identity, deceased status, independent NamuWiki title, representative Activity and historical context; no PHFC /36 score claimed.",
+    "namuwiki_evidence_method": "external indexed NamuWiki mirror, identity-specific content reviewed; canonical namu.wiki URL follows verified independent title; not a claim of direct origin fetch",
+    "namuwiki_evidence_url": "https://www.namu.moe/w/존%20밀턴",
+    "apply_gate": "DRAFT ONLY; no merge, Apply, DB write, compile, deployment or readback authorized in this unit. Fresh alias/semantic Activity/Polity preflight mandatory after restoration."
+  }
+}

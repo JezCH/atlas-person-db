@@ -1,0 +1,77 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:selected62-20261019:ferdowsi:representative-literary-point:1010:v1",
+  "person": {
+    "canonical_name_en": "Ferdowsi",
+    "display_name_ko": "페르도우시",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Ghaznavid Empire",
+    "display_name_ko": "가즈나 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Persian poet and author of the Shahnameh",
+    "role_display_name_ko": "페르시아 시인·샤나메 저자",
+    "start_year": 1010,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1010,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The documented 1010 completion of the Shahnameh is one representative event in the poet's Tus/Khorasan context under Ghaznavid rule. It is not the start of composition, an assertion of continuous Ghazna court employment, or the first 994 version under the earlier Samanid context. Iranica distinguishes the 994 first version, 1010 completion and possible later revision. The historical poet Ferdowsi/Firdawsi is not the mythical kings described in his epic; his uncertain personal name is not invented as a canonical identity. The gift arriving during his funeral and other anecdotes are not verified Activities. Competing death years 1020/1025 are left out of the Activity. Exact canonical Ghaznavid identity and spatial placement remain preflight gates."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Encyclopaedia Iranica — FERDOWSI i. Life",
+      "canonical_url": "https://www.iranicaonline.org/articles/ferdowsi-i/",
+      "citation_text": "Jalal Khaleghi-Motlagh distinguishes the first version in 994 from the 1010 completion; discusses Tus, Mahmud and his governor of Tus, and unresolved death dates."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Library of Congress — The Epic of Shahnameh",
+      "canonical_url": "https://wwws.loc.gov/exhibits/thousand-years-of-the-persian-book/epic-of-shahnameh.html",
+      "citation_text": "Library exhibition dates the poem’s first appearance to 1010 and distinguishes the historical poet from its epic kings."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "페르도우시",
+      "url": "https://namu.wiki/w/%ED%8E%98%EB%A5%B4%EB%8F%84%EC%9A%B0%EC%8B%9C"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "NEEDS_PREFLIGHT: source-reviewed historical locality, but no current Production Person/alias/Activity/Polity/Place UUID reads permitted during Vercel suspension. Reuse exact canonical identities after restoration; do not create regional surrogate Polities or coordinates."
+  },
+  "review_context": {
+    "task": "USER-SELECTED-62 / issue #2545",
+    "registration_state": "NEEDS_PREFLIGHT",
+    "draft_only": true,
+    "production_screen": "NOT_PERFORMED_THIS_UNIT_USER_PROHIBITED",
+    "review_scope": "Source-based identity, deceased status, independent NamuWiki title, representative Activity and historical context; no PHFC /36 score claimed.",
+    "namuwiki_evidence_method": "external indexed NamuWiki mirror, identity-specific content reviewed; canonical namu.wiki URL follows verified independent title; not a claim of direct origin fetch",
+    "namuwiki_evidence_url": "https://m.namu.moe/w/페르도우시",
+    "apply_gate": "DRAFT ONLY; no merge, Apply, DB write, compile, deployment or readback authorized in this unit. Fresh alias/semantic Activity/Polity preflight mandatory after restoration."
+  }
+}

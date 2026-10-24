@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-cultural20-20261019:cezanne:1895:v1",
+  "person": {
+    "canonical_name_en": "Paul Cézanne",
+    "display_name_ko": "폴 세잔",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "France",
+    "display_name_ko": "프랑스",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Post-Impressionist painter",
+    "role_display_name_ko": "후기인상주의 화가",
+    "start_year": 1895,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1895,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative historical PERSON-SPECIFIC milestone point (not a claim of a single year of career). Paris dealer Ambroise Vollard mounted Cézanne's first major solo exhibition in 1895; source-attested representative art reception, not a personal migration to Paris or an invented lifelong 1895 artwork interval."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "The Metropolitan Museum of Art — Paul Cézanne (1839–1906)",
+      "canonical_url": "https://www.metmuseum.org/essays/paul-cezanne-1839-1906",
+      "citation_text": "Met curatorial essay identifies Cézanne's influence and the important 1895 Vollard exhibition."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "폴 세잔",
+      "url": "https://namu.wiki/w/%ED%8F%B4%20%EC%84%B8%EC%9E%94"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Historical cultural/science activity period and source reviewed. Exact current Production Person, alias, Polity and Person→PlaceFunction IDs UNKNOWN due user-confirmed Vercel 402 pause; must reuse current exact matching canonical IDs on writer preflight, not create any substitute modern state, duplicate entity or fabricated coordinate. Existing reviewed user CORE40 queue id user-core40-20261004-cezanne is reused; no duplicate queue entry."
+  }
+}

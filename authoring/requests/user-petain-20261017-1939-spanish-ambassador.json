@@ -1,0 +1,67 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-petain-20261017:1939-spanish-ambassador:v1",
+  "person": {
+    "canonical_name_en": "Philippe Pétain",
+    "display_name_ko": "필리프 페탱",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-17",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "French Republic",
+    "display_name_ko": "프랑스 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "French ambassador to Spain",
+    "role_display_name_ko": "주스페인 프랑스 대사",
+    "start_year": 1939,
+    "start_month": 3,
+    "start_day": 2,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1940,
+    "end_month": 5,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Appointed ambassador to Franco Spain on 2 March 1939; remained until recalled to join Reynaud cabinet on 18 May 1940. May 1940 end is source-level month granularity without an invented exact termination day; concurrent transition to Deputy PM on 18 May. Activity domain emphasis: governance."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Michel Catala (1997), L'ambassade espagnole de Pétain (mars 1939–mai 1940), Vingtième Siècle",
+      "canonical_url": "https://www.persee.fr/doc/xxs_0294-1759_1997_num_55_1_3661",
+      "citation_text": "Archival historical scholarship dates Pétain's Madrid ambassador appointment to 2 March 1939; position ended upon recall to Reynaud government May 1940."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "French Ministry of Armed Forces — Philippe Pétain",
+      "canonical_url": "https://www.defense.gouv.fr/chemins-memoire/histoire-memoires/personnalites/personnalites-lettre-n-lettre-w/philippe-petain",
+      "citation_text": "French official life chronology gives 23 Jan 1920 High War Council appointment, 1925 Rif deployment, 2 March 1939 Spain ambassador, and May 1940 government."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-17",
+      "document_title": "필리프 페탱",
+      "url": "https://namu.wiki/w/%ED%95%84%EB%A6%AC%ED%94%84%20%ED%8E%98%ED%83%B1"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Source-reviewed historical France context only. Bounded exact Production Person and France/French Republic Polity identity preflight, and Vichy regime Context linkage, are blocked by Vercel Hobby HTTP 402. Existing France umbrella historical UUID 1eaa48b6-dc60-49d6-91c4-49db556f4ddf / juridically continuous French Republic UUID b138f5e4-ff83-40f6-bdb1-83b08c0256cb sourced by Production-verified P2-01F; no invented PlaceFunction/coordinates, no artificial new sovereign Vichy."
+  }
+}

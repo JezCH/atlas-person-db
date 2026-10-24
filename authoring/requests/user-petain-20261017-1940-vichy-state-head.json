@@ -1,0 +1,73 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-petain-20261017:1940-vichy-state-head:v1",
+  "person": {
+    "canonical_name_en": "Philippe Pétain",
+    "display_name_ko": "필리프 페탱",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-17",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "France",
+    "display_name_ko": "프랑스",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Chef de l'État français (Vichy de facto state head)",
+    "role_display_name_ko": "비시 정권 프랑스국 국가원수",
+    "start_year": 1940,
+    "start_month": 7,
+    "start_day": 11,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1944,
+    "end_month": 8,
+    "end_day": 20,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "11 July 1940 began exercising de facto État français state-head authority via constitutional acts, not on July 10 Assembly vote. Ceased to exercise effective functions on 20 Aug 1944. Existing Vichy governing_regime Context be34df5e-f43f-4645-bf04-1aaf4b213867 / period 2e71211b-94e2-405e-82d9-88394f2f8bad is already anchored on France umbrella Polity UUID 1eaa48b6-dc60-49d6-91c4-49db556f4ddf. No new sovereign Vichy Polity. Nominal later dates in September not effective territorial authority. Collaboration, anti-Jewish laws, persecution and postwar 1945 treason conviction should be represented in Person historical narrative, not as honorary governance. Activity domain emphasis: governance."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Archontology — Henri-Philippe-Bénoni-Omer-Joseph Pétain",
+      "canonical_url": "https://www.archontology.org/nations/france/france_vichy1/petain.php",
+      "citation_text": "Individual office chronology: minister of war 9 Feb–8 Nov 1934, 1–4 June 1935 minister of state, deputy PM 18 May–16 June, PM from 16 June 1940 until 18 April 1942, de facto state head 11 Jul 1940–20 Aug 1944."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "French Ministry of Armed Forces — 20 August 1944 end of Vichy regime",
+      "canonical_url": "https://www.cheminsdememoire.gouv.fr/fr/1944-08-20-fin-du-regime-de-vichy",
+      "citation_text": "French official calendar records 20 August 1944 end of Vichy de facto regime, not nominal September office dates."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Légifrance — Ordinance 9 August 1944 Article 7",
+      "canonical_url": "https://www.legifrance.gouv.fr/loda/article_lc/LEGIARTI000006530181",
+      "citation_text": "Defines Vichy as de facto authority, not legally continuous Republic; Article 1 asserts juridical continuity of French Republic."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-17",
+      "document_title": "필리프 페탱",
+      "url": "https://namu.wiki/w/%ED%95%84%EB%A6%AC%ED%94%84%20%ED%8E%98%ED%83%B1"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Source-reviewed historical France context only. Bounded exact Production Person and France/French Republic Polity identity preflight, and Vichy regime Context linkage, are blocked by Vercel Hobby HTTP 402. Existing France umbrella historical UUID 1eaa48b6-dc60-49d6-91c4-49db556f4ddf / juridically continuous French Republic UUID b138f5e4-ff83-40f6-bdb1-83b08c0256cb sourced by Production-verified P2-01F; no invented PlaceFunction/coordinates, no artificial new sovereign Vichy."
+  }
+}

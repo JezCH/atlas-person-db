@@ -1,0 +1,1034 @@
+{
+  "schema": "atlas-preproduction-request-inventory/v1",
+  "reviewed_at": "2026-10-19",
+  "executable": false,
+  "automatic_apply": false,
+  "counts": {
+    "files": 125,
+    "timeline_requests": 124,
+    "person_only_requests": 1,
+    "new_person_candidate_identities": 94,
+    "existing_person_active_activity_repair_identities": 1,
+    "existing_person_archived_activity_repair_identities": 1
+  },
+  "supersedes_draft_prs": [
+    2512,
+    2517,
+    2526,
+    2528,
+    2543,
+    2544,
+    2546,
+    2548
+  ],
+  "authoritative_draft_pr": 2549,
+  "gates": [
+    "No live DB absence or READY certificate",
+    "Re-read canonical Person aliases and semantic Activities before any writes",
+    "Exact historical Polity and reviewed NamuWiki reuse",
+    "Reuse immutable request IDs and candidate IDs",
+    "Apply only authoritative READY, compile and verify separately"
+  ],
+  "items": [
+    {
+      "path": "authoring/requests/cultural20-20261019-brahms-1876.json",
+      "request_id": "authoring:user-selected-cultural20-20261019:additional-brahms:1876:v1",
+      "name_en": "Johannes Brahms",
+      "sha256": "9688d8713959aeb23c2fab32df789e074b4736cc523cd6a9c0424380aff9f413",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/cultural20-20261019-cezanne-1895.json",
+      "request_id": "authoring:user-selected-cultural20-20261019:cezanne:1895:v1",
+      "name_en": "Paul Cézanne",
+      "sha256": "21a51a726fbf0071691a280fa0f618b283481d839d4d6c61561ab4f528a54325",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/cultural20-20261019-chopin-1832.json",
+      "request_id": "authoring:user-selected-cultural20-20261019:chopin:1832:v1",
+      "name_en": "Frédéric Chopin",
+      "sha256": "354ad25b4e74e89236e5bde856ea25558a3f435390c47efb9aab2fa934527707",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/cultural20-20261019-debussy-1894.json",
+      "request_id": "authoring:user-selected-cultural20-20261019:debussy:1894:v1",
+      "name_en": "Claude Debussy",
+      "sha256": "2cfe5865a87adf0b8cbaa1957f63e2bb3281b6835ddf04716476e5609a3e7661",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/cultural20-20261019-goya-1799.json",
+      "request_id": "authoring:user-selected-cultural20-20261019:additional-goya:1799:v1",
+      "name_en": "Francisco Goya",
+      "sha256": "1f990aa4b5f61b43fa6229864b6abcdd688f6ed6bdedb7ffd12e25c649cc66c9",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/cultural20-20261019-handel-1741.json",
+      "request_id": "authoring:user-selected-cultural20-20261019:handel:1741:v1",
+      "name_en": "George Frideric Handel",
+      "sha256": "acd43dfe14155542a530c5fcb50fa2a022f91eb4be1449be6890a5ed1275ecc8",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/cultural20-20261019-haydn-1798.json",
+      "request_id": "authoring:user-selected-cultural20-20261019:additional-haydn:1798:v1",
+      "name_en": "Joseph Haydn",
+      "sha256": "671ae849160cc17624224f73b87f2df0a5b60c245720d80d8d971f32fa737bf7",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/cultural20-20261019-hilbert-1899.json",
+      "request_id": "authoring:user-selected-cultural20-20261019:additional-hilbert:1899:v1",
+      "name_en": "David Hilbert",
+      "sha256": "25382aa600ac602a9d65f0206d0c411676829f7904c8b3b5763232cd454f3a05",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/cultural20-20261019-hokusai-1831.json",
+      "request_id": "authoring:user-selected-cultural20-20261019:hokusai:1831:v1",
+      "name_en": "Katsushika Hokusai",
+      "sha256": "abd40e09d80859f450f3c1fb51db4fe0e1f5d6f1388dc5925bc91cf5ad0769d1",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/cultural20-20261019-joyce-1922.json",
+      "request_id": "authoring:user-selected-cultural20-20261019:additional-joyce:1922:v1",
+      "name_en": "James Joyce",
+      "sha256": "82a6f212b4f5aa7993b40d2d37ecf05a9af473a42eb4cf9db8f4484a143716d1",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/cultural20-20261019-monet-1874.json",
+      "request_id": "authoring:user-selected-cultural20-20261019:monet:1874:v1",
+      "name_en": "Claude Monet",
+      "sha256": "58c0aae84a7263e41fec5d4a5fcd7e58bfb0c8bc8283d710d548962c5def392d",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/cultural20-20261019-rembrandt-1642.json",
+      "request_id": "authoring:user-selected-cultural20-20261019:rembrandt:1642:v1",
+      "name_en": "Rembrandt van Rijn",
+      "sha256": "6fc921b4e4a0c2725b847e789d60eaea70695904ce1eab696807918854d3cc7d",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/cultural20-20261019-riemann-1854.json",
+      "request_id": "authoring:user-selected-cultural20-20261019:additional-riemann:1854:v1",
+      "name_en": "Bernhard Riemann",
+      "sha256": "6e496ffb39134c0c6fe5fa9732213fc73a0edfb8dd3d354b2bbc401a5b6553d4",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/cultural20-20261019-schubert-1827.json",
+      "request_id": "authoring:user-selected-cultural20-20261019:additional-schubert:1827:v1",
+      "name_en": "Franz Schubert",
+      "sha256": "9c58d97adcda85f63e59675e7896a258f2d45c0d852b223d7e3dbee28dc4ebed",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/cultural20-20261019-spinoza-1670.json",
+      "request_id": "authoring:user-selected-cultural20-20261019:spinoza:1670:v1",
+      "name_en": "Baruch Spinoza",
+      "sha256": "3f477eba5f7d34e0e9611100a471e0840fcae60caa01d7bcc016c52c76dcd8fe",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/cultural20-20261019-stravinsky-1913.json",
+      "request_id": "authoring:user-selected-cultural20-20261019:stravinsky:1913:v1",
+      "name_en": "Igor Stravinsky",
+      "sha256": "e1e6eef553782f4ca8454bff57379c51e9367c2222183e0e9146fd2b77a63aba",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/cultural20-20261019-tchaikovsky-1892.json",
+      "request_id": "authoring:user-selected-cultural20-20261019:tchaikovsky:1892:v1",
+      "name_en": "Pyotr Ilyich Tchaikovsky",
+      "sha256": "41d5b6c466bc4d545c1f6942e5e93f7fa93facd70718393a0cf408f2ca0ef99f",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/cultural20-20261019-velazquez-1656.json",
+      "request_id": "authoring:user-selected-cultural20-20261019:additional-velazquez:1656:v1",
+      "name_en": "Diego Velázquez",
+      "sha256": "65a60968611c908de0a234f83c4a1537cae67a537a208dfef78752812bb9a860",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/cultural20-20261019-verdi-1874.json",
+      "request_id": "authoring:user-selected-cultural20-20261019:additional-verdi:1874:v1",
+      "name_en": "Giuseppe Verdi",
+      "sha256": "76101820294f976b466beda4cf263f302f2ebd32fa49cd35bad880b85e2f8801",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/goiswintha-visigothic-athanagild-widow-567-20261012.json",
+      "request_id": "authoring:goiswintha:visigothic-athanagild-consort:567-point:20261012:v1",
+      "name_en": "Goiswintha",
+      "sha256": "1d36158c31704b4500dedc4af8163bc40cc00806bba3ef3fb85f7b12811ed028",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/goiswintha-visigothic-liuvigild-consort-569-586-20261012.json",
+      "request_id": "authoring:goiswintha:visigothic-liuvigild-queen-consort:569-586:20261012:v1",
+      "name_en": "Goiswintha",
+      "sha256": "b8e61de92526b91ed91ba0e05888c6ae8e794e9e4f3d29affbe36c28a22c571c",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/goiswintha-visigothic-reccared-court-589-20261012.json",
+      "request_id": "authoring:goiswintha:visigothic-reccared-court-opposition:589-point:20261012:v1",
+      "name_en": "Goiswintha",
+      "sha256": "3ea75c8e76e731b61b664f1e04a00d462f0694f8665d6c93d6b7fd194a49f6cf",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/preproduction-20261019-al-hakam-ii.json",
+      "request_id": "authoring:preproduction-20261019:al-hakam-ii:representative:v1",
+      "name_en": "Al-Hakam II",
+      "sha256": "a55a0ca07a02acbf6419807ca5942c8e8c4b20e308a47954a267feb1a652fec8",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/preproduction-20261019-doria.json",
+      "request_id": "authoring:preproduction-20261019:doria:representative:v1",
+      "name_en": "Andrea Doria",
+      "sha256": "09efcaa8ddc5fa583e149ed9d5099e3bfcc2524d7216e2a8318a87ac8040cf42",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/preproduction-20261019-erasmus.json",
+      "request_id": "authoring:preproduction-20261019:erasmus:representative:v1",
+      "name_en": "Desiderius Erasmus",
+      "sha256": "35559e3b72ab8350e917d0cbac994a6be2c382a9d5fe2fee628d5cd1a207c5e0",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/preproduction-20261019-faberge.json",
+      "request_id": "authoring:preproduction-20261019:faberge:representative:v1",
+      "name_en": "Peter Carl Fabergé",
+      "sha256": "7db1ce93561091eb568ac3b4253bb5d0455e77f9ab1a78b7b58639fe435c4ea5",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/preproduction-20261019-hamilton.json",
+      "request_id": "authoring:preproduction-20261019:hamilton:representative:v1",
+      "name_en": "Alexander Hamilton",
+      "sha256": "c07c41543db1872224ac50f5b6d9d87c161fd8780a9f09356b88dfca5a07e512",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/preproduction-20261019-howard.json",
+      "request_id": "authoring:preproduction-20261019:howard:representative:v1",
+      "name_en": "Robert E. Howard",
+      "sha256": "c6abf73a5e0954da1c24d7387ea9cda1bcab9814775a46e1b76cdbfbbe1cecad",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/preproduction-20261019-hugues.json",
+      "request_id": "authoring:preproduction-20261019:hugues:representative:v1",
+      "name_en": "Hugues de Payens",
+      "sha256": "0be80937a6ce66edf30b1b181d8f31d1f8f108ad8a825f4147277a33876ba88d",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/preproduction-20261019-lawrence.json",
+      "request_id": "authoring:preproduction-20261019:lawrence:representative:v1",
+      "name_en": "T. E. Lawrence",
+      "sha256": "ba31f0a6b10cb75d1b749092ef31a23ac6479a87d498a46ee1fc2407fa9ec382",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/preproduction-20261019-lovecraft.json",
+      "request_id": "authoring:preproduction-20261019:lovecraft:representative:v1",
+      "name_en": "H. P. Lovecraft",
+      "sha256": "f249c1a92ec32948611993160c099cd9ac03dece7f71893179f4d790c084962a",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/preproduction-20261019-mitchell.json",
+      "request_id": "authoring:preproduction-20261019:mitchell:representative:v1",
+      "name_en": "Billy Mitchell",
+      "sha256": "00d3c66d3c79440a580327baac101dc3dc2664673657946c0daad759d763640b",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/preproduction-20261019-nikitin.json",
+      "request_id": "authoring:preproduction-20261019:nikitin:representative:v1",
+      "name_en": "Afanasy Nikitin",
+      "sha256": "300c92393513fb5854be025a4564ba68cfb9a5ffa44e68e5518771bb326d36b4",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/preproduction-20261019-sakharov.json",
+      "request_id": "authoring:preproduction-20261019:sakharov:representative:v1",
+      "name_en": "Andrei Sakharov",
+      "sha256": "b0e2ecd34a07808c84782657ab0fb8718d707051362ce2bc2cfbf49c291afd6c",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/preproduction-20261019-santos-dumont.json",
+      "request_id": "authoring:preproduction-20261019:santos-dumont:representative:v1",
+      "name_en": "Alberto Santos-Dumont",
+      "sha256": "48358c27b2b2a6fb2c09590a386b299c0c8ca7f4f25b90547eca937a8851ceee",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/preproduction-20261019-schuman.json",
+      "request_id": "authoring:preproduction-20261019:schuman:representative:v1",
+      "name_en": "Robert Schuman",
+      "sha256": "f2114fdef1b25a3e0d6ec0d118eea46557c1e17012c023e3ba50a216392146ed",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/preproduction-20261019-shibusawa.json",
+      "request_id": "authoring:preproduction-20261019:shibusawa:representative:v1",
+      "name_en": "Shibusawa Eiichi",
+      "sha256": "c414716f3ff291aaec6cf1c3e54e3e0dca2495a86301084af6e3b046df2eb374",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/preproduction-20261019-ungern.json",
+      "request_id": "authoring:preproduction-20261019:ungern:representative:v1",
+      "name_en": "Roman von Ungern-Sternberg",
+      "sha256": "389a1d94a72cbe1e46bf8353af949089189366ffeffe2a6682b05cf6290898d9",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/preproduction-20261019-vauban.json",
+      "request_id": "authoring:preproduction-20261019:vauban:representative:v1",
+      "name_en": "Sébastien Le Prestre de Vauban",
+      "sha256": "2b5defa585cbf9f28aef6d1d465f13e1df7467bd5b1b1f9231b7d65f07cb6f19",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/preproduction-20261019-zolkiewski.json",
+      "request_id": "authoring:preproduction-20261019:zolkiewski:representative:v1",
+      "name_en": "Stanisław Żółkiewski",
+      "sha256": "cb53a6ea61ddf9fb2b95dfaaba39d8793d7e5fdef7a49ed79bbe4ba1f951bb25",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-20261019-aeschylus-representative.json",
+      "request_id": "authoring:selected62-20261019:aeschylus:representative-literary-point:-458:v1",
+      "name_en": "Aeschylus",
+      "sha256": "c2eae7bd4f1ccca2e3892ce5d85ad03a41882c2cbf4149c5d5e4a13bd011fb14",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-20261019-euripides-representative.json",
+      "request_id": "authoring:selected62-20261019:euripides:representative-literary-point:-431:v1",
+      "name_en": "Euripides",
+      "sha256": "e915bff2a26af59464fff318114482b182fec8941e335ce3dcd310d45cdc054e",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-20261019-ferdowsi-representative.json",
+      "request_id": "authoring:selected62-20261019:ferdowsi:representative-literary-point:1010:v1",
+      "name_en": "Ferdowsi",
+      "sha256": "0d2dc2ecb537bd6064f8548db2bec1c2f76c349723659dbdcca3d2fb9b6a9c27",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-20261019-milton-representative.json",
+      "request_id": "authoring:selected62-20261019:milton:representative-literary-point:1667:v1",
+      "name_en": "John Milton",
+      "sha256": "de0d4a225fb0733092286ee5f62d56ed87851bbaaea901c3e1643c45c91bc9f1",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-20261019-ovid-representative.json",
+      "request_id": "authoring:selected62-20261019:ovid:representative-literary-point:8:v1",
+      "name_en": "Ovid",
+      "sha256": "b067267e0f68f84081cd2d8a890e778c143290f941a010420d694e7eca4ed4c7",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-20261019-pushkin-representative.json",
+      "request_id": "authoring:selected62-20261019:pushkin:representative-literary-point:1833:v1",
+      "name_en": "Alexander Pushkin",
+      "sha256": "099d5ae2a1eecbf9cec2dd5690c16232c0c180904094caf143554d35f4478fc9",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-20261019-whitman-representative.json",
+      "request_id": "authoring:selected62-20261019:whitman:representative-literary-point:1855:v1",
+      "name_en": "Walt Whitman",
+      "sha256": "c1ca8ff30cf0584201e5555c628bbb4a6d8391ebd33b048fb9afb38a6791300d",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-remaining30-20261018-basho.json",
+      "request_id": "authoring:selected62-remaining30-20261018:basho:representative:v1",
+      "name_en": "Matsuo Basho",
+      "sha256": "68a64c93ba6abf45d133653a27fac5a57143442c6a0d17a1391c2cb248122d6b",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-remaining30-20261018-boltzmann.json",
+      "request_id": "authoring:selected62-remaining30-20261018:boltzmann:representative:v1",
+      "name_en": "Ludwig Boltzmann",
+      "sha256": "120e3c0c72ca204c42503b7eb739f5c921b2452a5f4a633e2c9f21675aca6185",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-remaining30-20261018-cantor.json",
+      "request_id": "authoring:selected62-remaining30-20261018:cantor:representative:v1",
+      "name_en": "Georg Cantor",
+      "sha256": "522dea0d38ecb2f3e037dbfac980149ad3ed0fe135e62d7f1a8c5260437026fc",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-remaining30-20261018-davis.json",
+      "request_id": "authoring:selected62-remaining30-20261018:davis:representative:v1",
+      "name_en": "Miles Davis",
+      "sha256": "985e73fb1c903cbbd87a9fda13d3f265f7e3fdab27d6a3e65016064f0d764c17",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-remaining30-20261018-duchamp.json",
+      "request_id": "authoring:selected62-remaining30-20261018:duchamp:representative:v1",
+      "name_en": "Marcel Duchamp",
+      "sha256": "3d1a551cedd758ebac76e4bb7f492a2be8cc95221f1bdfcf35a4b697710f2765",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-remaining30-20261018-durer.json",
+      "request_id": "authoring:selected62-remaining30-20261018:durer:representative:v1",
+      "name_en": "Albrecht Durer",
+      "sha256": "c5c9f5da7ddc62719d4212fb6f46c4af9a6f44f7474a8495575008b89fa729a6",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-remaining30-20261018-eisenstein.json",
+      "request_id": "authoring:selected62-remaining30-20261018:eisenstein:representative:v1",
+      "name_en": "Sergei Eisenstein",
+      "sha256": "fbbc3c06e44ae66b6932937cc1b9df357bd5f1b6e8a777432c994a9118a7fb5f",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-remaining30-20261018-ellington.json",
+      "request_id": "authoring:selected62-remaining30-20261018:ellington:representative:v1",
+      "name_en": "Duke Ellington",
+      "sha256": "e0291b8fd51eb1d3125db13d7acfed339ae13d1ac5e80e007db9b9d7d911b243",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-remaining30-20261018-frege.json",
+      "request_id": "authoring:selected62-remaining30-20261018:frege:representative:v1",
+      "name_en": "Gottlob Frege",
+      "sha256": "c63ff3b087d41bb5d61edbb75b5b69180e77990af56ac8eee139257b18ec182d",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-remaining30-20261018-hegel.json",
+      "request_id": "authoring:selected62-remaining30-20261018:hegel:representative:v1",
+      "name_en": "Georg Wilhelm Friedrich Hegel",
+      "sha256": "1caa9cab75dfc6b8b50e65f490a616a3a4698d0e1cd379ac9562aad2c61c7feb",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-remaining30-20261018-hitchcock.json",
+      "request_id": "authoring:selected62-remaining30-20261018:hitchcock:representative:v1",
+      "name_en": "Alfred Hitchcock",
+      "sha256": "129ed0a9744b786a3200d17326245ac901e57be0cfae7f9a9ee92f20ce631f5b",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-remaining30-20261018-josquin.json",
+      "request_id": "authoring:selected62-remaining30-20261018:josquin:representative:v1",
+      "name_en": "Josquin des Prez",
+      "sha256": "bef461ebf46a20380cc24c99c5587cb0838f8fc17bc03c1a4b67e5584251f68e",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-remaining30-20261018-kalidasa-person-only.json",
+      "request_id": "authoring:selected62-remaining30-20261018:kalidasa:chronology-unresolved:v1",
+      "name_en": "Kalidasa",
+      "sha256": "75737abab77e05038a4270483c18119bf35953e8a3a91d3522b44eec43e8de6f",
+      "route": "NON_TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-remaining30-20261018-kandinsky.json",
+      "request_id": "authoring:selected62-remaining30-20261018:kandinsky:representative:v1",
+      "name_en": "Wassily Kandinsky",
+      "sha256": "39dbee3fe24b1e515a771055735fd20b65e4828de4832afbff60e5dcf51756d8",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-remaining30-20261018-koch.json",
+      "request_id": "authoring:selected62-remaining30-20261018:koch:representative:v1",
+      "name_en": "Robert Koch",
+      "sha256": "c9db8f79052551896d8bb52c7f63cb77e5bb1938065750b07be0c565fb7c3c31",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-remaining30-20261018-kurosawa.json",
+      "request_id": "authoring:selected62-remaining30-20261018:kurosawa:representative:v1",
+      "name_en": "Akira Kurosawa",
+      "sha256": "d5d7f31d76b84afa6847bec79e5107cc9a76f1df17039f9466f46953f1bcc0a1",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-remaining30-20261018-lagrange.json",
+      "request_id": "authoring:selected62-remaining30-20261018:lagrange:representative:v1",
+      "name_en": "Joseph-Louis Lagrange",
+      "sha256": "3c69bc6679383b95f9a3dfed3ccb6badc78f191be74c502613e8338d09fc802e",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-remaining30-20261018-laplace.json",
+      "request_id": "authoring:selected62-remaining30-20261018:laplace:representative:v1",
+      "name_en": "Pierre-Simon Laplace",
+      "sha256": "4b111f01886ff49dd5f77ee2b65672160255b73c61348dac498fc5e354600566",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-remaining30-20261018-le-corbusier.json",
+      "request_id": "authoring:selected62-remaining30-20261018:le-corbusier:representative:v1",
+      "name_en": "Le Corbusier",
+      "sha256": "86657706453fef9e9225e89e08774e242c698764981692e7f77a2ffd1b3266c6",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-remaining30-20261018-mahler.json",
+      "request_id": "authoring:selected62-remaining30-20261018:mahler:representative:v1",
+      "name_en": "Gustav Mahler",
+      "sha256": "c484405e259a3df297f50a0ffa0e6f13254ede960758c7491b7b4d9a89bd4965",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-remaining30-20261018-monteverdi.json",
+      "request_id": "authoring:selected62-remaining30-20261018:monteverdi:representative:v1",
+      "name_en": "Claudio Monteverdi",
+      "sha256": "010133188259fc69a7336e913023c4ae63aef652896a8cea031e77c83b1c16f7",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-remaining30-20261018-noether.json",
+      "request_id": "authoring:selected62-remaining30-20261018:noether:representative:v1",
+      "name_en": "Emmy Noether",
+      "sha256": "46a4c2e7d0e9f9b3ab05c3b84c7ee49e1f7ae2cdef4ef95d3654e95ac3cf64bd",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-remaining30-20261018-poincare.json",
+      "request_id": "authoring:selected62-remaining30-20261018:poincare:representative:v1",
+      "name_en": "Henri Poincare",
+      "sha256": "ee94dd83cccb74fd064e2d1ea634cd03751ba6c535228345d350cc45d0dc07de",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-remaining30-20261018-su-shi.json",
+      "request_id": "authoring:selected62-remaining30-20261018:su-shi:representative:v1",
+      "name_en": "Su Shi",
+      "sha256": "fc6c1c396a88dbb64bed29d9590f8f8a96a2b2d6cfea2081d18ba65be72fcfc0",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-remaining30-20261018-titian.json",
+      "request_id": "authoring:selected62-remaining30-20261018:titian:representative:v1",
+      "name_en": "Titian",
+      "sha256": "0e54222590ca57fd60d3fac2ca63eee5672db350fd5674c0a7b984e4cc8c75a9",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-remaining30-20261018-weber.json",
+      "request_id": "authoring:selected62-remaining30-20261018:weber:representative:v1",
+      "name_en": "Max Weber",
+      "sha256": "05fc317e67daa0effae49d26354e2994d5d9f76213be9e772126b6a1ce277dfc",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-remaining30-20261018-welles.json",
+      "request_id": "authoring:selected62-remaining30-20261018:welles:representative:v1",
+      "name_en": "Orson Welles",
+      "sha256": "98fa5bf3f5d36c893b8ce2674c885e58ec734db347b60fc1a1d1a5be57a0433a",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/selected62-remaining30-20261018-wittgenstein.json",
+      "request_id": "authoring:selected62-remaining30-20261018:wittgenstein:representative:v1",
+      "name_en": "Ludwig Wittgenstein",
+      "sha256": "4e93fc64af05c32fa684a4d0c190bd827bce8618f3d8359ff56d3a665475ed02",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/travancore-anizham-thirunal-marthanda-varma-1729-1758-20261014.json",
+      "request_id": "authoring:user-travancore:anizham-thirunal-marthanda-varma:reign:1729-1758:20261014:v1",
+      "name_en": "Anizham Thirunal Marthanda Varma",
+      "sha256": "aea56e31b27baffcdce80eacf9d5162c38cc0390c8cc9e80a97ccde6dc879c74",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-20261018-george-s-patton-ii-corps-1943.json",
+      "request_id": "authoring:user-selected-patton-20261018:ii-corps-1943:v1",
+      "name_en": "George S. Patton",
+      "sha256": "b5b6146512763435680874e1eb6169985005c496aeda5dcb16ddf0a5d7a8090c",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-20261018-george-s-patton-seventh-army-1943-1944.json",
+      "request_id": "authoring:user-selected-patton-20261018:seventh-army-1943-1944:v1",
+      "name_en": "George S. Patton",
+      "sha256": "86c93001e2836b7942740716a2d280fde1a09a7a016458a1c8ab79d473e699e8",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-20261018-george-s-patton-third-army-1944-1945.json",
+      "request_id": "authoring:user-selected-patton-20261018:third-army-1944-1945:v1",
+      "name_en": "George S. Patton",
+      "sha256": "151642f5b9afbaa7a1c66abd0ec8ebfc161020aa879ac4ee6609d60ae138c0b0",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-20261018-george-s-patton-world-war-i-tank-brigade-1918.json",
+      "request_id": "authoring:user-selected-patton-20261018:world-war-i-tank-brigade-1918:v2",
+      "name_en": "George S. Patton",
+      "sha256": "b9f12a44640aa978fa8eceef6d2b9a3e5c1f229b5528dad8d995f4f9d8c87ae9",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-20261018-henri-giraud-africa-civil-military-1942-1943.json",
+      "request_id": "authoring:user-selected-giraud-20261018:africa-civil-military-1942-1943:v1",
+      "name_en": "Henri Giraud",
+      "sha256": "4ce54bf2c0fb9cb152bb760da349a1acf7d4465c836bd49c8c7034488f725b33",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-20261018-henri-giraud-cfln-copresident-1943.json",
+      "request_id": "authoring:user-selected-giraud-20261018:cfln-copresident-1943:v1",
+      "name_en": "Henri Giraud",
+      "sha256": "f3efe025d6e15553e4eaf03e42899a7fc181d6f6f4498ad8fe9acbc456998fd0",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-20261018-henri-giraud-commander-in-chief-1943-1944.json",
+      "request_id": "authoring:user-selected-giraud-20261018:commander-in-chief-1943-1944:v1",
+      "name_en": "Henri Giraud",
+      "sha256": "47be97609efb19c2b0e2d28b3b4f1cae4d561b71eb5786eb9d91f8b6a8dcaab0",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-20261018-henri-giraud-constituent-assembly-1946.json",
+      "request_id": "authoring:user-selected-giraud-20261018:constituent-assembly-1946:v1",
+      "name_en": "Henri Giraud",
+      "sha256": "a8dabadb28da44a07113bd67c390f600067ac25cdf291a4ff1d0490bd11e63f0",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-20261018-henri-giraud-ninth-army-1940.json",
+      "request_id": "authoring:user-selected-giraud-20261018:ninth-army-1940:v1",
+      "name_en": "Henri Giraud",
+      "sha256": "a16c433a1f6e078502d4c55aac543c7ebf40d13b61296e554bf728cfe30d6ff9",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-20261018-henri-giraud-seventh-army-1939-1940.json",
+      "request_id": "authoring:user-selected-giraud-20261018:seventh-army-1939-1940:v1",
+      "name_en": "Henri Giraud",
+      "sha256": "db68518ff39b93e4884572c79581c977cfc01a39e3f156d418c25e26b3a21809",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-20261018-henri-giraud-superior-war-council-1949.json",
+      "request_id": "authoring:user-selected-giraud-20261018:superior-war-council-1949:v1",
+      "name_en": "Henri Giraud",
+      "sha256": "4b1433bd9441d626ce012acfb11afedd1f642c7c144609a0878b81ec845d3b7b",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-20261018-henri-giraud-third-army-1936.json",
+      "request_id": "authoring:user-selected-giraud-20261018:third-army-1936:v1",
+      "name_en": "Henri Giraud",
+      "sha256": "0ec38fe96612690c91d91d6081790ff15a14920ddacc4e7bce31d0a80cc1fcd8",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-civ11-20261016-adam-weishaupt-illuminati-1776.json",
+      "request_id": "authoring:user-selected-civ11-20261016:adam-weishaupt-illuminati-1776:v1",
+      "name_en": "Adam Weishaupt",
+      "sha256": "3c8749d7a1d5192c1d3a190180bb839813b451f4e12709aee03da165cc301268",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-civ11-20261016-al-mamun-abbasid-813-833.json",
+      "request_id": "authoring:user-selected-civ11-20261016:al-mamun-abbasid-813-833:v1",
+      "name_en": "Al-Ma'mun",
+      "sha256": "d1e11ab59f103a1f1c9c399bf40edd03be2c091effb65fff2ba40a79048ff810",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-civ11-20261016-balaputradeva-suvarnadvipa-c860.json",
+      "request_id": "authoring:user-selected-civ11-20261016:balaputradeva-suvarnadvipa-c860:v1",
+      "name_en": "Balaputradeva",
+      "sha256": "a7eddb8493e745b40b9a2408f9efe67aa1f9e80b3b94cda82919db81055b6ef7",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-civ11-20261016-carl-august-saxe-eisenach-1758-1809.json",
+      "request_id": "authoring:user-selected-civ11-20261016:carl-august-saxe-eisenach-1758-1809:v1",
+      "name_en": "Carl August, Grand Duke of Saxe-Weimar-Eisenach",
+      "sha256": "f3cfaf7b41cc4588568766c56a31c1d6b0057d33a27edcdb8934c78f7e371087",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-civ11-20261016-carl-august-saxe-weimar-1758-1809.json",
+      "request_id": "authoring:user-selected-civ11-20261016:carl-august-saxe-weimar-1758-1809:v1",
+      "name_en": "Carl August, Grand Duke of Saxe-Weimar-Eisenach",
+      "sha256": "fd5503dc15d9f65bbd003d60475bab3772c1abed7c3cf564a6fe5de33cdd2b22",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-civ11-20261016-carl-august-saxe-weimar-1815-1828.json",
+      "request_id": "authoring:user-selected-civ11-20261016:carl-august-saxe-weimar-1815-1828:v1",
+      "name_en": "Carl August, Grand Duke of Saxe-Weimar-Eisenach",
+      "sha256": "ab9fdee7565cdaf682ae8426bf7cedd17a4b760a407d7f1fbea0f3280cf10931",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-civ11-20261016-carl-august-saxe-weimar-eisenach-1809-1815.json",
+      "request_id": "authoring:user-selected-civ11-20261016:carl-august-saxe-weimar-eisenach-1809-1815:v1",
+      "name_en": "Carl August, Grand Duke of Saxe-Weimar-Eisenach",
+      "sha256": "9f3b1d73e9e80fc6b7e6da35274c3ae8b466be6a64a98bbadb3923346c615488",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-civ11-20261016-dewashtich-panjikant-c708-722.json",
+      "request_id": "authoring:user-selected-civ11-20261016:dewashtich-panjikant-c708-722:v1",
+      "name_en": "Dewashtich",
+      "sha256": "7a73c137a05fc9645bddb69789633915fe0c2ad6199ca26bb23d1125f98f63d1",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-core40-20261019-cervantes-don-quixote-1605-1615.json",
+      "request_id": "authoring:user-core40-20261004:cervantes:don-quixote-1605-1615:v1",
+      "name_en": "Miguel de Cervantes",
+      "sha256": "7def4adec9656dfb47c2781ba53e4155f261c6450b3d9b59493af4181db1fc73",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-core40-20261019-dostoevsky-major-literary-phase-1864-1880.json",
+      "request_id": "authoring:user-core40-20261004:dostoevsky:major-literary-phase-1864-1880:v1",
+      "name_en": "Fyodor Dostoevsky",
+      "sha256": "065c5720b6d46899ac9e6b2716730e1a1a358c9c396f2b4c62a954712fc454c4",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-core40-20261019-euler-berlin-academy-1741-1766.json",
+      "request_id": "authoring:user-core40-20261004:euler:berlin-academy-1741-1766:v1",
+      "name_en": "Leonhard Euler",
+      "sha256": "e0f074aa67601c6bd0103a26159cfb4e3283eb08530bddf16e1dbe9e79649222",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-core40-20261019-euler-petersburg-first-1727-1741.json",
+      "request_id": "authoring:user-core40-20261004:euler:petersburg-first-1727-1741:v1",
+      "name_en": "Leonhard Euler",
+      "sha256": "28c6049561a82c6d3f91c8cdbdea5358b9bc5ccfeaf3c6e243011b2e7d4b7944",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-core40-20261019-euler-petersburg-second-1766-1783.json",
+      "request_id": "authoring:user-core40-20261004:euler:petersburg-second-1766-1783:v1",
+      "name_en": "Leonhard Euler",
+      "sha256": "eb0855bc28ac25cd7069f7df1780e89493d4c86a6ce8cd6a859aa208f9d59648",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-core40-20261019-goethe-faust-part-one-1808.json",
+      "request_id": "authoring:user-core40-20261004:goethe:faust-part-one-1808:v1",
+      "name_en": "Johann Wolfgang von Goethe",
+      "sha256": "94cb495103d59d5cc1825879272f7d7c9de4a7811da2d979abd3d7a92d37bb18",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-core40-20261019-picasso-france-paris-1904-1973.json",
+      "request_id": "authoring:user-core40-20261004:picasso:france-paris-1904-1973:v1",
+      "name_en": "Pablo Picasso",
+      "sha256": "2723a9259b4ee992f7e7aa67a023162c6bb45b0cf9bc2aa1cac3b13f2e0f5593",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-core40-20261019-tolstoy-russian-major-novels-1863-1877.json",
+      "request_id": "authoring:user-core40-20261004:tolstoy:russian-major-novels-1863-1877:v1",
+      "name_en": "Leo Tolstoy",
+      "sha256": "ebb1fac6e6887dd37b8db6a6b5551921e72ef0e5136546cd834108d3ef6e2c46",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-petain-20261017-1915-second-army.json",
+      "request_id": "authoring:user-selected-petain-20261017:1915-second-army:v1",
+      "name_en": "Philippe Pétain",
+      "sha256": "e173bf027a776858325d9b9161a0fdbe99dcd737151cba3a3b63ea50ca890c95",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-petain-20261017-1916-centre-army-group.json",
+      "request_id": "authoring:user-selected-petain-20261017:1916-centre-army-group:v1",
+      "name_en": "Philippe Pétain",
+      "sha256": "bf2af1c817d5b6d5fc2e712a3b965f0cb3d90c4f805616c97f4b092935eb169c",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-petain-20261017-1917-chief-of-general-staff.json",
+      "request_id": "authoring:user-selected-petain-20261017:1917-chief-of-general-staff:v1",
+      "name_en": "Philippe Pétain",
+      "sha256": "e8402636c6a03adb3d9815c0b3a77833e8786807c95cc0c0829cb6c64ec2cb9a",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-petain-20261017-1917-commander-in-chief-appointment.json",
+      "request_id": "authoring:user-selected-petain-20261017:1917-commander-in-chief-appointment:v1",
+      "name_en": "Philippe Pétain",
+      "sha256": "ca1b1319c223b0fcb280837a420efec5ce974dd7f09948efc88d0add3dcc9eae",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-petain-20261017-1920-high-war-council.json",
+      "request_id": "authoring:user-selected-petain-20261017:1920-high-war-council:v1",
+      "name_en": "Philippe Pétain",
+      "sha256": "7065f1bddc2bea636042dc9b42b79cc2c9d111e7196eb3210663c4680930fc1d",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-petain-20261017-1925-rif-command.json",
+      "request_id": "authoring:user-selected-petain-20261017:1925-rif-command:v1",
+      "name_en": "Philippe Pétain",
+      "sha256": "9e541190caa719e926773f450286741650971f47975601fedd582b8089d1eb50",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-petain-20261017-1934-war-minister.json",
+      "request_id": "authoring:user-selected-petain-20261017:1934-war-minister:v1",
+      "name_en": "Philippe Pétain",
+      "sha256": "354448db44ded603fcb6fad7d37f7095e91e2e3dea4441fe6183ee932a036069",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-petain-20261017-1935-state-minister.json",
+      "request_id": "authoring:user-selected-petain-20261017:1935-state-minister:v1",
+      "name_en": "Philippe Pétain",
+      "sha256": "5b085b33ba45485a5321b0e2da5e8967e152e940a207f8e07d841235c7669b14",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-petain-20261017-1939-spanish-ambassador.json",
+      "request_id": "authoring:user-selected-petain-20261017:1939-spanish-ambassador:v1",
+      "name_en": "Philippe Pétain",
+      "sha256": "907f546d2bd0d46c9a51a8a820dbe2b2dc5f6287d83a15a1c1a61704ca981e9a",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-petain-20261017-1940-deputy-prime-minister.json",
+      "request_id": "authoring:user-selected-petain-20261017:1940-deputy-prime-minister:v1",
+      "name_en": "Philippe Pétain",
+      "sha256": "bcd906e8da2c19b73b0bb921f7c10402363f752541f1c78a995b05fbba071141",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-petain-20261017-1940-third-republic-council-president.json",
+      "request_id": "authoring:user-selected-petain-20261017:1940-third-republic-council-president:v1",
+      "name_en": "Philippe Pétain",
+      "sha256": "4c039e7ba9c734c26b96fd2cedfe491f6307494a8e94746321a6c247f8f2daa5",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-petain-20261017-1940-vichy-council-president.json",
+      "request_id": "authoring:user-selected-petain-20261017:1940-vichy-council-president:v1",
+      "name_en": "Philippe Pétain",
+      "sha256": "2d6d3afd802dba4be1023bd698033c7a77494a226e43009e8b7b1fa2fb77720b",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user-petain-20261017-1940-vichy-state-head.json",
+      "request_id": "authoring:user-selected-petain-20261017:1940-vichy-state-head:v1",
+      "name_en": "Philippe Pétain",
+      "sha256": "ca62127f32d6f72fd957f7cec1076994f37b360a68498495b9df5634843e7088",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user98-20261016-hugo-grotius-1609.json",
+      "request_id": "authoring:user-selected98-20261016:hugo-grotius-mare-liberum-1609:v1",
+      "name_en": "Hugo Grotius",
+      "sha256": "c53e24baa6a4e6aa39ef19228590710d1bf9401304a726bcc8d67eeb9ff73225",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user98-20261016-isambard-kingdom-brunel-1837.json",
+      "request_id": "authoring:user-selected98-20261016:brunel-great-western-1837:v1",
+      "name_en": "Isambard Kingdom Brunel",
+      "sha256": "6f1fa5479f9018576576dc2e77ee649b89bfaffd00958ce68c39eccf616dcebc",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user98-20261016-marcus-vipsanius-agrippa-actium-31bce.json",
+      "request_id": "authoring:user-selected98-20261016:agrippa-actium-bce31:v1",
+      "name_en": "Marcus Vipsanius Agrippa",
+      "sha256": "a88a927c52f0b4a09cc9d8c372699c8fd77790c38065016a9cf8e83ec0dd351c",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user98-20261016-michiel-de-ruyter-1667.json",
+      "request_id": "authoring:user-selected98-20261016:michiel-de-ruyter-medway-1667:v1",
+      "name_en": "Michiel de Ruyter",
+      "sha256": "a058dfa7b8f9c6c52d6e0c2e1ff93e05822b5f794e1c8122e8e45c3af9d2af2c",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user98-20261016-ulugh-beg-timurid-successor-1447-1449.json",
+      "request_id": "authoring:user-selected98-20261016:ulugh-beg-timurid-succession-1447-1449:v1",
+      "name_en": "Ulugh Beg",
+      "sha256": "ba139cca862e8f6ff123c9697039dd730d112ce515536bb3d1d490d64b85dd44",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user98-20261016-ulugh-beg-transoxiana-governor-1409-1447.json",
+      "request_id": "authoring:user-selected98-20261016:ulugh-beg-transoxiana-governor-1409-1447:v1",
+      "name_en": "Ulugh Beg",
+      "sha256": "964fc2fedbe0f5cc747b5ba5d19a26b1035214c25384caff8a2bf694f676992e",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user98-20261016-voltaire-candide-1759.json",
+      "request_id": "authoring:user-selected98-20261016:voltaire-candide-1759:v1",
+      "name_en": "Voltaire",
+      "sha256": "9d1ef0741cbb4650295fec4b4ed127d8441017ae1aff1867c784229a293ff206",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    },
+    {
+      "path": "authoring/requests/user98-20261016-william-adams-miura-anjin-1613.json",
+      "request_id": "authoring:user-selected98-20261016:william-adams-japan-1613:v1",
+      "name_en": "William Adams (Miura Anjin)",
+      "sha256": "2942af20277b95b1eaffff75c526c7826125c5c88385cba0cf90615f1cb6e6f7",
+      "route": "TIMELINE",
+      "state": "NEEDS_CURRENT_PRODUCTION_PREFLIGHT"
+    }
+  ]
+}

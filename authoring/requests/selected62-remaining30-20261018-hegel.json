@@ -1,0 +1,72 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:selected62-remaining30-20261018:hegel:representative:v1",
+  "person": {
+    "canonical_name_en": "Georg Wilhelm Friedrich Hegel",
+    "display_name_ko": "게오르크 빌헬름 프리드리히 헤겔",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-18",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Bavaria",
+    "display_name_ko": "바이에른 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Philosopher",
+    "role_display_name_ko": "철학자",
+    "start_year": 1807,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1807,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Bamberg publication-context point for Phenomenology of Spirit in 1807. Manuscript completed in Jena in late 1806; this is not a claim of Bavarian composition of all chapters or a pre-1809 unified Saxe-Weimar-Eisenach polity. Identity review: Historical philosopher (1770–1831); not a generic Hegelian movement or a namesake."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Stanford Encyclopedia of Philosophy — Hegel",
+      "canonical_url": "https://plato.stanford.edu/entries/hegel/",
+      "citation_text": "Scholarly biography distinguishes late-1806 completion, 1807 publication and the subsequent Bamberg newspaper work."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-18",
+      "document_title": "게오르크 빌헬름 프리드리히 헤겔",
+      "url": "https://namu.wiki/w/%EA%B2%8C%EC%98%A4%EB%A5%B4%ED%81%AC%20%EB%B9%8C%ED%97%AC%EB%A6%84%20%ED%94%84%EB%A6%AC%EB%93%9C%EB%A6%AC%ED%9E%88%20%ED%97%A4%EA%B2%94"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "NEEDS_PREFLIGHT. Source-reviewed historical location/context only; exact canonical Person/alias/Polity/Activity/Place state is unknown. No live requests permitted during quota suspension. Reuse exact existing identities; no invented UUIDs, coordinates or surrogate cultural Polities."
+  },
+  "review_context": {
+    "task": "#2545 approved 62, remaining 30 after #2543/#2544/#2546",
+    "registration_state": "NEEDS_PREFLIGHT",
+    "draft_only": true,
+    "production_screen": "NOT_PERFORMED_USER_PROHIBITED",
+    "identity_review": "Historical philosopher (1770–1831); not a generic Hegelian movement or a namesake.",
+    "namuwiki_evidence_method": "external-index independent Person mirror/title review; direct origin fetch not claimed",
+    "namuwiki_evidence_url": "https://namu.moe/w/%EA%B2%8C%EC%98%A4%EB%A5%B4%ED%81%AC%20%EB%B9%8C%ED%97%AC%EB%A6%84%20%ED%94%84%EB%A6%AC%EB%93%9C%EB%A6%AC%ED%9E%88%20%ED%97%A4%EA%B2%94",
+    "domain_review": "Explicit v2 taxonomy review; architecture=technology, social thought/philosophy=culture, mathematics/medicine=science. Not inferred from office.",
+    "apply_gate": "DRAFT / DO NOT MERGE OR APPLY. Fresh semantic duplicate and exact historical Polity preflight required; source review is not proof of DB absence. No PHFC /36 factual coverage score claimed."
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-giraud-20261018:africa-civil-military-1942-1943:v1",
+  "person": {
+    "canonical_name_en": "Henri Giraud",
+    "display_name_ko": "앙리 지로",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-18",
+    "life_status_basis": "documented_death",
+    "representative_domain": "military",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "France",
+    "display_name_ko": "프랑스",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "French Civil and Military Commander-in-Chief of North Africa",
+    "role_display_name_ko": "프랑스령 북아프리카 민군 총사령관",
+    "start_year": 1942,
+    "start_month": 12,
+    "start_day": 26,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1943,
+    "end_month": 6,
+    "end_day": 2,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Civil/military North African Allied-aligned French authority conferred on 26 Dec 1942 after Admiral Darlan's assassination. This is a limited territorial government/military mandate pending 3 June CFLN formation; NOT sovereign ruler of all France, independent Algerian state, or equivalent of de Gaulle's CNF. His administration initially retained discriminatory Vichy rules in North Africa, important to historical representation. Existing France umbrella is a neutral historical anchor pending canonical exact context match; do not attach his authority to legal Republican regime or Vichy government via invented identity edges."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Université de Perpignan, MJP — Commandement civil et militaire national français",
+      "canonical_url": "https://mjp.univ-perp.fr/france/co1943hc.htm",
+      "citation_text": "Giraud's own 14 March 1943 ordinance recites civil/military mandate conferred in the North African territories on 26 December 1942."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Fondation Charles de Gaulle — Henri GIRAUD",
+      "canonical_url": "https://www.charles-de-gaulle.org/lhomme/biographies/henri-giraud/",
+      "citation_text": "Giraud Third Army 1936, Seventh Army 1939, Ninth Army after 15 May 1940, prisoner on May 18, North Africa civil-military command late 1942, CFLN copresidency 3 June to early Oct 1943, general commander in chief ending 4 April 1944, Superior War Council 1949."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-18",
+      "document_title": "앙리 지로",
+      "url": "https://namu.wiki/w/%EC%95%99%EB%A6%AC%20%EC%A7%80%EB%A1%9C"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Historic normalized France/France Republic Polity and governance_context identity requires canonical Production confirmation. Last verified Vercel 402 quota gate prohibits live Person/Activity or PlaceFunction screen. Never invent geographic identity, de facto sovereign Free France/Algeria or PlaceFunction UUID."
+  }
+}
