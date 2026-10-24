@@ -61,7 +61,7 @@ test('journal POST uses its own bounded writer token, accepts only 201, never re
   assert.equal(requests[0].options.headers.Authorization,'Bearer fixture-writer');
   assert.equal(requests[0].url,'https://api.github.com/repos/JezCH/atlas-person-db/issues/88/comments');
   let denied=0;
-  await assert.rejects(()=>githubWrite('issues/88/comments',{body:'test'},'fixture-writer',
+  await assert.rejects(()=>githubWrite('issues/88/comments',{body:journalBody(report)},'fixture-writer',
     async()=>{denied++;return {status:403};}),/GitHub journal POST HTTP 403/);
   assert.equal(denied,1,'no hidden retry after denied write');
   await assert.rejects(()=>githubWrite('issues/88/comments',{body:'test'},'',post),/token missing/);
