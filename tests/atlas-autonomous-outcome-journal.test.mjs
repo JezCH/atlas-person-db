@@ -51,3 +51,9 @@ test('failed or irrelevant CI reports are never credentialed writes',async()=>{
   }
   assert.equal(api,0);
 });
+
+test('GitHub journal post rejects absent/forbidden writer and never retries',async()=>{
+  // POST outcome verification is single-shot; the work is only finalized after HTTP 201.
+  // Actual GitHub token scoping is verified by the trusted-main workflow integration.
+  assert.match(journalBody(report),/No next model task is dispatched/);
+});

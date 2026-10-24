@@ -1,0 +1,53 @@
+name: ATLAS V1 — One-shot Verified Result Journal Replay
+# One shot on its own approved main merge. Replays CI evidence ONLY; NO model call.
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/atlas-autonomous-outcome-replay-once.yml
+
+permissions: {}
+
+jobs:
+  request-journal-replay:
+    if: >-
+      github.repository == 'JezCH/atlas-person-db' &&
+      github.ref == 'refs/heads/main' && github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      actions: write
+      contents: read
+      pull-requests: read
+    steps:
+      - name: Dispatch exactly the original completed CI outcome, never Codex
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ github.token }}
+          script: |
+            const {owner,repo}=context.repo;
+            const original=40107456297;
+            const resultPr=2611;
+            const sha='7c55723bfbd00287a516f240a572ac95772b7155';
+            const prefix='fix(agent): restore verified outcome PR journal permissions #2611';
+            const commit=(await github.rest.repos.getCommit({owner,repo,ref:context.sha})).data;
+            if(!commit.commit.message.startsWith(prefix)){
+              core.info('Not the exact reviewed one-shot replay commit — skip');
+              return;
+            }
+            const main=(await github.rest.repos.getBranch({owner,repo,branch:'main'})).data;
+            if(main.commit.sha!==context.sha)throw Error('ATLAS_JOURNAL_REPLAY_BLOCKED: main advanced');
+            const run=(await github.rest.actions.getWorkflowRun({owner,repo,run_id:original})).data;
+            const pr=(await github.rest.pulls.get({owner,repo,pull_number:resultPr})).data;
+            if(run.name!=='ATLAS Integrity'||run.status!=='completed'||run.conclusion!=='success'||
+               run.head_sha!==sha||run.event!=='pull_request'||
+               pr.state!=='open'||pr.draft!==true||pr.head.sha!==sha)
+              throw Error('ATLAS_JOURNAL_REPLAY_BLOCKED: original evidence changed');
+            const target='atlas-autonomous-outcome.yml';
+            const response=await github.rest.actions.createWorkflowDispatch({
+              owner,repo,workflow_id:target,ref:'main',inputs:{run_id:String(original)}
+            });
+            if(response.status!==204)throw Error('ATLAS_JOURNAL_REPLAY_BLOCKED: dispatch rejected');
+            core.info(JSON.stringify({status:'CI_OUTCOME_RECHECK_REQUESTED',
+              ci_run_id:original,pr_number:resultPr,model_calls:0,credits_requested:0,
+              response_status:response.status,note:'not a journal publication proof'}));
