@@ -24,6 +24,7 @@ const AGENT_NON_RUNTIME = new Set([
   "scripts/atlas-agent-lesson-suggest.mjs",
   "scripts/atlas-autonomous-loop-bridge.mjs",
   "scripts/atlas-autonomous-outcome-journal.mjs",
+  "scripts/atlas-autonomous-recovery.mjs",
   "scripts/atlas-autonomous-outcome.mjs",
   "config/atlas-autonomous-loop.v1.json",
   "scripts/atlas-codex-task-runner.mjs"

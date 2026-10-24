@@ -1,0 +1,70 @@
+name: ATLAS Autonomous P1 — One-shot Journal Recovery
+# A failed outcome workflow can recover its PR comment only. No Codex, rerun of
+# original source tests, merge, Production, Supabase, or unbounded re-dispatch.
+on:
+  workflow_run:
+    workflows: ["ATLAS Autonomous Loop — Independent PR Outcome"]
+    types: [completed]
+
+permissions: {}
+
+concurrency:
+  group: atlas-p1-journal-recovery-${{ github.event.workflow_run.id }}
+  cancel-in-progress: false
+
+jobs:
+  plan:
+    if: >-
+      github.repository == 'JezCH/atlas-person-db' &&
+      github.run_attempt == 1 &&
+      github.event.action == 'completed' &&
+      github.event.workflow_run.conclusion == 'failure' &&
+      github.event.workflow_run.event == 'workflow_run'
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    permissions:
+      actions: read
+      contents: read
+      issues: read
+      pull-requests: read
+    outputs:
+      eligible: ${{ steps.plan.outputs.eligible }}
+      ci_run_id: ${{ steps.plan.outputs.ci_run_id }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - id: plan
+        name: Classify only a provenance-verified failed journal, without writes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/atlas-autonomous-recovery.mjs plan
+
+  recover:
+    needs: plan
+    if: needs.plan.outputs.eligible == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    permissions:
+      actions: read
+      contents: write
+      issues: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Reverify, atomically consume one recovery ref, then journal once
+        env:
+          GH_TOKEN: ${{ github.token }}
+          JOURNAL_WRITE_TOKEN: ${{ secrets.ATLAS_CODEX_TRIGGER_PAT }}
+          EXPECTED_ORIGINAL_CI_RUN_ID: ${{ needs.plan.outputs.ci_run_id }}
+        run: node scripts/atlas-autonomous-recovery.mjs recover
