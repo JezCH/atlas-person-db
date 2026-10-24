@@ -70,3 +70,7 @@ The trusted journal CLI now emits a small `atlas-journal-failure.json` evidence 
 **Recovery is deliberately narrower than re-running development:** only a separately authorized replay of the exact completed Integrity CI run after rechecking the existing PR head, original Codex patch receipt, and comment idempotency marker. A remote POST timeout may already have succeeded; read back PR comments before any approved replay. A missing/invalid source patch or mismatched SHA blocks recovery. Never retry the original model command.
 
 The outcome workflow serializes concurrent automatic/manual observers by the immutable **CI run ID** and rechecks existing journal comments in the writer job. The 7-day failure artifact reports the stop reason; the pre-existing verified PR comment and 30-day original outcome artifact are the durable success evidence. No additional recurrent polling, paid API, Production mutation or automatic merge is introduced.
+
+### P1 missing-writer preflight correction
+
+The journal workflow validates `JOURNAL_WRITE_TOKEN` before posting. Previously its CLI guard threw a generic block before the typed HTTP adapter could classify the missing secret. The shared `requireJournalWriter` guard now emits `JOURNAL_WRITE_TOKEN_MISSING` consistently from both preflight and POST. This changes *diagnosis only*: missing credentials still stop the workflow with **zero journal retries and zero model calls**.

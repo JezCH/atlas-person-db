@@ -55,6 +55,15 @@ function taggedWriteError(type,message,httpStatus){
   return e;
 }
 
+// Use the same typed error for workflow preflight and the write adapter.
+// Otherwise an absent PAT is mislabeled JOURNAL_PRECONDITION_BLOCKED before
+// the POST helper can emit JOURNAL_WRITE_TOKEN_MISSING.
+export function requireJournalWriter(token){
+  if(typeof token!=='string'||!token.trim())
+    throw taggedWriteError('MISSING_WRITE_TOKEN','GitHub journal writer token missing');
+  return token;
+}
+
 export function journalMarker(outcome){
   if(outcome?.status!=='CI_PASS_REVIEW_REQUIRED'||
     !Number.isSafeInteger(outcome.pr_number)||outcome.pr_number<1||
@@ -100,8 +109,9 @@ export async function postJournal({outcome,github,post}={}){
     ci_run_id:outcome.ci_run_id,next_action:'REVIEW_DRAFT_NO_MODEL_RETRY',model_calls:0};
 }
 export async function githubWrite(endpoint,body,token,fetchImpl=globalThis.fetch){
-  if(!token||typeof fetchImpl!=='function')
-    throw taggedWriteError('MISSING_WRITE_TOKEN','GitHub authorizing token missing');
+  requireJournalWriter(token);
+  if(typeof fetchImpl!=='function')
+    block('GitHub transport unavailable');
   // This adapter is for one PR issue-comment journal only, never a generic
   // elevated GitHub write client.
   if(!/^issues\/[1-9][0-9]*\/comments$/.test(endpoint)||
@@ -139,7 +149,7 @@ if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.ur
     const token=process.env.GH_TOKEN;
     const writer=process.env.JOURNAL_WRITE_TOKEN;
     if(!token)block('missing read-only GitHub token');
-    if(!writer)block('missing independently scoped PR-journal writer token');
+    requireJournalWriter(writer);
     const github=e=>githubRead(e,{token});
     const main=await github('branches/main');
     if(main?.commit?.sha!==checkoutSha())block('main moved during trusted checkout');
