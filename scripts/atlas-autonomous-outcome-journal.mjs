@@ -52,7 +52,7 @@ export async function postJournal({outcome,github,post}={}){
   return {status:'RECORDED',pr_number:outcome.pr_number,
     ci_run_id:outcome.ci_run_id,next_action:'REVIEW_DRAFT_NO_MODEL_RETRY',model_calls:0};
 }
-async function githubWrite(endpoint,body,token,fetchImpl=globalThis.fetch){
+export async function githubWrite(endpoint,body,token,fetchImpl=globalThis.fetch){
   if(!token||typeof fetchImpl!=='function')block('GitHub authorizing token missing');
   const response=await fetchImpl(API+'/'+endpoint,{
     method:'POST',redirect:'error',headers:{
