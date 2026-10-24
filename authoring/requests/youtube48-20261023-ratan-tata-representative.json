@@ -1,0 +1,70 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-youtube48-20261023:ratan-tata:representative:v1",
+  "person": {
+    "canonical_name_en": "Ratan Tata",
+    "display_name_ko": "라탄 타타",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-23",
+    "life_status_basis": "documented_death",
+    "representative_domain": "commerce",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Republic of India",
+    "display_name_ko": "인도 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "term",
+    "role": "Chairman of Tata Sons, group restructuring and international acquisitions",
+    "role_display_name_ko": "타타 선즈 회장·국제 기업 확장 지휘",
+    "start_year": 1991,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2012,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Tata official organizational chronology identifies Ratan Naval Tata taking chair March 25, 1991 and stepping down December 2012; covers restructuring and major international acquisitions. This is a corporate leadership TERM and never governs India. Do not conflate Ratan Naval Tata (1937–2024) with Sir Ratan Tata (1871–1918), Tata founder Jamsetji or J. R. D. Tata."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Tata Group — Ratan Naval Tata",
+      "canonical_url": "https://www.tata.com/about-us/tata-group-our-heritage/tata-titans/ratan-naval-tata",
+      "citation_text": "Tata official organizational chronology identifies Ratan Naval Tata taking chair March 25, 1991 and stepping down December 2012; covers restructuring and major international acquisitions. This is a corporate leadership TERM and never governs India. Do not conflate Ratan Naval Tata (1937–2024) with Sir Ratan Tata (1871–1918), Tata founder Jamsetji or J. R. D. Tata."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-23",
+      "document_title": "라탄 타타",
+      "url": "https://namu.wiki/w/%EB%9D%BC%ED%83%84%20%ED%83%80%ED%83%80"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Cohort authorization covers candidate inclusion only. Current canonical full Person aliases, Polity UUID, exact Activity equivalence, role, NamuWiki current-state and place must be checked by governed Human Authoring preflight_batch before irreversible commit; no fabricated UUID or coordinates."
+  },
+  "review_context": {
+    "identity_aliases": [
+      "Ratan Naval Tata",
+      "Ratan N. Tata"
+    ],
+    "cohort": "YOUTUBE48-20261023",
+    "sources_first": true,
+    "production_readback_verified": false
+  }
+}

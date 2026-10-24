@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-youtube39-20261023:emily-dickinson:representative:v1",
+  "person": {
+    "canonical_name_en": "Emily Dickinson",
+    "display_name_ko": "에밀리 디킨슨",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-23",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Poet composing and circulating literary verse in 1862",
+    "role_display_name_ko": "시집필·1862년 작품 활동",
+    "start_year": 1862,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1862,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Emily Dickinson Museum identifies 1862 anonymous printing of Safe in their Alabaster Chambers. Publication permission is uncertain, so do not claim she consented."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Historical reference — Emily Dickinson",
+      "canonical_url": "https://www.emilydickinsonmuseum.org/publishedinlifetime/",
+      "citation_text": "Emily Dickinson Museum identifies 1862 anonymous printing of Safe in their Alabaster Chambers. Publication permission is uncertain, so do not claim she consented."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-23",
+      "document_title": "에밀리 디킨슨",
+      "url": "https://namu.wiki/w/%EC%97%90%EB%B0%80%EB%A6%AC%20%EB%94%94%ED%82%A8%EC%8A%A8"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Identity/alias, specific historical Polity/Place, source and NamuWiki-title canonical readback required before final apply. This is an offline pre-Production reviewed authoring draft; no auto-write or invented coordinates."
+  }
+}

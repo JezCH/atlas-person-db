@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-youtube39-20261023:mark-twain:representative:v1",
+  "person": {
+    "canonical_name_en": "Mark Twain",
+    "display_name_ko": "마크 트웨인",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-23",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Novelist and author of Adventures of Huckleberry Finn",
+    "role_display_name_ko": "《허클베리 핀의 모험》 저자·소설가",
+    "start_year": 1885,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1885,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "1885 first United States publication of Adventures of Huckleberry Finn, New York; the British first publication was 1884 and must not be relabeled as an 1885 global first. Birth name Samuel Langhorne Clemens (1835–1910), do not treat Mark Twain and Samuel Clemens as distinct Persons. One representative literary publication point, not the entire writing career."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Library of Congress — Books That Shaped America, Mark Twain",
+      "canonical_url": "https://www.loc.gov/exhibits/books-that-shaped-america/1850-to-1900.html",
+      "citation_text": "Library of Congress distinguishes the 1884 London edition of Huckleberry Finn from the 1885 New York edition, identifying Samuel Clemens as Mark Twain."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-23",
+      "document_title": "마크 트웨인",
+      "url": "https://namu.wiki/w/%EB%A7%88%ED%81%AC%20%ED%8A%B8%EC%9B%A8%EC%9D%B8"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Exact current Production Person/alias, Polity, Source, Activity and placement preflight required. No phantom period precision or duplicate Person created."
+  }
+}

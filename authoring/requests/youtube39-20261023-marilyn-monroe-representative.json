@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-youtube39-20261023:marilyn-monroe:representative:v1",
+  "person": {
+    "canonical_name_en": "Marilyn Monroe",
+    "display_name_ko": "마릴린 먼로",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-23",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Actress performing in the 1953 film Gentlemen Prefer Blondes",
+    "role_display_name_ko": "영화 《신사는 금발을 좋아해》 배우",
+    "start_year": 1953,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1953,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "1953 US film-release performance point, not a one-year acting career. Born Norma Jeane Mortenson (1926–1962). Do not infer literary authorship or a political office from cultural celebrity. American Film Institute and PBS both document the film release/cast."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "American Film Institute — Gentlemen Prefer Blondes (1953)",
+      "canonical_url": "https://www.afi.com/robert-detail/50847-GENTLEMENPREFERBLONDES/",
+      "citation_text": "The American Film Institute identifies Marilyn Monroe in the cast of the film Gentlemen Prefer Blondes, 1953."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-23",
+      "document_title": "마릴린 먼로",
+      "url": "https://namu.wiki/w/%EB%A7%88%EB%A6%B4%EB%A6%B0%20%EB%A8%BC%EB%A1%9C"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Exact current Production Person/alias, Polity, Source, Activity and placement preflight required. No phantom period precision or duplicate Person created."
+  }
+}

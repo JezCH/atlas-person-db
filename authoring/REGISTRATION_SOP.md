@@ -47,6 +47,10 @@ Legacy `ATLAS-PHFC-4.2`, `ATLAS-PHFC-4.1`, `ATLAS-PHFP-4.0`, earlier PHFC/PRV ve
 
 A merged PR, green CI, Vercel deployment, authoring response without read-back, or workflow start is not completion by itself.
 
+## Retired discovery origin (2026-10-23)
+
+These standard Human Authoring requests may originate from a **retired external video-discovery research cohort**. The origin is historical provenance only, not a currently supported discovery, crawling, ranking, ingestion, storage, or publishing feature. Do not restore removed discovery workflows, services, APIs, database migrations, or UI assets to register these Persons. Existing reviewed historical Person candidates remain eligible for the ordinary canonical preflight, Authoring, Compile, Runtime, and Production read-back process. A legacy request filename or immutable `request_id` containing `youtube39`/`youtube48` is only a retained authoring identity, not a dependency on a removed discovery subsystem. Keep those immutable request IDs unchanged for idempotency; renaming source requests is unnecessary and risks duplicates. No Production write or automatic merge follows merely from this designation.
+
 ## 2. Safety gates that are never removed
 
 Every ordinary registration keeps these invariants:
@@ -55,6 +59,8 @@ Every ordinary registration keeps these invariants:
 - current life-status screening before Person creation: living people are excluded; unresolved life status is HOLD/BLOCKED; only reviewed deceased Persons may be newly created;
 - reviewed historical identity, chronology, relation, Role, Polity, and at least one real Source for every new Activity;
 - representative-domain review for every newly created Person, using exactly one canonical Person Domain v2 value (`governance / military / science / technology / commerce / culture / religion / exploration`) when clear, or an explicit reviewed-null/HOLD only when genuinely unresolved; omission is never equivalent to HOLD;
+- **Sports and athletics are within representative `culture` (user-approved 2026-10-23):** A deceased historical Person whose main lifetime activity is competitive sport, coaching or a sport-specific cultural career is classified under the EXISTING `culture` Person Domain v2. Do not add a ninth `sports` domain or classify a champion as `governance` merely for holding a sporting title. Preserve truthful Role/Relation/Period Basis; a sporting career must never be labeled `intellectual_activity` solely because its representative domain is `culture`. If no existing period basis truthfully represents a proposed sport Activity, select an independently source-backed suitable Activity or hold only that Activity contract pending review, without excluding the Person from the user-selected registration set. This is a Person **representative-domain routing policy**, NOT an unreviewed rewrite of the separate ATLAS-PHFC-4.3 factual-coverage counting predicates.
+
 - representative-domain is reviewed and persisted inside the registration lifecycle; routine `register now → domain later` follow-up work is prohibited, and Role→Domain inference remains prohibited;
 - NamuWiki review for a new Person or a Person whose NamuWiki status has never been reviewed;
 - an already reviewed existing Person reuses its live `linked` or `not_found` NamuWiki state without re-searching it;

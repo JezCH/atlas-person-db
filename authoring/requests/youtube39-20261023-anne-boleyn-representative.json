@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-youtube39-20261023:anne-boleyn:representative:v1",
+  "person": {
+    "canonical_name_en": "Anne Boleyn",
+    "display_name_ko": "앤 불린",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-23",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of England",
+    "display_name_ko": "잉글랜드 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "term",
+    "role": "Queen consort of Henry VIII",
+    "role_display_name_ko": "헨리 8세 왕비·왕실 활동",
+    "start_year": 1533,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1536,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Queen consort from 1533 until 1536 execution; she never automatically receives rules or governs relation for English sovereignty. English Reformation context is influence, not formal reigning authority."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Historical reference — Anne Boleyn",
+      "canonical_url": "https://www.hrp.org.uk/tower-of-london/history-and-stories/anne-boleyn/",
+      "citation_text": "Queen consort from 1533 until 1536 execution; she never automatically receives rules or governs relation for English sovereignty. English Reformation context is influence, not formal reigning authority."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-23",
+      "document_title": "앤 불린",
+      "url": "https://namu.wiki/w/%EC%95%A4%20%EB%B6%88%EB%A6%B0"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Identity/alias, specific historical Polity/Place, source and NamuWiki-title canonical readback required before final apply. This is an offline pre-Production reviewed authoring draft; no auto-write or invented coordinates."
+  }
+}
