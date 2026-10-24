@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {journalMarker,journalBody,postJournal,githubWrite} from '../scripts/atlas-autonomous-outcome-journal.mjs';
+import {journalMarker,journalBody,postJournal,githubWrite,classifyJournalFailure,journalFailureArtifact} from '../scripts/atlas-autonomous-outcome-journal.mjs';
 
 const SHA='a'.repeat(40);
 const report={status:'CI_PASS_REVIEW_REQUIRED',task_id:'atlas-fixture-unit',
@@ -61,9 +61,68 @@ test('journal POST uses its own bounded writer token, accepts only 201, never re
   assert.equal(requests[0].options.headers.Authorization,'Bearer fixture-writer');
   assert.equal(requests[0].url,'https://api.github.com/repos/JezCH/atlas-person-db/issues/88/comments');
   let denied=0;
-  await assert.rejects(()=>githubWrite('issues/88/comments',{body:'test'},'fixture-writer',
+  await assert.rejects(()=>githubWrite('issues/88/comments',{body:journalBody(report)},'fixture-writer',
     async()=>{denied++;return {status:403};}),/GitHub journal POST HTTP 403/);
   assert.equal(denied,1,'no hidden retry after denied write');
   await assert.rejects(()=>githubWrite('issues/88/comments',{body:'test'},'',post),/token missing/);
   assert.equal(requests.length,1);
+});
+
+test('P1 diagnoses the real GitHub 403 without authorizing any retry',async()=>{
+  let attempts=0,fail;
+  try{
+    await githubWrite('issues/88/comments',{body:journalBody(report)},'fixture-writer',
+      async()=>{attempts++;return {status:403}});
+  }catch(e){fail=e}
+  assert.equal(attempts,1,'HTTP 403 must never be retried');
+  const evidence=journalFailureArtifact(fail,40107543662);
+  assert.equal(evidence.status,'JOURNAL_BLOCKED');
+  assert.equal(evidence.failure_code,'JOURNAL_WRITER_PERMISSION_DENIED');
+  assert.equal(evidence.http_status,403);
+  assert.equal(evidence.automatic_journal_retry,false);
+  assert.equal(evidence.automatic_model_retry,false);
+  assert.equal(evidence.model_calls,0);
+  assert.equal(evidence.production_verified,false);
+  assert.equal(evidence.ci_run_id,40107543662);
+});
+test('P1 distinguishes missing writer, ambiguous status and transport uncertainty',async()=>{
+  const body={body:journalBody(report)};
+  for(const [http,expected] of [
+    [401,'JOURNAL_WRITER_PERMISSION_DENIED'],
+    [409,'JOURNAL_WRITE_STATE_AMBIGUOUS'],
+    [422,'JOURNAL_WRITE_STATE_AMBIGUOUS'],
+    [429,'JOURNAL_REMOTE_UNAVAILABLE'],
+    [503,'JOURNAL_REMOTE_UNAVAILABLE']
+  ]){
+    await assert.rejects(async()=>{
+      try{await githubWrite('issues/88/comments',body,'fixture',async()=>({status:http}))}
+      catch(e){
+        const d=classifyJournalFailure(e);
+        assert.equal(d.failure_code,expected);
+        assert.equal(d.automatic_journal_retry,false);
+        throw e;
+      }
+    },/GitHub journal POST HTTP/);
+  }
+  const e=await githubWrite('issues/88/comments',body,'fixture',async()=>{throw Error('network')})
+    .then(()=>null,x=>x);
+  assert.equal(classifyJournalFailure(e).failure_code,'JOURNAL_REMOTE_UNAVAILABLE');
+  const noToken=await githubWrite('issues/88/comments',body,'',async()=>({status:201}))
+    .then(()=>null,x=>x);
+  assert.equal(classifyJournalFailure(noToken).failure_code,'JOURNAL_WRITE_TOKEN_MISSING');
+  assert.equal(classifyJournalFailure(Error('stale original Codex proof')).failure_code,
+    'JOURNAL_PRECONDITION_BLOCKED');
+  assert.throws(()=>journalFailureArtifact(e,0),/invalid failed journal run/);
+});
+test('P1 privileged POST adapter refuses unrelated targets or unsigned bodies',async()=>{
+  let attempts=0;
+  for(const [endpoint,body] of [
+    ['issues/88/comments',{body:'unmarked'}],
+    ['actions/workflows/atlas-codex-tasks.yml/dispatches',{body:journalBody(report)}],
+    ['issues/88/labels',{body:journalBody(report)}]
+  ]){
+    await assert.rejects(()=>githubWrite(endpoint,body,'fixture',
+      async()=>{attempts++;return {status:201}}),/unexpected write endpoint/);
+  }
+  assert.equal(attempts,0);
 });

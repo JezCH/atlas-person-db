@@ -8,6 +8,53 @@ import {REPOSITORY} from './atlas-codex-task-policy.mjs';
 const API='https://api.github.com/repos/'+REPOSITORY;
 const SHA=/^[0-9a-f]{40}$/;
 function block(reason){throw Error('ATLAS_OUTCOME_JOURNAL_BLOCKED: '+reason);}
+
+const FAILURE_CODES=Object.freeze({
+  missing_token:'JOURNAL_WRITE_TOKEN_MISSING',
+  writer_permission:'JOURNAL_WRITER_PERMISSION_DENIED',
+  writer_conflict:'JOURNAL_WRITE_STATE_AMBIGUOUS',
+  remote_unavailable:'JOURNAL_REMOTE_UNAVAILABLE',
+  blocked:'JOURNAL_PRECONDITION_BLOCKED'
+});
+/**
+ * P1 failure classification operates only on trusted code-generated error
+ * properties, not arbitrary GitHub comments or AI-authored output. Neither a
+ * possible remote write nor a permission failure may request a second model.
+ */
+export function classifyJournalFailure(error){
+  const status=error?.journalHttpStatus;
+  const type=error?.journalErrorType;
+  let code=FAILURE_CODES.blocked;
+  let recovery='INSPECT_EVIDENCE_MANUALLY_NO_MODEL_RETRY';
+  if(type==='MISSING_WRITE_TOKEN'){
+    code=FAILURE_CODES.missing_token;
+    recovery='CONFIGURE_REVIEWED_JOURNAL_WRITER_THEN_REVERIFY_ORIGINAL_CI';
+  }else if(status===401||status===403){
+    code=FAILURE_CODES.writer_permission;
+    recovery='REVIEW_WRITER_PERMISSIONS_THEN_REVERIFY_ORIGINAL_CI';
+  }else if(status===409||status===422){
+    code=FAILURE_CODES.writer_conflict;
+    recovery='READ_BACK_ORIGINAL_PR_COMMENT_BEFORE_ANY_MANUAL_REPLAY';
+  }else if(status===429||(Number.isInteger(status)&&status>=500&&status<=599)||type==='TRANSPORT'){
+    code=FAILURE_CODES.remote_unavailable;
+    recovery='READ_BACK_ORIGINAL_PR_COMMENT_BEFORE_ANY_MANUAL_REPLAY';
+  }
+  return {version:1,status:'JOURNAL_BLOCKED',failure_code:code,
+    http_status:Number.isInteger(status)&&status>=100&&status<=599?status:null,
+    recovery,model_calls:0,automatic_model_retry:false,
+    automatic_journal_retry:false,production_verified:false};
+}
+export function journalFailureArtifact(error,runId){
+  if(!Number.isSafeInteger(runId)||runId<1)block('invalid failed journal run identifier');
+  return {...classifyJournalFailure(error),ci_run_id:runId};
+}
+function taggedWriteError(type,message,httpStatus){
+  const e=new Error('ATLAS_OUTCOME_JOURNAL_BLOCKED: '+message);
+  e.journalErrorType=type;
+  if(Number.isInteger(httpStatus))e.journalHttpStatus=httpStatus;
+  return e;
+}
+
 export function journalMarker(outcome){
   if(outcome?.status!=='CI_PASS_REVIEW_REQUIRED'||
     !Number.isSafeInteger(outcome.pr_number)||outcome.pr_number<1||
@@ -53,14 +100,28 @@ export async function postJournal({outcome,github,post}={}){
     ci_run_id:outcome.ci_run_id,next_action:'REVIEW_DRAFT_NO_MODEL_RETRY',model_calls:0};
 }
 export async function githubWrite(endpoint,body,token,fetchImpl=globalThis.fetch){
-  if(!token||typeof fetchImpl!=='function')block('GitHub authorizing token missing');
-  const response=await fetchImpl(API+'/'+endpoint,{
-    method:'POST',redirect:'error',headers:{
-      Authorization:'Bearer '+token,Accept:'application/vnd.github+json',
-      'X-GitHub-Api-Version':'2022-11-28','Content-Type':'application/json'
-    },body:JSON.stringify(body)
-  });
-  if(response?.status!==201)block('GitHub journal POST HTTP '+(response?.status??'unknown'));
+  if(!token||typeof fetchImpl!=='function')
+    throw taggedWriteError('MISSING_WRITE_TOKEN','GitHub authorizing token missing');
+  // This adapter is for one PR issue-comment journal only, never a generic
+  // elevated GitHub write client.
+  if(!/^issues\/[1-9][0-9]*\/comments$/.test(endpoint)||
+    !body||typeof body.body!=='string'||
+    !body.body.includes('<!-- ATLAS-AUTONOMOUS-OUTCOME-V1:'))
+    block('unexpected write endpoint or unverified journal marker');
+  let response;
+  try {
+    response=await fetchImpl(API+'/'+endpoint,{
+      method:'POST',redirect:'error',headers:{
+        Authorization:'Bearer '+token,Accept:'application/vnd.github+json',
+        'X-GitHub-Api-Version':'2022-11-28','Content-Type':'application/json'
+      },body:JSON.stringify(body)
+    });
+  }catch{
+    throw taggedWriteError('TRANSPORT','GitHub journal POST transport failure (write status unknown)');
+  }
+  if(response?.status!==201)
+    throw taggedWriteError('HTTP','GitHub journal POST HTTP '+(response?.status??'unknown'),
+      response?.status);
 }
 function checkoutSha(){
   const r=spawnSync('git',['rev-parse','HEAD'],{encoding:'utf8',timeout:5000});
@@ -86,5 +147,23 @@ if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.ur
     const outcome=await inspectRun({runId:Number(args[1]),registry,github});
     console.log(JSON.stringify(await postJournal({outcome,github,
       post:(e,b)=>githubWrite(e,b,writer)})));
-  })().catch(e=>{console.error(e.message);process.exitCode=1});
+  })().catch(e=>{
+    const args=process.argv.slice(2);
+    const id=args.length===2&&/^[1-9][0-9]*$/.test(args[1])?Number(args[1]):null;
+    const diagnostic=Number.isSafeInteger(id)?
+      journalFailureArtifact(e,id):classifyJournalFailure(e);
+    console.error(JSON.stringify(diagnostic));
+    if(process.env.GITHUB_STEP_SUMMARY)
+      fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,
+        '### ATLAS journal stopped safely\n\n'+
+        '- Failure code: '+diagnostic.failure_code+
+        '\n- Next: '+diagnostic.recovery+
+        '\n- Model calls/retries: 0\n');
+    if(process.env.RUNNER_TEMP){
+      const target=path.join(process.env.RUNNER_TEMP,'atlas-journal-failure.json');
+      try{fs.writeFileSync(target,JSON.stringify(diagnostic,null,2)+'\n',
+        {flag:'wx',mode:0o600});}catch{/* Never overwrite earlier evidence. */}
+    }
+    process.exitCode=1;
+  });
 }
