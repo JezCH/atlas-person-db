@@ -7,6 +7,7 @@ import {REPOSITORY} from './atlas-codex-task-policy.mjs';
 
 const API='https://api.github.com/repos/'+REPOSITORY;
 const SHA=/^[0-9a-f]{40}$/;
+const REVIEW_JOURNAL_AUTHOR=Object.freeze({id:281085255,login:'JezCH',type:'User'});
 function block(reason){throw Error('ATLAS_OUTCOME_JOURNAL_BLOCKED: '+reason);}
 
 const FAILURE_CODES=Object.freeze({
@@ -90,21 +91,51 @@ export function journalBody(outcome){
     '- No next model task is dispatched from this checkpoint.'
   ].join('\n').slice(0,2600);
 }
-export async function postJournal({outcome,github,post}={}){
-  // The privileged GitHub job MUST re-run inspectRun() on its own trusted main
-  // checkout before calling this helper. No untrusted artifact is an authority.
-  if(outcome?.status!=='CI_PASS_REVIEW_REQUIRED')return {status:'NOT_RECORDABLE',model_calls:0};
-  if(typeof github!=='function'||typeof post!=='function')block('GitHub adapter missing');
-  const marker=journalMarker(outcome),endpoint='issues/'+outcome.pr_number+'/comments?per_page=100';
-  const history=await github(endpoint);
+// Do not let an arbitrary PR participant suppress the real verification journal
+// by copying its visible marker. A genuine checkpoint is the exact canonical
+// comment, authored by the repository owner's approved GitHub PAT identity.
+function verifiedExistingJournal(history,outcome){
   if(!Array.isArray(history)||history.length>=100)
     block('incomplete comment inventory; do not risk duplicate write');
-  if(history.some(item=>typeof item?.body==='string'&&item.body.includes(marker)))
+  const marker=journalMarker(outcome),canonical=journalBody(outcome);
+  const matched=history.filter(x=>typeof x?.body==='string'&&x.body.includes(marker));
+  if(!matched.length)return false;
+  if(matched.length!==1||matched[0].body!==canonical||
+    matched[0].user?.id!==REVIEW_JOURNAL_AUTHOR.id||
+    matched[0].user?.login!==REVIEW_JOURNAL_AUTHOR.login||
+    matched[0].user?.type!==REVIEW_JOURNAL_AUTHOR.type)
+    block('untrusted, modified or duplicate outcome marker; manual inspection required');
+  return true;
+}
+export async function postJournal({outcome,github,post}={}){
+  // The privileged GitHub job MUST re-run inspectRun() on trusted main before
+  // calling this helper. Its result is never supplied by a PR or CI artifact.
+  if(outcome?.status!=='CI_PASS_REVIEW_REQUIRED')return {status:'NOT_RECORDABLE',model_calls:0};
+  if(typeof github!=='function'||typeof post!=='function')block('GitHub adapter missing');
+  const endpoint='issues/'+outcome.pr_number+'/comments?per_page=100';
+  const history=await github(endpoint);
+  if(verifiedExistingJournal(history,outcome))
     return {status:'ALREADY_RECORDED',pr_number:outcome.pr_number,model_calls:0};
   const pr=await github('pulls/'+outcome.pr_number);
   if(pr?.state!=='open'||pr?.draft!==true||pr?.head?.sha!==outcome.pr_head_sha)
     block('Draft/head no longer matches verified record');
-  await post('issues/'+outcome.pr_number+'/comments',{body:journalBody(outcome)});
+  try {
+    await post('issues/'+outcome.pr_number+'/comments',{body:journalBody(outcome)});
+  }catch(error){
+    // A network timeout, 409/422 conflict, or 429/5xx can hide a successful
+    // write. Read once with the low-privilege token. Never POST a second time,
+    // never re-run Codex, and never infer success from a copied marker.
+    const type=classifyJournalFailure(error).failure_code;
+    if(type==='JOURNAL_WRITE_STATE_AMBIGUOUS'||type==='JOURNAL_REMOTE_UNAVAILABLE'){
+      const after=await github(endpoint);
+      if(verifiedExistingJournal(after,outcome))return {
+        status:'CONFIRMED_AFTER_AMBIGUOUS_POST',pr_number:outcome.pr_number,
+        ci_run_id:outcome.ci_run_id,next_action:'REVIEW_DRAFT_NO_MODEL_RETRY',
+        journal_retried:false,model_calls:0
+      };
+    }
+    throw error;
+  }
   return {status:'RECORDED',pr_number:outcome.pr_number,
     ci_run_id:outcome.ci_run_id,next_action:'REVIEW_DRAFT_NO_MODEL_RETRY',model_calls:0};
 }

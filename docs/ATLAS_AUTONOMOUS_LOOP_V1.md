@@ -74,3 +74,9 @@ The outcome workflow serializes concurrent automatic/manual observers by the imm
 ### P1 missing-writer preflight correction
 
 The journal workflow validates `JOURNAL_WRITE_TOKEN` before posting. Previously its CLI guard threw a generic block before the typed HTTP adapter could classify the missing secret. The shared `requireJournalWriter` guard now emits `JOURNAL_WRITE_TOKEN_MISSING` consistently from both preflight and POST. This changes *diagnosis only*: missing credentials still stop the workflow with **zero journal retries and zero model calls**.
+
+### P1 journal ambiguity read-back and spoof resistance
+
+A valid evidence marker is only accepted when **exactly one** GitHub PR issue comment exists with the full canonical journal body and the approved repository-owner writer identity (`JezCH`, GitHub user ID 281085255, `User`). A different user's copied marker, edited body or duplicate marker blocks execution rather than hiding an incomplete journal.
+
+After one privileged POST returns an **ambiguous** 409/422, 429, 5xx or transport failure, the trusted workflow may perform **one additional read-only GET** of original PR comments. If that GET proves the exact owner-authored journal was already written, the result is `CONFIRMED_AFTER_AMBIGUOUS_POST`. If absent, incomplete or spoofed, the original failure stays blocked; no second POST, no Codex model retry and no permissions escalation. Definitive 401/403 errors do not initiate speculative retry or read-back. This is an outcome-checkpoint recovery only, not semantic review/merge or Production completion.
