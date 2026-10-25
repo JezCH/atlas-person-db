@@ -71,7 +71,7 @@ test('Place authoring rejects missing or unresolved provenance', async () => {
 });
 
 test('Source and Place are exposed through the existing governed identity mutation surface', async () => {
-  assert.deepEqual([...AUTHORING_OBJECT_OPERATIONS].sort(),['create_context_object','create_place','create_polity_place_function','create_source','link_person_context','link_polity_governance_context']);
+  assert.deepEqual([...AUTHORING_OBJECT_OPERATIONS].sort(),['assert_place','create_context_object','create_place','create_polity_place_function','create_source','link_person_context','link_polity_governance_context']);
   const calls=[];
   const client={async query(sql,params){
     calls.push(String(sql));
@@ -95,4 +95,92 @@ test('P13 Place migration creates UUID object/name/provenance tables without cop
   assert.match(sql,/CREATE TABLE IF NOT EXISTS atlas_v2\.place_sources/i);
   assert.match(sql,/REFERENCES atlas_v2\.sources\(id\) ON DELETE RESTRICT/i);
   assert.doesNotMatch(sql,/world_x|display_anchor|macroregion_code|subregion_code/i);
+});
+
+function exactPlacePayload() {
+  return {id:PLACE_ID,canonical_key:'rome',canonical_name_en:'Rome',
+    source_links:[{source_id:SOURCE_ID,source_locator_key:'reviewed place identity'}]};
+}
+
+function exactPlaceClient({existing=null, unresolvedSource=false, sourceWriteError=false}={}) {
+  const calls=[];
+  return {calls,async query(sql,params){
+    const text=String(sql);calls.push({sql:text,params});
+    if (text.includes('from atlas_v2.sources')) return {rows:unresolvedSource?[]:[{id:SOURCE_ID}]};
+    if (text.includes('where p.id=') || text.includes('where p.canonical_key=')) return {rows:existing?[existing]:[]};
+    if (text.includes('insert into atlas_v2.place_sources')) {
+      if (sourceWriteError) throw Error('fixture source-link failure');
+      return {rows:[],rowCount:existing?0:1};
+    }
+    return {rows:[],rowCount:1};
+  }};
+}
+
+test('exact Place transport preserves the reviewed UUID and English name without inventing Korean names',async()=>{
+  const client=exactPlaceClient();
+  const result=await createAuthoringObjectService({client}).mutate('assert_place',exactPlacePayload());
+  assert.equal(result.id,PLACE_ID);
+  assert.equal(result.operation,'assert_place');
+  assert.equal(result.committed,true);
+  const inserted=client.calls.find(c=>c.sql.includes('insert into atlas_v2.places('));
+  assert.deepEqual(inserted.params,[PLACE_ID,'rome','historical_place','historical']);
+  const name=client.calls.find(c=>c.sql.includes('insert into atlas_v2.place_names('));
+  assert.deepEqual(name.params,[PLACE_ID,'Rome']);
+  assert.doesNotMatch(name.sql,/'ko'/);
+  assert.equal(client.calls[0].sql,'begin isolation level serializable');
+  assert.equal(client.calls.at(-1).sql,'commit');
+});
+
+test('exact Place replay keeps identity and does not insert another Place',async()=>{
+  const client=exactPlaceClient({existing:{id:PLACE_ID,canonical_key:'rome',place_type:'historical_place',historicity:'historical',canonical_name_en:'Rome'}});
+  const result=await createAuthoringObjectService({client}).mutate('assert_place',exactPlacePayload());
+  assert.equal(result.id,PLACE_ID);
+  assert.equal(result.replay,true);
+  assert.equal(result.added_source_links,0);
+  assert.ok(!client.calls.some(c=>c.sql.includes('insert into atlas_v2.places(')));
+  assert.equal(client.calls.at(-1).sql,'commit');
+});
+
+test('exact Place transport rolls back identity, provenance and partial-write failures',async()=>{
+  const exact={id:PLACE_ID,canonical_key:'rome',place_type:'historical_place',historicity:'historical',canonical_name_en:'Rome'};
+  const cases=[
+    [{existing:{...exact,id:SOURCE_ID}},/PLACE_EXACT_IDENTITY_CONFLICT/],
+    [{existing:{...exact,canonical_name_en:'Different place'}},/PLACE_EXACT_IDENTITY_CONFLICT/],
+    [{unresolvedSource:true},/PLACE_SOURCE_ID_UNRESOLVED/],
+    [{sourceWriteError:true},/fixture source-link failure/]
+  ];
+  for (const [options,error] of cases) {
+    const client=exactPlaceClient(options);
+    await assert.rejects(()=>createAuthoringObjectService({client}).mutate('assert_place',exactPlacePayload()),error);
+    assert.equal(client.calls.at(-1).sql,'rollback');
+    assert.ok(!client.calls.some(c=>c.sql==='commit'));
+  }
+});
+
+test('exact Place transport refuses invalid UUID and missing provenance before any write',async()=>{
+  for (const [payload,error] of [
+    [{...exactPlacePayload(),id:'not-a-uuid'},/place.id must be a UUID/],
+    [{...exactPlacePayload(),source_links:[]},/PLACE_SOURCE_LINKS_REQUIRED/]
+  ]) {
+    const client=exactPlaceClient();
+    await assert.rejects(()=>createAuthoringObjectService({client}).mutate('assert_place',payload),error);
+    assert.deepEqual(client.calls.map(c=>c.sql),['begin isolation level serializable','rollback']);
+  }
+});
+
+test('exact Place handler requires authorization and routes an authorized request to the exact writer',async()=>{
+  const {createIdentityHandler}=require('../server/atlas-identity-handler.js');
+  for (const authorized of [false,true]) {
+    const client=exactPlaceClient();
+    let connections=0,closed=0;
+    client.end=async()=>{closed++};
+    const handler=createIdentityHandler({env:{SUPABASE_DB_URL:'postgresql://example.invalid/db',ATLAS_MUTATION_TOKEN:'fixture-secret'},clientFactory:async()=>{connections++;return client}});
+    const res={statusCode:0,setHeader(){},end(body){this.body=JSON.parse(body)}};
+    await handler({method:'POST',headers:authorized?{authorization:'Bearer fixture-secret'}:{},body:{operation:'assert_place',payload:exactPlacePayload()}},res);
+    assert.equal(res.statusCode,authorized?200:401);
+    assert.equal(connections,authorized?1:0);
+    assert.equal(closed,authorized?1:0);
+    if(authorized) assert.equal(res.body.outcome.id,PLACE_ID);
+    else assert.equal(client.calls.length,0);
+  }
 });
