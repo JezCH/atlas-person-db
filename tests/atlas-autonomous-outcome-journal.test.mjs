@@ -34,7 +34,7 @@ test('duplicate, incomplete history and changed PR SHA never publish',async()=>{
   let writes=0;
   const post=async()=>{writes++};
   const exists=await postJournal({outcome:report,
-    github:async()=>[{body:journalBody(report)}],post});
+    github:async()=>[{body:journalBody(report),user:{id:281085255,login:'JezCH',type:'User'}}],post});
   assert.equal(exists.status,'ALREADY_RECORDED');
   for(const github of [
     async()=>Array.from({length:100},()=>({body:''})),
@@ -139,4 +139,64 @@ test('P1 CLI preflight reports the real missing PAT category before any POST',()
     assert.equal(evidence.automatic_model_retry,false);
   }
   assert.equal(requireJournalWriter('fixture-secret'),'fixture-secret');
+});
+
+test('an unrelated user cannot spoof an existing verified checkpoint marker',async()=>{
+  let posts=0;
+  const post=async()=>{posts++};
+  const valid={body:journalBody(report),user:{id:281085255,login:'JezCH',type:'User'}};
+  for(const history of [
+    [{...valid,user:{id:99,login:'attacker',type:'User'}}],
+    [{...valid,body:valid.body+'\\nmodified'}],
+    [valid,valid],
+    [{...valid,user:{id:281085255,login:'JezCH',type:'Bot'}}]
+  ]){
+    await assert.rejects(()=>postJournal({outcome:report,
+      github:async()=>history,post}),/untrusted, modified or duplicate outcome marker/);
+  }
+  assert.equal(posts,0);
+});
+
+test('P1 resolves uncertain successful GitHub POST using exactly one read, never a second write',async()=>{
+  const canonical={body:journalBody(report),user:{id:281085255,login:'JezCH',type:'User'}};
+  const calls=[],github=async ep=>{
+    calls.push(ep);
+    if(ep==='pulls/88')return {state:'open',draft:true,head:{sha:SHA}};
+    if(ep==='issues/88/comments?per_page=100')return calls.length===1?[]:[canonical];
+    throw Error(ep);
+  };
+  let attempts=0;
+  const post=async()=>{attempts++;const e=Error('ambiguous timeout');e.journalErrorType='TRANSPORT';throw e};
+  const result=await postJournal({outcome:report,github,post});
+  assert.equal(result.status,'CONFIRMED_AFTER_AMBIGUOUS_POST');
+  assert.equal(result.journal_retried,false);
+  assert.equal(attempts,1);
+  assert.deepEqual(calls,['issues/88/comments?per_page=100','pulls/88',
+    'issues/88/comments?per_page=100']);
+});
+
+test('P1 uncertain write with no authentic read-back stays blocked without replay',async()=>{
+  for(const postError of [
+    Object.assign(Error('transport'),{journalErrorType:'TRANSPORT'}),
+    Object.assign(Error('429'),{journalHttpStatus:429,journalErrorType:'HTTP'}),
+    Object.assign(Error('409'),{journalHttpStatus:409,journalErrorType:'HTTP'})
+  ]){
+    let posts=0,reads=0;
+    const github=async ep=>{
+      if(ep==='pulls/88')return {state:'open',draft:true,head:{sha:SHA}};
+      reads++;
+      return [];
+    };
+    await assert.rejects(()=>postJournal({outcome:report,github,
+      post:async()=>{posts++;throw postError}}),x=>x===postError);
+    assert.equal(posts,1);assert.equal(reads,2);
+  }
+  let checks=0,posts=0;
+  const denied=Object.assign(Error('403'),{journalHttpStatus:403,journalErrorType:'HTTP'});
+  await assert.rejects(()=>postJournal({outcome:report,
+    github:async ep=>{
+      checks++;return ep.startsWith('issues/')?[]:{state:'open',draft:true,head:{sha:SHA}}},
+    post:async()=>{posts++;throw denied}}),x=>x===denied);
+  assert.equal(checks,2,'403 permission errors do not trigger a speculative readback');
+  assert.equal(posts,1);
 });
