@@ -1,0 +1,67 @@
+diff --git a/server/atlas-authoring-object-transaction.js b/server/atlas-authoring-object-transaction.js
+index 25eafa9..3d5c575 100644
+--- a/server/atlas-authoring-object-transaction.js
++++ b/server/atlas-authoring-object-transaction.js
+@@ -1,6 +1,6 @@
+ "use strict";
+ 
+-const { createSource, createPlace } = require("./atlas-authoring-object-service.js");
++const { createSource, createPlace, insertExactPlace } = require("./atlas-authoring-object-service.js");
+ const { createContextObject, linkPersonContext, linkPolityGovernanceContext } = require("./atlas-context-object-service.js");
+ const { createPolityPlaceFunction } = require("./atlas-polity-place-function-service.js");
+ 
+@@ -9,7 +9,7 @@ function createAuthoringObjectService({ client } = {}) {
+ 
+   async function mutate(operation, payload) {
+     const op = String(operation || "").trim().toLowerCase();
+-    const executors = Object.freeze({ create_source:createSource, create_place:createPlace, create_polity_place_function:createPolityPlaceFunction, create_context_object:createContextObject, link_person_context:linkPersonContext, link_polity_governance_context:linkPolityGovernanceContext });
++    const executors = Object.freeze({ create_source:createSource, create_place:createPlace, assert_place:insertExactPlace, create_polity_place_function:createPolityPlaceFunction, create_context_object:createContextObject, link_person_context:linkPersonContext, link_polity_governance_context:linkPolityGovernanceContext });
+     const execute = executors[op];
+     if (!execute) throw new Error("UNSUPPORTED_AUTHORING_OBJECT_OPERATION");
+ 
+diff --git a/server/atlas-identity-handler.js b/server/atlas-identity-handler.js
+index 2d79019..66ae73a 100644
+--- a/server/atlas-identity-handler.js
++++ b/server/atlas-identity-handler.js
+@@ -4,7 +4,7 @@ const { createIdentityService } = require("./atlas-identity-service.js");
+ const { createAuthoringObjectService } = require("./atlas-authoring-object-transaction.js");
+ const { createMutationAuthorizer } = require("./atlas-session-auth.js");
+ 
+-const AUTHORING_OBJECT_OPERATIONS = new Set(["create_source", "create_place", "create_polity_place_function", "create_context_object", "link_person_context", "link_polity_governance_context"]);
++const AUTHORING_OBJECT_OPERATIONS = new Set(["create_source", "create_place", "assert_place", "create_polity_place_function", "create_context_object", "link_person_context", "link_polity_governance_context"]);
+ const REGISTRATION_GATED_IDENTITY_OPERATIONS = new Set(["create_person", "create_polity"]);
+ 
+ function sendJson(res, status, body) {
+diff --git a/tests/atlas-p13-source-place-authoring.test.mjs b/tests/atlas-p13-source-place-authoring.test.mjs
+index d2fa6f8..67ec19f 100644
+--- a/tests/atlas-p13-source-place-authoring.test.mjs
++++ b/tests/atlas-p13-source-place-authoring.test.mjs
+@@ -71,7 +71,7 @@ test('Place authoring rejects missing or unresolved provenance', async () => {
+ });
+ 
+ test('Source and Place are exposed through the existing governed identity mutation surface', async () => {
+-  assert.deepEqual([...AUTHORING_OBJECT_OPERATIONS].sort(),['create_context_object','create_place','create_polity_place_function','create_source','link_person_context','link_polity_governance_context']);
++  assert.deepEqual([...AUTHORING_OBJECT_OPERATIONS].sort(),['assert_place','create_context_object','create_place','create_polity_place_function','create_source','link_person_context','link_polity_governance_context']);
+   const calls=[];
+   const client={async query(sql,params){
+     calls.push(String(sql));
+@@ -96,3 +96,19 @@ test('P13 Place migration creates UUID object/name/provenance tables without cop
+   assert.match(sql,/REFERENCES atlas_v2\.sources\(id\) ON DELETE RESTRICT/i);
+   assert.doesNotMatch(sql,/world_x|display_anchor|macroregion_code|subregion_code/i);
+ });
++
++
++test('exact Place transport preserves supplied UUID and rolls back identity conflicts', async () => {
++  for (const conflict of [false,true]) {
++    const calls=[];
++    const client={async query(sql,params){
++      calls.push({sql:String(sql),params});
++      if (String(sql).includes('from atlas_v2.sources')) return {rows:[{id:SOURCE_ID}]};
++      if (conflict && String(sql).includes('where p.canonical_key')) return {rows:[{id:SOURCE_ID,canonical_key:'rome',place_type:'historical_place',historicity:'historical',canonical_name_en:'Rome'}]};
++      return {rows:[],rowCount:1};
++    }};
++    const run=()=>createAuthoringObjectService({client}).mutate('assert_place',{id:PLACE_ID,canonical_key:'rome',canonical_name_en:'Rome',source_links:[{source_id:SOURCE_ID,source_locator_key:'reviewed location'}]});
++    if(conflict){await assert.rejects(run,/PLACE_EXACT_IDENTITY_CONFLICT/);assert.equal(calls.at(-1).sql,'rollback');}
++    else {assert.equal((await run()).id,PLACE_ID);assert.equal(calls.find(c=>c.sql.includes('insert into atlas_v2.places')).params[0],PLACE_ID);assert.equal(calls.at(-1).sql,'commit');}
++  }
++});

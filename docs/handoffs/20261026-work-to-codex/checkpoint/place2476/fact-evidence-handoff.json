@@ -1,0 +1,711 @@
+[
+  {
+    "original_fact_index": 0,
+    "status": "HOLD",
+    "payload": {
+      "polity_id": "01f4ce7b-aaa3-473a-a6fd-9c95c4a85ff7",
+      "function_type": "capital",
+      "place_id": "5b1dc86d-d6d5-54ae-9b2d-ec6a2804699c",
+      "start_year": 1063,
+      "end_year": 1072,
+      "confidence": "well_established",
+      "source_refs": [
+        {
+          "source_id": "305858ea-e93f-56ec-a353-343eda963c51",
+          "locator": "British Museum Collections Online: Seljuq dynasty (x41057)"
+        }
+      ]
+    },
+    "source_reviews": [
+      {
+        "source_id": "305858ea-e93f-56ec-a353-343eda963c51",
+        "original_locator": "British Museum Collections Online: Seljuq dynasty (x41057)",
+        "reviewed_locator": null,
+        "status": "HOLD_NOT_REVIEWED",
+        "missing": "Original publication text and precise page/section/URL locator have not yet been retrieved or compared; title is not evidence verification."
+      }
+    ]
+  },
+  {
+    "original_fact_index": 1,
+    "status": "HOLD",
+    "payload": {
+      "polity_id": "074510f4-f2e7-5795-8cfb-2a4206fa7254",
+      "function_type": "capital",
+      "place_id": "480ae330-d16c-59da-aef9-5a693cae063d",
+      "start_year": 1204,
+      "end_year": 1260,
+      "confidence": "well_established",
+      "source_refs": [
+        {
+          "source_id": "044aaa9d-e264-5449-bbe4-e380c3f02220",
+          "locator": "1911 Encyclopaedia Britannica: Nicaea"
+        }
+      ]
+    },
+    "source_reviews": [
+      {
+        "source_id": "044aaa9d-e264-5449-bbe4-e380c3f02220",
+        "original_locator": "1911 Encyclopaedia Britannica: Nicaea",
+        "reviewed_locator": "Nicaea, second paragraph",
+        "status": "ORIGINAL_TEXT_TRANSCRIPTION_REVIEWED_HOLD_DATES",
+        "missing": "Resolve stated interval/scope gaps before approving related facts; preserve original source identity. Wikisource entries are transcriptions, not scan-collated editions."
+      }
+    ]
+  },
+  {
+    "original_fact_index": 2,
+    "status": "HOLD",
+    "payload": {
+      "polity_id": "074510f4-f2e7-5795-8cfb-2a4206fa7254",
+      "function_type": "capital",
+      "place_id": "d36994cd-c9d0-5fcf-a215-0fec2b2242ba",
+      "start_year": 1261,
+      "end_year": 1453,
+      "confidence": "well_established",
+      "source_refs": [
+        {
+          "source_id": "2781d1ec-bf75-5045-bf99-3f7cdc919d0d",
+          "locator": "1911 Encyclopaedia Britannica: Constantinople"
+        }
+      ]
+    },
+    "source_reviews": [
+      {
+        "source_id": "2781d1ec-bf75-5045-bf99-3f7cdc919d0d",
+        "original_locator": "1911 Encyclopaedia Britannica: Constantinople",
+        "reviewed_locator": "History, Architecture and Antiquities; paragraphs on inauguration and capture",
+        "status": "ORIGINAL_TEXT_TRANSCRIPTION_REVIEWED_HOLD_ENDPOINTS",
+        "missing": "Resolve stated interval/scope gaps before approving related facts; preserve original source identity. Wikisource entries are transcriptions, not scan-collated editions."
+      }
+    ]
+  },
+  {
+    "original_fact_index": 3,
+    "status": "HOLD",
+    "payload": {
+      "polity_id": "074510f4-f2e7-5795-8cfb-2a4206fa7254",
+      "function_type": "capital",
+      "place_id": "d36994cd-c9d0-5fcf-a215-0fec2b2242ba",
+      "start_year": 330,
+      "end_year": 1203,
+      "confidence": "well_established",
+      "source_refs": [
+        {
+          "source_id": "2781d1ec-bf75-5045-bf99-3f7cdc919d0d",
+          "locator": "1911 Encyclopaedia Britannica: Constantinople"
+        }
+      ]
+    },
+    "source_reviews": [
+      {
+        "source_id": "2781d1ec-bf75-5045-bf99-3f7cdc919d0d",
+        "original_locator": "1911 Encyclopaedia Britannica: Constantinople",
+        "reviewed_locator": "History, Architecture and Antiquities; paragraphs on inauguration and capture",
+        "status": "ORIGINAL_TEXT_TRANSCRIPTION_REVIEWED_HOLD_ENDPOINTS",
+        "missing": "Resolve stated interval/scope gaps before approving related facts; preserve original source identity. Wikisource entries are transcriptions, not scan-collated editions."
+      }
+    ]
+  },
+  {
+    "original_fact_index": 4,
+    "status": "HOLD",
+    "payload": {
+      "polity_id": "28448862-277d-4738-9fb4-7f51a9e4c03a",
+      "function_type": "capital",
+      "place_id": "2a249a61-de85-5b88-beaa-ab67a63af684",
+      "start_year": 1923,
+      "end_year": null,
+      "confidence": "well_established",
+      "source_refs": [
+        {
+          "source_id": "c3af4db8-6c27-51da-af04-5f562cbd5cc2",
+          "locator": "Atatürk Ansiklopedisi: Ankara’nın Başkent Oluşu"
+        }
+      ]
+    },
+    "source_reviews": [
+      {
+        "source_id": "c3af4db8-6c27-51da-af04-5f562cbd5cc2",
+        "original_locator": "Atatürk Ansiklopedisi: Ankara’nın Başkent Oluşu",
+        "reviewed_locator": null,
+        "status": "URL_RESOLVED_ORIGINAL_FETCH_FAILED",
+        "missing": "Publisher URL resolved by index; original open returned Internal Error; original text not verified"
+      }
+    ]
+  },
+  {
+    "original_fact_index": 5,
+    "status": "HOLD",
+    "payload": {
+      "polity_id": "2f6e890f-1704-5c76-aa94-f18d7f905e06",
+      "function_type": "capital",
+      "place_id": "dd4811ef-44a5-5739-b09e-b1c4852b26e1",
+      "start_year": -336,
+      "end_year": -323,
+      "confidence": "well_established",
+      "source_refs": [
+        {
+          "source_id": "47fc9701-c079-5a5a-9360-90e059d4ca97",
+          "locator": "Hellenic Ministry of Culture, Cultural Egnatia: Pella"
+        },
+        {
+          "source_id": "01bff9e2-4a89-5056-a9e5-9e2b0574367c",
+          "locator": "Hellenic Ministry of Culture and Sports, Odysseus: Pella"
+        }
+      ]
+    },
+    "source_reviews": [
+      {
+        "source_id": "47fc9701-c079-5a5a-9360-90e059d4ca97",
+        "original_locator": "Hellenic Ministry of Culture, Cultural Egnatia: Pella",
+        "reviewed_locator": null,
+        "status": "HOLD_NOT_REVIEWED",
+        "missing": "Original publication text and precise page/section/URL locator have not yet been retrieved or compared; title is not evidence verification."
+      },
+      {
+        "source_id": "01bff9e2-4a89-5056-a9e5-9e2b0574367c",
+        "original_locator": "Hellenic Ministry of Culture and Sports, Odysseus: Pella",
+        "reviewed_locator": null,
+        "status": "HOLD_NOT_REVIEWED",
+        "missing": "Original publication text and precise page/section/URL locator have not yet been retrieved or compared; title is not evidence verification."
+      }
+    ]
+  },
+  {
+    "original_fact_index": 6,
+    "status": "HOLD",
+    "payload": {
+      "polity_id": "3b8f7efc-40ae-5a33-8956-e9e852fbede4",
+      "function_type": "capital",
+      "place_id": "f1c62e8f-86ae-5833-b6d9-9a426e027d6e",
+      "start_year": 1815,
+      "end_year": 1821,
+      "confidence": "well_established",
+      "source_refs": [
+        {
+          "source_id": "38e7f5dc-b0d9-5a54-acd3-5159075e1c6b",
+          "locator": "Governo do Brasil: Linha do Tempo da Independência"
+        }
+      ]
+    },
+    "source_reviews": [
+      {
+        "source_id": "38e7f5dc-b0d9-5a54-acd3-5159075e1c6b",
+        "original_locator": "Governo do Brasil: Linha do Tempo da Independência",
+        "reviewed_locator": null,
+        "status": "HOLD_NOT_REVIEWED",
+        "missing": "Original publication text and precise page/section/URL locator have not yet been retrieved or compared; title is not evidence verification."
+      }
+    ]
+  },
+  {
+    "original_fact_index": 7,
+    "status": "HOLD",
+    "payload": {
+      "polity_id": "5d9a6186-bbe6-5d1a-ba93-02190ae4c417",
+      "function_type": "capital",
+      "place_id": "823049a0-9d73-5191-a9c5-26a662697436",
+      "start_year": -27,
+      "end_year": 329,
+      "confidence": "well_established",
+      "source_refs": [
+        {
+          "source_id": "89243eda-1366-50cc-8b72-546766cf5b33",
+          "locator": "1911 Encyclopaedia Britannica: Constantine (emperors)"
+        }
+      ]
+    },
+    "source_reviews": [
+      {
+        "source_id": "89243eda-1366-50cc-8b72-546766cf5b33",
+        "original_locator": "1911 Encyclopaedia Britannica: Constantine (emperors)",
+        "reviewed_locator": "Constantine I, paragraphs on 326 relocation decision and 330 inauguration",
+        "status": "ORIGINAL_TEXT_TRANSCRIPTION_REVIEWED_HOLD_SCOPE",
+        "missing": "Resolve stated interval/scope gaps before approving related facts; preserve original source identity. Wikisource entries are transcriptions, not scan-collated editions."
+      }
+    ]
+  },
+  {
+    "original_fact_index": 8,
+    "status": "HOLD",
+    "payload": {
+      "polity_id": "5d9a6186-bbe6-5d1a-ba93-02190ae4c417",
+      "function_type": "capital",
+      "place_id": "d36994cd-c9d0-5fcf-a215-0fec2b2242ba",
+      "start_year": 330,
+      "end_year": 395,
+      "confidence": "well_established",
+      "source_refs": [
+        {
+          "source_id": "2781d1ec-bf75-5045-bf99-3f7cdc919d0d",
+          "locator": "1911 Encyclopaedia Britannica: Constantinople"
+        }
+      ]
+    },
+    "source_reviews": [
+      {
+        "source_id": "2781d1ec-bf75-5045-bf99-3f7cdc919d0d",
+        "original_locator": "1911 Encyclopaedia Britannica: Constantinople",
+        "reviewed_locator": "History, Architecture and Antiquities; paragraphs on inauguration and capture",
+        "status": "ORIGINAL_TEXT_TRANSCRIPTION_REVIEWED_HOLD_ENDPOINTS",
+        "missing": "Resolve stated interval/scope gaps before approving related facts; preserve original source identity. Wikisource entries are transcriptions, not scan-collated editions."
+      }
+    ]
+  },
+  {
+    "original_fact_index": 9,
+    "status": "HOLD",
+    "payload": {
+      "polity_id": "5fce7b7e-7e6c-5f91-96b6-ebcd925b0a90",
+      "function_type": "political_center",
+      "place_id": "41539b95-1782-5c82-9578-afe8cecd1a83",
+      "start_year": 1944,
+      "end_year": 1945,
+      "confidence": "well_established",
+      "source_refs": [
+        {
+          "source_id": "c88cdd70-16eb-5c3c-881b-425a880029f9",
+          "locator": "Government of India / IGNCA chronology: Bose civil and military headquarters moved to Burma in January 1944"
+        },
+        {
+          "source_id": "d0516347-22db-5919-80aa-ca80fe33574f",
+          "locator": "Odisha Review: headquarters of the Provisional Government, Indian Independence League and Supreme Command shifted from Singapore to Rangoon"
+        }
+      ]
+    },
+    "source_reviews": [
+      {
+        "source_id": "c88cdd70-16eb-5c3c-881b-425a880029f9",
+        "original_locator": "Government of India / IGNCA chronology: Bose civil and military headquarters moved to Burma in January 1944",
+        "reviewed_locator": null,
+        "status": "HOLD_NOT_REVIEWED",
+        "missing": "Original publication text and precise page/section/URL locator have not yet been retrieved or compared; title is not evidence verification."
+      },
+      {
+        "source_id": "d0516347-22db-5919-80aa-ca80fe33574f",
+        "original_locator": "Odisha Review: headquarters of the Provisional Government, Indian Independence League and Supreme Command shifted from Singapore to Rangoon",
+        "reviewed_locator": null,
+        "status": "HOLD_NOT_REVIEWED",
+        "missing": "Original publication text and precise page/section/URL locator have not yet been retrieved or compared; title is not evidence verification."
+      }
+    ]
+  },
+  {
+    "original_fact_index": 10,
+    "status": "HOLD",
+    "payload": {
+      "polity_id": "5fce7b7e-7e6c-5f91-96b6-ebcd925b0a90",
+      "function_type": "political_center",
+      "place_id": "4792157c-99ac-5d72-84bc-99baeb217911",
+      "start_year": 1943,
+      "end_year": 1943,
+      "confidence": "well_established",
+      "source_refs": [
+        {
+          "source_id": "677c16aa-8a6b-52a7-ab98-27ef7a3190d4",
+          "locator": "Press Information Bureau, Government of India: Anniversary of the formation of Azad Hind Government (21 Oct 1943)"
+        },
+        {
+          "source_id": "25cfc76c-7993-5d82-987c-7d46352fb048",
+          "locator": "Publications Division, Government of India: Builders of Modern India — Subhas Chandra Bose"
+        }
+      ]
+    },
+    "source_reviews": [
+      {
+        "source_id": "677c16aa-8a6b-52a7-ab98-27ef7a3190d4",
+        "original_locator": "Press Information Bureau, Government of India: Anniversary of the formation of Azad Hind Government (21 Oct 1943)",
+        "reviewed_locator": "SINGAPORE section",
+        "status": "ORIGINAL_REVIEWED_HOLD_TEMPORAL_SCOPE",
+        "missing": "Resolve interval semantics and full period support before clearing related fact HOLD"
+      },
+      {
+        "source_id": "25cfc76c-7993-5d82-987c-7d46352fb048",
+        "original_locator": "Publications Division, Government of India: Builders of Modern India — Subhas Chandra Bose",
+        "reviewed_locator": null,
+        "status": "HOLD_NOT_REVIEWED",
+        "missing": "Original publication text and precise page/section/URL locator have not yet been retrieved or compared; title is not evidence verification."
+      }
+    ]
+  },
+  {
+    "original_fact_index": 11,
+    "status": "HOLD",
+    "payload": {
+      "polity_id": "6539c314-ec29-42e0-a0c2-90991fb9ffd8",
+      "function_type": "capital",
+      "place_id": "4d5eb343-f0d9-521e-8dec-078cd2bcfbc2",
+      "start_year": 1370,
+      "end_year": 1405,
+      "confidence": "well_established",
+      "source_refs": [
+        {
+          "source_id": "25dfe37e-1389-52de-a203-3231e5a9f106",
+          "locator": "The Metropolitan Museum of Art: The Art of the Timurid Period (ca. 1370–1507)"
+        }
+      ]
+    },
+    "source_reviews": [
+      {
+        "source_id": "25dfe37e-1389-52de-a203-3231e5a9f106",
+        "original_locator": "The Metropolitan Museum of Art: The Art of the Timurid Period (ca. 1370–1507)",
+        "reviewed_locator": "Main essay paragraphs 1–2 (retrieval lines 109–110)",
+        "status": "ORIGINAL_REVIEWED_PARTIAL_SUPPORT",
+        "missing": "Corroborate end boundary and uninterrupted tenure before approving whole fact."
+      }
+    ]
+  },
+  {
+    "original_fact_index": 12,
+    "status": "HOLD",
+    "payload": {
+      "polity_id": "68c83ef6-0023-5af9-a6e8-26ccf5b8e116",
+      "function_type": "capital",
+      "place_id": "877dcabe-21b2-5a8f-b7b1-43a29e47ea9a",
+      "start_year": 1840,
+      "end_year": 1856,
+      "confidence": "well_established",
+      "source_refs": [
+        {
+          "source_id": "51851bcf-6c36-56b8-bf2b-808c9aaf4c7d",
+          "locator": "National Museum of Oman: Architectural Heritage — Muscat"
+        },
+        {
+          "source_id": "b8a51ecc-5091-51e2-97b6-cb24b4cd7d48",
+          "locator": "Oman Ministry of Foreign Affairs: History"
+        }
+      ]
+    },
+    "source_reviews": [
+      {
+        "source_id": "51851bcf-6c36-56b8-bf2b-808c9aaf4c7d",
+        "original_locator": "National Museum of Oman: Architectural Heritage — Muscat",
+        "reviewed_locator": null,
+        "status": "HOLD_NOT_REVIEWED",
+        "missing": "Original publication text and precise page/section/URL locator have not yet been retrieved or compared; title is not evidence verification."
+      },
+      {
+        "source_id": "b8a51ecc-5091-51e2-97b6-cb24b4cd7d48",
+        "original_locator": "Oman Ministry of Foreign Affairs: History",
+        "reviewed_locator": "History, paragraph beginning Thus in the 16th century",
+        "status": "ORIGINAL_REVIEWED_HOLD_DATES",
+        "missing": "Resolve stated interval/scope gaps before approving related facts; preserve original source identity. Wikisource entries are transcriptions, not scan-collated editions."
+      }
+    ]
+  },
+  {
+    "original_fact_index": 13,
+    "status": "HOLD",
+    "payload": {
+      "polity_id": "68c83ef6-0023-5af9-a6e8-26ccf5b8e116",
+      "function_type": "capital",
+      "place_id": "d2845992-4a4c-5a66-a209-18a0ca21ee7b",
+      "start_year": 1806,
+      "end_year": 1839,
+      "confidence": "well_established",
+      "source_refs": [
+        {
+          "source_id": "51851bcf-6c36-56b8-bf2b-808c9aaf4c7d",
+          "locator": "National Museum of Oman: Architectural Heritage — Muscat"
+        }
+      ]
+    },
+    "source_reviews": [
+      {
+        "source_id": "51851bcf-6c36-56b8-bf2b-808c9aaf4c7d",
+        "original_locator": "National Museum of Oman: Architectural Heritage — Muscat",
+        "reviewed_locator": null,
+        "status": "HOLD_NOT_REVIEWED",
+        "missing": "Original publication text and precise page/section/URL locator have not yet been retrieved or compared; title is not evidence verification."
+      }
+    ]
+  },
+  {
+    "original_fact_index": 14,
+    "status": "HOLD",
+    "payload": {
+      "polity_id": "6d1520e2-0aff-5063-b2b7-95eb86daf372",
+      "function_type": "capital",
+      "place_id": "0f81f69e-4b34-58c6-b9a3-65b48e786d63",
+      "start_year": 1299,
+      "end_year": 1325,
+      "confidence": "well_established",
+      "source_refs": [
+        {
+          "source_id": "7a0280a6-71d0-5ae9-809c-9d0db9e1d181",
+          "locator": "Republic of Türkiye Ministry of National Education, Söğüt District: İlçemiz - Söğüt"
+        }
+      ]
+    },
+    "source_reviews": [
+      {
+        "source_id": "7a0280a6-71d0-5ae9-809c-9d0db9e1d181",
+        "original_locator": "Republic of Türkiye Ministry of National Education, Söğüt District: İlçemiz - Söğüt",
+        "reviewed_locator": null,
+        "status": "HOLD_NOT_REVIEWED",
+        "missing": "Original publication text and precise page/section/URL locator have not yet been retrieved or compared; title is not evidence verification."
+      }
+    ]
+  },
+  {
+    "original_fact_index": 15,
+    "status": "HOLD",
+    "payload": {
+      "polity_id": "6d1520e2-0aff-5063-b2b7-95eb86daf372",
+      "function_type": "capital",
+      "place_id": "ae91bb0d-d164-521f-85b7-d96ceca4fa2a",
+      "start_year": 1365,
+      "end_year": 1452,
+      "confidence": "well_established",
+      "source_refs": [
+        {
+          "source_id": "0a3dc36b-9eb9-5536-ac23-5fe71cb9467b",
+          "locator": "Türkiye Culture Portal: Edirne - Genel Bilgiler"
+        }
+      ]
+    },
+    "source_reviews": [
+      {
+        "source_id": "0a3dc36b-9eb9-5536-ac23-5fe71cb9467b",
+        "original_locator": "Türkiye Culture Portal: Edirne - Genel Bilgiler",
+        "reviewed_locator": "Genel Bilgiler, paragraph on Murat and second capital",
+        "status": "ORIGINAL_REVIEWED_HOLD_TEMPORAL_SCOPE",
+        "missing": "Resolve interval semantics and full period support before clearing related fact HOLD"
+      }
+    ]
+  },
+  {
+    "original_fact_index": 16,
+    "status": "HOLD",
+    "payload": {
+      "polity_id": "6d1520e2-0aff-5063-b2b7-95eb86daf372",
+      "function_type": "capital",
+      "place_id": "d36994cd-c9d0-5fcf-a215-0fec2b2242ba",
+      "start_year": 1453,
+      "end_year": 1922,
+      "confidence": "well_established",
+      "source_refs": [
+        {
+          "source_id": "2781d1ec-bf75-5045-bf99-3f7cdc919d0d",
+          "locator": "1911 Encyclopaedia Britannica: Constantinople"
+        }
+      ]
+    },
+    "source_reviews": [
+      {
+        "source_id": "2781d1ec-bf75-5045-bf99-3f7cdc919d0d",
+        "original_locator": "1911 Encyclopaedia Britannica: Constantinople",
+        "reviewed_locator": "History, Architecture and Antiquities; paragraphs on inauguration and capture",
+        "status": "ORIGINAL_TEXT_TRANSCRIPTION_REVIEWED_HOLD_ENDPOINTS",
+        "missing": "Resolve stated interval/scope gaps before approving related facts; preserve original source identity. Wikisource entries are transcriptions, not scan-collated editions."
+      }
+    ]
+  },
+  {
+    "original_fact_index": 17,
+    "status": "HOLD",
+    "payload": {
+      "polity_id": "6d1520e2-0aff-5063-b2b7-95eb86daf372",
+      "function_type": "capital",
+      "place_id": "f0bbb5ec-a47f-53ad-adf2-6d12e431a586",
+      "start_year": 1326,
+      "end_year": 1364,
+      "confidence": "well_established",
+      "source_refs": [
+        {
+          "source_id": "69e4362a-3589-52b4-9a32-5b8e83710552",
+          "locator": "Republic of Türkiye Bursa Governorship: Tarihçe"
+        }
+      ]
+    },
+    "source_reviews": [
+      {
+        "source_id": "69e4362a-3589-52b4-9a32-5b8e83710552",
+        "original_locator": "Republic of Türkiye Bursa Governorship: Tarihçe",
+        "reviewed_locator": null,
+        "status": "HOLD_NOT_REVIEWED",
+        "missing": "Original publication text and precise page/section/URL locator have not yet been retrieved or compared; title is not evidence verification."
+      }
+    ]
+  },
+  {
+    "original_fact_index": 18,
+    "status": "HOLD",
+    "payload": {
+      "polity_id": "a1697cdb-1085-545c-850e-1bbc25cdb61b",
+      "function_type": "capital",
+      "place_id": "889c7eb5-f72e-5297-9759-c8c2d193efeb",
+      "start_year": 656,
+      "end_year": 661,
+      "confidence": "well_established",
+      "source_refs": [
+        {
+          "source_id": "9ed98162-dc7d-5a2f-89da-db4aac4694ae",
+          "locator": "Encyclopaedia Iranica: Kufa — Ali (r. 656–61) chose Kufa as his capital"
+        }
+      ]
+    },
+    "source_reviews": [
+      {
+        "source_id": "9ed98162-dc7d-5a2f-89da-db4aac4694ae",
+        "original_locator": "Encyclopaedia Iranica: Kufa — Ali (r. 656–61) chose Kufa as his capital",
+        "reviewed_locator": null,
+        "status": "HOLD_RETRIEVAL_TIMEOUT",
+        "missing": "Original page fetch timed out; index results also expose conflicting 656 vs 657 capital start; resolve using original text before approval"
+      }
+    ]
+  },
+  {
+    "original_fact_index": 19,
+    "status": "HOLD",
+    "payload": {
+      "polity_id": "a1697cdb-1085-545c-850e-1bbc25cdb61b",
+      "function_type": "capital",
+      "place_id": "e9c69c90-7572-5a69-ae63-19f5ac1946b1",
+      "start_year": 632,
+      "end_year": 656,
+      "confidence": "well_established",
+      "source_refs": [
+        {
+          "source_id": "82565127-eb9c-5da2-a1c4-8fcd738ecf87",
+          "locator": "Cambridge University Press: Rituals of Islamic Monarchy — the conquest society c. 628–c. 660"
+        }
+      ]
+    },
+    "source_reviews": [
+      {
+        "source_id": "82565127-eb9c-5da2-a1c4-8fcd738ecf87",
+        "original_locator": "Cambridge University Press: Rituals of Islamic Monarchy — the conquest society c. 628–c. 660",
+        "reviewed_locator": null,
+        "status": "HOLD_NOT_REVIEWED",
+        "missing": "Original publication text and precise page/section/URL locator have not yet been retrieved or compared; title is not evidence verification."
+      }
+    ]
+  },
+  {
+    "original_fact_index": 20,
+    "status": "HOLD",
+    "payload": {
+      "polity_id": "d54c540c-f3fb-5d05-9dc0-26af4ee9815a",
+      "function_type": "imperial_court_core",
+      "place_id": "64b8f4c4-3d8e-58ad-9ba4-4b98fb49ef0f",
+      "start_year": 1260,
+      "end_year": 1271,
+      "confidence": "well_established",
+      "source_refs": [
+        {
+          "source_id": "ea373bc1-66af-5950-a4c8-c31188c0f320",
+          "locator": "Cambridge History of the Mongol Empire: Mongolia in the Mongol Empire"
+        },
+        {
+          "source_id": "91d307b2-a4e3-5795-9f37-c0a2fabee2c7",
+          "locator": "UNESCO World Heritage Centre: Site of Xanadu"
+        },
+        {
+          "source_id": "37f50f8f-b242-5dfe-aeeb-4230d9c31670",
+          "locator": "Metropolitan Museum of Art: China, 1000–1400 A.D. chronology"
+        }
+      ]
+    },
+    "source_reviews": [
+      {
+        "source_id": "ea373bc1-66af-5950-a4c8-c31188c0f320",
+        "original_locator": "Cambridge History of the Mongol Empire: Mongolia in the Mongol Empire",
+        "reviewed_locator": null,
+        "status": "HOLD_NOT_REVIEWED",
+        "missing": "Original publication text and precise page/section/URL locator have not yet been retrieved or compared; title is not evidence verification."
+      },
+      {
+        "source_id": "91d307b2-a4e3-5795-9f37-c0a2fabee2c7",
+        "original_locator": "UNESCO World Heritage Centre: Site of Xanadu",
+        "reviewed_locator": "Outstanding Universal Value / Brief synthesis, first paragraph",
+        "status": "ORIGINAL_REVIEWED_HOLD_SCOPE",
+        "missing": "Independent evidence for Dadu component and 1260–1262 court presence; review composite Place semantics."
+      },
+      {
+        "source_id": "37f50f8f-b242-5dfe-aeeb-4230d9c31670",
+        "original_locator": "Metropolitan Museum of Art: China, 1000–1400 A.D. chronology",
+        "reviewed_locator": "Chronology entry 1260",
+        "status": "ORIGINAL_REVIEWED_HOLD_TEMPORAL_SCOPE",
+        "missing": "Resolve interval semantics and full period support before clearing related fact HOLD"
+      }
+    ]
+  },
+  {
+    "original_fact_index": 21,
+    "status": "HOLD",
+    "payload": {
+      "polity_id": "d54c540c-f3fb-5d05-9dc0-26af4ee9815a",
+      "function_type": "imperial_court_core",
+      "place_id": "e490f5ab-d605-56b5-842f-0916cbb7bb28",
+      "start_year": 1206,
+      "end_year": 1259,
+      "confidence": "well_established",
+      "source_refs": [
+        {
+          "source_id": "82cfad27-e6e5-57ed-97c7-28ae56bb5072",
+          "locator": "UNESCO World Heritage Centre: Archaeological Site at Khuduu Aral and Surrounding Cultural Landscape"
+        },
+        {
+          "source_id": "51e16f5a-ff7f-5d3c-b03e-034f9a1ef04d",
+          "locator": "Cambridge Antiquity: Mapping Karakorum, the capital of the Mongol Empire"
+        },
+        {
+          "source_id": "02e15cce-9ea1-5b3c-a3e1-c11842dfd8c9",
+          "locator": "Cambridge Modern Asian Studies: The cosmopolitanism of Karakorum, capital of the Mongol empire in Mongolia"
+        }
+      ]
+    },
+    "source_reviews": [
+      {
+        "source_id": "82cfad27-e6e5-57ed-97c7-28ae56bb5072",
+        "original_locator": "UNESCO World Heritage Centre: Archaeological Site at Khuduu Aral and Surrounding Cultural Landscape",
+        "reviewed_locator": "Description paragraphs 5–8; Comparison with other similar properties",
+        "status": "ORIGINAL_REVIEWED_HOLD_SCOPE",
+        "missing": "Separate Karakorum evidence and reviewed temporal synthesis"
+      },
+      {
+        "source_id": "51e16f5a-ff7f-5d3c-b03e-034f9a1ef04d",
+        "original_locator": "Cambridge Antiquity: Mapping Karakorum, the capital of the Mongol Empire",
+        "reviewed_locator": "Historical background, first four paragraphs",
+        "status": "ORIGINAL_REVIEWED_HOLD_SCOPE",
+        "missing": "Explicit reviewed evidence synthesis for composite Place and full time interval"
+      },
+      {
+        "source_id": "02e15cce-9ea1-5b3c-a3e1-c11842dfd8c9",
+        "original_locator": "Cambridge Modern Asian Studies: The cosmopolitanism of Karakorum, capital of the Mongol empire in Mongolia",
+        "reviewed_locator": "Article body: archaeology/cosmopolitanism discussion; religious pluralism paragraph",
+        "status": "ORIGINAL_REVIEWED_HOLD_SCOPE",
+        "missing": "Explicit reviewed evidence synthesis for composite Place and full time interval"
+      }
+    ]
+  },
+  {
+    "original_fact_index": 22,
+    "status": "HOLD",
+    "payload": {
+      "polity_id": "e3da3007-529a-40ec-9934-7b70dfd11cb7",
+      "function_type": "capital",
+      "place_id": "53708ee8-020e-5efa-89f6-85d97d26cd82",
+      "start_year": 1250,
+      "end_year": 1517,
+      "confidence": "well_established",
+      "source_refs": [
+        {
+          "source_id": "e91f57ec-9c46-594b-859b-4a14c2af99ba",
+          "locator": "Getty Thesaurus of Geographic Names: Mamluk Sultanate (TGN 6003667)"
+        }
+      ]
+    },
+    "source_reviews": [
+      {
+        "source_id": "e91f57ec-9c46-594b-859b-4a14c2af99ba",
+        "original_locator": "Getty Thesaurus of Geographic Names: Mamluk Sultanate (TGN 6003667)",
+        "reviewed_locator": null,
+        "status": "HOLD_NOT_REVIEWED",
+        "missing": "Original publication text and precise page/section/URL locator have not yet been retrieved or compared; title is not evidence verification."
+      }
+    ]
+  }
+]

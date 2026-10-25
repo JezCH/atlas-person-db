@@ -1,0 +1,352 @@
+{
+  "schema": "atlas-work-github-handoff/v1",
+  "created_at": "2026-10-25T22:27:00.892457+00:00",
+  "repository": "JezCH/atlas-person-db",
+  "base_main_sha": "56c7738e3135e6c0eeaa57e117d0694f56c0b973",
+  "archive_version": 10,
+  "archive_entry_count": 23,
+  "archive_entries": [
+    {
+      "archive_path": "person-only1896/ATLAS_1896_person_only_DRAFT.patch",
+      "repository_path": "docs/handoffs/20261026-work-to-codex/checkpoint/person-only1896/ATLAS_1896_person_only_DRAFT.patch",
+      "bytes": 8598,
+      "sha256": "0b8cb67fdbe5e848dc90715900352cbec6fe9d0e8de4cd4fe076bb5f76758932",
+      "git_blob_sha": "3003ca1f827459a35c7124b875e5d362946d7140"
+    },
+    {
+      "archive_path": "person-only1896/TESTING.md",
+      "repository_path": "docs/handoffs/20261026-work-to-codex/checkpoint/person-only1896/TESTING.md",
+      "bytes": 348,
+      "sha256": "f8b006ff56879e7c7a36c25ab2425d9693fc1a4bb2414fef071e9ccb04c754dd",
+      "git_blob_sha": "97bbcf99dc27fdfbb194dd78afd1285aa6977efa"
+    },
+    {
+      "archive_path": "person-only1896/atlas-admin-identity.js",
+      "repository_path": "docs/handoffs/20261026-work-to-codex/checkpoint/person-only1896/atlas-admin-identity.js",
+      "bytes": 32909,
+      "sha256": "5fe7e8ce5da976d751038453b27be38a62be2ab89bba7691e85b526c25d1d77b",
+      "git_blob_sha": "fa139ba42f6968e69ca1b02b1730e8d81ea14132"
+    },
+    {
+      "archive_path": "person-only1896/atlas-admin-identity.original.js",
+      "repository_path": "docs/handoffs/20261026-work-to-codex/checkpoint/person-only1896/atlas-admin-identity.original.js",
+      "bytes": 29436,
+      "sha256": "27932e6f2e758480439b04a3896d56458d86b08af0c81411b06816973db5bdde",
+      "git_blob_sha": "d56ab585ba5db95fa2ef064549f0c2d81b82fb4b"
+    },
+    {
+      "archive_path": "person-only1896/atlas-admin-person-only-payload.cjs",
+      "repository_path": "docs/handoffs/20261026-work-to-codex/checkpoint/person-only1896/atlas-admin-person-only-payload.cjs",
+      "bytes": 860,
+      "sha256": "6ae51a2a3521c0ef15b5de0060fdf0738cb7c97d4f2c7fa42042286fd17ad75c",
+      "git_blob_sha": "935d77e3b94ecd0e73138d033ad719b816d12c18"
+    },
+    {
+      "archive_path": "person-only1896/catalog-check.cjs",
+      "repository_path": "docs/handoffs/20261026-work-to-codex/checkpoint/person-only1896/catalog-check.cjs",
+      "bytes": 1607,
+      "sha256": "7d80046f1e213dbcc8962165eb4491748a32896e5cb26345ec996e116c07be2c",
+      "git_blob_sha": "5aaa7cba2ccae7a2a99e5319350496fde11a3f34"
+    },
+    {
+      "archive_path": "person-only1896/checkpoint.json",
+      "repository_path": "docs/handoffs/20261026-work-to-codex/checkpoint/person-only1896/checkpoint.json",
+      "bytes": 1080,
+      "sha256": "c6c49c43723ccb0e3251b838e6e19ee13351db270ec1ca36221cb2eb2100ef6d",
+      "git_blob_sha": "05c75b6491baec663acbe7ff0408e1d90936e0e8"
+    },
+    {
+      "archive_path": "person-only1896/contract-check.cjs",
+      "repository_path": "docs/handoffs/20261026-work-to-codex/checkpoint/person-only1896/contract-check.cjs",
+      "bytes": 1350,
+      "sha256": "c6bd870fd504969cb763b091732d3c1c94ea0a8015744304ffbde73b95b9ebea",
+      "git_blob_sha": "87c7bcb04d98258dccf7e3a4dc06c36ce47d613e"
+    },
+    {
+      "archive_path": "person-only1896/general-submit-check.cjs",
+      "repository_path": "docs/handoffs/20261026-work-to-codex/checkpoint/person-only1896/general-submit-check.cjs",
+      "bytes": 1376,
+      "sha256": "3846e2e77fe2348da5a4ae9cdd03e0bbb3cfce1cf3fb6ddc54a5e4f1ff57ed6d",
+      "git_blob_sha": "81672daaa12b8bf479e1606d335416bb677ca3d8"
+    },
+    {
+      "archive_path": "person-only1896/person-only.test.cjs",
+      "repository_path": "docs/handoffs/20261026-work-to-codex/checkpoint/person-only1896/person-only.test.cjs",
+      "bytes": 3452,
+      "sha256": "86547249d253835f878b372d6f7ee755beaea6d8838338ac429103985242c1f2",
+      "git_blob_sha": "ec3c6fd48e70c3387aea4f8a043e679d7e7af270"
+    },
+    {
+      "archive_path": "person-only1896/regression.test.cjs",
+      "repository_path": "docs/handoffs/20261026-work-to-codex/checkpoint/person-only1896/regression.test.cjs",
+      "bytes": 693,
+      "sha256": "2d937087c18e1ec01eab63b087ab5d5a61627f1b43c4e7d9859917805ad4e3c7",
+      "git_blob_sha": "8ae9f29567cfa792c98b1c80b23eca2c4ccf3278"
+    },
+    {
+      "archive_path": "person-only1896/retry-check.cjs",
+      "repository_path": "docs/handoffs/20261026-work-to-codex/checkpoint/person-only1896/retry-check.cjs",
+      "bytes": 1806,
+      "sha256": "32ca0cca678e33c7f4b35934974af8953cefbc0a4f2e6a9e18bae41c23e7af44",
+      "git_blob_sha": "6905ae90ed3efaa7b93c12c0368ecba3e2839146"
+    },
+    {
+      "archive_path": "person-only1896/submit-check.cjs",
+      "repository_path": "docs/handoffs/20261026-work-to-codex/checkpoint/person-only1896/submit-check.cjs",
+      "bytes": 1537,
+      "sha256": "74715ce356ecd7a25d4f8d6ee1294015fd2285f867c33ca57b39b902727dd05f",
+      "git_blob_sha": "3dbde92db245476799dfbc100a5de689494b754b"
+    },
+    {
+      "archive_path": "automation-resume-20261025-2300.json",
+      "repository_path": "docs/handoffs/20261026-work-to-codex/checkpoint/automation-resume-20261025-2300.json",
+      "bytes": 1523,
+      "sha256": "4e0f63fccbed9291fa59526abd1b912707bb989900112796c9218e356d7fe602",
+      "git_blob_sha": "1957c91a2461b43bca4cf1136ae2854a5f445b6e"
+    },
+    {
+      "archive_path": "place2476/original-manifest.json",
+      "repository_path": "docs/handoffs/20261026-work-to-codex/checkpoint/place2476/original-manifest.json",
+      "bytes": 33419,
+      "sha256": "f4f6f3736134edbffc90df6697e2d00ab5a09f517de1da2181615184b04b5e02",
+      "git_blob_sha": "0931a02956d332e4afa239f1ab3b1418c87f7e31"
+    },
+    {
+      "archive_path": "place2476/checkpoint.json",
+      "repository_path": "docs/handoffs/20261026-work-to-codex/checkpoint/place2476/checkpoint.json",
+      "bytes": 936,
+      "sha256": "1cee47a7c724e089d4953e9d31a543f5ca8af6f31bb84e0302b00c2c7a432a2e",
+      "git_blob_sha": "4904fb0ac5290af32246f6c4814ed97e69035af8"
+    },
+    {
+      "archive_path": "place2476/writer-contract.json",
+      "repository_path": "docs/handoffs/20261026-work-to-codex/checkpoint/place2476/writer-contract.json",
+      "bytes": 803,
+      "sha256": "147d975afa9bcaa5432a39c29aa2987e5669f64b7f8210c974472ddf331ce373",
+      "git_blob_sha": "53a9b86b8a591e399099a7724852d5fb2ae7d93d"
+    },
+    {
+      "archive_path": "place2476/restoration-inputs.json",
+      "repository_path": "docs/handoffs/20261026-work-to-codex/checkpoint/place2476/restoration-inputs.json",
+      "bytes": 36910,
+      "sha256": "499366ba93688844b357a34459195e660ca7393852a853402e27da5d48e0982e",
+      "git_blob_sha": "ac70d36ae237afeb0c6faf40a82b18bd28d3ce08"
+    },
+    {
+      "archive_path": "place2476/source-review.json",
+      "repository_path": "docs/handoffs/20261026-work-to-codex/checkpoint/place2476/source-review.json",
+      "bytes": 13452,
+      "sha256": "214dd928ad4a1b19123141c42e77bc1b9575930d0fcfcfc4f3f7933fb0f83244",
+      "git_blob_sha": "48485221f793ac2db8d1fb73d0108fd355cc8d55"
+    },
+    {
+      "archive_path": "place2476/exact-place-transport.patch",
+      "repository_path": "docs/handoffs/20261026-work-to-codex/checkpoint/place2476/exact-place-transport.patch",
+      "bytes": 4972,
+      "sha256": "cb56c4eacd95e684a5e702e5aa519a5a9396033cf32d7d92e4467f9becf533df",
+      "git_blob_sha": "0aeab8122b2c30484a384ef7ebccc4a958b61b3a"
+    },
+    {
+      "archive_path": "place2476/validation.json",
+      "repository_path": "docs/handoffs/20261026-work-to-codex/checkpoint/place2476/validation.json",
+      "bytes": 282,
+      "sha256": "7df84ddd121c79a0c370aee54e59bd2f69c47936d00840681a2473fd55afce03",
+      "git_blob_sha": "72cb44078f2bda3629f21ccc78917ced8332e87b"
+    },
+    {
+      "archive_path": "place2476/source-assertions.json",
+      "repository_path": "docs/handoffs/20261026-work-to-codex/checkpoint/place2476/source-assertions.json",
+      "bytes": 24350,
+      "sha256": "5ae6d5645155d4f14b09cff6e1c2aae0b780301de10fc761ca16d7839db0319b",
+      "git_blob_sha": "4d8e79e665ba5044637679117afd24d8da1fec41"
+    },
+    {
+      "archive_path": "place2476/fact-evidence-handoff.json",
+      "repository_path": "docs/handoffs/20261026-work-to-codex/checkpoint/place2476/fact-evidence-handoff.json",
+      "bytes": 28012,
+      "sha256": "9c30d6f3c39095eb30c7630589433e4c5f872c6550d90906fcebfd0283fc744d",
+      "git_blob_sha": "ff8f1a69e2f8f6ed731e4fa05ff0189ea67baea1"
+    }
+  ],
+  "files": [
+    {
+      "path": "docs/handoffs/20261026-work-to-codex/ATLAS_agent_evolution_plan_20261026.md",
+      "bytes": 19989,
+      "sha256": "a21416961ffcb301cb8c45d4f7a875ec8690bfacdb95c27170fd6a9ab8d61924",
+      "git_blob_sha": "c9e479ed4c853d07e440fd0ac0e38d72e10f507b"
+    },
+    {
+      "path": "docs/handoffs/20261026-work-to-codex/ATLAS_checkpoint_v10.zip",
+      "bytes": 55747,
+      "sha256": "38c8507e3403b290e24a4f81a9d9772f0f77984b0a13010b823d9ed6369fb463",
+      "git_blob_sha": "02efa1b382c197faeb973fb7f95e6500abb747a1"
+    },
+    {
+      "path": "docs/handoffs/20261026-work-to-codex/README.md",
+      "bytes": 6741,
+      "sha256": "9e15f4c5f6b16e033b1b3863daec7fca4cac22b16f813178e6d8e63dac85a196",
+      "git_blob_sha": "49aa93801f8526b12c4b3c26484247c4bc042da2"
+    },
+    {
+      "path": "docs/handoffs/20261026-work-to-codex/automation-snapshot.json",
+      "bytes": 11774,
+      "sha256": "3faa2a0c35e93da567c3423a3cabfae4e9978d38001ec8cee19ff5bdcfd532f0",
+      "git_blob_sha": "d387ae2d8a4eaf126658c5158d558d5ffc974b4e"
+    },
+    {
+      "path": "docs/handoffs/20261026-work-to-codex/checkpoint/automation-resume-20261025-2300.json",
+      "bytes": 1523,
+      "sha256": "4e0f63fccbed9291fa59526abd1b912707bb989900112796c9218e356d7fe602",
+      "git_blob_sha": "1957c91a2461b43bca4cf1136ae2854a5f445b6e"
+    },
+    {
+      "path": "docs/handoffs/20261026-work-to-codex/checkpoint/person-only1896/ATLAS_1896_person_only_DRAFT.patch",
+      "bytes": 8598,
+      "sha256": "0b8cb67fdbe5e848dc90715900352cbec6fe9d0e8de4cd4fe076bb5f76758932",
+      "git_blob_sha": "3003ca1f827459a35c7124b875e5d362946d7140"
+    },
+    {
+      "path": "docs/handoffs/20261026-work-to-codex/checkpoint/person-only1896/TESTING.md",
+      "bytes": 348,
+      "sha256": "f8b006ff56879e7c7a36c25ab2425d9693fc1a4bb2414fef071e9ccb04c754dd",
+      "git_blob_sha": "97bbcf99dc27fdfbb194dd78afd1285aa6977efa"
+    },
+    {
+      "path": "docs/handoffs/20261026-work-to-codex/checkpoint/person-only1896/atlas-admin-identity.js",
+      "bytes": 32909,
+      "sha256": "5fe7e8ce5da976d751038453b27be38a62be2ab89bba7691e85b526c25d1d77b",
+      "git_blob_sha": "fa139ba42f6968e69ca1b02b1730e8d81ea14132"
+    },
+    {
+      "path": "docs/handoffs/20261026-work-to-codex/checkpoint/person-only1896/atlas-admin-identity.original.js",
+      "bytes": 29436,
+      "sha256": "27932e6f2e758480439b04a3896d56458d86b08af0c81411b06816973db5bdde",
+      "git_blob_sha": "d56ab585ba5db95fa2ef064549f0c2d81b82fb4b"
+    },
+    {
+      "path": "docs/handoffs/20261026-work-to-codex/checkpoint/person-only1896/atlas-admin-person-only-payload.cjs",
+      "bytes": 860,
+      "sha256": "6ae51a2a3521c0ef15b5de0060fdf0738cb7c97d4f2c7fa42042286fd17ad75c",
+      "git_blob_sha": "935d77e3b94ecd0e73138d033ad719b816d12c18"
+    },
+    {
+      "path": "docs/handoffs/20261026-work-to-codex/checkpoint/person-only1896/catalog-check.cjs",
+      "bytes": 1607,
+      "sha256": "7d80046f1e213dbcc8962165eb4491748a32896e5cb26345ec996e116c07be2c",
+      "git_blob_sha": "5aaa7cba2ccae7a2a99e5319350496fde11a3f34"
+    },
+    {
+      "path": "docs/handoffs/20261026-work-to-codex/checkpoint/person-only1896/checkpoint.json",
+      "bytes": 1080,
+      "sha256": "c6c49c43723ccb0e3251b838e6e19ee13351db270ec1ca36221cb2eb2100ef6d",
+      "git_blob_sha": "05c75b6491baec663acbe7ff0408e1d90936e0e8"
+    },
+    {
+      "path": "docs/handoffs/20261026-work-to-codex/checkpoint/person-only1896/contract-check.cjs",
+      "bytes": 1350,
+      "sha256": "c6bd870fd504969cb763b091732d3c1c94ea0a8015744304ffbde73b95b9ebea",
+      "git_blob_sha": "87c7bcb04d98258dccf7e3a4dc06c36ce47d613e"
+    },
+    {
+      "path": "docs/handoffs/20261026-work-to-codex/checkpoint/person-only1896/general-submit-check.cjs",
+      "bytes": 1376,
+      "sha256": "3846e2e77fe2348da5a4ae9cdd03e0bbb3cfce1cf3fb6ddc54a5e4f1ff57ed6d",
+      "git_blob_sha": "81672daaa12b8bf479e1606d335416bb677ca3d8"
+    },
+    {
+      "path": "docs/handoffs/20261026-work-to-codex/checkpoint/person-only1896/person-only.test.cjs",
+      "bytes": 3452,
+      "sha256": "86547249d253835f878b372d6f7ee755beaea6d8838338ac429103985242c1f2",
+      "git_blob_sha": "ec3c6fd48e70c3387aea4f8a043e679d7e7af270"
+    },
+    {
+      "path": "docs/handoffs/20261026-work-to-codex/checkpoint/person-only1896/regression.test.cjs",
+      "bytes": 693,
+      "sha256": "2d937087c18e1ec01eab63b087ab5d5a61627f1b43c4e7d9859917805ad4e3c7",
+      "git_blob_sha": "8ae9f29567cfa792c98b1c80b23eca2c4ccf3278"
+    },
+    {
+      "path": "docs/handoffs/20261026-work-to-codex/checkpoint/person-only1896/retry-check.cjs",
+      "bytes": 1806,
+      "sha256": "32ca0cca678e33c7f4b35934974af8953cefbc0a4f2e6a9e18bae41c23e7af44",
+      "git_blob_sha": "6905ae90ed3efaa7b93c12c0368ecba3e2839146"
+    },
+    {
+      "path": "docs/handoffs/20261026-work-to-codex/checkpoint/person-only1896/submit-check.cjs",
+      "bytes": 1537,
+      "sha256": "74715ce356ecd7a25d4f8d6ee1294015fd2285f867c33ca57b39b902727dd05f",
+      "git_blob_sha": "3dbde92db245476799dfbc100a5de689494b754b"
+    },
+    {
+      "path": "docs/handoffs/20261026-work-to-codex/checkpoint/place2476/checkpoint.json",
+      "bytes": 936,
+      "sha256": "1cee47a7c724e089d4953e9d31a543f5ca8af6f31bb84e0302b00c2c7a432a2e",
+      "git_blob_sha": "4904fb0ac5290af32246f6c4814ed97e69035af8"
+    },
+    {
+      "path": "docs/handoffs/20261026-work-to-codex/checkpoint/place2476/exact-place-transport.patch",
+      "bytes": 4972,
+      "sha256": "cb56c4eacd95e684a5e702e5aa519a5a9396033cf32d7d92e4467f9becf533df",
+      "git_blob_sha": "0aeab8122b2c30484a384ef7ebccc4a958b61b3a"
+    },
+    {
+      "path": "docs/handoffs/20261026-work-to-codex/checkpoint/place2476/fact-evidence-handoff.json",
+      "bytes": 28012,
+      "sha256": "9c30d6f3c39095eb30c7630589433e4c5f872c6550d90906fcebfd0283fc744d",
+      "git_blob_sha": "ff8f1a69e2f8f6ed731e4fa05ff0189ea67baea1"
+    },
+    {
+      "path": "docs/handoffs/20261026-work-to-codex/checkpoint/place2476/original-manifest.json",
+      "bytes": 33419,
+      "sha256": "f4f6f3736134edbffc90df6697e2d00ab5a09f517de1da2181615184b04b5e02",
+      "git_blob_sha": "0931a02956d332e4afa239f1ab3b1418c87f7e31"
+    },
+    {
+      "path": "docs/handoffs/20261026-work-to-codex/checkpoint/place2476/restoration-inputs.json",
+      "bytes": 36910,
+      "sha256": "499366ba93688844b357a34459195e660ca7393852a853402e27da5d48e0982e",
+      "git_blob_sha": "ac70d36ae237afeb0c6faf40a82b18bd28d3ce08"
+    },
+    {
+      "path": "docs/handoffs/20261026-work-to-codex/checkpoint/place2476/source-assertions.json",
+      "bytes": 24350,
+      "sha256": "5ae6d5645155d4f14b09cff6e1c2aae0b780301de10fc761ca16d7839db0319b",
+      "git_blob_sha": "4d8e79e665ba5044637679117afd24d8da1fec41"
+    },
+    {
+      "path": "docs/handoffs/20261026-work-to-codex/checkpoint/place2476/source-review.json",
+      "bytes": 13452,
+      "sha256": "214dd928ad4a1b19123141c42e77bc1b9575930d0fcfcfc4f3f7933fb0f83244",
+      "git_blob_sha": "48485221f793ac2db8d1fb73d0108fd355cc8d55"
+    },
+    {
+      "path": "docs/handoffs/20261026-work-to-codex/checkpoint/place2476/validation.json",
+      "bytes": 282,
+      "sha256": "7df84ddd121c79a0c370aee54e59bd2f69c47936d00840681a2473fd55afce03",
+      "git_blob_sha": "72cb44078f2bda3629f21ccc78917ced8332e87b"
+    },
+    {
+      "path": "docs/handoffs/20261026-work-to-codex/checkpoint/place2476/writer-contract.json",
+      "bytes": 803,
+      "sha256": "147d975afa9bcaa5432a39c29aa2987e5669f64b7f8210c974472ddf331ce373",
+      "git_blob_sha": "53a9b86b8a591e399099a7724852d5fb2ae7d93d"
+    }
+  ],
+  "read_only_snapshot": true,
+  "production_applied": false,
+  "application_patches_integrated": false,
+  "person_only_status": "PARKED_PRIORITY_REVIEW",
+  "validation": {
+    "json_parse": "PASS",
+    "archive_entry_byte_identity": "PASS",
+    "credential_pattern_scan": "NO_MATCHES",
+    "application_tests_rerun": false
+  },
+  "non_deployment_evidence": {
+    "vercel_json_blob": "7de33d4d2d87567cc91e69dd1d6f653fbeaeee16",
+    "vercel_ignore_blob": "202966f1e4c1ac2e9b3179f54bee7c137183ab52",
+    "integrity_workflow_blob": "918cdf9e12541970165f24f4ff70de2ac6432044",
+    "outcome_workflow_blob": "ed07d44e7e715cb6c73e62884c2496ccc6c3dd05",
+    "external_provider_overrides": "NOT_ATTESTED"
+  }
+}
