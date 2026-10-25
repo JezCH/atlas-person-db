@@ -49,9 +49,25 @@ export function codeMask(source){
   }
   return out;
 }
-function literal(source,start){
+function skipTrivia(source,start){
   let p=start;
-  while(p<source.length&&/\s/.test(source[p]))p++;
+  for(;;){
+    while(p<source.length&&/\s/.test(source[p]))p++;
+    if(source[p]==='/'&&source[p+1]==='/'){
+      const end=source.indexOf('\n',p+2);
+      p=end===-1?source.length:end+1;
+      continue;
+    }
+    if(source[p]==='/'&&source[p+1]==='*'){
+      const end=source.indexOf('*/',p+2);
+      p=end===-1?source.length:end+2;
+      continue;
+    }
+    return p;
+  }
+}
+function literal(source,start){
+  let p=skipTrivia(source,start);
   const quote=source[p];
   if(quote!=="'"&&quote!=='"')return null;
   const begin=++p;
@@ -69,8 +85,7 @@ export function relativeSpecifiers(source){
       const prefix=mask.slice(Math.max(0,i-320),i).split(';').pop();
       if(!/\b(?:import|export)\b/.test(prefix))continue;
     }
-    let j=i+token.length;
-    while(/\s/.test(source[j]||'!'))j++;
+    let j=skipTrivia(source,i+token.length);
     if(token!=='from'){
       if(source[j]==='(')j++;
       else if(token==='require')continue;
