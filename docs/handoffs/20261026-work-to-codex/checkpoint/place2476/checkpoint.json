@@ -1,0 +1,17 @@
+{
+  "issue": 2476,
+  "stage": "LOCAL_TESTED_PARTIAL",
+  "completed": "Three publisher originals reviewed; all 23 fact payloads linked to item-level source reviews and missing-evidence reasons in fact-evidence-handoff.json. 13 structural Source candidates; 14 missing URL.",
+  "source_review": "9 publisher originals and 3 EB1911 transcriptions reviewed, all retain scoped HOLD. Ankara/Kufa fetch failures remain.",
+  "remote": "REMOTE_DELIVERY_HOLD",
+  "next_action": "Review remaining 14 missing-URL Source entries; resolve inclusive-year convention for Edirne and Singapore end-year evidence before promoting facts.",
+  "not_done": [
+    "Source correction plan envelope",
+    "full source review",
+    "Production preflight",
+    "PR",
+    "main integration",
+    "Production apply"
+  ],
+  "remaining": "24 canonical URLs, source/fact scope review, full execution-plan envelope, Production preflight and approvals, remote delivery"
+}

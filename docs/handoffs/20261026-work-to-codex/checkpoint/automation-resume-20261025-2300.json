@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-25",
+  "person_only_status": "PARKED_PRIORITY_REVIEW",
+  "status": "REPOSITORY_EVENT_REVIEW_COMPLETE_EXTERNAL_INTEGRATION_UNVERIFIED",
+  "findings": [
+    "Current workflow directory contains 39 workflows; old local checkout has removed YouTube workflows and must not determine current triggers.",
+    "Non-main Git deployments disabled in vercel.json blob 7de33d4d2d87567cc91e69dd1d6f653fbeaeee16; non-production ignore script skips builds.",
+    "PR opening limited to Integrity and path-scoped readiness/parity/revalidation workflows; documentation-only scope selects Integrity.",
+    "Integrity workflow_run outcome job is gated to codex/task-result/ branch prefix. Use no such prefix for ordinary authored work.",
+    "Production mutation workflows require main push or manual dispatch, not ordinary branch push.",
+    "Vercel get_project response does not expose Git connection or dashboard override configuration. Cannot certify unobserved external integrations. No remote write performed."
+  ],
+  "source_blobs": {
+    "integrity": "918cdf9e12541970165f24f4ff70de2ac6432044",
+    "outcome": "ed07d44e7e715cb6c73e62884c2496ccc6c3dd05"
+  },
+  "last_completed_unit": "Repository event inventory and scoped remote-delivery assessment; no business restoration completed",
+  "next_action": "Resume Place original manifest source/locator review offline; remote delivery HOLD until Vercel Git integration override behavior is confirmed. Do not repeat repository trigger census absent relevant delta."
+}

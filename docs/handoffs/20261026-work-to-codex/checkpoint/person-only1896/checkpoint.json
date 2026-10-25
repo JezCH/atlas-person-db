@@ -1,0 +1,18 @@
+{
+  "workstream": "#1896",
+  "case_id": "admin-person-only-place-authoring",
+  "stage_before": "CHANGE_PREPARED",
+  "stage_after": "CHANGE_PREPARED",
+  "base_main_sha": "56c7738e3135e6c0eeaa57e117d0694f56c0b973",
+  "original_blob": "d56ab585ba5db95fa2ef064549f0c2d81b82fb4b",
+  "blocker": "remote deployment isolation unverified; full browser and UI review incomplete",
+  "next_action": "Review remaining browser-only behavior and separate Person-only readiness from unimplemented Place authoring before any stage promotion.",
+  "warning": "DRAFT; Place authoring not implemented; no production calls",
+  "tests": "Node v24.22.1 unified regression.test.cjs: 14/14 PASS (5 fixture processes plus 9 focused tests); no browser/DB/Node22 verification",
+  "paths": [
+    "atlas-admin-identity.js",
+    "person-only.test.cjs"
+  ],
+  "decision": "Added single node:test entry point and explicit ATLAS_REPO_ROOT for server fixture; UI code unchanged this run",
+  "checkpoint_saved_url": "https://chatgpt.com/library?file_id=libfile_c685af4682b88191912cecb92e244ed4&account_id=personal"
+}

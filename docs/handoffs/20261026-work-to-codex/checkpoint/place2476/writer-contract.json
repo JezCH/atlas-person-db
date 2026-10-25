@@ -1,0 +1,14 @@
+{
+  "transaction_blob": "25eafa90f2092b4e02a71693743166f70fad8c54",
+  "assertions_blob": "68c9864d356961af7c33c5813cfc3aab46ba31a1",
+  "place": "insertExactPlace exists but is not exposed by object transaction executor; create_place generates replacement UUID and requires missing Korean name",
+  "function": "create_polity_place_function delegates createPolityPlaceFunction; normalizer creates semantic fact_key, not UUID",
+  "order": [
+    "approved exact Source assertions",
+    "exact Place insertion with source_links",
+    "create_polity_place_function with existing Polity and Place references",
+    "separate runtime compile and governed readback"
+  ],
+  "status": "HOLD_EXACT_PLACE_TRANSPORT_NOT_CONNECTED",
+  "production": "Not queried; live identity conflicts and approvals remain required"
+}
