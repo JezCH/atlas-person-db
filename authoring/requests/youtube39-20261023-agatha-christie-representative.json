@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-youtube39-20261023:agatha-christie:representative:v1",
+  "person": {
+    "canonical_name_en": "Agatha Christie",
+    "display_name_ko": "애거사 크리스티",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-23",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Detective novelist, The Murder of Roger Ackroyd",
+    "role_display_name_ko": "《애크로이드 살인사건》 저자",
+    "start_year": 1926,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1926,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Official literary estate dates The Murder of Roger Ackroyd spring 1926. Single novel publication point, not complete career."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Historical reference — Agatha Christie",
+      "canonical_url": "https://www.agathachristie.com/stories/the-murder-of-roger-ackroyd",
+      "citation_text": "Official literary estate dates The Murder of Roger Ackroyd spring 1926. Single novel publication point, not complete career."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-23",
+      "document_title": "애거서 크리스티",
+      "url": "https://namu.wiki/w/%EC%95%A0%EA%B1%B0%EC%84%9C%20%ED%81%AC%EB%A6%AC%EC%8A%A4%ED%8B%B0"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Identity/alias, specific historical Polity/Place, source and NamuWiki-title canonical readback required before final apply. This is an offline pre-Production reviewed authoring draft; no auto-write or invented coordinates."
+  }
+}

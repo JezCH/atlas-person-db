@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-youtube39-20261023:william-blake:representative:v1",
+  "person": {
+    "canonical_name_en": "William Blake",
+    "display_name_ko": "윌리엄 블레이크",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-23",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Great Britain",
+    "display_name_ko": "그레이트브리튼 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Poet and artist, Songs of Innocence",
+    "role_display_name_ko": "《순수의 노래》 저자·채색판화 창작",
+    "start_year": 1789,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1789,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Library of Congress records Blake's 1789 illustrated Songs of Innocence, London, during Kingdom of Great Britain, not post-1801 United Kingdom."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Historical reference — William Blake",
+      "canonical_url": "https://www.loc.gov/item/48031328/",
+      "citation_text": "Library of Congress records Blake's 1789 illustrated Songs of Innocence, London, during Kingdom of Great Britain, not post-1801 United Kingdom."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-23",
+      "document_title": "윌리엄 블레이크",
+      "url": "https://namu.wiki/w/%EC%9C%8C%EB%A6%AC%EC%97%84%20%EB%B8%94%EB%A0%88%EC%9D%B4%ED%81%AC"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Identity/alias, specific historical Polity/Place, source and NamuWiki-title canonical readback required before final apply. This is an offline pre-Production reviewed authoring draft; no auto-write or invented coordinates."
+  }
+}

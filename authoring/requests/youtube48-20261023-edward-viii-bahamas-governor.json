@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-youtube48-20261023:edward-viii-bahamas-governor:v1",
+  "person": {
+    "canonical_name_en": "Edward VIII",
+    "display_name_ko": "에드워드 8세",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-23",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Bahamas Colony",
+    "display_name_ko": "바하마 영국령 식민지",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Governor of the Bahamas during World War II",
+    "role_display_name_ko": "제2차 세계대전 중 바하마 총독",
+    "start_year": 1940,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1945,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After his 1936 abdication Edward VIII (Duke of Windsor) was appointed Governor of the Bahamas in 1940 and held that colonial office until 1945, according to the Royal Family biography. This is a distinct GOVERNS colonial appointment, not a continuation of his British throne. Bahamas Crown Colony precise existing Polity UUID/title must pass canonical preflight; do not invent a new independent sovereign Bahamas in 1940."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "The Royal Family — Edward VIII",
+      "canonical_url": "https://www.royal.uk/edward-viii",
+      "citation_text": "After his 1936 abdication Edward VIII (Duke of Windsor) was appointed Governor of the Bahamas in 1940 and held that colonial office until 1945, according to the Royal Family biography. This is a distinct GOVERNS colonial appointment, not a continuation of his British throne. Bahamas Crown Colony precise existing Polity UUID/title must pass canonical preflight; do not invent a new independent sovereign Bahamas in 1940."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-23",
+      "document_title": "에드워드 8세",
+      "url": "https://namu.wiki/w/%EC%97%90%EB%93%9C%EC%9B%8C%EB%93%9C%208%EC%84%B8"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "HISTORICAL_POLITY_IDENTITY_AND_EXISTING_PERSON_ACTIVITY_PREFLIGHT_REQUIRED; no automatic duplicate/create. Exact Crown relation semantics and year-granularity chronology must pass canonical Authoring resolver."
+  }
+}

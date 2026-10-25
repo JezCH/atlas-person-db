@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-youtube39-20261023:stephen-hawking:representative:v1",
+  "person": {
+    "canonical_name_en": "Stephen Hawking",
+    "display_name_ko": "스티븐 호킹",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-23",
+    "life_status_basis": "documented_death",
+    "representative_domain": "science",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Theoretical physicist formulating black-hole radiation",
+    "role_display_name_ko": "블랙홀 복사 이론을 정립한 이론물리학자",
+    "start_year": 1974,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1974,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "1974 is a precisely sourced representative discovery/research milestone, not his only scientific activity or a one-year career. Cambridge University's retrospective identifies 1974 radiation prediction. United Kingdom is academic activity context, not scientific ownership."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "University of Cambridge — Professor Stephen Hawking",
+      "canonical_url": "https://www.cam.ac.uk/stories/stephen-hawking",
+      "citation_text": "Cambridge identifies Hawking's 1974 theoretical result that black holes produce radiation, within his Cambridge research career."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-23",
+      "document_title": "스티븐 호킹",
+      "url": "https://namu.wiki/w/%EC%8A%A4%ED%8B%B0%EB%B8%90%20%ED%98%B8%ED%82%B9"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Canonical Person UUID/aliases, semantic Activity uniqueness, historical polity and place identity remain subject to one governed Production preflight; do not fabricate sovereign claims or coordinates."
+  }
+}

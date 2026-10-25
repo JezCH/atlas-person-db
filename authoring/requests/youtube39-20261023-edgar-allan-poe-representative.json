@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-youtube39-20261023:edgar-allan-poe:representative:v1",
+  "person": {
+    "canonical_name_en": "Edgar Allan Poe",
+    "display_name_ko": "에드거 앨런 포",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-23",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Poet and writer of The Raven",
+    "role_display_name_ko": "시 《까마귀》 저자·문학가",
+    "start_year": 1845,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1845,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Raven circulated and was published in American newspapers/journals in 1845; Library of Congress records January 29 Evening Mirror print and American Review version, so representative 1845 point has specific source. Not fictional 'Edgar Allan Poe' from Bungo Stray Dogs. Original author identity (1809–1849)."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Library of Congress — Edgar Allan Poe and The Raven",
+      "canonical_url": "https://blogs.loc.gov/catbird/2015/01/edgar-allan-poe-and-the-raven/",
+      "citation_text": "Library of Congress discusses Poe's 1845 The Raven appearance in The Evening Mirror and The American Review."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-23",
+      "document_title": "에드거 앨런 포",
+      "url": "https://namu.wiki/w/%EC%97%90%EB%93%9C%EA%B1%B0%20%EC%95%A8%EB%9F%B0%20%ED%8F%AC"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Exact current Production Person/alias, Polity, Source, Activity and placement preflight required. No phantom period precision or duplicate Person created."
+  }
+}

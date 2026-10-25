@@ -1,0 +1,70 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-youtube48-20261023:edward-viii:representative:v1",
+  "person": {
+    "canonical_name_en": "Edward VIII",
+    "display_name_ko": "에드워드 8세",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-23",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King Edward VIII of the United Kingdom, abdicated December 1936",
+    "role_display_name_ko": "영국 국왕·1936년 퇴위",
+    "start_year": 1936,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1936,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Edward VIII succeeded January 20, 1936; signed the Instrument of Abdication December 10, given legal effect December 11. The 1936–1936 rail is an exact SAME-YEAR reign with separately documented days, NOT an implied full year. Other distinct offices including Governor of the Bahamas 1940–1945 require separate Activity; he also held royal titles across self-governing dominions and Emperor of India. Avoid inventing one world empire polity or treating royal title as unlimited effective direct rule."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "The Royal Family — Edward VIII (Jan–Dec 1936)",
+      "canonical_url": "https://www.royal.uk/edward-viii",
+      "citation_text": "Edward VIII succeeded January 20, 1936; signed the Instrument of Abdication December 10, given legal effect December 11. The 1936–1936 rail is an exact SAME-YEAR reign with separately documented days, NOT an implied full year. Other distinct offices including Governor of the Bahamas 1940–1945 require separate Activity; he also held royal titles across self-governing dominions and Emperor of India. Avoid inventing one world empire polity or treating royal title as unlimited effective direct rule."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-23",
+      "document_title": "에드워드 8세",
+      "url": "https://namu.wiki/w/%EC%97%90%EB%93%9C%EC%9B%8C%EB%93%9C%208%EC%84%B8"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Cohort authorization covers candidate inclusion only. Current canonical full Person aliases, Polity UUID, exact Activity equivalence, role, NamuWiki current-state and place must be checked by governed Human Authoring preflight_batch before irreversible commit; no fabricated UUID or coordinates."
+  },
+  "review_context": {
+    "identity_aliases": [
+      "Edward Albert Christian George Andrew Patrick David",
+      "Duke of Windsor"
+    ],
+    "cohort": "YOUTUBE48-20261023",
+    "sources_first": true,
+    "production_readback_verified": false
+  }
+}
