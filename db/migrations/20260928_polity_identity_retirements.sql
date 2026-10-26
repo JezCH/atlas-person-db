@@ -93,6 +93,12 @@ BEGIN
       WHERE COALESCE(op->'removed_polity'->>'canonical_key','') <> ''
         AND COALESCE(op->'removed_polity'->>'polity_type','') <> ''
         AND COALESCE(op->'removed_polity'->>'historicity','') <> ''
+        -- A later reviewed restore may have revived this exact UUID. Historic
+        -- retirement ledger entries must not become active tombstones again.
+        AND NOT EXISTS (
+          SELECT 1 FROM atlas_v2.polities live
+          WHERE live.id = retired.retired_polity_id
+        )
       ON CONFLICT (retired_polity_id) DO NOTHING
     $backfill$;
 
@@ -141,6 +147,12 @@ BEGIN
           SELECT 1
           FROM atlas_v2.polity_identity_retirements r
           WHERE r.retired_polity_id = names.retired_polity_id
+        )
+        -- Match the parent backfill guard: do not refill archived names for
+        -- a restored-live identity, including if an old tombstone still exists.
+        AND NOT EXISTS (
+          SELECT 1 FROM atlas_v2.polities live
+          WHERE live.id = names.retired_polity_id
         )
       ON CONFLICT (retired_polity_id, locale, name) DO NOTHING
     $backfill_names$;
