@@ -1,0 +1,107 @@
+name: ATLAS VIS3-06 R9 Native 400 Focus Scroll Root Cause
+
+on:
+  pull_request:
+    paths:
+      - "scripts/verify-vis3-06-r9-native-400-focus-scroll-root-cause.mjs"
+      - ".github/workflows/atlas-vis3-06-r9-native-400-focus-scroll-root-cause.yml"
+      - "atlas-person-spacetime-view.js"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: atlas-vis3-06-r9-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  native_chrome_zoom:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      ATLAS_PRODUCTION_ORIGIN: https://atlas-person-db.vercel.app
+      ATLAS_CDP_URL: http://127.0.0.1:9222
+      ATLAS_VISUAL_OUT_DIR: artifacts/vis3-06-r9-native-400-focus-scroll-root-cause
+      DISPLAY: ":99"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install actual X11 desktop and Korean browser fonts
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends xvfb openbox xdotool x11-utils fonts-noto-cjk
+          fc-cache -f
+
+      - name: Verify original SVG, X11 tools, runner syntax
+        run: |
+          node --check scripts/verify-vis3-06-r9-native-400-focus-scroll-root-cause.mjs
+          test -s atlas-person-spacetime-view.js
+          node --check atlas-person-spacetime-view.js
+          command -v Xvfb
+          command -v xdotool
+          command -v openbox
+          CHROME_BIN="$(command -v google-chrome-stable || command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
+          test -n "$CHROME_BIN"
+          echo "CHROME_BIN=$CHROME_BIN" >> "$GITHUB_ENV"
+          "$CHROME_BIN" --version
+
+      - name: Actual Chrome 400 percent focus scroll geometry root-cause preflight
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$ATLAS_VISUAL_OUT_DIR"
+          Xvfb :99 -screen 0 1600x1024x24 -nolisten tcp >/tmp/atlas-r9-xvfb.log 2>&1 &
+          XVFB_PID=$!
+          CHROME_PID=""
+          WM_PID=""
+          trap 'for pid in "$CHROME_PID" "$WM_PID" "$XVFB_PID"; do if [ -n "$pid" ]; then kill "$pid" 2>/dev/null || true; fi; done' EXIT
+          for _ in $(seq 1 40); do
+            xdpyinfo -display :99 >/dev/null 2>&1 && break
+            sleep 0.25
+          done
+          xdpyinfo -display :99 >/dev/null
+          openbox --sm-disable >/tmp/atlas-r9-openbox.log 2>&1 &
+          WM_PID=$!
+          "$CHROME_BIN" \
+            --no-sandbox \
+            --disable-gpu \
+            --disable-dev-shm-usage \
+            --no-first-run \
+            --no-default-browser-check \
+            --disable-features=Translate \
+            --remote-debugging-port=9222 \
+            --user-data-dir=/tmp/atlas-r9-native-chrome \
+            --window-size=1440,900 \
+            --window-position=0,0 \
+            about:blank >/tmp/atlas-r9-chrome.log 2>&1 &
+          CHROME_PID=$!
+          for _ in $(seq 1 160); do
+            if curl -fsS http://127.0.0.1:9222/json/version >/dev/null 2>&1; then break; fi
+            sleep 0.25
+          done
+          if ! curl -fsS http://127.0.0.1:9222/json/version >/dev/null; then
+            echo 'ERROR: headed Chrome CDP startup failed — collecting full X11 evidence'
+            tail -n 100 /tmp/atlas-r9-chrome.log || true
+            tail -n 60 /tmp/atlas-r9-xvfb.log || true
+            tail -n 60 /tmp/atlas-r9-openbox.log || true
+            ps -ef | grep -E 'Xvfb|chrome|openbox' | head -50 || true
+            exit 1
+          fi
+          # Chrome startup creates transient X11 windows: xdotool search can report BadWindow.
+          # The actual Node preflight locates/activates the stable desktop window later.
+          sleep 1
+          xdotool getactivewindow >/dev/null 2>&1 || true
+          node scripts/verify-vis3-06-r9-native-400-focus-scroll-root-cause.mjs
+
+      - name: Archive R9 native 400 percent scroll ancestor and focus geometry evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-vis3-06-r9-native-400-focus-scroll-root-cause-${{ github.sha }}
+          path: artifacts/vis3-06-r9-native-400-focus-scroll-root-cause
+          if-no-files-found: warn
+          retention-days: 30
