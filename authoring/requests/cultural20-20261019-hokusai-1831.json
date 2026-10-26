@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-cultural20-20261019:hokusai:1831:v1",
+  "person": {
+    "canonical_name_en": "Katsushika Hokusai",
+    "display_name_ko": "가쓰시카 호쿠사이",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Tokugawa Shogunate",
+    "display_name_ko": "에도 막부",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Ukiyo-e artist of Thirty-six Views of Mount Fuji",
+    "role_display_name_ko": "우키요에 화가·후지산 36경 작가",
+    "start_year": 1831,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1831,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Representative historical PERSON-SPECIFIC milestone point (not a claim of a single year of career). Circa 1830–1832 Great Wave woodblock print as representative Hokusai activity point, conventionally c.1831. No false exact print date. His daughter Katsushika Ōi and fictional Hokusai characters are not the same Person. Tokugawa/Edo historical Japanese polity identity must resolve without inventing modern State of Japan retrospectively."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Metropolitan Museum of Art — Under the Wave off Kanagawa",
+      "canonical_url": "https://www.metmuseum.org/art/collection/search/39799",
+      "citation_text": "The Met identifies Katsushika Hokusai as artist of Under the Wave off Kanagawa, commonly dated ca. 1830–1832, Edo period."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "가쓰시카 호쿠사이",
+      "url": "https://namu.wiki/w/%EA%B0%80%EC%93%B0%EC%8B%9C%EC%B9%B4%20%ED%98%B8%EC%BF%A0%EC%82%AC%EC%9D%B4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Historical cultural/science activity period and source reviewed. Exact current Production Person, alias, Polity and Person→PlaceFunction IDs UNKNOWN due user-confirmed Vercel 402 pause; must reuse current exact matching canonical IDs on writer preflight, not create any substitute modern state, duplicate entity or fabricated coordinate. Existing reviewed user CORE40 queue id user-core40-20261004-hokusai is reused; no duplicate queue entry."
+  }
+}

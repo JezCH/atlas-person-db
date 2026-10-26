@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-cultural20-20261019:debussy:1894:v1",
+  "person": {
+    "canonical_name_en": "Claude Debussy",
+    "display_name_ko": "클로드 드뷔시",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "France",
+    "display_name_ko": "프랑스",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Composer of Prélude à l'après-midi d'un faune",
+    "role_display_name_ko": "작곡가·목신의 오후 전주곡 작곡가",
+    "start_year": 1894,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1894,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative historical PERSON-SPECIFIC milestone point (not a claim of a single year of career). Premiere of Debussy's orchestral Prélude à l'après-midi d'un faune in Paris 1894; distinctive musical modernism turning point in the French Third Republic. Not falsely linked to a France Second Empire birth polity."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Encyclopaedia Britannica — Claude Debussy",
+      "canonical_url": "https://www.britannica.com/biography/Claude-Debussy",
+      "citation_text": "Britannica biography identifies 1894 Prélude à l'après-midi d'un faune as a defining composition and early performance of Debussy."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "클로드 드뷔시",
+      "url": "https://namu.wiki/w/%ED%81%B4%EB%A1%9C%EB%93%9C%20%EB%93%9C%EB%B7%94%EC%8B%9C"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Historical cultural/science activity period and source reviewed. Exact current Production Person, alias, Polity and Person→PlaceFunction IDs UNKNOWN due user-confirmed Vercel 402 pause; must reuse current exact matching canonical IDs on writer preflight, not create any substitute modern state, duplicate entity or fabricated coordinate. Existing reviewed user CORE40 queue id user-core40-20261004-debussy is reused; no duplicate queue entry."
+  }
+}

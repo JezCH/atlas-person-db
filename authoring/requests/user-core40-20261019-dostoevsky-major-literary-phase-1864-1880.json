@@ -1,0 +1,67 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-core40-20261004:dostoevsky:major-literary-phase-1864-1880:v1",
+  "person": {
+    "canonical_name_en": "Fyodor Dostoevsky",
+    "display_name_ko": "표도르 도스토옙스키",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Russian Empire",
+    "display_name_ko": "러시아 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Novelist and literary author",
+    "role_display_name_ko": "소설가·문학가",
+    "start_year": 1864,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1880,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Selected mature Russian literary-activity span from Notes from Underground (1864) through Crime and Punishment (1866), The Idiot, Demons, and The Brothers Karamazov (1880). Distinct from 1849 arrest and 1850–1854 imprisonment/exile; no false 1846–1880 uninterrupted writing railway. Some works were written during travels abroad; Russian Empire labels societal/cultural affiliation, not a claim that every day in this period occurred within Russian borders."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Encyclopaedia Britannica 1911 — Feodor Mikhailovich Dostoievsky",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Dostoievsky%2C_Feodor_Mikhailovich",
+      "citation_text": "Original biographical account distinguishes Dostoevsky's earlier Siberian captivity from his 1860s–1880 mature literary work, including Crime and Punishment."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Joseph Frank — Dostoevsky: The Mantle of the Prophet, 1871–1881",
+      "canonical_url": "https://www.jstor.org/stable/j.ctvx5wbc0",
+      "citation_text": "Scholarly biographical volume details Dostoevsky's final 1871–1881 literary activity and publication of The Brothers Karamazov serial beginning 1879."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "표도르 도스토옙스키",
+      "url": "https://namu.wiki/w/%ED%91%9C%EB%8F%84%EB%A5%B4%20%EB%8F%84%EC%8A%A4%ED%86%A0%EC%98%99%EC%8A%A4%ED%82%A4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Source-reviewed historical state/cultural activity association; existing exact canonical Person aliases, Polity identity and PlaceFunction must be checked by Production preflight. Last known Vercel Hobby HTTP 402 prevented fresh live UUID reconciliation; no guessed coordinates, no new surrogate regional state. Existing USER-CORE40 queue candidate reused instead of duplication."
+  }
+}

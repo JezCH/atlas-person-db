@@ -1,0 +1,77 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:selected62-20261019:ovid:representative-literary-point:8:v1",
+  "person": {
+    "canonical_name_en": "Ovid",
+    "display_name_ko": "오비디우스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Roman Empire",
+    "display_name_ko": "로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Poet and author of the Metamorphoses",
+    "role_display_name_ko": "시인·변신 이야기 저자",
+    "start_year": 8,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 8,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Circa 8 CE marks the near-completion of the Metamorphoses before the exile to Tomis. This is a representative late-Roman literary point, not an asserted exact publication day, full-year residence, or exile-begins composition date. Columbia dates composition approximately 2–8 CE. Publius Ovidius Naso is the Roman poet, not the medical literature service Ovid or any mythic character. Rome is the pre-exile cultural locus; do not treat the narrative geography as author residence. Later exile poetry is noted without forcing a precise death year (17/18 CE) into the Activity."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Columbia University, World Epics — Ovid, Metamorphoses",
+      "canonical_url": "https://edblogs.columbia.edu/worldepics/project/ovid-metamorphoses/",
+      "citation_text": "Academic essay places work on the epic approximately 2–8 CE."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "University of California Press — Ovid’s Metamorphoses, introduction excerpt",
+      "canonical_url": "https://content.ucpress.edu/title/9780520394858/ovidsmetamorphosesexcerpt.pdf",
+      "citation_text": "Scholarly introduction states the Metamorphoses was all but complete when Augustus banished Ovid to Tomis in 8 CE."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "오비디우스",
+      "url": "https://namu.wiki/w/%EC%98%A4%EB%B9%84%EB%94%94%EC%9A%B0%EC%8A%A4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "NEEDS_PREFLIGHT: source-reviewed historical locality, but no current Production Person/alias/Activity/Polity/Place UUID reads permitted during Vercel suspension. Reuse exact canonical identities after restoration; do not create regional surrogate Polities or coordinates."
+  },
+  "review_context": {
+    "task": "USER-SELECTED-62 / issue #2545",
+    "registration_state": "NEEDS_PREFLIGHT",
+    "draft_only": true,
+    "production_screen": "NOT_PERFORMED_THIS_UNIT_USER_PROHIBITED",
+    "review_scope": "Source-based identity, deceased status, independent NamuWiki title, representative Activity and historical context; no PHFC /36 score claimed.",
+    "namuwiki_evidence_method": "external indexed NamuWiki mirror, identity-specific content reviewed; canonical namu.wiki URL follows verified independent title; not a claim of direct origin fetch",
+    "namuwiki_evidence_url": "https://www.namu.moe/w/오비디우스",
+    "apply_gate": "DRAFT ONLY; no merge, Apply, DB write, compile, deployment or readback authorized in this unit. Fresh alias/semantic Activity/Polity preflight mandatory after restoration."
+  }
+}

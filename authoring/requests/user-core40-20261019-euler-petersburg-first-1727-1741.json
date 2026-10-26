@@ -1,0 +1,67 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-core40-20261004:euler:petersburg-first-1727-1741:v1",
+  "person": {
+    "canonical_name_en": "Leonhard Euler",
+    "display_name_ko": "레온하르트 오일러",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "documented_death",
+    "representative_domain": "science",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Russian Empire",
+    "display_name_ko": "러시아 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Saint Petersburg Academy mathematician and physicist (first period)",
+    "role_display_name_ko": "상트페테르부르크 과학아카데미 수학·물리학자(1차)",
+    "start_year": 1727,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1741,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "First distinct Petersburg academy period from joining in 1727 until the documented 1741 move to Berlin. Year-level transition overlap with Berlin's 1741 start is a granularity artifact of sequential career moves, not simultaneous continuous Russian residence; no invented transfer day. The existing Russian Empire state polity identity must be reused."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Berlin-Brandenburg Academy — Leonhard Euler historical membership",
+      "canonical_url": "https://www.bbaw.de/die-akademie/akademie-historische-aspekte/mitglieder-historisch/historisches-mitglied-leonhard-euler-701",
+      "citation_text": "Historical academic register: Saint Petersburg Academy from 1727, Berlin Academy 1741–1766, return to Petersburg Academy in 1766; exact death 18 September 1783."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Berlin-Brandenburg Academy — 300 Jahre Leonhard Euler",
+      "canonical_url": "https://euler.bbaw.de/einfuehrung.php.html",
+      "citation_text": "Academy archival introduction explicitly divides Euler's institutional career into Petersburg 1727–1741, Prussian Academy of Sciences Berlin 1741–1766, and Petersburg 1766–1783."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "레온하르트 오일러",
+      "url": "https://namu.wiki/w/%EB%A0%88%EC%98%A8%ED%95%98%EB%A5%B4%ED%8A%B8%20%EC%98%A4%EC%9D%BC%EB%9F%AC"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Source-reviewed historical state/cultural activity association; existing exact canonical Person aliases, Polity identity and PlaceFunction must be checked by Production preflight. Last known Vercel Hobby HTTP 402 prevented fresh live UUID reconciliation; no guessed coordinates, no new surrogate regional state. Existing USER-CORE40 queue candidate reused instead of duplication."
+  }
+}

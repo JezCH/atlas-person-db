@@ -1,0 +1,69 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:preproduction-20261019:vauban:representative:v1",
+  "person": {
+    "canonical_name_en": "Sébastien Le Prestre de Vauban",
+    "display_name_ko": "세바스티앙 보방",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "technology",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of France",
+    "display_name_ko": "프랑스 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Fortification engineer",
+    "role_display_name_ko": "요새 공학자",
+    "start_year": 1678,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1678,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "1678 appointment as General Commissioner for Fortifications, a representative institutional milestone for his engineering programme. Not all individual sieges or fortresses split into separate rows, and not a guessed full tenure. Distinct from the Warframe or modern neighbourhood bearing his name."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Network of Vauban major sites — Vauban",
+      "canonical_url": "https://sites-vauban.org/en/discover/vauban",
+      "citation_text": "1678 appointment as General Commissioner for Fortifications, a representative institutional milestone for his engineering programme."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "세바스티앙 르 프레스트르 드 보방",
+      "url": "https://namu.wiki/w/%EC%84%B8%EB%B0%94%EC%8A%A4%ED%8B%B0%EC%95%99%20%EB%A5%B4%20%ED%94%84%EB%A0%88%EC%8A%A4%ED%8A%B8%EB%A5%B4%20%EB%93%9C%20%EB%B3%B4%EB%B0%A9"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Source-reviewed context only. No current canonical Person/alias/Activity/Polity/Place preflight permitted before Production. Resolve/reuse exact IDs and current reviewed external reference; no fabricated coordinates or new political entities."
+  },
+  "review_context": {
+    "registration_state": "NEEDS_PREFLIGHT",
+    "production_access": false,
+    "source_review_only": true,
+    "namuwiki_method": "Exact independent Person article reviewed in external-index or namu.moe mirror; origin fetch not claimed.",
+    "namuwiki_evidence_url": "https://namu.moe/w/%EC%84%B8%EB%B0%94%EC%8A%A4%ED%8B%B0%EC%95%99%20%EB%A5%B4%20%ED%94%84%EB%A0%88%EC%8A%A4%ED%8A%B8%EB%A5%B4%20%EB%93%9C%20%EB%B3%B4%EB%B0%A9",
+    "apply_gate": "DRAFT DO NOT APPLY OR MERGE; fresh canonical duplicate/Polity preflight after recovery. Importance is not identity/chronology proof. No PHFC /36 completeness claim."
+  }
+}

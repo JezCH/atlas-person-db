@@ -1,0 +1,77 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:selected62-20261019:aeschylus:representative-literary-point:-458:v1",
+  "person": {
+    "canonical_name_en": "Aeschylus",
+    "display_name_ko": "아이스킬로스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Athens",
+    "display_name_ko": "아테네",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Tragic playwright and author of the Oresteia",
+    "role_display_name_ko": "비극작가·오레스테이아 저자",
+    "start_year": -458,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -458,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Oresteia was presented at the City Dionysia in Athens in 458 BCE. All three surviving tragedies belong to one production and one representative Activity. The historical dramatist is distinct from the fictional Agamemnon, Orestes and other characters. Do not map the mythical Argos setting as the author's political affiliation; do not add the legendary turtle death as a verified event. Earlier military service is contextual rather than an invented command rail."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Oxford Bibliographies — Aeschylus’s Oresteia",
+      "canonical_url": "https://academic.oup.com/reference/62365/reference-article-abstract/554639257",
+      "citation_text": "Scholarly bibliography identifies the 458 BCE City Dionysia production in Athens and its first prize."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "University of Wisconsin Press — The Oresteia",
+      "canonical_url": "https://uwpress.wisc.edu/Books/T/The-Oresteia",
+      "citation_text": "Publisher describes the trilogy first presented at the festival of Dionysus in Athens in spring 458 BCE."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "아이스킬로스",
+      "url": "https://namu.wiki/w/%EC%95%84%EC%9D%B4%EC%8A%A4%ED%82%AC%EB%A1%9C%EC%8A%A4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "NEEDS_PREFLIGHT: source-reviewed historical locality, but no current Production Person/alias/Activity/Polity/Place UUID reads permitted during Vercel suspension. Reuse exact canonical identities after restoration; do not create regional surrogate Polities or coordinates."
+  },
+  "review_context": {
+    "task": "USER-SELECTED-62 / issue #2545",
+    "registration_state": "NEEDS_PREFLIGHT",
+    "draft_only": true,
+    "production_screen": "NOT_PERFORMED_THIS_UNIT_USER_PROHIBITED",
+    "review_scope": "Source-based identity, deceased status, independent NamuWiki title, representative Activity and historical context; no PHFC /36 score claimed.",
+    "namuwiki_evidence_method": "external indexed NamuWiki mirror, identity-specific content reviewed; canonical namu.wiki URL follows verified independent title; not a claim of direct origin fetch",
+    "namuwiki_evidence_url": "https://m.namu.moe/w/아이스킬로스",
+    "apply_gate": "DRAFT ONLY; no merge, Apply, DB write, compile, deployment or readback authorized in this unit. Fresh alias/semantic Activity/Polity preflight mandatory after restoration."
+  }
+}

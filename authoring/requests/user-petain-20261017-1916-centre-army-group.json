@@ -1,0 +1,73 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-petain-20261017:1916-centre-army-group:v1",
+  "person": {
+    "canonical_name_en": "Philippe Pétain",
+    "display_name_ko": "필리프 페탱",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-17",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "French Republic",
+    "display_name_ko": "프랑스 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "Commander of French Groupe d'armées du Centre",
+    "role_display_name_ko": "프랑스 중부 집단군 사령관",
+    "start_year": 1916,
+    "start_month": 5,
+    "start_day": 2,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1917,
+    "end_month": 5,
+    "end_day": 4,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Took command of Centre army group on 2 May 1916. Later chief of general staff dated April 28, 1917 and formal commander-in-chief May 15. The 4 May handover date is a secondary group chronology and overlaps the staff appointment; transition not a fabricated exclusive linear career; 4 May boundary approximate pending exact preflight sources. Activity domain emphasis: military."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "L'histoire en rafale — 2 mai 1916: Pétain and Groupe d'armées du Centre",
+      "canonical_url": "https://lhistoireenrafale.lunion.fr/2019/05/01/2-mai-1916-le-general-petain-a-la-tete-du-groupement-des-armees-du-centre/",
+      "citation_text": "Published transcript discussion of Poincaré's memoir records Pétain replacing Langle de Cary as Centre army group commander and Nivelle taking Verdun army command on 2 May 1916."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Larousse — Pétain, Dictionnaire de l'histoire de France",
+      "canonical_url": "https://www.larousse.fr/archives/histoire_de_france/page/947",
+      "citation_text": "Larousse places his 2 May 1916 promotion to commander of Centre army group and May 15 1917 elevation to French commander in chief."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Encyclopaedia Britannica 1926 supplement — Pétain",
+      "canonical_url": "https://en.wikisource.org/wiki/Page:EB1926_-_Supplement_Volume_3.pdf/120",
+      "citation_text": "Period source records Pétain becoming general chief of staff at War Ministry on 28 April 1917 and succeeding Nivelle as field commander in chief on May 15."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-17",
+      "document_title": "필리프 페탱",
+      "url": "https://namu.wiki/w/%ED%95%84%EB%A6%AC%ED%94%84%20%ED%8E%98%ED%83%B1"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Source-reviewed historical France context only. Bounded exact Production Person and France/French Republic Polity identity preflight, and Vichy regime Context linkage, are blocked by Vercel Hobby HTTP 402. Existing France umbrella historical UUID 1eaa48b6-dc60-49d6-91c4-49db556f4ddf / juridically continuous French Republic UUID b138f5e4-ff83-40f6-bdb1-83b08c0256cb sourced by Production-verified P2-01F; no invented PlaceFunction/coordinates, no artificial new sovereign Vichy."
+  }
+}

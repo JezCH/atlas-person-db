@@ -1,0 +1,69 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:preproduction-20261019:ungern:representative:v1",
+  "person": {
+    "canonical_name_en": "Roman von Ungern-Sternberg",
+    "display_name_ko": "로만 폰 운게른슈테른베르크",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "military",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Bogd Khanate of Mongolia",
+    "display_name_ko": "복드 칸국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Military commander",
+    "role_display_name_ko": "군 지휘관",
+    "start_year": 1921,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1921,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "1921 military intervention in Urga and restoration of the Bogd. Not a self-invented Mongolian emperor/reign or sovereign Russian-Mongolian empire; contested and violent military context. Bogd Khanate exact canonical polity identity must be resolved by future preflight. Distinguish alternate-history game variants."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Fujiko Isono — The Mongolian Revolution of 1921, Modern Asian Studies 10(3), 1976",
+      "canonical_url": "https://www.cambridge.org/core/journals/modern-asian-studies/article/mongolian-revolution-of-1921/2FD9F6600841118EEC430BB238D09AF7",
+      "citation_text": "1921 military intervention in Urga and restoration of the Bogd."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "로만 폰 운게른슈테른베르크",
+      "url": "https://namu.wiki/w/%EB%A1%9C%EB%A7%8C%20%ED%8F%B0%20%EC%9A%B4%EA%B2%8C%EB%A5%B8%EC%8A%88%ED%85%8C%EB%A5%B8%EB%B2%A0%EB%A5%B4%ED%81%AC"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Source-reviewed context only. No current canonical Person/alias/Activity/Polity/Place preflight permitted before Production. Resolve/reuse exact IDs and current reviewed external reference; no fabricated coordinates or new political entities."
+  },
+  "review_context": {
+    "registration_state": "NEEDS_PREFLIGHT",
+    "production_access": false,
+    "source_review_only": true,
+    "namuwiki_method": "Exact independent Person article reviewed in external-index or namu.moe mirror; origin fetch not claimed.",
+    "namuwiki_evidence_url": "https://namu.moe/w/%EB%A1%9C%EB%A7%8C%20%ED%8F%B0%20%EC%9A%B4%EA%B2%8C%EB%A5%B8%EC%8A%88%ED%85%8C%EB%A5%B8%EB%B2%A0%EB%A5%B4%ED%81%AC",
+    "apply_gate": "DRAFT DO NOT APPLY OR MERGE; fresh canonical duplicate/Polity preflight after recovery. Importance is not identity/chronology proof. No PHFC /36 completeness claim."
+  }
+}

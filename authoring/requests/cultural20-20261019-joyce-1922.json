@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-cultural20-20261019:additional-joyce:1922:v1",
+  "person": {
+    "canonical_name_en": "James Joyce",
+    "display_name_ko": "제임스 조이스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "France",
+    "display_name_ko": "프랑스",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Modernist writer and author of Ulysses",
+    "role_display_name_ko": "모더니즘 소설가·율리시스 저자",
+    "start_year": 1922,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1922,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative historical PERSON-SPECIFIC milestone point (not a claim of a single year of career). Sylvia Beach published the first edition of James Joyce's Ulysses in Paris on 2 February 1922, a French Third Republic location event. Joyce was Irish-born; novel narrative takes place in Dublin, NOT a warrant to bind first-publication Activity to Ireland. Person remains Irish literary identity."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Morgan Library & Museum — Publishing Ulysses",
+      "canonical_url": "https://www.themorgan.org/exhibitions/online/ulysses/publishing-ulysses",
+      "citation_text": "Morgan Library documents Paris first publication of Joyce's Ulysses on 2 February 1922 by Sylvia Beach."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "제임스 조이스",
+      "url": "https://namu.wiki/w/%EC%A0%9C%EC%9E%84%EC%8A%A4%20%EC%A1%B0%EC%9D%B4%EC%8A%A4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Historical cultural/science activity period and source reviewed. Exact current Production Person, alias, Polity and Person→PlaceFunction IDs UNKNOWN due user-confirmed Vercel 402 pause; must reuse current exact matching canonical IDs on writer preflight, not create any substitute modern state, duplicate entity or fabricated coordinate. New candidate not previously found in queue; exact live Person/alias negative check required before write."
+  }
+}

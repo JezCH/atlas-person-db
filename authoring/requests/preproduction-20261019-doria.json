@@ -1,0 +1,69 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:preproduction-20261019:doria:representative:v1",
+  "person": {
+    "canonical_name_en": "Andrea Doria",
+    "display_name_ko": "안드레아 도리아",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "military",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Genoa",
+    "display_name_ko": "제노바 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Admiral and political reformer",
+    "role_display_name_ko": "제독·정치 개혁가",
+    "start_year": 1528,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1528,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "1528 Genoese political restoration/reform and imperial naval alignment. Representative turning point, not a claimed office as Doge or an unqualified continuous sovereign reign. Distinct from Giovanni Andrea Doria, the liner, warship and fictional ship characters."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Treccani — Andrea Doria, Enciclopedia machiavelliana",
+      "canonical_url": "https://www.treccani.it/enciclopedia/andrea-doria_%28Enciclopedia-machiavelliana%29/",
+      "citation_text": "1528 Genoese political restoration/reform and imperial naval alignment."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "안드레아 도리아",
+      "url": "https://namu.wiki/w/%EC%95%88%EB%93%9C%EB%A0%88%EC%95%84%20%EB%8F%84%EB%A6%AC%EC%95%84"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Source-reviewed context only. No current canonical Person/alias/Activity/Polity/Place preflight permitted before Production. Resolve/reuse exact IDs and current reviewed external reference; no fabricated coordinates or new political entities."
+  },
+  "review_context": {
+    "registration_state": "NEEDS_PREFLIGHT",
+    "production_access": false,
+    "source_review_only": true,
+    "namuwiki_method": "Exact independent Person article reviewed in external-index or namu.moe mirror; origin fetch not claimed.",
+    "namuwiki_evidence_url": "https://namu.moe/w/%EC%95%88%EB%93%9C%EB%A0%88%EC%95%84%20%EB%8F%84%EB%A6%AC%EC%95%84",
+    "apply_gate": "DRAFT DO NOT APPLY OR MERGE; fresh canonical duplicate/Polity preflight after recovery. Importance is not identity/chronology proof. No PHFC /36 completeness claim."
+  }
+}

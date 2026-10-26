@@ -1,0 +1,69 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:preproduction-20261019:hamilton:representative:v1",
+  "person": {
+    "canonical_name_en": "Alexander Hamilton",
+    "display_name_ko": "알렉산더 해밀턴",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Secretary of the Treasury",
+    "role_display_name_ko": "재무장관",
+    "start_year": 1789,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1795,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "First US Secretary of the Treasury, 1789–1795. One meaningful fiscal-government term; the source also provides exact boundary days but this draft preserves year granularity. Not his son Alexander Hamilton Jr., a President, or the musical."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "US Treasury — Alexander Hamilton, 1789–1795",
+      "canonical_url": "https://home.treasury.gov/about/history/prior-secretaries/alexander-hamilton-1789-1795",
+      "citation_text": "First US Secretary of the Treasury, 1789–1795."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "알렉산더 해밀턴",
+      "url": "https://namu.wiki/w/%EC%95%8C%EB%A0%89%EC%82%B0%EB%8D%94%20%ED%95%B4%EB%B0%80%ED%84%B4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Source-reviewed context only. No current canonical Person/alias/Activity/Polity/Place preflight permitted before Production. Resolve/reuse exact IDs and current reviewed external reference; no fabricated coordinates or new political entities."
+  },
+  "review_context": {
+    "registration_state": "NEEDS_PREFLIGHT",
+    "production_access": false,
+    "source_review_only": true,
+    "namuwiki_method": "Exact independent Person article reviewed in external-index or namu.moe mirror; origin fetch not claimed.",
+    "namuwiki_evidence_url": "https://namu.moe/w/%EC%95%8C%EB%A0%89%EC%82%B0%EB%8D%94%20%ED%95%B4%EB%B0%80%ED%84%B4",
+    "apply_gate": "DRAFT DO NOT APPLY OR MERGE; fresh canonical duplicate/Polity preflight after recovery. Importance is not identity/chronology proof. No PHFC /36 completeness claim."
+  }
+}

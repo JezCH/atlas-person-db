@@ -1,0 +1,72 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:selected62-remaining30-20261018:ellington:representative:v1",
+  "person": {
+    "canonical_name_en": "Duke Ellington",
+    "display_name_ko": "듀크 엘링턴",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-18",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "United States of America",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Composer and bandleader",
+    "role_display_name_ko": "작곡가·악단 지휘자",
+    "start_year": 1943,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1943,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Carnegie Hall premiere of Black, Brown and Beige in New York in 1943; one representative composition/performance event, not all later revised recordings. Identity review: Edward Kennedy Ellington, musician (1899–1974); Duke is a nickname, not a sovereign title or band-as-Person."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Carnegie Hall performance archive — Black, Brown, and Beige",
+      "canonical_url": "https://data.carnegiehall.org/works/57353/about",
+      "citation_text": "Venue’s archive lists Duke Ellington and His Orchestra performing the work on 23 January 1943."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-18",
+      "document_title": "듀크 엘링턴",
+      "url": "https://namu.wiki/w/%EB%93%80%ED%81%AC%20%EC%97%98%EB%A7%81%ED%84%B4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "NEEDS_PREFLIGHT. Source-reviewed historical location/context only; exact canonical Person/alias/Polity/Activity/Place state is unknown. No live requests permitted during quota suspension. Reuse exact existing identities; no invented UUIDs, coordinates or surrogate cultural Polities."
+  },
+  "review_context": {
+    "task": "#2545 approved 62, remaining 30 after #2543/#2544/#2546",
+    "registration_state": "NEEDS_PREFLIGHT",
+    "draft_only": true,
+    "production_screen": "NOT_PERFORMED_USER_PROHIBITED",
+    "identity_review": "Edward Kennedy Ellington, musician (1899–1974); Duke is a nickname, not a sovereign title or band-as-Person.",
+    "namuwiki_evidence_method": "external-index independent Person mirror/title review; direct origin fetch not claimed",
+    "namuwiki_evidence_url": "https://namu.moe/w/%EB%93%80%ED%81%AC%20%EC%97%98%EB%A7%81%ED%84%B4",
+    "domain_review": "Explicit v2 taxonomy review; architecture=technology, social thought/philosophy=culture, mathematics/medicine=science. Not inferred from office.",
+    "apply_gate": "DRAFT / DO NOT MERGE OR APPLY. Fresh semantic duplicate and exact historical Polity preflight required; source review is not proof of DB absence. No PHFC /36 factual coverage score claimed."
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-costa-rica:jose-figueres-ferrer:junta-1948-1949:20261016:v1",
+  "person": {
+    "canonical_name_en": "José Figueres Ferrer",
+    "display_name_ko": "호세 피게레스 페레르",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-16",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Costa Rica",
+    "display_name_ko": "코스타리카",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President of the Founding Junta of the Second Republic",
+    "role_display_name_ko": "제2공화국 창설위원회 의장·임시정부 수반",
+    "start_year": 1948,
+    "start_month": 5,
+    "start_day": 8,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1949,
+    "end_month": 11,
+    "end_day": 7,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "De facto provisional government head: President of the Junta Fundadora de la Segunda República, established after Costa Rica's 1948 civil war. The Costa Rican National Archive lists the Junta's effective tenure through 7 November 1949; on 8 November 1949 José Figueres Ferrer handed executive power to elected President Otilio Ulate Blanco. These are last governing day versus handover boundary, NOT inconsistent overlapping presidential terms. It was not a popularly elected constitutional presidency, nor a distinct sovereign Republic of Costa Rica. Reuse the existing Costa Rica Polity and distinguish the provisional Junta as a role/institution, not an independently invented territorial state."
+  },
+  "sources": [
+    {
+      "source_type": "institutional_web",
+      "title": "Archivo Nacional de Costa Rica — Mayo 2024: Junta Fundadora de la Segunda República",
+      "canonical_url": "https://www.archivonacional.go.cr/index.php/component/content/article/117-un-momento-con-la-historia/412-mayo-2024?Itemid=437",
+      "citation_text": "National Archives explicitly record Figueres as president of the de facto Junta from 8 May 1948 through 7 November 1949."
+    },
+    {
+      "source_type": "institutional_web",
+      "title": "Asamblea Legislativa de Costa Rica — José Figueres Ferrer",
+      "canonical_url": "https://www.asamblea.go.cr/ca/Lists/coleccion/DispForm.aspx?ID=214",
+      "citation_text": "Legislative biographical collection explicitly records Figueres handing power over to Otilio Ulate on 8 November 1949."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-16",
+      "document_title": "호세 피게레스 페레르",
+      "url": "https://namu.wiki/w/%ED%98%B8%EC%84%B8%20%ED%94%BC%EA%B2%8C%EB%A0%88%EC%8A%A4%20%ED%8E%98%EB%A0%88%EB%A5%B4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Historical Costa Rica polity/temporal office identity source-reviewed. Exact live Person, historical Costa Rica Polity and PolityPlaceFunction IDs cannot be verified during Production HTTP 402 DEPLOYMENT_DISABLED. Reuse exact live IDs after bounded authoritative Production preflight; no invented coordinates, place-function IDs or duplicative state."
+  }
+}
