@@ -1,0 +1,77 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected:al-mamun:abbasid-caliphate:caliph:813-833:20261027:v1",
+  "person": {
+    "canonical_name_en": "Al-Ma'mun",
+    "display_name_ko": "알 마문",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-27",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance"
+  },
+  "polity": {
+    "canonical_name_en": "Abbasid Caliphate",
+    "display_name_ko": "아바스 칼리파국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Caliph",
+    "role_display_name_ko": "칼리파",
+    "start_year": 813,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 833,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Al-Ma'mun (Abu al-Abbas Abd Allah ibn Harun al-Rashid), seventh Abbasid caliph, reigned 813–833. He proclaimed himself caliph amid the struggle with al-Amin before Baghdad fell in 813; this Activity follows the conventional full caliphal reign dating of 813–833 and is not a lifetime or only-in-Baghdad period. He entered Baghdad in 819. His support for scholars and translation and the establishment of the Mihna in 833 belong to the reign context; this record does not assert sole foundation of the House of Wisdom."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Maʾmun — Encyclopaedia Iranica (Clifford Edmund Bosworth)",
+      "canonical_url": "https://www.iranicaonline.org/articles/mamun-abul-abbas-abd-allah/",
+      "citation_text": "Bosworth identifies Ma'mun as seventh Abbasid caliph (r. 813–833), describes the war with al-Amin and his arrival in Baghdad in 819."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Maʾmūn — Biographical Encyclopedia of Astronomers, Max Planck Institute for the History of Science",
+      "canonical_url": "https://ismi.mpiwg-berlin.mpg.de/biography/Ma%27mun_BEA.htm",
+      "citation_text": "Len Berggren's specialist biography documents Ma'mun's birth in 786, death in 833 and 813 accession as seventh Abbasid caliph; it discusses his learned patronage."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Islam: Empire of Faith — Mamun (PBS)",
+      "canonical_url": "https://www.pbs.org/empires/islam/profilesmamun.html",
+      "citation_text": "PBS describes the caliph's 813–833 reign, succession conflict, Khurasan political base and scholarly translation patronage."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-27",
+      "document_title": "알 마문",
+      "url": "https://namu.wiki/w/%EC%95%8C%20%EB%A7%88%EB%AC%B8"
+    }
+  },
+  "review_context": {
+    "selected_by_user_on": "2026-10-27",
+    "selection": "one_person_registration_requested",
+    "canonical_person_disambiguation": "Seventh Abbasid caliph (786–833), son of Harun al-Rashid; not Ma'munid rulers of Khwarazm (10th–11th centuries).",
+    "existing_polity_reference": "authoring/requests/cohort26-ahmad-ibn-hanbal-abbasid-833-20261009.json",
+    "namuwiki_evidence_note": "Matching '알 마문' article was reviewed through a NamuWiki-derived public mirror https://www.namu.moe/w/%EC%95%8C%20%EB%A7%88%EB%AC%B8 ; direct namu.wiki access was blocked by the browser provider. Reconfirm authoritative target if preflight requires it.",
+    "production_duplicate_preflight": "REQUIRED: verify current preferred name and variants Al-Ma'mun / Al-Mamun / Al-Maʾmūn / al-Maʿmun and reuse existing Person UUID if present; this offline manifest is not proof of absence.",
+    "production_status_at_review": "BLOCKED: Vercel project live=false; draft registration only, no canonical write/readback"
+  }
+}
