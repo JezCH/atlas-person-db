@@ -316,6 +316,9 @@ function requireV2Manifest(raw) {
       continue;
     }
     if (existingActivityTargets.has(operation.activity_id)) throw new Error("CORRECTION_V2_ACTIVITY_TARGET_REUSED");
+    // A prior split cannot create an ID that this operation expects to exist.
+    // The split loop checks the reverse order using the same collision rule.
+    if (newActivityIds.has(operation.activity_id)) throw new Error("CORRECTION_V2_NEW_ACTIVITY_ID_REUSED");
     existingActivityTargets.add(operation.activity_id);
     if (operation.type === "split_activity") {
       for (const fragment of operation.new_fragments) {

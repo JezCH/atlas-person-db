@@ -30,6 +30,81 @@ function explicitActivityBundle(id = SUBJECT_ID) {
   };
 }
 
+const THIRD_ACTIVITY_ID = '10000000-0000-4000-8000-000000000007';
+const FOURTH_ACTIVITY_ID = '10000000-0000-4000-8000-000000000008';
+
+function splitFixture(activityId, newId) {
+  return {
+    type: 'split_activity', activity_id: activityId,
+    exact_before: explicitActivityBundle(activityId),
+    survivor_fragment: explicitActivityBundle(activityId),
+    new_fragments: [explicitActivityBundle(newId)],
+    gap_overlap_policy: 'reviewed test partition'
+  };
+}
+
+function targetFixture(type, activityId) {
+  if (type === 'split_activity') return splitFixture(activityId, FOURTH_ACTIVITY_ID);
+  if (type === 'retire_activity') {
+    return {
+      type, activity_id: activityId, exact_before: explicitActivityBundle(activityId),
+      replacement_survivors: [{ activity_id: THIRD_ACTIVITY_ID, exact_before: explicitActivityBundle(THIRD_ACTIVITY_ID), exact_after: explicitActivityBundle(THIRD_ACTIVITY_ID) }],
+      source_transfer_policy: require('../server/atlas-correction-v2-manifest-synthesizer.js').RETIRE_SOURCE_TRANSFER_POLICY,
+      silent_source_drop_forbidden: true
+    };
+  }
+  return { type, activity_id: activityId, exact_before: explicitActivityBundle(activityId), exact_after: explicitActivityBundle(activityId) };
+}
+
+function signedActivityManifest(operations) {
+  const core = {
+    schema: engine.MANIFEST_V2, request_id: 'test-order-independent-activity-identities',
+    review_status: 'approved', exact_live_snapshot_digest: `sha256:${'a'.repeat(64)}`, operations
+  };
+  return { ...core, manifest_sha256: sha256(core), production_executable: true };
+}
+
+test('split new IDs cannot also be existing mutation targets in either operation order', () => {
+  for (const type of ['rewrite_activity', 'split_activity', 'retire_activity']) {
+    const pair = [splitFixture(SUBJECT_ID, RELATION_ID), targetFixture(type, RELATION_ID)];
+    for (const operations of [pair, pair.toReversed()]) {
+      const manifest = signedActivityManifest(operations);
+      const before = JSON.stringify(manifest);
+      assert.throws(() => engine.requireV2Manifest(manifest), { message: 'CORRECTION_V2_NEW_ACTIVITY_ID_REUSED' }, type);
+      assert.equal(JSON.stringify(manifest), before);
+    }
+  }
+});
+
+test('cross-operation split identity collisions reject before transaction in dry-run and apply', async () => {
+  let queries = 0;
+  const service = engine.createCorrectionManifestV2Service({ client: { async query() { queries++; throw Error('database must not be reached'); } } });
+  for (const type of ['rewrite_activity', 'split_activity', 'retire_activity']) {
+    const pair = [splitFixture(SUBJECT_ID, RELATION_ID), targetFixture(type, RELATION_ID)];
+    for (const operations of [pair, pair.toReversed()]) {
+      for (const dryRun of [true, false]) {
+        await assert.rejects(service.execute(signedActivityManifest(operations), { dryRun }), { message: 'CORRECTION_V2_NEW_ACTIVITY_ID_REUSED' });
+      }
+    }
+  }
+  assert.equal(queries, 0);
+});
+
+test('disjoint split and rewrite remain valid in either order without altering source or input bundles', () => {
+  const pair = [splitFixture(SUBJECT_ID, RELATION_ID), targetFixture('rewrite_activity', THIRD_ACTIVITY_ID)];
+  for (const operations of [pair, pair.toReversed()]) {
+    const manifest = signedActivityManifest(operations);
+    const before = JSON.stringify(manifest);
+    const normalized = engine.requireV2Manifest(manifest);
+    assert.equal(normalized.operations.length, 2);
+    const split = normalized.operations.find(operation => operation.type === 'split_activity');
+    assert.deepEqual(split.exact_before.normalized_source_links, operations.find(operation => operation.type === 'split_activity').exact_before.normalized_source_links);
+    assert.equal(split.new_fragments[0].normalized_source_links[0].source_id, SOURCE_ID);
+    assert.equal(JSON.stringify(manifest), before);
+    assert.deepEqual(engine.expectedCountDeltas(normalized.operations), { activities: 1, activity_sources: 1, chronology_claims: 0, relationship_descriptions: 0, polity_relations: 0, polity_relation_sources: 0 });
+  }
+});
+
 test('rewrite requires explicit child inventories on both before and after bundles', () => {
   const bundle = explicitActivityBundle();
   const operation = { type: 'rewrite_activity', activity_id: SUBJECT_ID, exact_before: bundle, exact_after: structuredClone(bundle) };
