@@ -47,6 +47,16 @@ function requireOperation(raw, index) {
     throw new Error("CORRECTION_SOURCE_CITATION_OPERATION_UNSUPPORTED");
   }
 
+  // This family can guard/rewrite citation_text only. Never silently discard
+  // a requested title/publisher change or an unsupported before-state guard.
+  // Nonmutation review metadata remains compatible.
+  const assertionFields = ["expected_canonical_url", "expected_citation_text", "replacement_citation_text"];
+  for (const field of Object.keys(raw)) {
+    if ((field.startsWith("expected_") || field.startsWith("replacement_")) && !assertionFields.includes(field)) {
+      throw new Error(`CORRECTION_SOURCE_CITATION_OP${index}_FIELD_UNSUPPORTED:${field}`);
+    }
+  }
+
   const caseId = requireNonEmpty(raw.case_id, `CORRECTION_SOURCE_CITATION_OP${index}_CASE_ID_REQUIRED`);
   const sourceId = requireUuid(raw.source_id, `CORRECTION_SOURCE_CITATION_OP${index}_SOURCE_ID_INVALID`);
   const expectedCanonicalUrl = requireNonEmpty(raw.expected_canonical_url, `CORRECTION_SOURCE_CITATION_OP${index}_EXPECTED_URL_REQUIRED`);
