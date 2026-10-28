@@ -239,6 +239,18 @@
       }
     }
 
+    function renderDetail(id) {
+      const card = [...root.querySelectorAll("details[data-polity-id]")].find(row => String(row.dataset.polityId || "").toLowerCase() === id);
+      const body = card?.querySelector(".polity-browser-detail");
+      if (!body) return; // A filtered-out dossier keeps its cached state until shown again.
+      const focused = card.ownerDocument?.activeElement;
+      const restoreFocus = focused && body.contains(focused);
+      body.innerHTML = detailHtml(details.get(id));
+      // Retry replaces its button. Keep keyboard navigation at this disclosure,
+      // but never move focus that the user has placed elsewhere while waiting.
+      if (restoreFocus) card.querySelector("summary")?.focus({ preventScroll: true });
+    }
+
     async function ensureDetail(polityId, { retry = false } = {}) {
       const id = String(polityId || "").trim().toLowerCase();
       if (live.status !== "ready" || !openPolityIds.has(id) || !live.polities.some(p => String(p.id).toLowerCase() === id)) return;
@@ -247,7 +259,7 @@
       const currentGeneration = generation;
       const state = { status: "loading", id };
       details.set(id, state);
-      render();
+      renderDetail(id);
       try {
         if (typeof READER.readPolity !== "function") throw new Error("POLITY_DETAIL_READER_UNAVAILABLE");
         const payload = await READER.readPolity(id);
@@ -258,9 +270,8 @@
         if (currentGeneration !== generation || details.get(id) !== state) return;
         details.set(id, { status: "error", id });
       }
-      // Native toggle notification may be queued after the user already closed.
-      syncOpenCards();
-      render();
+      // Update only this body: preserve native disclosure/focus and sibling DOM.
+      renderDetail(id);
     }
 
     function revealSelected({ scroll = true } = {}) {

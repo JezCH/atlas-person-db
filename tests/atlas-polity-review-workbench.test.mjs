@@ -702,32 +702,52 @@ const detailTestRow = {
 };
 const tick = () => new Promise(resolve => setImmediate(resolve));
 function deferred() { let resolve, reject; const promise = new Promise((yes,no) => { resolve=yes; reject=no; }); return { promise, resolve, reject }; }
-function mountedDetailBrowser(readPolity, initialPolityId = '') {
+function mountedDetailBrowser(readPolity, initialPolityId = '', extraRows = []) {
   const require = createRequire(import.meta.url);
   const service = require('../server/atlas-polity-read-service.js');
   const full = service.projectPolity(detailTestRow);
   const summary = service.projectPolity(detailTestRow, { includeTemporal: false });
   const nodes = new Map(), listeners = {}, cards = new Map();
+  const document = { activeElement: null };
   const element = () => ({ value: '', innerHTML: '', textContent: '', classList: { toggle() {} } });
   const list = element(); let html = '';
-  Object.defineProperty(list,'innerHTML',{ get() { return html; }, set(value) {
-    html=value; cards.clear();
-    for (const match of value.matchAll(/<details[^>]* data-polity-id="([^"]+)"([^>]*)>/g)) cards.set(match[1], {
-      dataset: { polityId: match[1] }, open: /\bopen\b/.test(match[2]), scrollIntoView() {}, matches(selector) { return selector === 'details[data-polity-id]'; }
+  Object.defineProperty(list,'innerHTML',{ get() {
+    return html.replace(/<details[^>]* data-polity-id="([^"]+)"[^>]*>[\s\S]*?<\/details>/g, (outer,id) => {
+      const card=cards.get(id);
+      return card ? outer.replace(/(<div class="polity-browser-detail">)[\s\S]*(<\/div>\s*<\/details>)/,
+        (_,start,end) => start+card.body.innerHTML+end) : outer;
     });
+  }, set(value) {
+    // Removing a native card also disconnects its focused descendants.
+    for (const card of cards.values()) if (document.activeElement===card.summary || card.body.contains(document.activeElement)) document.activeElement=null;
+    html=value; cards.clear();
+    for (const match of value.matchAll(/<details[^>]* data-polity-id="([^"]+)"([^>]*)>([\s\S]*?)<\/details>/g)) {
+      const summary={ focus() { document.activeElement=this; } };
+      const body={ contains(node) { return Boolean(node && (node===this || node.ownerBody===this)); } };
+      let detail=match[3].match(/<div class="polity-browser-detail">([\s\S]*)<\/div>\s*$/)?.[1]||'';
+      Object.defineProperty(body,'innerHTML',{ get() { return detail; }, set(value) {
+        if (body.contains(document.activeElement)) document.activeElement=null;
+        detail=value;
+      } });
+      cards.set(match[1], { dataset:{ polityId:match[1] }, open:/\bopen\b/.test(match[2]), scrollIntoView() {},
+        ownerDocument:document, summary, body,
+        querySelector(selector) { return selector==='summary' ? summary : selector==='.polity-browser-detail' ? body : null; },
+        matches(selector) { return selector==='details[data-polity-id]'; }
+      });
+    }
   } });
   nodes.set('[data-current-polity-list]',list);
   const root = { innerHTML: '', querySelector(key) { if (!nodes.has(key)) nodes.set(key,element()); return nodes.get(key); },
-    querySelectorAll(key) { return key === '[data-polity-id]' ? [...cards.values()] : []; },
+    querySelectorAll(key) { return ['[data-polity-id]','details[data-polity-id]'].includes(key) ? [...cards.values()] : []; },
     addEventListener(name,callback) { listeners[name]=callback; } };
   let listReads=0;
   const context = { console, CustomEvent: class { constructor(name, options) { this.type=name; this.detail=options?.detail; } }, window: {
-    dispatchEvent() {}, ATLAS_POLITY_BROWSER_READER: { async listPolities() { listReads++; return { polities:[summary], summary:service.buildSummary([summary]) }; }, readPolity },
+    dispatchEvent() {}, ATLAS_POLITY_BROWSER_READER: { async listPolities() { listReads++; return { polities:[summary,...extraRows], summary:service.buildSummary([summary,...extraRows]) }; }, readPolity },
     ATLAS_POLITY_DOSSIER_VIEW: require('../atlas-polity-dossier-view.js')
   } };
   vm.runInNewContext(browser,context);
   const controller=context.window.ATLAS_POLITY_BROWSER_VIEW.mount(root,{ initialPolityId });
-  return { full, summary, list, cards, listeners, nodes, controller, get listReads() { return listReads; },
+  return { full, summary, list, cards, listeners, nodes, controller, document, get listReads() { return listReads; },
     toggle(open) { const card=cards.get(detailTestId); assert.ok(card); card.open=open; listeners.toggle({ target:card }); },
     input(value) { nodes.get('[data-polity-search]').value=value; listeners.input({ target:{ matches: selector => selector === '[data-polity-search]' } }); },
     retry() { listeners.click({ target:{ closest: selector => selector === '[data-polity-detail-retry]' ? { dataset:{ polityDetailRetry:detailTestId } } : null } }); }
@@ -773,4 +793,42 @@ test('wrong-identity detail fails closed and explicit retry recovers without bac
   ui.input('조선'); assert.equal(calls,1);
   ui.retry(); await tick(); assert.equal(calls,2);
   assert.ok(ui.list.innerHTML.includes('기원전 44 3월 15일? (율리우스력)–약 14'));
+});
+
+
+test('loading and resolving one dossier preserve its focused summary and unrelated card DOM', async () => {
+  const pending=deferred();
+  const otherId='00000000-0000-4000-8000-000000000202';
+  const ui=mountedDetailBrowser(() => pending.promise,'',[{id:otherId,canonical_name_en:'Other',activities:[]}]);
+  await tick();
+  const card=ui.cards.get(detailTestId), sibling=ui.cards.get(otherId);
+  sibling.body.innerHTML='<p>User-selected evidence remains mounted</p>';
+  card.summary.focus();
+  ui.toggle(true);
+  assert.equal(ui.cards.get(detailTestId),card,'opening must not replace the native disclosure');
+  assert.equal(ui.document.activeElement,card.summary,'keyboard focus remains on the original summary');
+  assert.equal(ui.cards.get(otherId),sibling,'loading must not replace a sibling dossier');
+  pending.resolve({polity:ui.full}); await tick();
+  assert.equal(ui.cards.get(detailTestId),card);
+  assert.equal(ui.document.activeElement,card.summary);
+  assert.equal(ui.cards.get(otherId),sibling);
+  assert.equal(sibling.body.innerHTML,'<p>User-selected evidence remains mounted</p>');
+  assert.ok(card.body.innerHTML.includes('율리우스력'));
+});
+
+test('detail retry returns removed-control focus to its summary without stealing unrelated focus', async () => {
+  let calls=0; const pending=deferred();
+  const ui=mountedDetailBrowser(() => ++calls===1 ? Promise.reject(Error('offline failure')) : pending.promise);
+  await tick(); ui.toggle(true); await tick();
+  const card=ui.cards.get(detailTestId);
+  const retryControl={ ownerBody:card.body };
+  ui.document.activeElement=retryControl;
+  ui.retry();
+  assert.equal(ui.cards.get(detailTestId),card);
+  assert.equal(ui.document.activeElement,card.summary,'retry control removal has a stable keyboard destination');
+  const search=ui.nodes.get('[data-polity-search]');
+  ui.document.activeElement=search;
+  pending.resolve({polity:ui.full}); await tick();
+  assert.equal(ui.document.activeElement,search,'asynchronous completion does not steal search focus');
+  assert.ok(card.body.innerHTML.includes('율리우스력'));
 });
