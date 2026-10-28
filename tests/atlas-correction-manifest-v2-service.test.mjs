@@ -17,6 +17,64 @@ const OBJECT_ID = '3a29a08a-d111-50d5-916f-f5c11b5eabaf';
 const TYPE_ID = '375da950-65bc-5b81-a338-6c705f515120';
 const SOURCE_ID = '41cb0494-17f0-4196-bdae-4ca0c1eeb4e6';
 
+function explicitActivityBundle(id = SUBJECT_ID) {
+  return {
+    activity: engine.normalizeActivity({
+      id, person_id: OBJECT_ID, polity_id: null, relation_type_id: TYPE_ID,
+      role_id: null, period_basis_id: SOURCE_ID,
+      activity_start: 1900, activity_end: 1901
+    }, 'TEST'),
+    normalized_source_links: [{ person_politics_id: id, source_id: SOURCE_ID, source_locator_key: 'reviewed fixture locator' }],
+    chronology_claims: [],
+    relationship_descriptions: []
+  };
+}
+
+test('rewrite requires explicit child inventories on both before and after bundles', () => {
+  const bundle = explicitActivityBundle();
+  const operation = { type: 'rewrite_activity', activity_id: SUBJECT_ID, exact_before: bundle, exact_after: structuredClone(bundle) };
+  const original = structuredClone(operation);
+  for (const side of ['exact_before', 'exact_after']) {
+    for (const key of ['normalized_source_links', 'chronology_claims', 'relationship_descriptions']) {
+      for (const value of [undefined, null, {}, '', false]) {
+        const altered = structuredClone(operation);
+        if (value === undefined) delete altered[side][key];
+        else altered[side][key] = value;
+        assert.throws(() => engine.normalizeOperation(altered, 0), /EXPLICIT_ARRAY_REQUIRED/, `${side}.${key} must be known, even when empty`);
+      }
+    }
+  }
+  const normalized = engine.normalizeOperation(operation, 0);
+  assert.deepEqual(normalized.exact_before.normalized_source_links, bundle.normalized_source_links);
+  assert.deepEqual(normalized.exact_after, normalized.exact_before);
+  assert.deepEqual(operation, original);
+});
+
+test('split requires explicit inventories for original, survivor and every new fragment', () => {
+  const bundle = explicitActivityBundle();
+  const operation = {
+    type: 'split_activity', activity_id: SUBJECT_ID,
+    exact_before: bundle, survivor_fragment: structuredClone(bundle),
+    new_fragments: [explicitActivityBundle(RELATION_ID)],
+    gap_overlap_policy: 'reviewed test partition'
+  };
+  for (const side of ['exact_before', 'survivor_fragment', 'new_fragments']) {
+    for (const key of ['normalized_source_links', 'chronology_claims', 'relationship_descriptions']) {
+      for (const value of [undefined, null, {}, '', false]) {
+        const altered = structuredClone(operation);
+        const target = side === 'new_fragments' ? altered.new_fragments[0] : altered[side];
+        if (value === undefined) delete target[key];
+        else target[key] = value;
+        assert.throws(() => engine.normalizeOperation(altered, 0), /EXPLICIT_ARRAY_REQUIRED/);
+      }
+    }
+  }
+  const normalized = engine.normalizeOperation(operation, 0);
+  assert.equal(normalized.new_fragments.length, 1);
+  assert.equal(normalized.new_fragments[0].normalized_source_links[0].source_id, SOURCE_ID);
+  assert.equal(normalized.new_fragments[0].activity.legacy_source_key, null);
+});
+
 function manifestWithRelation() {
   const core = {
     schema: engine.MANIFEST_V2,

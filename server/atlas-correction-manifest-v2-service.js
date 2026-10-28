@@ -112,6 +112,9 @@ function assertUniqueBy(rows, keyFn, code) {
 
 function normalizeActivityBundle(raw, label) {
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) throw new Error(`CORRECTION_V2_${label}_BUNDLE_REQUIRED`);
+  for (const key of ["normalized_source_links", "chronology_claims", "relationship_descriptions"]) {
+    if (!Array.isArray(raw[key])) throw new Error(`CORRECTION_V2_${label}_${key.toUpperCase()}_EXPLICIT_ARRAY_REQUIRED`);
+  }
   const activity = normalizeActivity(raw.activity, label);
   const sourceLinks = (raw.normalized_source_links || []).map((row, index) => normalizeActivitySourceLink(row, activity.id, `${label}_SOURCE_${index + 1}`));
   const claims = (raw.chronology_claims || []).map((row, index) => normalizeChronologyClaim(row, activity.id, `${label}_CLAIM_${index + 1}`));
