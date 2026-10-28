@@ -14,11 +14,30 @@
     if(value>0) return String(value);
     return "0";
   }
+  function activityBoundary(activity, prefix, fallback){
+    const year=yearValue(activity?.["activity_"+prefix]);
+    if(year==null) return fallback;
+    let label=formatYear(year);
+    const month=activity?.["activity_"+prefix+"_month"];
+    const day=activity?.["activity_"+prefix+"_day"];
+    const granularity=activity?.["activity_"+prefix+"_granularity"];
+    // Explicit precision wins over any residual date components. Legacy null
+    // precision retains the existing Person boundary presentation policy.
+    const showMonth=granularity==null||granularity==="month"||granularity==="day";
+    const showDay=granularity==null||granularity==="day";
+    if(showMonth&&Number.isInteger(month)) label+=" "+month+"월";
+    if(showDay&&Number.isInteger(month)&&Number.isInteger(day)) label+=" "+day+"일";
+    const certainty=activity?.["activity_"+prefix+"_certainty"];
+    if(certainty==="approximate") label="약 "+label;
+    if(certainty==="uncertain") label+="?";
+    const calendar=activity?.["activity_"+prefix+"_calendar"];
+    const calendars={julian:"율리우스력",source_calendar:"출처 기록의 역법",unspecified_historical:"역법 미특정"};
+    if(calendar&&calendar!=="gregorian") label+=" ("+(calendars[calendar]||"달력 확인 필요")+")";
+    return label;
+  }
   function activitySpan(activity){
-    const start=yearValue(activity?.activity_start);
-    const end=yearValue(activity?.activity_end);
-    const startLabel=start==null?"시작 미상":formatYear(start);
-    const endLabel=activity?.chronology_status==="ongoing"?"현재":end==null?"종료 미상":formatYear(end);
+    const startLabel=activityBoundary(activity,"start","시작 미상");
+    const endLabel=activity?.chronology_status==="ongoing"?"현재":activityBoundary(activity,"end","종료 미상");
     return startLabel+"–"+endLabel;
   }
   function observedSpan(rows){
