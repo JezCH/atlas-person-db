@@ -832,3 +832,66 @@ test('detail retry returns removed-control focus to its summary without stealing
   assert.equal(ui.document.activeElement,search,'asynchronous completion does not steal search focus');
   assert.ok(card.body.innerHTML.includes('율리우스력'));
 });
+
+function mountedCollectionFlow() {
+  const require=createRequire(import.meta.url);
+  const {createPolityReadHandler}=require('../server/atlas-polity-read-handler.js');
+  const ids=['5fb816f2-2d44-55f9-a9c4-35e31625df38','e76162a0-8a7e-4d81-8a76-3a068f4194e0'];
+  let rows=ids.map((id,i)=>({id,canonical_name_en:i?'Korean Empire':'Joseon',preferred_name_ko:i?'대한제국':'조선',names:[],activities:[{
+    id:'00000000-0000-4000-8000-00000000010'+i,person_id:'00000000-0000-4000-8000-000000000001',person_name_ko:'검증 인물',
+    activity_start:1897,activity_end:1907,activity_start_month:10,activity_start_day:12,activity_start_granularity:'day',activity_start_certainty:'uncertain',activity_start_calendar:'gregorian'
+  }]}));
+  const outsider={id:'00000000-0000-4000-8000-000000000203',canonical_name_en:'Other polity',activities:[]};rows.push(outsider);
+  let listReads=0,detailReads=0;
+  const handler=createPolityReadHandler({env:{SUPABASE_DB_URL:'postgresql://offline.invalid/atlas'},clientFactory:async()=>{
+    let queries=0;return {query:async(sql,params)=>{queries++;return params&&queries===1?{rows:rows.filter(row=>row.id===params[0]),rowCount:rows.some(row=>row.id===params[0])?1:0}:params?{rows:[]}:{rows};},end:async()=>{}};
+  }});
+  const nodes=new Map(),cards=new Map(),listeners={};const element=()=>({value:'',innerHTML:'',textContent:'',classList:{toggle(){}}});
+  const list=element();let html='';Object.defineProperty(list,'innerHTML',{get(){return html;},set(value){html=value;cards.clear();for(const match of value.matchAll(/<details[^>]* data-polity-id="([^"]+)"([^>]*)>/g)){
+    const body={innerHTML:'',contains(){return false;}};cards.set(match[1],{dataset:{polityId:match[1]},open:/\bopen\b/.test(match[2]),body,
+      querySelector(selector){return selector==='.polity-browser-detail'?body:null;},matches(selector){return selector==='details[data-polity-id]';},scrollIntoView(){}});
+  }}});nodes.set('[data-current-polity-list]',list);
+  const root={innerHTML:'',querySelector(key){if(!nodes.has(key))nodes.set(key,element());return nodes.get(key);},querySelectorAll(key){return ['[data-polity-id]','details[data-polity-id]'].includes(key)?[...cards.values()]:[];},addEventListener(name,callback){listeners[name]=callback;}};
+  const context={console,CustomEvent:class{},window:{dispatchEvent(){},ATLAS_POLITY_DOSSIER_VIEW:require('../atlas-polity-dossier-view.js')},fetch:async(url,options)=>{
+    assert.equal(options.method,'GET');if(url.includes('polity_id='))detailReads++;else listReads++;
+    const res={setHeader(){},end(body){this.body=JSON.parse(body);}};await handler({url},res);return {ok:res.statusCode===200,status:res.statusCode,json:async()=>res.body};
+  }};
+  vm.runInNewContext(fs.readFileSync(new URL('../atlas-polity-browser-reader.js',import.meta.url),'utf8'),context);vm.runInNewContext(browser,context);
+  const controller=context.window.ATLAS_POLITY_BROWSER_VIEW.mount(root);
+  return {ids,outsider,nodes,cards,controller,get listReads(){return listReads;},get detailReads(){return detailReads;},
+    shown(){return [...cards.keys()];},collection(key){nodes.get('[data-polity-collection]').value=key;listeners.change({target:{matches:key=>key==='[data-polity-collection]'}});},
+    input(value){nodes.get('[data-polity-search]').value=value;listeners.input({target:{matches:key=>key==='[data-polity-search]'}});},
+    open(id){const card=cards.get(id);card.open=true;listeners.toggle({target:card});},removeMembers(){rows=[outsider];}};
+}
+
+test('API reader collection selection intersects local search and keeps UUID detail navigation', async()=>{
+  const ui=mountedCollectionFlow();await tick();assert.equal(ui.shown().length,3);
+  assert.match(ui.nodes.get('[data-polity-collection]').innerHTML,/한국사 시범/);
+  ui.collection('korean-history-pilot');assert.deepEqual(new Set(ui.shown()),new Set(ui.ids));
+  assert.match(ui.nodes.get('[data-polity-collection-note]').innerHTML,/비배타적/);
+  assert.match(ui.nodes.get('[data-polity-collection-note]').innerHTML,/sillok.history.go.kr/);
+  ui.input('대한제국');assert.deepEqual(ui.shown(),[ui.ids[1]]);assert.equal(ui.listReads,1);assert.equal(ui.detailReads,0);
+  ui.open(ui.ids[1]);await tick();assert.equal(ui.detailReads,1);assert.match(ui.cards.get(ui.ids[1]).body.innerHTML,/10월 12일\?/);
+  ui.input('');ui.collection('');assert.equal(ui.shown().length,3);assert.equal(ui.listReads,1);
+});
+
+test('collection refresh retains available scope and explicitly clears removed membership; deep links escape scope', async()=>{
+  const ui=mountedCollectionFlow();await tick();ui.collection('korean-history-pilot');await ui.controller.refresh();
+  assert.equal(ui.nodes.get('[data-polity-collection]').value,'korean-history-pilot');assert.equal(ui.shown().length,2);
+  assert.equal(ui.controller.selectPolity(ui.outsider.id,{updateRoute:false,scroll:false}),true);
+  assert.equal(ui.nodes.get('[data-polity-collection]').value,'');assert.ok(ui.shown().includes(ui.outsider.id));
+  ui.collection('korean-history-pilot');ui.removeMembers();await ui.controller.refresh();
+  assert.equal(ui.nodes.get('[data-polity-collection]').value,'');assert.match(ui.nodes.get('[data-polity-collection-note]').innerHTML,/현재 목록에 없어/);
+});
+
+test('reader ignores malformed or unknown collection membership and accepts legacy list DTOs', async()=>{
+  const id='abcdef00-0000-4000-8000-000000000201';const context={window:{}};
+  vm.runInNewContext(fs.readFileSync(new URL('../atlas-polity-browser-reader.js',import.meta.url),'utf8'),context);
+  const valid={key:'valid',kind:'nonexclusive_navigation',label:'Example',polity_ids:[id]};
+  const payload={ok:true,mode:'list',polities:[{id}],navigation_collections:[valid,{...valid},{...valid,key:'unknown',polity_ids:['00000000-0000-4000-8000-000000000202']},{...valid,key:'duplicates',polity_ids:[id,id]},{...valid,key:'case-duplicates',polity_ids:[id,id.toUpperCase()]},{...valid,key:'sovereign',kind:'state'}]};
+  const read=value=>context.window.ATLAS_POLITY_BROWSER_READER.listPolities({fetchImpl:async()=>({ok:true,json:async()=>value})});
+  const result=await read(payload);assert.equal(result.navigation_collections.length,1);assert.equal(result.navigation_collections[0].key,'valid');
+  const malformedEvidence=await read({...payload,navigation_collections:[{...valid,evidence:{url:'https://example.org',source_ids:'invalid'}}]});
+  assert.equal(malformedEvidence.navigation_collections[0].evidence.source_ids.length,0,'malformed optional evidence cannot break listing');
+  const legacy=await read({ok:true,mode:'list',polities:[{id}]});assert.equal(legacy.navigation_collections.length,0);
+});

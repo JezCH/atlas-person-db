@@ -282,11 +282,26 @@ function filterPolities(polities, query = "") {
   ].filter(Boolean).join(" ")).includes(needle));
 }
 
+// A bounded navigation pilot, not a canonical identity, territory or succession edge.
+const KOREAN_HISTORY_PILOT = Object.freeze({
+  key: "korean-history-pilot", kind: "nonexclusive_navigation",
+  label: "한국사 시범 · 조선·대한제국",
+  description: "조선·대한제국만 포함한 탐색 시범입니다. 역사권은 비배타적 탐색 범위이며 국가 승계나 현대 영토 소유를 뜻하지 않습니다.",
+  polity_ids: Object.freeze(["5fb816f2-2d44-55f9-a9c4-35e31625df38", "e76162a0-8a7e-4d81-8a76-3a068f4194e0"]),
+  evidence: Object.freeze({ source_snapshot: "2026-10-11", url: "https://sillok.history.go.kr/id/kza_13410013_002", label: "고종실록 · 국호와 황제 칭호 선포",
+    source_ids: Object.freeze(["6f738239-35e7-42d4-a0cb-d178a176e6fa", "7a2be5f0-b7e2-4541-bb02-d7ad61bae45b"]) })
+});
+function navigationCollections(polities) {
+  const present = new Set(polities.map(polity => polity.id));
+  const ids = KOREAN_HISTORY_PILOT.polity_ids.filter(id => present.has(id));
+  return Object.freeze(ids.length ? [Object.freeze({ ...KOREAN_HISTORY_PILOT, polity_ids: Object.freeze(ids) })] : []);
+}
+
 async function readPolities({ client, query = "" } = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client is required");
   const result = await client.query(POLITY_LIST_SQL);
   const polities = Object.freeze(filterPolities((result.rows || []).map(row => projectPolity(row, { includeTemporal: false })), query).sort(comparePolities));
-  return Object.freeze({ polities, summary: buildSummary(polities) });
+  return Object.freeze({ polities, summary: buildSummary(polities), navigation_collections: navigationCollections(polities) });
 }
 
 async function readPolityDetail({ client, polityId } = {}) {

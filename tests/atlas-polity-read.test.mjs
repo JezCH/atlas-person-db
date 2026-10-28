@@ -253,3 +253,23 @@ test('list omits dossier-only temporal metadata while UUID detail preserves it',
   assert.equal(queries, 2, 'existing Activity and governance detail queries remain; no DB reduction claimed');
   assert.equal(JSON.stringify(row), before);
 });
+
+test('navigation pilot references only present UUIDs, preserves rows and never infers identity edges', async () => {
+  const ids=['5fb816f2-2d44-55f9-a9c4-35e31625df38','e76162a0-8a7e-4d81-8a76-3a068f4194e0'];
+  const rows=ids.map((id,i)=>({...polityRow(),id,canonical_name_en:i?'Korean Empire':'Joseon',preferred_name_ko:i?'대한제국':'조선'}));
+  rows.push({...polityRow(),canonical_name_en:'Joseon name lookalike'});
+  const before=JSON.stringify(rows);const client={query:async()=>({rows})};
+  const result=await readPolities({client});
+  assert.equal(result.polities.length,rows.length,'default listing remains complete');
+  const collection=result.navigation_collections[0];
+  assert.equal(collection.kind,'nonexclusive_navigation');assert.deepEqual(collection.polity_ids,ids);
+  assert.match(collection.description,/비배타적/);assert.match(collection.description,/승계/);
+  assert.equal(collection.evidence.url,'https://sillok.history.go.kr/id/kza_13410013_002');
+  assert.equal(collection.evidence.source_ids.length,2);
+  assert.equal(Object.hasOwn(result,'edges'),false);assert.equal(Object.hasOwn(collection,'successor_polity_id'),false);
+  assert.equal(JSON.stringify(rows),before);
+  const missing=await readPolities({client:{query:async()=>({rows:[rows[2]]})}});
+  assert.deepEqual(missing.navigation_collections,[],'matching a name cannot create membership');
+  const narrowed=await readPolities({client,query:'대한제국'});
+  assert.deepEqual(narrowed.navigation_collections[0].polity_ids,[ids[1]],'metadata cannot introduce a filtered-out UUID');
+});

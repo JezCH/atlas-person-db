@@ -161,6 +161,8 @@
 
     let live = { status: "loading", source: null, summary: null, polities: [], error: null };
     let filter = "all";
+    let collectionKey = "";
+    let collectionNotice = "";
     let visibleLimit = PAGE_SIZE;
     let selectedPolityId = String(initialPolityId || "").trim().toLowerCase();
     const openPolityIds = new Set(selectedPolityId ? [selectedPolityId] : []);
@@ -185,6 +187,8 @@
           '<button type="button" data-polity-filter="orphan">연결 없음</button>' +
           '<button type="button" data-polity-filter="ongoing">현재 활동 포함</button>' +
         '</div>' +
+        '<label>역사권 탐색 <select data-polity-collection aria-label="역사권 탐색"><option value="">전체 정치체</option></select></label>' +
+        '<p data-polity-collection-note></p>' +
         '<span data-polity-count></span>' +
       '</section>' +
       '<div class="polity-browser-list" data-current-polity-list></div>' +
@@ -198,10 +202,21 @@
     const source = root.querySelector("[data-polity-source]");
     const kpis = root.querySelector("[data-polity-kpis]");
     const more = root.querySelector("[data-polity-load-more]");
+    const collectionControl = root.querySelector("[data-polity-collection]");
+    const collectionNote = root.querySelector("[data-polity-collection-note]");
 
     function render() {
       const needle = normalizeText(search?.value || "");
-      const matched = filterRows(live.polities, filter, needle);
+      const collections = live.navigation_collections || [];
+      const collection = collections.find(row => row.key === collectionKey);
+      const members = collection ? new Set(collection.polity_ids) : null;
+      const matched = filterRows(members ? live.polities.filter(row => members.has(String(row.id).toLowerCase())) : live.polities, filter, needle);
+      if (collectionControl) {
+        collectionControl.innerHTML = '<option value="">전체 정치체</option>' + collections.map(row => '<option value="' + escapeHtml(row.key) + '">' + escapeHtml(row.label) + '</option>').join("");
+        collectionControl.value = collectionKey;
+      }
+      if (collectionNote) collectionNote.innerHTML = collection ? escapeHtml(collection.description) +
+        (collection.evidence ? ' <a href="' + escapeHtml(collection.evidence.url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(collection.evidence.label) + '</a>' : '') : escapeHtml(collectionNotice);
       if (selectedPolityId) {
         const selectedIndex = matched.findIndex((polity) => String(polity?.id || "").toLowerCase() === selectedPolityId);
         if (selectedIndex >= visibleLimit) visibleLimit = selectedIndex + 1;
@@ -279,6 +294,8 @@
       const index = live.polities.findIndex((polity) => String(polity?.id || "").toLowerCase() === selectedPolityId);
       if (index < 0) return false;
       filter = "all";
+      collectionKey = "";
+      collectionNotice = "";
       if (search) search.value = "";
       root.querySelectorAll("[data-polity-filter]").forEach((button) => {
         button.classList.toggle("is-active", button.dataset.polityFilter === "all");
@@ -328,9 +345,13 @@
           status: "ready",
           source: payload.source || null,
           summary: payload.summary || null,
+          navigation_collections: Array.isArray(payload.navigation_collections) ? payload.navigation_collections : [],
           polities: Array.isArray(payload.polities) ? payload.polities.slice() : [],
           error: null
         };
+        if (collectionKey && !live.navigation_collections.some(row => row.key === collectionKey)) {
+          collectionKey = ""; collectionNotice = "선택한 탐색 범위가 현재 목록에 없어 전체 정치체로 돌아왔습니다.";
+        }
       } catch (error) {
         if (currentGeneration !== generation) return;
         live = { status: "error", source: null, summary: null, polities: [], error };
@@ -349,6 +370,13 @@
         ensureDetail(id);
       } else openPolityIds.delete(id);
     }, true);
+
+    root.addEventListener("change", (event) => {
+      if (!event.target.matches("[data-polity-collection]")) return;
+      const key = String(collectionControl?.value || "");
+      if (key && !(live.navigation_collections || []).some(row => row.key === key)) return;
+      syncOpenCards(); collectionKey = key; collectionNotice = ""; selectedPolityId = ""; visibleLimit = PAGE_SIZE; render();
+    });
 
     root.addEventListener("input", (event) => {
       if (!event.target.matches("[data-polity-search]")) return;
