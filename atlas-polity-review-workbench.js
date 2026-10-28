@@ -101,7 +101,16 @@
     ].filter(Boolean).join(" "));
   }
 
-  function polityCardHtml(polity, selectedPolityId = "") {
+  function detailHtml(state) {
+    if (state?.status === "ready") {
+      const polity = state.polity;
+      return dossierRenderer.dossierHtml(polity);
+    }
+    if (state?.status === "error") return '<p role="status">상세 활동을 불러오지 못했습니다.</p><button type="button" data-polity-detail-retry="' + escapeHtml(state.id) + '">상세 다시 불러오기</button>';
+    return '<p role="status">' + (state?.status === "loading" ? "상세 활동을 불러오는 중입니다." : "상세 활동은 펼치면 불러옵니다.") + '</p>';
+  }
+
+  function polityCardHtml(polity, selectedPolityId = "", detailState = null) {
     const ko = polity.preferred_name_ko || polity.display_name || polity.canonical_name_en || polity.id;
     const en = polity.canonical_name_en || "";
     const activityCount = Number(polity.activity_count || 0);
@@ -122,7 +131,7 @@
           (unresolved ? '<span><b>' + unresolved + '</b> 연대 미해결</span>' : "") +
         '</div>' +
       '</summary>' +
-      '<div class="polity-browser-detail">' + dossierRenderer.dossierHtml(polity) + '</div>' +
+      '<div class="polity-browser-detail">' + detailHtml(detailState) + '</div>' +
     '</details>';
   }
 
@@ -154,6 +163,9 @@
     let filter = "all";
     let visibleLimit = PAGE_SIZE;
     let selectedPolityId = String(initialPolityId || "").trim().toLowerCase();
+    const openPolityIds = new Set(selectedPolityId ? [selectedPolityId] : []);
+    const details = new Map();
+    let generation = 0;
 
     root.innerHTML = '<section class="polity-browser-shell">' +
       '<header class="polity-browser-summary card">' +
@@ -203,7 +215,7 @@
       } else if (!matched.length) {
         list.innerHTML = '<section class="card polity-browser-state"><strong>조건에 맞는 현재 정치체가 없습니다.</strong></section>';
       } else {
-        list.innerHTML = shown.map((polity) => polityCardHtml(polity, selectedPolityId)).join("");
+        list.innerHTML = shown.map((polity) => polityCardHtml(polity, openPolityIds.has(String(polity.id).toLowerCase()) ? String(polity.id).toLowerCase() : "", details.get(String(polity.id).toLowerCase()))).join("");
       }
 
       if (kpis) kpis.innerHTML = summaryHtml(live.summary);
@@ -217,6 +229,38 @@
         more.hidden = live.status !== "ready" || shown.length >= matched.length;
         more.textContent = more.hidden ? "더 보기" : "더 보기 (" + (matched.length - shown.length).toLocaleString("ko-KR") + "개 남음)";
       }
+    }
+
+    function syncOpenCards() {
+      for (const card of root.querySelectorAll("[data-polity-id]")) {
+        const id = String(card.dataset.polityId || "").trim().toLowerCase();
+        if (card.open) openPolityIds.add(id);
+        else openPolityIds.delete(id);
+      }
+    }
+
+    async function ensureDetail(polityId, { retry = false } = {}) {
+      const id = String(polityId || "").trim().toLowerCase();
+      if (live.status !== "ready" || !openPolityIds.has(id) || !live.polities.some(p => String(p.id).toLowerCase() === id)) return;
+      const existing = details.get(id);
+      if (existing && !(retry && existing.status === "error")) return;
+      const currentGeneration = generation;
+      const state = { status: "loading", id };
+      details.set(id, state);
+      render();
+      try {
+        if (typeof READER.readPolity !== "function") throw new Error("POLITY_DETAIL_READER_UNAVAILABLE");
+        const payload = await READER.readPolity(id);
+        if (currentGeneration !== generation || details.get(id) !== state) return;
+        if (String(payload?.polity?.id || "").toLowerCase() !== id) throw new Error("POLITY_DETAIL_ID_MISMATCH");
+        details.set(id, { status: "ready", polity: payload.polity });
+      } catch (error) {
+        if (currentGeneration !== generation || details.get(id) !== state) return;
+        details.set(id, { status: "error", id });
+      }
+      // Native toggle notification may be queued after the user already closed.
+      syncOpenCards();
+      render();
     }
 
     function revealSelected({ scroll = true } = {}) {
@@ -242,7 +286,9 @@
       const id = String(polityId || "").trim().toLowerCase();
       if (!id) return false;
       selectedPolityId = id;
+      openPolityIds.add(id);
       const revealed = revealSelected({ scroll });
+      ensureDetail(id);
       if (updateRoute) {
         window.dispatchEvent(new CustomEvent("atlas-polity-selected", { detail:{ polityId:id } }));
       }
@@ -252,16 +298,21 @@
     function clearSelection() {
       if (!selectedPolityId) return false;
       selectedPolityId = "";
+      openPolityIds.clear();
       render();
       return true;
     }
 
     async function refresh() {
+      syncOpenCards();
+      const currentGeneration = ++generation;
+      details.clear();
       live = { status: "loading", source: null, summary: null, polities: [], error: null };
       visibleLimit = PAGE_SIZE;
       render();
       try {
         const payload = await READER.listPolities();
+        if (currentGeneration !== generation) return;
         live = {
           status: "ready",
           source: payload.source || null,
@@ -270,19 +321,37 @@
           error: null
         };
       } catch (error) {
+        if (currentGeneration !== generation) return;
         live = { status: "error", source: null, summary: null, polities: [], error };
       }
       render();
       if (selectedPolityId) revealSelected({ scroll:false });
+      for (const id of openPolityIds) ensureDetail(id);
     }
+
+    root.addEventListener("toggle", (event) => {
+      const card = event.target;
+      if (!card?.matches?.("details[data-polity-id]")) return;
+      const id = String(card.dataset.polityId || "").trim().toLowerCase();
+      if (card.open) {
+        openPolityIds.add(id);
+        ensureDetail(id);
+      } else openPolityIds.delete(id);
+    }, true);
 
     root.addEventListener("input", (event) => {
       if (!event.target.matches("[data-polity-search]")) return;
       visibleLimit = PAGE_SIZE;
+      syncOpenCards();
       render();
     });
 
     root.addEventListener("click", (event) => {
+      const retryButton = event.target.closest("[data-polity-detail-retry]");
+      if (retryButton) {
+        ensureDetail(retryButton.dataset.polityDetailRetry, { retry: true });
+        return;
+      }
       const personButton = event.target.closest("[data-polity-person-id]");
       if (personButton) {
         const personId = String(personButton.dataset.polityPersonId || "").trim().toLowerCase();
@@ -308,6 +377,7 @@
 
       const filterButton = event.target.closest("[data-polity-filter]");
       if (filterButton) {
+        syncOpenCards();
         filter = filterButton.dataset.polityFilter || "all";
         visibleLimit = PAGE_SIZE;
         root.querySelectorAll("[data-polity-filter]").forEach((button) => button.classList.toggle("is-active", button === filterButton));
@@ -316,6 +386,7 @@
       }
 
       if (event.target.closest("[data-polity-load-more]")) {
+        syncOpenCards();
         visibleLimit += PAGE_SIZE;
         render();
       }

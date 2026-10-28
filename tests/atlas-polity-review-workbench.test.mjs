@@ -691,3 +691,86 @@ test('P2-07E Carolingian 843–855 stage preflight retains non-destructive ruptu
   assert.ok(row.evidence.some(v=>v.includes('larousse.fr')));
   assert.ok(row.evidence.some(v=>v.includes('rgh.univ-lorraine.fr')));
 });
+
+const detailTestId = '00000000-0000-4000-8000-000000000201';
+const detailTestRow = {
+  id: detailTestId, canonical_name_en: 'Joseon', preferred_name_ko: '조선', names: [],
+  activities: [{ id: '00000000-0000-4000-8000-000000000101', person_id: '00000000-0000-4000-8000-000000000001', person_name_ko: '태조',
+    activity_start: -44, activity_end: 14, activity_start_month: 3, activity_start_day: 15,
+    activity_start_granularity: 'day', activity_start_certainty: 'uncertain', activity_start_calendar: 'julian',
+    activity_end_granularity: 'year', activity_end_certainty: 'approximate' }]
+};
+const tick = () => new Promise(resolve => setImmediate(resolve));
+function deferred() { let resolve, reject; const promise = new Promise((yes,no) => { resolve=yes; reject=no; }); return { promise, resolve, reject }; }
+function mountedDetailBrowser(readPolity, initialPolityId = '') {
+  const require = createRequire(import.meta.url);
+  const service = require('../server/atlas-polity-read-service.js');
+  const full = service.projectPolity(detailTestRow);
+  const summary = service.projectPolity(detailTestRow, { includeTemporal: false });
+  const nodes = new Map(), listeners = {}, cards = new Map();
+  const element = () => ({ value: '', innerHTML: '', textContent: '', classList: { toggle() {} } });
+  const list = element(); let html = '';
+  Object.defineProperty(list,'innerHTML',{ get() { return html; }, set(value) {
+    html=value; cards.clear();
+    for (const match of value.matchAll(/<details[^>]* data-polity-id="([^"]+)"([^>]*)>/g)) cards.set(match[1], {
+      dataset: { polityId: match[1] }, open: /\bopen\b/.test(match[2]), scrollIntoView() {}, matches(selector) { return selector === 'details[data-polity-id]'; }
+    });
+  } });
+  nodes.set('[data-current-polity-list]',list);
+  const root = { innerHTML: '', querySelector(key) { if (!nodes.has(key)) nodes.set(key,element()); return nodes.get(key); },
+    querySelectorAll(key) { return key === '[data-polity-id]' ? [...cards.values()] : []; },
+    addEventListener(name,callback) { listeners[name]=callback; } };
+  let listReads=0;
+  const context = { console, CustomEvent: class { constructor(name, options) { this.type=name; this.detail=options?.detail; } }, window: {
+    dispatchEvent() {}, ATLAS_POLITY_BROWSER_READER: { async listPolities() { listReads++; return { polities:[summary], summary:service.buildSummary([summary]) }; }, readPolity },
+    ATLAS_POLITY_DOSSIER_VIEW: require('../atlas-polity-dossier-view.js')
+  } };
+  vm.runInNewContext(browser,context);
+  const controller=context.window.ATLAS_POLITY_BROWSER_VIEW.mount(root,{ initialPolityId });
+  return { full, summary, list, cards, listeners, nodes, controller, get listReads() { return listReads; },
+    toggle(open) { const card=cards.get(detailTestId); assert.ok(card); card.open=open; listeners.toggle({ target:card }); },
+    input(value) { nodes.get('[data-polity-search]').value=value; listeners.input({ target:{ matches: selector => selector === '[data-polity-search]' } }); },
+    retry() { listeners.click({ target:{ closest: selector => selector === '[data-polity-detail-retry]' ? { dataset:{ polityDetailRetry:detailTestId } } : null } }); }
+  };
+}
+
+test('dossier reads only an opened identity, deduplicates opens and preserves close state', async () => {
+  const pending=deferred(); let calls=0;
+  const ui=mountedDetailBrowser(async id => { assert.equal(id,detailTestId); calls++; return pending.promise; });
+  await tick(); assert.equal(calls,0); assert.equal(ui.listReads,1);
+  ui.input('조선'); ui.input(''); assert.equal(calls,0);
+  ui.toggle(true); ui.toggle(true); assert.equal(calls,1);
+  assert.match(ui.list.innerHTML,/상세 활동을 불러오는 중/);
+  assert.doesNotMatch(ui.list.innerHTML,/율리우스력/);
+  ui.cards.get(detailTestId).open=false; // Browser property changes before its queued toggle event.
+  pending.resolve({ polity:ui.full }); await tick();
+  assert.equal(ui.cards.get(detailTestId).open,false,'late detail never reopens a closed card');
+  ui.toggle(true); assert.equal(calls,1,'cached reopen does not read again');
+  assert.ok(ui.list.innerHTML.includes('기원전 44 3월 15일? (율리우스력)–약 14'));
+  assert.equal(ui.listReads,1);
+});
+
+test('deep link loads one detail and refresh ignores stale success and failure', async () => {
+  const pending=[deferred(),deferred(),deferred()]; let calls=0;
+  const ui=mountedDetailBrowser(() => pending[calls++].promise,detailTestId);
+  await tick(); assert.equal(calls,1);
+  await ui.controller.refresh(); assert.equal(calls,2); assert.equal(ui.listReads,2);
+  pending[0].resolve({ polity:{...ui.full,canonical_name_en:'STALE OLD NAME'} }); await tick();
+  assert.doesNotMatch(ui.list.innerHTML,/STALE OLD NAME/); assert.match(ui.list.innerHTML,/불러오는 중/);
+  await ui.controller.refresh(); assert.equal(calls,3);
+  pending[1].reject(Error('old failure')); await tick();
+  assert.doesNotMatch(ui.list.innerHTML,/불러오지 못했습니다/);
+  pending[2].resolve({ polity:ui.full }); await tick();
+  assert.ok(ui.list.innerHTML.includes('기원전 44 3월 15일? (율리우스력)–약 14'));
+});
+
+test('wrong-identity detail fails closed and explicit retry recovers without background reads', async () => {
+  let calls=0;
+  const ui=mountedDetailBrowser(async () => { calls++; return { polity:calls===1 ? {id:'wrong',canonical_name_en:'WRONG IDENTITY'} : ui.full }; });
+  await tick(); ui.toggle(true); await tick();
+  assert.equal(calls,1); assert.match(ui.list.innerHTML,/상세 활동을 불러오지 못했습니다/);
+  assert.doesNotMatch(ui.list.innerHTML,/WRONG IDENTITY/);
+  ui.input('조선'); assert.equal(calls,1);
+  ui.retry(); await tick(); assert.equal(calls,2);
+  assert.ok(ui.list.innerHTML.includes('기원전 44 3월 15일? (율리우스력)–약 14'));
+});

@@ -236,3 +236,20 @@ test('Polity list rejects ambiguous, oversized and malformed search input before
   }
   assert.equal(calls, 0);
 });
+
+test('list omits dossier-only temporal metadata while UUID detail preserves it', async () => {
+  const row = polityRow();
+  Object.assign(row.activities[0], { activity_start_month: 3, activity_start_day: 15,
+    activity_start_granularity: 'day', activity_start_certainty: 'uncertain', activity_start_calendar: 'julian' });
+  const before = JSON.stringify(row);
+  const list = await readPolities({ client: { query: async () => ({ rows: [row] }) } });
+  assert.equal(Object.hasOwn(list.polities[0].activities[0], 'activity_start_month'), false);
+  assert.equal(list.polities[0].activities[0].id, row.activities[0].id);
+  let queries = 0;
+  const detail = await readPolityDetail({ client: { query: async () => { queries++; return queries === 1 ? { rowCount: 1, rows: [row] } : { rows: [] }; } }, polityId: POLITY_ID });
+  for (const field of ['month','day','granularity','certainty','calendar']) {
+    assert.equal(detail.activities[0]['activity_start_' + field], row.activities[0]['activity_start_' + field]);
+  }
+  assert.equal(queries, 2, 'existing Activity and governance detail queries remain; no DB reduction claimed');
+  assert.equal(JSON.stringify(row), before);
+});

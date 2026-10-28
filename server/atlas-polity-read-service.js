@@ -52,9 +52,16 @@ function normalizeActivities(value) {
   })));
 }
 
-function projectPolity(row) {
+function projectPolity(row, { includeTemporal = true } = {}) {
   const names = normalizeNames(row.names);
-  const activities = normalizeActivities(row.activities);
+  const fullActivities = normalizeActivities(row.activities);
+  const activities = includeTemporal ? fullActivities : Object.freeze(fullActivities.map((activity) => {
+    const summary = { ...activity };
+    for (const side of ["start", "end"]) for (const field of ["month", "day", "granularity", "certainty", "calendar"]) {
+      delete summary[`activity_${side}_${field}`];
+    }
+    return Object.freeze(summary);
+  }));
   const canonicalNameEn = row.canonical_name_en == null ? preferredName(names, "en") : String(row.canonical_name_en);
   const preferredNameKo = row.preferred_name_ko == null ? preferredName(names, "ko") : String(row.preferred_name_ko);
   const displayName = preferredNameKo || canonicalNameEn || firstUsableName(names) || String(row.id);
@@ -278,7 +285,7 @@ function filterPolities(polities, query = "") {
 async function readPolities({ client, query = "" } = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client is required");
   const result = await client.query(POLITY_LIST_SQL);
-  const polities = Object.freeze(filterPolities((result.rows || []).map(projectPolity), query).sort(comparePolities));
+  const polities = Object.freeze(filterPolities((result.rows || []).map(row => projectPolity(row, { includeTemporal: false })), query).sort(comparePolities));
   return Object.freeze({ polities, summary: buildSummary(polities) });
 }
 
