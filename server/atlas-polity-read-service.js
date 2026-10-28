@@ -239,10 +239,26 @@ where p.id = $1::uuid
 limit 1
 `;
 
-async function readPolities({ client } = {}) {
+function filterPolities(polities, query = "") {
+  const normalize = value => String(value || "").normalize("NFKC").trim().toLocaleLowerCase("und").replace(/\s+/gu, " ");
+  const needle = normalize(query);
+  if (!needle) return polities;
+  return polities.filter(polity => normalize([
+    polity.display_name, polity.canonical_name_en, polity.preferred_name_ko,
+    polity.canonical_key, polity.polity_type, polity.historicity,
+    ...(polity.names || []).map(row => row?.name),
+    ...(polity.activities || []).flatMap(activity => [
+      activity.person_display_name, activity.person_name_en, activity.person_name_ko,
+      activity.polity_designation_name_en, activity.polity_designation_name_ko,
+      activity.relation_code, activity.role_name, activity.role_code, activity.period_basis
+    ])
+  ].filter(Boolean).join(" ")).includes(needle));
+}
+
+async function readPolities({ client, query = "" } = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client is required");
   const result = await client.query(POLITY_LIST_SQL);
-  const polities = Object.freeze((result.rows || []).map(projectPolity).sort(comparePolities));
+  const polities = Object.freeze(filterPolities((result.rows || []).map(projectPolity), query).sort(comparePolities));
   return Object.freeze({ polities, summary: buildSummary(polities) });
 }
 

@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import fs from 'node:fs';
 import vm from 'node:vm';
+import { createRequire } from 'node:module';
 
 const snapshot = fs.readFileSync(new URL('../docs/audits/POLITY_REVIEW_CANDIDATES_20260927_ARCHIVE.txt', import.meta.url), 'utf8');
 const registrySource = fs.readFileSync(new URL('../atlas-polity-review-registry.js', import.meta.url), 'utf8');
@@ -16,6 +17,38 @@ const stage2 = JSON.parse(fs.readFileSync(new URL('../stage2/contracts/polity-id
 const registryContext = { window:{} };
 vm.runInNewContext(registrySource, registryContext);
 const registry = registryContext.window.ATLAS_POLITY_REVIEW_REGISTRY;
+
+test('actual API list query matches mounted workbench input/results without per-input reads', async () => {
+  const require = createRequire(import.meta.url);
+  const { createPolityReadHandler } = require('../server/atlas-polity-read-handler.js');
+  const rows = [
+    { id: '00000000-0000-4000-8000-000000000201', canonical_key: 'joseon', polity_type: 'historical_polity', historicity: 'historical', canonical_name_en: 'Joseon', preferred_name_ko: '조선', names: [{ name: 'Choson' }], activities: [{ id: '00000000-0000-4000-8000-000000000101', person_id: '00000000-0000-4000-8000-000000000001', person_name_ko: '태조', role_name: '왕', polity_designation_name_ko: '조선 왕국', activity_start: 1392, activity_end: 1418 }] },
+    { id: '00000000-0000-4000-8000-000000000202', canonical_name_en: 'Korean Empire', preferred_name_ko: '대한제국', names: [], activities: [] }
+  ];
+  const handler = createPolityReadHandler({ env: { SUPABASE_DB_URL: 'postgresql://offline.invalid/atlas' }, clientFactory: async () => ({ query: async () => ({ rows }), end: async () => {} }) });
+  async function api(query) {
+    const res = { setHeader() {}, end(body) { this.body = JSON.parse(body); } };
+    await handler({ url: '/api/atlas-polity-read' + (query == null ? '' : '?q=' + encodeURIComponent(query)) }, res);
+    assert.equal(res.statusCode, 200); return res.body;
+  }
+  let reads = 0;
+  const nodes = new Map(); const listeners = {};
+  const element = () => ({ value: '', innerHTML: '', textContent: '', classList: { toggle() {} } });
+  const root = { innerHTML: '', querySelector(key) { if (!nodes.has(key)) nodes.set(key, element()); return nodes.get(key); }, querySelectorAll() { return []; }, addEventListener(name, callback) { listeners[name] = callback; } };
+  const context = { console, window: { ATLAS_POLITY_BROWSER_READER: { async listPolities() { reads++; return api(); } }, ATLAS_POLITY_DOSSIER_VIEW: { createRenderer() { return { dossierHtml() { return ''; } }; } } } };
+  vm.runInNewContext(browser, context);
+  context.window.ATLAS_POLITY_BROWSER_VIEW.mount(root);
+  await new Promise(resolve => setImmediate(resolve));
+  const search = nodes.get('[data-polity-search]');
+  const list = nodes.get('[data-current-polity-list]');
+  for (const query of ['조선 Joseon', 'Ｃｈｏｓｏｎ', '조선'.normalize('NFD'), '태조', '왕', '조선 왕국', 'historical_polity', 'korean\t empire', 'missing']) {
+    search.value = query; listeners.input({ target: { matches: key => key === '[data-polity-search]' } });
+    const displayed = [...list.innerHTML.matchAll(/<details[^>]* data-polity-id="([^"]+)"/g)].map(hit => hit[1]);
+    const expected = (await api(query)).polities.map(p => p.id);
+    assert.deepEqual(displayed, expected, query);
+  }
+  assert.equal(reads, 1, 'mount reads once; all input events filter the loaded DTO locally');
+});
 
 test('Polities main surface keeps canonical listing first and mounts current review registry below it', () => {
   assert.match(nav, /atlasPolityMount/);

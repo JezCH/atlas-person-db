@@ -19,6 +19,21 @@ function requestQueryValue(req, key) {
   }
 }
 
+function listSearchQuery(req) {
+  try {
+    const values = new URL(String(req?.url || "/"), "http://atlas.local").searchParams.getAll("q");
+    if (values.length > 1) return null;
+    const direct = req?.query?.q;
+    const value = direct == null ? (values[0] || "") :
+      Array.isArray(direct) && direct.length === 1 ? direct[0] : direct;
+    if (typeof value !== "string") return null;
+    const query = value.trim();
+    return query.length <= 200 ? query : null;
+  } catch {
+    return null;
+  }
+}
+
 function polityIdFromRequest(req) {
   return requestQueryValue(req, "polity_id");
 }
@@ -47,6 +62,12 @@ function createPolityReadHandler({
         code: "INVALID_POLITY_ID",
         error: "valid polity_id UUID is required"
       });
+      return;
+    }
+
+    const query = polityId ? "" : listSearchQuery(req);
+    if (query === null) {
+      sendJson(res, 400, { ok: false, schema: "atlas-polity-read/v1", code: "INVALID_SEARCH_QUERY" });
       return;
     }
 
@@ -86,7 +107,7 @@ function createPolityReadHandler({
         return;
       }
 
-      const data = await readList({ client });
+      const data = await readList({ client, query });
       sendJson(res, 200, {
         ok: true,
         source: "v2-polity-read",

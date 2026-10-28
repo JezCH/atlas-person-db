@@ -193,3 +193,46 @@ test('Polity read handler exposes list/detail modes and rejects malformed UUIDs 
   await handler({ method: 'POST' }, postRes);
   assert.equal(postRes.statusCode, 405);
 });
+
+test('Polity query preserves the existing UI corpus, Unicode matching and filtered summary', async () => {
+  const row = polityRow();
+  row.names.push({ locale: 'en', name: 'Nippon', name_type: 'alias' });
+  const orphan = { id: '00000000-0000-4000-8000-000000000202', canonical_name_en: 'Korean Empire', preferred_name_ko: '대한제국', activities: [] };
+  const before = JSON.stringify([row, orphan]);
+  const client = { query: async () => ({ rows: [row, orphan] }) };
+  for (const query of ['일본 Japan', 'Ｎｉｐｐｏｎ', '일본'.normalize('NFD'), '인물 A', '천황', '일본 제국', 'historical_polity', 'reign']) {
+    const data = await readPolities({ client, query });
+    assert.deepEqual(data.polities.map(p => p.id), [POLITY_ID], query);
+    assert.equal(data.summary.total_polities, 1);
+    assert.equal(data.summary.activity_count, 2);
+    assert.equal(data.polities[0].activities[0].id, row.activities[0].id);
+  }
+  assert.equal((await readPolities({ client, query: 'korean\t  empire' })).polities[0].id, orphan.id);
+  assert.equal((await readPolities({ client, query: 'missing' })).summary.total_polities, 0);
+  assert.equal((await readPolities({ client, query: '' })).polities.length, 2);
+  assert.equal(JSON.stringify([row, orphan]), before);
+});
+
+test('Polity list handler forwards URL/framework queries through the actual service', async () => {
+  let sqlCalls = 0;
+  const handler = createPolityReadHandler({ env: { SUPABASE_DB_URL: 'postgresql://offline.invalid/atlas' }, clientFactory: async () => ({
+    query: async () => { sqlCalls++; return { rows: [polityRow()] }; }, end: async () => {}
+  }) });
+  for (const req of [{ url: '/?q=missing' }, { query: { q: 'missing' } }]) {
+    const res = mockResponse(); await handler(req, res);
+    assert.equal(res.statusCode, 200);
+    assert.equal(JSON.parse(res.body).summary.total_polities, 0);
+  }
+  assert.equal(sqlCalls, 2, 'one existing list query per request, not a database cost reduction');
+});
+
+test('Polity list rejects ambiguous, oversized and malformed search input before DB access', async () => {
+  let calls = 0;
+  const handler = createPolityReadHandler({ env: { SUPABASE_DB_URL: 'postgresql://offline.invalid/atlas' }, clientFactory: async () => { calls++; throw Error('must not connect'); } });
+  for (const req of [{ url: '/?q=a&q=b' }, { query: { q: ['a','b'] } }, { query: { q: 'x'.repeat(201) } }, { url: 'http://[' }, { query: { q: {} } }]) {
+    const res = mockResponse(); await handler(req, res);
+    assert.equal(res.statusCode, 400);
+    assert.equal(JSON.parse(res.body).code, 'INVALID_SEARCH_QUERY');
+  }
+  assert.equal(calls, 0);
+});
