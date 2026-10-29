@@ -112,6 +112,9 @@ function assertUniqueBy(rows, keyFn, code) {
 
 function normalizeActivityBundle(raw, label) {
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) throw new Error(`CORRECTION_V2_${label}_BUNDLE_REQUIRED`);
+  for (const key of ["normalized_source_links", "chronology_claims", "relationship_descriptions"]) {
+    if (!Array.isArray(raw[key])) throw new Error(`CORRECTION_V2_${label}_${key.toUpperCase()}_EXPLICIT_ARRAY_REQUIRED`);
+  }
   const activity = normalizeActivity(raw.activity, label);
   const sourceLinks = (raw.normalized_source_links || []).map((row, index) => normalizeActivitySourceLink(row, activity.id, `${label}_SOURCE_${index + 1}`));
   const claims = (raw.chronology_claims || []).map((row, index) => normalizeChronologyClaim(row, activity.id, `${label}_CLAIM_${index + 1}`));
@@ -192,6 +195,7 @@ function normalizeRetireReplacement(raw, targetBefore, label) {
   if (!exactEqual(before.activity, after.activity)) throw new Error(`CORRECTION_V2_${label}_REPLACEMENT_ACTIVITY_DRIFT`);
   if (!exactEqual(before.chronology_claims, after.chronology_claims)) throw new Error(`CORRECTION_V2_${label}_REPLACEMENT_CLAIM_DRIFT`);
   if (!exactEqual(before.relationship_descriptions, after.relationship_descriptions)) throw new Error(`CORRECTION_V2_${label}_REPLACEMENT_DESCRIPTION_DRIFT`);
+  if (!containsAllSourceSemantics(after, before)) throw new Error(`CORRECTION_V2_${label}_REPLACEMENT_SOURCE_DRIFT`);
   if (!containsAllSourceSemantics(after, targetBefore)) throw new Error(`CORRECTION_V2_${label}_RETIRED_SOURCE_NOT_TRANSFERRED`);
   return { activity_id: activityId, exact_before: before, exact_after: after };
 }
@@ -313,6 +317,9 @@ function requireV2Manifest(raw) {
       continue;
     }
     if (existingActivityTargets.has(operation.activity_id)) throw new Error("CORRECTION_V2_ACTIVITY_TARGET_REUSED");
+    // A prior split cannot create an ID that this operation expects to exist.
+    // The split loop checks the reverse order using the same collision rule.
+    if (newActivityIds.has(operation.activity_id)) throw new Error("CORRECTION_V2_NEW_ACTIVITY_ID_REUSED");
     existingActivityTargets.add(operation.activity_id);
     if (operation.type === "split_activity") {
       for (const fragment of operation.new_fragments) {
@@ -760,3 +767,4 @@ module.exports = Object.freeze({
   existingActivityLockIds,
   createCorrectionManifestV2Service
 });
+
