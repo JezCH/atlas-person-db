@@ -861,8 +861,44 @@ function mountedCollectionFlow() {
   return {ids,outsider,nodes,cards,controller,get listReads(){return listReads;},get detailReads(){return detailReads;},
     shown(){return [...cards.keys()];},collection(key){nodes.get('[data-polity-collection]').value=key;listeners.change({target:{matches:key=>key==='[data-polity-collection]'}});},
     input(value){nodes.get('[data-polity-search]').value=value;listeners.input({target:{matches:key=>key==='[data-polity-search]'}});},
-    open(id){const card=cards.get(id);card.open=true;listeners.toggle({target:card});},removeMembers(){rows=[outsider];}};
+    open(id){const card=cards.get(id);card.open=true;listeners.toggle({target:card});},
+    clickOpen(id){const card=cards.get(id);const summary={closest:key=>key==='[data-polity-id]'?card:null};listeners.click({target:{closest:key=>key==='summary'?summary:null}});card.open=true;listeners.toggle({target:card});},
+    filter(key){const button={dataset:{polityFilter:key}};listeners.click({target:{closest:selector=>selector==='[data-polity-filter]'?button:null}});},
+    removeMembers(){rows=[outsider];}};
 }
+
+test('refresh preserves collection and text after opening a native card', async()=>{
+  const ui=mountedCollectionFlow();await tick();ui.collection('korean-history-pilot');ui.input('조선');
+  ui.clickOpen(ui.ids[0]);await tick();
+  await ui.controller.refresh();
+  assert.equal(ui.nodes.get('[data-polity-collection]').value,'korean-history-pilot');
+  assert.equal(ui.nodes.get('[data-polity-search]').value,'조선');
+  assert.deepEqual(ui.shown(),[ui.ids[0]]);
+  assert.equal(ui.listReads,2);assert.equal(ui.detailReads,2,'one opened detail per refresh generation');
+});
+
+test('new text and status intent survive refresh after an explicit UUID navigation', async()=>{
+  for(const control of ['text','status']){
+    const ui=mountedCollectionFlow();await tick();ui.controller.selectPolity(ui.ids[0],{updateRoute:false,scroll:false});await tick();
+    if(control==='text')ui.input('Other polity');else ui.filter('orphan');
+    await ui.controller.refresh();
+    assert.deepEqual(ui.shown(),[ui.outsider.id],control);
+    if(control==='text')assert.equal(ui.nodes.get('[data-polity-search]').value,'Other polity');
+  }
+});
+
+test('pending initial UUID reveal yields to newer input while a later explicit navigation still reveals', async()=>{
+  for(const explicitLater of [false,true]){
+    let reads=0;
+    const ui=mountedDetailBrowser(async()=>{reads++;return {polity:ui.full};},detailTestId);
+    ui.input('no matching polity');
+    if(explicitLater)ui.controller.selectPolity(detailTestId,{updateRoute:false,scroll:false});
+    await tick();
+    assert.equal(ui.nodes.get('[data-polity-search]').value,explicitLater?'':'no matching polity');
+    assert.equal(ui.cards.has(detailTestId),explicitLater);
+    if(explicitLater)assert.equal(reads,1);
+  }
+});
 
 test('API reader collection selection intersects local search and keeps UUID detail navigation', async()=>{
   const ui=mountedCollectionFlow();await tick();assert.equal(ui.shown().length,3);

@@ -165,6 +165,8 @@
     let collectionNotice = "";
     let visibleLimit = PAGE_SIZE;
     let selectedPolityId = String(initialPolityId || "").trim().toLowerCase();
+    // Revealing a route target may clear filters once; refresh is not navigation.
+    let pendingSelectionReveal = Boolean(selectedPolityId);
     const openPolityIds = new Set(selectedPolityId ? [selectedPolityId] : []);
     const details = new Map();
     let generation = 0;
@@ -293,6 +295,7 @@
       if (!selectedPolityId || live.status !== "ready") return false;
       const index = live.polities.findIndex((polity) => String(polity?.id || "").toLowerCase() === selectedPolityId);
       if (index < 0) return false;
+      pendingSelectionReveal = false;
       filter = "all";
       collectionKey = "";
       collectionNotice = "";
@@ -314,6 +317,7 @@
       const id = String(polityId || "").trim().toLowerCase();
       if (!id) return false;
       selectedPolityId = id;
+      pendingSelectionReveal = true;
       openPolityIds.add(id);
       const revealed = revealSelected({ scroll });
       ensureDetail(id);
@@ -326,6 +330,7 @@
     function clearSelection() {
       if (!selectedPolityId) return false;
       selectedPolityId = "";
+      pendingSelectionReveal = false;
       openPolityIds.clear();
       render();
       return true;
@@ -357,7 +362,7 @@
         live = { status: "error", source: null, summary: null, polities: [], error };
       }
       render();
-      if (selectedPolityId) revealSelected({ scroll:false });
+      if (pendingSelectionReveal) revealSelected({ scroll:false });
       for (const id of openPolityIds) ensureDetail(id);
     }
 
@@ -375,11 +380,13 @@
       if (!event.target.matches("[data-polity-collection]")) return;
       const key = String(collectionControl?.value || "");
       if (key && !(live.navigation_collections || []).some(row => row.key === key)) return;
+      pendingSelectionReveal = false;
       syncOpenCards(); collectionKey = key; collectionNotice = ""; selectedPolityId = ""; visibleLimit = PAGE_SIZE; render();
     });
 
     root.addEventListener("input", (event) => {
       if (!event.target.matches("[data-polity-search]")) return;
+      pendingSelectionReveal = false;
       visibleLimit = PAGE_SIZE;
       syncOpenCards();
       render();
@@ -416,6 +423,7 @@
 
       const filterButton = event.target.closest("[data-polity-filter]");
       if (filterButton) {
+        pendingSelectionReveal = false;
         syncOpenCards();
         filter = filterButton.dataset.polityFilter || "all";
         visibleLimit = PAGE_SIZE;
