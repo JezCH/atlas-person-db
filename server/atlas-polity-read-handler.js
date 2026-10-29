@@ -6,17 +6,18 @@ const { requireDatabaseUrl, sendJson } = require("./atlas-read-http.js");
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 function requestQueryValue(req, key) {
+  const rawUrl = String(req?.url || "").trim();
+  let values = [];
+  if (rawUrl) {
+    try {
+      values = new URL(rawUrl, "http://atlas.local").searchParams.getAll(key);
+    } catch { /* Preserve framework-query handling for requests without a parseable URL. */ }
+  }
+  if (values.length > 1) return "__INVALID_MULTI__";
   const direct = req?.query?.[key];
   if (Array.isArray(direct)) return direct.length === 1 ? String(direct[0] || "").trim() : "__INVALID_MULTI__";
   if (direct != null) return String(direct).trim();
-  const rawUrl = String(req?.url || "").trim();
-  if (!rawUrl) return null;
-  try {
-    const parsed = new URL(rawUrl, "http://atlas.local");
-    return parsed.searchParams.has(key) ? String(parsed.searchParams.get(key) || "").trim() : null;
-  } catch {
-    return null;
-  }
+  return values.length ? values[0].trim() : null;
 }
 
 function listSearchQuery(req) {
@@ -134,3 +135,4 @@ module.exports = Object.freeze({
   polityIdFromRequest,
   createPolityReadHandler
 });
+

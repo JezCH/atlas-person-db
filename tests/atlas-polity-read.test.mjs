@@ -273,3 +273,48 @@ test('navigation pilot references only present UUIDs, preserves rows and never i
   const narrowed=await readPolities({client,query:'대한제국'});
   assert.deepEqual(narrowed.navigation_collections[0].polity_ids,[ids[1]],'metadata cannot introduce a filtered-out UUID');
 });
+
+test('duplicate polity UUID URL parameters fail before DB access even with a framework query', async () => {
+  let calls = 0;
+  const otherId = '00000000-0000-4000-8000-000000000202';
+  const handler = createPolityReadHandler({
+    env: { SUPABASE_DB_URL: 'postgresql://offline.invalid/atlas' },
+    clientFactory: async () => { calls++; return { end: async () => {} }; },
+    readDetail: async () => projectPolity(polityRow())
+  });
+  for (const req of [
+    { url: `/?polity_id=${POLITY_ID}&polity_id=${otherId}` },
+    { url: `/?polity_id=${POLITY_ID}&polity_id=${POLITY_ID}` },
+    { url: `/?polity_id=${POLITY_ID}&polity%5Fid=${otherId}` },
+    { url: `/?polity_id=${POLITY_ID}&polity_id=${otherId}`, query: { polity_id: POLITY_ID } },
+    { url: `/?polity_id=${POLITY_ID}&polity_id=${otherId}`, query: { polity_id: [POLITY_ID] } }
+  ]) {
+    const res = mockResponse();
+    await handler(req, res);
+    assert.equal(res.statusCode, 400, JSON.stringify(req));
+    assert.equal(JSON.parse(res.body).code, 'INVALID_POLITY_ID');
+  }
+  assert.equal(calls, 0, 'ambiguous requests never connect');
+});
+
+test('single URL/framework UUIDs retain detail routing and ignore unrelated repeated parameters', async () => {
+  const ids = [];
+  let closed = 0;
+  const handler = createPolityReadHandler({
+    env: { SUPABASE_DB_URL: 'postgresql://offline.invalid/atlas' },
+    clientFactory: async () => ({ end: async () => { closed++; } }),
+    readDetail: async ({ polityId }) => { ids.push(polityId); return projectPolity(polityRow()); }
+  });
+  for (const req of [
+    { url: `/?polity%5Fid=${POLITY_ID}&x=a&x=b` },
+    { query: { polity_id: [POLITY_ID] } },
+    { url: `/?polity_id=${POLITY_ID}`, query: { polity_id: POLITY_ID } }
+  ]) {
+    const res = mockResponse(); await handler(req, res);
+    assert.equal(res.statusCode, 200);
+    assert.equal(JSON.parse(res.body).mode, 'detail');
+  }
+  assert.deepEqual(ids, [POLITY_ID, POLITY_ID, POLITY_ID]);
+  assert.equal(closed, 3);
+});
+
