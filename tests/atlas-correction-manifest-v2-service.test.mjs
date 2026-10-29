@@ -64,6 +64,62 @@ function signedActivityManifest(operations) {
   return { ...core, manifest_sha256: sha256(core), production_executable: true };
 }
 
+function retireWithDistinctSurvivorSources() {
+  const operation = targetFixture('retire_activity', SUBJECT_ID);
+  const survivor = operation.replacement_survivors[0];
+  survivor.exact_before.normalized_source_links[0].source_id = FOURTH_ACTIVITY_ID;
+  survivor.exact_before.normalized_source_links[0].source_locator_key = 'survivor original locator';
+  survivor.exact_after = structuredClone(survivor.exact_before);
+  survivor.exact_after.normalized_source_links.push({
+    ...operation.exact_before.normalized_source_links[0], person_politics_id: survivor.activity_id
+  });
+  return operation;
+}
+
+test('retire transfer preserves the receiving Activity own Source and locator', () => {
+  for (const mutation of ['drop', 'change_locator']) {
+    const operation = retireWithDistinctSurvivorSources();
+    const links = operation.replacement_survivors[0].exact_after.normalized_source_links;
+    if (mutation === 'drop') links.shift();
+    else links[0].source_locator_key = 'unreviewed replacement locator';
+    const manifest = signedActivityManifest([operation]);
+    const original = JSON.stringify(manifest);
+    assert.throws(() => engine.requireV2Manifest(manifest), /REPLACEMENT_SOURCE_DRIFT/, mutation);
+    assert.equal(JSON.stringify(manifest), original);
+  }
+});
+
+test('retire survivor source loss rejects before database access in dry-run and apply', async () => {
+  let queries = 0;
+  const service = engine.createCorrectionManifestV2Service({ client: { async query() {
+    queries++; throw Error('database must not be reached');
+  } } });
+  for (const mutation of ['drop', 'change_locator']) {
+    const operation = retireWithDistinctSurvivorSources();
+    const links = operation.replacement_survivors[0].exact_after.normalized_source_links;
+    if (mutation === 'drop') links.shift();
+    else links[0].source_locator_key = 'unreviewed replacement locator';
+    for (const dryRun of [true, false]) {
+      await assert.rejects(service.execute(signedActivityManifest([operation]), { dryRun }), /REPLACEMENT_SOURCE_DRIFT/);
+    }
+  }
+  assert.equal(queries, 0);
+});
+
+test('retire transfer accepts preserved source union and already-shared source without mutating input', () => {
+  for (const operation of [retireWithDistinctSurvivorSources(), targetFixture('retire_activity', SUBJECT_ID)]) {
+    const manifest = signedActivityManifest([operation]);
+    const original = JSON.stringify(manifest);
+    const normalized = engine.requireV2Manifest(manifest);
+    const survivor = normalized.operations[0].replacement_survivors[0];
+    assert.equal(JSON.stringify(manifest), original);
+    assert.deepEqual(survivor.exact_after.normalized_source_links.map(row => [row.source_id, row.source_locator_key]).sort(),
+      operation.replacement_survivors[0].exact_after.normalized_source_links.map(row => [row.source_id, row.source_locator_key]).sort());
+    assert.equal(engine.expectedCountDeltas(normalized.operations).activity_sources,
+      operation.replacement_survivors[0].exact_after.normalized_source_links.length - 2);
+  }
+});
+
 test('split new IDs cannot also be existing mutation targets in either operation order', () => {
   for (const type of ['rewrite_activity', 'split_activity', 'retire_activity']) {
     const pair = [splitFixture(SUBJECT_ID, RELATION_ID), targetFixture(type, RELATION_ID)];
@@ -275,3 +331,4 @@ test('Correction v2 accepts a reviewed rewrite from legacy null polity to a cano
   assert.equal(after.polity_id, '10000000-0000-4000-8000-000000000005');
   assert.equal(after.relation_type_id, '10000000-0000-4000-8000-000000000006');
 });
+

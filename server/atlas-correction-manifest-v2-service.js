@@ -195,6 +195,7 @@ function normalizeRetireReplacement(raw, targetBefore, label) {
   if (!exactEqual(before.activity, after.activity)) throw new Error(`CORRECTION_V2_${label}_REPLACEMENT_ACTIVITY_DRIFT`);
   if (!exactEqual(before.chronology_claims, after.chronology_claims)) throw new Error(`CORRECTION_V2_${label}_REPLACEMENT_CLAIM_DRIFT`);
   if (!exactEqual(before.relationship_descriptions, after.relationship_descriptions)) throw new Error(`CORRECTION_V2_${label}_REPLACEMENT_DESCRIPTION_DRIFT`);
+  if (!containsAllSourceSemantics(after, before)) throw new Error(`CORRECTION_V2_${label}_REPLACEMENT_SOURCE_DRIFT`);
   if (!containsAllSourceSemantics(after, targetBefore)) throw new Error(`CORRECTION_V2_${label}_RETIRED_SOURCE_NOT_TRANSFERRED`);
   return { activity_id: activityId, exact_before: before, exact_after: after };
 }
@@ -766,3 +767,4 @@ module.exports = Object.freeze({
   existingActivityLockIds,
   createCorrectionManifestV2Service
 });
+
