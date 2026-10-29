@@ -22,6 +22,13 @@ export function verifyRestorationBundle(bundle, original) {
   const sources=new Map(original.sources.map(x=>[x.id,x]));
   const reviewed=new Map(bundle.source_review.map(x=>[x.source_id,x]));
   assert.equal(reviewed.size,bundle.source_review.length,'duplicate source review');
+  function evidenceHold(row) {
+    assert.equal(row?.historical_approval,'HOLD','retrieval status is not historical approval');
+    assert(row.missing,'missing item-level evidence gap');
+    assert.equal(typeof row.status,'string');
+    assert(row.status.trim() && !/^approved$/i.test(row.status.trim()),'retrieval status must not assert approval');
+  }
+  bundle.source_review.forEach(evidenceHold);
   const seen=new Set();
   function source(operation) {
     const s=operation.exact_after.source;
@@ -29,8 +36,7 @@ export function verifyRestorationBundle(bundle, original) {
     assert(sources.has(s.id),'unknown source');
     for(const [k,v] of Object.entries(sources.get(s.id))) assert.deepEqual(s[k],v,`original Source field ${k}`);
     assert.equal(operation.exact_before.source_absent_id,s.id);
-    assert(reviewed.get(s.id)?.missing,'missing item-level evidence gap');
-    assert.match(reviewed.get(s.id).status,/^(?:HOLD.*|ORIGINAL_.*HOLD.*|ORIGINAL_REVIEWED_PARTIAL_SUPPORT|URL_RESOLVED_ORIGINAL_FETCH_FAILED)$/);
+    evidenceHold(reviewed.get(s.id));
   }
   plan.stage2_assertions.forEach((op,i)=>{source(op);normalizeStage2AssertionOperation(op,i);});
   bundle.quarantined_source_assertions.forEach((item,i)=>{
@@ -59,7 +65,15 @@ export function verifyRestorationBundle(bundle, original) {
     assert(!facts.has(f.fact_key),'duplicate semantic fact');facts.add(f.fact_key);
     assert(places.has(f.place_id)&&original.expected_polity_ids.includes(f.polity_id),'dangling fact target');
     assert.deepEqual(item.source_reviews.map(x=>x.source_id),f.source_refs.map(x=>x.source_id));
-    for(const ref of item.source_reviews){assert(sources.has(ref.source_id));assert(ref.missing);assert.match(ref.status,/^(?:HOLD.*|ORIGINAL_.*HOLD.*|ORIGINAL_REVIEWED_PARTIAL_SUPPORT|URL_RESOLVED_ORIGINAL_FETCH_FAILED)$/);}
+    for(const ref of item.source_reviews){
+      assert(sources.has(ref.source_id));evidenceHold(ref);
+      const review=reviewed.get(ref.source_id);
+      assert.equal(ref.original_locator,f.source_refs.find(x=>x.source_id===ref.source_id).locator);
+      assert.equal(ref.status,review.status);
+      assert.equal(ref.missing,review.missing);
+      assert.equal(ref.reviewed_locator,review.locator||null);
+      assert.equal(ref.finding,review.finding||null);
+    }
   });
   assert.deepEqual(bundle.execution_order,['approved_source_assertions','approved_exact_places','approved_place_functions','separately_authorized_compile_and_readback']);
   return {structural_source_candidates:plan.stage2_assertions.length,quarantined_sources:bundle.quarantined_source_assertions.length,places:places.size,facts:facts.size,historical_approvals:0,production_calls:0};
