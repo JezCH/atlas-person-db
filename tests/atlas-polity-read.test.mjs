@@ -193,3 +193,179 @@ test('Polity read handler exposes list/detail modes and rejects malformed UUIDs 
   await handler({ method: 'POST' }, postRes);
   assert.equal(postRes.statusCode, 405);
 });
+
+test('Polity query preserves the existing UI corpus, Unicode matching and filtered summary', async () => {
+  const row = polityRow();
+  row.names.push({ locale: 'en', name: 'Nippon', name_type: 'alias' });
+  const orphan = { id: '00000000-0000-4000-8000-000000000202', canonical_name_en: 'Korean Empire', preferred_name_ko: '대한제국', activities: [] };
+  const before = JSON.stringify([row, orphan]);
+  const client = { query: async () => ({ rows: [row, orphan] }) };
+  for (const query of ['일본 Japan', 'Ｎｉｐｐｏｎ', '일본'.normalize('NFD'), '인물 A', '천황', '일본 제국', 'historical_polity', 'reign']) {
+    const data = await readPolities({ client, query });
+    assert.deepEqual(data.polities.map(p => p.id), [POLITY_ID], query);
+    assert.equal(data.summary.total_polities, 1);
+    assert.equal(data.summary.activity_count, 2);
+    assert.equal(data.polities[0].activities[0].id, row.activities[0].id);
+  }
+  assert.equal((await readPolities({ client, query: 'korean\t  empire' })).polities[0].id, orphan.id);
+  assert.equal((await readPolities({ client, query: 'missing' })).summary.total_polities, 0);
+  assert.equal((await readPolities({ client, query: '' })).polities.length, 2);
+  assert.equal(JSON.stringify([row, orphan]), before);
+});
+
+test('Polity list handler forwards URL/framework queries through the actual service', async () => {
+  let sqlCalls = 0;
+  const handler = createPolityReadHandler({ env: { SUPABASE_DB_URL: 'postgresql://offline.invalid/atlas' }, clientFactory: async () => ({
+    query: async () => { sqlCalls++; return { rows: [polityRow()] }; }, end: async () => {}
+  }) });
+  for (const req of [{ url: '/?q=missing' }, { query: { q: 'missing' } }]) {
+    const res = mockResponse(); await handler(req, res);
+    assert.equal(res.statusCode, 200);
+    assert.equal(JSON.parse(res.body).summary.total_polities, 0);
+  }
+  assert.equal(sqlCalls, 2, 'one existing list query per request, not a database cost reduction');
+});
+
+test('Polity list rejects ambiguous, oversized and malformed search input before DB access', async () => {
+  let calls = 0;
+  const handler = createPolityReadHandler({ env: { SUPABASE_DB_URL: 'postgresql://offline.invalid/atlas' }, clientFactory: async () => { calls++; throw Error('must not connect'); } });
+  for (const req of [{ url: '/?q=a&q=b' }, { query: { q: ['a','b'] } }, { query: { q: 'x'.repeat(201) } }, { url: 'http://[' }, { query: { q: {} } }]) {
+    const res = mockResponse(); await handler(req, res);
+    assert.equal(res.statusCode, 400);
+    assert.equal(JSON.parse(res.body).code, 'INVALID_SEARCH_QUERY');
+  }
+  assert.equal(calls, 0);
+});
+
+test('list omits dossier-only temporal metadata while UUID detail preserves it', async () => {
+  const row = polityRow();
+  Object.assign(row.activities[0], { activity_start_month: 3, activity_start_day: 15,
+    activity_start_granularity: 'day', activity_start_certainty: 'uncertain', activity_start_calendar: 'julian' });
+  const before = JSON.stringify(row);
+  const list = await readPolities({ client: { query: async () => ({ rows: [row] }) } });
+  assert.equal(Object.hasOwn(list.polities[0].activities[0], 'activity_start_month'), false);
+  assert.equal(list.polities[0].activities[0].id, row.activities[0].id);
+  let queries = 0;
+  const detail = await readPolityDetail({ client: { query: async () => { queries++; return queries === 1 ? { rowCount: 1, rows: [row] } : { rows: [] }; } }, polityId: POLITY_ID });
+  for (const field of ['month','day','granularity','certainty','calendar']) {
+    assert.equal(detail.activities[0]['activity_start_' + field], row.activities[0]['activity_start_' + field]);
+  }
+  assert.equal(queries, 2, 'existing Activity and governance detail queries remain; no DB reduction claimed');
+  assert.equal(JSON.stringify(row), before);
+});
+
+test('navigation pilot references only present UUIDs, preserves rows and never infers identity edges', async () => {
+  const ids=['5fb816f2-2d44-55f9-a9c4-35e31625df38','e76162a0-8a7e-4d81-8a76-3a068f4194e0'];
+  const rows=ids.map((id,i)=>({...polityRow(),id,canonical_name_en:i?'Korean Empire':'Joseon',preferred_name_ko:i?'대한제국':'조선'}));
+  rows.push({...polityRow(),canonical_name_en:'Joseon name lookalike'});
+  const before=JSON.stringify(rows);const client={query:async()=>({rows})};
+  const result=await readPolities({client});
+  assert.equal(result.polities.length,rows.length,'default listing remains complete');
+  const collection=result.navigation_collections[0];
+  assert.equal(collection.kind,'nonexclusive_navigation');assert.deepEqual(collection.polity_ids,ids);
+  assert.match(collection.description,/비배타적/);assert.match(collection.description,/승계/);
+  assert.equal(collection.evidence.url,'https://sillok.history.go.kr/id/kza_13410013_002');
+  assert.equal(collection.evidence.source_ids.length,2);
+  assert.equal(Object.hasOwn(result,'edges'),false);assert.equal(Object.hasOwn(collection,'successor_polity_id'),false);
+  assert.equal(JSON.stringify(rows),before);
+  const missing=await readPolities({client:{query:async()=>({rows:[rows[2]]})}});
+  assert.deepEqual(missing.navigation_collections,[],'matching a name cannot create membership');
+  const narrowed=await readPolities({client,query:'대한제국'});
+  assert.deepEqual(narrowed.navigation_collections[0].polity_ids,[ids[1]],'metadata cannot introduce a filtered-out UUID');
+});
+
+test('duplicate polity UUID URL parameters fail before DB access even with a framework query', async () => {
+  let calls = 0;
+  const otherId = '00000000-0000-4000-8000-000000000202';
+  const handler = createPolityReadHandler({
+    env: { SUPABASE_DB_URL: 'postgresql://offline.invalid/atlas' },
+    clientFactory: async () => { calls++; return { end: async () => {} }; },
+    readDetail: async () => projectPolity(polityRow())
+  });
+  for (const req of [
+    { url: `/?polity_id=${POLITY_ID}&polity_id=${otherId}` },
+    { url: `/?polity_id=${POLITY_ID}&polity_id=${POLITY_ID}` },
+    { url: `/?polity_id=${POLITY_ID}&polity%5Fid=${otherId}` },
+    { url: `/?polity_id=${POLITY_ID}&polity_id=${otherId}`, query: { polity_id: POLITY_ID } },
+    { url: `/?polity_id=${POLITY_ID}&polity_id=${otherId}`, query: { polity_id: [POLITY_ID] } }
+  ]) {
+    const res = mockResponse();
+    await handler(req, res);
+    assert.equal(res.statusCode, 400, JSON.stringify(req));
+    assert.equal(JSON.parse(res.body).code, 'INVALID_POLITY_ID');
+  }
+  assert.equal(calls, 0, 'ambiguous requests never connect');
+});
+
+test('single URL/framework UUIDs retain detail routing and ignore unrelated repeated parameters', async () => {
+  const ids = [];
+  let closed = 0;
+  const handler = createPolityReadHandler({
+    env: { SUPABASE_DB_URL: 'postgresql://offline.invalid/atlas' },
+    clientFactory: async () => ({ end: async () => { closed++; } }),
+    readDetail: async ({ polityId }) => { ids.push(polityId); return projectPolity(polityRow()); }
+  });
+  for (const req of [
+    { url: `/?polity%5Fid=${POLITY_ID}&x=a&x=b` },
+    { query: { polity_id: [POLITY_ID] } },
+    { url: `/?polity_id=${POLITY_ID}`, query: { polity_id: POLITY_ID } }
+  ]) {
+    const res = mockResponse(); await handler(req, res);
+    assert.equal(res.statusCode, 200);
+    assert.equal(JSON.parse(res.body).mode, 'detail');
+  }
+  assert.deepEqual(ids, [POLITY_ID, POLITY_ID, POLITY_ID]);
+  assert.equal(closed, 3);
+});
+
+test('conflicting URL and framework UUIDs fail before configuration or DB access', async () => {
+  const otherId = '00000000-0000-4000-8000-000000000202';
+  let calls = 0;
+  const handler = createPolityReadHandler({
+    env: { SUPABASE_DB_URL: 'postgresql://offline.invalid/atlas' },
+    clientFactory: async () => { calls++; return { end: async () => {} }; },
+    readDetail: async ({ polityId }) => ({ id: polityId })
+  });
+  for (const req of [
+    { url: `/?polity_id=${POLITY_ID}`, query: { polity_id: otherId } },
+    { url: `/?polity_id=${POLITY_ID}`, query: { polity_id: [otherId] } },
+    { url: '/?polity_id=bad-id', query: { polity_id: POLITY_ID } },
+    { url: `/?polity_id=${POLITY_ID}`, query: { polity_id: '' } },
+    { url: `/?polity_id=${POLITY_ID}`, query: { polity_id: [otherId, POLITY_ID] } }
+  ]) {
+    const res = mockResponse(); await handler(req, res);
+    assert.equal(res.statusCode, 400, JSON.stringify(req));
+    assert.equal(JSON.parse(res.body).code, 'INVALID_POLITY_ID');
+  }
+  assert.equal(calls, 0);
+  const unconfigured = createPolityReadHandler({
+    env: {}, clientFactory: async () => { throw new Error('must not connect'); }
+  });
+  const res = mockResponse();
+  await unconfigured({ url: `/?polity_id=${POLITY_ID}`, query: { polity_id: otherId } }, res);
+  assert.equal(res.statusCode, 400, 'ambiguous identity precedes database configuration');
+  assert.equal(JSON.parse(res.body).code, 'INVALID_POLITY_ID');
+});
+
+test('equivalent UUID spellings and framework-only rewritten routes remain valid', async () => {
+  const id = 'abcdef00-0000-4000-8000-000000000201';
+  let closed = 0;
+  const ids = [];
+  const handler = createPolityReadHandler({
+    env: { SUPABASE_DB_URL: 'postgresql://offline.invalid/atlas' },
+    clientFactory: async () => ({ end: async () => { closed++; } }),
+    readDetail: async ({ polityId }) => { ids.push(polityId); return projectPolity(polityRow()); }
+  });
+  for (const req of [
+    { url: `/?polity_id=${id.toUpperCase()}`, query: { polity_id: ` ${id} ` } },
+    { url: `/?polity%5Fid=${id}`, query: { polity_id: [id.toUpperCase()] } },
+    { url: '/rewritten-route?x=a&x=b', query: { polity_id: id } }
+  ]) {
+    const res = mockResponse(); await handler(req, res);
+    assert.equal(res.statusCode, 200); assert.equal(JSON.parse(res.body).mode, 'detail');
+  }
+  assert.deepEqual(ids, [id, id.toUpperCase(), id]);
+  assert.equal(closed, 3);
+});
+
+

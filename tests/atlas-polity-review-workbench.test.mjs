@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import fs from 'node:fs';
 import vm from 'node:vm';
+import { createRequire } from 'node:module';
 
 const snapshot = fs.readFileSync(new URL('../docs/audits/POLITY_REVIEW_CANDIDATES_20260927_ARCHIVE.txt', import.meta.url), 'utf8');
 const registrySource = fs.readFileSync(new URL('../atlas-polity-review-registry.js', import.meta.url), 'utf8');
@@ -16,6 +17,38 @@ const stage2 = JSON.parse(fs.readFileSync(new URL('../stage2/contracts/polity-id
 const registryContext = { window:{} };
 vm.runInNewContext(registrySource, registryContext);
 const registry = registryContext.window.ATLAS_POLITY_REVIEW_REGISTRY;
+
+test('actual API list query matches mounted workbench input/results without per-input reads', async () => {
+  const require = createRequire(import.meta.url);
+  const { createPolityReadHandler } = require('../server/atlas-polity-read-handler.js');
+  const rows = [
+    { id: '00000000-0000-4000-8000-000000000201', canonical_key: 'joseon', polity_type: 'historical_polity', historicity: 'historical', canonical_name_en: 'Joseon', preferred_name_ko: '조선', names: [{ name: 'Choson' }], activities: [{ id: '00000000-0000-4000-8000-000000000101', person_id: '00000000-0000-4000-8000-000000000001', person_name_ko: '태조', role_name: '왕', polity_designation_name_ko: '조선 왕국', activity_start: 1392, activity_end: 1418 }] },
+    { id: '00000000-0000-4000-8000-000000000202', canonical_name_en: 'Korean Empire', preferred_name_ko: '대한제국', names: [], activities: [] }
+  ];
+  const handler = createPolityReadHandler({ env: { SUPABASE_DB_URL: 'postgresql://offline.invalid/atlas' }, clientFactory: async () => ({ query: async () => ({ rows }), end: async () => {} }) });
+  async function api(query) {
+    const res = { setHeader() {}, end(body) { this.body = JSON.parse(body); } };
+    await handler({ url: '/api/atlas-polity-read' + (query == null ? '' : '?q=' + encodeURIComponent(query)) }, res);
+    assert.equal(res.statusCode, 200); return res.body;
+  }
+  let reads = 0;
+  const nodes = new Map(); const listeners = {};
+  const element = () => ({ value: '', innerHTML: '', textContent: '', classList: { toggle() {} } });
+  const root = { innerHTML: '', querySelector(key) { if (!nodes.has(key)) nodes.set(key, element()); return nodes.get(key); }, querySelectorAll() { return []; }, addEventListener(name, callback) { listeners[name] = callback; } };
+  const context = { console, window: { ATLAS_POLITY_BROWSER_READER: { async listPolities() { reads++; return api(); } }, ATLAS_POLITY_DOSSIER_VIEW: { createRenderer() { return { dossierHtml() { return ''; } }; } } } };
+  vm.runInNewContext(browser, context);
+  context.window.ATLAS_POLITY_BROWSER_VIEW.mount(root);
+  await new Promise(resolve => setImmediate(resolve));
+  const search = nodes.get('[data-polity-search]');
+  const list = nodes.get('[data-current-polity-list]');
+  for (const query of ['조선 Joseon', 'Ｃｈｏｓｏｎ', '조선'.normalize('NFD'), '태조', '왕', '조선 왕국', 'historical_polity', 'korean\t empire', 'missing']) {
+    search.value = query; listeners.input({ target: { matches: key => key === '[data-polity-search]' } });
+    const displayed = [...list.innerHTML.matchAll(/<details[^>]* data-polity-id="([^"]+)"/g)].map(hit => hit[1]);
+    const expected = (await api(query)).polities.map(p => p.id);
+    assert.deepEqual(displayed, expected, query);
+  }
+  assert.equal(reads, 1, 'mount reads once; all input events filter the loaded DTO locally');
+});
 
 test('Polities main surface keeps canonical listing first and mounts current review registry below it', () => {
   assert.match(nav, /atlasPolityMount/);
@@ -657,4 +690,244 @@ test('P2-07E Carolingian 843–855 stage preflight retains non-destructive ruptu
   assert.ok(row.evidence.some(v=>v.includes('38128160741')));
   assert.ok(row.evidence.some(v=>v.includes('larousse.fr')));
   assert.ok(row.evidence.some(v=>v.includes('rgh.univ-lorraine.fr')));
+});
+
+const detailTestId = '00000000-0000-4000-8000-000000000201';
+const detailTestRow = {
+  id: detailTestId, canonical_name_en: 'Joseon', preferred_name_ko: '조선', names: [],
+  activities: [{ id: '00000000-0000-4000-8000-000000000101', person_id: '00000000-0000-4000-8000-000000000001', person_name_ko: '태조',
+    activity_start: -44, activity_end: 14, activity_start_month: 3, activity_start_day: 15,
+    activity_start_granularity: 'day', activity_start_certainty: 'uncertain', activity_start_calendar: 'julian',
+    activity_end_granularity: 'year', activity_end_certainty: 'approximate' }]
+};
+const tick = () => new Promise(resolve => setImmediate(resolve));
+function deferred() { let resolve, reject; const promise = new Promise((yes,no) => { resolve=yes; reject=no; }); return { promise, resolve, reject }; }
+function mountedDetailBrowser(readPolity, initialPolityId = '', extraRows = []) {
+  const require = createRequire(import.meta.url);
+  const service = require('../server/atlas-polity-read-service.js');
+  const full = service.projectPolity(detailTestRow);
+  const summary = service.projectPolity(detailTestRow, { includeTemporal: false });
+  const nodes = new Map(), listeners = {}, cards = new Map();
+  const document = { activeElement: null };
+  const element = () => ({ value: '', innerHTML: '', textContent: '', classList: { toggle() {} } });
+  const list = element(); let html = '';
+  Object.defineProperty(list,'innerHTML',{ get() {
+    return html.replace(/<details[^>]* data-polity-id="([^"]+)"[^>]*>[\s\S]*?<\/details>/g, (outer,id) => {
+      const card=cards.get(id);
+      return card ? outer.replace(/(<div class="polity-browser-detail">)[\s\S]*(<\/div>\s*<\/details>)/,
+        (_,start,end) => start+card.body.innerHTML+end) : outer;
+    });
+  }, set(value) {
+    // Removing a native card also disconnects its focused descendants.
+    for (const card of cards.values()) if (document.activeElement===card.summary || card.body.contains(document.activeElement)) document.activeElement=null;
+    html=value; cards.clear();
+    for (const match of value.matchAll(/<details[^>]* data-polity-id="([^"]+)"([^>]*)>([\s\S]*?)<\/details>/g)) {
+      const summary={ focus() { document.activeElement=this; } };
+      const body={ contains(node) { return Boolean(node && (node===this || node.ownerBody===this)); } };
+      let detail=match[3].match(/<div class="polity-browser-detail">([\s\S]*)<\/div>\s*$/)?.[1]||'';
+      Object.defineProperty(body,'innerHTML',{ get() { return detail; }, set(value) {
+        if (body.contains(document.activeElement)) document.activeElement=null;
+        detail=value;
+      } });
+      cards.set(match[1], { dataset:{ polityId:match[1] }, open:/\bopen\b/.test(match[2]), scrollIntoView() {},
+        ownerDocument:document, summary, body,
+        querySelector(selector) { return selector==='summary' ? summary : selector==='.polity-browser-detail' ? body : null; },
+        matches(selector) { return selector==='details[data-polity-id]'; }
+      });
+    }
+  } });
+  nodes.set('[data-current-polity-list]',list);
+  const root = { innerHTML: '', querySelector(key) { if (!nodes.has(key)) nodes.set(key,element()); return nodes.get(key); },
+    querySelectorAll(key) { return ['[data-polity-id]','details[data-polity-id]'].includes(key) ? [...cards.values()] : []; },
+    addEventListener(name,callback) { listeners[name]=callback; } };
+  let listReads=0;
+  const context = { console, CustomEvent: class { constructor(name, options) { this.type=name; this.detail=options?.detail; } }, window: {
+    dispatchEvent() {}, ATLAS_POLITY_BROWSER_READER: { async listPolities() { listReads++; return { polities:[summary,...extraRows], summary:service.buildSummary([summary,...extraRows]) }; }, readPolity },
+    ATLAS_POLITY_DOSSIER_VIEW: require('../atlas-polity-dossier-view.js')
+  } };
+  vm.runInNewContext(browser,context);
+  const controller=context.window.ATLAS_POLITY_BROWSER_VIEW.mount(root,{ initialPolityId });
+  return { full, summary, list, cards, listeners, nodes, controller, document, get listReads() { return listReads; },
+    toggle(open) { const card=cards.get(detailTestId); assert.ok(card); card.open=open; listeners.toggle({ target:card }); },
+    input(value) { nodes.get('[data-polity-search]').value=value; listeners.input({ target:{ matches: selector => selector === '[data-polity-search]' } }); },
+    retry() { listeners.click({ target:{ closest: selector => selector === '[data-polity-detail-retry]' ? { dataset:{ polityDetailRetry:detailTestId } } : null } }); }
+  };
+}
+
+test('dossier reads only an opened identity, deduplicates opens and preserves close state', async () => {
+  const pending=deferred(); let calls=0;
+  const ui=mountedDetailBrowser(async id => { assert.equal(id,detailTestId); calls++; return pending.promise; });
+  await tick(); assert.equal(calls,0); assert.equal(ui.listReads,1);
+  ui.input('조선'); ui.input(''); assert.equal(calls,0);
+  ui.toggle(true); ui.toggle(true); assert.equal(calls,1);
+  assert.match(ui.list.innerHTML,/상세 활동을 불러오는 중/);
+  assert.doesNotMatch(ui.list.innerHTML,/율리우스력/);
+  ui.cards.get(detailTestId).open=false; // Browser property changes before its queued toggle event.
+  pending.resolve({ polity:ui.full }); await tick();
+  assert.equal(ui.cards.get(detailTestId).open,false,'late detail never reopens a closed card');
+  ui.toggle(true); assert.equal(calls,1,'cached reopen does not read again');
+  assert.ok(ui.list.innerHTML.includes('기원전 44 3월 15일? (율리우스력)–약 14'));
+  assert.equal(ui.listReads,1);
+});
+
+test('deep link loads one detail and refresh ignores stale success and failure', async () => {
+  const pending=[deferred(),deferred(),deferred()]; let calls=0;
+  const ui=mountedDetailBrowser(() => pending[calls++].promise,detailTestId);
+  await tick(); assert.equal(calls,1);
+  await ui.controller.refresh(); assert.equal(calls,2); assert.equal(ui.listReads,2);
+  pending[0].resolve({ polity:{...ui.full,canonical_name_en:'STALE OLD NAME'} }); await tick();
+  assert.doesNotMatch(ui.list.innerHTML,/STALE OLD NAME/); assert.match(ui.list.innerHTML,/불러오는 중/);
+  await ui.controller.refresh(); assert.equal(calls,3);
+  pending[1].reject(Error('old failure')); await tick();
+  assert.doesNotMatch(ui.list.innerHTML,/불러오지 못했습니다/);
+  pending[2].resolve({ polity:ui.full }); await tick();
+  assert.ok(ui.list.innerHTML.includes('기원전 44 3월 15일? (율리우스력)–약 14'));
+});
+
+test('wrong-identity detail fails closed and explicit retry recovers without background reads', async () => {
+  let calls=0;
+  const ui=mountedDetailBrowser(async () => { calls++; return { polity:calls===1 ? {id:'wrong',canonical_name_en:'WRONG IDENTITY'} : ui.full }; });
+  await tick(); ui.toggle(true); await tick();
+  assert.equal(calls,1); assert.match(ui.list.innerHTML,/상세 활동을 불러오지 못했습니다/);
+  assert.doesNotMatch(ui.list.innerHTML,/WRONG IDENTITY/);
+  ui.input('조선'); assert.equal(calls,1);
+  ui.retry(); await tick(); assert.equal(calls,2);
+  assert.ok(ui.list.innerHTML.includes('기원전 44 3월 15일? (율리우스력)–약 14'));
+});
+
+
+test('loading and resolving one dossier preserve its focused summary and unrelated card DOM', async () => {
+  const pending=deferred();
+  const otherId='00000000-0000-4000-8000-000000000202';
+  const ui=mountedDetailBrowser(() => pending.promise,'',[{id:otherId,canonical_name_en:'Other',activities:[]}]);
+  await tick();
+  const card=ui.cards.get(detailTestId), sibling=ui.cards.get(otherId);
+  sibling.body.innerHTML='<p>User-selected evidence remains mounted</p>';
+  card.summary.focus();
+  ui.toggle(true);
+  assert.equal(ui.cards.get(detailTestId),card,'opening must not replace the native disclosure');
+  assert.equal(ui.document.activeElement,card.summary,'keyboard focus remains on the original summary');
+  assert.equal(ui.cards.get(otherId),sibling,'loading must not replace a sibling dossier');
+  pending.resolve({polity:ui.full}); await tick();
+  assert.equal(ui.cards.get(detailTestId),card);
+  assert.equal(ui.document.activeElement,card.summary);
+  assert.equal(ui.cards.get(otherId),sibling);
+  assert.equal(sibling.body.innerHTML,'<p>User-selected evidence remains mounted</p>');
+  assert.ok(card.body.innerHTML.includes('율리우스력'));
+});
+
+test('detail retry returns removed-control focus to its summary without stealing unrelated focus', async () => {
+  let calls=0; const pending=deferred();
+  const ui=mountedDetailBrowser(() => ++calls===1 ? Promise.reject(Error('offline failure')) : pending.promise);
+  await tick(); ui.toggle(true); await tick();
+  const card=ui.cards.get(detailTestId);
+  const retryControl={ ownerBody:card.body };
+  ui.document.activeElement=retryControl;
+  ui.retry();
+  assert.equal(ui.cards.get(detailTestId),card);
+  assert.equal(ui.document.activeElement,card.summary,'retry control removal has a stable keyboard destination');
+  const search=ui.nodes.get('[data-polity-search]');
+  ui.document.activeElement=search;
+  pending.resolve({polity:ui.full}); await tick();
+  assert.equal(ui.document.activeElement,search,'asynchronous completion does not steal search focus');
+  assert.ok(card.body.innerHTML.includes('율리우스력'));
+});
+
+function mountedCollectionFlow() {
+  const require=createRequire(import.meta.url);
+  const {createPolityReadHandler}=require('../server/atlas-polity-read-handler.js');
+  const ids=['5fb816f2-2d44-55f9-a9c4-35e31625df38','e76162a0-8a7e-4d81-8a76-3a068f4194e0'];
+  let rows=ids.map((id,i)=>({id,canonical_name_en:i?'Korean Empire':'Joseon',preferred_name_ko:i?'대한제국':'조선',names:[],activities:[{
+    id:'00000000-0000-4000-8000-00000000010'+i,person_id:'00000000-0000-4000-8000-000000000001',person_name_ko:'검증 인물',
+    activity_start:1897,activity_end:1907,activity_start_month:10,activity_start_day:12,activity_start_granularity:'day',activity_start_certainty:'uncertain',activity_start_calendar:'gregorian'
+  }]}));
+  const outsider={id:'00000000-0000-4000-8000-000000000203',canonical_name_en:'Other polity',activities:[]};rows.push(outsider);
+  let listReads=0,detailReads=0;
+  const handler=createPolityReadHandler({env:{SUPABASE_DB_URL:'postgresql://offline.invalid/atlas'},clientFactory:async()=>{
+    let queries=0;return {query:async(sql,params)=>{queries++;return params&&queries===1?{rows:rows.filter(row=>row.id===params[0]),rowCount:rows.some(row=>row.id===params[0])?1:0}:params?{rows:[]}:{rows};},end:async()=>{}};
+  }});
+  const nodes=new Map(),cards=new Map(),listeners={};const element=()=>({value:'',innerHTML:'',textContent:'',classList:{toggle(){}}});
+  const list=element();let html='';Object.defineProperty(list,'innerHTML',{get(){return html;},set(value){html=value;cards.clear();for(const match of value.matchAll(/<details[^>]* data-polity-id="([^"]+)"([^>]*)>/g)){
+    const body={innerHTML:'',contains(){return false;}};cards.set(match[1],{dataset:{polityId:match[1]},open:/\bopen\b/.test(match[2]),body,
+      querySelector(selector){return selector==='.polity-browser-detail'?body:null;},matches(selector){return selector==='details[data-polity-id]';},scrollIntoView(){}});
+  }}});nodes.set('[data-current-polity-list]',list);
+  const root={innerHTML:'',querySelector(key){if(!nodes.has(key))nodes.set(key,element());return nodes.get(key);},querySelectorAll(key){return ['[data-polity-id]','details[data-polity-id]'].includes(key)?[...cards.values()]:[];},addEventListener(name,callback){listeners[name]=callback;}};
+  const context={console,CustomEvent:class{},window:{dispatchEvent(){},ATLAS_POLITY_DOSSIER_VIEW:require('../atlas-polity-dossier-view.js')},fetch:async(url,options)=>{
+    assert.equal(options.method,'GET');if(url.includes('polity_id='))detailReads++;else listReads++;
+    const res={setHeader(){},end(body){this.body=JSON.parse(body);}};await handler({url},res);return {ok:res.statusCode===200,status:res.statusCode,json:async()=>res.body};
+  }};
+  vm.runInNewContext(fs.readFileSync(new URL('../atlas-polity-browser-reader.js',import.meta.url),'utf8'),context);vm.runInNewContext(browser,context);
+  const controller=context.window.ATLAS_POLITY_BROWSER_VIEW.mount(root);
+  return {ids,outsider,nodes,cards,controller,get listReads(){return listReads;},get detailReads(){return detailReads;},
+    shown(){return [...cards.keys()];},collection(key){nodes.get('[data-polity-collection]').value=key;listeners.change({target:{matches:key=>key==='[data-polity-collection]'}});},
+    input(value){nodes.get('[data-polity-search]').value=value;listeners.input({target:{matches:key=>key==='[data-polity-search]'}});},
+    open(id){const card=cards.get(id);card.open=true;listeners.toggle({target:card});},
+    clickOpen(id){const card=cards.get(id);const summary={closest:key=>key==='[data-polity-id]'?card:null};listeners.click({target:{closest:key=>key==='summary'?summary:null}});card.open=true;listeners.toggle({target:card});},
+    filter(key){const button={dataset:{polityFilter:key}};listeners.click({target:{closest:selector=>selector==='[data-polity-filter]'?button:null}});},
+    removeMembers(){rows=[outsider];}};
+}
+
+test('refresh preserves collection and text after opening a native card', async()=>{
+  const ui=mountedCollectionFlow();await tick();ui.collection('korean-history-pilot');ui.input('조선');
+  ui.clickOpen(ui.ids[0]);await tick();
+  await ui.controller.refresh();
+  assert.equal(ui.nodes.get('[data-polity-collection]').value,'korean-history-pilot');
+  assert.equal(ui.nodes.get('[data-polity-search]').value,'조선');
+  assert.deepEqual(ui.shown(),[ui.ids[0]]);
+  assert.equal(ui.listReads,2);assert.equal(ui.detailReads,2,'one opened detail per refresh generation');
+});
+
+test('new text and status intent survive refresh after an explicit UUID navigation', async()=>{
+  for(const control of ['text','status']){
+    const ui=mountedCollectionFlow();await tick();ui.controller.selectPolity(ui.ids[0],{updateRoute:false,scroll:false});await tick();
+    if(control==='text')ui.input('Other polity');else ui.filter('orphan');
+    await ui.controller.refresh();
+    assert.deepEqual(ui.shown(),[ui.outsider.id],control);
+    if(control==='text')assert.equal(ui.nodes.get('[data-polity-search]').value,'Other polity');
+  }
+});
+
+test('pending initial UUID reveal yields to newer input while a later explicit navigation still reveals', async()=>{
+  for(const explicitLater of [false,true]){
+    let reads=0;
+    const ui=mountedDetailBrowser(async()=>{reads++;return {polity:ui.full};},detailTestId);
+    ui.input('no matching polity');
+    if(explicitLater)ui.controller.selectPolity(detailTestId,{updateRoute:false,scroll:false});
+    await tick();
+    assert.equal(ui.nodes.get('[data-polity-search]').value,explicitLater?'':'no matching polity');
+    assert.equal(ui.cards.has(detailTestId),explicitLater);
+    if(explicitLater)assert.equal(reads,1);
+  }
+});
+
+test('API reader collection selection intersects local search and keeps UUID detail navigation', async()=>{
+  const ui=mountedCollectionFlow();await tick();assert.equal(ui.shown().length,3);
+  assert.match(ui.nodes.get('[data-polity-collection]').innerHTML,/한국사 시범/);
+  ui.collection('korean-history-pilot');assert.deepEqual(new Set(ui.shown()),new Set(ui.ids));
+  assert.match(ui.nodes.get('[data-polity-collection-note]').innerHTML,/비배타적/);
+  assert.match(ui.nodes.get('[data-polity-collection-note]').innerHTML,/sillok.history.go.kr/);
+  ui.input('대한제국');assert.deepEqual(ui.shown(),[ui.ids[1]]);assert.equal(ui.listReads,1);assert.equal(ui.detailReads,0);
+  ui.open(ui.ids[1]);await tick();assert.equal(ui.detailReads,1);assert.match(ui.cards.get(ui.ids[1]).body.innerHTML,/10월 12일\?/);
+  ui.input('');ui.collection('');assert.equal(ui.shown().length,3);assert.equal(ui.listReads,1);
+});
+
+test('collection refresh retains available scope and explicitly clears removed membership; deep links escape scope', async()=>{
+  const ui=mountedCollectionFlow();await tick();ui.collection('korean-history-pilot');await ui.controller.refresh();
+  assert.equal(ui.nodes.get('[data-polity-collection]').value,'korean-history-pilot');assert.equal(ui.shown().length,2);
+  assert.equal(ui.controller.selectPolity(ui.outsider.id,{updateRoute:false,scroll:false}),true);
+  assert.equal(ui.nodes.get('[data-polity-collection]').value,'');assert.ok(ui.shown().includes(ui.outsider.id));
+  ui.collection('korean-history-pilot');ui.removeMembers();await ui.controller.refresh();
+  assert.equal(ui.nodes.get('[data-polity-collection]').value,'');assert.match(ui.nodes.get('[data-polity-collection-note]').innerHTML,/현재 목록에 없어/);
+});
+
+test('reader ignores malformed or unknown collection membership and accepts legacy list DTOs', async()=>{
+  const id='abcdef00-0000-4000-8000-000000000201';const context={window:{}};
+  vm.runInNewContext(fs.readFileSync(new URL('../atlas-polity-browser-reader.js',import.meta.url),'utf8'),context);
+  const valid={key:'valid',kind:'nonexclusive_navigation',label:'Example',polity_ids:[id]};
+  const payload={ok:true,mode:'list',polities:[{id}],navigation_collections:[valid,{...valid},{...valid,key:'unknown',polity_ids:['00000000-0000-4000-8000-000000000202']},{...valid,key:'duplicates',polity_ids:[id,id]},{...valid,key:'case-duplicates',polity_ids:[id,id.toUpperCase()]},{...valid,key:'sovereign',kind:'state'}]};
+  const read=value=>context.window.ATLAS_POLITY_BROWSER_READER.listPolities({fetchImpl:async()=>({ok:true,json:async()=>value})});
+  const result=await read(payload);assert.equal(result.navigation_collections.length,1);assert.equal(result.navigation_collections[0].key,'valid');
+  const malformedEvidence=await read({...payload,navigation_collections:[{...valid,evidence:{url:'https://example.org',source_ids:'invalid'}}]});
+  assert.equal(malformedEvidence.navigation_collections[0].evidence.source_ids.length,0,'malformed optional evidence cannot break listing');
+  const legacy=await read({ok:true,mode:'list',polities:[{id}]});assert.equal(legacy.navigation_collections.length,0);
 });
