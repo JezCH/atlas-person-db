@@ -15,8 +15,14 @@ function requestQueryValue(req, key) {
   }
   if (values.length > 1) return "__INVALID_MULTI__";
   const direct = req?.query?.[key];
-  if (Array.isArray(direct)) return direct.length === 1 ? String(direct[0] || "").trim() : "__INVALID_MULTI__";
-  if (direct != null) return String(direct).trim();
+  if (Array.isArray(direct) && direct.length !== 1) return "__INVALID_MULTI__";
+  if (direct != null) {
+    const value = String(Array.isArray(direct) ? direct[0] || "" : direct).trim();
+    // A framework-parsed UUID may supplement a rewritten URL, but cannot
+    // silently replace a different UUID that is still present in that URL.
+    if (values.length && values[0].trim().toLowerCase() !== value.toLowerCase()) return "__INVALID_MULTI__";
+    return value;
+  }
   return values.length ? values[0].trim() : null;
 }
 
@@ -135,4 +141,5 @@ module.exports = Object.freeze({
   polityIdFromRequest,
   createPolityReadHandler
 });
+
 

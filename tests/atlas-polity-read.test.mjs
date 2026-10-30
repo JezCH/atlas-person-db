@@ -318,3 +318,54 @@ test('single URL/framework UUIDs retain detail routing and ignore unrelated repe
   assert.equal(closed, 3);
 });
 
+test('conflicting URL and framework UUIDs fail before configuration or DB access', async () => {
+  const otherId = '00000000-0000-4000-8000-000000000202';
+  let calls = 0;
+  const handler = createPolityReadHandler({
+    env: { SUPABASE_DB_URL: 'postgresql://offline.invalid/atlas' },
+    clientFactory: async () => { calls++; return { end: async () => {} }; },
+    readDetail: async ({ polityId }) => ({ id: polityId })
+  });
+  for (const req of [
+    { url: `/?polity_id=${POLITY_ID}`, query: { polity_id: otherId } },
+    { url: `/?polity_id=${POLITY_ID}`, query: { polity_id: [otherId] } },
+    { url: '/?polity_id=bad-id', query: { polity_id: POLITY_ID } },
+    { url: `/?polity_id=${POLITY_ID}`, query: { polity_id: '' } },
+    { url: `/?polity_id=${POLITY_ID}`, query: { polity_id: [otherId, POLITY_ID] } }
+  ]) {
+    const res = mockResponse(); await handler(req, res);
+    assert.equal(res.statusCode, 400, JSON.stringify(req));
+    assert.equal(JSON.parse(res.body).code, 'INVALID_POLITY_ID');
+  }
+  assert.equal(calls, 0);
+  const unconfigured = createPolityReadHandler({
+    env: {}, clientFactory: async () => { throw new Error('must not connect'); }
+  });
+  const res = mockResponse();
+  await unconfigured({ url: `/?polity_id=${POLITY_ID}`, query: { polity_id: otherId } }, res);
+  assert.equal(res.statusCode, 400, 'ambiguous identity precedes database configuration');
+  assert.equal(JSON.parse(res.body).code, 'INVALID_POLITY_ID');
+});
+
+test('equivalent UUID spellings and framework-only rewritten routes remain valid', async () => {
+  const id = 'abcdef00-0000-4000-8000-000000000201';
+  let closed = 0;
+  const ids = [];
+  const handler = createPolityReadHandler({
+    env: { SUPABASE_DB_URL: 'postgresql://offline.invalid/atlas' },
+    clientFactory: async () => ({ end: async () => { closed++; } }),
+    readDetail: async ({ polityId }) => { ids.push(polityId); return projectPolity(polityRow()); }
+  });
+  for (const req of [
+    { url: `/?polity_id=${id.toUpperCase()}`, query: { polity_id: ` ${id} ` } },
+    { url: `/?polity%5Fid=${id}`, query: { polity_id: [id.toUpperCase()] } },
+    { url: '/rewritten-route?x=a&x=b', query: { polity_id: id } }
+  ]) {
+    const res = mockResponse(); await handler(req, res);
+    assert.equal(res.statusCode, 200); assert.equal(JSON.parse(res.body).mode, 'detail');
+  }
+  assert.deepEqual(ids, [id, id.toUpperCase(), id]);
+  assert.equal(closed, 3);
+});
+
+
