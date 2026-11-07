@@ -1,20 +1,22 @@
 name: ATLAS VIS3-05T-D KPI and Appbar Chrome Compare
 
 on:
-  pull_request:
-    paths:
-      - "atlas-dashboard-monumental-v11.css"
-      - "atlas-ui-mobile-v8.css"
-      - "scripts/verify-vis3-05t-d-kpi-browser.mjs"
-      - ".github/workflows/atlas-vis3-05t-d-kpi-browser.yml"
+  workflow_dispatch:
+    inputs:
+      approve_production_read:
+        description: "Approve one bounded Production browser comparison"
+        required: true
+        type: boolean
+        default: false
 permissions:
   contents: read
 jobs:
   real_production_same_dom:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.approve_production_read }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      GITHUB_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+      GITHUB_HEAD_SHA: ${{ github.sha }}
       ATLAS_PRODUCTION_ORIGIN: https://atlas-person-db.vercel.app
     steps:
       - uses: actions/checkout@v4
@@ -48,7 +50,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: vis3-05t-d-kpi-appbar-${{ github.event.pull_request.head.sha }}
+          name: vis3-05t-d-kpi-appbar-${{ github.sha }}
           path: artifacts/vis3-05t-d-browser
           retention-days: 21
           if-no-files-found: warn
