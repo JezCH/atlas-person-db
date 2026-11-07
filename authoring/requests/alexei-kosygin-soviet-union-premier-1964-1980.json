@@ -1,0 +1,73 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected:alexei-kosygin:ussr-premier:1964-1980:20261107:v1",
+  "person": {
+    "canonical_name_en": "Alexei Kosygin",
+    "display_name_ko": "알렉세이 코시긴",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-07",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Soviet Union",
+    "display_name_ko": "소련",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Chairman of the Council of Ministers of the USSR",
+    "role_display_name_ko": "소련 각료회의 의장·정부수반",
+    "start_year": 1964,
+    "start_month": 10,
+    "start_day": 15,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1980,
+    "end_month": 10,
+    "end_day": 23,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Aleksei Nikolayevich Kosygin (Алексей Николаевич Косыгин; 1904-02-21 to 1980-12-18) served as Chairman of the USSR Council of Ministers from 15 October 1964 to 23 October 1980. This is formal head-of-government authority in the Soviet Union, not a claim to have held the CPSU General Secretaryship or to have been the USSR's sole paramount ruler. His 1965 economic-reform program and his mediation at the January 1966 Tashkent talks are historical context, not separately dated offices in this request. His RSFSR Council of People's Commissars chairmanship from 23 June 1943 to 23 March 1946 concerns a different political level and is deliberately NOT conflated with the USSR premiership."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Archontology — KOSYGIN, Aleksej Nikolajevich (USSR): Chairman of the Council of Ministers",
+      "canonical_url": "https://archontology.org/nations/ussr/ussr_govt2/kosygin.php",
+      "citation_text": "Documents the USSR Council of Ministers chairmanship from 15 October 1964 to 23 October 1980, with appointment and release entries citing the USSR Supreme Soviet official gazette."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Visuotinė lietuvių enciklopedija — Aleksej Kosygin",
+      "canonical_url": "https://www.vle.lt/Straipsnis/aleksej-kosygin/",
+      "citation_text": "National encyclopedia confirms his identity, 21 February 1904 birth, 18 December 1980 death, government career, and role in Soviet economic administration."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "U.S. Department of State, FRUS 1964–1968, Vol. XXV, Document 278",
+      "canonical_url": "https://history.state.gov/historicaldocuments/frus1964-68v25/d278",
+      "citation_text": "U.S. diplomatic documentary record attests Chairman Kosygin's mediation of the January 1966 Tashkent India–Pakistan talks; this provides historical context only and is not a separate term of office."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-07",
+      "document_title": "알렉세이 코시긴",
+      "url": "https://namu.wiki/w/%EC%95%8C%EB%A0%89%EC%84%B8%EC%9D%B4%20%EC%BD%94%EC%8B%9C%EA%B8%B4"
+    }
+  },
+  "review_context": {
+    "request_batch": "user-selected-kosygin-20261107",
+    "requested_item": 1
+  }
+}
