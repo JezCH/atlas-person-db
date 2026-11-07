@@ -1,6 +1,16 @@
 name: ATLAS VIS3-05T-D KPI and Appbar Chrome Compare
 
 on:
+  pull_request:
+    paths:
+      - "atlas-dashboard-monumental-v11.css"
+      - "atlas-ui-mobile-v8.css"
+      - "atlas-dashboard.js"
+      - "atlas-main-authority-nav.js"
+      - "index.html"
+      - "tests/atlas-vis3-05t-d-kpi-appbar-type.test.mjs"
+      - "scripts/verify-vis3-05t-d-kpi-browser.mjs"
+      - ".github/workflows/atlas-vis3-05t-d-kpi-browser.yml"
   workflow_dispatch:
     inputs:
       approve_production_read:
@@ -11,6 +21,19 @@ on:
 permissions:
   contents: read
 jobs:
+  offline_contract:
+    if: ${{ github.event_name == 'pull_request' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Verify source contracts without Production access
+        run: |
+          node --check scripts/verify-vis3-05t-d-kpi-browser.mjs
+          node --test tests/atlas-vis3-05t-d-kpi-appbar-type.test.mjs
   real_production_same_dom:
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.approve_production_read }}
     runs-on: ubuntu-latest
