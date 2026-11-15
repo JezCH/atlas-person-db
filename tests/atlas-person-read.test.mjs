@@ -14,7 +14,10 @@ const {
   readPersonDetail
 } = require('../server/atlas-person-read-service.js');
 const runtimeRead = require('../server/atlas-runtime-person-read-service.js');
-const { createPersonReadHandler } = require('../server/atlas-person-read-handler.js');
+const {
+  createPersonReadHandler, personIdFromRequest, personQueryFromRequest,
+  listLimitFromRequest, namuwikiStatusFromRequest
+} = require('../server/atlas-person-read-handler.js');
 
 const PERSON_ID = '00000000-0000-4000-8000-000000000001';
 const ACTIVITY_ID = '00000000-0000-4000-8000-000000000101';
@@ -380,4 +383,47 @@ test('Person detail returns 404 for a valid UUID that is not present', async () 
   await handler({ method: 'GET', url: `/api/atlas-person-read?person_id=${PERSON_ID}` }, res);
   assert.equal(res.statusCode, 404);
   assert.equal(JSON.parse(res.body).code, 'PERSON_NOT_FOUND');
+});
+
+
+test('Person read rejects URL/framework parameter conflicts and repeated URL values before DB work', async () => {
+  const otherId = '00000000-0000-4000-8000-000000000002';
+  let dbCalls = 0;
+  const handler = createPersonReadHandler({
+    // Using no DB URL proves invalid inputs fail before configuration too.
+    env: {},
+    clientFactory: async () => { dbCalls++; throw new Error('must not connect'); }
+  });
+  for (const [request, code] of [
+    [{ url: `/api/atlas-person-read?person_id=${PERSON_ID}`, query: { person_id: otherId } }, 'INVALID_PERSON_ID'],
+    [{ url: `/?person_id=${PERSON_ID}`, query: { person_id: [otherId] } }, 'INVALID_PERSON_ID'],
+    [{ url: '/?person_id=not-a-uuid', query: { person_id: PERSON_ID } }, 'INVALID_PERSON_ID'],
+    [{ url: `/?person_id=${PERSON_ID}`, query: { person_id: '' } }, 'INVALID_PERSON_ID'],
+    [{ url: `/?person_id=${PERSON_ID}&person_id=${PERSON_ID}` }, 'INVALID_PERSON_ID'],
+    [{ url: '/?q=Napoleon', query: { q: 'Caesar' } }, 'INVALID_PERSON_QUERY'],
+    [{ url: '/?q=A&q=B', query: { q: 'A' } }, 'INVALID_PERSON_QUERY'],
+    [{ url: '/?view=identity', query: { view: 'detail' } }, 'INVALID_PERSON_VIEW'],
+    [{ url: '/?namuwiki_status=missing', query: { namuwiki_status: 'linked' } }, 'INVALID_NAMUWIKI_STATUS'],
+    [{ url: '/?limit=10', query: { limit: '20' } }, 'INVALID_LIST_LIMIT']
+  ]) {
+    const res = mockResponse();
+    await handler({ method: 'GET', ...request }, res);
+    assert.equal(res.statusCode, 400, JSON.stringify(request));
+    assert.equal(JSON.parse(res.body).code, code, JSON.stringify(request));
+  }
+  assert.equal(dbCalls, 0);
+});
+
+test('Person read preserves equivalent UUID spellings and rewritten framework-only queries', () => {
+  assert.equal(
+    personIdFromRequest({ url: `/?person%5Fid=${PERSON_ID.toUpperCase()}`, query: { person_id: ` ${PERSON_ID} ` } }),
+    PERSON_ID
+  );
+  assert.equal(
+    personIdFromRequest({ url: '/rewritten-route?other=x&other=y', query: { person_id: [PERSON_ID] } }),
+    PERSON_ID
+  );
+  assert.equal(personQueryFromRequest({ url: '/?q=Caesar', query: { q: ' Caesar ' } }), 'Caesar');
+  assert.equal(listLimitFromRequest({ url: '/?limit=10', query: { limit: '10' } }), '10');
+  assert.equal(namuwikiStatusFromRequest({ query: { namuwiki_status: 'linked' } }), 'linked');
 });
