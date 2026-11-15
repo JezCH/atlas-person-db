@@ -369,3 +369,44 @@ test('equivalent UUID spellings and framework-only rewritten routes remain valid
 });
 
 
+
+
+test('Polity search rejects conflicting URL and framework q before database access', async () => {
+  let calls = 0;
+  const handler = createPolityReadHandler({
+    env: {},
+    clientFactory: async () => { calls++; throw new Error('must not connect'); }
+  });
+  for (const req of [
+    { url: '/?q=Joseon', query: { q: 'Korean Empire' } },
+    { url: '/?q=Joseon', query: { q: ['Korean Empire'] } },
+    { url: '/?q=Joseon', query: { q: '' } },
+    { url: '/?q=Joseon', query: { q: ['Joseon', 'Korean Empire'] } }
+  ]) {
+    const res = mockResponse(); await handler({ method: 'GET', ...req }, res);
+    assert.equal(res.statusCode, 400, JSON.stringify(req));
+    assert.equal(JSON.parse(res.body).code, 'INVALID_SEARCH_QUERY');
+  }
+  assert.equal(calls, 0);
+});
+
+test('Polity search accepts equivalent URL/framework q and framework-only rewritten routes', async () => {
+  const searches = [];
+  const handler = createPolityReadHandler({
+    env: { SUPABASE_DB_URL: 'postgresql://offline.invalid/atlas' },
+    clientFactory: async () => ({ end: async () => {} }),
+    readList: async ({ query }) => {
+      searches.push(query);
+      return { polities: [], summary: { total_polities: 0 } };
+    }
+  });
+  for (const req of [
+    { url: '/?q=Joseon', query: { q: ' Joseon ' } },
+    { url: '/rewritten-route?other=a&other=b', query: { q: ['Korean Empire'] } }
+  ]) {
+    const res = mockResponse(); await handler({ method: 'GET', ...req }, res);
+    assert.equal(res.statusCode, 200, JSON.stringify(req));
+    assert.equal(JSON.parse(res.body).mode, 'list');
+  }
+  assert.deepEqual(searches, ['Joseon', 'Korean Empire']);
+});

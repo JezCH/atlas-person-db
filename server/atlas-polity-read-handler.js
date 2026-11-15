@@ -31,10 +31,14 @@ function listSearchQuery(req) {
     const values = new URL(String(req?.url || "/"), "http://atlas.local").searchParams.getAll("q");
     if (values.length > 1) return null;
     const direct = req?.query?.q;
+    if (Array.isArray(direct) && direct.length !== 1) return null;
     const value = direct == null ? (values[0] || "") :
-      Array.isArray(direct) && direct.length === 1 ? direct[0] : direct;
+      Array.isArray(direct) ? direct[0] : direct;
     if (typeof value !== "string") return null;
     const query = value.trim();
+    // A rewritten framework query must agree with the URL's original search.
+    // Silently preferring either one could display a different Polity cohort.
+    if (values.length && values[0].trim() !== query) return null;
     return query.length <= 200 ? query : null;
   } catch {
     return null;
