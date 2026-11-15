@@ -141,6 +141,11 @@ test("Evidence period basis localizes the canonical code when the read contract 
   }
   const korean=renderer.activityEvidenceHtml({...activity,period_basis:{code:"reign",display_name:"재위 기간"}});
   assert.match(korean,/<small>기간 기준<\/small><strong>재위 기간<\/strong>/);
+  // The evidence formatter intentionally rejects mixed Latin/Hangul labels.
+  // Prefer the known canonical code instead of showing a false unknown.
+  const bilingual=renderer.activityEvidenceHtml({...activity,period_basis:{code:"reign",display_name:"재위 기간 (Reign)"}});
+  assert.match(bilingual,/<small>기간 기준<\/small><strong>재위<\/strong>/);
+  assert.doesNotMatch(bilingual,/<small>기간 기준<\/small><strong>표시 확인 필요<\/strong>/);
   const unknown=renderer.activityEvidenceHtml({...activity,period_basis:{code:"unreviewed_basis",display_name:"Unreviewed basis"}});
   assert.match(unknown,/<small>기간 기준<\/small><strong>표시 확인 필요<\/strong>/);
   const missing=renderer.activityEvidenceHtml({...activity,period_basis:null});

@@ -97,8 +97,12 @@
       const evidence=evidenceForActivity(activity);
       // Match the main Activity label: keep localized names, otherwise translate
       // the existing canonical code rather than an English display-name fallback.
-      const periodBasis=/[가-힣]/.test(evidence.period_basis||"")
-        ? evidence.period_basis : text(activity?.period_basis?.code)||evidence.period_basis;
+      const basisLabel=evidence.period_basis||"";
+      // humanEvidenceValue accepts localized labels only if they contain no
+      // Latin text; a bilingual label must use the reviewed canonical code.
+      const localizedBasis=/[가-힣]/.test(basisLabel)&&!/[A-Za-z]/.test(basisLabel);
+      const periodBasis=localizedBasis
+        ? basisLabel : text(activity?.period_basis?.code)||basisLabel;
       const activityId=escapeHtml(activity?.id||"");
       const sourceLabel=`출처 ${evidence.source_count}건`;
       return `<details class="person-evidence-inspector" data-activity-evidence-id="${activityId}">
