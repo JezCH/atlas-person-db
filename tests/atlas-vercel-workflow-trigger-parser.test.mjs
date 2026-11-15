@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync, readdirSync } from "node:fs";
-import { workflowTriggerEvents, workflowPrProductionViolation, workflowHistoricalManualViolation } from "../scripts/verify-vercel-resource-budget.mjs";
+import { workflowTriggerEvents, workflowPrProductionViolation, workflowHistoricalManualViolation, forbiddenVercelSandboxInvocation } from "../scripts/verify-vercel-resource-budget.mjs";
 
 test("root-level on key cannot bypass Production pull_request guard", () => {
   const events = workflowTriggerEvents("on:\n  pull_request:\n  workflow_dispatch:\njobs:\n  verify: {}");
@@ -85,4 +85,29 @@ test("historical full-Production census remains manual-only for PR target trigge
     assert.equal(workflowHistoricalManualViolation(workflowTriggerEvents(source)), true, event);
   }
   assert.equal(workflowHistoricalManualViolation(null), true);
+});
+
+
+test("Vercel Hobby guard rejects snapshot restoration, named resume and direct Sandbox creation entrypoints", () => {
+  for (const text of [
+    "await tools.mcp__Vercel__create_sandboxes_v4({})",
+    "await tools.mcp__Vercel__create_sandboxes_sessions_by_session_id_snapshot_v2({})",
+    "await tools.mcp__Vercel__create_sandboxes_sessions_by_session_id_snapshot_v3({})",
+    "await tools.mcp__Vercel__update_sandbox({resume:true})",
+    "vercel sandbox resume my-session",
+    "vercel sandbox create",
+    "import('@vercel/sandbox')",
+    "const { Sandbox } = require('@vercel/sandbox')",
+    "POST /v3/sandboxes/sessions"
+  ]) {
+    assert.equal(forbiddenVercelSandboxInvocation(text), true, text);
+  }
+  for (const safe of [
+    "chromium --no-sandbox",
+    "comment: Sandbox was prohibited historically",
+    "GET /v2/sandboxes",
+    "mcp__Vercel__list_named_sandboxes"
+  ]) {
+    assert.equal(forbiddenVercelSandboxInvocation(safe), false, safe);
+  }
 });
