@@ -923,6 +923,22 @@ test('pending initial UUID reveal yields to newer input while a later explicit n
   }
 });
 
+test('refresh never refetches expanded dossiers hidden by the current search; returning them loads once', async()=>{
+  const ui=mountedCollectionFlow(); await tick();
+  ui.open(ui.ids[0]); await tick();
+  assert.equal(ui.detailReads,1,'first explicit open is one detail call');
+  ui.input('대한제국');
+  assert.deepEqual(ui.shown(),[ui.ids[1]]);
+  await ui.controller.refresh(); await tick();
+  assert.equal(ui.detailReads,1,'hidden previously opened identity must not trigger a Function call after refresh');
+  ui.input('');
+  await tick();
+  assert.equal(ui.detailReads,2,'open card reappearing after refresh loads its now-stale detail once');
+  ui.input('대한제국'); ui.input(''); await tick();
+  assert.equal(ui.detailReads,2,'repeat filter toggling reuses the same loaded detail');
+  assert.equal(ui.listReads,2,'no extra full-list GET when changing local filters');
+});
+
 test('API reader collection selection intersects local search and keeps UUID detail navigation', async()=>{
   const ui=mountedCollectionFlow();await tick();assert.equal(ui.shown().length,3);
   assert.match(ui.nodes.get('[data-polity-collection]').innerHTML,/한국사 시범/);

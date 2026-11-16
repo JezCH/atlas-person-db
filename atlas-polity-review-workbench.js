@@ -249,6 +249,13 @@
         more.hidden = live.status !== "ready" || shown.length >= matched.length;
         more.textContent = more.hidden ? "더 보기" : "더 보기 (" + (matched.length - shown.length).toLocaleString("ko-KR") + "개 남음)";
       }
+      // A refreshed list may preserve open state for a previously hidden card.
+      // Read only the details actually mounted and expanded on this page.
+      if (live.status === "ready") {
+        for (const card of root.querySelectorAll("details[data-polity-id]")) {
+          if (card.open) void ensureDetail(card.dataset.polityId);
+        }
+      }
     }
 
     function syncOpenCards() {
@@ -274,6 +281,11 @@
     async function ensureDetail(polityId, { retry = false } = {}) {
       const id = String(polityId || "").trim().toLowerCase();
       if (live.status !== "ready" || !openPolityIds.has(id) || !live.polities.some(p => String(p.id).toLowerCase() === id)) return;
+      // Refresh must not fetch every identity the user ever expanded if the
+      // current search/collection hides it. Reappearing open cards are picked
+      // up by render() and fetched once when actually visible.
+      const visibleCard = [...root.querySelectorAll("details[data-polity-id]")].find(row => String(row.dataset.polityId || "").toLowerCase() === id);
+      if (!visibleCard?.open) return;
       const existing = details.get(id);
       if (existing && !(retry && existing.status === "error")) return;
       const currentGeneration = generation;
