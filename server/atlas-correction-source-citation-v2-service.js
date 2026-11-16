@@ -52,7 +52,10 @@ function requireOperation(raw, index) {
   // Nonmutation review metadata remains compatible.
   const assertionFields = ["expected_canonical_url", "expected_citation_text", "replacement_citation_text"];
   for (const field of Object.keys(raw)) {
-    if ((field.startsWith("expected_") || field.startsWith("replacement_")) && !assertionFields.includes(field)) {
+    // Reject casing and spelling variants too: JSON permits expectedTitle or
+    // replacementPublisher, which otherwise appear accepted but do nothing.
+    const lower = field.toLowerCase();
+    if ((lower.startsWith("expected") || lower.startsWith("replacement")) && !assertionFields.includes(field)) {
       throw new Error(`CORRECTION_SOURCE_CITATION_OP${index}_FIELD_UNSUPPORTED:${field}`);
     }
   }

@@ -8,7 +8,7 @@ const { requireOperation, requireManifest, createCorrectionSourceCitationV2Servi
 const manifest = JSON.parse(fs.readFileSync(new URL('../corrections/requests/gracchi-shared-source-citation-20260912.v2.json', import.meta.url), 'utf8'));
 
 test('citation-only operation rejects unsupported before/after guard fields instead of dropping them', () => {
-  for (const field of ['expected_title', 'replacement_title', 'replacement_publisher', 'replacement_canonical_url', 'replacement_citation']) {
+  for (const field of ['expected_title', 'replacement_title', 'replacement_publisher', 'replacement_canonical_url', 'replacement_citation', 'expectedTitle', 'replacementPublisher', 'Expected_title', 'replacementcitation']) {
     const operation = { ...manifest.operations[0], [field]: 'Unsupported bibliographic assertion' };
     assert.throws(() => requireOperation(operation, 1), { message: `CORRECTION_SOURCE_CITATION_OP1_FIELD_UNSUPPORTED:${field}` });
   }
