@@ -1,0 +1,80 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261116:tran-hung-dao:dai-viet:bach-dang-1288:v1",
+  "registration_candidate_id": "gplist3-20260921-014",
+  "person": {
+    "canonical_name_en": "Trần Hưng Đạo",
+    "display_name_ko": "쩐흥다오",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-16",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "military",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Đại Việt",
+    "display_name_ko": "대월",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "0723204f-d766-475b-9b8a-67fcdda9425b"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "role": "Commander-in-Chief",
+    "role_display_name_ko": "군 총사령관",
+    "period_basis": "military_activity",
+    "start_year": 1288,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1288,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative military year 1288: Trần Hưng Đạo (Trần Quốc Tuấn) commanded the Đại Việt resistance to the Yuan invasion and played a central role in the Bạch Đằng naval victory, with Trần royal leadership including the retired emperor Trần Thánh Tông and emperor Trần Nhân Tông. This event point does not purport to cover his entire command or lifespan."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Vietnam National Museum of History — Discovery of the stake field from the 1288 Bạch Đằng naval battle",
+      "canonical_url": "https://baotanglichsu.vn/vi/Articles/3100/71253/phat-hien-bai-coc-trong-tran-thuy-chien-tren-song-bach-djang-nam-1288.html",
+      "citation_text": "Museum account identifies the 1288 battle and Trần Hưng Đạo among Đại Việt's commanders."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Trần Hưng Đạo, nhà quân sự thiên tài — university-hosted historical study",
+      "canonical_url": "https://lic.haui.edu.vn/media/Book%20L%E1%BB%8Bch%20s%E1%BB%AD%2C%20%C4%91%E1%BB%8Ba%20l%C3%BD/Tr%E1%BA%A7n%20H%C6%B0ng%20%C4%90%E1%BA%A1o%20nh%C3%A0%20qu%C3%A2n%20s%E1%BB%B1%20thi%C3%AAn%20t%C3%A0i.pdf",
+      "citation_text": "University-hosted monograph reviews the 1285 and 1288 anti-Yuan campaigns."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-16",
+      "document_title": "쩐흥다오",
+      "url": "https://namu.wiki/w/%EC%A9%90%ED%9D%A5%EB%8B%A4%EC%98%A4"
+    }
+  },
+  "review_context": {
+    "selection": "user_requested_registration_2026-11-16",
+    "prior_candidate_id": "gplist3-20260921-014",
+    "aliases": [
+      "Trần Quốc Tuấn",
+      "陳國峻",
+      "진국준",
+      "진흥도"
+    ],
+    "namuwiki_review_method": "exact document title verified in indexed NamuWiki mirror",
+    "namuwiki_review_evidence": "https://www.namu.moe/w/%EC%A9%90%ED%9D%A5%EB%8B%A4%EC%98%A4",
+    "registration_state": "CURRENT_PRODUCTION_PROTECTED_PREFLIGHT_REQUIRED",
+    "production_screen": "2026-11-17 (KST) production read-only identity projection of 2,152 Person rows: no exact/normalized alias or >=7-letter substring match for reviewed aliases; not authoritative proof of absence. Production Polity list uniquely resolves the desired exact canonical English identity, official Korean preferred label, type, historicity and UUID. Canonical GitHub OIDC preflight_batch is still mandatory before any apply.",
+    "apply_gate": "HOLD: DO NOT MERGE/APPLY until bounded protected Production preflight_batch verifies exact Person/alias/Activity/Role/Source identity; reuse existing Person if found. Do not create new Polity. Preserve historical Source, Activity, immutable request_id, and prior registration_candidate_id."
+  }
+}

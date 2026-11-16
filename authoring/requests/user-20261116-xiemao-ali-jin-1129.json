@@ -1,0 +1,77 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261116:xiemao-ali:jin-dynasty:campaign-1129:v1",
+  "person": {
+    "canonical_name_en": "Xiemao Ali",
+    "display_name_ko": "사묘아리",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-16",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "military",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Jin Dynasty",
+    "display_name_ko": "금나라",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "6a9d6b63-15c9-5b1b-8fd5-29bbf0787dde"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "role": "General",
+    "role_display_name_ko": "장군",
+    "period_basis": "military_activity",
+    "start_year": 1129,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1129,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative dated activity 1129: Jin shi, juan 80, documents 斜卯阿里 serving the Jin army in operations against the Southern Song court around Mingzhou. His Jin service also includes engagements against Goryeo, Liao and Song in other years. The source does not establish an undisputed exact death year, so no life-year or lifetime military interval is invented."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Jin shi (金史), juan 80, biography of Xiemao Ali",
+      "canonical_url": "https://www.donglishuzhai.net/chapter/11220.html",
+      "citation_text": "The primary transmitted biography records 斜卯阿里's Jurchen campaigns against Goryeo, Liao and Song, his naval activity and later office."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Chinese Text Project — Jin shi, Biographies 18 (斜卯阿里)",
+      "canonical_url": "https://ctext.org/wiki.pl?chapter=178024&if=en",
+      "citation_text": "Edition of Jin shi, juan 80, including the original Xiemao Ali biography."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-16",
+      "document_title": "사묘아리",
+      "url": "https://namu.wiki/w/%EC%82%AC%EB%AC%98%EC%95%84%EB%A6%AC"
+    }
+  },
+  "review_context": {
+    "selection": "user_requested_registration_2026-11-16",
+    "prior_candidate_id": null,
+    "aliases": [
+      "斜卯阿里",
+      "Xie Mao Ali"
+    ],
+    "namuwiki_review_method": "exact document title verified in indexed NamuWiki mirror",
+    "namuwiki_review_evidence": "https://m.namu.moe/w/%EC%82%AC%EB%AC%98%EC%95%84%EB%A6%AC",
+    "registration_state": "CURRENT_PRODUCTION_PROTECTED_PREFLIGHT_REQUIRED",
+    "production_screen": "2026-11-17 (KST) production read-only identity projection of 2,152 Person rows: no exact/normalized alias or >=7-letter substring match for reviewed aliases; not authoritative proof of absence. Production Polity list uniquely resolves the desired exact canonical English identity, official Korean preferred label, type, historicity and UUID. Canonical GitHub OIDC preflight_batch is still mandatory before any apply.",
+    "apply_gate": "HOLD: DO NOT MERGE/APPLY until bounded protected Production preflight_batch verifies exact Person/alias/Activity/Role/Source identity; reuse existing Person if found. Do not create new Polity. Preserve historical Source, Activity, immutable request_id, and prior registration_candidate_id."
+  }
+}
