@@ -9,6 +9,18 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const targets = [".github/workflows", "scripts", "server", "api", "package.json"];
 const errors = [];
 const sourceExt = /\.(?:[cm]?js|ya?ml|json|sh|py)$/i;
+// Keep the classifier independently testable without launching a Sandbox.
+// Chromium --no-sandbox is not a Vercel Sandbox resource allocation.
+export function forbiddenVercelSandboxInvocation(source) {
+  const body = String(source || "");
+  return [
+    /\bmcp__Vercel__(?:create_sandboxes(?:_v\d+|_sessions_by_session_id_snapshot_v\d+)?|update_sandbox)\b/i,
+    /\bvercel\s+sandbox\s+(?:create|run|start|resume)\b/i,
+    /(?:require\s*\(\s*|from\s*|import\s*\(\s*)["']@vercel\/sandbox["']/i,
+    /\b(?:POST|post)\s+\/?v[23]\/sandboxes\b/i
+  ].some((pattern) => pattern.test(body));
+}
+
 function scan(location) {
   let entries;
   try { entries = readdirSync(location, { withFileTypes: true }); }
@@ -20,15 +32,10 @@ function scan(location) {
     const file = relative(root, full).replaceAll("\\", "/");
     if (file === "scripts/verify-vercel-resource-budget.mjs") continue;
     const body = readFileSync(full, "utf8");
-    // Block executable Sandbox starts. Avoid a generic "sandbox" match because
-    // Chromium's --no-sandbox and historical test fixtures are unrelated.
-    const banned = [
-      /\bmcp__Vercel__create_sandboxes(?:_v\d+)?\b/i,
-      /\bvercel\s+sandbox\s+(?:create|run|start)\b/i,
-      /(?:require\s*\(\s*|from\s*)["']@vercel\/sandbox["']/i,
-      /\b(?:POST|post)\s+\/?v2\/sandboxes\b/i
-    ];
-    if (banned.some((pattern) => pattern.test(body))) {
+    // Guard all known billable Sandbox entrypoints, including restoring a
+    // saved session and resuming a named Sandbox. This only scans repo code:
+    // it cannot intercept calls made directly through external tools.
+    if (forbiddenVercelSandboxInvocation(body)) {
       errors.push(`${file}: Vercel Sandbox execution is forbidden in this production repository; use an independent research runner.`);
     }
   }
@@ -36,7 +43,7 @@ function scan(location) {
 for (const target of targets) {
   if (target === "package.json") {
     const body = readFileSync(join(root, target), "utf8");
-    if (/\bvercel\s+sandbox\s+(?:create|run|start)\b/i.test(body)) errors.push("package.json: Sandbox runner forbidden");
+    if (forbiddenVercelSandboxInvocation(body)) errors.push("package.json: Sandbox runner forbidden");
   } else scan(join(root, target));
 }
 

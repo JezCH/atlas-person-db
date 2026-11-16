@@ -24,17 +24,31 @@ const MAX_LIST_LIMIT = 50;
 const NAMUWIKI_STATUS_VALUES = Object.freeze(["missing", "linked", "not_found"]);
 
 function requestQueryValue(req, key) {
-  const direct = req?.query?.[key];
-  if (Array.isArray(direct)) return direct.length === 1 ? String(direct[0] || "").trim() : "__INVALID_MULTI__";
-  if (direct != null) return String(direct).trim();
+  // Do not allow framework-parsed query parameters to silently override a
+  // different value still present in the original URL (including rewrites).
   const rawUrl = String(req?.url || "").trim();
-  if (!rawUrl) return null;
-  try {
-    const parsed = new URL(rawUrl, "http://atlas.local");
-    return parsed.searchParams.has(key) ? String(parsed.searchParams.get(key) || "").trim() : null;
-  } catch {
-    return null;
+  let values = [];
+  if (rawUrl) {
+    try {
+      values = new URL(rawUrl, "http://atlas.local").searchParams.getAll(key);
+    } catch { /* Framework-only rewritten routes remain supported. */ }
   }
+  if (values.length > 1) return "__INVALID_MULTI__";
+  const direct = req?.query?.[key];
+  if (Array.isArray(direct) && direct.length !== 1) return "__INVALID_MULTI__";
+  if (direct != null) {
+    const value = String(Array.isArray(direct) ? direct[0] || "" : direct).trim();
+    if (values.length) {
+      const urlValue = String(values[0] || "").trim();
+      // UUID spellings are case-insensitive; search/filter values are not.
+      const equivalent = key === "person_id"
+        ? urlValue.toLowerCase() === value.toLowerCase()
+        : urlValue === value;
+      if (!equivalent) return "__INVALID_MULTI__";
+    }
+    return value;
+  }
+  return values.length ? String(values[0] || "").trim() : null;
 }
 
 function personIdFromRequest(req) {

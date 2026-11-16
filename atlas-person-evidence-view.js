@@ -95,6 +95,14 @@
 
     function activityEvidenceHtml(activity){
       const evidence=evidenceForActivity(activity);
+      // Match the main Activity label: keep localized names, otherwise translate
+      // the existing canonical code rather than an English display-name fallback.
+      const basisLabel=evidence.period_basis||"";
+      // humanEvidenceValue accepts localized labels only if they contain no
+      // Latin text; a bilingual label must use the reviewed canonical code.
+      const localizedBasis=/[가-힣]/.test(basisLabel)&&!/[A-Za-z]/.test(basisLabel);
+      const periodBasis=localizedBasis
+        ? basisLabel : text(activity?.period_basis?.code)||basisLabel;
       const activityId=escapeHtml(activity?.id||"");
       const sourceLabel=`출처 ${evidence.source_count}건`;
       return `<details class="person-evidence-inspector" data-activity-evidence-id="${activityId}">
@@ -104,7 +112,7 @@
         </summary>
         <div class="person-evidence-body">
           <div class="person-evidence-facts">
-            <div><small>기간 기준</small><strong>${rawValue(evidence.period_basis,"period_basis")}</strong></div>
+            <div><small>기간 기준</small><strong>${rawValue(periodBasis,"period_basis")}</strong></div>
             <div><small>연대 상태</small><strong>${rawValue(evidence.chronology_status,"chronology_status")}</strong></div>
             <div><small>신뢰도</small><strong>${rawValue(evidence.confidence,"confidence")}</strong></div>
           </div>
