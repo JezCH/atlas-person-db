@@ -301,6 +301,19 @@ test("missing previous Production SHA still fails to build on non-data-only chan
   assert.equal(v.status,1,v.stdout);
   assert.match(v.stdout,/BUILD: previous successful Production SHA unavailable/);
 });
+test("trusted bounded Authoring control and request-only changes never require an app build",()=>{
+  const control=".github/atlas-authoring-preflight.txt";
+  assert.equal(isSafeToSkipPath(control),true);
+  assert.equal(shouldBuildForChangedPaths([control,"authoring/requests/user-approved.json"]),false);
+  assert.equal(shouldBuildForChangedPaths([control,"server/atlas-human-authoring-handler.js"]),true);
+  const v=gitFixture({
+    ".github/atlas-authoring-preflight.txt":"preflight authoring/requests/example.json\\n",
+    "authoring/requests/example.json":"{}"
+  });
+  assert.equal(v.status,0,v.stdout+"\\n"+v.stderr);
+  assert.match(v.stdout,/SKIP: only non-deployable files changed/);
+});
+
 test("unusual literal whitespace is not an approved direct-helper path",()=>{
   for(const name of [" docs/readme.md"," docs/runtime.js","docs/readme.md ","\tdocs/readme.md"]){
     assert.equal(isSafeToSkipPath(name),false,name);
