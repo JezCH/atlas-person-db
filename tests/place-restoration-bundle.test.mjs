@@ -54,6 +54,27 @@ test('latest preserved evidence reaches25 real Source candidates with2 quarantin
   }
 });
 
+
+test('multiple distinct locators on one Source keep ordered fact-specific evidence',()=>{
+  const customOriginal=structuredClone(original);
+  const customBundle=structuredClone(bundle);
+  const old=customOriginal.facts[0].source_refs[0];
+  const extra={source_id:old.source_id,locator:'Another independently reviewed passage'};
+  customOriginal.facts[0].source_refs.push(extra);
+  customBundle.facts[0].payload.source_refs.push(structuredClone(extra));
+  customBundle.facts[0].source_reviews.push({
+    ...structuredClone(customBundle.facts[0].source_reviews[0]),
+    original_locator:extra.locator
+  });
+  const snapshot=JSON.stringify([customOriginal,customBundle]);
+  const verified=verifyRestorationBundle(customBundle,customOriginal);
+  assert.equal(verified.facts,original.facts.length);
+  assert.equal(verified.historical_approvals,0);
+  assert.equal(JSON.stringify([customOriginal,customBundle]),snapshot,'validator is read-only');
+  customBundle.facts[0].source_reviews[1].original_locator='Wrong earlier passage';
+  assert.throws(()=>verifyRestorationBundle(customBundle,customOriginal),'mismatched second locator must fail closed');
+});
+
 test('retrieval updates cannot clear historical gates or detach fact-specific evidence',()=>{
   for(const mutate of [
     b=>b.source_review[0].historical_approval='APPROVED',

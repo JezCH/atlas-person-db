@@ -65,10 +65,13 @@ export function verifyRestorationBundle(bundle, original) {
     assert(!facts.has(f.fact_key),'duplicate semantic fact');facts.add(f.fact_key);
     assert(places.has(f.place_id)&&original.expected_polity_ids.includes(f.polity_id),'dangling fact target');
     assert.deepEqual(item.source_reviews.map(x=>x.source_id),f.source_refs.map(x=>x.source_id));
-    for(const ref of item.source_reviews){
+    for(const [index,ref] of item.source_reviews.entries()){
       assert(sources.has(ref.source_id));evidenceHold(ref);
       const review=reviewed.get(ref.source_id);
-      assert.equal(ref.original_locator,f.source_refs.find(x=>x.source_id===ref.source_id).locator);
+      // One Source can support the same fact at several distinct locators.
+      // Match the reviewed evidence to its ordered reference, not the first
+      // occurrence of this Source UUID (which could be a different passage).
+      assert.equal(ref.original_locator,f.source_refs[index].locator);
       assert.equal(ref.status,review.status);
       assert.equal(ref.missing,review.missing);
       assert.equal(ref.reviewed_locator,review.locator||null);
