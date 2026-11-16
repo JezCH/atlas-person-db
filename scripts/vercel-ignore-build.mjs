@@ -33,7 +33,10 @@ const AGENT_SKIP_GATE = "scripts/vercel-ignore-build.mjs";
 const SAFE_SKIP_EXACT = new Set([
   ".github/workflows/atlas-integrity.yml",
   ".github/workflows/atlas-spacetime-production-visual.yml",
-  "scripts/verify-vercel-resource-budget.mjs"
+  "scripts/verify-vercel-resource-budget.mjs",
+  // The trusted preflight/apply request selector is consumed by GitHub
+  // Actions, never by the deployed app or runtime. Do not build for it alone.
+  ".github/atlas-authoring-preflight.txt"
 ]);
 
 // The deployed Human Authoring and reviewed Person merge endpoints can consume

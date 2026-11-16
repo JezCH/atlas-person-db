@@ -66,7 +66,39 @@ jobs:
             echo "Recovery publication requested at workflow SHA ${GITHUB_SHA}."
           fi
 
+      # A main push that explicitly requests Authoring preflight-only is not
+      # a canonical mutation. Skip the downstream Runtime re-publication for
+      # that exact producer commit; failed/mutating producers remain eligible.
+      - name: Detect read-only Authoring preflight producer
+        id: readonly_preflight
+        shell: bash
+        env:
+          ATLAS_TRIGGER_EVENT: ${{ github.event_name }}
+          ATLAS_PRODUCER_NAME: ${{ github.event.workflow_run.name }}
+          ATLAS_PRODUCER_EVENT: ${{ github.event.workflow_run.event }}
+          ATLAS_PRODUCER_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          set -euo pipefail
+          skip=false
+          sha="${ATLAS_PRODUCER_SHA:-}"
+          if [[ "${ATLAS_TRIGGER_EVENT}" == "workflow_run" \
+             && "${ATLAS_PRODUCER_NAME}" == "ATLAS Authoring Apply" \
+             && "${ATLAS_PRODUCER_EVENT}" == "push" \
+             && "$sha" =~ ^[0-9a-f]{40}$ ]] \
+             && git cat-file -e "${sha}^{commit}" \
+             && git diff-tree --no-commit-id --name-only -r "$sha" -- .github/atlas-authoring-preflight.txt | grep -Fxq '.github/atlas-authoring-preflight.txt'; then
+            if control="$(git show "${sha}:.github/atlas-authoring-preflight.txt" 2>/dev/null)"; then
+              control="$(printf '%s' "$control" | tr -d '\r\n')"
+              if [[ "$control" =~ ^preflight[[:space:]]+authoring/requests/[A-Za-z0-9._-]+\.json$ ]]; then
+                skip=true
+                echo "Authoring producer ${sha} was preflight-only; no Runtime mutation needed."
+              fi
+            fi
+          fi
+          echo "skip=$skip" >> "$GITHUB_OUTPUT"
+
       - name: Resolve compatible deployed Runtime
+        if: steps.readonly_preflight.outputs.skip != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -106,6 +138,7 @@ jobs:
           exit 1
 
       - name: Compile and atomically publish Runtime projection
+        if: steps.readonly_preflight.outputs.skip != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -135,6 +168,7 @@ jobs:
           jq . /tmp/atlas-runtime-compile.json
 
       - name: Verify active publication and explicit dispositions
+        if: steps.readonly_preflight.outputs.skip != 'true'
         shell: bash
         run: |
           set -euo pipefail

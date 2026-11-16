@@ -1,1 +1,1 @@
-apply authoring/requests/registration-20261007-agitators-sss-mikhail-bakunin.json
+preflight authoring/requests/cultural20-20261019-joyce-1922.json
