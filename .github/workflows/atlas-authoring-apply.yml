@@ -1039,129 +1039,51 @@ jobs:
               ' "$response" >> "$verify_queue"
             fi
 
+            # The canonical transaction has committed before Runtime projection
+            # compilation. Do not compare new Activities with the stale public
+            # runtime projection here: workflow_run publishes it only after this
+            # Authoring job finishes. Instead, prove each committed request is
+            # an idempotent canonical ledger replay. The server validates
+            # Activity, Source links, domain, NamuWiki and spatial invariants
+            # inside SERIALIZABLE transactions and rolls them all back.
             verify_failed=false
-            while IFS= read -r item; do
-              [[ -n "$item" ]] || continue
-              manifest_path="$(jq -r '.manifest_path' <<<"$item")"
-              person_id="$(jq -r '.person_id' <<<"$item")"
-              relationship_id="$(jq -r '.relationship_id' <<<"$item")"
-              request_id="$(jq -r '.request_id' <<<"$item")"
-              readback="/tmp/atlas-authoring-evidence/responses/readback-${request_id//[:\/]/_}.json"
-              read_status="$(curl --silent --show-error \
-                --output "$readback" \
-                --write-out '%{http_code}' \
-                "${ATLAS_PERSON_READ_ENDPOINT}?__atlas_read_surface=person&person_id=${person_id}")"
-              if [[ "$read_status" != "200" ]]; then
-                echo "Production read-back failed for ${request_id}: HTTP ${read_status}" >&2
+            if [[ -s "$verify_queue" ]]; then
+              expected_replays="$(jq -s -c '.' "$verify_queue")"
+              replay_count="$(jq -r 'length' <<<"$expected_replays")"
+              replay_response="/tmp/atlas-authoring-evidence/responses/human-authoring-canonical-replay.json"
+              replay_status="$(post_human_batch "preflight_batch" "$manifest_paths" "$requests" "$candidate_ids" "$replay_response")"
+              if [[ "$replay_status" != "200" ]]; then
+                echo "Post-commit canonical replay preflight failed: HTTP ${replay_status}" >&2
+                cat "$replay_response" >&2 || true
                 verify_failed=true
-                continue
-              fi
-              manifest_schema="$(jq -r '.schema' "$manifest_path")"
-              if [[ "$manifest_schema" == "atlas-human-person-authoring/v1" ]]; then
-                if ! jq -e \
-                  --slurpfile manifest "$manifest_path" \
-                  --arg person_id "$person_id" '
-                    $manifest[0] as $m
-                    | .ok==true
-                    and .mode=="detail"
-                    and .person.id==$person_id
-                    and .person.activity_count==0
-                    and (.person.representative_domain // null)==$m.representative_domain
-                    and (.person.timeline_disposition.disposition // null)==$m.timeline_disposition.disposition
-                    and (.person.timeline_disposition.reason // null)==$m.timeline_disposition.reason
-                    and (.person.timeline_disposition.basis_code // null)==($m.timeline_disposition.basis_code // null)
-                    and (
-                      (.person.external_references.namuwiki.status // null)==($m.external_references.namuwiki.status // null)
-                      and (.person.external_references.namuwiki.document_title // null)==($m.external_references.namuwiki.document_title // null)
-                      and (.person.external_references.namuwiki.url // null)==($m.external_references.namuwiki.url // null)
-                    )
-                    and . as $read
-                    | all($m.sources[];
-                      . as $s
-                      | any($read.person.sources[]; (.canonical_url // null)==($s.canonical_url // null) and (.title // null)==($s.title // null))
-                    )
-                  ' "$readback" >/dev/null; then
-                  echo "Production person-only read-back mismatch for ${request_id}" >&2
-                  cat "$readback" >&2 || true
-                  verify_failed=true
-                  continue
-                fi
+              elif ! jq -e --argjson expected "$expected_replays" --argjson count "${#manifests[@]}" '
+                . as $reply
+                | .ok==true
+                  and .auth_method=="github_oidc"
+                  and .marker=="ATLAS_HUMAN_AUTHORING_BATCH_V1"
+                  and .schema=="atlas-human-authoring-batch/v1"
+                  and .operation=="preflight_batch"
+                  and .committed==false
+                  and .count==$count
+                  and (.results | type=="array" and length==$count)
+                  and all($expected[];
+                    . as $item
+                    | any($reply.results[];
+                        .status=="ALREADY_PRESENT"
+                        and .request_id==$item.request_id
+                        and .manifest_path==$item.manifest_path
+                        and .person_id==$item.person_id
+                        and (.relationship_id // null)==($item.relationship_id // null)
+                      )
+                  )
+              ' "$replay_response" >/dev/null; then
+                echo "Post-commit canonical ledger/source replay mismatch for ${replay_count} request(s)" >&2
+                cat "$replay_response" >&2 || true
+                verify_failed=true
               else
-                  if ! jq -e \
-                  --slurpfile manifest "$manifest_path" \
-                  --arg person_id "$person_id" \
-                  --arg relationship_id "$relationship_id" '
-                    $manifest[0] as $m
-                    | .ok==true
-                    and .mode=="detail"
-                    and .person.id==$person_id
-                    and any(.person.activities[];
-                      .id==$relationship_id
-                      and (.polity.canonical_name_en // null)==($m.polity.canonical_name_en // null)
-                      and (.relation.code // null)==($m.activity.relation_type // null)
-                      and (.period_basis.code // null)==($m.activity.period_basis // null)
-                      and (
-                        if $m.activity.start_year == null then
-                          .start.year==null
-                          and (.start.month // null)==null
-                          and (.start.day // null)==null
-                          and (.start.certainty // null)==null
-                          and (.start.calendar // null)==null
-                        else
-                          .start.year==$m.activity.start_year
-                          and (.start.month // null)==($m.activity.start_month // null)
-                          and (.start.day // null)==($m.activity.start_day // null)
-                          and (.start.certainty // null)==($m.activity.start_certainty // null)
-                          and (.start.calendar // null)==($m.activity.start_calendar // "unspecified_historical")
-                        end
-                      )
-                      and (
-                        if $m.activity.chronology_status=="ongoing" then
-                          .end.year==null
-                          and (.end.month // null)==null
-                          and (.end.day // null)==null
-                          and (.end.certainty // null)==null
-                          and (.end.calendar // null)==null
-                          and .end.status=="ongoing"
-                          and .end.as_of==$m.activity.ongoing_as_of
-                        elif $m.activity.end_year == null then
-                          .end.year==null
-                          and (.end.month // null)==null
-                          and (.end.day // null)==null
-                          and (.end.certainty // null)==null
-                          and (.end.calendar // null)==null
-                          and (.end.status // null)!="ongoing"
-                        else
-                          .end.year==$m.activity.end_year
-                          and (.end.month // null)==($m.activity.end_month // null)
-                          and (.end.day // null)==($m.activity.end_day // null)
-                          and (.end.certainty // null)==($m.activity.end_certainty // null)
-                          and (.end.calendar // null)==($m.activity.end_calendar // "unspecified_historical")
-                        end
-                      )
-                      and (
-                        if ($m.activity.role // null)==null then .role==null
-                        else
-                          ((.role.source_label // .role.canonical_name_en // "") | ascii_downcase | gsub("[^a-z0-9]"; ""))
-                          == (($m.activity.role // "") | ascii_downcase | gsub("[^a-z0-9]"; ""))
-                        end
-                      )
-                    )
-                    and (
-                      (.person.external_references.namuwiki.status // null)==($m.external_references.namuwiki.status // null)
-                      and (.person.external_references.namuwiki.document_title // null)==($m.external_references.namuwiki.document_title // null)
-                      and (.person.external_references.namuwiki.url // null)==($m.external_references.namuwiki.url // null)
-                    )
-                  ' "$readback" >/dev/null; then
-                  echo "Production read-back mismatch for ${request_id}" >&2
-                  cat "$readback" >&2 || true
-                  verify_failed=true
-                  continue
-                fi
-
+                echo "Canonical post-commit replay VERIFIED for ${replay_count} request(s); compiled public Runtime validation follows the independent Runtime Projection Compile workflow."
               fi
-              echo "Production read-back VERIFIED: ${request_id}"
-            done < "$verify_queue"
+            fi
 
             final_failed=false
             if [[ "$blocked_count" -gt 0 ]]; then

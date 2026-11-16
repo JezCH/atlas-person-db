@@ -1,1 +1,1 @@
-apply authoring/requests/cultural20-20261019-joyce-1922.json
+preflight authoring/requests/cultural20-20261019-joyce-1922.json

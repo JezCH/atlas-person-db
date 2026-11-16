@@ -178,7 +178,14 @@ test('CORE-REENTRY-09 Authoring Apply gate and Production read-back encode unkno
   assert.match(workflow,/\.activity\.activity_end == null/);
   assert.match(workflow,/\.activity\.start_year == null/);
   assert.match(workflow,/\.activity\.end_year == null/);
-  assert.match(workflow,/if \$m\.activity\.start_year == null then/);
-  assert.match(workflow,/elif \$m\.activity\.end_year == null then/);
-  assert.match(workflow,/\(\.end\.status \/\/ null\)!="ongoing"/);
+  // Human Authoring's immutable canonical manifest/Activity ledger provides
+  // immediate post-commit verification, not an out-of-date Runtime projection.
+  const service=fs.readFileSync(new URL('../server/atlas-human-authoring-service.js',import.meta.url),'utf8');
+  assert.match(service,/UNRESOLVED_BOUNDARY_MUST_BE_ALL_NULL/);
+  assert.match(service,/return Object\.freeze\(\{ year:null, month:null, day:null, granularity:null, certainty:null, calendar:null \}\)/);
+  assert.match(service,/if \(ledger\.manifest_hash !== hash\)/);
+  assert.match(service,/async function verifyReplay\(client, ledger\)/);
+  assert.match(service,/HUMAN_AUTHORING_REPLAY_SOURCE_DRIFT/);
+  assert.match(workflow,/\.status=="ALREADY_PRESENT"/);
+  assert.match(workflow,/\.relationship_id \/\/ null\)==\(\$item\.relationship_id \/\/ null/);
 });

@@ -31,8 +31,11 @@ test('all-human authoring batches preflight then apply through the runtime-race-
   assert.match(workflow, /atlas-human-authoring-batch\/v1/);
   assert.match(workflow, /all\(\.results\[\];/);
   assert.match(workflow, /\.result\.semantic_version=="v2-relation-full-temporal"/);
-  assert.match(workflow, /role\.source_label \/\/ \.role\.canonical_name_en \/\/ ""\) \| ascii_downcase/);
-  assert.match(workflow, /\(\$m\.activity\.role \/\/ ""\) \| ascii_downcase/);
+  // Activity role/interval semantics are covered by the canonical immutable
+  // request hash and native Activity replay; compiled public Runtime is async.
+  assert.match(workflow, /\.status=="ALREADY_PRESENT"/);
+  assert.match(workflow, /\.request_id==\$item\.request_id/);
+  assert.match(workflow, /\.relationship_id \/\/ null\)==\(\$item\.relationship_id \/\/ null/);
 });
 
 test('native or mixed authoring retains the existing safe per-manifest fallback', () => {
