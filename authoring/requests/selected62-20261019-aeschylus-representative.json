@@ -63,16 +63,16 @@
   },
   "spatial_disposition": {
     "state": "reviewed_hold",
-    "evidence": "NEEDS_PREFLIGHT: source-reviewed historical locality, but no current Production Person/alias/Activity/Polity/Place UUID reads permitted during Vercel suspension. Reuse exact canonical identities after restoration; do not create regional surrogate Polities or coordinates."
+    "evidence": "2026-11-16 exact existing Production Polity UUID and canonical metadata confirmed; reuse without new Polity. This is review metadata only. Current Person/Activity/source identity remains subject to canonical preflight. Do not infer Place coordinates."
   },
   "review_context": {
     "task": "USER-SELECTED-62 / issue #2545",
-    "registration_state": "NEEDS_PREFLIGHT",
-    "draft_only": true,
-    "production_screen": "NOT_PERFORMED_THIS_UNIT_USER_PROHIBITED",
+    "registration_state": "CURRENT_PRODUCTION_PREFLIGHT_PENDING",
+    "draft_only": false,
+    "production_screen": "2026-11-16 current Production Person identity/name projection reviewed; no direct match for selected identity; authoritative OIDC preflight_batch required before write",
     "review_scope": "Source-based identity, deceased status, independent NamuWiki title, representative Activity and historical context; no PHFC /36 score claimed.",
     "namuwiki_evidence_method": "external indexed NamuWiki mirror, identity-specific content reviewed; canonical namu.wiki URL follows verified independent title; not a claim of direct origin fetch",
     "namuwiki_evidence_url": "https://m.namu.moe/w/아이스킬로스",
-    "apply_gate": "DRAFT ONLY; no merge, Apply, DB write, compile, deployment or readback authorized in this unit. Fresh alias/semantic Activity/Polity preflight mandatory after restoration."
+    "apply_gate": "User-selected 62 authorized batch: only per-item READY may be applied by GitHub OIDC Authoring; BLOCKED and ALREADY_PRESENT must not create duplicates. Verify after Runtime compile. No identity changes or deletions."
   }
 }
