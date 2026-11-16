@@ -1,0 +1,1875 @@
+{
+  "schema": "atlas-dated-export-identity-comparison/v1",
+  "export_filename": "atlas-persons-2026-10-18.xlsx",
+  "export_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+  "export_date": "2026-10-18",
+  "row_count": 2646,
+  "unique_normalized_en_labels": 2145,
+  "limitation": "Dated display export has no Person UUID or full alias table; unmatched is not canonical absence and repeated Activities are not Person duplicates. No Production read performed.",
+  "matches": [
+    {
+      "name_en": "Rurik",
+      "name_ko": "류리크",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 558,
+          "values": [
+            "류리크",
+            "Rurik",
+            "류리크 초기 북부 루스 세력권",
+            "rules",
+            "왕자",
+            "AD 862?",
+            "AD 879?",
+            "재위"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Khalid ibn al-Walid",
+      "name_ko": "할리드 이븐 알왈리드",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 470,
+          "values": [
+            "할리드 이븐 알왈리드",
+            "Khalid ibn al-Walid",
+            "라시둔 칼리파국",
+            "serves",
+            "군사 지휘관",
+            "AD 632",
+            "AD 638",
+            "군사 활동"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Baybars",
+      "name_ko": "바이바르스",
+      "status": "DUPLICATE_UUID_CORRECTION_HOLD",
+      "matches": [
+        {
+          "excel_row": 853,
+          "values": [
+            "바이바르스",
+            "Baibars",
+            "맘루크 술탄국",
+            "rules",
+            "술탄",
+            "AD 1260",
+            "AD 1277",
+            "재위"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Jan Žižka",
+      "name_ko": "얀 지슈카",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 988,
+          "values": [
+            "얀 지슈카",
+            "Jan Žižka",
+            "보헤미아 왕국",
+            "active_in",
+            "후스파 군사지도자",
+            "AD 1419",
+            "AD 1424",
+            "군사 활동"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Gajah Mada",
+      "name_ko": "가자 마다",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 899,
+          "values": [
+            "가자 마다",
+            "Gajah Mada",
+            "마자파힛 제국",
+            "serves",
+            "마하파티",
+            "AD 1331",
+            "AD 1364",
+            "임기"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Caterina Sforza",
+      "name_ko": "카테리나 스포르차",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 1068,
+          "values": [
+            "카테리나 스포르차",
+            "Caterina Sforza",
+            "포를리·이몰라",
+            "governs",
+            "섭정",
+            "AD 1488",
+            "AD 1500",
+            "임기"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Hernán Cortés",
+      "name_ko": "에르난 코르테스",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 1128,
+          "values": [
+            "에르난 코르테스",
+            "Hernán Cortés",
+            "누에바 에스파냐",
+            "governs",
+            "총독·대장군",
+            "AD 1522",
+            "AD 1528",
+            "임기"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Charles XII of Sweden",
+      "name_ko": "칼 12세",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 1375,
+          "values": [
+            "칼 12세",
+            "Karl XII",
+            "스웨덴",
+            "rules",
+            "왕",
+            "AD 1697",
+            "AD 1718",
+            "재위"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Giuseppe Garibaldi",
+      "name_ko": "주세페 가리발디",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 1730,
+          "values": [
+            "주세페 가리발디",
+            "Giuseppe Garibaldi",
+            "이탈리아",
+            "active_in",
+            "혁명가·군사 지도자",
+            "AD 1848",
+            "AD 1867",
+            "군사 활동"
+          ]
+        },
+        {
+          "excel_row": 1731,
+          "values": [
+            "주세페 가리발디",
+            "Giuseppe Garibaldi",
+            "이탈리아 통일운동(리소르지멘토)",
+            "active_in",
+            "천인대 원정 지휘관",
+            "약 AD 1860 5월 5일",
+            "AD 1860 11월 9일",
+            "군사 활동"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Ulysses S. Grant",
+      "name_ko": "율리시스 S. 그랜트",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 1834,
+          "values": [
+            "율리시스 S. 그랜트",
+            "Ulysses S. Grant",
+            "미국",
+            "governs",
+            "대통령",
+            "AD 1869",
+            "AD 1877",
+            "임기"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Carl Gustaf Emil Mannerheim",
+      "name_ko": "칼 구스타프 에밀 만네르헤임",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 2069,
+          "values": [
+            "칼 구스타프 에밀 만네르헤임",
+            "Carl Gustaf Emil Mannerheim",
+            "핀란드",
+            "governs",
+            "섭정",
+            "AD 1918 12월 12일",
+            "AD 1919 7월 27일",
+            "임기"
+          ]
+        },
+        {
+          "excel_row": 2070,
+          "values": [
+            "칼 구스타프 에밀 만네르헤임",
+            "Carl Gustaf Emil Mannerheim",
+            "핀란드",
+            "governs",
+            "대통령",
+            "AD 1944 8월 4일",
+            "AD 1946 3월 4일",
+            "임기"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Ragnar Lodbrok",
+      "name_ko": "라그나르 로드브로크",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 2547,
+          "values": [
+            "라그나르 로드브로크",
+            "Ragnar Lodbrok",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Hayreddin Barbarossa",
+      "name_ko": "하이레딘 바르바로사",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 1140,
+          "values": [
+            "바르바로스 하이레딘 파샤",
+            "Hayreddin Barbarossa",
+            "오스만 제국",
+            "serves",
+            "오스만 함대 총사령관",
+            "약 AD 1534",
+            "AD 1546",
+            "임기"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Ahmad ibn Majid",
+      "name_ko": "아흐마드 이븐 마지드",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 1037,
+          "values": [
+            "아흐마드 이븐 마지드",
+            "Ahmad ibn Majid",
+            "호르무즈 왕국",
+            "active_in",
+            "항해가·지도제작자",
+            "약 AD 1462",
+            "약 AD 1498",
+            "주요 활동"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Henry Morgan",
+      "name_ko": "헨리 모건",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 1343,
+          "values": [
+            "헨리 모건",
+            "Henry Morgan",
+            "잉글랜드 왕국",
+            "serves",
+            "사략선 지휘관",
+            "약 AD 1666",
+            "AD 1671",
+            "군사 활동"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Afonso de Albuquerque",
+      "name_ko": "아폰수 드 알부케르크",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 1101,
+          "values": [
+            "아폰수 드 알부케르크",
+            "Afonso de Albuquerque",
+            "포르투갈령 인도",
+            "governs",
+            "총독",
+            "AD 1509",
+            "AD 1515",
+            "임기"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Phidias",
+      "name_ko": "페이디아스",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 132,
+          "values": [
+            "피디아스",
+            "Phidias",
+            "아테네",
+            "active_in",
+            "조각가·예술감독",
+            "약 BC 438",
+            "약 BC 438",
+            "학술 활동"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Vitruvius",
+      "name_ko": "비트루비우스",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 258,
+          "values": [
+            "비트루비우스",
+            "Vitruvius",
+            "로마 제국",
+            "active_in",
+            "건축가·공학자·저술가",
+            "약 BC 27",
+            "약 BC 27",
+            "학술 활동"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Muhammad V of Granada",
+      "name_ko": "그라나다의 무함마드 5세",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 926,
+          "values": [
+            "그라나다의 무함마드 5세",
+            "Muhammad V of Granada",
+            "그라나다 토후국",
+            "rules",
+            "술탄",
+            "AD 1354",
+            "AD 1359",
+            "재위"
+          ]
+        },
+        {
+          "excel_row": 927,
+          "values": [
+            "그라나다의 무함마드 5세",
+            "Muhammad V of Granada",
+            "그라나다 토후국",
+            "rules",
+            "술탄",
+            "AD 1362",
+            "AD 1391",
+            "재위"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Croesus",
+      "name_ko": "크로이소스",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 96,
+          "values": [
+            "크로이소스",
+            "Croesus",
+            "리디아 왕국",
+            "rules",
+            "왕",
+            "약 BC 560",
+            "약 BC 546",
+            "재위"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Ibn Battuta",
+      "name_ko": "이븐 바투타",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 896,
+          "values": [
+            "이븐 바투타",
+            "Ibn Battuta",
+            "마리니드 술탄국",
+            "active_in",
+            "탐험가·여행가·법학자",
+            "AD 1325",
+            "AD 1355",
+            "학술 활동"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Cecil Rhodes",
+      "name_ko": "세실 로즈",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 1905,
+          "values": [
+            "세실 로즈",
+            "Cecil Rhodes",
+            "케이프 식민지",
+            "governs",
+            "총리",
+            "AD 1890 7월 17일",
+            "AD 1896 1월 12일",
+            "임기"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "J. P. Morgan",
+      "name_ko": "J. P. 모건",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 1977,
+          "values": [
+            "J. P. 모건",
+            "J. P. Morgan",
+            "미국",
+            "active_in",
+            "금융가",
+            "AD 1907",
+            "AD 1907",
+            "주요 활동"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Aristotle",
+      "name_ko": "아리스토텔레스",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 162,
+          "values": [
+            "아리스토텔레스",
+            "Aristotle",
+            "아테네",
+            "active_in",
+            "철학자·리케이온 창립자",
+            "BC 335",
+            "BC 323",
+            "학술 활동"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Cai Lun",
+      "name_ko": "채륜",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 297,
+          "values": [
+            "채륜",
+            "Cai Lun",
+            "후한",
+            "active_in",
+            "제지 기술 혁신가",
+            "AD 105",
+            "AD 105",
+            "학술 활동"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Ibn Sina",
+      "name_ko": "이븐 시나",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 643,
+          "values": [
+            "이븐 시나",
+            "Ibn Sina",
+            "사만 왕조",
+            "serves",
+            "궁정 의사·학자",
+            "약 AD 997",
+            "약 AD 997",
+            "학술 활동"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Shen Kuo",
+      "name_ko": "심괄",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 708,
+          "values": [
+            "심괄",
+            "Shen Kuo",
+            "북송",
+            "active_in",
+            "박학자",
+            "AD 1088",
+            "AD 1088",
+            "학술 활동"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Ibn Rushd",
+      "name_ko": "이븐 루시드",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 765,
+          "values": [
+            "이븐 루시드",
+            "Ibn Rushd",
+            "무와히드 칼리파국",
+            "serves",
+            "법관·철학자",
+            "AD 1169",
+            "AD 1169",
+            "학술 활동"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Michael Faraday",
+      "name_ko": "마이클 패러데이",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 1647,
+          "values": [
+            "마이클 패러데이",
+            "Michael Faraday",
+            "영국",
+            "active_in",
+            "물리학자",
+            "AD 1831",
+            "AD 1831",
+            "주요 활동"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Louis Pasteur",
+      "name_ko": "루이 파스퇴르",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 1868,
+          "values": [
+            "루이 파스퇴르",
+            "Louis Pasteur",
+            "프랑스 공화국",
+            "active_in",
+            "화학자·미생물학자",
+            "AD 1878",
+            "AD 1885",
+            "학술 활동"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Augustine of Hippo",
+      "name_ko": "히포의 아우구스티누스",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 395,
+          "values": [
+            "히포의 아우구스티누스",
+            "Augustine of Hippo",
+            "로마령 아프리카",
+            "active_in",
+            "히포 레기우스 주교",
+            "약 AD 396",
+            "AD 430",
+            "임기"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Jean-Jacques Rousseau",
+      "name_ko": "장 자크 루소",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 1453,
+          "values": [
+            "장자크 루소",
+            "Jean-Jacques Rousseau",
+            "프랑스",
+            "active_in",
+            "철학자·작가",
+            "AD 1762",
+            "AD 1762",
+            "학술 활동"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Friedrich Nietzsche",
+      "name_ko": "프리드리히 니체",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 1848,
+          "values": [
+            "프리드리히 니체",
+            "Friedrich Nietzsche",
+            "스위스",
+            "active_in",
+            "철학자",
+            "AD 1872",
+            "AD 1872",
+            "학술 활동"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Martin Heidegger",
+      "name_ko": "마르틴 하이데거",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 2124,
+          "values": [
+            "마르틴 하이데거",
+            "Martin Heidegger",
+            "바이마르 공화국",
+            "active_in",
+            "철학자",
+            "AD 1927",
+            "AD 1927",
+            "학술 활동"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Solomon",
+      "name_ko": "솔로몬",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 43,
+          "values": [
+            "솔로몬",
+            "Solomon",
+            "이스라엘 왕국",
+            "rules",
+            "왕",
+            "약 BC 970",
+            "약 BC 931",
+            "주요 활동"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Marcus Aurelius",
+      "name_ko": "마르쿠스 아우렐리우스",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 303,
+          "values": [
+            "마르쿠스 아우렐리우스",
+            "Marcus Aurelius",
+            "로마 제국",
+            "rules",
+            "황제",
+            "AD 161 3월 7일",
+            "AD 180 3월 17일",
+            "재위"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Ptolemy I Soter",
+      "name_ko": "프톨레마이오스 1세",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 167,
+          "values": [
+            "프톨레마이오스 1세",
+            "Ptolemy I Soter",
+            "프톨레마이오스 왕국",
+            "governs",
+            "총독",
+            "BC 323",
+            "BC 305",
+            "임기"
+          ]
+        },
+        {
+          "excel_row": 168,
+          "values": [
+            "프톨레마이오스 1세",
+            "Ptolemy I Soter",
+            "프톨레마이오스 왕국",
+            "rules",
+            "왕",
+            "BC 305",
+            "BC 282",
+            "재위"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Ashoka",
+      "name_ko": "아소카",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 188,
+          "values": [
+            "아소카 대왕",
+            "Ashoka",
+            "마우리아 제국",
+            "rules",
+            "황제",
+            "BC 268",
+            "BC 232",
+            "재위"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Frederick II, Holy Roman Emperor",
+      "name_ko": "프리드리히 2세(신성로마)",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 795,
+          "values": [
+            "프리드리히 2세",
+            "Frederick II, Holy Roman Emperor",
+            "시칠리아 왕국",
+            "rules",
+            "왕",
+            "AD 1198",
+            "AD 1250 12월 13일",
+            "재위"
+          ]
+        },
+        {
+          "excel_row": 796,
+          "values": [
+            "프리드리히 2세",
+            "Frederick II, Holy Roman Emperor",
+            "신성 로마 제국",
+            "rules",
+            "신성 로마 황제",
+            "AD 1220 11월 22일",
+            "AD 1250 12월 13일",
+            "재위"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Parameswara",
+      "name_ko": "파라메스와라",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 971,
+          "values": [
+            "파라메스와라",
+            "Parameswara",
+            "말라카 술탄국",
+            "rules",
+            "창건자·통치자",
+            "AD 1400",
+            "AD 1414",
+            "재위"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Charlemagne",
+      "name_ko": "샤를마뉴",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 523,
+          "values": [
+            "카롤루스 대제",
+            "Charlemagne",
+            "프랑크 왕국",
+            "rules",
+            "왕",
+            "AD 768",
+            "AD 814",
+            "재위"
+          ]
+        },
+        {
+          "excel_row": 524,
+          "values": [
+            "카롤루스 대제",
+            "Charlemagne",
+            "랑고바르드 왕국",
+            "rules",
+            "왕",
+            "AD 774",
+            "AD 814",
+            "재위"
+          ]
+        },
+        {
+          "excel_row": 525,
+          "values": [
+            "카롤루스 대제",
+            "Charlemagne",
+            "카롤링거 제국",
+            "rules",
+            "황제",
+            "AD 800",
+            "AD 814",
+            "재위"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Alfred the Great",
+      "name_ko": "앨프레드 대왕",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 562,
+          "values": [
+            "알프레드 대왕",
+            "Alfred the Great",
+            "웨식스 왕국",
+            "rules",
+            "왕",
+            "AD 871",
+            "AD 899",
+            "재위"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Ramkhamhaeng",
+      "name_ko": "람캄행",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 870,
+          "values": [
+            "람캄행",
+            "Ramkhamhaeng",
+            "수코타이 왕국",
+            "rules",
+            "왕",
+            "AD 1279",
+            "AD 1298",
+            "재위"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Harun al-Rashid",
+      "name_ko": "하룬 알라시드",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 532,
+          "values": [
+            "하룬 알 라시드",
+            "Harun al-Rashid",
+            "아바스 칼리파국",
+            "rules",
+            "칼리프",
+            "AD 786",
+            "AD 809",
+            "재위"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Vytautas",
+      "name_ko": "비타우타스",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 967,
+          "values": [
+            "비타우타스",
+            "Vytautas the Great",
+            "리투아니아 대공국",
+            "rules",
+            "리투아니아 대공",
+            "AD 1392",
+            "AD 1430 10월 27일",
+            "재위"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Lorenzo de' Medici",
+      "name_ko": "로렌초 데 메디치",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 1041,
+          "values": [
+            "로렌초 데 메디치",
+            "Lorenzo de' Medici",
+            "피렌체 공화국",
+            "governs",
+            "사실상 통치자",
+            "AD 1469",
+            "AD 1492",
+            "실권 장악"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Pope Julius II",
+      "name_ko": "율리오 2세",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 1094,
+          "values": [
+            "교황 율리오 2세",
+            "Pope Julius II",
+            "교황령",
+            "rules",
+            "교황·세속 군주",
+            "AD 1503 11월 1일",
+            "AD 1513 2월 21일",
+            "재위"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Ulugh Beg",
+      "name_ko": "울루그 베그",
+      "status": "EXISTING_ACTIVITY_REPAIR_PENDING",
+      "matches": [
+        {
+          "excel_row": 2603,
+          "values": [
+            "울루그 베그",
+            "Ulugh Beg",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Akbar the Great",
+      "name_ko": "악바르",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 1179,
+          "values": [
+            "악바르 대제",
+            "Akbar the Great",
+            "무굴 제국",
+            "rules",
+            "황제",
+            "AD 1556",
+            "AD 1605",
+            "재위"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Louis XIV",
+      "name_ko": "루이 14세",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 1318,
+          "values": [
+            "루이 14세",
+            "Louis XIV",
+            "프랑스",
+            "rules",
+            "왕",
+            "AD 1643",
+            "AD 1715",
+            "재위"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Skanderbeg",
+      "name_ko": "스컨데르베우",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 1010,
+          "values": [
+            "스컨데르베우",
+            "Skanderbeg",
+            "카스트리오티 공국",
+            "rules",
+            "왕자",
+            "AD 1443",
+            "AD 1468",
+            "재위"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Askia Muhammad",
+      "name_ko": "아스키아 무함마드",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 1075,
+          "values": [
+            "아스키아 무함마드",
+            "Askia Muhammad",
+            "송가이 제국",
+            "rules",
+            "아스키아·황제",
+            "AD 1493",
+            "AD 1528",
+            "재위"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Maria Theresa",
+      "name_ko": "마리아 테레지아",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 1415,
+          "values": [
+            "마리아 테레지아",
+            "Maria Theresa",
+            "보헤미아 왕국",
+            "rules",
+            "여왕",
+            "AD 1740",
+            "AD 1741",
+            "재위"
+          ]
+        },
+        {
+          "excel_row": 1416,
+          "values": [
+            "마리아 테레지아",
+            "Maria Theresa",
+            "오스트리아 대공국",
+            "rules",
+            "여대공",
+            "AD 1740",
+            "AD 1780",
+            "재위"
+          ]
+        },
+        {
+          "excel_row": 1417,
+          "values": [
+            "마리아 테레지아",
+            "Maria Theresa",
+            "헝가리 왕국",
+            "rules",
+            "여왕",
+            "AD 1740",
+            "AD 1780",
+            "재위"
+          ]
+        },
+        {
+          "excel_row": 1418,
+          "values": [
+            "마리아 테레지아",
+            "Maria Theresa",
+            "합스부르크 군주국",
+            "rules",
+            "주권자",
+            "AD 1740",
+            "AD 1780",
+            "재위"
+          ]
+        },
+        {
+          "excel_row": 1419,
+          "values": [
+            "마리아 테레지아",
+            "Maria Theresa",
+            "보헤미아 왕국",
+            "rules",
+            "여왕",
+            "AD 1743",
+            "AD 1780",
+            "재위"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Prithvi Narayan Shah",
+      "name_ko": "프리트비 나라얀 샤",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 1423,
+          "values": [
+            "프리트비 나라얀 샤",
+            "Prithvi Narayan Shah",
+            "고르카 왕국",
+            "rules",
+            "왕",
+            "AD 1743",
+            "AD 1768",
+            "재위"
+          ]
+        },
+        {
+          "excel_row": 1424,
+          "values": [
+            "프리트비 나라얀 샤",
+            "Prithvi Narayan Shah",
+            "네팔 왕국",
+            "rules",
+            "왕",
+            "AD 1768",
+            "AD 1775",
+            "재위"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Otto von Bismarck",
+      "name_ko": "오토 폰 비스마르크",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 1786,
+          "values": [
+            "비스마르크",
+            "Otto von Bismarck",
+            "프로이센 왕국",
+            "governs",
+            "총리",
+            "AD 1862",
+            "AD 1890",
+            "임기"
+          ]
+        },
+        {
+          "excel_row": 1787,
+          "values": [
+            "비스마르크",
+            "Otto von Bismarck",
+            "독일 제국",
+            "governs",
+            "재상",
+            "AD 1871",
+            "AD 1890",
+            "임기"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Emperor Meiji",
+      "name_ko": "메이지 천황",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 1815,
+          "values": [
+            "메이지 천황",
+            "Emperor Meiji",
+            "일본",
+            "rules",
+            "황제",
+            "AD 1867",
+            "AD 1868 1월 2일",
+            "재위"
+          ]
+        },
+        {
+          "excel_row": 1816,
+          "values": [
+            "메이지 천황",
+            "Emperor Meiji",
+            "대일본제국",
+            "rules",
+            "황제",
+            "AD 1868 1월 3일",
+            "AD 1912",
+            "재위"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Haile Selassie I",
+      "name_ko": "하일레 셀라시에",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 2038,
+          "values": [
+            "하일레 셀라시에 1세",
+            "Haile Selassie I",
+            "에티오피아 제국",
+            "governs",
+            "섭정",
+            "AD 1916",
+            "AD 1930",
+            "임기"
+          ]
+        },
+        {
+          "excel_row": 2039,
+          "values": [
+            "하일레 셀라시에 1세",
+            "Haile Selassie I",
+            "에티오피아 제국",
+            "rules",
+            "왕",
+            "AD 1928",
+            "AD 1930",
+            "재위"
+          ]
+        },
+        {
+          "excel_row": 2040,
+          "values": [
+            "하일레 셀라시에 1세",
+            "Haile Selassie I",
+            "에티오피아 제국",
+            "rules",
+            "황제",
+            "AD 1930",
+            "AD 1936",
+            "재위"
+          ]
+        },
+        {
+          "excel_row": 2041,
+          "values": [
+            "하일레 셀라시에 1세",
+            "Haile Selassie I",
+            "에티오피아 제국",
+            "rules",
+            "황제",
+            "AD 1941",
+            "AD 1974",
+            "재위"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Mustafa Kemal Atatürk",
+      "name_ko": "무스타파 케말 아타튀르크",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 2083,
+          "values": [
+            "무스타파 케말 아타튀르크",
+            "Mustafa Kemal Atatürk",
+            "튀르키예 대국민의회 정부(앙카라 정부)",
+            "governs",
+            "대국민의회 의장",
+            "AD 1920 4월 24일",
+            "AD 1923 10월 29일",
+            "임기"
+          ]
+        },
+        {
+          "excel_row": 2084,
+          "values": [
+            "무스타파 케말 아타튀르크",
+            "Mustafa Kemal Atatürk",
+            "튀르키예",
+            "governs",
+            "대통령",
+            "AD 1923 10월 29일",
+            "AD 1938 11월 10일",
+            "임기"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Lee Kuan Yew",
+      "name_ko": "리콴유",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 2339,
+          "values": [
+            "리콴유",
+            "Lee Kuan Yew",
+            "싱가포르",
+            "governs",
+            "총리",
+            "AD 1959 6월 5일",
+            "AD 1990 11월 27일",
+            "임기"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Zayed bin Sultan Al Nahyan",
+      "name_ko": "자이드 빈 술탄 알나얀",
+      "status": "EXISTING_AS_OF_20261016",
+      "matches": [
+        {
+          "excel_row": 2382,
+          "values": [
+            "자이드 빈 술탄 알 나흐얀",
+            "Zayed bin Sultan Al Nahyan",
+            "아부다비",
+            "rules",
+            "통치자",
+            "AD 1966 8월 6일",
+            "AD 2004 11월 2일",
+            "재위"
+          ]
+        },
+        {
+          "excel_row": 2383,
+          "values": [
+            "자이드 빈 술탄 알 나흐얀",
+            "Zayed bin Sultan Al Nahyan",
+            "아랍에미리트",
+            "governs",
+            "대통령",
+            "AD 1971 12월 2일",
+            "AD 2004 11월 2일",
+            "임기"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Dharmapala",
+      "name_ko": "다르마팔라",
+      "status": "NEEDS_PREFLIGHT",
+      "matches": [
+        {
+          "excel_row": 526,
+          "values": [
+            "다르마팔라",
+            "Dharmapala of Bengal",
+            "팔라 제국",
+            "rules",
+            "황제",
+            "약 AD 770",
+            "약 AD 810",
+            "재위"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "John Calvin",
+      "name_ko": "장 칼뱅",
+      "status": "NEEDS_PREFLIGHT",
+      "matches": [
+        {
+          "excel_row": 1153,
+          "values": [
+            "장 칼뱅",
+            "John Calvin",
+            "제네바 공화국",
+            "active_in",
+            "종교개혁가·설교자·신학자",
+            "AD 1541",
+            "AD 1564",
+            "종교 활동"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Tiglath-Pileser III",
+      "name_ko": "티글라트-필레세르 3세",
+      "status": "NEEDS_PREFLIGHT",
+      "matches": [
+        {
+          "excel_row": 61,
+          "values": [
+            "티글라트-필레세르 3세",
+            "Tiglath-Pileser III",
+            "신아시리아 제국",
+            "rules",
+            "왕",
+            "BC 745",
+            "BC 727",
+            "재위"
+          ]
+        },
+        {
+          "excel_row": 62,
+          "values": [
+            "티글라트-필레세르 3세",
+            "Tiglath-Pileser III",
+            "바빌로니아",
+            "rules",
+            "바빌론 왕",
+            "BC 729",
+            "BC 727",
+            "재위"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "José Figueres Ferrer",
+      "name_ko": "호세 피게레스 페레르",
+      "status": "NEEDS_PREFLIGHT",
+      "matches": [
+        {
+          "excel_row": 2273,
+          "values": [
+            "호세 피게레스 페레르",
+            "José Figueres Ferrer",
+            "코스타리카",
+            "governs",
+            "제2공화국 건국평의회 의장",
+            "AD 1948",
+            "AD 1949",
+            "임기"
+          ]
+        },
+        {
+          "excel_row": 2274,
+          "values": [
+            "호세 피게레스 페레르",
+            "José Figueres Ferrer",
+            "코스타리카",
+            "governs",
+            "대통령",
+            "AD 1953",
+            "AD 1958",
+            "임기"
+          ]
+        },
+        {
+          "excel_row": 2275,
+          "values": [
+            "호세 피게레스 페레르",
+            "José Figueres Ferrer",
+            "코스타리카",
+            "governs",
+            "대통령",
+            "AD 1970",
+            "AD 1974",
+            "임기"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Lempira",
+      "name_ko": "렘피라",
+      "status": "EXISTING_CORRECTION_ONLY_NO_CREATE",
+      "matches": [
+        {
+          "excel_row": 1148,
+          "values": [
+            "렘피라",
+            "Lempira",
+            "렌카 저항 연합",
+            "active_in",
+            "저항 지도자",
+            "AD 1537",
+            "AD 1537",
+            "주요 활동"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Leonor of El Limón",
+      "name_ko": "엘리몬의 레오노르",
+      "status": "EXISTING_CORRECTION_ONLY_NO_CREATE",
+      "matches": [
+        {
+          "excel_row": 1309,
+          "values": [
+            "엘리몬의 레오노르",
+            "Leonor of El Limón",
+            "엘리몬 팔렝케",
+            "rules",
+            "여왕",
+            "AD 1634",
+            "AD 1634",
+            "주요 활동"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Nasr ibn Ahmad of Fraxinetum",
+      "name_ko": "나스르 이븐 아흐마드(프락시네툼)",
+      "status": "EXISTING_CORRECTION_ONLY_NO_CREATE",
+      "matches": [
+        {
+          "excel_row": 606,
+          "values": [
+            "프락시네툼의 나스르 이븐 아흐마드",
+            "Nasr ibn Ahmad of Fraxinetum",
+            "프락시네툼",
+            "governs",
+            "지휘관",
+            "약 AD 940",
+            "약 AD 940",
+            "주요 활동"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Miklos Horthy",
+      "name_ko": "호르티 미클로시",
+      "status": "EXISTING_REVIEW_NO_CREATE",
+      "matches": [
+        {
+          "excel_row": 2090,
+          "values": [
+            "호르티 미클로시",
+            "Miklós Horthy",
+            "헝가리 왕국 (1920–1946)",
+            "governs",
+            "섭정",
+            "AD 1920 3월 1일",
+            "AD 1944 10월 16일",
+            "임기"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "William the Conqueror",
+      "name_ko": "정복왕 윌리엄",
+      "status": "EXISTING_REVIEW_NO_CREATE",
+      "matches": [
+        {
+          "excel_row": 674,
+          "values": [
+            "정복왕 윌리엄 1세",
+            "William the Conqueror",
+            "노르망디",
+            "rules",
+            "공작",
+            "AD 1035",
+            "AD 1087 9월 9일",
+            "재위"
+          ]
+        },
+        {
+          "excel_row": 675,
+          "values": [
+            "정복왕 윌리엄 1세",
+            "William the Conqueror",
+            "잉글랜드 왕국",
+            "rules",
+            "왕",
+            "AD 1066 12월 25일",
+            "AD 1087 9월 9일",
+            "재위"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Richard I",
+      "name_ko": "리처드 1세",
+      "status": "EXISTING_REVIEW_NO_CREATE",
+      "matches": [
+        {
+          "excel_row": 785,
+          "values": [
+            "리처드 1세",
+            "Richard I",
+            "잉글랜드 왕국",
+            "rules",
+            "왕",
+            "AD 1189",
+            "AD 1199 4월 6일",
+            "재위"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Edward I of England",
+      "name_ko": "에드워드 1세",
+      "status": "EXISTING_REVIEW_NO_CREATE",
+      "matches": [
+        {
+          "excel_row": 864,
+          "values": [
+            "에드워드 1세",
+            "Edward I of England",
+            "잉글랜드 왕국",
+            "rules",
+            "왕",
+            "AD 1272",
+            "AD 1307",
+            "재위"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Henry V of England",
+      "name_ko": "헨리 5세",
+      "status": "EXISTING_REVIEW_NO_CREATE",
+      "matches": [
+        {
+          "excel_row": 981,
+          "values": [
+            "헨리 5세",
+            "Henry V",
+            "잉글랜드 왕국",
+            "rules",
+            "왕",
+            "AD 1413",
+            "AD 1422",
+            "재위"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Yarima",
+      "name_ko": "야리마",
+      "status": "EXISTING_REVIEW_NO_CREATE",
+      "matches": [
+        {
+          "excel_row": 2590,
+          "values": [
+            "야리마",
+            "Yarima",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Harriet Tubman",
+      "name_ko": "해리엇 터브먼",
+      "status": "EXISTING_REVIEW_NO_CREATE",
+      "matches": [
+        {
+          "excel_row": 1740,
+          "values": [
+            "해리엇 터브먼",
+            "Harriet Tubman",
+            "미국",
+            "active_in",
+            "노예제 폐지운동가·인도주의자·북군 정찰병",
+            "AD 1849",
+            "약 AD 1860",
+            "주요 활동"
+          ]
+        },
+        {
+          "excel_row": 1741,
+          "values": [
+            "해리엇 터브먼",
+            "Harriet Tubman",
+            "미국",
+            "serves",
+            "노예제 폐지운동가·인도주의자·북군 정찰병",
+            "약 AD 1861",
+            "약 AD 1865",
+            "주요 활동"
+          ]
+        },
+        {
+          "excel_row": 1742,
+          "values": [
+            "해리엇 터브먼",
+            "Harriet Tubman",
+            "미국",
+            "active_in",
+            "노예제 폐지운동가·인도주의자·북군 정찰병",
+            "약 AD 1866",
+            "AD 1913",
+            "주요 활동"
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Guacanaoma",
+      "name_ko": "과카나오마",
+      "status": "HOLD_IDENTITY_AND_CHRONOLOGY",
+      "matches": [
+        {
+          "excel_row": 2529,
+          "values": [
+            "과카나오마",
+            "Guacanaoma",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "name_en": "Leovigild",
+      "name_ko": "레오비길드",
+      "status": "EXISTING_REVIEW_NO_CREATE",
+      "matches": [
+        {
+          "excel_row": 440,
+          "values": [
+            "레오비길드",
+            "Leovigild",
+            "서고트 왕국",
+            "rules",
+            "왕",
+            "AD 569",
+            "AD 586",
+            "재위"
+          ]
+        }
+      ]
+    }
+  ],
+  "matching_policy": "Exact normalized EN or KO labels; manually reviewed name+polity+role+period for four conflicts. Similar names never auto-joined.",
+  "reviewed_nonmatches": [
+    {
+      "candidate": "Robert E. Howard",
+      "not_same_as": "Robert Goddard"
+    },
+    {
+      "candidate": "Johannes Brahms",
+      "not_same_as": "Johannes Brand"
+    },
+    {
+      "candidate": "Francisco Goya",
+      "not_same_as": "Francis Ona"
+    },
+    {
+      "candidate": "John Milton",
+      "not_same_as": "John Dalton"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-cultural20-20261019:additional-riemann:1854:v1",
+  "person": {
+    "canonical_name_en": "Bernhard Riemann",
+    "display_name_ko": "베른하르트 리만",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "documented_death",
+    "representative_domain": "science",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Hanover",
+    "display_name_ko": "하노버 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Mathematician and pioneer of Riemannian geometry",
+    "role_display_name_ko": "수학자·리만 기하학 창시자",
+    "start_year": 1854,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1854,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative historical PERSON-SPECIFIC milestone point (not a claim of a single year of career). 10 June 1854 Göttingen habilitation lecture Über die Hypothesen welche der Geometrie zu Grunde liegen, historically before Hanover Kingdom lost independence in 1866; NOT German Empire. Later 1859 zeta function memoir documented in biography but not an additional low-necessity activity."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "MacTutor History of Mathematics — Bernhard Riemann",
+      "canonical_url": "https://mathshistory.st-andrews.ac.uk/Biographies/Riemann/",
+      "citation_text": "MacTutor documents Riemann's 1854 Göttingen habilitation lecture on geometry and subsequent 1859 analytic number theory work."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "베른하르트 리만",
+      "url": "https://namu.wiki/w/%EB%B2%A0%EB%A5%B8%ED%95%98%EB%A5%B4%ED%8A%B8%20%EB%A6%AC%EB%A7%8C"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Historical cultural/science activity period and source reviewed. Exact current Production Person, alias, Polity and Person→PlaceFunction IDs UNKNOWN due user-confirmed Vercel 402 pause; must reuse current exact matching canonical IDs on writer preflight, not create any substitute modern state, duplicate entity or fabricated coordinate. New candidate not previously found in queue; exact live Person/alias negative check required before write."
+  }
+}

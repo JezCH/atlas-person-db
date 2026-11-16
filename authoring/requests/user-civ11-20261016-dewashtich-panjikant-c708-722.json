@@ -1,0 +1,60 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-civ11-20261016:dewashtich-panjikant-c708-722:v1",
+  "person": {
+    "canonical_name_en": "Dewashtich",
+    "display_name_ko": "데와슈티치",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-16",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Principality of Panjikant",
+    "display_name_ko": "판지켄트 공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Prince and ruler of Panjikant",
+    "role_display_name_ko": "판지켄트 통치자",
+    "start_year": 708,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "end_year": 722,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Local rule at Panjikant about 706/708–722, documented in Mount Mug archives. His claim to be king of Sogdia/Samarkand must not be represented as undisputed effective suzerainty over all Sogdia; Panjikant local polity identity is a preflight review dependency. 722 terminal year is approximate amid 722/723 narrative chronology."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Encyclopaedia Iranica — DĒWĀŠTĪČ",
+      "canonical_url": "https://www.iranicaonline.org/articles/dewastic/",
+      "citation_text": "Individual historical ruler of Panjikant, ca.706?–722; archives include 14th year ruling Panč and distinguish his claimed Samarkand throne from effective power."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-16",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Source-reviewed Principality of Panjikant temporal context and Person Activity. Canonical live Polity/Place/PolityPlaceFunction identities cannot be verified while Production returns HTTP 402; no invented place UUID or coordinates. Exact identity/alias/semantic duplicate preflight is mandatory before any write."
+  }
+}

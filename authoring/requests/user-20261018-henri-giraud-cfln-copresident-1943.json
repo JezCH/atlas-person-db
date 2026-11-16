@@ -1,0 +1,73 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-giraud-20261018:cfln-copresident-1943:v1",
+  "person": {
+    "canonical_name_en": "Henri Giraud",
+    "display_name_ko": "앙리 지로",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-18",
+    "life_status_basis": "documented_death",
+    "representative_domain": "military",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "French Republic",
+    "display_name_ko": "프랑스 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Co-President of the French Committee of National Liberation",
+    "role_display_name_ko": "프랑스 국민해방위원회 공동의장",
+    "start_year": 1943,
+    "start_month": 6,
+    "start_day": 3,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1943,
+    "end_month": 10,
+    "end_day": 2,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Joint CFLN copresidency with Charles de Gaulle from 3 June 1943. De Gaulle Foundation dates loss of copresidency to Oct 2; French armed forces official narrative dates formal removal from committee to Nov 9. End listed Oct 2 as approximate de facto co-chair authority, NOT falsely equating it to membership removal on Nov 9 or an independent French presidency. Context CFLN already registered in France Republic polity, reuse it without new sovereign Free France state."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Fondation Charles de Gaulle — Henri GIRAUD",
+      "canonical_url": "https://www.charles-de-gaulle.org/lhomme/biographies/henri-giraud/",
+      "citation_text": "Giraud Third Army 1936, Seventh Army 1939, Ninth Army after 15 May 1940, prisoner on May 18, North Africa civil-military command late 1942, CFLN copresidency 3 June to early Oct 1943, general commander in chief ending 4 April 1944, Superior War Council 1949."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Fondation Charles de Gaulle — Historical chronology of CFLN",
+      "canonical_url": "https://www.charles-de-gaulle.org/lhomme/frise-chronologique/",
+      "citation_text": "Timeline confirms CFLN June 3 1943 creation and Giraud displaced from copresidency October 2 1943."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Ministère des Armées — Création et action du CFLN",
+      "canonical_url": "https://www.defense.gouv.fr/chemins-memoire/histoire-memoires/ressources-historiques/seconde-guerre-mondiale/resister/france-libre/creation",
+      "citation_text": "CFLN formed 3 June 1943; co-presidency duties eroded by early August and Giraud removed from the Committee 9 November 1943. This committee-membership end differs from earlier de facto political copresidency end."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-18",
+      "document_title": "앙리 지로",
+      "url": "https://namu.wiki/w/%EC%95%99%EB%A6%AC%20%EC%A7%80%EB%A1%9C"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Historic normalized France/France Republic Polity and governance_context identity requires canonical Production confirmation. Last verified Vercel 402 quota gate prohibits live Person/Activity or PlaceFunction screen. Never invent geographic identity, de facto sovereign Free France/Algeria or PlaceFunction UUID."
+  }
+}

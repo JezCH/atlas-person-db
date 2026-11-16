@@ -1,0 +1,67 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-costa-rica:jose-figueres-ferrer:presidency-1970-1974:20261016:v1",
+  "person": {
+    "canonical_name_en": "José Figueres Ferrer",
+    "display_name_ko": "호세 피게레스 페레르",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-16",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Costa Rica",
+    "display_name_ko": "코스타리카",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President of Costa Rica (constitutional, 1970–1974)",
+    "role_display_name_ko": "코스타리카 제36대 대통령",
+    "start_year": 1970,
+    "start_month": 5,
+    "start_day": 8,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1974,
+    "end_month": 5,
+    "end_day": 8,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Figueres Ferrer's later separately elected constitutional presidency began 8 May 1970 and ended 8 May 1974. Costa Rican legislative institutional documentation confirms the oath on 8 May 1970, and the parliament's historical presidents chronology records the term end. The 1970 return is not a resumption of the 1953–1958 Activity without a gap, and Figueres Olsen's separate 1994–1998 presidency is a distinct Person."
+  },
+  "sources": [
+    {
+      "source_type": "institutional_web",
+      "title": "Asamblea Legislativa — El Poder Legislativo en Costa Rica, historical congressional chronology",
+      "canonical_url": "https://www.asamblea.go.cr/sd/SiteAssets/Lists/Consultas%20Biblioteca/EditForm/El%20Poder%20Legislativo%20en%20Costa%20Rica%20VC.pdf",
+      "citation_text": "The legislature's history records José Figueres Ferrer's inauguration by Congress on 8 May 1970 for the 1970–1974 presidency."
+    },
+    {
+      "source_type": "institutional_web",
+      "title": "Asamblea Legislativa — historical list of Costa Rican presidents, 1848–2022",
+      "canonical_url": "https://asamblea.go.cr/sd/referencia_cedil/Inv_11_2026_PrimeraDama_Dip/2_PresidentesCR.pdf",
+      "citation_text": "Parliamentary list gives Figueres Ferrer's presidency from 8 May 1970 through 8 May 1974."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-16",
+      "document_title": "호세 피게레스 페레르",
+      "url": "https://namu.wiki/w/%ED%98%B8%EC%84%B8%20%ED%94%BC%EA%B2%8C%EB%A0%88%EC%8A%A4%20%ED%8E%98%EB%A0%88%EB%A5%B4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Historical Costa Rica polity/temporal office identity source-reviewed. Exact live Person, historical Costa Rica Polity and PolityPlaceFunction IDs cannot be verified during Production HTTP 402 DEPLOYMENT_DISABLED. Reuse exact live IDs after bounded authoritative Production preflight; no invented coordinates, place-function IDs or duplicative state."
+  }
+}

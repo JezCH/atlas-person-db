@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-core40-20261004:goethe:faust-part-one-1808:v1",
+  "person": {
+    "canonical_name_en": "Johann Wolfgang von Goethe",
+    "display_name_ko": "요한 볼프강 폰 괴테",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Duchy of Saxe-Weimar",
+    "display_name_ko": "작센바이마르 공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Poet, dramatist and author of Faust",
+    "role_display_name_ko": "시인·극작가·파우스트 저자",
+    "start_year": 1808,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1808,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative exact 1808 source-published Faust Part I date, not Goethe's entire birth-to-death creative career, tenure as Weimar official or Part II (completed 1832, published posthumously). In 1808 Weimar and Eisenach were still separate duchies in personal union under Carl August; the consolidated Duchy of Saxe-Weimar-Eisenach was created in 1809, and grand-ducal title came 1815. Reuse exact Duchy of Saxe-Weimar identity if available; this polity will also be considered by reviewed Carl August draft PR #2512, and no new competing live duplicate should arise."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Klassik Stiftung Weimar — Goethe dichtet den Faust",
+      "canonical_url": "https://blog-archiv.klassik-stiftung.de/goethe-dichtet-den-faust/",
+      "citation_text": "The Goethe manuscript collection's historical account identifies the 1808 first publication of Faust Part One, while Part Two was completed much later."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "요한 볼프강 폰 괴테",
+      "url": "https://namu.wiki/w/%EC%9A%94%ED%95%9C%20%EB%B3%BC%ED%94%84%EA%B0%95%20%ED%8F%B0%20%EA%B4%B4%ED%85%8C"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Source-reviewed historical state/cultural activity association; existing exact canonical Person aliases, Polity identity and PlaceFunction must be checked by Production preflight. Last known Vercel Hobby HTTP 402 prevented fresh live UUID reconciliation; no guessed coordinates, no new surrogate regional state. Existing USER-CORE40 queue candidate reused instead of duplication."
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:preproduction-20261019:sakharov:representative:v1",
+  "person": {
+    "canonical_name_en": "Andrei Sakharov",
+    "display_name_ko": "안드레이 사하로프",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "documented_death",
+    "representative_domain": "science",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Soviet Union",
+    "display_name_ko": "소련",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Physicist and public intellectual",
+    "role_display_name_ko": "물리학자·공적 지식인",
+    "start_year": 1968,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1968,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "1968 essay on progress, peaceful coexistence and intellectual freedom, clandestinely circulated in the USSR. Domain science explicitly reviewed from his nuclear-physics career; this milestone records the physicist’s intellectual intervention, not a political office or Nobel travel to Oslo. Distinct from fictional Professor Sakharov."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "European Parliament CARDOC — Andrei Sakharov, 1968 essay",
+      "canonical_url": "https://www.europarl.europa.eu/pdf/cardoc/14402_CARDOC_11_INLAY_EN_7.pdf",
+      "citation_text": "1968 essay on progress, peaceful coexistence and intellectual freedom, clandestinely circulated in the USSR."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Nobel Foundation — Andrei Sakharov facts",
+      "canonical_url": "https://www.nobelprize.org/laureate/534",
+      "citation_text": "Identifies the Soviet physicist and records death on 14 December 1989."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "안드레이 사하로프",
+      "url": "https://namu.wiki/w/%EC%95%88%EB%93%9C%EB%A0%88%EC%9D%B4%20%EC%82%AC%ED%95%98%EB%A1%9C%ED%94%84"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Source-reviewed context only. No current canonical Person/alias/Activity/Polity/Place preflight permitted before Production. Resolve/reuse exact IDs and current reviewed external reference; no fabricated coordinates or new political entities."
+  },
+  "review_context": {
+    "registration_state": "NEEDS_PREFLIGHT",
+    "production_access": false,
+    "source_review_only": true,
+    "namuwiki_method": "Exact independent Person article reviewed in external-index or namu.moe mirror; origin fetch not claimed.",
+    "namuwiki_evidence_url": "https://namu.moe/w/%EC%95%88%EB%93%9C%EB%A0%88%EC%9D%B4%20%EC%82%AC%ED%95%98%EB%A1%9C%ED%94%84",
+    "apply_gate": "DRAFT DO NOT APPLY OR MERGE; fresh canonical duplicate/Polity preflight after recovery. Importance is not identity/chronology proof. No PHFC /36 completeness claim."
+  }
+}

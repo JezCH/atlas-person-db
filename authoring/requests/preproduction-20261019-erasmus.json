@@ -1,0 +1,69 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:preproduction-20261019:erasmus:representative:v1",
+  "person": {
+    "canonical_name_en": "Desiderius Erasmus",
+    "display_name_ko": "에라스뮈스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Old Swiss Confederacy",
+    "display_name_ko": "스위스 구연방",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Humanist and textual scholar",
+    "role_display_name_ko": "인문주의자·문헌학자",
+    "start_year": 1516,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1516,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "1516 Basel first Greek/Latin New Testament edition. Publication context in Basel, a Swiss confederate member since 1501; exact canonical polity reuse required. Not the university, Erasmus programme, Saint Erasmus, or another life period inferred from nationality."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "University of Basel Library — Erasmus New Testament editions",
+      "canonical_url": "https://ub.unibas.ch/cmsdata/spezialkataloge/gg/higg0380.html",
+      "citation_text": "1516 Basel first Greek/Latin New Testament edition."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "에라스뮈스",
+      "url": "https://namu.wiki/w/%EC%97%90%EB%9D%BC%EC%8A%A4%EB%AE%88%EC%8A%A4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Source-reviewed context only. No current canonical Person/alias/Activity/Polity/Place preflight permitted before Production. Resolve/reuse exact IDs and current reviewed external reference; no fabricated coordinates or new political entities."
+  },
+  "review_context": {
+    "registration_state": "NEEDS_PREFLIGHT",
+    "production_access": false,
+    "source_review_only": true,
+    "namuwiki_method": "Exact independent Person article reviewed in external-index or namu.moe mirror; origin fetch not claimed.",
+    "namuwiki_evidence_url": "https://namu.moe/w/%EC%97%90%EB%9D%BC%EC%8A%A4%EB%AE%88%EC%8A%A4",
+    "apply_gate": "DRAFT DO NOT APPLY OR MERGE; fresh canonical duplicate/Polity preflight after recovery. Importance is not identity/chronology proof. No PHFC /36 completeness claim."
+  }
+}

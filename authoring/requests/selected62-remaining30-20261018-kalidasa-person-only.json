@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:selected62-remaining30-20261018:kalidasa:chronology-unresolved:v1",
+  "person": {
+    "canonical_name_en": "Kalidasa",
+    "display_name_ko": "칼리다사",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-18",
+    "life_status_basis": "historical_certainty"
+  },
+  "representative_domain": "culture",
+  "timeline_disposition": {
+    "disposition": "chronology_unresolved",
+    "reason": "Historical Sanskrit poet and dramatist; scholarly chronologies disagree. No defensible narrowly bounded personal Activity is asserted. Preserve earlier chronology HOLD from #1375; this draft proposes only canonical excluded-timeline Person identity, not a Gupta-period year rail.",
+    "basis_code": "person_specific_chronology_unresolved",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "reviewed_at": "2026-10-18",
+      "sources": [
+        "https://sanskrit.nic.in/about_sanskrit.php",
+        "https://ignca.gov.in/Asi_data/2002.pdf"
+      ]
+    }
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Central Sanskrit University — About Sanskrit",
+      "canonical_url": "https://sanskrit.nic.in/about_sanskrit.php",
+      "citation_text": "Institutional account identifies Kalidasa as a Sanskrit poet and explicitly states that scholars disagree about his date."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "IGNCA — Kālidāsa, literary study",
+      "canonical_url": "https://ignca.gov.in/Asi_data/2002.pdf",
+      "citation_text": "Scholarly text discusses the difficulty of establishing the poet’s age; literary importance cannot supply a missing personal chronology."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-18",
+      "document_title": "칼리다사",
+      "url": "https://namu.wiki/w/%EC%B9%BC%EB%A6%AC%EB%8B%A4%EC%82%AC"
+    }
+  },
+  "review_context": {
+    "task": "#2545 remaining30",
+    "registration_state": "NEEDS_PREFLIGHT",
+    "draft_only": true,
+    "route": "NON_TIMELINE / chronology_unresolved",
+    "identity_review": "Historical Sanskrit author, not fictional King Kalidasa in The Fountains of Paradise. Legends about goddess Kali or Vikramaditya do not establish dates or an exact sovereign identity.",
+    "namuwiki_evidence_url": "https://m.namu.moe/w/%EC%B9%BC%EB%A6%AC%EB%8B%A4%EC%82%AC",
+    "production_screen": "NOT_PERFORMED_USER_PROHIBITED",
+    "apply_gate": "No Apply/merge. Fresh current Person/alias and existing timeline disposition preflight after restoration; preserve existing identity and chronology HOLD."
+  }
+}

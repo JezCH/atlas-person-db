@@ -1,0 +1,67 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-core40-20261004:cervantes:don-quixote-1605-1615:v1",
+  "person": {
+    "canonical_name_en": "Miguel de Cervantes",
+    "display_name_ko": "미겔 데 세르반테스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Spanish Monarchy",
+    "display_name_ko": "스페인 군주국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Novelist and author of Don Quixote",
+    "role_display_name_ko": "소설가·돈키호테 저자",
+    "start_year": 1605,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1615,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Spanish Monarchy literary-activity envelope bounded by the published Don Quixote first part (Madrid, 1605) and second part (Madrid, 1615). This is authorial activity in historical Spain, not rule over the modern constitutional Spanish state or a fabricated sovereign intellectual government. Military role at Lepanto (1571), Algiers captivity and minor administrative employments are biographical details rather than independent high-impact timeline bands."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Biblioteca Nacional de España — Don Quijote collections",
+      "canonical_url": "https://www.bne.es/es/quijote/",
+      "citation_text": "Spanish National Library documents the 1605 first edition and 1615 second part of Cervantes's Don Quixote."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Biblioteca Nacional de España — Don Quijote 1605 first edition",
+      "canonical_url": "https://www.bne.es/es/colecciones/cervantes/ingenioso-hidalgo-don-quixote-mancha",
+      "citation_text": "The first edition is catalogued as written by Miguel de Cervantes and published in Madrid in 1605."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "미겔 데 세르반테스",
+      "url": "https://namu.wiki/w/%EB%AF%B8%EA%B2%94%20%EB%8D%B0%20%EC%84%B8%EB%A5%B4%EB%B0%98%ED%85%8C%EC%8A%A4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Source-reviewed historical state/cultural activity association; existing exact canonical Person aliases, Polity identity and PlaceFunction must be checked by Production preflight. Last known Vercel Hobby HTTP 402 prevented fresh live UUID reconciliation; no guessed coordinates, no new surrogate regional state. Existing USER-CORE40 queue candidate reused instead of duplication."
+  }
+}

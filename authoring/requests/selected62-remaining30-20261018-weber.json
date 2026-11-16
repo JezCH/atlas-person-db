@@ -1,0 +1,72 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:selected62-remaining30-20261018:weber:representative:v1",
+  "person": {
+    "canonical_name_en": "Max Weber",
+    "display_name_ko": "막스 베버",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-18",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "German Empire",
+    "display_name_ko": "독일 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Sociologist",
+    "role_display_name_ko": "사회학자",
+    "start_year": 1904,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1905,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Publication of The Protestant Ethic and the Spirit of Capitalism in 1904–1905 as one representative social-thought work. Heidelberg scholarly context does not mean continuous residence; 1904 American travel is explicitly distinguished. Identity review: Maximilian Carl Emil Weber (1864–1920); not father Max Sr., brother Alfred, wife Marianne, painter Max Weber or composer Carl Maria von Weber."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Stanford Encyclopedia of Philosophy — Max Weber",
+      "canonical_url": "https://plato.stanford.edu/entries/weber/",
+      "citation_text": "Scholarly biography identifies the work in 1904–1905, US travel in 1904 and death in 1920; no continuous teaching appointment is asserted."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-18",
+      "document_title": "막스 베버",
+      "url": "https://namu.wiki/w/%EB%A7%89%EC%8A%A4%20%EB%B2%A0%EB%B2%84"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "NEEDS_PREFLIGHT. Source-reviewed historical location/context only; exact canonical Person/alias/Polity/Activity/Place state is unknown. No live requests permitted during quota suspension. Reuse exact existing identities; no invented UUIDs, coordinates or surrogate cultural Polities."
+  },
+  "review_context": {
+    "task": "#2545 approved 62, remaining 30 after #2543/#2544/#2546",
+    "registration_state": "NEEDS_PREFLIGHT",
+    "draft_only": true,
+    "production_screen": "NOT_PERFORMED_USER_PROHIBITED",
+    "identity_review": "Maximilian Carl Emil Weber (1864–1920); not father Max Sr., brother Alfred, wife Marianne, painter Max Weber or composer Carl Maria von Weber.",
+    "namuwiki_evidence_method": "external-index independent Person mirror/title review; direct origin fetch not claimed",
+    "namuwiki_evidence_url": "https://namu.moe/w/%EB%A7%89%EC%8A%A4%20%EB%B2%A0%EB%B2%84",
+    "domain_review": "Explicit v2 taxonomy review; architecture=technology, social thought/philosophy=culture, mathematics/medicine=science. Not inferred from office.",
+    "apply_gate": "DRAFT / DO NOT MERGE OR APPLY. Fresh semantic duplicate and exact historical Polity preflight required; source review is not proof of DB absence. No PHFC /36 factual coverage score claimed."
+  }
+}

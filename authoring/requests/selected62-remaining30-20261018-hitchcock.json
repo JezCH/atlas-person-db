@@ -1,0 +1,78 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:selected62-remaining30-20261018:hitchcock:representative:v1",
+  "person": {
+    "canonical_name_en": "Alfred Hitchcock",
+    "display_name_ko": "앨프리드 히치콕",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-18",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "United States of America",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Film director",
+    "role_display_name_ko": "영화감독",
+    "start_year": 1960,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1960,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "US release/directorial achievement of Psycho in 1960. Fictional story locations and Hitchcock’s British birth do not change the production’s US affiliation. Identity review: Alfred Joseph Hitchcock (1899–1980); not the actor portraying him in the 2012 biopic or a fictional character."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "British Film Institute — Psycho (1960)",
+      "canonical_url": "https://www.bfi.org.uk/film/18313136-53d5-53d4-a89b-1d19d24a30f2/psycho",
+      "citation_text": "BFI catalogue identifies the 1960 Hitchcock film and its artistic significance."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "BFI Replay — The Westcliff Cine Club Visits Mr Hitchcock",
+      "canonical_url": "https://replay.bfi.org.uk/video/31770315-edb3-5ade-8183-d1811d66aecd",
+      "citation_text": "Institutional record identifies Alfred Hitchcock as 1899–1980."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-18",
+      "document_title": "앨프리드 히치콕",
+      "url": "https://namu.wiki/w/%EC%95%A8%ED%94%84%EB%A6%AC%EB%93%9C%20%ED%9E%88%EC%B9%98%EC%BD%95"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "NEEDS_PREFLIGHT. Source-reviewed historical location/context only; exact canonical Person/alias/Polity/Activity/Place state is unknown. No live requests permitted during quota suspension. Reuse exact existing identities; no invented UUIDs, coordinates or surrogate cultural Polities."
+  },
+  "review_context": {
+    "task": "#2545 approved 62, remaining 30 after #2543/#2544/#2546",
+    "registration_state": "NEEDS_PREFLIGHT",
+    "draft_only": true,
+    "production_screen": "NOT_PERFORMED_USER_PROHIBITED",
+    "identity_review": "Alfred Joseph Hitchcock (1899–1980); not the actor portraying him in the 2012 biopic or a fictional character.",
+    "namuwiki_evidence_method": "external-index independent Person mirror/title review; direct origin fetch not claimed",
+    "namuwiki_evidence_url": "https://namu.moe/w/%EC%95%A8%ED%94%84%EB%A6%AC%EB%93%9C%20%ED%9E%88%EC%B9%98%EC%BD%95",
+    "domain_review": "Explicit v2 taxonomy review; architecture=technology, social thought/philosophy=culture, mathematics/medicine=science. Not inferred from office.",
+    "apply_gate": "DRAFT / DO NOT MERGE OR APPLY. Fresh semantic duplicate and exact historical Polity preflight required; source review is not proof of DB absence. No PHFC /36 factual coverage score claimed."
+  }
+}

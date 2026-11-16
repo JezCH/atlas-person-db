@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-civ11-20261016:tiglath-pileser-iii-assyria-bce745-bce727:v1",
+  "person": {
+    "canonical_name_en": "Tiglath-Pileser III",
+    "display_name_ko": "티글라트-필레세르 3세",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-16",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Neo-Assyrian Empire",
+    "display_name_ko": "신아시리아 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King of Assyria",
+    "role_display_name_ko": "아시리아 국왕",
+    "start_year": -745,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "end_year": -727,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Assyrian royal reign 745–727 BCE, separate from Tiglath-Pileser I or II. Assyrian royal reliefs and British Museum chronological attribution corroborate king and period; does not conflate later Babylonian kingship with start of Assyrian reign."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "British Museum — wall panel of Tiglath-Pileser III",
+      "canonical_url": "https://www.britishmuseum.org/collection/object/W_1856-0909-61",
+      "citation_text": "Museum identifies king Tiglath-Pileser III and scholarly bibliographic reign dates 745–727 BCE."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-16",
+      "document_title": "티글라트-필레세르 3세",
+      "url": "https://namu.wiki/w/%ED%8B%B0%EA%B8%80%EB%9D%BC%ED%8A%B8-%ED%95%84%EB%A0%88%EC%84%B8%EB%A5%B4%203%EC%84%B8"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Source-reviewed Neo-Assyrian Empire temporal context and Person Activity. Canonical live Polity/Place/PolityPlaceFunction identities cannot be verified while Production returns HTTP 402; no invented place UUID or coordinates. Exact identity/alias/semantic duplicate preflight is mandatory before any write."
+  }
+}

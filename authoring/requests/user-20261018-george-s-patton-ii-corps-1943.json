@@ -1,0 +1,67 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-patton-20261018:ii-corps-1943:v1",
+  "person": {
+    "canonical_name_en": "George S. Patton",
+    "display_name_ko": "조지 S. 패튼",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-18",
+    "life_status_basis": "documented_death",
+    "representative_domain": "military",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "general_activity",
+    "role": "Commander of U.S. II Corps",
+    "role_display_name_ko": "북아프리카 전역 미군 제2군단 지휘",
+    "start_year": 1943,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1943,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Key representative North Africa/Tunisia field command in March–April 1943 (the 1943 year-only span is an attestation point, NOT a whole-year office or an excuse to register all interim promotions). Library of Congress personal papers and contemporary March diaries identify Patton commanding II Corps. Later reassignment to Sicily is represented separately by Seventh Army command. No new Polity created for U.S. corps."
+  },
+  "sources": [
+    {
+      "source_type": "institutional_web",
+      "title": "Library of Congress — George S. Patton Papers, March 1943 Diary",
+      "canonical_url": "https://www.loc.gov/resource/mcc.085/",
+      "citation_text": "Library of Congress establishes Patton as United States II Corps commander in the March 1943 Tunisian campaign."
+    },
+    {
+      "source_type": "institutional_web",
+      "title": "Library of Congress — George S. Patton timeline",
+      "canonical_url": "https://www.loc.gov/collections/george-s-patton-diaries/articles-and-essays/timeline/",
+      "citation_text": "Official personal papers timeline separately records the North African II Corps command and the Seventh Army Sicilian campaign."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-18",
+      "document_title": "조지 S. 패튼",
+      "url": "https://namu.wiki/w/%EC%A1%B0%EC%A7%80%20S.%20%ED%8C%A8%ED%8A%BC"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Person-specific US military unit/office is not a sovereign Polity. Reuse existing US historical Polity on exact live Production preflight after 402 quota pause, no invented unit-as-Polity, German occupation state or personal place-function UUID. Distinguish father George Smith Patton (1856–1927), Patton IV, and fictional alternate-history derivative."
+  }
+}

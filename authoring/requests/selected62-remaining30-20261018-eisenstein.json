@@ -1,0 +1,72 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:selected62-remaining30-20261018:eisenstein:representative:v1",
+  "person": {
+    "canonical_name_en": "Sergei Eisenstein",
+    "display_name_ko": "세르게이 에이젠슈테인",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-18",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Soviet Union",
+    "display_name_ko": "소련",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Film director",
+    "role_display_name_ko": "영화감독",
+    "start_year": 1925,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1925,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Battleship Potemkin as a Soviet directorial/montage milestone in 1925. The film dramatizes a 1905 mutiny; that earlier narrative time is not the director’s Activity date. Identity review: Sergei Mikhailovich Eisenstein (1898–1948); not physicist Einstein. Korean wiki uses 예이젠시테인, not a guessed transliteration URL."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "British Film Institute — Battleship Potemkin (1925)",
+      "canonical_url": "https://www.bfi.org.uk/film/9c02c20b-1487-52c8-bbfc-0849e204fe59/battleship-potemkin",
+      "citation_text": "BFI catalogue identifies Eisenstein’s 1925 film and distinguishes its 1905 subject."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-18",
+      "document_title": "세르게이 예이젠시테인",
+      "url": "https://namu.wiki/w/%EC%84%B8%EB%A5%B4%EA%B2%8C%EC%9D%B4%20%EC%98%88%EC%9D%B4%EC%A0%A0%EC%8B%9C%ED%85%8C%EC%9D%B8"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "NEEDS_PREFLIGHT. Source-reviewed historical location/context only; exact canonical Person/alias/Polity/Activity/Place state is unknown. No live requests permitted during quota suspension. Reuse exact existing identities; no invented UUIDs, coordinates or surrogate cultural Polities."
+  },
+  "review_context": {
+    "task": "#2545 approved 62, remaining 30 after #2543/#2544/#2546",
+    "registration_state": "NEEDS_PREFLIGHT",
+    "draft_only": true,
+    "production_screen": "NOT_PERFORMED_USER_PROHIBITED",
+    "identity_review": "Sergei Mikhailovich Eisenstein (1898–1948); not physicist Einstein. Korean wiki uses 예이젠시테인, not a guessed transliteration URL.",
+    "namuwiki_evidence_method": "external-index independent Person mirror/title review; direct origin fetch not claimed",
+    "namuwiki_evidence_url": "https://namu.moe/w/%EC%84%B8%EB%A5%B4%EA%B2%8C%EC%9D%B4%20%EC%98%88%EC%9D%B4%EC%A0%A0%EC%8B%9C%ED%85%8C%EC%9D%B8",
+    "domain_review": "Explicit v2 taxonomy review; architecture=technology, social thought/philosophy=culture, mathematics/medicine=science. Not inferred from office.",
+    "apply_gate": "DRAFT / DO NOT MERGE OR APPLY. Fresh semantic duplicate and exact historical Polity preflight required; source review is not proof of DB absence. No PHFC /36 factual coverage score claimed."
+  }
+}

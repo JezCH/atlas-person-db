@@ -1,0 +1,72 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:selected62-remaining30-20261018:cantor:representative:v1",
+  "person": {
+    "canonical_name_en": "Georg Cantor",
+    "display_name_ko": "게오르크 칸토어",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-18",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "science",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "German Empire",
+    "display_name_ko": "독일 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Mathematician",
+    "role_display_name_ko": "수학자",
+    "start_year": 1874,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1874,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Halle-based mathematical research represented by the 1874 uncountability/set-theory paper; not a conflation with the later diagonal argument. Identity review: Georg Ferdinand Ludwig Philipp Cantor (1845–1918); not his father or a religious cantor."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "MacTutor — Georg Cantor",
+      "canonical_url": "https://mathshistory.st-andrews.ac.uk/Biographies/Cantor/",
+      "citation_text": "University biography explains the 1874 proof that real numbers are uncountable, distinguishing countable algebraic numbers."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-18",
+      "document_title": "게오르크 칸토어",
+      "url": "https://namu.wiki/w/%EA%B2%8C%EC%98%A4%EB%A5%B4%ED%81%AC%20%EC%B9%B8%ED%86%A0%EC%96%B4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "NEEDS_PREFLIGHT. Source-reviewed historical location/context only; exact canonical Person/alias/Polity/Activity/Place state is unknown. No live requests permitted during quota suspension. Reuse exact existing identities; no invented UUIDs, coordinates or surrogate cultural Polities."
+  },
+  "review_context": {
+    "task": "#2545 approved 62, remaining 30 after #2543/#2544/#2546",
+    "registration_state": "NEEDS_PREFLIGHT",
+    "draft_only": true,
+    "production_screen": "NOT_PERFORMED_USER_PROHIBITED",
+    "identity_review": "Georg Ferdinand Ludwig Philipp Cantor (1845–1918); not his father or a religious cantor.",
+    "namuwiki_evidence_method": "external-index independent Person mirror/title review; direct origin fetch not claimed",
+    "namuwiki_evidence_url": "https://namu.moe/w/%EA%B2%8C%EC%98%A4%EB%A5%B4%ED%81%AC%20%EC%B9%B8%ED%86%A0%EC%96%B4",
+    "domain_review": "Explicit v2 taxonomy review; architecture=technology, social thought/philosophy=culture, mathematics/medicine=science. Not inferred from office.",
+    "apply_gate": "DRAFT / DO NOT MERGE OR APPLY. Fresh semantic duplicate and exact historical Polity preflight required; source review is not proof of DB absence. No PHFC /36 factual coverage score claimed."
+  }
+}

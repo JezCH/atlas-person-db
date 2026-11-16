@@ -1,0 +1,67 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-petain-20261017:1940-deputy-prime-minister:v1",
+  "person": {
+    "canonical_name_en": "Philippe Pétain",
+    "display_name_ko": "필리프 페탱",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-17",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "French Republic",
+    "display_name_ko": "프랑스 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "Vice-President of the Council of Ministers under Paul Reynaud",
+    "role_display_name_ko": "레노 내각 부총리",
+    "start_year": 1940,
+    "start_month": 5,
+    "start_day": 18,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1940,
+    "end_month": 6,
+    "end_day": 16,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Appointed Vice-President of Council and Minister of State on 18 May 1940, continued until 16 June formation of his own cabinet. Same-day transition boundary reflects new government formation; not a separate state. Activity domain emphasis: governance."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Larousse — Philippe Pétain, Encyclopédie",
+      "canonical_url": "https://www.larousse.fr/encyclopedie/personnage/Philippe_P%C3%A9tain/137768",
+      "citation_text": "Larousse documents his war ministry Feb 1934, Bouisson state ministry June 1935, Franco embassy and Reynaud vice premiership on 18 May 1940."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Archontology — Henri-Philippe-Bénoni-Omer-Joseph Pétain",
+      "canonical_url": "https://www.archontology.org/nations/france/france_vichy1/petain.php",
+      "citation_text": "Individual office chronology: minister of war 9 Feb–8 Nov 1934, 1–4 June 1935 minister of state, deputy PM 18 May–16 June, PM from 16 June 1940 until 18 April 1942, de facto state head 11 Jul 1940–20 Aug 1944."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-17",
+      "document_title": "필리프 페탱",
+      "url": "https://namu.wiki/w/%ED%95%84%EB%A6%AC%ED%94%84%20%ED%8E%98%ED%83%B1"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Source-reviewed historical France context only. Bounded exact Production Person and France/French Republic Polity identity preflight, and Vichy regime Context linkage, are blocked by Vercel Hobby HTTP 402. Existing France umbrella historical UUID 1eaa48b6-dc60-49d6-91c4-49db556f4ddf / juridically continuous French Republic UUID b138f5e4-ff83-40f6-bdb1-83b08c0256cb sourced by Production-verified P2-01F; no invented PlaceFunction/coordinates, no artificial new sovereign Vichy."
+  }
+}

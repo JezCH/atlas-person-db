@@ -1,0 +1,78 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:selected62-remaining30-20261018:welles:representative:v1",
+  "person": {
+    "canonical_name_en": "Orson Welles",
+    "display_name_ko": "오슨 웰스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-18",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "United States of America",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Film director",
+    "role_display_name_ko": "영화감독",
+    "start_year": 1941,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1941,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Citizen Kane US release in 1941 is one representative filmmaking milestone; collaborators and the fictional Charles Foster Kane are not conflated with the director. Identity review: George Orson Welles (1915–1985); not H. G. Wells or the fictional protagonist. AFI records death 10 October 1985."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "American Film Institute — Citizen Kane",
+      "canonical_url": "https://www.afi.com/robert-detail/27624-CITIZEN-KANE/",
+      "citation_text": "AFI identifies Orson Welles as director of Citizen Kane (1941)."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "AFI — Someone to Love historical production record",
+      "canonical_url": "https://catalog.afi.com/Film/59116-SOMEONE-TO-LOVE",
+      "citation_text": "AFI history explicitly records Orson Welles died on 10 October 1985."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-18",
+      "document_title": "오슨 웰스",
+      "url": "https://namu.wiki/w/%EC%98%A4%EC%8A%A8%20%EC%9B%B0%EC%8A%A4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "NEEDS_PREFLIGHT. Source-reviewed historical location/context only; exact canonical Person/alias/Polity/Activity/Place state is unknown. No live requests permitted during quota suspension. Reuse exact existing identities; no invented UUIDs, coordinates or surrogate cultural Polities."
+  },
+  "review_context": {
+    "task": "#2545 approved 62, remaining 30 after #2543/#2544/#2546",
+    "registration_state": "NEEDS_PREFLIGHT",
+    "draft_only": true,
+    "production_screen": "NOT_PERFORMED_USER_PROHIBITED",
+    "identity_review": "George Orson Welles (1915–1985); not H. G. Wells or the fictional protagonist. AFI records death 10 October 1985.",
+    "namuwiki_evidence_method": "external-index independent Person mirror/title review; direct origin fetch not claimed",
+    "namuwiki_evidence_url": "https://namu.moe/w/%EC%98%A4%EC%8A%A8%20%EC%9B%B0%EC%8A%A4",
+    "domain_review": "Explicit v2 taxonomy review; architecture=technology, social thought/philosophy=culture, mathematics/medicine=science. Not inferred from office.",
+    "apply_gate": "DRAFT / DO NOT MERGE OR APPLY. Fresh semantic duplicate and exact historical Polity preflight required; source review is not proof of DB absence. No PHFC /36 factual coverage score claimed."
+  }
+}

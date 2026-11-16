@@ -1,0 +1,67 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-petain-20261017:1917-chief-of-general-staff:v1",
+  "person": {
+    "canonical_name_en": "Philippe Pétain",
+    "display_name_ko": "필리프 페탱",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-17",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "French Republic",
+    "display_name_ko": "프랑스 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "French Army Chief of the General Staff",
+    "role_display_name_ko": "프랑스 육군 참모총장",
+    "start_year": 1917,
+    "start_month": 4,
+    "start_day": 28,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1917,
+    "end_month": 5,
+    "end_day": 14,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "28 April 1917 chief of general staff at French War Ministry; transitioned to commander in chief on 15 May. End is approximate last-full-day convention, not a proof all overlapping Centre army group duties ended that day. Activity domain emphasis: military."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Encyclopaedia Britannica 1926 supplement — Pétain",
+      "canonical_url": "https://en.wikisource.org/wiki/Page:EB1926_-_Supplement_Volume_3.pdf/120",
+      "citation_text": "Period source records Pétain becoming general chief of staff at War Ministry on 28 April 1917 and succeeding Nivelle as field commander in chief on May 15."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "National Army Museum — Pétain appointed French Commander-in-Chief",
+      "canonical_url": "https://ww1.nam.ac.uk/timeline/petain-appointed-french-commander-chief/",
+      "citation_text": "15 May 1917 appointment to army commander in chief following Nivelle's replacement."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-17",
+      "document_title": "필리프 페탱",
+      "url": "https://namu.wiki/w/%ED%95%84%EB%A6%AC%ED%94%84%20%ED%8E%98%ED%83%B1"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Source-reviewed historical France context only. Bounded exact Production Person and France/French Republic Polity identity preflight, and Vichy regime Context linkage, are blocked by Vercel Hobby HTTP 402. Existing France umbrella historical UUID 1eaa48b6-dc60-49d6-91c4-49db556f4ddf / juridically continuous French Republic UUID b138f5e4-ff83-40f6-bdb1-83b08c0256cb sourced by Production-verified P2-01F; no invented PlaceFunction/coordinates, no artificial new sovereign Vichy."
+  }
+}

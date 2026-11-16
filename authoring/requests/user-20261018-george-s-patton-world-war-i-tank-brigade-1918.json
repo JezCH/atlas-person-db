@@ -1,0 +1,67 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-patton-20261018:world-war-i-tank-brigade-1918:v2",
+  "person": {
+    "canonical_name_en": "George S. Patton",
+    "display_name_ko": "조지 S. 패튼",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-18",
+    "life_status_basis": "documented_death",
+    "representative_domain": "military",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "general_activity",
+    "role": "Commander of US First Tank Brigade (later 304th Tank Brigade) in World War I",
+    "role_display_name_ko": "제1차 세계대전 미군 전차여단 지휘",
+    "start_year": 1918,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1918,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "1918 representative combat-service POINT for the American tank brigade that Patton led at the September St. Mihiel and Meuse-Argonne campaigns. US Army describes the formation as First Tank Brigade during St. Mihiel and later 304th Tank Brigade; do not apply its later unit designation retroactively as though it held that name at the start of September. This is NOT a complete 1918-to-1921 career rail nor proof he commanded for only one year. Other peacetime and intermediate staff/command billets belong in person biography, not separate ATLAS time-axis Activities."
+  },
+  "sources": [
+    {
+      "source_type": "institutional_web",
+      "title": "U.S. Army — The Birth of Armored Forces",
+      "canonical_url": "https://www.army.mil/article-amp/2413/the_birth_of_armored_forces",
+      "citation_text": "US Army describes Patton leading First Tank Brigade in September 1918 at St. Mihiel and Meuse-Argonne, the historically prominent U.S. tank combat command."
+    },
+    {
+      "source_type": "government_web",
+      "title": "U.S. Army Center of Military History — St. Mihiel 12–16 September 1918",
+      "canonical_url": "https://history.army.mil/portals/143/Images/Publications/catalog/77-7.pdf",
+      "citation_text": "Army history identifies Patton's tank formation, later indexed as 304th, in the St. Mihiel operation of September 1918."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-18",
+      "document_title": "조지 S. 패튼",
+      "url": "https://namu.wiki/w/%EC%A1%B0%EC%A7%80%20S.%20%ED%8C%A8%ED%8A%BC"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Person-specific US military unit/office is not a sovereign Polity. Reuse existing US historical Polity on exact live Production preflight after 402 quota pause, no invented unit-as-Polity, German occupation state or personal place-function UUID. Distinguish father George Smith Patton (1856–1927), Patton IV, and fictional alternate-history derivative."
+  }
+}
