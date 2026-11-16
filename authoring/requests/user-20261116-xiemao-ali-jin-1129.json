@@ -70,8 +70,8 @@
     ],
     "namuwiki_review_method": "exact document title verified in indexed NamuWiki mirror",
     "namuwiki_review_evidence": "https://m.namu.moe/w/%EC%82%AC%EB%AC%98%EC%95%84%EB%A6%AC",
-    "registration_state": "CURRENT_PRODUCTION_PROTECTED_PREFLIGHT_REQUIRED",
-    "production_screen": "2026-11-17 (KST) production read-only identity projection of 2,152 Person rows: no exact/normalized alias or >=7-letter substring match for reviewed aliases; not authoritative proof of absence. Production Polity list uniquely resolves the desired exact canonical English identity, official Korean preferred label, type, historicity and UUID. Canonical GitHub OIDC preflight_batch is still mandatory before any apply.",
-    "apply_gate": "HOLD: DO NOT MERGE/APPLY until bounded protected Production preflight_batch verifies exact Person/alias/Activity/Role/Source identity; reuse existing Person if found. Do not create new Polity. Preserve historical Source, Activity, immutable request_id, and prior registration_candidate_id."
+    "registration_state": "PROTECTED_OIDC_PREFLIGHT_THEN_READY_ONLY_APPLY",
+    "production_screen": "2026-11-17 2152-name Production identity projection no direct English/Korean/alternate alias match; live exact Polity UUID+KO label pinned. This is NOT proof that canonical Person/Activity is absent; GitHub OIDC preflight_batch must determine READY/ALREADY_PRESENT/BLOCKED before any write.",
+    "apply_gate": "GitHub OIDC main-push Authoring batch selects exactly changed two files, runs SERIALIZABLE read-only preflight_batch, applies only READY independently with immutable request_id and preserved registration_candidate_id; BLOCKED and ALREADY_PRESENT are never inserted. Verify canonical ledger replay then Runtime compile/readback. Do not reselect already committed Gar."
   }
 }
