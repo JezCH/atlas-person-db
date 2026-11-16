@@ -205,7 +205,7 @@ test("leading whitespace in real Git paths cannot disguise unsafe files as appro
 
 
 const VERCEL_IGNORE_CLI = fileURLToPath(new URL("../scripts/vercel-ignore-build.mjs", import.meta.url));
-function gitFixture(changedFiles, {previousMissing=false, workflow=""}={}) {
+function gitFixture(changedFiles, {previousMissing=false, workflow="", priorChangedFiles=null}={}) {
   const root=mkdtempSync(join(tmpdir(),"atlas-vercel-cli-"));
   const gitEnv={...process.env,GIT_CONFIG_NOSYSTEM:"1",GIT_CONFIG_GLOBAL:"/dev/null"};
   const git=(...args)=>execFileSync("git",args,{cwd:root,encoding:"utf8",env:gitEnv}).trim();
@@ -214,6 +214,16 @@ function gitFixture(changedFiles, {previousMissing=false, workflow=""}={}) {
     git("-c","user.name=ATLAS Test","-c","user.email=atlas@example.invalid",
       "commit","-q","--allow-empty","-m","baseline");
     const previous=git("rev-parse","HEAD");
+    if (priorChangedFiles) {
+      for(const [name,body] of Object.entries(priorChangedFiles)) {
+        const file=join(root,name);
+        mkdirSync(dirname(file),{recursive:true});
+        writeFileSync(file,body);
+      }
+      git("add","-A");
+      git("-c","user.name=ATLAS Test","-c","user.email=atlas@example.invalid",
+        "commit","-q","-m","older undeployed runtime change");
+    }
     for(const [name,body] of Object.entries(changedFiles)) {
       const file=join(root,name);
       mkdirSync(dirname(file),{recursive:true});
@@ -259,10 +269,27 @@ test("ordinary docs and workflow-only commit still skips",()=>{
   assert.equal(v.status,0,v.stdout);
   assert.match(v.stdout,/SKIP: only non-deployable files changed/);
 });
-test("reviewed runtime-data-only commit still skips without previous Production SHA",()=>{
+test("missing previous Production SHA must build even for reviewed data-only commit",()=>{
   const v=gitFixture({"authoring/requests/person.json":"{}"},{previousMissing:true});
+  assert.equal(v.status,1,v.stdout);
+  assert.match(v.stdout,/BUILD: previous successful Production SHA unavailable/);
+});
+test("a safe last commit cannot hide earlier undeployed runtime changes",()=>{
+  const priorChangedFiles={"server/atlas-person-read-handler.js":"runtime changed"};
+  for(const latest of [
+    {"docs/ATLAS_AUTONOMOUS_LOOP_V1.md":"notes","scripts/atlas-autonomous-outcome-journal.mjs":"agent-only","tests/atlas-autonomous-outcome-journal.test.mjs":"test"},
+    {"authoring/requests/person.json":"{}"}
+  ]) {
+    const v=gitFixture(latest,{priorChangedFiles});
+    assert.equal(v.status,1,v.stdout);
+    assert.match(v.stdout,/BUILD: deployment-relevant change detected/);
+    assert.match(v.stdout,/server\/atlas-person-read-handler\.js/);
+  }
+});
+test("safe commits since the actual deployed SHA remain skippable",()=>{
+  const v=gitFixture({"authoring/requests/person.json":"{}"},{priorChangedFiles:{"docs/old-audit.md":"text"}});
   assert.equal(v.status,0,v.stdout);
-  assert.match(v.stdout,/SKIP: current commit contains only reviewed runtime-safe data/);
+  assert.match(v.stdout,/SKIP: only non-deployable files changed/);
 });
 test("mixed docs plus runtime code requires build",()=>{
   const v=gitFixture({"docs/readme.md":"doc","server/runtime.js":"code"});

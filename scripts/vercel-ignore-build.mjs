@@ -185,28 +185,11 @@ export function main(env = process.env) {
     return;
   }
 
-  // Reviewed request/merge manifests are data, not deployable runtime code.
-  // Prove the current commit itself is data-only before relying on the older
-  // successful-deployment SHA. This prevents harmless reviewed-data commits from
-  // consuming a Vercel build merely because an older SHA is absent from a shallow
-  // clone. Any inability to prove the current commit delta falls back to the
-  // conservative build path below.
-  try {
-    const currentOutput = git(["diff-tree", "--no-commit-id", "--name-only", "-z", "-r", "-m", "--first-parent", currentSha, "--"]);
-    const currentPaths = parsePaths(currentOutput);
-    if (isRuntimeDataOnly(currentPaths)) {
-      exitSkip(`current commit contains only reviewed runtime-safe data (${currentPaths.length} path${currentPaths.length === 1 ? "" : "s"})`);
-      for (const file of currentPaths) console.log(`[atlas-vercel-ignore]   ${file}`);
-      return;
-    }
-    if (isAgentCapabilityOnly(currentPaths)) {
-      exitSkip(`current commit contains only GitHub agent tooling (${currentPaths.length} path${currentPaths.length === 1 ? "" : "s"})`);
-      for (const file of currentPaths) console.log(`[atlas-vercel-ignore]   ${file}`);
-      return;
-    }
-  } catch {
-    logDecision("INFO", "could not prove current commit as runtime-safe data-only; falling back to deployment-diff gate");
-  }
+  // A safe last commit is NOT proof the release is safe to skip: an older
+  // Production deployment may be dozens of commits behind. Compare the entire
+  // range since the last successfully deployed SHA before skipping any build.
+  // If that SHA is missing or inaccessible in a shallow clone, BUILD rather
+  // than silently leave pending runtime/API/UI changes undeployed.
 
   // Fail open to a real build whenever the last successfully deployed SHA cannot
   // be proven. Skipping is an optimization; deployment correctness has priority.
