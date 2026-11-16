@@ -17,7 +17,8 @@
     "canonical_name_en": "Russian Empire",
     "display_name_ko": "러시아 제국",
     "polity_type": "historical_polity",
-    "historicity": "historical"
+    "historicity": "historical",
+    "existing_id": "dd07fc4c-b3ac-59ac-bdf2-9cc190893327"
   },
   "activity": {
     "relation_type": "active_in",

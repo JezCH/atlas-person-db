@@ -14,10 +14,11 @@
     "representative_domain_reviewed": true
   },
   "polity": {
-    "canonical_name_en": "United States of America",
+    "canonical_name_en": "United States",
     "display_name_ko": "미국",
     "polity_type": "historical_polity",
-    "historicity": "historical"
+    "historicity": "historical",
+    "existing_id": "7d09bc56-1ea0-515e-a3e7-9863361b6f15"
   },
   "activity": {
     "relation_type": "active_in",

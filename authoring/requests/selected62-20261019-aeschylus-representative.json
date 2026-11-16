@@ -17,7 +17,8 @@
     "canonical_name_en": "Athens",
     "display_name_ko": "아테네",
     "polity_type": "historical_polity",
-    "historicity": "historical"
+    "historicity": "historical",
+    "existing_id": "12eecff6-48de-5bce-b9d0-443d9e019a58"
   },
   "activity": {
     "relation_type": "active_in",

@@ -17,7 +17,8 @@
     "canonical_name_en": "Roman Empire",
     "display_name_ko": "로마 제국",
     "polity_type": "historical_polity",
-    "historicity": "historical"
+    "historicity": "historical",
+    "existing_id": "5d9a6186-bbe6-5d1a-ba93-02190ae4c417"
   },
   "activity": {
     "relation_type": "active_in",

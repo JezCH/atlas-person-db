@@ -17,7 +17,8 @@
     "canonical_name_en": "Kingdom of England",
     "display_name_ko": "잉글랜드 왕국",
     "polity_type": "historical_polity",
-    "historicity": "historical"
+    "historicity": "historical",
+    "existing_id": "d3131d3e-ff4b-5d4d-b5d2-ddfd5e9bda1d"
   },
   "activity": {
     "relation_type": "active_in",
