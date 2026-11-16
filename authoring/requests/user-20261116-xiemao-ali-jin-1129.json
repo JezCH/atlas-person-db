@@ -17,7 +17,8 @@
     "canonical_name_en": "Jin Dynasty",
     "display_name_ko": "금나라",
     "polity_type": "historical_polity",
-    "historicity": "historical"
+    "historicity": "historical",
+    "existing_id": "6a9d6b63-15c9-5b1b-8fd5-29bbf0787dde"
   },
   "activity": {
     "relation_type": "serves",
@@ -69,8 +70,8 @@
     ],
     "namuwiki_review_method": "exact document title verified in indexed NamuWiki mirror",
     "namuwiki_review_evidence": "https://m.namu.moe/w/%EC%82%AC%EB%AC%98%EC%95%84%EB%A6%AC",
-    "registration_state": "DRAFT_PENDING_CANONICAL_PREFLIGHT",
-    "production_screen": "Not verified: Vercel current project live=false and latest Production deployment CANCELED; Production Person/Activity exact screening required before any apply",
-    "apply_gate": "Before merge, exact protected Production duplicate/preflight resolution required. On duplicate, reuse existing Person, never create second identity. No deletion, mutation or fabricated historical boundary."
+    "registration_state": "CURRENT_PRODUCTION_PROTECTED_PREFLIGHT_REQUIRED",
+    "production_screen": "2026-11-17 (KST) production read-only identity projection of 2,152 Person rows: no exact/normalized alias or >=7-letter substring match for reviewed aliases; not authoritative proof of absence. Production Polity list uniquely resolves the desired exact canonical English identity, official Korean preferred label, type, historicity and UUID. Canonical GitHub OIDC preflight_batch is still mandatory before any apply.",
+    "apply_gate": "HOLD: DO NOT MERGE/APPLY until bounded protected Production preflight_batch verifies exact Person/alias/Activity/Role/Source identity; reuse existing Person if found. Do not create new Polity. Preserve historical Source, Activity, immutable request_id, and prior registration_candidate_id."
   }
 }
