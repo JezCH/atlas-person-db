@@ -877,6 +877,29 @@ test('refresh preserves collection and text after opening a native card', async(
   assert.equal(ui.listReads,2);assert.equal(ui.detailReads,2,'one opened detail per refresh generation');
 });
 
+test('search after deep link restores bounded pagination without hiding refreshed route target', async()=> {
+  const extra=Array.from({length:16},(_,i)=>({
+    id:'00000000-0000-4000-8000-'+String(i+301).padStart(12,'0'),
+    canonical_name_en:'Common polity '+i, preferred_name_ko:'공통 정치체 '+i, activities:[]
+  }));
+  const last=extra.at(-1).id;
+  let ui;
+  ui=mountedDetailBrowser(async id=>({polity:{...ui.full,id}}),last,extra);
+  await tick();
+  assert.equal(ui.cards.size,17,'explicit deep link reveals a target beyond the first page');
+  await ui.controller.refresh();
+  assert.equal(ui.cards.size,17,'refresh preserves the active deep-link reveal');
+
+  ui.input('Common polity');
+  assert.equal(ui.cards.size,12,'a new search does not expand to the previously selected late result');
+  assert.equal(ui.nodes.get('[data-polity-count]').textContent,'표시 12 / 검색 결과 16');
+  await ui.controller.refresh();
+  assert.equal(ui.cards.size,12,'the user search survives a later refresh');
+
+  ui.controller.selectPolity(last,{updateRoute:false,scroll:false});
+  assert.equal(ui.cards.size,17,'new explicit UUID navigation still reveals its deep target');
+});
+
 test('new text and status intent survive refresh after an explicit UUID navigation', async()=>{
   for(const control of ['text','status']){
     const ui=mountedCollectionFlow();await tick();ui.controller.selectPolity(ui.ids[0],{updateRoute:false,scroll:false});await tick();

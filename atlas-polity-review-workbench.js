@@ -167,6 +167,9 @@
     let selectedPolityId = String(initialPolityId || "").trim().toLowerCase();
     // Revealing a route target may clear filters once; refresh is not navigation.
     let pendingSelectionReveal = Boolean(selectedPolityId);
+    // A route target may expand the list, but a later user filter/search must
+    // restore pagination rather than re-expanding to that old target.
+    let keepSelectedInPage = Boolean(selectedPolityId);
     const openPolityIds = new Set(selectedPolityId ? [selectedPolityId] : []);
     const details = new Map();
     let generation = 0;
@@ -219,7 +222,7 @@
       }
       if (collectionNote) collectionNote.innerHTML = collection ? escapeHtml(collection.description) +
         (collection.evidence ? ' <a href="' + escapeHtml(collection.evidence.url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(collection.evidence.label) + '</a>' : '') : escapeHtml(collectionNotice);
-      if (selectedPolityId) {
+      if (selectedPolityId && keepSelectedInPage) {
         const selectedIndex = matched.findIndex((polity) => String(polity?.id || "").toLowerCase() === selectedPolityId);
         if (selectedIndex >= visibleLimit) visibleLimit = selectedIndex + 1;
       }
@@ -317,6 +320,7 @@
       const id = String(polityId || "").trim().toLowerCase();
       if (!id) return false;
       selectedPolityId = id;
+      keepSelectedInPage = true;
       pendingSelectionReveal = true;
       openPolityIds.add(id);
       const revealed = revealSelected({ scroll });
@@ -330,6 +334,7 @@
     function clearSelection() {
       if (!selectedPolityId) return false;
       selectedPolityId = "";
+      keepSelectedInPage = false;
       pendingSelectionReveal = false;
       openPolityIds.clear();
       render();
@@ -381,12 +386,13 @@
       const key = String(collectionControl?.value || "");
       if (key && !(live.navigation_collections || []).some(row => row.key === key)) return;
       pendingSelectionReveal = false;
-      syncOpenCards(); collectionKey = key; collectionNotice = ""; selectedPolityId = ""; visibleLimit = PAGE_SIZE; render();
+      syncOpenCards(); collectionKey = key; collectionNotice = ""; selectedPolityId = ""; keepSelectedInPage = false; visibleLimit = PAGE_SIZE; render();
     });
 
     root.addEventListener("input", (event) => {
       if (!event.target.matches("[data-polity-search]")) return;
       pendingSelectionReveal = false;
+      keepSelectedInPage = false;
       visibleLimit = PAGE_SIZE;
       syncOpenCards();
       render();
@@ -411,6 +417,7 @@
         const id = String(summaryCard.dataset.polityId || "").trim().toLowerCase();
         if (id) {
           selectedPolityId = id;
+          keepSelectedInPage = true;
           window.dispatchEvent(new CustomEvent("atlas-polity-selected", { detail:{ polityId:id } }));
         }
       }
@@ -424,6 +431,7 @@
       const filterButton = event.target.closest("[data-polity-filter]");
       if (filterButton) {
         pendingSelectionReveal = false;
+        keepSelectedInPage = false;
         syncOpenCards();
         filter = filterButton.dataset.polityFilter || "all";
         visibleLimit = PAGE_SIZE;
