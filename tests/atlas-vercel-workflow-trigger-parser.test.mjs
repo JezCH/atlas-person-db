@@ -88,6 +88,22 @@ test("historical full-Production census remains manual-only for PR target trigge
 });
 
 
+test("package.json cannot bypass resume or create Sandbox invocation guard", () => {
+  // The package path used a different, older regex than the repository scan.
+  const guard = readFileSync(new URL("../scripts/verify-vercel-resource-budget.mjs", import.meta.url), "utf8");
+  const branch = guard.split('if (target === "package.json") {')[1]?.split('} else scan(join(root, target));')[0];
+  assert.ok(branch, "actual package scanner branch must exist");
+  assert.match(branch, /forbiddenVercelSandboxInvocation\(body\)/);
+  for (const body of [
+    '{"scripts":{"dev":"vercel sandbox resume abc"}}',
+    '{"scripts":{"dev":"vercel sandbox create"}}',
+    '{"scripts":{"dev":"vercel sandbox run abc"}}',
+    '{"scripts":{"dev":"node -e require(\'@vercel/sandbox\')"}}'
+  ]) {
+    assert.equal(forbiddenVercelSandboxInvocation(body), true, body);
+  }
+});
+
 test("Vercel Hobby guard rejects snapshot restoration, named resume and direct Sandbox creation entrypoints", () => {
   for (const text of [
     "await tools.mcp__Vercel__create_sandboxes_v4({})",

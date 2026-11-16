@@ -43,7 +43,7 @@ function scan(location) {
 for (const target of targets) {
   if (target === "package.json") {
     const body = readFileSync(join(root, target), "utf8");
-    if (/\bvercel\s+sandbox\s+(?:create|run|start)\b/i.test(body)) errors.push("package.json: Sandbox runner forbidden");
+    if (forbiddenVercelSandboxInvocation(body)) errors.push("package.json: Sandbox runner forbidden");
   } else scan(join(root, target));
 }
 
