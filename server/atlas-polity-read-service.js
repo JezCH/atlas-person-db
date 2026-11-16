@@ -31,7 +31,17 @@ function normalizeActivities(value) {
     polity_designation_name_en: row.polity_designation_name_en == null ? null : String(row.polity_designation_name_en),
     polity_designation_name_ko: row.polity_designation_name_ko == null ? null : String(row.polity_designation_name_ko),
     activity_start: row.activity_start == null ? null : Number(row.activity_start),
+    activity_start_month: row.activity_start_month == null ? null : Number(row.activity_start_month),
+    activity_start_day: row.activity_start_day == null ? null : Number(row.activity_start_day),
+    activity_start_granularity: row.activity_start_granularity == null ? null : String(row.activity_start_granularity),
+    activity_start_certainty: row.activity_start_certainty == null ? null : String(row.activity_start_certainty),
+    activity_start_calendar: row.activity_start_calendar == null ? null : String(row.activity_start_calendar),
     activity_end: row.activity_end == null ? null : Number(row.activity_end),
+    activity_end_month: row.activity_end_month == null ? null : Number(row.activity_end_month),
+    activity_end_day: row.activity_end_day == null ? null : Number(row.activity_end_day),
+    activity_end_granularity: row.activity_end_granularity == null ? null : String(row.activity_end_granularity),
+    activity_end_certainty: row.activity_end_certainty == null ? null : String(row.activity_end_certainty),
+    activity_end_calendar: row.activity_end_calendar == null ? null : String(row.activity_end_calendar),
     chronology_status: row.chronology_status == null ? null : String(row.chronology_status),
     relation_code: row.relation_code == null ? null : String(row.relation_code),
     relation_category: row.relation_category == null ? null : String(row.relation_category),
@@ -42,9 +52,16 @@ function normalizeActivities(value) {
   })));
 }
 
-function projectPolity(row) {
+function projectPolity(row, { includeTemporal = true } = {}) {
   const names = normalizeNames(row.names);
-  const activities = normalizeActivities(row.activities);
+  const fullActivities = normalizeActivities(row.activities);
+  const activities = includeTemporal ? fullActivities : Object.freeze(fullActivities.map((activity) => {
+    const summary = { ...activity };
+    for (const side of ["start", "end"]) for (const field of ["month", "day", "granularity", "certainty", "calendar"]) {
+      delete summary[`activity_${side}_${field}`];
+    }
+    return Object.freeze(summary);
+  }));
   const canonicalNameEn = row.canonical_name_en == null ? preferredName(names, "en") : String(row.canonical_name_en);
   const preferredNameKo = row.preferred_name_ko == null ? preferredName(names, "ko") : String(row.preferred_name_ko);
   const displayName = preferredNameKo || canonicalNameEn || firstUsableName(names) || String(row.id);
@@ -162,7 +179,17 @@ select
       'polity_designation_name_en', td_en.name,
       'polity_designation_name_ko', td_ko.name,
       'activity_start', pp.activity_start,
+      'activity_start_month', pp.activity_start_month,
+      'activity_start_day', pp.activity_start_day,
+      'activity_start_granularity', pp.activity_start_granularity,
+      'activity_start_certainty', pp.activity_start_certainty,
+      'activity_start_calendar', pp.activity_start_calendar,
       'activity_end', pp.activity_end,
+      'activity_end_month', pp.activity_end_month,
+      'activity_end_day', pp.activity_end_day,
+      'activity_end_granularity', pp.activity_end_granularity,
+      'activity_end_certainty', pp.activity_end_certainty,
+      'activity_end_calendar', pp.activity_end_calendar,
       'chronology_status', pp.chronology_status,
       'relation_code', rt.code,
       'relation_category', rt.category,
@@ -239,11 +266,42 @@ where p.id = $1::uuid
 limit 1
 `;
 
-async function readPolities({ client } = {}) {
+function filterPolities(polities, query = "") {
+  const normalize = value => String(value || "").normalize("NFKC").trim().toLocaleLowerCase("und").replace(/\s+/gu, " ");
+  const needle = normalize(query);
+  if (!needle) return polities;
+  return polities.filter(polity => normalize([
+    polity.display_name, polity.canonical_name_en, polity.preferred_name_ko,
+    polity.canonical_key, polity.polity_type, polity.historicity,
+    ...(polity.names || []).map(row => row?.name),
+    ...(polity.activities || []).flatMap(activity => [
+      activity.person_display_name, activity.person_name_en, activity.person_name_ko,
+      activity.polity_designation_name_en, activity.polity_designation_name_ko,
+      activity.relation_code, activity.role_name, activity.role_code, activity.period_basis
+    ])
+  ].filter(Boolean).join(" ")).includes(needle));
+}
+
+// A bounded navigation pilot, not a canonical identity, territory or succession edge.
+const KOREAN_HISTORY_PILOT = Object.freeze({
+  key: "korean-history-pilot", kind: "nonexclusive_navigation",
+  label: "한국사 시범 · 조선·대한제국",
+  description: "조선·대한제국만 포함한 탐색 시범입니다. 역사권은 비배타적 탐색 범위이며 국가 승계나 현대 영토 소유를 뜻하지 않습니다.",
+  polity_ids: Object.freeze(["5fb816f2-2d44-55f9-a9c4-35e31625df38", "e76162a0-8a7e-4d81-8a76-3a068f4194e0"]),
+  evidence: Object.freeze({ source_snapshot: "2026-10-11", url: "https://sillok.history.go.kr/id/kza_13410013_002", label: "고종실록 · 국호와 황제 칭호 선포",
+    source_ids: Object.freeze(["6f738239-35e7-42d4-a0cb-d178a176e6fa", "7a2be5f0-b7e2-4541-bb02-d7ad61bae45b"]) })
+});
+function navigationCollections(polities) {
+  const present = new Set(polities.map(polity => polity.id));
+  const ids = KOREAN_HISTORY_PILOT.polity_ids.filter(id => present.has(id));
+  return Object.freeze(ids.length ? [Object.freeze({ ...KOREAN_HISTORY_PILOT, polity_ids: Object.freeze(ids) })] : []);
+}
+
+async function readPolities({ client, query = "" } = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client is required");
   const result = await client.query(POLITY_LIST_SQL);
-  const polities = Object.freeze((result.rows || []).map(projectPolity).sort(comparePolities));
-  return Object.freeze({ polities, summary: buildSummary(polities) });
+  const polities = Object.freeze(filterPolities((result.rows || []).map(row => projectPolity(row, { includeTemporal: false })), query).sort(comparePolities));
+  return Object.freeze({ polities, summary: buildSummary(polities), navigation_collections: navigationCollections(polities) });
 }
 
 async function readPolityDetail({ client, polityId } = {}) {

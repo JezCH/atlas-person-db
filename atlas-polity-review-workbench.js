@@ -101,7 +101,16 @@
     ].filter(Boolean).join(" "));
   }
 
-  function polityCardHtml(polity, selectedPolityId = "") {
+  function detailHtml(state) {
+    if (state?.status === "ready") {
+      const polity = state.polity;
+      return dossierRenderer.dossierHtml(polity);
+    }
+    if (state?.status === "error") return '<p role="status">상세 활동을 불러오지 못했습니다.</p><button type="button" data-polity-detail-retry="' + escapeHtml(state.id) + '">상세 다시 불러오기</button>';
+    return '<p role="status">' + (state?.status === "loading" ? "상세 활동을 불러오는 중입니다." : "상세 활동은 펼치면 불러옵니다.") + '</p>';
+  }
+
+  function polityCardHtml(polity, selectedPolityId = "", detailState = null) {
     const ko = polity.preferred_name_ko || polity.display_name || polity.canonical_name_en || polity.id;
     const en = polity.canonical_name_en || "";
     const activityCount = Number(polity.activity_count || 0);
@@ -122,7 +131,7 @@
           (unresolved ? '<span><b>' + unresolved + '</b> 연대 미해결</span>' : "") +
         '</div>' +
       '</summary>' +
-      '<div class="polity-browser-detail">' + dossierRenderer.dossierHtml(polity) + '</div>' +
+      '<div class="polity-browser-detail">' + detailHtml(detailState) + '</div>' +
     '</details>';
   }
 
@@ -152,8 +161,18 @@
 
     let live = { status: "loading", source: null, summary: null, polities: [], error: null };
     let filter = "all";
+    let collectionKey = "";
+    let collectionNotice = "";
     let visibleLimit = PAGE_SIZE;
     let selectedPolityId = String(initialPolityId || "").trim().toLowerCase();
+    // Revealing a route target may clear filters once; refresh is not navigation.
+    let pendingSelectionReveal = Boolean(selectedPolityId);
+    // A route target may expand the list, but a later user filter/search must
+    // restore pagination rather than re-expanding to that old target.
+    let keepSelectedInPage = Boolean(selectedPolityId);
+    const openPolityIds = new Set(selectedPolityId ? [selectedPolityId] : []);
+    const details = new Map();
+    let generation = 0;
 
     root.innerHTML = '<section class="polity-browser-shell">' +
       '<header class="polity-browser-summary card">' +
@@ -173,6 +192,8 @@
           '<button type="button" data-polity-filter="orphan">연결 없음</button>' +
           '<button type="button" data-polity-filter="ongoing">현재 활동 포함</button>' +
         '</div>' +
+        '<label>역사권 탐색 <select data-polity-collection aria-label="역사권 탐색"><option value="">전체 정치체</option></select></label>' +
+        '<p data-polity-collection-note></p>' +
         '<span data-polity-count></span>' +
       '</section>' +
       '<div class="polity-browser-list" data-current-polity-list></div>' +
@@ -186,11 +207,22 @@
     const source = root.querySelector("[data-polity-source]");
     const kpis = root.querySelector("[data-polity-kpis]");
     const more = root.querySelector("[data-polity-load-more]");
+    const collectionControl = root.querySelector("[data-polity-collection]");
+    const collectionNote = root.querySelector("[data-polity-collection-note]");
 
     function render() {
       const needle = normalizeText(search?.value || "");
-      const matched = filterRows(live.polities, filter, needle);
-      if (selectedPolityId) {
+      const collections = live.navigation_collections || [];
+      const collection = collections.find(row => row.key === collectionKey);
+      const members = collection ? new Set(collection.polity_ids) : null;
+      const matched = filterRows(members ? live.polities.filter(row => members.has(String(row.id).toLowerCase())) : live.polities, filter, needle);
+      if (collectionControl) {
+        collectionControl.innerHTML = '<option value="">전체 정치체</option>' + collections.map(row => '<option value="' + escapeHtml(row.key) + '">' + escapeHtml(row.label) + '</option>').join("");
+        collectionControl.value = collectionKey;
+      }
+      if (collectionNote) collectionNote.innerHTML = collection ? escapeHtml(collection.description) +
+        (collection.evidence ? ' <a href="' + escapeHtml(collection.evidence.url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(collection.evidence.label) + '</a>' : '') : escapeHtml(collectionNotice);
+      if (selectedPolityId && keepSelectedInPage) {
         const selectedIndex = matched.findIndex((polity) => String(polity?.id || "").toLowerCase() === selectedPolityId);
         if (selectedIndex >= visibleLimit) visibleLimit = selectedIndex + 1;
       }
@@ -203,7 +235,7 @@
       } else if (!matched.length) {
         list.innerHTML = '<section class="card polity-browser-state"><strong>조건에 맞는 현재 정치체가 없습니다.</strong></section>';
       } else {
-        list.innerHTML = shown.map((polity) => polityCardHtml(polity, selectedPolityId)).join("");
+        list.innerHTML = shown.map((polity) => polityCardHtml(polity, openPolityIds.has(String(polity.id).toLowerCase()) ? String(polity.id).toLowerCase() : "", details.get(String(polity.id).toLowerCase()))).join("");
       }
 
       if (kpis) kpis.innerHTML = summaryHtml(live.summary);
@@ -217,13 +249,71 @@
         more.hidden = live.status !== "ready" || shown.length >= matched.length;
         more.textContent = more.hidden ? "더 보기" : "더 보기 (" + (matched.length - shown.length).toLocaleString("ko-KR") + "개 남음)";
       }
+      // A refreshed list may preserve open state for a previously hidden card.
+      // Read only the details actually mounted and expanded on this page.
+      if (live.status === "ready") {
+        for (const card of root.querySelectorAll("details[data-polity-id]")) {
+          if (card.open) void ensureDetail(card.dataset.polityId);
+        }
+      }
+    }
+
+    function syncOpenCards() {
+      for (const card of root.querySelectorAll("[data-polity-id]")) {
+        const id = String(card.dataset.polityId || "").trim().toLowerCase();
+        if (card.open) openPolityIds.add(id);
+        else openPolityIds.delete(id);
+      }
+    }
+
+    function renderDetail(id) {
+      const card = [...root.querySelectorAll("details[data-polity-id]")].find(row => String(row.dataset.polityId || "").toLowerCase() === id);
+      const body = card?.querySelector(".polity-browser-detail");
+      if (!body) return; // A filtered-out dossier keeps its cached state until shown again.
+      const focused = card.ownerDocument?.activeElement;
+      const restoreFocus = focused && body.contains(focused);
+      body.innerHTML = detailHtml(details.get(id));
+      // Retry replaces its button. Keep keyboard navigation at this disclosure,
+      // but never move focus that the user has placed elsewhere while waiting.
+      if (restoreFocus) card.querySelector("summary")?.focus({ preventScroll: true });
+    }
+
+    async function ensureDetail(polityId, { retry = false } = {}) {
+      const id = String(polityId || "").trim().toLowerCase();
+      if (live.status !== "ready" || !openPolityIds.has(id) || !live.polities.some(p => String(p.id).toLowerCase() === id)) return;
+      // Refresh must not fetch every identity the user ever expanded if the
+      // current search/collection hides it. Reappearing open cards are picked
+      // up by render() and fetched once when actually visible.
+      const visibleCard = [...root.querySelectorAll("details[data-polity-id]")].find(row => String(row.dataset.polityId || "").toLowerCase() === id);
+      if (!visibleCard?.open) return;
+      const existing = details.get(id);
+      if (existing && !(retry && existing.status === "error")) return;
+      const currentGeneration = generation;
+      const state = { status: "loading", id };
+      details.set(id, state);
+      renderDetail(id);
+      try {
+        if (typeof READER.readPolity !== "function") throw new Error("POLITY_DETAIL_READER_UNAVAILABLE");
+        const payload = await READER.readPolity(id);
+        if (currentGeneration !== generation || details.get(id) !== state) return;
+        if (String(payload?.polity?.id || "").toLowerCase() !== id) throw new Error("POLITY_DETAIL_ID_MISMATCH");
+        details.set(id, { status: "ready", polity: payload.polity });
+      } catch (error) {
+        if (currentGeneration !== generation || details.get(id) !== state) return;
+        details.set(id, { status: "error", id });
+      }
+      // Update only this body: preserve native disclosure/focus and sibling DOM.
+      renderDetail(id);
     }
 
     function revealSelected({ scroll = true } = {}) {
       if (!selectedPolityId || live.status !== "ready") return false;
       const index = live.polities.findIndex((polity) => String(polity?.id || "").toLowerCase() === selectedPolityId);
       if (index < 0) return false;
+      pendingSelectionReveal = false;
       filter = "all";
+      collectionKey = "";
+      collectionNotice = "";
       if (search) search.value = "";
       root.querySelectorAll("[data-polity-filter]").forEach((button) => {
         button.classList.toggle("is-active", button.dataset.polityFilter === "all");
@@ -242,7 +332,11 @@
       const id = String(polityId || "").trim().toLowerCase();
       if (!id) return false;
       selectedPolityId = id;
+      keepSelectedInPage = true;
+      pendingSelectionReveal = true;
+      openPolityIds.add(id);
       const revealed = revealSelected({ scroll });
+      ensureDetail(id);
       if (updateRoute) {
         window.dispatchEvent(new CustomEvent("atlas-polity-selected", { detail:{ polityId:id } }));
       }
@@ -252,37 +346,76 @@
     function clearSelection() {
       if (!selectedPolityId) return false;
       selectedPolityId = "";
+      keepSelectedInPage = false;
+      pendingSelectionReveal = false;
+      openPolityIds.clear();
       render();
       return true;
     }
 
     async function refresh() {
+      syncOpenCards();
+      const currentGeneration = ++generation;
+      details.clear();
       live = { status: "loading", source: null, summary: null, polities: [], error: null };
       visibleLimit = PAGE_SIZE;
       render();
       try {
         const payload = await READER.listPolities();
+        if (currentGeneration !== generation) return;
         live = {
           status: "ready",
           source: payload.source || null,
           summary: payload.summary || null,
+          navigation_collections: Array.isArray(payload.navigation_collections) ? payload.navigation_collections : [],
           polities: Array.isArray(payload.polities) ? payload.polities.slice() : [],
           error: null
         };
+        if (collectionKey && !live.navigation_collections.some(row => row.key === collectionKey)) {
+          collectionKey = ""; collectionNotice = "선택한 탐색 범위가 현재 목록에 없어 전체 정치체로 돌아왔습니다.";
+        }
       } catch (error) {
+        if (currentGeneration !== generation) return;
         live = { status: "error", source: null, summary: null, polities: [], error };
       }
       render();
-      if (selectedPolityId) revealSelected({ scroll:false });
+      if (pendingSelectionReveal) revealSelected({ scroll:false });
+      for (const id of openPolityIds) ensureDetail(id);
     }
+
+    root.addEventListener("toggle", (event) => {
+      const card = event.target;
+      if (!card?.matches?.("details[data-polity-id]")) return;
+      const id = String(card.dataset.polityId || "").trim().toLowerCase();
+      if (card.open) {
+        openPolityIds.add(id);
+        ensureDetail(id);
+      } else openPolityIds.delete(id);
+    }, true);
+
+    root.addEventListener("change", (event) => {
+      if (!event.target.matches("[data-polity-collection]")) return;
+      const key = String(collectionControl?.value || "");
+      if (key && !(live.navigation_collections || []).some(row => row.key === key)) return;
+      pendingSelectionReveal = false;
+      syncOpenCards(); collectionKey = key; collectionNotice = ""; selectedPolityId = ""; keepSelectedInPage = false; visibleLimit = PAGE_SIZE; render();
+    });
 
     root.addEventListener("input", (event) => {
       if (!event.target.matches("[data-polity-search]")) return;
+      pendingSelectionReveal = false;
+      keepSelectedInPage = false;
       visibleLimit = PAGE_SIZE;
+      syncOpenCards();
       render();
     });
 
     root.addEventListener("click", (event) => {
+      const retryButton = event.target.closest("[data-polity-detail-retry]");
+      if (retryButton) {
+        ensureDetail(retryButton.dataset.polityDetailRetry, { retry: true });
+        return;
+      }
       const personButton = event.target.closest("[data-polity-person-id]");
       if (personButton) {
         const personId = String(personButton.dataset.polityPersonId || "").trim().toLowerCase();
@@ -296,6 +429,7 @@
         const id = String(summaryCard.dataset.polityId || "").trim().toLowerCase();
         if (id) {
           selectedPolityId = id;
+          keepSelectedInPage = true;
           window.dispatchEvent(new CustomEvent("atlas-polity-selected", { detail:{ polityId:id } }));
         }
       }
@@ -308,6 +442,9 @@
 
       const filterButton = event.target.closest("[data-polity-filter]");
       if (filterButton) {
+        pendingSelectionReveal = false;
+        keepSelectedInPage = false;
+        syncOpenCards();
         filter = filterButton.dataset.polityFilter || "all";
         visibleLimit = PAGE_SIZE;
         root.querySelectorAll("[data-polity-filter]").forEach((button) => button.classList.toggle("is-active", button === filterButton));
@@ -316,6 +453,7 @@
       }
 
       if (event.target.closest("[data-polity-load-more]")) {
+        syncOpenCards();
         visibleLimit += PAGE_SIZE;
         render();
       }

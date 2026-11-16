@@ -96,3 +96,37 @@ test("Polity dossier renderer exposes exact Person deep-link targets and explici
   assert.match(html,/2 활동/);
   assert.doesNotMatch(html,/fetch\s*\(|XMLHttpRequest|\/api\//);
 });
+
+test("Polity reader and dossier preserve Activity date precision, uncertainty and calendar",()=>{
+  const reader=require("../server/atlas-polity-read-service.js");
+  const raw={
+    id:"a1",person_id:PERSON_A,person_name_ko:"인물 A",
+    activity_start:-44,activity_end:14,
+    activity_start_month:3,activity_start_day:15,
+    activity_start_granularity:"day",activity_start_certainty:"uncertain",activity_start_calendar:"julian",
+    activity_end_granularity:"year",activity_end_certainty:"approximate",activity_end_calendar:"gregorian"
+  };
+  const before=JSON.stringify(raw);
+  const activity=reader.normalizeActivities([raw])[0];
+  for(const side of ["start","end"]) for(const field of ["month","day","granularity","certainty","calendar"]){
+    const key=`activity_${side}_${field}`;
+    assert.equal(activity[key],raw[key]??null,key);
+    assert.ok(reader.POLITY_SELECT_SQL.includes(`'${key}', pp.${key}`),key);
+  }
+  const cases=[
+    [activity,"기원전 44 3월 15일? (율리우스력)–약 14"],
+    [{...activity,activity_start_granularity:"month"},"기원전 44 3월? (율리우스력)–약 14"],
+    [{...activity,activity_start_granularity:"year"},"기원전 44? (율리우스력)–약 14"],
+    [{activity_start:1900,activity_end:null},"1900–종료 미상"],
+    [{activity_start:null,chronology_status:"ongoing"},"시작 미상–현재"],
+    [{activity_start:1900,activity_end:1901,activity_start_calendar:"unknown_calendar"},"1900 (달력 확인 필요)–1901"]
+  ];
+  for(const [value,expected] of cases) assert.equal(dossier.activitySpan(value),expected);
+  const polity={...polityFixture(),activities:[activity]};
+  const html=dossier.createRenderer({
+    escapeHtml:value=>String(value??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;")
+  }).dossierHtml(polity);
+  assert.ok(html.includes(cases[0][1]),"actual Activity row renders preserved temporal evidence");
+  assert.equal(dossier.dossierForPolity(polity).people[0].activities[0].id,raw.id);
+  assert.equal(JSON.stringify(raw),before);
+});

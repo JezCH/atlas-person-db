@@ -17,6 +17,195 @@ const OBJECT_ID = '3a29a08a-d111-50d5-916f-f5c11b5eabaf';
 const TYPE_ID = '375da950-65bc-5b81-a338-6c705f515120';
 const SOURCE_ID = '41cb0494-17f0-4196-bdae-4ca0c1eeb4e6';
 
+function explicitActivityBundle(id = SUBJECT_ID) {
+  return {
+    activity: engine.normalizeActivity({
+      id, person_id: OBJECT_ID, polity_id: null, relation_type_id: TYPE_ID,
+      role_id: null, period_basis_id: SOURCE_ID,
+      activity_start: 1900, activity_end: 1901
+    }, 'TEST'),
+    normalized_source_links: [{ person_politics_id: id, source_id: SOURCE_ID, source_locator_key: 'reviewed fixture locator' }],
+    chronology_claims: [],
+    relationship_descriptions: []
+  };
+}
+
+const THIRD_ACTIVITY_ID = '10000000-0000-4000-8000-000000000007';
+const FOURTH_ACTIVITY_ID = '10000000-0000-4000-8000-000000000008';
+
+function splitFixture(activityId, newId) {
+  return {
+    type: 'split_activity', activity_id: activityId,
+    exact_before: explicitActivityBundle(activityId),
+    survivor_fragment: explicitActivityBundle(activityId),
+    new_fragments: [explicitActivityBundle(newId)],
+    gap_overlap_policy: 'reviewed test partition'
+  };
+}
+
+function targetFixture(type, activityId) {
+  if (type === 'split_activity') return splitFixture(activityId, FOURTH_ACTIVITY_ID);
+  if (type === 'retire_activity') {
+    return {
+      type, activity_id: activityId, exact_before: explicitActivityBundle(activityId),
+      replacement_survivors: [{ activity_id: THIRD_ACTIVITY_ID, exact_before: explicitActivityBundle(THIRD_ACTIVITY_ID), exact_after: explicitActivityBundle(THIRD_ACTIVITY_ID) }],
+      source_transfer_policy: require('../server/atlas-correction-v2-manifest-synthesizer.js').RETIRE_SOURCE_TRANSFER_POLICY,
+      silent_source_drop_forbidden: true
+    };
+  }
+  return { type, activity_id: activityId, exact_before: explicitActivityBundle(activityId), exact_after: explicitActivityBundle(activityId) };
+}
+
+function signedActivityManifest(operations) {
+  const core = {
+    schema: engine.MANIFEST_V2, request_id: 'test-order-independent-activity-identities',
+    review_status: 'approved', exact_live_snapshot_digest: `sha256:${'a'.repeat(64)}`, operations
+  };
+  return { ...core, manifest_sha256: sha256(core), production_executable: true };
+}
+
+function retireWithDistinctSurvivorSources() {
+  const operation = targetFixture('retire_activity', SUBJECT_ID);
+  const survivor = operation.replacement_survivors[0];
+  survivor.exact_before.normalized_source_links[0].source_id = FOURTH_ACTIVITY_ID;
+  survivor.exact_before.normalized_source_links[0].source_locator_key = 'survivor original locator';
+  survivor.exact_after = structuredClone(survivor.exact_before);
+  survivor.exact_after.normalized_source_links.push({
+    ...operation.exact_before.normalized_source_links[0], person_politics_id: survivor.activity_id
+  });
+  return operation;
+}
+
+test('retire transfer preserves the receiving Activity own Source and locator', () => {
+  for (const mutation of ['drop', 'change_locator']) {
+    const operation = retireWithDistinctSurvivorSources();
+    const links = operation.replacement_survivors[0].exact_after.normalized_source_links;
+    if (mutation === 'drop') links.shift();
+    else links[0].source_locator_key = 'unreviewed replacement locator';
+    const manifest = signedActivityManifest([operation]);
+    const original = JSON.stringify(manifest);
+    assert.throws(() => engine.requireV2Manifest(manifest), /REPLACEMENT_SOURCE_DRIFT/, mutation);
+    assert.equal(JSON.stringify(manifest), original);
+  }
+});
+
+test('retire survivor source loss rejects before database access in dry-run and apply', async () => {
+  let queries = 0;
+  const service = engine.createCorrectionManifestV2Service({ client: { async query() {
+    queries++; throw Error('database must not be reached');
+  } } });
+  for (const mutation of ['drop', 'change_locator']) {
+    const operation = retireWithDistinctSurvivorSources();
+    const links = operation.replacement_survivors[0].exact_after.normalized_source_links;
+    if (mutation === 'drop') links.shift();
+    else links[0].source_locator_key = 'unreviewed replacement locator';
+    for (const dryRun of [true, false]) {
+      await assert.rejects(service.execute(signedActivityManifest([operation]), { dryRun }), /REPLACEMENT_SOURCE_DRIFT/);
+    }
+  }
+  assert.equal(queries, 0);
+});
+
+test('retire transfer accepts preserved source union and already-shared source without mutating input', () => {
+  for (const operation of [retireWithDistinctSurvivorSources(), targetFixture('retire_activity', SUBJECT_ID)]) {
+    const manifest = signedActivityManifest([operation]);
+    const original = JSON.stringify(manifest);
+    const normalized = engine.requireV2Manifest(manifest);
+    const survivor = normalized.operations[0].replacement_survivors[0];
+    assert.equal(JSON.stringify(manifest), original);
+    assert.deepEqual(survivor.exact_after.normalized_source_links.map(row => [row.source_id, row.source_locator_key]).sort(),
+      operation.replacement_survivors[0].exact_after.normalized_source_links.map(row => [row.source_id, row.source_locator_key]).sort());
+    assert.equal(engine.expectedCountDeltas(normalized.operations).activity_sources,
+      operation.replacement_survivors[0].exact_after.normalized_source_links.length - 2);
+  }
+});
+
+test('split new IDs cannot also be existing mutation targets in either operation order', () => {
+  for (const type of ['rewrite_activity', 'split_activity', 'retire_activity']) {
+    const pair = [splitFixture(SUBJECT_ID, RELATION_ID), targetFixture(type, RELATION_ID)];
+    for (const operations of [pair, pair.toReversed()]) {
+      const manifest = signedActivityManifest(operations);
+      const before = JSON.stringify(manifest);
+      assert.throws(() => engine.requireV2Manifest(manifest), { message: 'CORRECTION_V2_NEW_ACTIVITY_ID_REUSED' }, type);
+      assert.equal(JSON.stringify(manifest), before);
+    }
+  }
+});
+
+test('cross-operation split identity collisions reject before transaction in dry-run and apply', async () => {
+  let queries = 0;
+  const service = engine.createCorrectionManifestV2Service({ client: { async query() { queries++; throw Error('database must not be reached'); } } });
+  for (const type of ['rewrite_activity', 'split_activity', 'retire_activity']) {
+    const pair = [splitFixture(SUBJECT_ID, RELATION_ID), targetFixture(type, RELATION_ID)];
+    for (const operations of [pair, pair.toReversed()]) {
+      for (const dryRun of [true, false]) {
+        await assert.rejects(service.execute(signedActivityManifest(operations), { dryRun }), { message: 'CORRECTION_V2_NEW_ACTIVITY_ID_REUSED' });
+      }
+    }
+  }
+  assert.equal(queries, 0);
+});
+
+test('disjoint split and rewrite remain valid in either order without altering source or input bundles', () => {
+  const pair = [splitFixture(SUBJECT_ID, RELATION_ID), targetFixture('rewrite_activity', THIRD_ACTIVITY_ID)];
+  for (const operations of [pair, pair.toReversed()]) {
+    const manifest = signedActivityManifest(operations);
+    const before = JSON.stringify(manifest);
+    const normalized = engine.requireV2Manifest(manifest);
+    assert.equal(normalized.operations.length, 2);
+    const split = normalized.operations.find(operation => operation.type === 'split_activity');
+    assert.deepEqual(split.exact_before.normalized_source_links, operations.find(operation => operation.type === 'split_activity').exact_before.normalized_source_links);
+    assert.equal(split.new_fragments[0].normalized_source_links[0].source_id, SOURCE_ID);
+    assert.equal(JSON.stringify(manifest), before);
+    assert.deepEqual(engine.expectedCountDeltas(normalized.operations), { activities: 1, activity_sources: 1, chronology_claims: 0, relationship_descriptions: 0, polity_relations: 0, polity_relation_sources: 0 });
+  }
+});
+
+test('rewrite requires explicit child inventories on both before and after bundles', () => {
+  const bundle = explicitActivityBundle();
+  const operation = { type: 'rewrite_activity', activity_id: SUBJECT_ID, exact_before: bundle, exact_after: structuredClone(bundle) };
+  const original = structuredClone(operation);
+  for (const side of ['exact_before', 'exact_after']) {
+    for (const key of ['normalized_source_links', 'chronology_claims', 'relationship_descriptions']) {
+      for (const value of [undefined, null, {}, '', false]) {
+        const altered = structuredClone(operation);
+        if (value === undefined) delete altered[side][key];
+        else altered[side][key] = value;
+        assert.throws(() => engine.normalizeOperation(altered, 0), /EXPLICIT_ARRAY_REQUIRED/, `${side}.${key} must be known, even when empty`);
+      }
+    }
+  }
+  const normalized = engine.normalizeOperation(operation, 0);
+  assert.deepEqual(normalized.exact_before.normalized_source_links, bundle.normalized_source_links);
+  assert.deepEqual(normalized.exact_after, normalized.exact_before);
+  assert.deepEqual(operation, original);
+});
+
+test('split requires explicit inventories for original, survivor and every new fragment', () => {
+  const bundle = explicitActivityBundle();
+  const operation = {
+    type: 'split_activity', activity_id: SUBJECT_ID,
+    exact_before: bundle, survivor_fragment: structuredClone(bundle),
+    new_fragments: [explicitActivityBundle(RELATION_ID)],
+    gap_overlap_policy: 'reviewed test partition'
+  };
+  for (const side of ['exact_before', 'survivor_fragment', 'new_fragments']) {
+    for (const key of ['normalized_source_links', 'chronology_claims', 'relationship_descriptions']) {
+      for (const value of [undefined, null, {}, '', false]) {
+        const altered = structuredClone(operation);
+        const target = side === 'new_fragments' ? altered.new_fragments[0] : altered[side];
+        if (value === undefined) delete target[key];
+        else target[key] = value;
+        assert.throws(() => engine.normalizeOperation(altered, 0), /EXPLICIT_ARRAY_REQUIRED/);
+      }
+    }
+  }
+  const normalized = engine.normalizeOperation(operation, 0);
+  assert.equal(normalized.new_fragments.length, 1);
+  assert.equal(normalized.new_fragments[0].normalized_source_links[0].source_id, SOURCE_ID);
+  assert.equal(normalized.new_fragments[0].activity.legacy_source_key, null);
+});
+
 function manifestWithRelation() {
   const core = {
     schema: engine.MANIFEST_V2,
@@ -142,3 +331,4 @@ test('Correction v2 accepts a reviewed rewrite from legacy null polity to a cano
   assert.equal(after.polity_id, '10000000-0000-4000-8000-000000000005');
   assert.equal(after.relation_type_id, '10000000-0000-4000-8000-000000000006');
 });
+
