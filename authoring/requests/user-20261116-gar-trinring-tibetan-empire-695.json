@@ -1,0 +1,73 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261116:gar-trinring:tibetan-empire:military-695:v1",
+  "person": {
+    "canonical_name_en": "Gar Trinring Tsendro",
+    "display_name_ko": "가르친링",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-16",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "military",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Tibetan Empire",
+    "display_name_ko": "티베트 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "9639b3f0-9b94-42d3-98b9-273c7a601def"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "role": "General",
+    "role_display_name_ko": "장군",
+    "period_basis": "military_activity",
+    "start_year": 695,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 695,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Old Tibetan Annals record mGar Khri 'bring btsan brod defeating a Tang army led by Wang Zhangshao in 'A zha in 695. This is a source-verified representative military activity point, NOT the whole span of his command or his separate office as chief minister. Also known as Lun Qinling (論欽陵)."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Prosopography of the Tibetan Empire — mGar Khri 'bring btsan brod",
+      "canonical_url": "https://tibetanempire.blogspot.com/2017/04/mgar-khri-bring-btsan-brod.html",
+      "citation_text": "Review of the Old Tibetan Annals PT 1288 and PT 1287 documents the 695 campaign and 698–699 downfall."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-16",
+      "document_title": "가르친링",
+      "url": "https://namu.wiki/w/%EA%B0%80%EB%A5%B4%EC%B9%9C%EB%A7%81"
+    }
+  },
+  "review_context": {
+    "selection": "user_requested_registration_2026-11-16",
+    "prior_candidate_id": null,
+    "aliases": [
+      "mGar Khri 'bring btsan brod",
+      "論欽陵",
+      "Lun Qinling",
+      "가르 친링 첸드로"
+    ],
+    "namuwiki_review_method": "exact document title verified in indexed NamuWiki mirror",
+    "namuwiki_review_evidence": "https://seore.org/w/%EA%B0%80%EB%A5%B4%EC%B9%9C%EB%A7%81",
+    "registration_state": "CURRENT_PRODUCTION_PROTECTED_PREFLIGHT_REQUIRED",
+    "production_screen": "2026-11-17 (KST) production read-only identity projection of 2,152 Person rows: no exact/normalized alias or >=7-letter substring match for reviewed aliases; not authoritative proof of absence. Production Polity list uniquely resolves the desired exact canonical English identity, official Korean preferred label, type, historicity and UUID. Canonical GitHub OIDC preflight_batch is still mandatory before any apply.",
+    "apply_gate": "HOLD: DO NOT MERGE/APPLY until bounded protected Production preflight_batch verifies exact Person/alias/Activity/Role/Source identity; reuse existing Person if found. Do not create new Polity. Preserve historical Source, Activity, immutable request_id, and prior registration_candidate_id."
+  }
+}
