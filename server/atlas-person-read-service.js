@@ -60,9 +60,9 @@ select
     from atlas_v2.person_external_references per
     where per.person_id = p.id
   ), '{}'::jsonb) as external_references,
-  (select count(*)::int from atlas_v2.runtime_person_politics_v1 pp where pp.person_id = p.id) as activity_count,
-  (select min(pp.activity_start) from atlas_v2.runtime_person_politics_v1 pp where pp.person_id = p.id) as first_activity_year,
-  (select max(pp.activity_end) from atlas_v2.runtime_person_politics_v1 pp where pp.person_id = p.id) as last_activity_year
+  (select count(*)::int from atlas_v2.person_politics_v2 pp where pp.person_id = p.id) as activity_count,
+  (select min(pp.activity_start) from atlas_v2.person_politics_v2 pp where pp.person_id = p.id) as first_activity_year,
+  (select max(pp.activity_end) from atlas_v2.person_politics_v2 pp where pp.person_id = p.id) as last_activity_year
 from atlas_v2.persons p
 order by p.id
 `;
