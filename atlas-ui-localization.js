@@ -49,6 +49,10 @@
     }),
     chronology: Object.freeze({
       exact_as_recorded: null,
+      reviewed: "연대 검토 완료",
+      ongoing: "진행 중",
+      unresolved: "연대 미확정",
+      chronology_unresolved: "연대 미확정",
       reviewed_stage2_traditional_disputed: "연대 논쟁 있음",
       disputed: "연대 논쟁 있음",
       approximate: "연대 근사",
@@ -58,6 +62,9 @@
     confidence: Object.freeze({
       legacy_asserted: null,
       well_established: "근거 확립",
+      likely: "개연성 높음",
+      speculative: "가설·추정 수준",
+      disputed: "근거 논쟁 중",
       high: "신뢰도 높음",
       medium: "신뢰도 보통",
       low: "신뢰도 낮음",
