@@ -8,6 +8,7 @@
  * re-preflights and writes READY-only, then triggers Runtime publication.
  */
 import fs from 'node:fs';
+import { isDeepStrictEqual } from 'node:util';
 import {
   MANIFEST_RE, SELECTOR_FILE, WRITER_WORKFLOW,
   githubApi, githubContent, readPreflightArtifact
@@ -77,7 +78,40 @@ export function approvedBatchSelectorPaths(selector) {
   return new Set(paths).size === paths.length ? paths : null;
 }
 
-export function assessApprovedBatchPreflightHandoff({ run, selector, manifests, evidence, changedPaths }) {
+// Selected62 requests predate the user-* naming convention. Their ledger IDs
+// must not be renamed. Bind them to the original, immutable approved intake.
+const SELECTED62_SOURCE_SHA = 'b75cecab893b342fa91c11eaef170b956c1c0cbf';
+const SELECTED62_PATH = /^authoring\/requests\/selected62-remaining30-20261018-([a-z0-9][a-z0-9-]*)\.json$/;
+
+function selected62RequestMatchesPath(path, manifest) {
+  const match = SELECTED62_PATH.exec(path || '');
+  return Boolean(match && manifest?.request_id ===
+    'authoring:selected62-remaining30-20261018:' + match[1] + ':representative:v1' &&
+    manifest.review_context?.source_draft_pr === 2549);
+}
+
+export function hasReviewedBatchRequestIdentity(path, manifest, original) {
+  if (/^authoring:user-/.test(manifest?.request_id || '')) return true;
+  if (!selected62RequestMatchesPath(path, manifest) || !original ||
+      original.schema !== 'atlas-human-authoring/v1' || original.review_status !== 'approved' ||
+      original.request_id !== manifest.request_id ||
+      !/^#2545 approved 62, remaining 30\b/.test(original.review_context?.task || '')) return false;
+
+  // Compare every historical field, not just name/ID. Only verification
+  // metadata and a separately verified existing Polity identity may differ.
+  const { review_context: currentReview, polity: currentPolity, ...currentHistory } = manifest;
+  const { review_context: originalReview, polity: originalPolity, ...originalHistory } = original;
+  const { existing_id: currentId, canonical_name_en: currentName, ...currentRest } = currentPolity || {};
+  const { existing_id: originalId, canonical_name_en: originalName, ...originalRest } = originalPolity || {};
+  const polityNameMatches = currentName === originalName ||
+    (originalName === 'United States of America' && currentName === 'United States' &&
+      currentId === '7d09bc56-1ea0-515e-a3e7-9863361b6f15');
+  return isDeepStrictEqual(currentHistory, originalHistory) &&
+    isDeepStrictEqual(currentRest, originalRest) && polityNameMatches &&
+    (!originalId || originalId === currentId) && UUID_RE.test(currentId || '');
+}
+
+export function assessApprovedBatchPreflightHandoff({ run, selector, manifests, evidence, changedPaths, originalManifests = {} }) {
   const stop = (reason) => ({ ok: false, reason });
   if (run?.name !== 'ATLAS Authoring Apply' || run.event !== 'push' ||
       run.head_branch !== 'main' || run.status !== 'completed' ||
@@ -94,10 +128,10 @@ export function assessApprovedBatchPreflightHandoff({ run, selector, manifests, 
     return stop('BATCH_MANIFEST_COUNT_MISMATCH');
   }
   const ids = new Set();
-  for (const manifest of manifests) {
+  for (const [i, manifest] of manifests.entries()) {
     if (manifest?.schema !== 'atlas-human-authoring/v1' ||
         manifest.review_status !== 'approved' ||
-        !/^authoring:user-/.test(manifest.request_id || '') ||
+        !hasReviewedBatchRequestIdentity(paths[i], manifest, originalManifests[paths[i]]) ||
         manifest.person?.life_status !== 'deceased' ||
         manifest.person?.representative_domain_reviewed !== true ||
         !manifest.person?.canonical_name_en ||
@@ -167,13 +201,22 @@ export async function continueApprovedPreflight({ event, api = githubApi, conten
     console.log('SKIP: at least one Person lacks explicit reviewed event continuation');
     return;
   }
+  const originalManifests = {};
+  if (batch) {
+    for (const [i, manifest] of manifests.entries()) {
+      if (selected62RequestMatchesPath(paths[i], manifest)) {
+        const original = await content(REPO, paths[i], SELECTED62_SOURCE_SHA);
+        originalManifests[paths[i]] = JSON.parse(original.text);
+      }
+    }
+  }
   const evidence = await evidenceReader(REPO, producer.id, producer.head_sha);
   const approval = single
     ? assessApprovedPreflightHandoff({
         run: producer, selector: sourceSelector.text, manifest: manifests[0], evidence, changedPaths
       })
     : assessApprovedBatchPreflightHandoff({
-        run: producer, selector: sourceSelector.text, manifests, evidence, changedPaths
+        run: producer, selector: sourceSelector.text, manifests, evidence, changedPaths, originalManifests
       });
   if (!approval.ok) throw new Error('REFUSED_' + approval.reason);
 
