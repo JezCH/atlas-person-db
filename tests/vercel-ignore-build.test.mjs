@@ -352,3 +352,22 @@ test("unusual literal whitespace is not an approved direct-helper path",()=>{
     assert.equal(shouldBuildForChangedPaths([name]),true,name);
   }
 });
+
+test("SOURCE2478 offline-only audit and exact gate update never rebuild a runtime app", () => {
+  const offline = [
+    "scripts/atlas-source-url-semantic-audit.mjs",
+    "tests/atlas-source-url-semantic-audit.test.mjs",
+    "docs/audits/SOURCE2478_FULL_URL_SEMANTIC_REVIEW_20261117.md"
+  ];
+  assert.equal(isAgentCapabilityOnly(offline), true);
+  assert.equal(shouldBuildForChangedPaths(offline), false);
+  assert.equal(isAgentCapabilityOnly([...offline, "scripts/vercel-ignore-build.mjs"]), true);
+  assert.equal(shouldBuildForChangedPaths([...offline, "scripts/vercel-ignore-build.mjs", "tests/vercel-ignore-build.test.mjs"]), false);
+
+  // A gate-only change, a new unknown executable, or a mixed runtime edit must BUILD.
+  assert.equal(shouldBuildForChangedPaths(["scripts/vercel-ignore-build.mjs"]), true);
+  assert.equal(shouldBuildForChangedPaths([...offline, "scripts/unknown-research-cli.mjs"]), true);
+  assert.equal(shouldBuildForChangedPaths([...offline, "server/atlas-read-http.js"]), true);
+  assert.equal(shouldBuildForChangedPaths([...offline, "index.html"]), true);
+  assert.equal(shouldBuildForChangedPaths([...offline, "vercel.json"]), true);
+});

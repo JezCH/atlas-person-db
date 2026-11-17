@@ -57,6 +57,9 @@ test('incomplete Source or reference graph fails closed rather than inventing a 
   const drift=fixture();
   drift.raw.sources[1].id='s1';
   assert.throws(()=>auditSharedSourceUrls(drift),/INVALID_SOURCE_ID/);
+  const duplicateKey=fixture();
+  duplicateKey.raw.sources[1].source_key=duplicateKey.raw.sources[0].source_key;
+  assert.throws(()=>auditSharedSourceUrls(duplicateKey),/DUPLICATE_SOURCE_KEY/);
   const dangling=fixture();
   dangling.raw.activity_sources[0].source_id='missing';
   assert.throws(()=>auditSharedSourceUrls(dangling),/DANGLING_SOURCE/);

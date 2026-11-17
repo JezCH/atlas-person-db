@@ -19,11 +19,13 @@ export function auditSharedSourceUrls(snapshot) {
       !ROUTES.every(([name]) => Array.isArray(raw[name]))) {
     throw new Error('SOURCE_URL_AUDIT_INCOMPLETE_SNAPSHOT');
   }
-  const byId = new Map(), byUrl = new Map(), references = new Map();
+  const byId = new Map(), byUrl = new Map(), references = new Map(), sourceKeys = new Set();
   for (const source of raw.sources) {
     if (!source || typeof source.id !== 'string' || !source.id ||
         typeof source.source_key !== 'string' || !source.source_key ||
         byId.has(source.id)) throw new Error('SOURCE_URL_AUDIT_INVALID_SOURCE_ID');
+    if (sourceKeys.has(source.source_key)) throw new Error('SOURCE_URL_AUDIT_DUPLICATE_SOURCE_KEY');
+    sourceKeys.add(source.source_key);
     byId.set(source.id, source);
     references.set(source.id, []);
     const url = source.canonical_url;
