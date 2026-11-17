@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-youtube39-20261023:rudyard-kipling:representative:v1",
+  "person": {
+    "canonical_name_en": "Rudyard Kipling",
+    "display_name_ko": "러디어드 키플링",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-23",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "United Kingdom of Great Britain and Ireland",
+    "display_name_ko": "그레이트브리튼 아일랜드 연합왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Novelist, The Jungle Book",
+    "role_display_name_ko": "《정글 북》 집필 작가",
+    "start_year": 1894,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1894,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Library of Congress records 1894 London and New York edition. Fictional Mowgli must not become an historical Person."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Historical reference — Rudyard Kipling",
+      "canonical_url": "https://www.loc.gov/item/50042653/",
+      "citation_text": "Library of Congress records 1894 London and New York edition. Fictional Mowgli must not become an historical Person."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-23",
+      "document_title": "러디어드 키플링",
+      "url": "https://namu.wiki/w/%EB%9F%AC%EB%94%94%EC%96%B4%EB%93%9C%20%ED%82%A4%ED%94%8C%EB%A7%81"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Identity/alias, specific historical Polity/Place, source and NamuWiki-title canonical readback required before final apply. This is an offline pre-Production reviewed authoring draft; no auto-write or invented coordinates."
+  }
+}

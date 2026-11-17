@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-youtube48-20261023:edward-viii-emperor-india:v1",
+  "person": {
+    "canonical_name_en": "Edward VIII",
+    "display_name_ko": "에드워드 8세",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-23",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "British Raj",
+    "display_name_ko": "영국령 인도",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor of India as a British monarch (formal imperial title)",
+    "role_display_name_ko": "인도 황제 칭호(영국 군주 겸임)",
+    "start_year": 1936,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1936,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "His signed December 10, 1936 abdication instrument explicitly titles him Emperor of India. Crown title from Jan 20 to Dec 11, 1936 is formally distinct from the UK kingship. This is a juridical imperial title, not direct personal governance of Indian institutions. British Raj precise Polity must be reviewed and no duplication of UK title Activity allowed."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "UK National Archives — Edward VIII Instrument of Abdication",
+      "canonical_url": "https://www.nationalarchives.gov.uk/education/resources/significant-events/abdication-of-edward-viii-1936/",
+      "citation_text": "His signed December 10, 1936 abdication instrument explicitly titles him Emperor of India. Crown title from Jan 20 to Dec 11, 1936 is formally distinct from the UK kingship. This is a juridical imperial title, not direct personal governance of Indian institutions. British Raj precise Polity must be reviewed and no duplication of UK title Activity allowed."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-23",
+      "document_title": "에드워드 8세",
+      "url": "https://namu.wiki/w/%EC%97%90%EB%93%9C%EC%9B%8C%EB%93%9C%208%EC%84%B8"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "HISTORICAL_POLITY_IDENTITY_AND_EXISTING_PERSON_ACTIVITY_PREFLIGHT_REQUIRED; no automatic duplicate/create. Exact Crown relation semantics and year-granularity chronology must pass canonical Authoring resolver."
+  }
+}

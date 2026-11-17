@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-youtube39-20261023:andy-warhol:representative:v1",
+  "person": {
+    "canonical_name_en": "Andy Warhol",
+    "display_name_ko": "앤디 워홀",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-23",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Pop artist, Campbell's Soup Cans",
+    "role_display_name_ko": "《캠벨 수프 캔》 창작·팝아트 화가",
+    "start_year": 1962,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1962,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Museum of Modern Art confirms 1962 exhibition of 32 Campbell's Soup Cans. Point illustrates a particular work, not whole artistic activity."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Historical reference — Andy Warhol",
+      "canonical_url": "https://www.moma.org/collection/works/79809",
+      "citation_text": "Museum of Modern Art confirms 1962 exhibition of 32 Campbell's Soup Cans. Point illustrates a particular work, not whole artistic activity."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-23",
+      "document_title": "앤디 워홀",
+      "url": "https://namu.wiki/w/%EC%95%A4%EB%94%94%20%EC%9B%8C%ED%99%80"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Identity/alias, specific historical Polity/Place, source and NamuWiki-title canonical readback required before final apply. This is an offline pre-Production reviewed authoring draft; no auto-write or invented coordinates."
+  }
+}

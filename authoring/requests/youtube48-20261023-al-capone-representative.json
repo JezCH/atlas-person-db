@@ -1,0 +1,71 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-youtube48-20261023:al-capone:representative:v1",
+  "person": {
+    "canonical_name_en": "Al Capone",
+    "display_name_ko": "알 카포네",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-23",
+    "life_status_basis": "documented_death",
+    "representative_domain": "commerce",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "term",
+    "role": "Chicago organized-crime syndicate leader during Prohibition",
+    "role_display_name_ko": "금주법 시대 시카고 범죄조직 지휘자",
+    "start_year": 1925,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1931,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "FBI dates Capone's takeover from Johnny Torrio to 1925 and his federal tax-evasion conviction to October 1931. 1925–1931 is the historic underworld leadership period, not rule over a US state or a claim that FBI originated from Capone; do not blur criminal syndicate with a sovereign Polity. Commerce is the closest existing Domain v2 for organized illicit bootlegging/financial operations and denotes no legitimacy. Alias Alphonse Gabriel Capone/Scarface are one Person."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "FBI — Al Capone",
+      "canonical_url": "https://www.fbi.gov/history/cases-and-criminals/al-capone",
+      "citation_text": "FBI dates Capone's takeover from Johnny Torrio to 1925 and his federal tax-evasion conviction to October 1931. 1925–1931 is the historic underworld leadership period, not rule over a US state or a claim that FBI originated from Capone; do not blur criminal syndicate with a sovereign Polity. Commerce is the closest existing Domain v2 for organized illicit bootlegging/financial operations and denotes no legitimacy. Alias Alphonse Gabriel Capone/Scarface are one Person."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-23",
+      "document_title": "알 카포네",
+      "url": "https://namu.wiki/w/%EC%95%8C%20%EC%B9%B4%ED%8F%AC%EB%84%A4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Cohort authorization covers candidate inclusion only. Current canonical full Person aliases, Polity UUID, exact Activity equivalence, role, NamuWiki current-state and place must be checked by governed Human Authoring preflight_batch before irreversible commit; no fabricated UUID or coordinates."
+  },
+  "review_context": {
+    "identity_aliases": [
+      "Alphonse Gabriel Capone",
+      "Alphonse Capone",
+      "Scarface"
+    ],
+    "cohort": "YOUTUBE48-20261023",
+    "sources_first": true,
+    "production_readback_verified": false
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-youtube48-20261023:jack-london:representative:v1",
+  "person": {
+    "canonical_name_en": "Jack London",
+    "display_name_ko": "잭 런던",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-23",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Novelist, author of The Call of the Wild",
+    "role_display_name_ko": "소설 《야성의 부름》 저자",
+    "start_year": 1903,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1903,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Library of Congress records Jack London's The Call of the Wild, New York Macmillan 1903. It is representative US book publication, not sole year of career or direct life events of the fictional dog Buck. Jack London (1876–1916) also called John Griffith Chaney."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Library of Congress — Books That Shaped America, The Call of the Wild",
+      "canonical_url": "https://wwws.loc.gov/exhibits/books-that-shaped-america/1900-to-1950.html",
+      "citation_text": "The Library of Congress records Jack London's The Call of the Wild, New York Macmillan 1903. It is representative US book publication, not sole year of career or direct life events of the fictional dog Buck. Jack London (1876–1916) also called John Griffith Chaney."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-23",
+      "document_title": "잭 런던",
+      "url": "https://namu.wiki/w/%EC%9E%AD%20%EB%9F%B0%EB%8D%98"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Cohort authorization covers candidate inclusion only. Current canonical full Person aliases, Polity UUID, exact Activity equivalence, role, NamuWiki current-state and place must be checked by governed Human Authoring preflight_batch before irreversible commit; no fabricated UUID or coordinates."
+  },
+  "review_context": {
+    "identity_aliases": [
+      "John Griffith Chaney",
+      "John Griffith London"
+    ],
+    "cohort": "YOUTUBE48-20261023",
+    "sources_first": true,
+    "production_readback_verified": false
+  }
+}

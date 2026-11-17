@@ -1,0 +1,67 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-youtube39-20261023:jane-goodall:gombe-field-research-1960:v1",
+  "person": {
+    "canonical_name_en": "Jane Goodall",
+    "display_name_ko": "제인 구달",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-23",
+    "life_status_basis": "documented_death",
+    "representative_domain": "science",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Tanganyika Territory",
+    "display_name_ko": "탕가니카 신탁통치령",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Field primatologist beginning chimpanzee behavioral research at Gombe",
+    "role_display_name_ko": "곰베 침팬지 행동 연구 시작·영장류학자",
+    "start_year": 1960,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1960,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Exact representative research-start year 1960 at Gombe in then-British-administered Tanganyika (now Tanzania), not an assertion that her 65-year chimpanzee studies lasted only one year or were located in a modern 1960 Tanzanian sovereign state. Later founded the Jane Goodall Institute in 1977 and Roots & Shoots in 1991. Died 2025-10-01. Current Production bounded name search returned zero direct results, not authoritative full alias absence. Historical Tanganyika Polity exact identity MUST be verified in canonical preflight; no new surrogate polity or coordinates without explicit normal resolver."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Jane Goodall Institute — JGI Timeline",
+      "canonical_url": "https://janegoodall.org/jgi-timeline/",
+      "citation_text": "Official institutional timeline records Jane Goodall's arrival at Gombe in 1960 and the foundation of her research."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Jane Goodall Institute Global — Our founder",
+      "canonical_url": "https://janegoodall.global/our-founder/",
+      "citation_text": "Institutional biography records her primatological work, JGI/Roots & Shoots formation, and death on 1 October 2025."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-23",
+      "document_title": "제인 구달",
+      "url": "https://namu.wiki/w/%EC%A0%9C%EC%9D%B8%20%EA%B5%AC%EB%8B%AC"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Reviewed historical affiliation only; exact current Person and alternate names, semantic Activity, Polity identity and Place/Source links must pass canonical Production preflight. No coordinates invented, no preflight DB writes, no destructive or automatic merge."
+  }
+}

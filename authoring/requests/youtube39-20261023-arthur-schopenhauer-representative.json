@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-youtube39-20261023:arthur-schopenhauer:representative:v1",
+  "person": {
+    "canonical_name_en": "Arthur Schopenhauer",
+    "display_name_ko": "아르투어 쇼펜하우어",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-23",
+    "life_status_basis": "documented_death",
+    "representative_domain": "science",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Saxony",
+    "display_name_ko": "작센 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Philosopher, The World as Will and Representation",
+    "role_display_name_ko": "《의지와 표상으로서의 세계》 저술 철학자",
+    "start_year": 1818,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1818,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Stanford Encyclopedia discusses his book 1818, with edition dated 1819. Leipzig publication context rather than unverified full-time Saxony residence."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Historical reference — Arthur Schopenhauer",
+      "canonical_url": "https://plato.stanford.edu/archives/spr2022/entries/schopenhauer/",
+      "citation_text": "Stanford Encyclopedia discusses his book 1818, with edition dated 1819. Leipzig publication context rather than unverified full-time Saxony residence."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-23",
+      "document_title": "아르투어 쇼펜하우어",
+      "url": "https://namu.wiki/w/%EC%95%84%EB%A5%B4%ED%88%AC%EC%96%B4%20%EC%87%BC%ED%8E%9C%ED%95%98%EC%9A%B0%EC%96%B4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Identity/alias, specific historical Polity/Place, source and NamuWiki-title canonical readback required before final apply. This is an offline pre-Production reviewed authoring draft; no auto-write or invented coordinates."
+  }
+}

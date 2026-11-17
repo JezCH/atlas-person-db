@@ -1,0 +1,70 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-youtube48-20261023:richard-iii:representative:v1",
+  "person": {
+    "canonical_name_en": "Richard III of England",
+    "display_name_ko": "리처드 3세",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-23",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of England",
+    "display_name_ko": "잉글랜드 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King of England of the House of York",
+    "role_display_name_ko": "잉글랜드 요크 왕조 국왕",
+    "start_year": 1483,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1485,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Richard III ruled from June 1483 until killed August 22, 1485 at Bosworth, after which Henry VII began the Tudor dynasty. Earlier Lord Protector and Duke of Gloucester offices, though relevant, are NOT falsely merged into the royal 1483–1485 reign; any additional distinct office needs independent original source and existing semantic-Activity preflight. Distinguish fictional portrayal from historical Person."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "The Royal Family — Richard III",
+      "canonical_url": "https://www.royal.uk/richard-iii",
+      "citation_text": "Richard III ruled from June 1483 until killed August 22, 1485 at Bosworth, after which Henry VII began the Tudor dynasty. Earlier Lord Protector and Duke of Gloucester offices, though relevant, are NOT falsely merged into the royal 1483–1485 reign; any additional distinct office needs independent original source and existing semantic-Activity preflight. Distinguish fictional portrayal from historical Person."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-23",
+      "document_title": "리처드 3세",
+      "url": "https://namu.wiki/w/%EB%A6%AC%EC%B2%98%EB%93%9C%203%EC%84%B8"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Cohort authorization covers candidate inclusion only. Current canonical full Person aliases, Polity UUID, exact Activity equivalence, role, NamuWiki current-state and place must be checked by governed Human Authoring preflight_batch before irreversible commit; no fabricated UUID or coordinates."
+  },
+  "review_context": {
+    "identity_aliases": [
+      "Richard III",
+      "Richard Plantagenet"
+    ],
+    "cohort": "YOUTUBE48-20261023",
+    "sources_first": true,
+    "production_readback_verified": false
+  }
+}

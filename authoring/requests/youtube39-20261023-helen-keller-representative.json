@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-youtube39-20261023:helen-keller:representative:v1",
+  "person": {
+    "canonical_name_en": "Helen Keller",
+    "display_name_ko": "헬렌 켈러",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-23",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Writer, The Story of My Life",
+    "role_display_name_ko": "《내 삶의 이야기》 자서전 저자",
+    "start_year": 1903,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1903,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "American Foundation for the Blind documents 1903 book publication after 1902 magazine serialization. Later disability advocacy activity is not denied."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Historical reference — Helen Keller",
+      "canonical_url": "https://afb.org/about-afb/history/helen-keller/biography-and-chronology/biography",
+      "citation_text": "American Foundation for the Blind documents 1903 book publication after 1902 magazine serialization. Later disability advocacy activity is not denied."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-23",
+      "document_title": "헬렌 켈러",
+      "url": "https://namu.wiki/w/%ED%97%AC%EB%A0%8C%20%EC%BC%88%EB%9F%AC"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Identity/alias, specific historical Polity/Place, source and NamuWiki-title canonical readback required before final apply. This is an offline pre-Production reviewed authoring draft; no auto-write or invented coordinates."
+  }
+}

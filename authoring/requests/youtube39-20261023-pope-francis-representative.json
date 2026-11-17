@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-youtube39-20261023:pope-francis:representative:v1",
+  "person": {
+    "canonical_name_en": "Pope Francis",
+    "display_name_ko": "프란치스코 교황",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-23",
+    "life_status_basis": "documented_death",
+    "representative_domain": "religion",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Vatican City State",
+    "display_name_ko": "바티칸 시국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "term",
+    "role": "266th pope of the Catholic Church, Jorge Mario Bergoglio",
+    "role_display_name_ko": "가톨릭 제266대 교황·호르헤 마리오 베르고글리오",
+    "start_year": 2013,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2025,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Bergoglio elected 13 March 2013; pontificate ended with death 21 April 2025. Year-level chronology preserves exact source dates in notes rather than fabricating a term spanning the whole 2025 year. Spiritual religious office is not equivalent to a secular monarchy; active_in rather than invented rules/governs relation. Reuse exact current Vatican Polity identity only after authoritative preflight."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Holy See — Biography of the Holy Father Francis (2013–2025)",
+      "canonical_url": "https://www.vatican.va/content/francesco/en/biography/documents/papa-francesco-biografia-bergoglio.html",
+      "citation_text": "Vatican biography establishes secular name Jorge Mario Bergoglio, election 13 March 2013 and death 21 April 2025."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-23",
+      "document_title": "프란치스코(교황)",
+      "url": "https://namu.wiki/w/%ED%94%84%EB%9E%80%EC%B9%98%EC%8A%A4%EC%BD%94(%EA%B5%90%ED%99%A9)"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Canonical Person UUID/aliases, semantic Activity uniqueness, historical polity and place identity remain subject to one governed Production preflight; do not fabricate sovereign claims or coordinates."
+  }
+}

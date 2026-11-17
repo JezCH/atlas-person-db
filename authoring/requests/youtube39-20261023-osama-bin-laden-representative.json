@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-youtube39-20261023:osama-bin-laden:representative:v1",
+  "person": {
+    "canonical_name_en": "Osama bin Laden",
+    "display_name_ko": "오사마 빈 라덴",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-23",
+    "life_status_basis": "documented_death",
+    "representative_domain": "military",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Afghanistan",
+    "display_name_ko": "아프가니스탄",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "term",
+    "role": "Founder of the al-Qaeda extremist organization",
+    "role_display_name_ko": "알카에다 조직 설립자",
+    "start_year": 1988,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1988,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "FBI confirms al-Qaeda founded in 1988. The specific founding locality/Polity affiliation and whether term is valid for this one-year founder point are unresolved. This is NOT an office in an Afghan state or an exact one-year tenure; block until canonical period/Polity preflight."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Historical reference — Osama bin Laden",
+      "canonical_url": "https://www.fbi.gov/history/cases-and-criminals/osama-bin-laden",
+      "citation_text": "FBI confirms al-Qaeda founded in 1988. The specific founding locality/Polity affiliation and whether term is valid for this one-year founder point are unresolved. This is NOT an office in an Afghan state or an exact one-year tenure; block until canonical period/Polity preflight."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-23",
+      "document_title": "오사마 빈 라덴",
+      "url": "https://namu.wiki/w/%EC%98%A4%EC%82%AC%EB%A7%88%20%EB%B9%88%20%EB%9D%BC%EB%8D%B4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Identity/alias, specific historical Polity/Place, source and NamuWiki-title canonical readback required before final apply. This is an offline pre-Production reviewed authoring draft; no auto-write or invented coordinates."
+  }
+}

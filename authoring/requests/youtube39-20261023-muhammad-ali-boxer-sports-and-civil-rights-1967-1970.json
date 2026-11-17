@@ -1,0 +1,67 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-youtube39-20261023:muhammad-ali-boxer:sports-and-civil-rights-1967-1970:v1",
+  "person": {
+    "canonical_name_en": "Muhammad Ali (boxer)",
+    "display_name_ko": "무하마드 알리(복서)",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-23",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Heavyweight boxing champion and leading athlete in public civil-rights activism",
+    "role_display_name_ko": "헤비급 복싱 챔피언·민권운동 참여 선수",
+    "start_year": 1967,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1970,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "1967 refusal of US military induction followed by public civil-rights and antiwar speaking during suspension from competitive boxing through 1970. The intellectual_activity basis describes the recorded public advocacy ONLY, not physical boxing. The sports career, first world championship (1964), comeback/title regain (1974) and further championship (1978) require separately reviewed, sports-compatible Activity period-basis mapping, not fabricated government office or continuous US-only competition. Former name Cassius Marcellus Clay Jr. (1942–2016). This is NOT Muhammad Ali of Egypt nor Muhammad Ali Jinnah. Current read-only name search returned these other two Persons; exact canonical alias preflight still required. Sports/athletic work is classified under Person Domain v2 culture by explicit user instruction 2026-10-23."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "US National Archives — Muhammad Ali biography and selective-service refusal",
+      "canonical_url": "https://www.archives.gov/research/african-americans/individuals/muhammad-ali",
+      "citation_text": "Ali refused US induction in 1967, lost title and boxing eligibility, and publicly addressed civil-rights/antiwar groups during suspension, 1967–1970."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Smithsonian National Portrait Gallery — In Memoriam: Muhammad Ali",
+      "canonical_url": "https://npg.si.edu/exhibition/memorium-muhammad-ali",
+      "citation_text": "Ali was an Olympian and heavyweight boxer whose 1967 refusal and 1974 restored title marked a cultural and civic career."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-23",
+      "document_title": "무하마드 알리",
+      "url": "https://namu.wiki/w/%EB%AC%B4%ED%95%98%EB%A7%88%EB%93%9C%20%EC%95%8C%EB%A6%AC"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Reviewed historical affiliation only; exact current Person and alternate names, semantic Activity, Polity identity and Place/Source links must pass canonical Production preflight. No coordinates invented, no preflight DB writes, no destructive or automatic merge."
+  }
+}

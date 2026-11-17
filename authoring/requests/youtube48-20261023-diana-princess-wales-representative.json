@@ -1,0 +1,71 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-youtube48-20261023:diana-princess-wales:representative:v1",
+  "person": {
+    "canonical_name_en": "Diana, Princess of Wales",
+    "display_name_ko": "다이애나 왕세자비",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-23",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Humanitarian campaigner addressing landmine prohibition in London",
+    "role_display_name_ko": "대인지뢰 금지 운동가·런던 공개 연설",
+    "start_year": 1997,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1997,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Royal Family documents her June 1997 London address at the Royal Geographical Society advocating a ban on anti-personnel landmines, and 1997 Angola/Bosnia visits. The United Kingdom association refers specifically to this London advocacy, not a claim she was sovereign or that her activity only lasted in 1997. Cultural/public humanitarian advocacy receives existing representative Domain v2 culture; do not claim she single-handedly enacted the Ottawa Treaty."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "The Royal Family — Diana, Princess of Wales",
+      "canonical_url": "https://www.royal.uk/diana-princess-wales",
+      "citation_text": "The Royal Family documents her June 1997 London address at the Royal Geographical Society advocating a ban on anti-personnel landmines, and 1997 Angola/Bosnia visits. The United Kingdom association refers specifically to this London advocacy, not a claim she was sovereign or that her activity only lasted in 1997. Cultural/public humanitarian advocacy receives existing representative Domain v2 culture; do not claim she single-handedly enacted the Ottawa Treaty."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-23",
+      "document_title": "다이애나 스펜서",
+      "url": "https://namu.wiki/w/%EB%8B%A4%EC%9D%B4%EC%95%A0%EB%82%98%20%EC%8A%A4%ED%8E%9C%EC%84%9C"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Cohort authorization covers candidate inclusion only. Current canonical full Person aliases, Polity UUID, exact Activity equivalence, role, NamuWiki current-state and place must be checked by governed Human Authoring preflight_batch before irreversible commit; no fabricated UUID or coordinates."
+  },
+  "review_context": {
+    "identity_aliases": [
+      "Diana Frances Spencer",
+      "Lady Diana Spencer",
+      "Princess Diana"
+    ],
+    "cohort": "YOUTUBE48-20261023",
+    "sources_first": true,
+    "production_readback_verified": false
+  }
+}
