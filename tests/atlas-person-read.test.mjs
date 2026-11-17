@@ -16,7 +16,7 @@ const {
 const runtimeRead = require('../server/atlas-runtime-person-read-service.js');
 const {
   createPersonReadHandler, personIdFromRequest, personQueryFromRequest,
-  listLimitFromRequest, namuwikiStatusFromRequest
+  listLimitFromRequest, namuwikiStatusFromRequest, PERSON_LIST_SNAPSHOT_BEGIN_SQL
 } = require('../server/atlas-person-read-handler.js');
 
 const PERSON_ID = '00000000-0000-4000-8000-000000000001';
@@ -348,6 +348,7 @@ test('Person read handler supports list and UUID detail modes and rejects malfor
     env: { SUPABASE_DB_URL: 'postgresql://example.invalid/atlas' },
     clientFactory: async () => ({
       async query(sql) {
+        if ([PERSON_LIST_SNAPSHOT_BEGIN_SQL, "COMMIT", "ROLLBACK"].includes(sql)) return { rows: [] };
         if (sql === runtimeRead.PERSON_READ_SQL) return { rows: [] };
         if (sql === runtimeRead.PERSON_DETAIL_SQL) return { rowCount: 1, rows: [detailPersonRow()] };
         if (sql === runtimeRead.ACTIVITY_DETAIL_SQL) return { rowCount: 1, rows: [detailActivityRow()] };
