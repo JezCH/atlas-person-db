@@ -270,7 +270,7 @@ test("a GitHub-only dependency map commit SKIPs, but prior undeployed runtime st
   });
   assert.equal(mixed.status,1,mixed.stdout+"\\n"+mixed.stderr);
   assert.match(mixed.stdout,/BUILD: deployment-relevant change detected/);
-  assert.match(mixed.stdout,/server\\/atlas-person-read-handler\\.js/);
+  assert.ok(mixed.stdout.includes("server/atlas-person-read-handler.js"));
 });
 
 test("real Git CLI preserves a leading-space unsafe path and BUILDs",()=>{
