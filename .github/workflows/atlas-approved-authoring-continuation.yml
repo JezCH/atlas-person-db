@@ -1,0 +1,46 @@
+name: ATLAS Approved Authoring Continuation
+
+# Event-driven continuation; no polling cron, ChatGPT session, or paid runner.
+# Only an exact reviewed authoring Apply PR can opt in. The default-branch
+# worker checks protected OIDC READY evidence before any merge or dispatch.
+on:
+  workflow_run:
+    workflows:
+      - ATLAS Integrity
+    types:
+      - completed
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: write
+
+concurrency:
+  # The trusted authoring selector is one shared file, unlike independent
+  # research/implementation. Serialize only this concrete mutation boundary.
+  group: atlas-reviewed-authoring-selector
+  cancel-in-progress: false
+
+jobs:
+  continue-approved-person:
+    if: >-
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.repository.full_name == 'JezCH/atlas-person-db'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      # Never check out PR code under a write-capable workflow_run token.
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Continue only exact owner-reviewed READY Person Apply
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ATLAS_AUTOCONTINUE_RUN: '1'
+        run: node scripts/atlas-authoring-auto-continuation.mjs

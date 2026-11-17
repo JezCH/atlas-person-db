@@ -24,6 +24,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
   id-token: write
 
 concurrency:
@@ -198,3 +199,20 @@ jobs:
               and .activation_history.latest_recorded.authoring_sha==$authoring
             ' /tmp/atlas-runtime-publication.json >/dev/null
           jq . /tmp/atlas-runtime-publication.json
+
+
+      # Completion is the actual changed Person on Production, not CI or a
+      # canonical transaction alone. One bounded request per newly committed
+      # Person, using only the protected producer's immutable evidence.
+      - name: Verify committed Person and Activity in Production after Runtime publication
+        if: >-
+          steps.readonly_preflight.outputs.skip != 'true' &&
+          github.event_name == 'workflow_run' &&
+          github.event.workflow_run.name == 'ATLAS Authoring Apply' &&
+          github.event.workflow_run.event == 'workflow_dispatch' &&
+          github.event.workflow_run.conclusion == 'success'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ATLAS_AUTHORING_PRODUCER_RUN_ID: ${{ github.event.workflow_run.id }}
+          ATLAS_RUNTIME_READBACK_RUN: '1'
+        run: node scripts/atlas-authoring-runtime-readback.mjs

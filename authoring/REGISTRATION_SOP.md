@@ -521,3 +521,23 @@ Use the ordinary path when the ongoing schema migration is deployed; retain
 convert an unknown historical endpoint into an ongoing term. Do not use the
 verification date as the Activity end. See `HUMAN_AUTHORING.md` for the payload
 and readback contract.
+
+
+## 13. Event-driven reviewed Authoring continuation (CI-to-Production)
+
+GitHub Actions, not the duration of an AI/ChatGPT session, owns the asynchronous continuation after PR validation. The narrowly scoped workflow `.github/workflows/atlas-approved-authoring-continuation.yml` listens for successful `ATLAS Integrity` PR runs. It does **not** auto-merge ordinary UI/Code/Polity/Source PRs or unapproved Person drafts.
+
+Only a previously approved, preflighted **single Person apply-selector PR** can opt in:
+
+1. The immutable `atlas-human-authoring/v1` manifest already exists on protected `main` with `review_status=approved`, a unique historical Person, a reviewed deceased status and domain, a real Source, an existing reviewed Polity UUID, a reviewed NamuWiki disposition and the original reviewed source Draft reference. The prior protected **main-push** Authoring preflight must have produced exact `READY=1/ALREADY_PRESENT=0/BLOCKED=0/committed=false`, not merely a green workflow badge.
+2. Create PR from the repository-owner account, within this repository, on a branch named `atlas/auto-authoring-<slug>`. Change **only** `.github/atlas-authoring-preflight.txt` from `preflight authoring/requests/<exact>.json` to `apply authoring/requests/<same>.json`. No manifest mutation, code changes, merge conflicts, or user HOLD.
+3. Include two standalone lines in the PR body:
+   ```
+   ATLAS-AUTO-CONTINUE: approved-person-apply/v1
+   https://github.com/JezCH/atlas-person-db/actions/runs/<exact-protected-preflight-run-ID>
+   ```
+   These are **explicit opt-in** controls, not a substitute for approval. Do not insert them for an unapproved/HOLD item. A PR lacking this exact opt-in stays manual/review-gated.
+4. GitHub's CI completion event launches a default-branch trusted worker that independently checks the current PR head and author, exact one-line patch, approved live manifest, protected OIDC run provenance and **immutable artifact READY result**. Only then it uses the current PR-head SHA to merge the exact PR and **explicitly dispatches** the existing `ATLAS Authoring Apply` workflow (GitHub Actions `GITHUB_TOKEN` merges do not emit ordinary push-triggered workflows). The Authoring writer independently re-preflights and applies READY-only with OIDC, SERIALIZABLE/idempotent transactions and post-commit canonical replay. The existing `ATLAS Runtime Projection Compile` then publishes and verifies projection and performs bounded exact Production Person/Activity/Polity/Source/domain/NamuWiki readback for newly committed dispatches.
+5. Failure or ambiguous state is **fail closed**: no automatic merge for stale CI, different head/manifest/selector, non-unique artifact, blocked/already-present preflight, changed repository resource, wrong author or missing opt-in. A failure **after a merge but before dispatch** is not silently retried: inspect the merge SHA and Authoring ledger before explicit recovery to avoid duplicated work.
+
+This event-driven lane consumes no Vercel Sandbox, adds no background polling schedule and does not alter the existing four daily ATLAS master runs. **Do not call the Person complete** from an opt-in PR, CI success, merge or dispatch alone. The terminal evidence is a new canonical Authoring transaction, successful Runtime publication and exact Production readback.
