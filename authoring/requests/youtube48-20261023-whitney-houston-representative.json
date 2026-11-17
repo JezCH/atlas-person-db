@@ -69,6 +69,8 @@
     "source_draft_pr": 2589,
     "preflight_required": true,
     "auto_continue_after_preflight": true,
-    "existing_polity_identity_checked_at": "2026-11-18"
+    "existing_polity_identity_checked_at": "2026-11-18",
+    "retry_after_pre_mutation_readiness_failure_run": 44196844301,
+    "retry_basis": "Previous protected Authoring job failed at Verify deployed authoring runtime readiness before any writer step; fresh exact-SHA read-only preflight required. Retain identity, source and Activity unchanged."
   }
 }
