@@ -59,6 +59,31 @@ async function readManifest(filename, sha) {
   return JSON.parse(Buffer.from(r.content, 'base64').toString('utf8'));
 }
 
+// GitHub Actions may dispatch a protected Authoring workflow with its own
+// github-actions[bot] identity. Do not reject that legitimate handoff solely
+// because it was initiated by GitHub instead of the repository owner.
+// A bot is trusted ONLY when GitHub confirms the exact private repository,
+// the approved workflow file on main, bounded event/status and immutable SHA.
+export function verifyProtectedProducer(producer) {
+  const fail = (reason) => ({ ok: false, reason });
+  if (producer?.name !== 'ATLAS Authoring Apply' ||
+      producer?.path !== '.github/workflows/atlas-authoring-apply.yml' ||
+      producer?.event !== 'workflow_dispatch' ||
+      producer?.head_branch !== 'main') return fail('WORKFLOW_OR_BRANCH');
+  if (producer?.repository?.full_name !== REPO ||
+      producer?.head_repository?.full_name !== REPO) return fail('REPOSITORY_OR_HEAD');
+  const actor = producer?.actor;
+  const owner = actor?.login === 'JezCH' && actor?.type === 'User';
+  const workflowBot = actor?.login === 'github-actions[bot]' && actor?.type === 'Bot';
+  if (!owner && !workflowBot) return fail('UNTRUSTED_ACTOR');
+  if (!['in_progress', 'completed'].includes(producer?.status) ||
+      (producer.status === 'completed' && producer.conclusion !== 'success')) {
+    return fail('STATUS_OR_CONCLUSION');
+  }
+  if (!/^[a-f0-9]{40}$/.test(producer?.head_sha || '')) return fail('INVALID_COMMIT_SHA');
+  return { ok: true };
+}
+
 async function runReadback() {
   const runId = Number(process.env.ATLAS_AUTHORING_PRODUCER_RUN_ID);
   if (!Number.isSafeInteger(runId) || runId < 1) throw new Error('INVALID_AUTHORING_PRODUCER_RUN');
@@ -67,12 +92,9 @@ async function runReadback() {
   // uploading signed-by-GitHub immutable evidence but before GitHub necessarily
   // marks that job completed. Committed evidence, not a racing conclusion
   // field, is the authority for canonical writes.
-  if (producer.name !== 'ATLAS Authoring Apply' || producer.event !== 'workflow_dispatch' ||
-      producer.head_branch !== 'main' || producer.actor?.login !== 'JezCH' ||
-      !['in_progress', 'completed'].includes(producer.status) ||
-      (producer.status === 'completed' && producer.conclusion !== 'success') ||
-      !/^[a-f0-9]{40}$/.test(producer.head_sha || '')) {
-    throw new Error('PRODUCER_NOT_VERIFIED_PROTECTED_DISPATCH');
+  const verification = verifyProtectedProducer(producer);
+  if (!verification.ok) {
+    throw new Error('PRODUCER_NOT_VERIFIED_PROTECTED_DISPATCH:' + verification.reason);
   }
   const list = await api('/repos/' + REPO + '/actions/runs/' + runId + '/artifacts?per_page=100');
   const expected = 'atlas-authoring-' + producer.head_sha;
