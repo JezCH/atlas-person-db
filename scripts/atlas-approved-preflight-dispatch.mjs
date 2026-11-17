@@ -17,6 +17,20 @@ const REPO = 'JezCH/atlas-person-db';
 const SHA_RE = /^[a-f0-9]{40}$/;
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
+// #2545 explicitly selected this historical cohort; #2549 retains its original
+// immutable request namespace. Do not rename already-reviewed request IDs or
+// treat every authoring:* identifier as an authorization marker. Person-only
+// Kalidasa and pending-only cohorts are deliberately not in this list.
+const SELECTED62_REMAINING30 = new Set(["basho","boltzmann","cantor","duchamp","durer","eisenstein","ellington","davis","frege","hegel","hitchcock","josquin","kandinsky","koch","kurosawa","lagrange","laplace","le-corbusier","mahler","monteverdi","noether","poincare","su-shi","titian","weber","welles","wittgenstein"]);
+export function isApprovedRequestIdentity(manifest, requestPath) {
+  const id = manifest?.request_id || '';
+  if (/^authoring:user-/.test(id)) return true;
+  const match = /^authoring:selected62-remaining30-20261018:([a-z0-9-]+):representative:v1$/.exec(id);
+  return Boolean(match && manifest.review_context?.source_draft_pr === 2549 &&
+    SELECTED62_REMAINING30.has(match[1]) &&
+    requestPath === 'authoring/requests/selected62-remaining30-20261018-' + match[1] + '.json');
+}
+
 export function assessApprovedPreflightHandoff({ run, selector, manifest, evidence, changedPaths }) {
   const stop = (reason) => ({ ok: false, reason });
   if (run?.name !== 'ATLAS Authoring Apply' || run.event !== 'push' ||
@@ -33,7 +47,7 @@ export function assessApprovedPreflightHandoff({ run, selector, manifest, eviden
   }
   if (manifest?.schema !== 'atlas-human-authoring/v1' ||
       manifest.review_status !== 'approved' ||
-      !/^authoring:user-/.test(manifest.request_id || '') ||
+      !isApprovedRequestIdentity(manifest, requestPath) ||
       manifest.person?.life_status !== 'deceased' ||
       manifest.person?.representative_domain_reviewed !== true ||
       !manifest.person?.canonical_name_en ||
@@ -94,10 +108,10 @@ export function assessApprovedBatchPreflightHandoff({ run, selector, manifests, 
     return stop('BATCH_MANIFEST_COUNT_MISMATCH');
   }
   const ids = new Set();
-  for (const manifest of manifests) {
+  for (const [index, manifest] of manifests.entries()) {
     if (manifest?.schema !== 'atlas-human-authoring/v1' ||
         manifest.review_status !== 'approved' ||
-        !/^authoring:user-/.test(manifest.request_id || '') ||
+        !isApprovedRequestIdentity(manifest, paths[index]) ||
         manifest.person?.life_status !== 'deceased' ||
         manifest.person?.representative_domain_reviewed !== true ||
         !manifest.person?.canonical_name_en ||

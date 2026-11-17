@@ -151,3 +151,34 @@ test('successful ordinary Authoring main push never fetches stale selector or pr
   assert.match(calls[0][0], /\/commits\/[a-f0-9]{40}$/);
   assert.equal(calls[0][1],undefined);
 });
+
+test('selected62 approved legacy request namespace is accepted only for exact reviewed cohort/path/PR', () => {
+  const a = batchCase();
+  const path = 'authoring/requests/selected62-remaining30-20261018-davis.json';
+  const id = 'authoring:selected62-remaining30-20261018:davis:representative:v1';
+  a.selector = 'preflight ' + target + '\npreflight ' + path + '\n';
+  a.changedPaths[1] = path;
+  a.manifests[1].request_id = id;
+  a.manifests[1].review_context.source_draft_pr = 2549;
+  a.evidence.results[1] = { status:'READY', request_id:id, manifest_path:path };
+  assert.equal(assessApprovedBatchPreflightHandoff(a).ok,true);
+  const single = { ...a, selector:'preflight '+path+'\n', manifest:a.manifests[1],
+    evidence:{...a.evidence,ready_count:1,count:1,results:[a.evidence.results[1]]},changedPaths:[path,'.github/atlas-authoring-preflight.txt'] };
+  assert.equal(assessApprovedPreflightHandoff(single).ok,true);
+  for (const change of [
+    x => {x.manifests[1].review_context.source_draft_pr=2589;},
+    x => {x.manifests[1].review_context.auto_continue_after_preflight=false;},
+    x => {x.manifests[1].request_id=id.replace(':davis:',':chekhov:');x.evidence.results[1].request_id=x.manifests[1].request_id;},
+    x => {x.manifests[1].request_id=id.replace(':davis:',':welles:');x.evidence.results[1].request_id=x.manifests[1].request_id;}
+  ]) {
+    const bad=structuredClone(a);change(bad);
+    assert.equal(assessApprovedBatchPreflightHandoff(bad).ok,false);
+  }
+  const pending=structuredClone(a);
+  const pendingPath=path.replace('davis','chekhov');
+  pending.selector=pending.selector.replace(path,pendingPath);
+  pending.changedPaths[1]=pendingPath;
+  pending.manifests[1].request_id=id.replace(':davis:',':chekhov:');
+  pending.evidence.results[1]={status:'READY',request_id:pending.manifests[1].request_id,manifest_path:pendingPath};
+  assert.equal(assessApprovedBatchPreflightHandoff(pending).ok,false,'pending 14 are not selected62');
+});
