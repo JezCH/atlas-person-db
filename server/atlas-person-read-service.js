@@ -246,7 +246,13 @@ select
   s.source_type,
   s.title,
   s.canonical_url,
-  s.citation_text
+  s.citation_text,
+  s.author_creator,
+  s.institution,
+  s.publisher,
+  s.publication_date::text as publication_date,
+  s.publication_year,
+  s.external_identifier
 from atlas_v2.person_politics_sources pps
 join atlas_v2.person_politics_v2 pp
   on pp.id = pps.person_politics_id

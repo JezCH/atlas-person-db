@@ -16,7 +16,7 @@ const {
 const runtimeRead = require('../server/atlas-runtime-person-read-service.js');
 const {
   createPersonReadHandler, personIdFromRequest, personQueryFromRequest,
-  listLimitFromRequest, namuwikiStatusFromRequest
+  listLimitFromRequest, namuwikiStatusFromRequest, PERSON_LIST_SNAPSHOT_BEGIN_SQL
 } = require('../server/atlas-person-read-handler.js');
 
 const PERSON_ID = '00000000-0000-4000-8000-000000000001';
@@ -111,7 +111,13 @@ function activitySourceRow() {
     source_type: 'web_bibliographic_reference',
     title: 'Ateas chronology study',
     canonical_url: 'https://example.org/ateas',
-    citation_text: 'Example Journal 12 (2025), pp. 40-42.'
+    citation_text: 'Example Journal 12 (2025), pp. 40-42.',
+    author_creator: 'Activity Chronologist',
+    institution: 'Chronology Institute',
+    publisher: 'Historical Studies Press',
+    publication_date: null,
+    publication_year: 2025,
+    external_identifier: 'DOI:10.1234/ateas'
   };
 }
 
@@ -280,8 +286,16 @@ test('Person detail exposes authoritative Activity semantics and readable proven
     canonical_url: 'https://example.org/ateas',
     citation_text: 'Example Journal 12 (2025), pp. 40-42.',
     locator: 'pp. 40-42',
-    display_reference: 'Example Journal 12 (2025), pp. 40-42.'
+    display_reference: 'Example Journal 12 (2025), pp. 40-42.',
+    author_creator: 'Activity Chronologist',
+    institution: 'Chronology Institute',
+    publisher: 'Historical Studies Press',
+    external_identifier: 'DOI:10.1234/ateas',
+    publication_year: 2025
   });
+  assert.equal('publication_date' in activity.sources[0], false);
+  assert.equal(activity.sources[0].publication_year, 2025);
+  assert.equal(activity.sources[0].locator, 'pp. 40-42');
   for (const source of [...person.sources, ...activity.sources]) {
     assert.equal('id' in source, false);
     assert.equal('source_key' in source, false);
@@ -290,6 +304,8 @@ test('Person detail exposes authoritative Activity semantics and readable proven
   }
   for (const field of ['author_creator','institution','publisher','publication_date','publication_year','external_identifier']) {
     assert.match(PERSON_SOURCE_SQL, new RegExp('s\\.' + field));
+    assert.match(ACTIVITY_SOURCE_SQL, new RegExp('s\\.' + field));
+    assert.match(runtimeRead.ACTIVITY_SOURCE_SQL, new RegExp('s\\.' + field));
   }
   const personSourceProjection = PERSON_SOURCE_SQL.split(/\nfrom\s+/i)[0];
   const activitySourceProjection = ACTIVITY_SOURCE_SQL.split(/\nfrom\s+/i)[0];
@@ -325,6 +341,9 @@ test('Person detail exposes authoritative Activity semantics and readable proven
     assert.match(ACTIVITY_SOURCE_SQL, new RegExp(field));
   }
   assert.match(ACTIVITY_SOURCE_SQL, /source_locator_key/);
+  assert.match(runtimeRead.ACTIVITY_SOURCE_SQL, /src->>'source_locator_key'/);
+  assert.match(runtimeRead.ACTIVITY_SOURCE_SQL, /left join atlas_v2\.sources s/);
+  assert.match(runtimeRead.ACTIVITY_SOURCE_SQL, /s\.id::text = src->>'source_id'/);
 });
 
 test('Person read handler supports list and UUID detail modes and rejects malformed IDs before DB access', async () => {
@@ -333,6 +352,7 @@ test('Person read handler supports list and UUID detail modes and rejects malfor
     env: { SUPABASE_DB_URL: 'postgresql://example.invalid/atlas' },
     clientFactory: async () => ({
       async query(sql) {
+        if ([PERSON_LIST_SNAPSHOT_BEGIN_SQL, "COMMIT", "ROLLBACK"].includes(sql)) return { rows: [] };
         if (sql === runtimeRead.PERSON_READ_SQL) return { rows: [] };
         if (sql === runtimeRead.PERSON_DETAIL_SQL) return { rowCount: 1, rows: [detailPersonRow()] };
         if (sql === runtimeRead.ACTIVITY_DETAIL_SQL) return { rowCount: 1, rows: [detailActivityRow()] };

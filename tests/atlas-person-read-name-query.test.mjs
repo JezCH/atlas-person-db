@@ -9,7 +9,7 @@ const {
   normalizeSearchText,
   personMatchesQuery,
   personMatchesNamuWikiStatus,
-  createPersonReadHandler
+  createPersonReadHandler, PERSON_LIST_SNAPSHOT_BEGIN_SQL
 } = require('../server/atlas-person-read-handler.js');
 const { PERSON_READ_SQL } = require('../server/atlas-runtime-person-read-service.js');
 
@@ -65,6 +65,7 @@ test('Person read handler returns only matching Production persons for q', async
     env: { SUPABASE_DB_URL: 'postgresql://example.invalid/atlas' },
     clientFactory: async () => ({
       async query(sql) {
+        if (sql === PERSON_LIST_SNAPSHOT_BEGIN_SQL || sql === 'COMMIT' || sql === 'ROLLBACK') return { rows: [] };
         assert.equal(sql, PERSON_READ_SQL);
         return { rows };
       },
@@ -111,6 +112,7 @@ test('Person read handler returns a bounded batch of only missing NamuWiki refer
     env: { SUPABASE_DB_URL: 'postgresql://example.invalid/atlas' },
     clientFactory: async () => ({
       async query(sql) {
+        if (sql === PERSON_LIST_SNAPSHOT_BEGIN_SQL || sql === 'COMMIT' || sql === 'ROLLBACK') return { rows: [] };
         assert.equal(sql, PERSON_READ_SQL);
         return { rows };
       },
@@ -143,6 +145,7 @@ test('Person read handler can select previously checked not_found references', a
     env: { SUPABASE_DB_URL: 'postgresql://example.invalid/atlas' },
     clientFactory: async () => ({
       async query(sql) {
+        if (sql === PERSON_LIST_SNAPSHOT_BEGIN_SQL || sql === 'COMMIT' || sql === 'ROLLBACK') return { rows: [] };
         assert.equal(sql, PERSON_READ_SQL);
         return { rows };
       },
