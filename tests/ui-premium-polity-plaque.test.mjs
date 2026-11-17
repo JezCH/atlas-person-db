@@ -13,5 +13,5 @@ test("POLITY-LUX1 extends only the canonical polity/dossier material, never Pers
   for(const token of ["--atlas-material-sheen-strong","--atlas-material-edge-dark","--atlas-material-wash-selected","--atlas-text-strong"]) assert.ok(finish.includes(`var(${token})`),token);
   assert.doesNotMatch(finish,/(?:^|\n)\s*(?:width|height|padding|margin|gap|font-size|line-height|grid-template-columns|grid-template-rows|position|left|right|top|bottom|transform|opacity)\s*:/);
   assert.doesNotMatch(finish,/\.person-table|\.person-register-entry|@keyframes|animation:|!important/);
-  assert.match(nav,/atlas-polity-review-workbench\.css\?v=20261008-polity-lux1-inscription-v1/);
+  assert.match(nav,/atlas-polity-review-workbench\.css\?v=20261118-polity-direct-sources-v1/);
 });

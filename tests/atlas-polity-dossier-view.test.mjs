@@ -130,3 +130,43 @@ test("Polity reader and dossier preserve Activity date precision, uncertainty an
   assert.equal(dossier.dossierForPolity(polity).people[0].activities[0].id,raw.id);
   assert.equal(JSON.stringify(raw),before);
 });
+
+test("Polity direct bibliography is visible, escapes text, and rejects unsafe source URLs",()=>{
+  const renderer=dossier.createRenderer({escapeHtml:value=>String(value??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;")});
+  const data={...polityFixture(),direct_sources:[
+    {title:"Archive <title>",canonical_url:"https://example.org/record",citation_text:"Original citation",author_creator:"A. Author",institution:"Archive",publisher:"Press",publication_year:1901,external_identifier:"cat:1"},
+    {title:"Unsafe URL",canonical_url:"javascript:alert(1)",citation_text:"<img src=x>"},
+    {title:"Text-only record",canonical_url:null}
+  ]};
+  const before=JSON.stringify(data);
+  const html=renderer.dossierHtml(data);
+  assert.match(html,/정치체 직접 출처/);
+  assert.match(html,/href="https:\/\/example\.org\/record"/);
+  assert.match(html,/Archive &lt;title&gt;/);
+  assert.match(html,/저자: A\. Author/);
+  assert.match(html,/기관: Archive/);
+  assert.match(html,/출판: Press/);
+  assert.match(html,/발행: 1901/);
+  assert.match(html,/식별자: cat:1/);
+  assert.match(html,/Original citation/);
+  assert.match(html,/Text-only record/);
+  assert.match(html,/&lt;img src=x&gt;/);
+  assert.doesNotMatch(html,/href="javascript:|<img src=x>/);
+  assert.equal(JSON.stringify(data),before);
+  assert.match(renderer.dossierHtml(polityFixture()),/이 정치체에 직접 연결된 출처 없음/);
+});
+
+test("Governance interval never promotes residual month/day beyond canonical granularity; notes are displayed",()=>{
+  const data={...polityFixture(),governance_periods:[{
+    id:"historical-regime",name_ko:"통치 체제",governance_type:"government",
+    valid_from_year:1900,valid_from_month:1,valid_from_day:2,valid_from_granularity:"year",
+    valid_to_year:1910,valid_to_month:4,valid_to_day:5,valid_to_granularity:"month",
+    notes:"근거 기록 <not html>"
+  }]};
+  assert.equal(dossier.dossierForPolity(data).governance_periods[0].period_label,"1900–1910-04");
+  const renderer=dossier.createRenderer({escapeHtml:value=>String(value??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;")});
+  const html=renderer.dossierHtml(data);
+  assert.match(html,/1900–1910-04/);
+  assert.match(html,/근거 기록 &lt;not html&gt;/);
+  assert.doesNotMatch(html,/1900-01-02|1910-04-05/);
+});

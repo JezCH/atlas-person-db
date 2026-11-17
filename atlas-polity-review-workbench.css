@@ -371,6 +371,14 @@
 }
 
 
+/* Explicit detail-only bibliography; responsive single column, no change to catalog layout. */
+.polity-dossier-sources{display:grid;gap:6px}
+.polity-dossier-sources article{display:grid;gap:4px;min-width:0;padding:8px 9px;border:1px solid var(--atlas-divider-soft);border-radius:4px;background:var(--atlas-surface-1)}
+.polity-dossier-sources strong{font-size:11px;color:var(--atlas-text);overflow-wrap:anywhere}
+.polity-dossier-sources a{color:var(--atlas-text);text-decoration:underline;text-underline-offset:2px}
+.polity-dossier-sources a:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.polity-dossier-sources small,.polity-governance-note{font-size:10px;line-height:1.45;color:var(--atlas-text-secondary);overflow-wrap:anywhere}
+
 /* GLOBAL-M3 — Inscription typography.
  * Shared institutional display type for historical identity headings only.
  * Font size, line height, spacing, layout, metadata typography, and operational

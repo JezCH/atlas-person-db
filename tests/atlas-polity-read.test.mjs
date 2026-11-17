@@ -410,3 +410,30 @@ test('Polity search accepts equivalent URL/framework q and framework-only rewrit
   }
   assert.deepEqual(searches, ['Joseon', 'Korean Empire']);
 });
+
+test('Polity exact UUID detail exposes only directly linked public bibliography, never on list', async () => {
+  const publicRow = { source_type: 'book', title: 'Archive record', canonical_url: 'https://example.org/record',
+    citation_text: 'Historical bibliography', author_creator: 'A. Author', institution: 'Archive',
+    publisher: 'Press', publication_date: '1901-01-01', publication_year: 1901,
+    external_identifier: 'catalog:1', id: 'private-id', source_key: 'private-key',
+    sha256: 'private-hash', bytes: 100, artifact_metadata: { secret: 'private-data' } };
+  const calls = [];
+  const client = { async query(sql, params) {
+    calls.push({ sql, params });
+    if (sql === POLITY_LIST_SQL) return { rows: [polityRow()] };
+    if (sql === POLITY_DETAIL_SQL) return { rows: [{ ...polityRow(), direct_sources: [publicRow] }], rowCount: 1 };
+    if (sql === POLITY_GOVERNANCE_PERIODS_SQL) return { rows: [] };
+    throw Error('unexpected query');
+  } };
+  const detail = await readPolityDetail({ client, polityId: POLITY_ID });
+  const list = await readPolities({ client });
+  const result = detail.direct_sources[0];
+  assert.match(POLITY_DETAIL_SQL, /from atlas_v2\.polity_sources ps\s+join atlas_v2\.sources s on s\.id = ps\.source_id\s+where ps\.polity_id = \$1::uuid/);
+  assert.doesNotMatch(POLITY_LIST_SQL, /atlas_v2\.polity_sources|direct_sources/);
+  assert.equal(calls[0].params[0], POLITY_ID);
+  for (const key of ['source_type','title','canonical_url','citation_text','author_creator','institution','publisher','publication_date','publication_year','external_identifier']) assert.equal(result[key], publicRow[key]);
+  for (const key of ['id','source_key','sha256','bytes','artifact_metadata']) assert.equal(Object.hasOwn(result,key),false);
+  assert.equal(result.locator, null, 'do not invent an activity locator for a direct Polity source');
+  assert.equal(Object.hasOwn(list.polities[0],'direct_sources'),false);
+  assert.equal(Object.isFrozen(detail.direct_sources),true);
+});
