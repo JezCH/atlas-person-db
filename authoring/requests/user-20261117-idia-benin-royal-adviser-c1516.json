@@ -1,0 +1,79 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261117:idia:kingdom-of-benin:queen-mother:c1516:v1",
+  "person": {
+    "canonical_name_en": "Idia",
+    "display_name_ko": "이디아",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-17",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Benin",
+    "display_name_ko": "베냉 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Iyoba (Queen Mother) and royal adviser",
+    "role_display_name_ko": "이요바(왕모)·왕실 고문",
+    "start_year": 1516,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1516,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Idia, mother of Oba Esigie of the Edo Kingdom of Benin (in today's Nigeria), was credited with pivotal political support during struggles over Esigie's rule. The royal court subsequently established the Iyoba (Queen Mother) title and conferred significant political privileges on her. A Benin City educational institution places one conflict, the Idah War, in 1515–1516; circa 1516 is therefore only a tentative representative activity point, NOT an exact accession, term start or end, or claim that Idia herself was Oba/sovereign ruler. The independent Met essay supports her standing but does not date this war precisely."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Women Leaders in African History: Idia, First Queen Mother of Benin — The Metropolitan Museum of Art",
+      "canonical_url": "https://www.metmuseum.org/essays/idia-the-first-queen-mother-of-benin",
+      "citation_text": "Metropolitan Museum historical essay identifies Idia as the mother of Esigie, her contribution to his political security and the creation of the Iyoba office with political privileges."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "About Queen Idia — Idia College, Benin City",
+      "canonical_url": "https://idiacollegebenincity.org/about-queen-idia/",
+      "citation_text": "Benin City educational institution records the historical tradition of Idia's political and military aid, with the Idah conflict dated to 1515–1516."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-11-17",
+      "review_reason": "related_or_derivative_only"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "No new geographic coordinates inferred; use existing authoritative Polity / Place placement, preserve uncertainty where applicable."
+  },
+  "review_context": {
+    "selection": "explicit_user_selected_registration_2026-11-17",
+    "preflight_required": true,
+    "production_screen": "No direct admin Production SCREEN available in this session. Protected GitHub OIDC Human Authoring preflight_batch is mandatory before every write; handle ALREADY_PRESENT/BLOCKED without duplicate creation.",
+    "aliases": [
+      "Queen Idia",
+      "Iyoba Idia",
+      "Ìyọ́bà Idià",
+      "이요바 이디아"
+    ],
+    "namuwiki_review_evidence": "Indexed mentions in 'CFA 프랑/서아프리카' refer to Idia (Iyoba), but no independent exact Idia Person article found after exact and alternate-name indexed search.",
+    "no_sovereignty_claim": true
+  }
+}
