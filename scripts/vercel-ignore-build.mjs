@@ -18,6 +18,8 @@ const SAFE_SKIP_PREFIXES = Object.freeze([
 const AGENT_NON_RUNTIME = new Set([
   "agent-memory/lessons.v1.json",
   "scripts/atlas-agent-context.mjs",
+  // Protected GitHub-only continuation; not a deployed endpoint.
+  "scripts/atlas-approved-preflight-dispatch.mjs",
   "scripts/atlas-agent-experience.mjs",
   "scripts/atlas-agent-lesson-harvest.mjs",
   "scripts/atlas-agent-dependency-map.mjs",

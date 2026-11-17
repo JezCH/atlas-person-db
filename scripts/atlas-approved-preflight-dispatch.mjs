@@ -129,10 +129,9 @@ export function assessApprovedBatchPreflightHandoff({ run, selector, manifests, 
   return { ok: true, requests: paths.map((p, i) => ({ path: p, requestId: manifests[i].request_id })) };
 }
 
-async function run() {
-  const event = JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH, 'utf8'));
-  const producer = event.workflow_run;
-  if (event.action !== 'completed' || event.repository?.full_name !== REPO ||
+export async function continueApprovedPreflight({ event, api = githubApi, content = githubContent, evidenceReader = readPreflightArtifact } = {}) {
+  const producer = event?.workflow_run;
+  if (event?.action !== 'completed' || event.repository?.full_name !== REPO ||
       producer?.name !== 'ATLAS Authoring Apply' ||
       producer?.event !== 'push' || producer.conclusion !== 'success') {
     console.log('SKIP: not protected main-push Authoring preflight completion');
@@ -142,7 +141,19 @@ async function run() {
     console.log('SKIP: Authoring run replay must not cause duplicate dispatch');
     return;
   }
-  const sourceSelector = await githubContent(REPO, SELECTOR_FILE, producer.head_sha);
+  if (producer.head_branch !== 'main' || !SHA_RE.test(producer.head_sha || '')) {
+    console.log('SKIP: producer is not an exact main SHA');
+    return;
+  }
+  // A successful Authoring run using an older selector is not a new
+  // selector preflight. Do not request a nonexistent or stale artifact.
+  const commit = await api('/repos/' + REPO + '/commits/' + producer.head_sha);
+  const changedPaths = Array.isArray(commit.files) ? commit.files.map((f) => f.filename) : [];
+  if (!changedPaths.includes(SELECTOR_FILE)) {
+    console.log('SKIP: producer did not change the protected selector');
+    return;
+  }
+  const sourceSelector = await content(REPO, SELECTOR_FILE, producer.head_sha);
   const single = /^preflight (authoring\/requests\/[A-Za-z0-9._-]+\.json)\n$/.exec(sourceSelector.text);
   const batch = single ? null : approvedBatchSelectorPaths(sourceSelector.text);
   if (!single && !batch) {
@@ -150,15 +161,13 @@ async function run() {
     return;
   }
   const paths = single ? [single[1]] : batch;
-  const sourceManifests = await Promise.all(paths.map((p) => githubContent(REPO, p, producer.head_sha)));
+  const sourceManifests = await Promise.all(paths.map((p) => content(REPO, p, producer.head_sha)));
   const manifests = sourceManifests.map((file) => JSON.parse(file.text));
   if (manifests.some((manifest) => manifest.review_context?.auto_continue_after_preflight !== true)) {
     console.log('SKIP: at least one Person lacks explicit reviewed event continuation');
     return;
   }
-  const commit = await githubApi('/repos/' + REPO + '/commits/' + producer.head_sha);
-  const changedPaths = (commit.files || []).map((f) => f.filename);
-  const evidence = await readPreflightArtifact(REPO, producer.id, producer.head_sha);
+  const evidence = await evidenceReader(REPO, producer.id, producer.head_sha);
   const approval = single
     ? assessApprovedPreflightHandoff({
         run: producer, selector: sourceSelector.text, manifest: manifests[0], evidence, changedPaths
@@ -171,8 +180,8 @@ async function run() {
   // Exact optimistic parity for the shared selector and EVERY immutable reviewed
   // manifest. A newer unrelated main commit is fine; a changed resource is not.
   const [mainSelector, ...mainManifests] = await Promise.all([
-    githubContent(REPO, SELECTOR_FILE, 'main'),
-    ...paths.map((p) => githubContent(REPO, p, 'main'))
+    content(REPO, SELECTOR_FILE, 'main'),
+    ...paths.map((p) => content(REPO, p, 'main'))
   ]);
   if (mainSelector.sha !== sourceSelector.sha ||
       mainManifests.some((file, i) => file.sha !== sourceManifests[i].sha)) {
@@ -188,7 +197,7 @@ async function run() {
       };
   // The existing protected Writer independently preflights the bounded batch
   // and checks the exact reviewed SHA before any canonical transaction.
-  await githubApi('/repos/' + REPO + '/actions/workflows/' + WRITER_WORKFLOW + '/dispatches', {
+  await api('/repos/' + REPO + '/actions/workflows/' + WRITER_WORKFLOW + '/dispatches', {
     method: 'POST', json: { ref: 'main', inputs }
   });
   const message = 'ATLAS_PREFLIGHT_AUTO_CONTINUED: OIDC run ' + producer.id +
@@ -199,7 +208,7 @@ async function run() {
 }
 
 if (process.env.ATLAS_PREFLIGHT_AUTODISPATCH_RUN === '1') {
-  run().catch((err) => {
+  continueApprovedPreflight({ event: JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH, 'utf8')) }).catch((err) => {
     console.error('ATLAS_PREFLIGHT_AUTODISPATCH_FAIL_CLOSED: ' + err.message);
     process.exitCode = 1;
   });
