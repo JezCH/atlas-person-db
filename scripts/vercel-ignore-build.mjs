@@ -137,6 +137,11 @@ export function shouldBuildForChangedPaths(paths) {
     return requiresAuthoringRuntimeDeployment(normalized);
   }
 
+  // The scanner, agent and outcome tools are GitHub-only development helpers.
+  // Preserve the deployed-SHA diff guard in main(): a prior undeployed app
+  // change must still trigger BUILD even when the newest commit is agent-only.
+  if (isAgentCapabilityOnly(normalized)) return false;
+
   return normalized.some((file) => !isSafeToSkipPath(file));
 }
 

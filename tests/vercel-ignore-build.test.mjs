@@ -45,6 +45,21 @@ test("agent-only GitHub development integration never consumes a Vercel build", 
   assert.equal(isAgentCapabilityOnly(["scripts/atlas-agent-context.mjs", "index.html"]), false);
   assert.equal(isAgentCapabilityOnly(["scripts/atlas-agent-context.mjs", "vercel.json"]), false);
   assert.equal(isAgentCapabilityOnly(["scripts/atlas-agent-context.mjs", "scripts/unreviewed-agent-tool.mjs"]), false);
+  assert.equal(shouldBuildForChangedPaths(integration), false);
+  assert.equal(shouldBuildForChangedPaths([
+    "scripts/atlas-agent-dependency-map.mjs",
+    "tests/atlas-agent-dependency-map.test.mjs"
+  ]), false);
+  // The ignore gate itself and any unknown executable are not skippable alone.
+  assert.equal(shouldBuildForChangedPaths(["scripts/vercel-ignore-build.mjs"]), true);
+  assert.equal(shouldBuildForChangedPaths([
+    "scripts/atlas-agent-dependency-map.mjs",
+    "scripts/unreviewed-agent-tool.mjs"
+  ]), true);
+  assert.equal(shouldBuildForChangedPaths([
+    "scripts/atlas-agent-dependency-map.mjs",
+    "api/atlas-read.js"
+  ]), true);
 });
 
 test("documentation, research evidence, reviewed authoring data and integrity-only changes are safe to skip", () => {
@@ -242,6 +257,22 @@ function gitFixture(changedFiles, {previousMissing=false, workflow="", priorChan
     return result;
   } finally { rmSync(root,{recursive:true,force:true}); }
 }
+test("a GitHub-only dependency map commit SKIPs, but prior undeployed runtime still BUILDs",()=>{
+  const helper={
+    "scripts/atlas-agent-dependency-map.mjs":"agent-only helper",
+    "tests/atlas-agent-dependency-map.test.mjs":"regression"
+  };
+  const safe=gitFixture(helper);
+  assert.equal(safe.status,0,safe.stdout+"\\n"+safe.stderr);
+  assert.match(safe.stdout,/SKIP: only non-deployable files changed/);
+  const mixed=gitFixture(helper,{
+    priorChangedFiles:{"server/atlas-person-read-handler.js":"older unshipped runtime"}
+  });
+  assert.equal(mixed.status,1,mixed.stdout+"\\n"+mixed.stderr);
+  assert.match(mixed.stdout,/BUILD: deployment-relevant change detected/);
+  assert.ok(mixed.stdout.includes("server/atlas-person-read-handler.js"));
+});
+
 test("real Git CLI preserves a leading-space unsafe path and BUILDs",()=>{
   const v=gitFixture({" docs/runtime.js":"unsafe"});
   assert.equal(v.status,1,v.stdout+"\n"+v.stderr);
