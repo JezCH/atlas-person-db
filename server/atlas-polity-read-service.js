@@ -1,6 +1,7 @@
 "use strict";
 
 const { TEMPORAL_POLITY_DESIGNATION_JOIN_SQL } = require("./atlas-polity-temporal-designation-read.js");
+const { projectSource } = require("./atlas-person-read-service.js");
 
 function preferredName(names, locale) {
   return (names || []).find((row) => row.locale === locale && row.is_preferred)?.name || null;
@@ -261,9 +262,32 @@ const POLITY_LIST_SQL = `${POLITY_SELECT_SQL}
 order by coalesce(ko.name, en.name, p.canonical_key, p.id::text), p.id
 `;
 
-const POLITY_DETAIL_SQL = `${POLITY_SELECT_SQL}
+// Direct Polity bibliography is deliberately detail-only. The list query
+// must not multiply source rows or expose identifiers/artifact/private metadata.
+// Use the same public Source projection as the Person detail contract.
+const POLITY_DETAIL_SQL = `
+select detail.*, coalesce((
+  select jsonb_agg(jsonb_build_object(
+    'source_type', s.source_type,
+    'title', s.title,
+    'canonical_url', s.canonical_url,
+    'citation_text', s.citation_text,
+    'author_creator', s.author_creator,
+    'institution', s.institution,
+    'publisher', s.publisher,
+    'publication_date', s.publication_date::text,
+    'publication_year', s.publication_year,
+    'external_identifier', s.external_identifier
+  ) order by s.title, s.source_type, s.id)
+  from atlas_v2.polity_sources ps
+  join atlas_v2.sources s on s.id = ps.source_id
+  where ps.polity_id = $1::uuid
+), '[]'::jsonb) as direct_sources
+from (
+${POLITY_SELECT_SQL}
 where p.id = $1::uuid
 limit 1
+) detail
 `;
 
 function filterPolities(polities, query = "") {
@@ -312,6 +336,8 @@ async function readPolityDetail({ client, polityId } = {}) {
   const periods = await client.query(POLITY_GOVERNANCE_PERIODS_SQL, [polityId]);
   return Object.freeze({
     ...existing,
+    direct_sources: Object.freeze((Array.isArray(result.rows[0].direct_sources)
+      ? result.rows[0].direct_sources : []).map(row => projectSource(row))),
     governance_periods: normalizeGovernancePeriods(periods.rows || [])
   });
 }

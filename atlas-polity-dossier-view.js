@@ -121,8 +121,12 @@
     let label=formatYear(year);
     const month=row?.["valid_"+prefix+"_month"];
     const day=row?.["valid_"+prefix+"_day"];
-    if(Number.isInteger(month)&&month>=1&&month<=12) label+="-"+String(month).padStart(2,"0");
-    if(Number.isInteger(day)&&day>=1&&day<=31&&Number.isInteger(month)) label+="-"+String(day).padStart(2,"0");
+    const granularity=row?.["valid_"+prefix+"_granularity"];
+    const validMonth=Number.isInteger(month)&&month>=1&&month<=12;
+    const showMonth=granularity==null||granularity==="month"||granularity==="day";
+    const showDay=granularity==null||granularity==="day";
+    if(showMonth&&validMonth) label+="-"+String(month).padStart(2,"0");
+    if(showDay&&validMonth&&Number.isInteger(day)&&day>=1&&day<=31) label+="-"+String(day).padStart(2,"0");
     return label;
   }
 
@@ -166,6 +170,7 @@
       unresolved_activity_count:unresolved,
       designations,
       governance_periods:governancePeriods,
+      direct_sources:Object.freeze(Array.isArray(polity?.direct_sources)?polity.direct_sources.slice():[]),
       people
     });
   }
@@ -204,10 +209,38 @@
       return '<div class="polity-dossier-designations">'+rows.map((row)=>
         '<article><div><strong>'+escapeHtml(row.title)+'</strong>'+
         (row.original_name&&row.original_name!==row.title?'<small>'+escapeHtml(row.original_name)+'</small>':"")+
+        (row.notes?'<small class="polity-governance-note">'+escapeHtml(row.notes)+'</small>':"")+
         '</div><span>'+escapeHtml(row.period_label)+'</span><span>'+
         escapeHtml(typeLabel(row.governance_type))+' · '+escapeHtml(row.confidence||"검증 상태 미기록")+
         '</span></article>'
       ).join("")+'</div>';
+    }
+
+    // Public source records carry no credential/artifact identity fields.
+    // Treat URLs as untrusted input; no href for malformed or non-HTTP(S).
+    function directSourcesHtml(rows){
+      if(!rows.length) return '<p class="polity-dossier-empty">이 정치체에 직접 연결된 출처 없음</p>';
+      return '<div class="polity-dossier-sources">'+rows.map((row)=>{
+        const title=text(row?.title||row?.display_reference||row?.citation_text||row?.canonical_url)||"제목 미등록";
+        const citation=text(row?.citation_text);
+        const bibliography=[
+          row?.author_creator&&"저자: "+row.author_creator,
+          row?.institution&&"기관: "+row.institution,
+          row?.publisher&&"출판: "+row.publisher,
+          (row?.publication_date||row?.publication_year!=null)&&"발행: "+(row.publication_date||row.publication_year),
+          row?.external_identifier&&"식별자: "+row.external_identifier
+        ].filter(Boolean).join(" · ");
+        let url="";
+        try {
+          const parsed=new URL(text(row?.canonical_url));
+          if(parsed.protocol==="https:"||parsed.protocol==="http:") url=parsed.href;
+        } catch {}
+        return '<article><strong>'+(url?
+          '<a href="'+escapeHtml(url)+'" target="_blank" rel="noopener noreferrer">'+escapeHtml(title)+'</a>':
+          escapeHtml(title))+'</strong>'+
+          (citation&&citation!==title?'<small>'+escapeHtml(citation)+'</small>':"")+
+          (bibliography?'<small>'+escapeHtml(bibliography)+'</small>':"")+'</article>';
+      }).join("")+'</div>';
     }
 
     function activityMeaning(activity){
@@ -257,6 +290,9 @@
         '</section>'+
         '<section class="polity-dossier-section"><div class="polity-dossier-section-head"><div><small>통치체계</small><h4>등록된 통치체계</h4></div><p>이 정치체 UUID에 직접 연결된 사료 기반 통치기간만 표시합니다. 국가 포괄체·헌정체계·사실상 통치권을 자동으로 합치거나 법적 정통성을 추정하지 않습니다. 종료일 미등록은 현재까지 존속했다는 보증이 아닙니다.</p></div>'+
           governanceHtml(dossier.governance_periods)+
+        '</section>'+
+        '<section class="polity-dossier-section"><div class="polity-dossier-section-head"><div><small>출처</small><h4>정치체 직접 출처</h4></div><p>이 정치체 자체에 등록된 출처입니다. 개별 활동이나 통치기간의 주장별 인용과는 구분합니다.</p></div>'+
+          directSourcesHtml(dossier.direct_sources)+
         '</section>'+
         '<section class="polity-dossier-section"><div class="polity-dossier-section-head"><div><small>연결 인물</small><h4>연결 인물</h4></div><p>동일 인물의 여러 활동을 한 묶음으로 표시합니다.</p></div>'+
           peopleHtml(dossier.people)+
