@@ -122,6 +122,9 @@ test('protected OIDC immutable artifact must match exact READY one', () => {
   committed.evidence.committed = true;
   assert.equal(assessProtectedPreflight(committed).reason, 'OIDC_NOT_EXACT_READY_ONE');
   const unrelatedRun = preflightInputs();
-  unrelatedRun.run.head_sha = sha;
+  unrelatedRun.run.actor.login = 'attacker';
   assert.equal(assessProtectedPreflight(unrelatedRun).reason, 'OIDC_PROVENANCE_MISMATCH');
+  const invalidSha = preflightInputs();
+  invalidSha.run.head_sha = 'not-a-sha';
+  assert.equal(assessProtectedPreflight(invalidSha).reason, 'OIDC_PROVENANCE_MISMATCH');
 });
