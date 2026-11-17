@@ -33,6 +33,7 @@
   const systemPanel = dataArea?.querySelector('[aria-labelledby="system-status-title"]');
   const inspectorPanel = dataArea?.querySelector('[aria-labelledby="inspector-title"]');
   const identityPanel = dataArea?.querySelector('[aria-labelledby="identity-title"]');
+  const waitlistPanel = dataArea?.querySelector('[aria-labelledby="waitlist-title"]');
   const activityPanel = dataArea?.querySelector('[aria-labelledby="input-title"]');
 
   if (!authPanel || !duplicateArea || !dataArea || !systemPanel || !inspectorPanel || !identityPanel || !activityPanel) {
@@ -57,7 +58,7 @@
   duplicateArea.appendChild(reviewView);
 
   const overviewView = createView("overview", [systemPanel]);
-  const authoringView = createView("authoring", [identityPanel, activityPanel]);
+  const authoringView = createView("authoring", waitlistPanel ? [identityPanel, waitlistPanel, activityPanel] : [identityPanel, activityPanel]);
   const inspectorView = createView("inspector", [inspectorPanel]);
 
   if (observabilityStack && observabilityStack.children.length === 0) observabilityStack.remove();
