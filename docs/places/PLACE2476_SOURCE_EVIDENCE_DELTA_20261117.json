@@ -1,0 +1,130 @@
+{
+  "schema": "atlas-place-source-evidence-delta/v1",
+  "as_of": "2026-11-17",
+  "authority": "Scoped source review; never a canonical correction request",
+  "original_review": {
+    "pr": 2617,
+    "head_sha": "ba6ad96783a51a2b712756951b7464e2c11d7d69",
+    "source_review_url": "https://github.com/JezCH/atlas-person-db/blob/ba6ad96783a51a2b712756951b7464e2c11d7d69/docs/handoffs/20261026-work-to-codex/checkpoint/place2476/source-review.json",
+    "fact_handoff_url": "https://github.com/JezCH/atlas-person-db/blob/ba6ad96783a51a2b712756951b7464e2c11d7d69/docs/handoffs/20261026-work-to-codex/checkpoint/place2476/fact-evidence-handoff.json"
+  },
+  "production_executable": false,
+  "production_mutation_authorized": false,
+  "operations": [],
+  "cases": [
+    {
+      "fact_index": 18,
+      "source_id": "9ed98162-dc7d-5a2f-89da-db4aac4694ae",
+      "historical_claim": {
+        "function_type": "capital",
+        "start_year": 656,
+        "end_year": 661
+      },
+      "review_state": "HOLD_START_YEAR_CONFLICT",
+      "original_publication": "Encyclopaedia Iranica: Kufa",
+      "original_url_recovered": "https://www.iranicaonline.org/articles/kufa/",
+      "original_locator": "KUFA, opening history paragraph on Ali's court; article published 2017",
+      "additional_evidence": [
+        {
+          "url": "https://www.iranicaonline.org/articles/chronology-of-iranian-history-part-1/",
+          "locator": "Chronology: 656 accession / 657 establishment of Kufa as capital",
+          "supports": "Capital role and death in 661; explicit capital establishment 657 rather than asserted 656"
+        }
+      ],
+      "finding": "Article KUFA confirms Ali (reigned 656–661) chose Kufa as capital but does NOT date that choice 656. Iranica chronological list states 657. Do not replace capital start with accession year; 656–661 assertion not approved.",
+      "next_action": "Historical owner adjudicates capital start and exact source/bibliographic identity; preserve original Source UUID and all links."
+    },
+    {
+      "fact_index": 4,
+      "source_id": "c3af4db8-6c27-51da-af04-5f562cbd5cc2",
+      "historical_claim": {
+        "function_type": "capital",
+        "start_year": 1923,
+        "end_year": null
+      },
+      "review_state": "HOLD_START_SUPPORTED_PUBLICATION_NOT_FETCHED",
+      "original_publication": "Atatürk Ansiklopedisi: Ankara’nın Başkent Oluşu",
+      "original_url_existing": "https://ataturkansiklopedisi.gov.tr/detay/868/Ankara%E2%80%99n%C4%B1n_Ba%C5%9Fkent_Olu%C5%9Fu",
+      "original_access": "Search-index exact title/date returned; direct original open failed. Not classified as verified original text.",
+      "additional_evidence": [
+        {
+          "url": "https://atam.gov.tr/ankaranin-baskent-olusunun-97-yil-donumunu-kutlu-olsun/",
+          "locator": "Paragraph announcing TBMM decision on 13 October 1923 and 1924 Constitution article 2",
+          "supports": "Ankara officially designated capital 13 Oct 1923; 1924 constitution later confirms status"
+        }
+      ],
+      "finding": "Independent government primary institution corroborates start 1923, but unavailable original article and current ongoing end=null require a separate current-law/continuity check. Supplemental institution URL must not silently replace original Source URI.",
+      "next_action": "Review original publisher article and currently operative capital authority; then decide Source assertion and full interval; fresh Production preflight."
+    },
+    {
+      "fact_index": 17,
+      "source_id": "69e4362a-3589-52b4-9a32-5b8e83710552",
+      "historical_claim": {
+        "function_type": "capital",
+        "start_year": 1326,
+        "end_year": 1364
+      },
+      "review_state": "HOLD_OFFICIAL_DATE_CONFLICT",
+      "original_publication": "Republic of Türkiye Bursa Governorship: Tarihçe",
+      "original_access": "Exact title/URL not verified. Distinct government agency pages are supplemental, not the original Source.",
+      "additional_evidence": [
+        {
+          "url": "https://bursa.ktb.gov.tr/TR-70230/tarihce.html",
+          "locator": "Tarihçe, Bursa captured 6 April 1326, made capital; Murad captured Edirne in 1361 but capital had not moved then",
+          "supports": "1326 Bursa capital establishment and continuity through at least 1361"
+        },
+        {
+          "url": "https://goturkiye.com/uk/unesco/marmara-turkiye",
+          "locator": "Bursa and Cumalıkızık paragraph, claim Bursa capital between 1335 and 1363",
+          "supports": "Alternative official published 1335–1363 interval; conflicts with 1326–1364 original fact"
+        }
+      ],
+      "finding": "Official Turkish cultural pages disagree on exact capital chronology. 1326–1364 is not independently established; do not use another agency's title as the existing Bursa Governorship Source.",
+      "next_action": "Resolve conflicting chronology and original Governor source identity with scholarly/publication-level evidence before any corrected date or Source attach."
+    },
+    {
+      "fact_index": 1,
+      "source_id": "044aaa9d-e264-5449-bbe4-e380c3f02220",
+      "historical_claim": {
+        "function_type": "capital",
+        "start_year": 1204,
+        "end_year": 1260
+      },
+      "review_state": "HOLD_INCLUSIVE_BOUNDARY_POLICY",
+      "original_publication": "1911 Encyclopaedia Britannica: Nicaea",
+      "original_url_existing": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Nicaea",
+      "original_access": "Transcription previously checked, not independently scan-collated 1911 print",
+      "additional_evidence": [
+        {
+          "url": "https://goturkiye.com/uk/unesco/marmara-turkiye",
+          "locator": "İznik Bursa section: Empire of Nicaea capital after 1204 Fourth Crusade until 1261 Byzantine recapture of Constantinople",
+          "supports": "Capital function from 1204 until transition in 1261"
+        }
+      ],
+      "finding": "Additional official tourism prose supports start 1204 and next-capital transition 1261; the asserted inclusive end=1260 needs reviewed end-exclusive 1261 → inclusive 1260 policy and original source treatment.",
+      "next_action": "Adjudicate year-boundary semantics for both Nicaea and Constantinople before source-reviewed authoring; do not auto-promote."
+    },
+    {
+      "fact_index": 15,
+      "source_id": "0a3dc36b-9eb9-5536-ac23-5fe71cb9467b",
+      "historical_claim": {
+        "function_type": "capital",
+        "start_year": 1365,
+        "end_year": 1452
+      },
+      "review_state": "HOLD_END_BOUNDARY_CONVENTION",
+      "original_publication": "Türkiye Culture Portal: Edirne - Genel Bilgiler",
+      "original_url_existing": "https://kulturportali.gov.tr/turkiye/edirne/genelbilgiler",
+      "original_access": "Original had been reviewed in 2026-10 checkpoint; no new direct publisher body assertion in this delta",
+      "additional_evidence": [
+        {
+          "url": "https://goturkiye.com/uk/unesco/marmara-turkiye",
+          "locator": "Edirne/İstanbul capital narrative",
+          "supports": "Edirne former Ottoman capital before Istanbul, without precise start-year or transition-year documentation"
+        }
+      ],
+      "finding": "Existing checked original states 1365 capital and 1453 move; original end=1452 is only consistent if capital transition year 1453 is represented as next phase. Explicit inclusive-boundary policy remains unresolved, especially in light of divergent Bursa timelines.",
+      "next_action": "Review inclusive-year policy against Nicaea, Constantinople and Bursa; retain HOLD until reviewed historical basis."
+    }
+  ]
+}
