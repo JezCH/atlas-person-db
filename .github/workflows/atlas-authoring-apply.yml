@@ -98,7 +98,10 @@ jobs:
             # Song Zhenzong registration 2026-09-24: refresh Runtime after committed Authoring write raced with a newer main deployment.
             # SSS+ Person batch 01 registration 2026-09-24: refresh Runtime after 8 committed Authoring Activities await Runtime projection.
             # It may also be used to record a no-content-change Runtime activation for activation-history verification.
-            if [[ ! -s /tmp/atlas-candidates.txt ]] && git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" -- | grep -qx '.github/workflows/atlas-authoring-apply.yml'; then
+            changed_for_audit="$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" --)"
+            # Do not trigger the all-approved bulk audit for mixed workflow
+            # fixes: that is expensive and unrelated to a Runtime handoff fix.
+            if [[ ! -s /tmp/atlas-candidates.txt && "$changed_for_audit" == '.github/workflows/atlas-authoring-apply.yml' ]]; then
               audit_all_approved=true
               echo 'Workflow-only change selected the trusted read-only completeness audit instead of replaying a historical batch.'
             fi
