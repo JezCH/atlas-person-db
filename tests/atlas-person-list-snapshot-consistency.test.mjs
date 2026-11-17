@@ -3,7 +3,7 @@ import test from 'node:test';
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
-const { PERSON_READ_SQL } = require('../server/atlas-person-read-service.js');
+const { PERSON_READ_SQL } = require('../server/atlas-runtime-person-read-service.js');
 const { PERSON_LIST_SEMANTIC_SQL } = require('../server/atlas-person-list-semantic-service.js');
 const {
   createPersonReadHandler,
@@ -57,9 +57,10 @@ function activityRow() {
 
 test('Person list summary is projected from the exact published Runtime Activity table', () => {
   const sql = PERSON_READ_SQL;
-  const matches = sql.match(/from atlas_v2\.runtime_person_politics_v1 pp where pp\.person_id = p\.id/g) || [];
-  assert.equal(matches.length, 3, 'count, min-year and max-year must use the same Runtime publication as activity facets');
-  assert.doesNotMatch(sql, /from atlas_v2\.person_politics_v2 pp where pp\.person_id = p\.id/);
+  assert.match(sql, /count\(\*\)::int from atlas_v2\.runtime_person_politics_v1 pp/);
+  assert.match(sql, /min\(pp\.activity_start\) from atlas_v2\.runtime_person_politics_v1 pp/);
+  assert.match(sql, /max\(pp\.activity_end\) from atlas_v2\.runtime_person_politics_v1 pp/);
+  assert.doesNotMatch(sql, /from atlas_v2\.person_politics_v2 pp/);
 });
 
 test('normal concurrent Runtime compile cannot make the Person list return HTTP500', async () => {
