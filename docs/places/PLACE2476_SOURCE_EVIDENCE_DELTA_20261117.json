@@ -170,6 +170,41 @@
         "observation": "Public scoped catalog reads only; full authenticated exact-before and legacy dependency link census not performed."
       },
       "next_action": "Historical Place owner confirms 1370–1405 means Timur personal-reign capital (not full Timurid Empire), reviews original Source identity and exact year-granularity convention; then approved immutable Source with exact UUID/URL/locator, exact-UUID Place and PPF writer preflight may be drafted. Explicit governed Production approval remains required. Do not call any writer from this evidence case."
+    },
+    {
+      "fact_index": 22,
+      "source_id": "e91f57ec-9c46-594b-859b-4a14c2af99ba",
+      "canonical_identity": {
+        "polity_id": "e3da3007-529a-40ec-9934-7b70dfd11cb7",
+        "polity": "Mamluk Sultanate",
+        "place_id": "53708ee8-020e-5efa-89f6-85d97d26cd82",
+        "place": "Cairo",
+        "place_key": "cairo"
+      },
+      "historical_claim": {
+        "function_type": "capital",
+        "start_year": 1250,
+        "end_year": 1517
+      },
+      "review_state": "HOLD_OWNER_APPROVAL_AFTER_INDEPENDENT_CORROBORATION",
+      "evidence_status": "MAMLUK_CAPITAL_AND_DYNASTIC_YEAR_INTERVAL_CORROBORATED",
+      "original_publication": "Getty Thesaurus of Geographic Names: Mamluk Sultanate (TGN 6003667)",
+      "original_url_existing": "https://www.getty.edu/vow/TGNFullDisplay?english=Y&find=lee&nation=&place=&subjectid=6003667",
+      "original_locator": "Getty TGN 6003667: Note; Related geographic places, capital is Cairo [7001215]",
+      "additional_evidence": [
+        {
+          "url": "https://www.metmuseum.org/essays/the-art-of-the-mamluk-period-1250-1517",
+          "locator": "Suzan Yalman, The Art of the Mamluk Period (1250–1517), October 1, 2001; opening historical paragraphs",
+          "supports": "Explicitly identifies Cairo as the Mamluk capital and gives Bahri 1250–1382 and Burji 1382–1517 periods."
+        },
+        {
+          "url": "https://whc.unesco.org/en/list/89",
+          "locator": "Historic Cairo, Outstanding Universal Value, Brief synthesis: political capital and Mamluk state 1250–1517",
+          "supports": "Independently identifies Cairo's political-capital urban history and the Mamluk state period 1250–1517."
+        }
+      ],
+      "finding": "The original Getty relation and independent Met/UNESCO descriptions jointly corroborate Cairo as the Mamluk Sultanate capital at year granularity, 1250–1517. This is a polity-lifetime synthesis, not a source for a precise transfer date, every sub-year interval, or exclusive capital status. No date or identity changes are proposed. Original Source UUID/locator remain intact; supplemental publications are distinct, not replacements.",
+      "next_action": "Historical owner approves the year-level capital interval and exact source attribution; obtain fresh authenticated exact-before identities and source status; then prepare bounded approved Place/Source/PPF writer preflight. No canonical operation authorized."
     }
   ]
 }
