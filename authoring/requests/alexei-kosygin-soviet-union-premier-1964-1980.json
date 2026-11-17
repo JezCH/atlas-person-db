@@ -69,6 +69,10 @@
   },
   "review_context": {
     "request_batch": "user-selected-kosygin-20261107",
-    "requested_item": 1
+    "requested_item": 1,
+    "current_production_authoring_gate": "OIDC preflight READY=1 ALREADY_PRESENT=0 BLOCKED=0 run 43992911438; re-run fresh protected batch preflight before commit",
+    "namuwiki_indexed_evidence_20261117": "Exact indexed NamuWiki-derived title 알렉세이 코시긴, USSR premiership dated 1964-10-15 to 1980-10-23, corroborated by Russian State Archive. Direct official-host HTTP not verified.",
+    "registration_state": "PROTECTED_OIDC_PREFLIGHT_THEN_READY_ONLY_APPLY",
+    "apply_gate": "User-selected cohort: only modified two request files are selected; authenticated GitHub OIDC batch preflights all, applies READY only using independent SERIALIZABLE transactions and validates ledger replay and Runtime; no duplicate writes or new Polity."
   }
 }

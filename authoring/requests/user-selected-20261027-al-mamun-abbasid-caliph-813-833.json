@@ -73,6 +73,10 @@
     "existing_polity_reference": "authoring/requests/cohort26-ahmad-ibn-hanbal-abbasid-833-20261009.json",
     "namuwiki_evidence_note": "Matching '알 마문' article was reviewed through a NamuWiki-derived public mirror https://www.namu.moe/w/%EC%95%8C%20%EB%A7%88%EB%AC%B8 ; direct namu.wiki access was blocked by the browser provider. Reconfirm authoritative target if preflight requires it.",
     "production_duplicate_preflight": "REQUIRED: verify current preferred name and variants Al-Ma'mun / Al-Mamun / Al-Maʾmūn / al-Maʿmun and reuse existing Person UUID if present; this offline manifest is not proof of absence.",
-    "production_status_at_review": "BLOCKED: Vercel project live=false; draft registration only, no canonical write/readback"
+    "production_status_at_review": "BLOCKED: Vercel project live=false; draft registration only, no canonical write/readback",
+    "current_production_authoring_gate": "OIDC preflight READY=1 ALREADY_PRESENT=0 BLOCKED=0 run 43993922520; re-run fresh protected batch preflight before commit",
+    "namuwiki_indexed_evidence_20261117": "Exact indexed NamuWiki-derived document 알 마문; Abbasid 7th caliph 813–833 corroborated by Encyclopaedia Iranica. Direct official-host HTTP not verified.",
+    "registration_state": "PROTECTED_OIDC_PREFLIGHT_THEN_READY_ONLY_APPLY",
+    "apply_gate": "User-selected cohort: only modified two request files are selected; authenticated GitHub OIDC batch preflights all, applies READY only using independent SERIALIZABLE transactions and validates ledger replay and Runtime; no duplicate writes or new Polity."
   }
 }
