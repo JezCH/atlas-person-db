@@ -1,6 +1,6 @@
 {
   "schema": "atlas-place-source-evidence-delta/v1",
-  "as_of": "2026-11-17",
+  "as_of": "2026-11-18",
   "authority": "Scoped source review; never a canonical correction request",
   "original_review": {
     "pr": 2617,
@@ -125,6 +125,51 @@
       ],
       "finding": "Existing checked original states 1365 capital and 1453 move; original end=1452 is only consistent if capital transition year 1453 is represented as next phase. Explicit inclusive-boundary policy remains unresolved, especially in light of divergent Bursa timelines.",
       "next_action": "Review inclusive-year policy against Nicaea, Constantinople and Bursa; retain HOLD until reviewed historical basis."
+    },
+    {
+      "fact_index": 11,
+      "source_id": "25dfe37e-1389-52de-a203-3231e5a9f106",
+      "canonical_identity": {
+        "polity_id": "6539c314-ec29-42e0-a0c2-90991fb9ffd8",
+        "polity": "Timurid Empire",
+        "place_id": "4d5eb343-f0d9-521e-8dec-078cd2bcfbc2",
+        "place": "Samarkand",
+        "place_key": "samarkand"
+      },
+      "historical_claim": {
+        "function_type": "capital",
+        "start_year": 1370,
+        "end_year": 1405
+      },
+      "review_state": "HOLD_OWNER_APPROVAL_AFTER_REIGN_SCOPE_CORROBORATION",
+      "evidence_status": "TIMUR_PERSONAL_REIGN_CAPITAL_1370_THROUGH_DEATH_1405_CORROBORATED",
+      "original_publication": "The Metropolitan Museum of Art: The Art of the Timurid Period (ca. 1370–1507)",
+      "original_url_existing": "https://www.metmuseum.org/essays/the-art-of-the-timurid-period-ca-1370-1507",
+      "original_locator": "Essay opening paragraph (Timur made Samarqand his capital in 1370; Timur's death in 1405)",
+      "original_access": "Metropolitan Museum original publisher essay directly indexed and corroborated; old October review had ORIGINAL_REVIEWED_PARTIAL_SUPPORT because interval through 1405 was not yet independently corroborated.",
+      "additional_evidence": [
+        {
+          "url": "https://www.iranicaonline.org/articles/courts-and-courtiers-v/",
+          "locator": "COURTS AND COURTIERS V: Timurid and Turkman dynasties, discussion of the proposed capital at Kesh versus Samarqand and its status by Timur's death in 1405",
+          "supports": "Independent specialist historical article supports Samarqand as the capital selected by Timur and a major capital at his death in 1405."
+        },
+        {
+          "url": "https://www.archnet.org/collections/2377",
+          "locator": "Timeline: Timurid {1370–1506}, opening passage and succession to Shah Rukh after Timur's 1405 death",
+          "supports": "Supports Timur's 1370 Samarkand control and 1405 death, and a later imperial court governed by Shah Rukh from Herat. Does not justify claiming Samarkand was the sole Timurid capital for 1370–1507."
+        }
+      ],
+      "finding": "Source-supported narrow claim: Timur established his capital at Samarqand in 1370 and the city remained his imperial capital up to his death in 1405. The reviewed original 1370–1405 interval is acceptable only when defined as capital of Timur's personal reign (inclusive terminal year), not proof of uninterrupted exclusive capital status for the full Timurid dynasty after 1405. Separate subsequent rulers and rival courts. Historic fact/Source support advanced; canonical identity and source-ID status are not approval to write.",
+      "production_before_checked": {
+        "polity_id_present": true,
+        "polity_name": "Timurid Empire",
+        "place_query": "samarkand",
+        "place_count": 0,
+        "source_key_query": "spatial-reviewed:25dfe37e-1389-52de-a203-3231e5a9f106",
+        "source_count": 0,
+        "observation": "Public scoped catalog reads only; full authenticated exact-before and legacy dependency link census not performed."
+      },
+      "next_action": "Historical Place owner confirms 1370–1405 means Timur personal-reign capital (not full Timurid Empire), reviews original Source identity and exact year-granularity convention; then approved immutable Source with exact UUID/URL/locator, exact-UUID Place and PPF writer preflight may be drafted. Explicit governed Production approval remains required. Do not call any writer from this evidence case."
     }
   ]
 }
