@@ -1,0 +1,122 @@
+/* Audit immutable ATLAS normalized Source URL reuse without touching a database.
+ * Input: raw/full-census JSON from the approved P2-10 read-only artifact.
+ * URL equality is only a review lead, never an instruction to merge Source UUIDs.
+ */
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const ROUTES = Object.freeze([
+  ['activity_sources', 'activity_id'],
+  ['polity_sources', 'polity_id'],
+  ['designation_sources', 'designation_id'],
+  ['governance_sources', 'governance_id']
+]);
+
+export function auditSharedSourceUrls(snapshot) {
+  const raw = snapshot?.raw || snapshot;
+  if (!raw || typeof raw !== 'object' || !Array.isArray(raw.sources) ||
+      !ROUTES.every(([name]) => Array.isArray(raw[name]))) {
+    throw new Error('SOURCE_URL_AUDIT_INCOMPLETE_SNAPSHOT');
+  }
+  const byId = new Map(), byUrl = new Map(), references = new Map();
+  for (const source of raw.sources) {
+    if (!source || typeof source.id !== 'string' || !source.id ||
+        typeof source.source_key !== 'string' || !source.source_key ||
+        byId.has(source.id)) throw new Error('SOURCE_URL_AUDIT_INVALID_SOURCE_ID');
+    byId.set(source.id, source);
+    references.set(source.id, []);
+    const url = source.canonical_url;
+    if (typeof url !== 'string' || !url.trim()) continue;
+    if (!byUrl.has(url)) byUrl.set(url, []);
+    byUrl.get(url).push(source);
+  }
+  for (const [table, parentKey] of ROUTES) {
+    for (const row of raw[table]) {
+      if (!byId.has(row?.source_id)) throw new Error('SOURCE_URL_AUDIT_DANGLING_SOURCE');
+      if (typeof row[parentKey] !== 'string' || !row[parentKey]) {
+        throw new Error('SOURCE_URL_AUDIT_INCOMPLETE_REFERENCE');
+      }
+      references.get(row.source_id).push({
+        table, parent_id: row[parentKey],
+        source_locator_key: row.source_locator_key == null ? null : String(row.source_locator_key)
+      });
+    }
+  }
+  const cases = [...byUrl].filter(([, sources]) => sources.length > 1)
+    .sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]))
+    .map(([canonical_url, items]) => {
+      const sources = items.map(item => ({
+        id: item.id,
+        source_key: item.source_key,
+        source_type: item.source_type,
+        title: item.title,
+        external_identifier: item.external_identifier == null ? null : item.external_identifier,
+        references: references.get(item.id)
+      })).sort((a, b) => a.id.localeCompare(b.id));
+      const titles = [...new Set(sources.map(x => x.title))].sort();
+      const types = [...new Set(sources.map(x => x.source_type))].sort();
+      const byActivity = new Map();
+      for (const s of sources) for (const ref of s.references) {
+        if (ref.table !== 'activity_sources') continue;
+        if (!byActivity.has(ref.parent_id)) byActivity.set(ref.parent_id, new Set());
+        byActivity.get(ref.parent_id).add(s.id);
+      }
+      const same_activity_source_collisions = [...byActivity]
+        .filter(([, ids]) => ids.size > 1)
+        .map(([activity_id, ids]) => ({ activity_id, source_ids: [...ids].sort() }))
+        .sort((a, b) => a.activity_id.localeCompare(b.activity_id));
+      return {
+        canonical_url, source_count: sources.length,
+        title_variants: titles, type_variants: types,
+        review_priority: same_activity_source_collisions.length
+          ? 'SAME_ACTIVITY_MULTIPLE_SOURCE_UUIDS'
+          : titles.length > 1 || types.length > 1
+            ? 'BIBLIOGRAPHIC_METADATA_VARIATION'
+            : 'ACTIVITY_SCOPED_REUSE',
+        same_activity_source_collisions,
+        sources, safe_to_merge: false, mutation_authorized: false,
+        review_state: 'REVIEW_REQUIRED'
+      };
+    });
+  const all = cases.flatMap(c => c.sources);
+  return {
+    schema: 'atlas-source-url-semantic-audit/v1',
+    scope: 'historical immutable Production read-only census; current live state not reconfirmed',
+    production_mutation_authorized: false, operations: [],
+    summary: {
+      shared_url_groups: cases.length,
+      source_uuid_rows: all.length,
+      excess_over_url_uniqueness: all.length - cases.length,
+      title_variant_groups: cases.filter(c => c.title_variants.length > 1).length,
+      type_variant_groups: cases.filter(c => c.type_variants.length > 1).length,
+      same_activity_source_groups: cases.filter(c => c.same_activity_source_collisions.length).length,
+      same_activity_source_collisions: cases.reduce((n, c) => n + c.same_activity_source_collisions.length, 0),
+      human_authoring_source_rows: all.filter(s => s.source_key.startsWith('human-authoring:')).length,
+      activity_source_links: all.reduce((n, s) => n + s.references.filter(r => r.table === 'activity_sources').length, 0),
+      designation_source_links: all.reduce((n, s) => n + s.references.filter(r => r.table === 'designation_sources').length, 0)
+    },
+    limitations: [
+      'The P2-10 snapshot does not include full Source citation_text or all Human Authoring ledger semantics.',
+      'Same URL/title/type or same Activity cannot by itself establish Source identity equivalence.',
+      'No canonical Source UUID can be deleted, merged or rebound by this report.'
+    ],
+    cases
+  };
+}
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  try {
+    const args = process.argv.slice(2);
+    if (args.length !== 4 || args[0] !== '--input' || args[2] !== '--output') {
+      throw new Error('usage: node scripts/atlas-source-url-semantic-audit.mjs --input full-census.json --output audit.json');
+    }
+    const input = JSON.parse(fs.readFileSync(args[1], 'utf8'));
+    const result = auditSharedSourceUrls(input);
+    fs.writeFileSync(args[3], JSON.stringify(result, null, 2) + '\n', {flag: 'wx'});
+    process.stdout.write(JSON.stringify(result.summary) + '\n');
+  } catch (error) {
+    process.stderr.write(String(error?.message || error) + '\n');
+    process.exitCode = 1;
+  }
+}
