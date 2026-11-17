@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { assessApprovedPreflightHandoff, assessApprovedBatchPreflightHandoff, approvedBatchSelectorPaths, continueApprovedPreflight } from '../scripts/atlas-approved-preflight-dispatch.mjs';
+import { assessApprovedPreflightHandoff, assessApprovedBatchPreflightHandoff, approvedBatchSelectorPaths, continueApprovedPreflight, hasReviewedBatchRequestIdentity } from '../scripts/atlas-approved-preflight-dispatch.mjs';
 
 const target = 'authoring/requests/youtube39-20261023-edgar-allan-poe-representative.json';
 const requestId = 'authoring:user-youtube39-20261023:edgar-allan-poe:representative:v1';
@@ -150,4 +150,73 @@ test('successful ordinary Authoring main push never fetches stale selector or pr
   assert.equal(calls.length,1);
   assert.match(calls[0][0], /\/commits\/[a-f0-9]{40}$/);
   assert.equal(calls[0][1],undefined);
+});
+
+const selectedPath = 'authoring/requests/selected62-remaining30-20261018-davis.json';
+const selectedId = 'authoring:selected62-remaining30-20261018:davis:representative:v1';
+function legacyBatchCase() {
+  const a = batchCase();
+  const seed = structuredClone(a.manifests[1]);
+  seed.request_id = selectedId;
+  seed.person.canonical_name_en = 'Miles Davis';
+  seed.polity = { canonical_name_en: 'United States of America', display_name_ko:'미국', polity_type:'historical_polity', historicity:'historical' };
+  seed.review_context = { task:'#2545 approved 62, remaining 30 after #2543/#2544/#2546', registration_state:'NEEDS_PREFLIGHT' };
+  const reviewed = structuredClone(seed);
+  reviewed.polity.canonical_name_en = 'United States';
+  reviewed.polity.existing_id = '7d09bc56-1ea0-515e-a3e7-9863361b6f15';
+  reviewed.review_context = { source_draft_pr:2549, auto_continue_after_preflight:true, preflight_required:true };
+  a.manifests[1] = reviewed;
+  a.selector = 'preflight ' + target + '\npreflight ' + selectedPath + '\n';
+  a.evidence.results[1] = { status:'READY', request_id:selectedId, manifest_path:selectedPath };
+  a.changedPaths[1] = selectedPath;
+  a.originalManifests = { [selectedPath]:seed };
+  return a;
+}
+
+test('legacy selected62 stable ID is accepted only when original approved historical content is preserved', () => {
+  const a = legacyBatchCase();
+  assert.equal(assessApprovedBatchPreflightHandoff(a).ok, true);
+  assert.equal(hasReviewedBatchRequestIdentity(selectedPath,a.manifests[1],a.originalManifests[selectedPath]),true);
+  for (const corrupt of [
+    b => { delete b.originalManifests[selectedPath]; },
+    b => { b.originalManifests[selectedPath].review_status = 'hold'; },
+    b => { b.originalManifests[selectedPath].review_context.task = 'unrelated'; },
+    b => { b.manifests[1].person.canonical_name_en = 'Other person'; },
+    b => { b.manifests[1].review_context.source_draft_pr = 2589; },
+    b => { b.manifests[1].sources[0].canonical_url = 'https://example.org/changed'; },
+    b => { b.manifests[1].polity.existing_id = '8d09bc56-1ea0-515e-a3e7-9863361b6f15'; },
+    b => { b.manifests[1].request_id = 'authoring:selected62-remaining30-20261018:other:representative:v1'; },
+    b => { b.manifests[1].activity = {start_year:1999}; }
+  ]) {
+    const b = legacyBatchCase();
+    corrupt(b);
+    assert.equal(assessApprovedBatchPreflightHandoff(b).ok,false,String(corrupt));
+  }
+});
+
+test('mixed modern and legacy reviewed batch dispatches once after immutable original proof', async () => {
+  const a = legacyBatchCase(), calls = [], source = [];
+  const snapshot = a.manifests.map((m,i)=>({sha:'blob'+i,text:JSON.stringify(m)}));
+  await continueApprovedPreflight({
+    event:{action:'completed', repository:{full_name:'JezCH/atlas-person-db'},workflow_run:{...a.run,id:123}},
+    api:async (url,opts)=> {
+      calls.push({url, opts});
+      return {files:a.changedPaths.map(filename=>({filename}))};
+    },
+    content:async (repo,path,ref)=>{
+      if (path === '.github/atlas-authoring-preflight.txt') return {sha:'selector',text:a.selector};
+      if (path === selectedPath && ref !== 'main' && ref !== a.run.head_sha) {
+        source.push(ref);
+        return {sha:'original',text:JSON.stringify(a.originalManifests[path])};
+      }
+      return snapshot[path===target?0:1];
+    },
+    evidenceReader:async ()=>a.evidence
+  });
+  assert.equal(source.length,1);
+  assert.match(source[0],/^[a-f0-9]{40}$/);
+  const writes=calls.filter(c=>c.opts?.method==='POST');
+  assert.equal(writes.length,1);
+  assert.deepEqual(JSON.parse(writes[0].opts.json.inputs.manifests_json),[target,selectedPath]);
+  assert.equal(writes[0].opts.json.inputs.approved_sha,a.run.head_sha);
 });
