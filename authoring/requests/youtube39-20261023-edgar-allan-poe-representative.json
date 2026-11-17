@@ -62,6 +62,7 @@
   "review_context": {
     "source_draft_pr": 2589,
     "existing_polity_identity_checked_at": "2026-11-17",
-    "preflight_required": true
+    "preflight_required": true,
+    "auto_continue_after_preflight": true
   }
 }
