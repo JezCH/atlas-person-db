@@ -82,9 +82,17 @@ select
   src->>'source_type' as source_type,
   src->>'title' as title,
   nullif(src->>'canonical_url','') as canonical_url,
-  src->>'citation_text' as citation_text
+  src->>'citation_text' as citation_text,
+  s.author_creator,
+  s.institution,
+  s.publisher,
+  s.publication_date::text as publication_date,
+  s.publication_year,
+  s.external_identifier
 from atlas_v2.runtime_person_politics_v1 pp
 cross join lateral jsonb_array_elements(coalesce(pp.provenance_snapshot->'normalized_sources','[]'::jsonb)) src
+left join atlas_v2.sources s
+  on s.id::text = src->>'source_id'
 where pp.person_id=$1::uuid
 order by pp.id,src->>'title',src->>'source_locator_key',src->>'source_id'`;
 
