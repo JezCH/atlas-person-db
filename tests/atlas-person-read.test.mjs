@@ -94,7 +94,13 @@ function personSourceRow() {
     source_type: 'bibliographic_reference',
     title: 'A History of the Scythians',
     canonical_url: null,
-    citation_text: 'Example Scholar, A History of the Scythians, 2024.'
+    citation_text: 'Example Scholar, A History of the Scythians, 2024.',
+    author_creator: 'Example Scholar',
+    institution: 'Historical Institute',
+    publisher: 'Example Press',
+    publication_date: '2024-01-15',
+    publication_year: 2024,
+    external_identifier: 'ISBN-TEST-2024'
   };
 }
 
@@ -226,7 +232,13 @@ test('Person detail exposes authoritative Activity semantics and readable proven
     canonical_url: null,
     citation_text: 'Example Scholar, A History of the Scythians, 2024.',
     locator: null,
-    display_reference: 'Example Scholar, A History of the Scythians, 2024.'
+    display_reference: 'Example Scholar, A History of the Scythians, 2024.',
+    author_creator: 'Example Scholar',
+    institution: 'Historical Institute',
+    publisher: 'Example Press',
+    publication_date: '2024-01-15',
+    external_identifier: 'ISBN-TEST-2024',
+    publication_year: 2024
   });
 
   const activity = person.activities[0];
@@ -275,6 +287,9 @@ test('Person detail exposes authoritative Activity semantics and readable proven
     assert.equal('source_key' in source, false);
     assert.equal('sha256' in source, false);
     assert.equal('bytes' in source, false);
+  }
+  for (const field of ['author_creator','institution','publisher','publication_date','publication_year','external_identifier']) {
+    assert.match(PERSON_SOURCE_SQL, new RegExp('s\\.' + field));
   }
   const personSourceProjection = PERSON_SOURCE_SQL.split(/\nfrom\s+/i)[0];
   const activitySourceProjection = ACTIVITY_SOURCE_SQL.split(/\nfrom\s+/i)[0];
