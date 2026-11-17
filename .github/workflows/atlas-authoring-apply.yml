@@ -27,6 +27,7 @@ on:
 
 permissions:
   contents: read
+  actions: write
   id-token: write
 
 concurrency:
@@ -97,7 +98,10 @@ jobs:
             # Song Zhenzong registration 2026-09-24: refresh Runtime after committed Authoring write raced with a newer main deployment.
             # SSS+ Person batch 01 registration 2026-09-24: refresh Runtime after 8 committed Authoring Activities await Runtime projection.
             # It may also be used to record a no-content-change Runtime activation for activation-history verification.
-            if [[ ! -s /tmp/atlas-candidates.txt ]] && git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" -- | grep -qx '.github/workflows/atlas-authoring-apply.yml'; then
+            changed_for_audit="$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" --)"
+            # Do not trigger the all-approved bulk audit for mixed workflow
+            # fixes: that is expensive and unrelated to a Runtime handoff fix.
+            if [[ ! -s /tmp/atlas-candidates.txt && "$changed_for_audit" == '.github/workflows/atlas-authoring-apply.yml' ]]; then
               audit_all_approved=true
               echo 'Workflow-only change selected the trusted read-only completeness audit instead of replaying a historical batch.'
             fi
@@ -1192,3 +1196,38 @@ jobs:
           path: /tmp/atlas-authoring-evidence/
           if-no-files-found: error
           retention-days: 90
+
+      # GitHub workflow_run chaining can be suppressed after an upstream
+      # GITHUB_TOKEN workflow_dispatch. A committed Authoring mutation must
+      # explicitly dispatch Runtime rather than depending on another event.
+      # The Runtime workflow itself deduplicates these dispatches from legacy
+      # workflow_run triggers. Never redo the canonical Authoring mutation.
+      - name: Dispatch Runtime for committed canonical Authoring mutations
+        if: always() && github.event_name == 'workflow_dispatch' && env.ATLAS_AUTHORING_SELECTED == 'true' && env.ATLAS_AUTHORING_AUDIT_ALL_APPROVED != 'true'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          response_dir=/tmp/atlas-authoring-evidence/responses
+          mutated=false
+          batch="$response_dir/human-authoring-batch.json"
+          if [[ -s "$batch" ]] && jq -e '(.succeeded_count // 0) > 0 and (.results | type == "array")' "$batch" >/dev/null; then
+            mutated=true
+          fi
+          if [[ "$mutated" == "false" ]]; then
+            shopt -s nullglob
+            for response in "$response_dir"/*.json; do
+              if jq -e '.committed == true and (.marker | IN("ATLAS_HUMAN_AUTHORING_V1", "ATLAS_AUTHORING_MANIFEST_V2_STAGE2_NATIVE"))' "$response" >/dev/null 2>&1; then
+                mutated=true
+                break
+              fi
+            done
+          fi
+          if [[ "$mutated" != "true" ]]; then
+            echo 'No committed Person/Activity mutation; skip Runtime dispatch.'
+            exit 0
+          fi
+          echo "Canonical Authoring commit evidence found. Dispatching bounded Runtime Compile from producer $GITHUB_RUN_ID."
+          gh workflow run atlas-runtime-compile.yml --ref main -f authoring_run_id="$GITHUB_RUN_ID"
+          echo 'RUNTIME_DISPATCH_ACCEPTED; do not treat this as Runtime publication or Production readback completion.'
