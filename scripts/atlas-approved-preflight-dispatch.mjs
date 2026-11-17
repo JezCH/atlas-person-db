@@ -59,6 +59,76 @@ export function assessApprovedPreflightHandoff({ run, selector, manifest, eviden
   return { ok: true, requestPath, requestId: manifest.request_id };
 }
 
+
+// A batch is a single reviewed main-push change, not repeated singleton
+// selector flips. Limit five to match the existing immutable Runtime readback.
+export const MAX_APPROVED_PREFLIGHT_BATCH = 5;
+
+export function approvedBatchSelectorPaths(selector) {
+  if (typeof selector !== 'string' || !selector.endsWith('\n')) return null;
+  const lines = selector.slice(0, -1).split('\n');
+  if (lines.length < 2 || lines.length > MAX_APPROVED_PREFLIGHT_BATCH) return null;
+  const paths = [];
+  for (const line of lines) {
+    const match = /^preflight (authoring\/requests\/[A-Za-z0-9._-]+\.json)$/.exec(line);
+    if (!match || !MANIFEST_RE.test(match[1])) return null;
+    paths.push(match[1]);
+  }
+  return new Set(paths).size === paths.length ? paths : null;
+}
+
+export function assessApprovedBatchPreflightHandoff({ run, selector, manifests, evidence, changedPaths }) {
+  const stop = (reason) => ({ ok: false, reason });
+  if (run?.name !== 'ATLAS Authoring Apply' || run.event !== 'push' ||
+      run.head_branch !== 'main' || run.status !== 'completed' ||
+      run.conclusion !== 'success' || run.actor?.login !== 'JezCH' ||
+      !SHA_RE.test(run.head_sha || '') || run.run_attempt !== 1) {
+    return stop('NOT_FIRST_SUCCESSFUL_OWNER_MAIN_PREFLIGHT');
+  }
+  const paths = approvedBatchSelectorPaths(selector);
+  if (!paths) return stop('INVALID_EXACT_BATCH_SELECTOR');
+  const allowedPaths = new Set([SELECTOR_FILE, ...paths]);
+  if (!Array.isArray(changedPaths) || changedPaths.length !== allowedPaths.size ||
+      !changedPaths.every((p) => allowedPaths.has(p))) return stop('BATCH_TOUCH_SET_MISMATCH');
+  if (!Array.isArray(manifests) || manifests.length !== paths.length) {
+    return stop('BATCH_MANIFEST_COUNT_MISMATCH');
+  }
+  const ids = new Set();
+  for (const manifest of manifests) {
+    if (manifest?.schema !== 'atlas-human-authoring/v1' ||
+        manifest.review_status !== 'approved' ||
+        !/^authoring:user-/.test(manifest.request_id || '') ||
+        manifest.person?.life_status !== 'deceased' ||
+        manifest.person?.representative_domain_reviewed !== true ||
+        !manifest.person?.canonical_name_en ||
+        !UUID_RE.test(manifest.polity?.existing_id || '') ||
+        !Array.isArray(manifest.sources) || manifest.sources.length < 1 ||
+        !manifest.sources.every((s) => /^https:\/\//.test(s.canonical_url || '')) ||
+        !['linked', 'not_found'].includes(manifest.external_references?.namuwiki?.status) ||
+        !Number.isInteger(manifest.review_context?.source_draft_pr) ||
+        manifest.review_context?.preflight_required !== true ||
+        manifest.review_context?.auto_continue_after_preflight !== true ||
+        ids.has(manifest.request_id)) return stop('BATCH_MANIFEST_NOT_INDIVIDUALLY_APPROVED');
+    ids.add(manifest.request_id);
+  }
+  if (evidence?.ok !== true || evidence.marker !== 'ATLAS_HUMAN_AUTHORING_BATCH_V1' ||
+      evidence.operation !== 'preflight_batch' || evidence.committed !== false ||
+      evidence.count !== paths.length || evidence.ready_count !== paths.length ||
+      evidence.already_present_count !== 0 || evidence.blocked_count !== 0 ||
+      !Array.isArray(evidence.results) || evidence.results.length !== paths.length) {
+    return stop('BATCH_OIDC_NOT_ALL_READY');
+  }
+  const outstanding = new Set(paths.map((p, i) => p + '\u0000' + manifests[i].request_id));
+  for (const result of evidence.results) {
+    const key = result.manifest_path + '\u0000' + result.request_id;
+    if (result.status !== 'READY' || !outstanding.delete(key)) {
+      return stop('BATCH_OIDC_RESULT_MISMATCH');
+    }
+  }
+  if (outstanding.size) return stop('BATCH_OIDC_RESULT_MISMATCH');
+  return { ok: true, requests: paths.map((p, i) => ({ path: p, requestId: manifests[i].request_id })) };
+}
+
 async function run() {
   const event = JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH, 'utf8'));
   const producer = event.workflow_run;
@@ -73,46 +143,57 @@ async function run() {
     return;
   }
   const sourceSelector = await githubContent(REPO, SELECTOR_FILE, producer.head_sha);
-  const pathMatch = /^preflight (authoring\/requests\/[A-Za-z0-9._-]+\.json)\n$/.exec(sourceSelector.text);
-  if (!pathMatch) {
-    console.log('SKIP: producer not a specific read-only preflight');
+  const single = /^preflight (authoring\/requests\/[A-Za-z0-9._-]+\.json)\n$/.exec(sourceSelector.text);
+  const batch = single ? null : approvedBatchSelectorPaths(sourceSelector.text);
+  if (!single && !batch) {
+    console.log('SKIP: producer not an exact read-only Person preflight selector');
     return;
   }
-  const sourceManifest = await githubContent(REPO, pathMatch[1], producer.head_sha);
-  const manifest = JSON.parse(sourceManifest.text);
-  if (manifest.review_context?.auto_continue_after_preflight !== true) {
-    console.log('SKIP: manifest did not expressly authorize event continuation');
+  const paths = single ? [single[1]] : batch;
+  const sourceManifests = await Promise.all(paths.map((p) => githubContent(REPO, p, producer.head_sha)));
+  const manifests = sourceManifests.map((file) => JSON.parse(file.text));
+  if (manifests.some((manifest) => manifest.review_context?.auto_continue_after_preflight !== true)) {
+    console.log('SKIP: at least one Person lacks explicit reviewed event continuation');
     return;
   }
   const commit = await githubApi('/repos/' + REPO + '/commits/' + producer.head_sha);
   const changedPaths = (commit.files || []).map((f) => f.filename);
   const evidence = await readPreflightArtifact(REPO, producer.id, producer.head_sha);
-  const approval = assessApprovedPreflightHandoff({
-    run: producer, selector: sourceSelector.text, manifest, evidence, changedPaths
-  });
+  const approval = single
+    ? assessApprovedPreflightHandoff({
+        run: producer, selector: sourceSelector.text, manifest: manifests[0], evidence, changedPaths
+      })
+    : assessApprovedBatchPreflightHandoff({
+        run: producer, selector: sourceSelector.text, manifests, evidence, changedPaths
+      });
   if (!approval.ok) throw new Error('REFUSED_' + approval.reason);
 
-  // Exact optimistic resource parity, not a global task lock. If a newer
-  // agent changed the shared selection file or immutable request, stop.
-  const [mainSelector, mainManifest] = await Promise.all([
+  // Exact optimistic parity for the shared selector and EVERY immutable reviewed
+  // manifest. A newer unrelated main commit is fine; a changed resource is not.
+  const [mainSelector, ...mainManifests] = await Promise.all([
     githubContent(REPO, SELECTOR_FILE, 'main'),
-    githubContent(REPO, approval.requestPath, 'main')
+    ...paths.map((p) => githubContent(REPO, p, 'main'))
   ]);
-  if (mainSelector.sha !== sourceSelector.sha || mainManifest.sha !== sourceManifest.sha) {
+  if (mainSelector.sha !== sourceSelector.sha ||
+      mainManifests.some((file, i) => file.sha !== sourceManifests[i].sha)) {
     throw new Error('STALE_AUTHORING_SELECTOR_OR_MANIFEST');
   }
-  // No user-approved identity or data is changed here. The existing writer
-  // independently performs a fresh OIDC preflight before any DB transaction.
+  const inputs = single
+    ? { manifest: approval.requestPath, bootstrap_only: 'false', audit_all_approved: 'false' }
+    : {
+        manifests_json: JSON.stringify(paths),
+        approved_sha: producer.head_sha,
+        bootstrap_only: 'false',
+        audit_all_approved: 'false'
+      };
+  // The existing protected Writer independently preflights the bounded batch
+  // and checks the exact reviewed SHA before any canonical transaction.
   await githubApi('/repos/' + REPO + '/actions/workflows/' + WRITER_WORKFLOW + '/dispatches', {
-    method: 'POST',
-    json: {
-      ref: 'main',
-      inputs: { manifest: approval.requestPath, bootstrap_only: 'false', audit_all_approved: 'false' }
-    }
+    method: 'POST', json: { ref: 'main', inputs }
   });
   const message = 'ATLAS_PREFLIGHT_AUTO_CONTINUED: OIDC run ' + producer.id +
-    ' READY=1 for ' + approval.requestPath + '; existing protected Authoring APPLY dispatched. ' +
-    'Not completed until committed+Runtime+Production readback.';
+    ' READY=' + paths.length + ' individually approved requests; protected Authoring APPLY dispatched. ' +
+    'Not complete until committed+Runtime+Production readback.';
   console.log(message);
   if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, message + '\n');
 }

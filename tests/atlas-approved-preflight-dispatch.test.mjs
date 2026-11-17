@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { assessApprovedPreflightHandoff } from '../scripts/atlas-approved-preflight-dispatch.mjs';
+import { assessApprovedPreflightHandoff, assessApprovedBatchPreflightHandoff, approvedBatchSelectorPaths } from '../scripts/atlas-approved-preflight-dispatch.mjs';
 
 const target = 'authoring/requests/youtube39-20261023-edgar-allan-poe-representative.json';
 const requestId = 'authoring:user-youtube39-20261023:edgar-allan-poe:representative:v1';
@@ -65,4 +65,75 @@ test('not first owner push, stale/incorrect selector or push event fails closed'
   assert.equal(assessApprovedPreflightHandoff(d).reason, 'SELECTOR_NOT_CHANGED_BY_PROTECTED_PUSH');
   const e = original(); e.run.event = 'workflow_dispatch';
   assert.equal(assessApprovedPreflightHandoff(e).reason, 'NOT_FIRST_SUCCESSFUL_OWNER_MAIN_PREFLIGHT');
+});
+
+const otherPath = 'authoring/requests/youtube39-20261023-james-baldwin-representative.json';
+const batchCase = () => {
+  const a = original();
+  const other = structuredClone(a.manifest);
+  other.request_id = 'authoring:user-youtube39-20261023:james-baldwin:representative:v1';
+  other.person.canonical_name_en = 'James Baldwin';
+  return {
+    run: a.run,
+    selector: 'preflight ' + target + '\npreflight ' + otherPath + '\n',
+    manifests: [a.manifest, other],
+    evidence: {
+      ...a.evidence, count: 2, ready_count: 2,
+      results: [
+        { status: 'READY', request_id: requestId, manifest_path: target },
+        { status: 'READY', request_id: other.request_id, manifest_path: otherPath }
+      ]
+    },
+    changedPaths: [target, otherPath, '.github/atlas-authoring-preflight.txt']
+  };
+};
+
+test('bounded batch requires two to five distinct exact preflight lines', () => {
+  const a = batchCase();
+  assert.deepEqual(approvedBatchSelectorPaths(a.selector), [target, otherPath]);
+  assert.equal(approvedBatchSelectorPaths('preflight ' + target + '\n'), null);
+  assert.equal(approvedBatchSelectorPaths('apply ' + target + '\npreflight ' + otherPath + '\n'), null);
+  assert.equal(approvedBatchSelectorPaths(a.selector + 'preflight ' + target + '\n'), null);
+  assert.equal(approvedBatchSelectorPaths(a.selector.slice(0, -1)), null);
+  assert.equal(approvedBatchSelectorPaths(('preflight ' + target + '\n').repeat(6)), null);
+});
+
+test('OIDC all-READY batch from exact main push may dispatch one writer batch', () => {
+  const a = batchCase();
+  assert.deepEqual(assessApprovedBatchPreflightHandoff(a), {
+    ok: true,
+    requests: [
+      { path: target, requestId },
+      { path: otherPath, requestId: a.manifests[1].request_id }
+    ]
+  });
+  a.evidence.results.reverse();
+  assert.equal(assessApprovedBatchPreflightHandoff(a).ok, true);
+});
+
+test('batch refuses mixed/ambiguous/non-unique identity or provenance', () => {
+  const modifications = [
+    a => { a.run.actor.login = 'untrusted'; },
+    a => { a.run.run_attempt = 2; },
+    a => { a.changedPaths.push('scripts/unrelated.js'); },
+    a => { a.changedPaths.pop(); },
+    a => { a.manifests[1].request_id = a.manifests[0].request_id; },
+    a => { a.manifests[1].review_status = 'hold'; },
+    a => { a.manifests[1].review_context.auto_continue_after_preflight = false; },
+    a => { a.manifests[1].review_context.source_draft_pr = null; },
+    a => { a.manifests[1].polity.existing_id = null; },
+    a => { a.manifests[1].sources = []; },
+    a => { a.evidence.committed = true; },
+    a => { a.evidence.ready_count = 1; },
+    a => { a.evidence.already_present_count = 1; },
+    a => { a.evidence.blocked_count = 1; },
+    a => { a.evidence.results[1].status = 'ALREADY_PRESENT'; },
+    a => { a.evidence.results[1].manifest_path = target; },
+    a => { a.evidence.results[1].request_id = requestId; }
+  ];
+  for (const corrupt of modifications) {
+    const a = batchCase();
+    corrupt(a);
+    assert.equal(assessApprovedBatchPreflightHandoff(a).ok, false, String(corrupt));
+  }
 });
