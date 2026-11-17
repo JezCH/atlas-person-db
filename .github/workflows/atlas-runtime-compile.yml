@@ -14,6 +14,7 @@ on:
       - 'db/migrations/20260920_runtime_projection_activation_history_v1.sql'
       - 'db/migrations/20260920_runtime_compile_exclusion_targets_v1.sql'
       - 'contracts/runtime-projection-contract.v1.json'
+      - '.github/workflows/atlas-runtime-compile.yml'
   workflow_run:
     workflows:
       - ATLAS Authoring Apply
@@ -21,6 +22,12 @@ on:
     types:
       - completed
   workflow_dispatch:
+    inputs:
+      authoring_run_id:
+        description: 'Optional protected Authoring run ID for verified Person readback'
+        required: false
+        type: string
+        default: ''
 
 permissions:
   contents: read
@@ -39,7 +46,11 @@ jobs:
     # A terminal run triggers publication even when the producer workflow
     # reports failure because isolated earlier operations may already have
     # committed. workflow_dispatch is recovery-only, never a semantic trigger.
-    if: github.event_name != 'workflow_run' || github.event.workflow_run.head_branch == 'main'
+    if: >-
+      github.event_name != 'workflow_run' ||
+      (github.event.workflow_run.head_branch == 'main' &&
+       !(github.event.workflow_run.name == 'ATLAS Authoring Apply' &&
+         github.event.workflow_run.event == 'workflow_dispatch'))
     runs-on: ubuntu-latest
     timeout-minutes: 15
     environment: production
@@ -105,7 +116,25 @@ jobs:
           set -euo pipefail
           require_exact_runtime=false
           if [[ "${{ github.event_name }}" == "push" ]]; then
-            require_exact_runtime=true
+            before="${{ github.event.before }}"
+            if [[ "$before" =~ ^[0-9a-f]{40}$ ]] && git cat-file -e "${before}^{commit}" 2>/dev/null; then
+              git diff --name-only --diff-filter=ACMRTUXB "$before" "$GITHUB_SHA" -- > /tmp/atlas-runtime-trigger-paths.txt
+              # Use the canonical Vercel build-impact classifier: pure workflows,
+              # docs and tests do NOT require a new Production app deploy.
+              if node --input-type=module -e '
+                import fs from "node:fs";
+                import { shouldBuildForChangedPaths } from "./scripts/vercel-ignore-build.mjs";
+                const paths = fs.readFileSync("/tmp/atlas-runtime-trigger-paths.txt", "utf8").split(/\r?\n/).filter(Boolean);
+                const needsDeploy = shouldBuildForChangedPaths(paths);
+                console.log("Runtime source requires fresh Production build:", needsDeploy);
+                process.exit(needsDeploy ? 0 : 1);
+              '; then
+                require_exact_runtime=true
+              fi
+            else
+              echo 'Unverified push base; require exact Runtime deployment.' >&2
+              require_exact_runtime=true
+            fi
           fi
 
           for attempt in $(seq 1 60); do
@@ -207,12 +236,10 @@ jobs:
       - name: Verify committed Person and Activity in Production after Runtime publication
         if: >-
           steps.readonly_preflight.outputs.skip != 'true' &&
-          github.event_name == 'workflow_run' &&
-          github.event.workflow_run.name == 'ATLAS Authoring Apply' &&
-          github.event.workflow_run.event == 'workflow_dispatch' &&
-          github.event.workflow_run.conclusion == 'success'
+          github.event_name == 'workflow_dispatch' &&
+          inputs.authoring_run_id != ''
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ATLAS_AUTHORING_PRODUCER_RUN_ID: ${{ github.event.workflow_run.id }}
+          ATLAS_AUTHORING_PRODUCER_RUN_ID: ${{ inputs.authoring_run_id }}
           ATLAS_RUNTIME_READBACK_RUN: '1'
         run: node scripts/atlas-authoring-runtime-readback.mjs
