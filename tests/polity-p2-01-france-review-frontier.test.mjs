@@ -34,9 +34,9 @@ test("P2-01J closes the 1830 France boundary while the parent family remains app
   assert.match(audit,/65 Runtime/);
   assert.match(audit,/P2-01A/);
   const workstreams=text("docs/ATLAS_CURRENT_WORKSTREAMS.md");
-  // Current-state board intentionally no longer repeats historical closure labels;
+  // Current routing checkpoint intentionally does not repeat historical closure labels;
   // exact P2-01J closure is verified from its audited source document below.
-  assert.match(workstreams,/Current-state board/);
+  assert.match(workstreams,/Current routing checkpoint/);
   assert.match(workstreams,/france-regime-family/);
   assert.match(workstreams,/brazil-regime-family/);
   assert.match(workstreams,/approval-gated/);
