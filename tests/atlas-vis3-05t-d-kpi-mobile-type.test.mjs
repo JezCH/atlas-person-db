@@ -11,7 +11,7 @@ const k=kpi.slice(kpi.indexOf('/* VIS3-05T-D'));
 const m=mobile.slice(mobile.indexOf('/* VIS3-05T-D'));
 test('T-D KPI and mobile appbar use canonical CSS authorities and cache versions',()=>{
  assert.match(nav,/atlas-dashboard-monumental-v11\.css\?v=20261010-vis3-05t-d-kpi-caption-v1/);
- assert.match(index,/atlas-ui-mobile-v8\.css\?v=20261010-vis3-05t-d-appbar-microtype-v1/);
+ assert.match(index,/atlas-ui-mobile-v8\.css\?v=20261117-vis3-05t-mobile-caption-v1/);
  assert.match(k,/\.dashboard-control-center \.dashboard-kpi > small \{/);
  assert.match(k,/\.dashboard-control-center \.dashboard-kpi > span \{/);
  assert.match(k,/@media \(max-width:600px\)/);
