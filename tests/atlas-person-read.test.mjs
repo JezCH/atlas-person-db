@@ -305,6 +305,7 @@ test('Person detail exposes authoritative Activity semantics and readable proven
   for (const field of ['author_creator','institution','publisher','publication_date','publication_year','external_identifier']) {
     assert.match(PERSON_SOURCE_SQL, new RegExp('s\\.' + field));
     assert.match(ACTIVITY_SOURCE_SQL, new RegExp('s\\.' + field));
+    assert.match(runtimeRead.ACTIVITY_SOURCE_SQL, new RegExp('s\\.' + field));
   }
   const personSourceProjection = PERSON_SOURCE_SQL.split(/\nfrom\s+/i)[0];
   const activitySourceProjection = ACTIVITY_SOURCE_SQL.split(/\nfrom\s+/i)[0];
@@ -340,6 +341,9 @@ test('Person detail exposes authoritative Activity semantics and readable proven
     assert.match(ACTIVITY_SOURCE_SQL, new RegExp(field));
   }
   assert.match(ACTIVITY_SOURCE_SQL, /source_locator_key/);
+  assert.match(runtimeRead.ACTIVITY_SOURCE_SQL, /src->>'source_locator_key'/);
+  assert.match(runtimeRead.ACTIVITY_SOURCE_SQL, /left join atlas_v2\.sources s/);
+  assert.match(runtimeRead.ACTIVITY_SOURCE_SQL, /s\.id::text = src->>'source_id'/);
 });
 
 test('Person read handler supports list and UUID detail modes and rejects malformed IDs before DB access', async () => {
