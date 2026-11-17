@@ -7,6 +7,7 @@ on:
   workflow_run:
     workflows:
       - ATLAS Integrity
+      - ATLAS Authoring Apply
     types:
       - completed
 
@@ -44,3 +45,32 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ATLAS_AUTOCONTINUE_RUN: '1'
         run: node scripts/atlas-authoring-auto-continuation.mjs
+
+  continue-protected-ready-preflight:
+    # A protected GitHub OIDC main-push preflight can hand a reviewed READY
+    # Person directly to the existing Authoring Apply dispatcher, eliminating
+    # a redundant second approval PR and the ChatGPT-session timing gap.
+    if: >-
+      github.event.workflow_run.name == 'ATLAS Authoring Apply' &&
+      github.event.workflow_run.event == 'push' &&
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.repository.full_name == 'JezCH/atlas-person-db'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      actions: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Dispatch only immutable reviewed READY request to protected writer
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ATLAS_PREFLIGHT_AUTODISPATCH_RUN: '1'
+        run: node scripts/atlas-approved-preflight-dispatch.mjs
