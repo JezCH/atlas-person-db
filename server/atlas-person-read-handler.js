@@ -109,6 +109,31 @@ function filteredSummary(persons) {
   });
 }
 
+// Person list summary and its detailed Runtime facets are two SQL statements.
+// Compile/Authoring can change between them; one stable read-only snapshot
+// avoids a transient 500 without suppressing true same-snapshot mismatches.
+const PERSON_LIST_SNAPSHOT_BEGIN_SQL = "BEGIN TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY";
+
+async function withConsistentPersonListSnapshot(client, read) {
+  if (!client || typeof client.query !== "function" || typeof read !== "function") {
+    throw new Error("Person list read requires a connected PostgreSQL client");
+  }
+  await client.query(PERSON_LIST_SNAPSHOT_BEGIN_SQL);
+  try {
+    const value = await read();
+    await client.query("COMMIT");
+    return value;
+  } catch (error) {
+    try {
+      await client.query("ROLLBACK");
+    } catch (rollbackError) {
+      // Preserve the actual read failure while recording only a safe code.
+      console.error("ATLAS Person list snapshot rollback failed", String(rollbackError?.code || "UNKNOWN"));
+    }
+    throw error;
+  }
+}
+
 function createPersonReadHandler({ clientFactory, env = process.env, readListSemantics = readPersonListSemantics } = {}) {
   if (typeof clientFactory !== "function") throw new Error("clientFactory is required");
   if (typeof readListSemantics !== "function") throw new Error("readListSemantics is required");
@@ -223,45 +248,47 @@ function createPersonReadHandler({ clientFactory, env = process.env, readListSem
         return;
       }
 
-      const data = await readPersons({ client });
-      const hasListFilter = Boolean(requestedQuery || requestedNamuWikiStatus || requestedLimit != null);
-      if (hasListFilter) {
-        let filteredPersons = data.persons;
-        if (requestedQuery) filteredPersons = filteredPersons.filter((person) => personMatchesQuery(person, requestedQuery));
-        if (requestedNamuWikiStatus) {
-          filteredPersons = filteredPersons.filter((person) => personMatchesNamuWikiStatus(person, requestedNamuWikiStatus));
+      const payload = await withConsistentPersonListSnapshot(client, async () => {
+        const data = await readPersons({ client });
+        const hasListFilter = Boolean(requestedQuery || requestedNamuWikiStatus || requestedLimit != null);
+        if (hasListFilter) {
+          let filteredPersons = data.persons;
+          if (requestedQuery) filteredPersons = filteredPersons.filter((person) => personMatchesQuery(person, requestedQuery));
+          if (requestedNamuWikiStatus) {
+            filteredPersons = filteredPersons.filter((person) => personMatchesNamuWikiStatus(person, requestedNamuWikiStatus));
+          }
+          const matchedTotal = filteredPersons.length;
+          if (requestedLimit != null) filteredPersons = filteredPersons.slice(0, requestedLimit);
+          const persons = await readListSemantics({ client, persons: filteredPersons });
+          return {
+            ok: true,
+            source: "v2-person-read",
+            activity_source: PUBLIC_ACTIVITY_SOURCE,
+            schema: "atlas-person-read/v1",
+            mode: "list",
+            ...data,
+            summary: filteredSummary(persons),
+            query: requestedQuery || null,
+            ...(requestedNamuWikiStatus ? { namuwiki_status: requestedNamuWikiStatus } : {}),
+            ...(requestedLimit != null ? { limit: requestedLimit, matched_total: matchedTotal } : {}),
+            persons
+          };
         }
-        const matchedTotal = filteredPersons.length;
-        if (requestedLimit != null) filteredPersons = filteredPersons.slice(0, requestedLimit);
-        const persons = await readListSemantics({ client, persons: filteredPersons });
-        sendJson(res, 200, {
+        const persons = await readListSemantics({ client, persons: data.persons });
+        return {
           ok: true,
           source: "v2-person-read",
           activity_source: PUBLIC_ACTIVITY_SOURCE,
           schema: "atlas-person-read/v1",
           mode: "list",
           ...data,
-          summary: filteredSummary(persons),
-          query: requestedQuery || null,
-          ...(requestedNamuWikiStatus ? { namuwiki_status: requestedNamuWikiStatus } : {}),
-          ...(requestedLimit != null ? { limit: requestedLimit, matched_total: matchedTotal } : {}),
+          summary: data.summary,
+          query: null,
           persons
-        });
-        return;
-      }
-
-      const persons = await readListSemantics({ client, persons: data.persons });
-      sendJson(res, 200, {
-        ok: true,
-        source: "v2-person-read",
-        activity_source: PUBLIC_ACTIVITY_SOURCE,
-        schema: "atlas-person-read/v1",
-        mode: "list",
-        ...data,
-        summary: data.summary,
-        query: null,
-        persons
+        };
       });
+      // Do not hold the read snapshot open across HTTP serialization.
+      sendJson(res, 200, payload);
     } catch (error) {
       console.error("ATLAS Person read failed", error);
       sendJson(res, client ? 500 : 503, {
@@ -289,5 +316,7 @@ module.exports = Object.freeze({
   personMatchesQuery,
   personMatchesNamuWikiStatus,
   parseListLimit,
+  PERSON_LIST_SNAPSHOT_BEGIN_SQL,
+  withConsistentPersonListSnapshot,
   createPersonReadHandler
 });
