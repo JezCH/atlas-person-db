@@ -1,2 +1,5 @@
+preflight authoring/requests/selected62-remaining30-20261018-ellington.json
+preflight authoring/requests/selected62-remaining30-20261018-davis.json
+preflight authoring/requests/selected62-remaining30-20261018-welles.json
 preflight authoring/requests/youtube39-20261023-marilyn-monroe-representative.json
 preflight authoring/requests/youtube48-20261023-whitney-houston-representative.json
