@@ -1,0 +1,80 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261117:ioannis-metaxas:greece:prime-minister:1936-1941:v1",
+  "person": {
+    "canonical_name_en": "Ioannis Metaxas",
+    "display_name_ko": "요안니스 메탁사스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-17",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Greece",
+    "display_name_ko": "그리스",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "4dd77aef-9070-448e-b8da-425dfd0f4732"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1936,
+    "start_month": 4,
+    "start_day": 13,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1941,
+    "end_month": 1,
+    "end_day": 29,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ioannis Metaxas became Prime Minister of Greece by appointment of King George II on 13 April 1936; he suspended parliamentary government on 4 August 1936 and led an authoritarian dictatorship until his death on 29 January 1941. The ATLAS canonical Greece polity is reused; the historical 'Kingdom of Greece' state-form designation is already modeled on this polity and must NOT be re-created as a separate polity. He was Prime Minister and de facto dictator, not a reigning king."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Metaxas, Ioannis — International Encyclopedia of the First World War (Elli Lemonidou, University of Patras)",
+      "canonical_url": "https://encyclopedia.1914-1918-online.net/article/metaxas-ioannis/",
+      "citation_text": "Scholarly biography states the exact prime ministerial appointment, 4 August 1936 dictatorship and death on 29 January 1941."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "4th of August Regime — SearchCulture.gr, Greek National Documentation Centre",
+      "canonical_url": "https://www.searchculture.gr/aggregator/portal/ekt-events/994296589?collection=DigChaniaKAM&language=en",
+      "citation_text": "Greek public cultural aggregator confirms the August 1936 constitutional suspension under Prime Minister Metaxas and King George II."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-17",
+      "document_title": "요안니스 메탁사스",
+      "url": "https://namu.wiki/w/%EC%9A%94%EC%95%88%EB%8B%88%EC%8A%A4%20%EB%A9%94%ED%83%81%EC%82%AC%EC%8A%A4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "No new geographic coordinates inferred; use existing authoritative Polity / Place placement, preserve uncertainty where applicable."
+  },
+  "review_context": {
+    "selection": "explicit_user_selected_registration_2026-11-17",
+    "preflight_required": true,
+    "production_screen": "No direct admin Production SCREEN available in this session. Protected GitHub OIDC Human Authoring preflight_batch is mandatory before every write; handle ALREADY_PRESENT/BLOCKED without duplicate creation.",
+    "aliases": [
+      "Ιωάννης Μεταξάς",
+      "Ioannes Metaxas",
+      "이오아니스 메탁사스"
+    ],
+    "canonical_greece_note": "Greece UUID verified in prior reviewed Greece Kingdom identity-merge correction plan; never re-create retired Kingdom of Greece identity.",
+    "reviewed_namuwiki_evidence": "https://www.namu.moe/w/%EC%9A%94%EC%95%88%EB%8B%88%EC%8A%A4%20%EB%A9%94%ED%83%81%EC%82%AC%EC%8A%A4"
+  }
+}

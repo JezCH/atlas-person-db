@@ -1,0 +1,78 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261117:circling-raven:coeur-dalene:vision-c1740:v1",
+  "person": {
+    "canonical_name_en": "Circling Raven",
+    "display_name_ko": "서클링 레이븐",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-17",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Coeur d'Alene",
+    "display_name_ko": "쾨르달렌족",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Head chief and spiritual visionary",
+    "role_display_name_ko": "부족 최고지도자·영적 예언자",
+    "start_year": 1740,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "uncertain",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1740,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "uncertain",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Circling Raven appears in Coeur d'Alene (Schitsu'umsh) oral history as an earlier head chief and visionary. A local Kootenai County historical account retrospectively dates the vision about later 'Black Robes' to 1740; a University of Idaho Schitsu'umsh cultural history instead describes him as head chief 'during the 1600s'. The circa-1740 datum is therefore contested oral-tradition chronology only, NOT an established birth, death, accession, regnal span, or independently dated prophetic event. Retain this year as an uncertain representative point and keep indigenous cultural sources explicit; never assert he personally met 1842 missionaries."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "L³: Wilderness Kingdom — Jesuit Mission, Coeur d'Alene (Schitsu'umsh) — University of Idaho Library",
+      "canonical_url": "https://www.lib.uidaho.edu/digital/L3/ShowOneObjectSiteID50ObjectID591.html",
+      "citation_text": "University of Idaho's tribally reviewed Coeur d'Alene cultural module describes Circling Raven as an early head chief in the oral history but places him in the 1600s rather than providing secure 1740 chronology."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "A Developing Community — Kootenai County, Idaho",
+      "canonical_url": "https://kcgov.us/589/A-Developing-Community",
+      "citation_text": "Kootenai County local history recounts the tribal tradition placing Circling Raven's vision at about 1740 and connecting its fulfillment to Jesuit arrival in 1842."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-11-17",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "No new geographic coordinates inferred; use existing authoritative Polity / Place placement, preserve uncertainty where applicable."
+  },
+  "review_context": {
+    "selection": "explicit_user_selected_registration_2026-11-17",
+    "preflight_required": true,
+    "production_screen": "No direct admin Production SCREEN available in this session. Protected GitHub OIDC Human Authoring preflight_batch is mandatory before every write; handle ALREADY_PRESENT/BLOCKED without duplicate creation.",
+    "aliases": [
+      "Chief Circling Raven",
+      "Schitsu'umsh Circling Raven",
+      "쾨르달렌 지도자 서클링 레이븐"
+    ],
+    "historicity_review": "Culturally significant named chief appears in Schitsu'umsh oral history; historical core plausible but chronology contested across independent sources.",
+    "namuwiki_review_evidence": "No independent exact Circling Raven Person page in indexed NamuWiki search using English name, tribe, and Korean transliterations."
+  }
+}
