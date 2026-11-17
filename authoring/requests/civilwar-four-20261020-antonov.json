@@ -1,0 +1,77 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:civilwar-four-20261020:antonov:representative:v1",
+  "person": {
+    "canonical_name_en": "Alexander Antonov",
+    "display_name_ko": "알렉산드르 안토노프",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-20",
+    "life_status_basis": "documented_death",
+    "representative_domain": "military",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Soviet Russia",
+    "display_name_ko": "소비에트 러시아",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Tambov peasant insurgency leader",
+    "role_display_name_ko": "탐보프 농민봉기 지도자",
+    "start_year": 1920,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1921,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Aleksandr Stepanovich Antonov, Tambov insurgent, not actor Aleksandr Antonov, Soviet general Aleksei Antonov, or Vladimir Antonov-Ovseyenko. Representative mass uprising 1920-1921; subsequent fugitive resistance and death in1922 do not extend the selected organized-command period. Soviet Russia identifies the territorial context of Tambov, not allegiance, service or office. The primary relation is active_in, as the canonical Human Authoring contract forbids a primary opposes relation."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "State Archive of Socio-Political History of Tambov Oblast: Tambov Civil War Front documentary collection",
+      "canonical_url": "https://gaspito.ru/materials/publications/collections/antonov100/",
+      "citation_text": "Representative activity evidence: 1920-1921; see activity notes for scope and chronology limitations."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Alexander Antonov: identity and documented death",
+      "canonical_url": "https://en.wikipedia.org/wiki/Alexander_Antonov_(politician)",
+      "citation_text": "Identity corroboration and deceased status; death year 1922."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-20",
+      "document_title": "알렉산드르 안토노프",
+      "url": "https://namu.wiki/w/%EC%95%8C%EB%A0%89%EC%82%B0%EB%93%9C%EB%A5%B4%20%EC%95%88%ED%86%A0%EB%85%B8%ED%94%84"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Source-reviewed context only. No current canonical Person/alias/Activity/Polity/Place preflight permitted before Production. Resolve/reuse exact IDs and current reviewed external reference; no fabricated coordinates or new political entities."
+  },
+  "review_context": {
+    "registration_state": "NEEDS_PREFLIGHT",
+    "production_access": false,
+    "source_review_only": true,
+    "namuwiki_method": "Independent exact Person article verified by external index/mirror, with same-person full name and historical context. Origin fetch not claimed.",
+    "namuwiki_evidence_url": "https://namu.moe/w/%EC%95%8C%EB%A0%89%EC%82%B0%EB%93%9C%EB%A5%B4%20%EC%95%88%ED%86%A0%EB%85%B8%ED%94%84",
+    "apply_gate": "DRAFT DO NOT APPLY OR MERGE; fresh canonical duplicate/Polity preflight after recovery. Importance is not identity/chronology proof. No PHFC /36 completeness claim.",
+    "review_checkpoint": "https://github.com/JezCH/atlas-person-db/issues/1374#issuecomment-6270116498",
+    "authorization": "User 2026-10-20 KST approved all four, including Antonov; draft only under standing no-Production restriction."
+  }
+}
