@@ -9,6 +9,14 @@ const reviewed = [
   ["tran-hung-dao-dai-viet-1288", "Trần Hưng Đạo", "Đại Việt", "대월", "0723204f-d766-475b-9b8a-67fcdda9425b"],
   ["xiemao-ali-jin-1129", "Xiemao Ali", "Jin Dynasty", "금나라", "6a9d6b63-15c9-5b1b-8fd5-29bbf0787dde"]
 ];
+// Immutable source review_context is historical staging metadata, not the
+// current canonical registration status. Gar's request retains its earlier
+// preflight gate; the later two were promoted through protected OIDC.
+const expectedGateBySlug = new Map([
+  ["gar-trinring-tibetan-empire-695", "CURRENT_PRODUCTION_PROTECTED_PREFLIGHT_REQUIRED"],
+  ["tran-hung-dao-dai-viet-1288", "PROTECTED_OIDC_PREFLIGHT_THEN_READY_ONLY_APPLY"],
+  ["xiemao-ali-jin-1129", "PROTECTED_OIDC_PREFLIGHT_THEN_READY_ONLY_APPLY"]
+]);
 test("user military cohort reuses exact matching Production Polity identities without new Polity creation", () => {
   for (const [slug, person, en, ko, id] of reviewed) {
     const path = `../authoring/requests/user-20261116-${slug}.json`;
@@ -18,8 +26,13 @@ test("user military cohort reuses exact matching Production Polity identities wi
     assert.equal(data.polity.canonical_name_en, en);
     assert.equal(data.polity.display_name_ko, ko);
     assert.equal(data.polity.existing_id, id);
-    assert.equal(data.review_context.registration_state, "CURRENT_PRODUCTION_PROTECTED_PREFLIGHT_REQUIRED");
-    assert.match(data.review_context.apply_gate, /DO NOT MERGE\/APPLY/);
+    assert.equal(data.review_context.registration_state, expectedGateBySlug.get(slug));
+    if (slug === "gar-trinring-tibetan-empire-695") {
+      assert.match(data.review_context.apply_gate, /DO NOT MERGE\/APPLY/);
+    } else {
+      assert.match(data.review_context.apply_gate, /preflight_batch/);
+      assert.match(data.review_context.apply_gate, /READY/);
+    }
     assert.ok(data.request_id.startsWith("authoring:user-20261116:"));
     assert.ok(data.sources.length > 0);
     assert.equal(data.external_references.namuwiki.status, "linked");
