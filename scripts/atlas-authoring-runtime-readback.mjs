@@ -63,8 +63,14 @@ async function runReadback() {
   const runId = Number(process.env.ATLAS_AUTHORING_PRODUCER_RUN_ID);
   if (!Number.isSafeInteger(runId) || runId < 1) throw new Error('INVALID_AUTHORING_PRODUCER_RUN');
   const producer = await api('/repos/' + REPO + '/actions/runs/' + runId);
+  // The protected Authoring job dispatches Runtime at its final step, after
+  // uploading signed-by-GitHub immutable evidence but before GitHub necessarily
+  // marks that job completed. Committed evidence, not a racing conclusion
+  // field, is the authority for canonical writes.
   if (producer.name !== 'ATLAS Authoring Apply' || producer.event !== 'workflow_dispatch' ||
-      producer.conclusion !== 'success' || producer.head_branch !== 'main' ||
+      producer.head_branch !== 'main' || producer.actor?.login !== 'JezCH' ||
+      !['in_progress', 'completed'].includes(producer.status) ||
+      (producer.status === 'completed' && producer.conclusion !== 'success') ||
       !/^[a-f0-9]{40}$/.test(producer.head_sha || '')) {
     throw new Error('PRODUCER_NOT_VERIFIED_PROTECTED_DISPATCH');
   }
