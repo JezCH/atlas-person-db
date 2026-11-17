@@ -125,7 +125,10 @@ jobs:
                 import fs from "node:fs";
                 import { shouldBuildForChangedPaths } from "./scripts/vercel-ignore-build.mjs";
                 const paths = fs.readFileSync("/tmp/atlas-runtime-trigger-paths.txt", "utf8").split(/\r?\n/).filter(Boolean);
-                const needsDeploy = shouldBuildForChangedPaths(paths);
+                // This exact script runs only in GitHub Actions and cannot
+                // change the deployed Vercel Runtime/Authoring API contract.
+                const deployablePaths = paths.filter(p => p !== "scripts/atlas-authoring-runtime-readback.mjs");
+                const needsDeploy = shouldBuildForChangedPaths(deployablePaths);
                 console.log("Runtime source requires fresh Production build:", needsDeploy);
                 process.exit(needsDeploy ? 0 : 1);
               '; then
