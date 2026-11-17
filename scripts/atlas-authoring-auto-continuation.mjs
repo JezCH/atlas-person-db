@@ -66,7 +66,7 @@ export function assessProtectedPreflight({ run, evidence, pr, target, requestId 
   const stop = (reason) => ({ ok: false, reason });
   if (!run || run.name !== 'ATLAS Authoring Apply' || run.event !== 'push' ||
       run.status !== 'completed' || run.conclusion !== 'success' ||
-      run.head_branch !== 'main' || run.head_sha !== pr.base.sha ||
+      run.head_branch !== 'main' || !SHA_RE.test(run.head_sha || '') ||
       run.actor?.login !== pr.base.repo.owner.login) return stop('OIDC_PROVENANCE_MISMATCH');
   if (!evidence || evidence.ok !== true ||
       evidence.marker !== 'ATLAS_HUMAN_AUTHORING_BATCH_V1' ||
@@ -150,15 +150,25 @@ export async function continueAuthoring({ event, api = githubApi, content = gith
   }
   const repo = event.repository?.full_name;
   if (repo !== 'JezCH/atlas-person-db') throw new Error('WRONG_REPOSITORY');
-  const associated = run.pull_requests || [];
+  let associated = run.pull_requests || [];
+  if (associated.length === 0 && BRANCH_RE.test(run.head_branch || '')) {
+    // GitHub sometimes omits workflow_run.pull_requests for same-repo PRs.
+    // Resolve only an exact open owner branch + CI head SHA; never guess a PR.
+    const candidates = await api('/repos/' + repo + '/pulls?state=open&head=JezCH:' +
+      encodeURIComponent(run.head_branch) + '&base=main&per_page=10');
+    associated = candidates.filter((x) => x.head?.sha === run.head_sha)
+      .map((x) => ({ number: x.number, head: { sha: x.head.sha } }));
+  }
   if (associated.length !== 1 || !Number.isInteger(associated[0]?.number)) {
-    return summary('SKIP: ambiguous or missing PR association');
+    return summary('SKIP: ambiguous or missing exact PR association');
   }
   const number = associated[0].number;
   const pr = await api('/repos/' + repo + '/pulls/' + number);
   if (pr.state !== 'open') return summary('SKIP: PR already closed (idempotent)');
-  if (pr.head?.sha !== associated[0]?.head?.sha) {
-    return summary('SKIP: stale CI head; wait for current PR CI');
+  if (pr.head?.sha !== associated[0]?.head?.sha ||
+      (run.head_branch !== pr.head?.ref) ||
+      (run.head_sha !== pr.head.sha)) {
+    return summary('SKIP: stale or mismatched CI head; wait for current PR CI');
   }
   if (!BRANCH_RE.test(pr.head?.ref || '') || !String(pr.body || '').includes(AUTO_MARKER)) {
     return summary('SKIP: not explicitly opted into restricted lane');
@@ -178,7 +188,16 @@ export async function continueAuthoring({ event, api = githubApi, content = gith
   // does NOT imply READY; the Authoring preflight workflow can exit 0 for BLOCKED.
   const preflightRunId = parseRunId(pr.body);
   const preflightRun = await api('/repos/' + repo + '/actions/runs/' + preflightRunId);
-  const record = await evidenceReader(repo, preflightRunId, pr.base.sha);
+  // Preserve resource-scoped concurrency: unrelated newer main commits need
+  // not invalidate a protected preflight if BOTH read-only selector and
+  // immutable reviewed manifest have exactly the same blob at that run.
+  if (!SHA_RE.test(preflightRun.head_sha || '')) throw new Error('OIDC_HEAD_SHA_MISSING');
+  const protectedSelector = await content(repo, SELECTOR_FILE, preflightRun.head_sha);
+  const protectedManifest = await content(repo, verdict.target, preflightRun.head_sha);
+  if (protectedSelector.sha !== main.sha || protectedManifest.sha !== mf.sha) {
+    throw new Error('PROTECTED_PREFLIGHT_RESOURCE_MISMATCH');
+  }
+  const record = await evidenceReader(repo, preflightRunId, preflightRun.head_sha);
   const approved = assessProtectedPreflight({
     run: preflightRun, evidence: record, pr,
     target: verdict.target, requestId: verdict.requestId
