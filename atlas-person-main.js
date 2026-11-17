@@ -437,7 +437,13 @@
     const basis = basisLabel(activity.period_basis);
     const startMeta = boundaryMeta(activity.start);
     const endMeta = boundaryMeta(activity.end);
+    const confidenceLabel = activity.confidence
+      ? metaLabel("confidence", activity.confidence, "근거 수준 확인 필요") : null;
+    const chronologyLabel = activity.chronology_status
+      ? metaLabel("chronology", activity.chronology_status, "연대 검토 상태 확인 필요") : null;
     const semanticMeta = [
+      confidenceLabel ? `근거: ${confidenceLabel}` : null,
+      chronologyLabel ? `연대: ${chronologyLabel}` : null,
       activity.relation?.category ? `관계 분류: ${metaLabel("relation_category", activity.relation.category, "관계 분류 확인 필요")}` : null
     ].filter(Boolean);
     const activityId = escapeHtml(activity.id || "");
