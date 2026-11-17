@@ -14,6 +14,14 @@ on:
         description: 'Path under authoring/requests/ (required unless bootstrap_only=true)'
         required: false
         type: string
+      manifests_json:
+        description: 'Reviewed 2-5 manifest paths as JSON; only exact-SHA protected READY handoff'
+        required: false
+        type: string
+      approved_sha:
+        description: 'Immutable OIDC preflight main SHA for protected batch replay parity'
+        required: false
+        type: string
       bootstrap_only:
         description: 'Apply only bounded authoring ledger migrations; do not author Person/Activity data'
         required: true
@@ -51,6 +59,9 @@ jobs:
           fetch-depth: 0
 
       - name: Resolve approved Stage 2 authoring requests
+        env:
+          ATLAS_DISPATCH_MANIFESTS_JSON: ${{ inputs.manifests_json }}
+          ATLAS_DISPATCH_APPROVED_SHA: ${{ inputs.approved_sha }}
         shell: bash
         run: |
           set -euo pipefail
@@ -62,25 +73,61 @@ jobs:
           preflight_only=false
 
           if [[ "${{ github.event_name }}" == "push" ]] && git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" -- | grep -qx '.github/atlas-authoring-preflight.txt'; then
-            command="$(tr -d '\r\n' < .github/atlas-authoring-preflight.txt)"
-            mode="preflight"
-            manifest="$command"
-            if [[ "$command" =~ ^(preflight|apply)[[:space:]]+(.+)$ ]]; then
-              mode="${BASH_REMATCH[1]}"
-              manifest="${BASH_REMATCH[2]}"
-            fi
-            [[ "$manifest" =~ ^authoring/requests/[A-Za-z0-9._-]+\.json$ ]] || { echo "Rejected bounded authoring manifest path: $manifest" >&2; exit 1; }
-            if [[ "$mode" == "preflight" ]]; then
+            mapfile -t selector_lines < .github/atlas-authoring-preflight.txt
+            if [[ "${#selector_lines[@]}" -ge 2 ]]; then
+              # Reviewed multi-Person selector: read-only preflight, never bulk Apply.
+              [[ "${#selector_lines[@]}" -le 5 ]] || { echo 'Authoring preflight batch > 5 refused' >&2; exit 1; }
               preflight_only=true
+              for line in "${selector_lines[@]}"; do
+                [[ "$line" =~ ^preflight[[:space:]](authoring/requests/[A-Za-z0-9._-]+\.json)$ ]] || { echo 'Invalid batch selector line' >&2; exit 1; }
+                printf '%s\n' "${BASH_REMATCH[1]}" >> /tmp/atlas-candidates.txt
+              done
+              unique_count="$(sort -u /tmp/atlas-candidates.txt | wc -l | tr -d ' ')"
+              [[ "$unique_count" -eq "${#selector_lines[@]}" ]] || { echo 'Repeated reviewed manifest in batch' >&2; exit 1; }
+              echo "Trusted read-only batch preflight selected: ${#selector_lines[@]} requests"
+            else
+              command="$(tr -d '\r\n' < .github/atlas-authoring-preflight.txt)"
+              mode="preflight"
+              manifest="$command"
+              if [[ "$command" =~ ^(preflight|apply)[[:space:]]+(.+)$ ]]; then
+                mode="${BASH_REMATCH[1]}"
+                manifest="${BASH_REMATCH[2]}"
+              fi
+              [[ "$manifest" =~ ^authoring/requests/[A-Za-z0-9._-]+\.json$ ]] || { echo "Rejected bounded authoring manifest path: $manifest" >&2; exit 1; }
+              if [[ "$mode" == "preflight" ]]; then
+                preflight_only=true
+              fi
+              printf '%s\n' "$manifest" > /tmp/atlas-candidates.txt
+              echo "Trusted ${mode}-only request selected: $manifest"
             fi
-            printf '%s\n' "$manifest" > /tmp/atlas-candidates.txt
-            echo "Trusted ${mode}-only request selected: $manifest"
           elif [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ inputs.audit_all_approved }}" == "true" ]]; then
             [[ "${{ inputs.bootstrap_only }}" != "true" ]] || { echo 'audit_all_approved and bootstrap_only are mutually exclusive' >&2; exit 1; }
             [[ -z "${{ inputs.manifest }}" ]] || { echo 'audit_all_approved does not accept a single manifest' >&2; exit 1; }
             audit_all_approved=true
           elif [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ inputs.bootstrap_only }}" == "true" ]]; then
             bootstrap_only=true
+          elif [[ "${{ github.event_name }}" == "workflow_dispatch" && -n "$ATLAS_DISPATCH_MANIFESTS_JSON" ]]; then
+            [[ -z "${{ inputs.manifest }}" && "${{ inputs.audit_all_approved }}" != "true" && "${{ inputs.bootstrap_only }}" != "true" ]] || { echo 'Batch dispatch conflicts with single/audit/bootstrap' >&2; exit 1; }
+            [[ "$ATLAS_DISPATCH_APPROVED_SHA" =~ ^[a-f0-9]{40}$ ]] || { echo 'Immutable batch producer SHA missing' >&2; exit 1; }
+            git merge-base --is-ancestor "$ATLAS_DISPATCH_APPROVED_SHA" "$GITHUB_SHA" || { echo 'Unrelated/unsafe approved SHA' >&2; exit 1; }
+            jq -er 'type=="array" and (length>=2 and length<=5) and ((unique|length)==length) and all(.[]; type=="string" and test("^authoring/requests/[A-Za-z0-9._-]+\\.json$"))' <<<"$ATLAS_DISPATCH_MANIFESTS_JSON" >/dev/null || { echo 'Unreviewed batch paths' >&2; exit 1; }
+            jq -r '.[]' <<<"$ATLAS_DISPATCH_MANIFESTS_JSON" > /tmp/atlas-candidates.txt
+            mapfile -t verified_paths < /tmp/atlas-candidates.txt
+            mapfile -t approved_lines < .github/atlas-authoring-preflight.txt
+            [[ "${#verified_paths[@]}" -eq "${#approved_lines[@]}" ]] || { echo 'Global selector changed since approval' >&2; exit 1; }
+            original_selector="$(git show "$ATLAS_DISPATCH_APPROVED_SHA:.github/atlas-authoring-preflight.txt")"
+            current_selector="$(cat .github/atlas-authoring-preflight.txt)"
+            [[ "$original_selector" == "$current_selector" ]] || { echo 'Immutable batch selector SHA drift' >&2; exit 1; }
+            for i in "${!verified_paths[@]}"; do
+              manifest="${verified_paths[$i]}"
+              [[ "${approved_lines[$i]}" == "preflight $manifest" ]] || { echo 'Selector request identity mismatch' >&2; exit 1; }
+              approved_blob="$(git rev-parse "$ATLAS_DISPATCH_APPROVED_SHA:$manifest")"
+              current_blob="$(git rev-parse "$GITHUB_SHA:$manifest")"
+              [[ "$approved_blob" == "$current_blob" ]] || { echo "Reviewed manifest changed: $manifest" >&2; exit 1; }
+              jq -e '.schema=="atlas-human-authoring/v1" and .review_status=="approved" and .person.life_status=="deceased" and .person.representative_domain_reviewed==true and .polity.existing_id!=null and .review_context.preflight_required==true and .review_context.auto_continue_after_preflight==true' "$manifest" >/dev/null || { echo "Batch member not individually authorized: $manifest" >&2; exit 1; }
+            done
+            echo 'ATLAS_APPROVED_BATCH_DISPATCH=true' >> "$GITHUB_ENV"
+            echo "Protected exact-SHA batch dispatch selected ${#verified_paths[@]} approved manifests"
           elif [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
             [[ -n "${{ inputs.manifest }}" ]] || { echo 'manifest is required unless bootstrap_only=true or audit_all_approved=true' >&2; exit 1; }
             printf '%s\n' "${{ inputs.manifest }}" > /tmp/atlas-candidates.txt
@@ -963,6 +1010,12 @@ jobs:
             blocked_count="$(jq -r '.blocked_count' "$preflight_response")"
             ready_count="$(jq -r '.ready_count' "$preflight_response")"
             already_present_count="$(jq -r '.already_present_count' "$preflight_response")"
+
+            if [[ "${ATLAS_APPROVED_BATCH_DISPATCH:-false}" == "true" ]] &&
+               { [[ "$ready_count" -ne "${#manifests[@]}" ]] || [[ "$blocked_count" -ne 0 ]] || [[ "$already_present_count" -ne 0 ]]; }; then
+              echo "FAIL_CLOSED: reviewed batch changed since preflight; no canonical write: READY=$ready_count BLOCKED=$blocked_count PRESENT=$already_present_count" >&2
+              exit 1
+            fi
 
             if [[ "${ATLAS_AUTHORING_PREFLIGHT_ONLY:-false}" == "true" ]]; then
               echo "Human Authoring preflight-only summary: READY=${ready_count}, ALREADY_PRESENT=${already_present_count}, BLOCKED=${blocked_count}"
