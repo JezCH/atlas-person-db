@@ -100,8 +100,22 @@ jobs:
              && git cat-file -e "${sha}^{commit}" \
              && git diff-tree --no-commit-id --name-only -r "$sha" -- .github/atlas-authoring-preflight.txt | grep -Fxq '.github/atlas-authoring-preflight.txt'; then
             if control="$(git show "${sha}:.github/atlas-authoring-preflight.txt" 2>/dev/null)"; then
-              control="$(printf '%s' "$control" | tr -d '\r\n')"
-              if [[ "$control" =~ ^preflight[[:space:]]+authoring/requests/[A-Za-z0-9._-]+\.json$ ]]; then
+              # The Writer accepts 1-5 distinct read-only selector lines.
+              # Never flatten multi-line controls or suppress a genuine apply.
+              mapfile -t selectors <<< "$control"
+              valid=true
+              declare -A seen=()
+              if (( ${#selectors[@]} < 1 || ${#selectors[@]} > 5 )); then valid=false; fi
+              for line in "${selectors[@]}"; do
+                if [[ "$line" =~ ^preflight[[:space:]]+(authoring/requests/[A-Za-z0-9._-]+\.json)$ ]]; then
+                  path="${BASH_REMATCH[1]}"
+                  if [[ -n "${seen[$path]:-}" ]]; then valid=false; fi
+                  seen[$path]=1
+                else
+                  valid=false
+                fi
+              done
+              if [[ "$valid" == "true" ]]; then
                 skip=true
                 echo "Authoring producer ${sha} was preflight-only; no Runtime mutation needed."
               fi

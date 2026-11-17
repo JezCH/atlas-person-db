@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { assessApprovedPreflightHandoff, assessApprovedBatchPreflightHandoff, approvedBatchSelectorPaths } from '../scripts/atlas-approved-preflight-dispatch.mjs';
+import { assessApprovedPreflightHandoff, assessApprovedBatchPreflightHandoff, approvedBatchSelectorPaths, continueApprovedPreflight } from '../scripts/atlas-approved-preflight-dispatch.mjs';
 
 const target = 'authoring/requests/youtube39-20261023-edgar-allan-poe-representative.json';
 const requestId = 'authoring:user-youtube39-20261023:edgar-allan-poe:representative:v1';
@@ -136,4 +136,18 @@ test('batch refuses mixed/ambiguous/non-unique identity or provenance', () => {
     corrupt(a);
     assert.equal(assessApprovedBatchPreflightHandoff(a).ok, false, String(corrupt));
   }
+});
+
+
+test('successful ordinary Authoring main push never fetches stale selector or preflight artifact', async () => {
+  const calls = [];
+  await continueApprovedPreflight({
+    event: {action:'completed',repository:{full_name:'JezCH/atlas-person-db'},workflow_run:run},
+    api: async (url, options) => { calls.push([url,options]); return {files:[{filename:'authoring/requests/another-reviewed.json'}]}; },
+    content: async () => { throw Error('must not read stale selector'); },
+    evidenceReader: async () => { throw Error('must not read nonexistent preflight artifact'); }
+  });
+  assert.equal(calls.length,1);
+  assert.match(calls[0][0], /\/commits\/[a-f0-9]{40}$/);
+  assert.equal(calls[0][1],undefined);
 });
