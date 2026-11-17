@@ -21,6 +21,8 @@ const AGENT_NON_RUNTIME = new Set([
   "scripts/atlas-agent-experience.mjs",
   "scripts/atlas-agent-lesson-harvest.mjs",
   "scripts/atlas-agent-dependency-map.mjs",
+  // Offline Source-census CLI: not imported by deployed server, API, UI or release build.
+  "scripts/atlas-source-url-semantic-audit.mjs",
   "scripts/atlas-agent-lesson-suggest.mjs",
   "scripts/atlas-autonomous-loop-bridge.mjs",
   "scripts/atlas-autonomous-outcome-journal.mjs",
