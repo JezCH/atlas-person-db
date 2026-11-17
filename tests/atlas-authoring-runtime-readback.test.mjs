@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { verifyPersonReadback } from '../scripts/atlas-authoring-runtime-readback.mjs';
+import { verifyPersonReadback, verifyProtectedProducer } from '../scripts/atlas-authoring-runtime-readback.mjs';
 
 const personId = '44d38e5f-e48a-4bc5-9357-ab30f8625399';
 const activityId = '34d56578-a361-402a-a710-c643b52e8f2e';
@@ -50,4 +50,50 @@ test('no provenance or NamuWiki mismatch is silently accepted', () => {
   assert.equal(run((x) => { x.person.person.activities[0].sources = []; }).reason, 'ACTIVITY_SOURCE_PROVENANCE_MISMATCH');
   assert.equal(run((x) => { x.person.person.external_references.namuwiki.status = 'not_found'; }).reason, 'NAMUWIKI_REVIEW_MISMATCH');
   assert.equal(run((x) => { x.person.ok = false; }).reason, 'PERSON_DETAIL_NOT_LIVE');
+});
+
+const trustedProducer = Object.freeze({
+  name: 'ATLAS Authoring Apply',
+  path: '.github/workflows/atlas-authoring-apply.yml',
+  event: 'workflow_dispatch',
+  head_branch: 'main',
+  repository: { full_name: 'JezCH/atlas-person-db' },
+  head_repository: { full_name: 'JezCH/atlas-person-db' },
+  actor: { login: 'JezCH', type: 'User' },
+  status: 'completed',
+  conclusion: 'success',
+  head_sha: 'a'.repeat(40)
+});
+
+test('protected user and GitHub Actions service actor are both authenticated with exact repository and workflow', () => {
+  assert.deepEqual(verifyProtectedProducer(trustedProducer), { ok: true });
+  assert.deepEqual(verifyProtectedProducer({
+    ...trustedProducer, actor: { login: 'github-actions[bot]', type: 'Bot' }
+  }), { ok: true });
+  assert.deepEqual(verifyProtectedProducer({
+    ...trustedProducer, actor: { login: 'github-actions[bot]', type: 'Bot' },
+    status: 'in_progress', conclusion: null
+  }), { ok: true });
+});
+
+test('no other actor, workflow, repository, event, branch or SHA can claim protected handoff', () => {
+  const failures = [
+    [{ actor: { login: 'third-party[bot]', type: 'Bot' } }, 'UNTRUSTED_ACTOR'],
+    [{ actor: { login: 'github-actions[bot]', type: 'User' } }, 'UNTRUSTED_ACTOR'],
+    [{ actor: { login: 'JezCH', type: 'Bot' } }, 'UNTRUSTED_ACTOR'],
+    [{ path: '.github/workflows/untrusted.yml' }, 'WORKFLOW_OR_BRANCH'],
+    [{ name: 'ATLAS Runtime Projection Compile' }, 'WORKFLOW_OR_BRANCH'],
+    [{ event: 'push' }, 'WORKFLOW_OR_BRANCH'],
+    [{ head_branch: 'main-malicious' }, 'WORKFLOW_OR_BRANCH'],
+    [{ repository: { full_name: 'other/repo' } }, 'REPOSITORY_OR_HEAD'],
+    [{ head_repository: { full_name: 'other/repo' } }, 'REPOSITORY_OR_HEAD'],
+    [{ status: 'completed', conclusion: 'failure' }, 'STATUS_OR_CONCLUSION'],
+    [{ status: 'queued' }, 'STATUS_OR_CONCLUSION'],
+    [{ head_sha: 'not-a-commit' }, 'INVALID_COMMIT_SHA'],
+    [{ head_sha: null }, 'INVALID_COMMIT_SHA']
+  ];
+  for (const [changes, reason] of failures) {
+    assert.deepEqual(verifyProtectedProducer({ ...trustedProducer, ...changes }), { ok: false, reason });
+  }
+  assert.deepEqual(verifyProtectedProducer(null), { ok: false, reason: 'WORKFLOW_OR_BRANCH' });
 });
