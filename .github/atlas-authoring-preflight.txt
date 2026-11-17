@@ -1,1 +1,2 @@
-preflight authoring/requests/youtube39-20261023-andy-warhol-representative.json
+preflight authoring/requests/youtube39-20261023-marilyn-monroe-representative.json
+preflight authoring/requests/youtube48-20261023-whitney-houston-representative.json
