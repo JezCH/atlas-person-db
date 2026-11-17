@@ -77,6 +77,25 @@ export function approvedBatchSelectorPaths(selector) {
   return new Set(paths).size === paths.length ? paths : null;
 }
 
+// #2545 explicitly selected these three historical Persons for registration.
+// #2685 reused their immutable pre-user-prefix request IDs, as required for
+// idempotency. Accept only these exact legacy identities, paths and source
+// draft; never generalize the exception to pending-only or other cohorts.
+const LEGACY_SELECTED62 = Object.freeze({
+  ellington: 'Duke Ellington',
+  davis: 'Miles Davis',
+  welles: 'Orson Welles'
+});
+
+function hasApprovedBatchRequestIdentity(manifest, requestPath) {
+  if (/^authoring:user-/.test(manifest?.request_id || '')) return true;
+  const match = /^authoring:selected62-remaining30-20261018:(ellington|davis|welles):representative:v1$/.exec(manifest?.request_id || '');
+  return Boolean(match &&
+    requestPath === 'authoring/requests/selected62-remaining30-20261018-' + match[1] + '.json' &&
+    manifest.person?.canonical_name_en === LEGACY_SELECTED62[match[1]] &&
+    manifest.review_context?.source_draft_pr === 2549);
+}
+
 export function assessApprovedBatchPreflightHandoff({ run, selector, manifests, evidence, changedPaths }) {
   const stop = (reason) => ({ ok: false, reason });
   if (run?.name !== 'ATLAS Authoring Apply' || run.event !== 'push' ||
@@ -94,10 +113,10 @@ export function assessApprovedBatchPreflightHandoff({ run, selector, manifests, 
     return stop('BATCH_MANIFEST_COUNT_MISMATCH');
   }
   const ids = new Set();
-  for (const manifest of manifests) {
+  for (const [index, manifest] of manifests.entries()) {
     if (manifest?.schema !== 'atlas-human-authoring/v1' ||
         manifest.review_status !== 'approved' ||
-        !/^authoring:user-/.test(manifest.request_id || '') ||
+        !hasApprovedBatchRequestIdentity(manifest, paths[index]) ||
         manifest.person?.life_status !== 'deceased' ||
         manifest.person?.representative_domain_reviewed !== true ||
         !manifest.person?.canonical_name_en ||
