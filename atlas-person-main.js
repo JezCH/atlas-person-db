@@ -160,7 +160,15 @@
     const url = safeHttpUrl(source?.canonical_url);
     const locator = source?.locator ? `<small>위치: ${escapeHtml(source.locator)}</small>` : "";
     const type = source?.source_type ? `<span class="person-source-type">${escapeHtml(metaLabel("source_type", source.source_type, "출처 유형 확인 필요"))}</span>` : "";
-    return `<li class="person-source-item"><div>${type}${url ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(display)}</a>` : `<span>${escapeHtml(display)}</span>`}</div>${locator}</li>`;
+    const bibliography = [
+      source?.author_creator ? `저자: ${source.author_creator}` : null,
+      source?.institution ? `기관: ${source.institution}` : null,
+      source?.publisher ? `출판: ${source.publisher}` : null,
+      source?.publication_date ? `발행: ${source.publication_date}` : (source?.publication_year != null ? `발행: ${source.publication_year}` : null),
+      source?.external_identifier ? `식별자: ${source.external_identifier}` : null
+    ].filter(Boolean);
+    const bibliographyHtml = bibliography.length ? `<small class="person-source-bibliography">${escapeHtml(bibliography.join(" · "))}</small>` : "";
+    return `<li class="person-source-item"><div>${type}${url ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(display)}</a>` : `<span>${escapeHtml(display)}</span>`}</div>${bibliographyHtml}${locator}</li>`;
   }
 
   function sourceListHtml(sources) {

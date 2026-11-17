@@ -42,6 +42,6 @@ test("P12 keeps single-Activity duplicate periods suppressed while multi-Activit
 
 test("P12 publishes always-visible Register assets", () => {
   assert.match(html, /atlas-person-monumental-register\.css\?v=20261004-ui-p13-column-balance-polity-height-v1/);
-  assert.match(html, /atlas-ui-mobile-v8\.css\?v=20261010-vis3-05t-d-appbar-microtype-v1/);
+  assert.match(html, /atlas-ui-mobile-v8\.css\?v=20261117-vis3-05t-mobile-caption-v1/);
   assert.match(html, /atlas-person-table-view\.js\?v=20261004-ui-p13-column-balance-polity-height-v1/);
 });
