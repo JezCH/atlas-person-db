@@ -17,7 +17,14 @@ test('data-only publication reuses deployed Runtime code instead of demanding ca
   assert.match(workflow,/__atlas_read_surface=runtime-identity/);
   assert.doesNotMatch(workflow,/ATLAS_AUTHORING_ENDPOINT/);
   assert.match(workflow,/require_exact_runtime=false/);
-  assert.match(workflow,/if \[\[ "\$\{\{ github\.event_name \}\}" == "push" \]\]; then\s*\n\s*require_exact_runtime=true/);
+  // Workflow-only GitHub changes recompile existing Runtime without a Vercel build;
+  // deployable Runtime source changes still demand exact Production SHA.
+  assert.match(workflow,/if \[\[ "\$\{\{ github\.event_name \}\}" == "push" \]\]; then/);
+  assert.match(workflow,/shouldBuildForChangedPaths\(deployablePaths\)/);
+  assert.match(workflow,/require_exact_runtime=true/);
+  assert.match(workflow,/authoring_run_id:/);
+  assert.match(workflow,/inputs\.authoring_run_id != ''/);
+  assert.match(workflow,/ATLAS_AUTHORING_PRODUCER_RUN_ID/);
   assert.match(workflow,/--arg runtime_sha "\$ATLAS_RUNTIME_SHA"/);
   assert.match(workflow,/--arg authoring_sha "\$GITHUB_SHA"/);
   assert.match(workflow,/\.runtime_sha==\$runtime/);
