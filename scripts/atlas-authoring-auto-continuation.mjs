@@ -93,7 +93,7 @@ function summary(msg) {
   if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, msg + '\n');
 }
 
-async function githubApi(endpoint, { method = 'GET', json = undefined, raw = false } = {}) {
+export async function githubApi(endpoint, { method = 'GET', json = undefined, raw = false } = {}) {
   const token = process.env.GH_TOKEN;
   if (!token) throw new Error('GITHUB_TOKEN_UNAVAILABLE');
   const url = endpoint.startsWith('https://') ? endpoint : 'https://api.github.com' + endpoint;
@@ -114,13 +114,13 @@ async function githubApi(endpoint, { method = 'GET', json = undefined, raw = fal
   return response.json();
 }
 
-async function githubContent(repo, filename, ref) {
+export async function githubContent(repo, filename, ref) {
   const result = await githubApi('/repos/' + repo + '/contents/' + filename + '?ref=' + encodeURIComponent(ref));
   if (result.type !== 'file' || result.encoding !== 'base64') throw new Error('CONTENTS_NOT_BASE64_' + filename);
   return { text: Buffer.from(result.content, 'base64').toString('utf8'), sha: result.sha };
 }
 
-async function readPreflightArtifact(repo, runId, headSha) {
+export async function readPreflightArtifact(repo, runId, headSha) {
   const data = await githubApi('/repos/' + repo + '/actions/runs/' + runId + '/artifacts?per_page=100');
   const name = 'atlas-authoring-' + headSha;
   const artifacts = (data.artifacts || []).filter((a) => a.name === name && a.expired !== true);
