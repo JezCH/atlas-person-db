@@ -209,7 +209,13 @@ select
   s.source_type,
   s.title,
   s.canonical_url,
-  s.citation_text
+  s.citation_text,
+  s.author_creator,
+  s.institution,
+  s.publisher,
+  s.publication_date::text as publication_date,
+  s.publication_year,
+  s.external_identifier
 from atlas_v2.person_sources ps
 join atlas_v2.sources s
   on s.id = ps.source_id
@@ -394,13 +400,23 @@ function projectSource(row, locator = null) {
   const title = row?.title == null ? null : String(row.title);
   const citationText = row?.citation_text == null ? null : String(row.citation_text);
   const canonicalUrl = row?.canonical_url == null ? null : String(row.canonical_url);
+  // Only published bibliographic scalar fields are projected. Private source
+  // identity, artifact and claim provenance stay within Admin authority.
+  const bibliography = {};
+  for (const field of ["author_creator", "institution", "publisher", "publication_date", "external_identifier"]) {
+    if (row?.[field] != null && String(row[field]).trim()) bibliography[field] = String(row[field]).trim();
+  }
+  if (row?.publication_year != null && Number.isFinite(Number(row.publication_year))) {
+    bibliography.publication_year = Number(row.publication_year);
+  }
   return Object.freeze({
     title,
     source_type: row?.source_type == null ? null : String(row.source_type),
     canonical_url: canonicalUrl,
     citation_text: citationText,
     locator: locator == null ? null : String(locator),
-    display_reference: citationText || title || canonicalUrl
+    display_reference: citationText || title || canonicalUrl,
+    ...bibliography
   });
 }
 
