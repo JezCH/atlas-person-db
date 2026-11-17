@@ -151,3 +151,32 @@ test('successful ordinary Authoring main push never fetches stale selector or pr
   assert.match(calls[0][0], /\/commits\/[a-f0-9]{40}$/);
   assert.equal(calls[0][1],undefined);
 });
+
+test('approved legacy selected62 IDs preserve exact immutable batch identities (#2545/#2685)', () => {
+  const a = batchCase();
+  for (const [slug, name] of [['ellington','Duke Ellington'], ['davis','Miles Davis'], ['welles','Orson Welles']]) {
+    const legacy = structuredClone(a.manifests[0]);
+    const path = 'authoring/requests/selected62-remaining30-20261018-' + slug + '.json';
+    legacy.request_id = 'authoring:selected62-remaining30-20261018:' + slug + ':representative:v1';
+    legacy.person.canonical_name_en = name;
+    legacy.review_context.source_draft_pr = 2549;
+    a.manifests.push(legacy);
+    a.selector += 'preflight ' + path + '\n';
+    a.changedPaths.push(path);
+    a.evidence.results.push({status:'READY', request_id:legacy.request_id, manifest_path:path});
+  }
+  a.evidence.count = a.evidence.ready_count = 5;
+  assert.equal(assessApprovedBatchPreflightHandoff(a).ok, true);
+  for (const mutate of [
+    b => { b.manifests[2].person.canonical_name_en = 'Henri Matisse'; },
+    b => { b.manifests[2].review_context.source_draft_pr = 2589; },
+    b => { b.manifests[2].review_context.auto_continue_after_preflight = false; },
+    b => { b.manifests[2].review_status = 'hold'; },
+    b => { b.manifests[2].request_id = b.manifests[2].request_id.replace('ellington','matisse'); b.evidence.results[2].request_id = b.manifests[2].request_id; },
+    b => { const before = b.evidence.results[2].manifest_path; const after = before.replace('ellington','other'); b.selector = b.selector.replace(before,after); b.changedPaths = b.changedPaths.map(p => p === before ? after : p); b.evidence.results[2].manifest_path = after; },
+  ]) {
+    const b = structuredClone(a);
+    mutate(b);
+    assert.equal(assessApprovedBatchPreflightHandoff(b).ok, false, String(mutate));
+  }
+});
