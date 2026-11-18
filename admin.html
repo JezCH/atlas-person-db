@@ -192,6 +192,14 @@
         <pre id="identityResult" class="result" aria-live="polite">식별정보 등록 준비 완료</pre>
       </section>
 
+      <section class="panel" aria-labelledby="waitlist-title">
+        <div class="panel-head"><div><h2 id="waitlist-title">인물 등록 대기열</h2><p>최대 30명의 후보를 검토 대기에만 추가합니다. 기존 인물/후보와 이름이 일치하면 추가하지 않으며, 실제 인물 등록이나 승인으로 전환하지 않습니다.</p></div><button id="waitlistPreset" class="button secondary" type="button">기존 선정 29명 불러오기</button></div>
+        <label for="waitlistJson">대기 후보 JSON</label>
+        <textarea id="waitlistJson" rows="12" spellcheck="false"></textarea>
+        <div class="actions"><button id="waitlistPreview" class="button secondary" type="button">읽기 전용 사전검증</button><button id="waitlistApply" class="button primary" type="button" disabled>신규 대기 후보 추가</button></div>
+        <pre id="waitlistResult" class="result" aria-live="polite">후보 목록을 불러오거나 입력하세요.</pre>
+      </section>
+
       <section class="panel" aria-labelledby="input-title">
         <div class="panel-head">
           <div>
@@ -233,6 +241,7 @@
             "./atlas-admin-write-service.js",
             "./atlas-admin-identity.js",
             "./atlas-admin-duplicate-review.js",
+            "./atlas-admin-waitlist.js",
             "./admin.js"
           ]);
         };

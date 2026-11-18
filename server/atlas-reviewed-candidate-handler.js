@@ -12,8 +12,11 @@ const {
 } = require("./atlas-authoring-apply-handler.js");
 const { createReviewedCandidateRegistrationService } = require("./atlas-reviewed-candidate-registration-service.js");
 
+const { admitWaitlist } = require("./atlas-registration-waitlist-service.js");
+
 const MARKER = "ATLAS_REVIEWED_CANDIDATE_LIFECYCLE_V1";
 const OP_RECORD_REVIEW = "record_review";
+const OP_ADMIT_WAITLIST = "admit_waitlist";
 const OP_APPLY_CANDIDATE = "apply_reviewed_candidate";
 
 function json(res, status, body) {
@@ -33,7 +36,7 @@ function parseBody(req) {
 
 function operationOf(body) {
   const operation = String(body?.operation || "").trim();
-  if (![OP_RECORD_REVIEW, OP_APPLY_CANDIDATE].includes(operation)) throw new Error("CANDIDATE_LIFECYCLE_OPERATION_INVALID");
+  if (![OP_RECORD_REVIEW, OP_APPLY_CANDIDATE, OP_ADMIT_WAITLIST].includes(operation)) throw new Error("CANDIDATE_LIFECYCLE_OPERATION_INVALID");
   return operation;
 }
 
@@ -55,7 +58,7 @@ async function authorizeCandidateRequest(req, body, {
   const authorize = createMutationAuthorizer({ env, ...(typeof now === "function" ? { now } : {}) });
   const regular = await authorize({ method:req?.method, headers:req?.headers || {}, body });
 
-  if (operation === OP_RECORD_REVIEW) {
+  if (operation === OP_RECORD_REVIEW || operation === OP_ADMIT_WAITLIST) {
     if (!regular?.authorized || !["session","bearer"].includes(regular.method)) {
       throw new Error("CANDIDATE_REVIEW_HUMAN_AUTH_REQUIRED");
     }
@@ -155,6 +158,10 @@ function createReviewedCandidateHandler({
       client = await clientFactory(databaseUrl, { env });
       const readiness = await inspectReadiness(client);
       if (!readiness.ready) throw new Error("CANDIDATE_LIFECYCLE_PRODUCTION_NOT_READY");
+      if (auth.operation === OP_ADMIT_WAITLIST) {
+        const result = await admitWaitlist({ client,items:body.items,commit:body.commit ?? false,expected_token:body.expected_token });
+        return json(res,200,{ok:true,marker:MARKER,operation:OP_ADMIT_WAITLIST,auth_method:auth.method,...result});
+      }
       const service = createService({ client });
 
       if (auth.operation === OP_RECORD_REVIEW) {
@@ -194,6 +201,7 @@ module.exports = Object.freeze({
   MARKER,
   OP_RECORD_REVIEW,
   OP_APPLY_CANDIDATE,
+  OP_ADMIT_WAITLIST,
   parseBody,
   operationOf,
   candidateTransportEnvelope,

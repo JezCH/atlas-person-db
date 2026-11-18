@@ -283,6 +283,7 @@ module.exports = Object.freeze({
   REVIEWED_PERSON_ALIAS_VALUES_SQL,
   REVIEWED_PERSON_ALIASES_SQL,
   CANDIDATE_IDENTITY_CTES,
+  identityKeySql,
   PENDING_SQL,
   SUMMARY_SQL,
   text,
