@@ -1,0 +1,79 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-youtube39-20261023:bruce-lee:representative:v1",
+  "person": {
+    "canonical_name_en": "Bruce Lee",
+    "display_name_ko": "이소룡",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-23",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "British Hong Kong",
+    "display_name_ko": "영국령 홍콩",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "44d36935-11d2-407d-a0ae-6cc432a89580"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Actor and director of The Way of the Dragon",
+    "role_display_name_ko": "영화 《맹룡과강》 감독·배우",
+    "start_year": 1972,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1972,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Lee wrote, directed and starred in 1972 Hong Kong film The Way of the Dragon. Not a claim his entire career or martial-arts instruction lasted just one year. Preflight the precise British Hong Kong polity; do not invent a sovereign new entity."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Historical reference — Bruce Lee",
+      "canonical_url": "https://www.amacad.org/person/bruce-lee",
+      "citation_text": "Lee wrote, directed and starred in 1972 Hong Kong film The Way of the Dragon. Not a claim his entire career or martial-arts instruction lasted just one year. Preflight the precise British Hong Kong polity; do not invent a sovereign new entity."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Hong Kong Film Archive — The Way of the Dragon (1972)",
+      "canonical_url": "https://www.filmarchive.gov.hk/en/web/hkfa/2024/martial/pe-event-2024-martial-fs-film08.html",
+      "citation_text": "Hong Kong Film Archive credits Bruce Lee as writer, director, lead actor and action instructor of the 1972 film. Hong Kong is production context, not the location of the story's Rome scenes."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-23",
+      "document_title": "이소룡",
+      "url": "https://namu.wiki/w/%EC%9D%B4%EC%86%8C%EB%A3%A1"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Identity/alias, specific historical Polity/Place, source and NamuWiki-title canonical readback required before final apply. This is an offline pre-Production reviewed authoring draft; no auto-write or invented coordinates."
+  },
+  "review_context": {
+    "source_draft_pr": 2589,
+    "preflight_required": true,
+    "auto_continue_after_preflight": true,
+    "existing_polity_identity_checked_at": "2026-11-18",
+    "polity_identity_basis": "live canonical Polity 44d36935-11d2-407d-a0ae-6cc432a89580; original label British Hong Kong / 영국령 홍콩 normalized to existing British Hong Kong / 영국령 홍콩",
+    "identity_aliases": [
+      "Lee Jun-fan"
+    ],
+    "historical_request_source_head": "07d1571f90e2884764f1046cfa3d2fa455dce8dd"
+  }
+}
