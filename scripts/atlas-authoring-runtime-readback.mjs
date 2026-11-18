@@ -31,8 +31,17 @@ export function verifyPersonReadback({ person, manifest, applied }) {
       activity.relation?.code !== manifest.activity.relation_type ||
       activity.start?.year !== manifest.activity.start_year ||
       activity.end?.year !== manifest.activity.end_year) return stop('ACTIVITY_POLITY_OR_YEAR_MISMATCH');
+  // Bibliographic URL alone is not an assertion identity. Exact URL and title
+  // without the approved citation_text silently accepted unrelated claims for
+  // the same Person (e.g. Charles I Scottish versus English crowns). Normalize
+  // only the same nonsemantic whitespace folding as the canonical Source writer.
+  const citation = (text) => String(text ?? '').normalize('NFC').trim().replace(/\\s+/g, ' ');
   if (!Array.isArray(activity.sources) || !manifest.sources.every((source) =>
-    activity.sources.some((s) => s.canonical_url === source.canonical_url && s.title === source.title))) {
+    activity.sources.some((liveSource) =>
+      liveSource.canonical_url === source.canonical_url &&
+      liveSource.title === source.title &&
+      citation(liveSource.citation_text) === citation(source.citation_text || source.title) &&
+      (source.source_type == null || liveSource.source_type === source.source_type)))) {
     return stop('ACTIVITY_SOURCE_PROVENANCE_MISMATCH');
   }
   return { ok: true, personId: live.id, activityId: activity.id };
