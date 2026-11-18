@@ -61,6 +61,7 @@ export function auditSharedSourceUrls(snapshot) {
       }
     }
   }
+  const matchedRuntimeLinks = new Set();
   for (const [table, parentKey] of ROUTES) {
     for (const row of raw[table]) {
       if (!byId.has(row?.source_id)) throw new Error('SOURCE_URL_AUDIT_DANGLING_SOURCE');
@@ -71,6 +72,7 @@ export function auditSharedSourceUrls(snapshot) {
       let citation = null;
       if (hasRuntimeProvenance && table === 'activity_sources') {
         citation = runtimeProvenance.get(row[parentKey] + '\0' + row.source_id);
+        matchedRuntimeLinks.add(row[parentKey] + '\0' + row.source_id);
         const source = byId.get(row.source_id);
         if (!citation ||
             citation.source_key !== source.source_key ||
@@ -86,6 +88,9 @@ export function auditSharedSourceUrls(snapshot) {
         ...(typeof citation?.citation_text === 'string' && { citation_text: citation.citation_text })
       });
     }
+  }
+  if (hasRuntimeProvenance && matchedRuntimeLinks.size !== runtimeProvenance.size) {
+    throw new Error('SOURCE_URL_AUDIT_UNMATCHED_RUNTIME_CITATION');
   }
   const cases = [...byUrl].filter(([, sources]) => sources.length > 1)
     .sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]))
