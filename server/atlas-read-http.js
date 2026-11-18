@@ -6,6 +6,19 @@ function requireDatabaseUrl(env) {
   return value;
 }
 
+// Use only known response contract fields; do not log request query contents,
+// names, IDs, notes, headers, or caller-provided arbitrary labels.
+function largeJsonDisposition(body) {
+  if (body?.schema !== "atlas-person-read/v1") return { mode: "other", rows: null };
+  if (body.mode === "detail") return { mode: "person_detail", rows: body.person ? 1 : 0 };
+  if (body.mode !== "list" || !Array.isArray(body.persons)) return { mode: "other", rows: null };
+  if (body.projection === "identity") return { mode: "person_identity", rows: body.persons.length };
+  if (body.query || body.namuwiki_status || Number.isInteger(body.limit)) {
+    return { mode: "person_filtered_list", rows: body.persons.length };
+  }
+  return { mode: "person_full_list", rows: body.persons.length };
+}
+
 function sendJson(res, status, body) {
   res.statusCode = status;
   res.setHeader("content-type", "application/json; charset=utf-8");
@@ -17,9 +30,11 @@ function sendJson(res, status, body) {
   res.setHeader("x-atlas-json-bytes", String(bytes));
   if (bytes >= 256 * 1024) {
     const route = String(res.req?.url || "unknown").split("?")[0].split("#")[0];
-    console.warn("[ATLAS_LARGE_ORIGIN_JSON]", "route=" + route, "bytes=" + bytes, "status=" + status);
+    const disposition = largeJsonDisposition(body);
+    console.warn("[ATLAS_LARGE_ORIGIN_JSON]", "route=" + route, "bytes=" + bytes, "status=" + status,
+      "mode=" + disposition.mode, "rows=" + (disposition.rows == null ? "unknown" : disposition.rows));
   }
   res.end(json);
 }
 
-module.exports = Object.freeze({ requireDatabaseUrl, sendJson });
+module.exports = Object.freeze({ requireDatabaseUrl, sendJson, largeJsonDisposition });
