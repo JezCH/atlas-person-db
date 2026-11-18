@@ -8,6 +8,7 @@
  * re-preflights and writes READY-only, then triggers Runtime publication.
  */
 import fs from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import {
   MANIFEST_RE, SELECTOR_FILE, WRITER_WORKFLOW,
   githubApi, githubContent, readPreflightArtifact
@@ -96,18 +97,15 @@ function hasApprovedBatchRequestIdentity(manifest, requestPath) {
     manifest.review_context?.source_draft_pr === 2549);
 }
 
-export function assessApprovedBatchPreflightHandoff({ run, selector, manifests, evidence, changedPaths }) {
+
+/** The same static intake predicate is used before merge and before the
+ * protected writer handoff. It is NOT an OIDC preflight or a write approval. */
+export function assessApprovedBatchIntake({ selector, manifests, changedPaths }) {
   const stop = (reason) => ({ ok: false, reason });
-  if (run?.name !== 'ATLAS Authoring Apply' || run.event !== 'push' ||
-      run.head_branch !== 'main' || run.status !== 'completed' ||
-      run.conclusion !== 'success' || run.actor?.login !== 'JezCH' ||
-      !SHA_RE.test(run.head_sha || '') || run.run_attempt !== 1) {
-    return stop('NOT_FIRST_SUCCESSFUL_OWNER_MAIN_PREFLIGHT');
-  }
   const paths = approvedBatchSelectorPaths(selector);
   if (!paths) return stop('INVALID_EXACT_BATCH_SELECTOR');
   const allowedPaths = new Set([SELECTOR_FILE, ...paths]);
-  if (!Array.isArray(changedPaths) || changedPaths.length !== allowedPaths.size ||
+  if (!Array.isArray(changedPaths) || new Set(changedPaths).size !== allowedPaths.size || changedPaths.length !== allowedPaths.size ||
       !changedPaths.every((p) => allowedPaths.has(p))) return stop('BATCH_TOUCH_SET_MISMATCH');
   if (!Array.isArray(manifests) || manifests.length !== paths.length) {
     return stop('BATCH_MANIFEST_COUNT_MISMATCH');
@@ -130,6 +128,20 @@ export function assessApprovedBatchPreflightHandoff({ run, selector, manifests, 
         ids.has(manifest.request_id)) return stop('BATCH_MANIFEST_NOT_INDIVIDUALLY_APPROVED');
     ids.add(manifest.request_id);
   }
+  return { ok: true, requests: paths.map((p, i) => ({ path: p, requestId: manifests[i].request_id })) };
+}
+
+export function assessApprovedBatchPreflightHandoff({ run, selector, manifests, evidence, changedPaths }) {
+  const stop = (reason) => ({ ok: false, reason });
+  if (run?.name !== 'ATLAS Authoring Apply' || run.event !== 'push' ||
+      run.head_branch !== 'main' || run.status !== 'completed' ||
+      run.conclusion !== 'success' || run.actor?.login !== 'JezCH' ||
+      !SHA_RE.test(run.head_sha || '') || run.run_attempt !== 1) {
+    return stop('NOT_FIRST_SUCCESSFUL_OWNER_MAIN_PREFLIGHT');
+  }
+  const intake = assessApprovedBatchIntake({ selector, manifests, changedPaths });
+  if (!intake.ok) return intake;
+  const paths = intake.requests.map((request) => request.path);
   if (evidence?.ok !== true || evidence.marker !== 'ATLAS_HUMAN_AUTHORING_BATCH_V1' ||
       evidence.operation !== 'preflight_batch' || evidence.committed !== false ||
       evidence.count !== paths.length || evidence.ready_count !== paths.length ||
@@ -226,7 +238,47 @@ export async function continueApprovedPreflight({ event, api = githubApi, conten
   if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, message + '\n');
 }
 
-if (process.env.ATLAS_PREFLIGHT_AUTODISPATCH_RUN === '1') {
+
+/** Read-only exact Git-delta validation. No token, network, OIDC or DB calls.
+ * Unrelated commits and legacy one-record control files retain their own
+ * existing checks. Multiline controls are always strict preflight batches. */
+export function checkChangedBatchIntake({ baseSha, headSha, git = (args) => execFileSync('git', args, { encoding: 'utf8', maxBuffer: 8 * 1024 * 1024 }) }) {
+  if (!SHA_RE.test(baseSha || '') || !SHA_RE.test(headSha || '')) throw Error('EXACT_INTAKE_RANGE_REQUIRED');
+  const changedPaths = git(['diff', '--name-only', '--no-renames', '-z', baseSha, headSha, '--']).split('\0').filter(Boolean);
+  if (!changedPaths.includes(SELECTOR_FILE)) return { ok: true, disposition: 'UNCHANGED_SELECTOR' };
+  const selector = git(['show', headSha + ':' + SELECTOR_FILE]);
+  const lines = (selector.endsWith('\n') ? selector.slice(0, -1) : selector).split('\n');
+  if (lines.length <= 1) return { ok: true, disposition: 'SINGLE_SELECTOR_EXISTING_GATE' };
+  const paths = approvedBatchSelectorPaths(selector);
+  if (!paths) return { ok: false, reason: 'INVALID_EXACT_BATCH_SELECTOR' };
+  const manifests = paths.map((p) => JSON.parse(git(['show', headSha + ':' + p])));
+  if (manifests.some((m) => !['atlas-human-authoring/v1', 'atlas-human-person-authoring/v1'].includes(m?.schema) || m?.review_status !== 'approved')) {
+    return { ok: false, reason: 'READ_ONLY_BATCH_REQUIRES_APPROVED_HUMAN_SCHEMA' };
+  }
+  // A pure read-only inspection need not opt into automatic writing. If ANY
+  // member opts in, validate the exact full group using the writer handoff's
+  // real static predicate; no partly opted-in batch can pass as auto-ready.
+  if (!manifests.some((m) => m.review_context?.auto_continue_after_preflight === true)) {
+    return { ok: true, disposition: 'READ_ONLY_NO_AUTO_CONTINUATION', count: paths.length };
+  }
+  const intake = assessApprovedBatchIntake({ selector, manifests, changedPaths });
+  return intake.ok
+    ? { ok: true, disposition: 'STATIC_HANDOFF_ELIGIBLE_ONLY', count: intake.requests.length }
+    : intake;
+}
+
+if (process.argv[2] === '--check-intake') {
+  try {
+    const result = checkChangedBatchIntake({ baseSha: process.argv[3], headSha: process.argv[4] });
+    console.log('ATLAS_BATCH_INTAKE_STATIC_CHECK: ' + JSON.stringify(result));
+    if (!result.ok) process.exitCode = 1;
+  } catch (error) {
+    console.error('ATLAS_BATCH_INTAKE_STATIC_CHECK_FAILED: ' + error.message);
+    process.exitCode = 1;
+  }
+}
+
+if (process.env.ATLAS_PREFLIGHT_AUTODISPATCH_RUN === '1' && process.argv[2] !== '--check-intake') {
   continueApprovedPreflight({ event: JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH, 'utf8')) }).catch((err) => {
     console.error('ATLAS_PREFLIGHT_AUTODISPATCH_FAIL_CLOSED: ' + err.message);
     process.exitCode = 1;
