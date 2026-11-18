@@ -1,0 +1,74 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-youtube39-20261023:anne-frank:representative:v1",
+  "person": {
+    "canonical_name_en": "Anne Frank",
+    "display_name_ko": "안네 프랑크",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-23",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of the Netherlands",
+    "display_name_ko": "네덜란드 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "cde8c7d2-c0bd-5e43-9d2a-ebfdcb7e9b1e"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Author beginning her wartime diary",
+    "role_display_name_ko": "전쟁 중 일기 집필 시작",
+    "start_year": 1942,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1942,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Began writing her diary in Amsterdam June 1942. Year is a start milestone, not an end; Netherlands indicates place during Nazi occupation, not uninterrupted sovereign authority."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Historical reference — Anne Frank",
+      "canonical_url": "https://www.annefrank.org/en/anne-frank/diary/complete-works-anne-frank/",
+      "citation_text": "Began writing her diary in Amsterdam June 1942. Year is a start milestone, not an end; Netherlands indicates place during Nazi occupation, not uninterrupted sovereign authority."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-23",
+      "document_title": "안네 프랑크",
+      "url": "https://namu.wiki/w/%EC%95%88%EB%84%A4%20%ED%94%84%EB%9E%91%ED%81%AC"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Identity/alias, specific historical Polity/Place, source and NamuWiki-title canonical readback required before final apply. This is an offline pre-Production reviewed authoring draft; no auto-write or invented coordinates."
+  },
+  "review_context": {
+    "source_draft_pr": 2589,
+    "preflight_required": true,
+    "auto_continue_after_preflight": true,
+    "existing_polity_identity_checked_at": "2026-11-19",
+    "polity_identity_review": "1942 Amsterdam Nazi occupation context; existing Netherlands monarchy UUID is geographic/historical association only, not assertion of unoccupied sovereignty",
+    "identity_aliases": [
+      "Annelies Marie Frank"
+    ],
+    "historical_request_source_head": "07d1571f90e2884764f1046cfa3d2fa455dce8dd",
+    "production_person_identity_screen": "2026-11-19 compact production identity projection 2192 Persons; no direct normalized canonical/KO name match, protected preflight authoritative"
+  }
+}
