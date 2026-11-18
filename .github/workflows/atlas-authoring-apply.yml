@@ -158,6 +158,10 @@ jobs:
             [[ -n "$manifest" ]] || continue
             [[ "$manifest" =~ ^authoring/requests/[A-Za-z0-9._-]+\.json$ ]] || { echo "Rejected manifest path: $manifest" >&2; exit 1; }
             schema="$(jq -r '.schema // ""' "$manifest")"
+            if [[ "$preflight_only" == "true" && "$schema" != "atlas-human-authoring/v1" && "$schema" != "atlas-human-person-authoring/v1" ]]; then
+              echo "FAIL_CLOSED: read-only selector rejects non-human schema: $manifest" >&2
+              exit 1
+            fi
             if [[ "$schema" == "atlas-authoring-manifest/v2" ]]; then
               jq -e '
                 .review_status == "approved"
@@ -364,6 +368,10 @@ jobs:
                 done < /tmp/atlas-manifests.txt
               fi
             fi
+            if [[ "${ATLAS_AUTHORING_PREFLIGHT_ONLY:-false}" == "true" && "$bootstrap_required" == "true" ]]; then
+              echo 'FAIL_CLOSED: read-only preflight requires an already-ready runtime; bootstrap prohibited' >&2
+              exit 1
+            fi
             if ! git cat-file -e "${runtime_sha}^{commit}" 2>/dev/null; then
               if [[ "${ATLAS_AUTHORING_AUDIT_ALL_APPROVED:-false}" == "true" ]]; then
                 git fetch --no-tags --quiet origin main
@@ -436,7 +444,7 @@ jobs:
           [[ "$runtime_ready" == "true" ]] || { echo "Authoring runtime never became ready." >&2; exit 1; }
 
       - name: Bootstrap bounded authoring schema migrations
-        if: env.ATLAS_AUTHORING_SELECTED == 'true' && env.ATLAS_AUTHORING_BOOTSTRAP_REQUIRED == 'true' && env.ATLAS_AUTHORING_AUDIT_ALL_APPROVED != 'true'
+        if: env.ATLAS_AUTHORING_SELECTED == 'true' && env.ATLAS_AUTHORING_BOOTSTRAP_REQUIRED == 'true' && env.ATLAS_AUTHORING_AUDIT_ALL_APPROVED != 'true' && env.ATLAS_AUTHORING_PREFLIGHT_ONLY != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -981,6 +989,12 @@ jobs:
               break
             }
           done
+
+          if [[ "${ATLAS_AUTHORING_PREFLIGHT_ONLY:-false}" == "true" ]] &&
+             { [[ "$all_human" != "true" ]] || [[ "${#manifests[@]}" -eq 0 ]]; }; then
+            echo 'FAIL_CLOSED: read-only preflight cannot enter native or empty apply path' >&2
+            exit 1
+          fi
 
           if [[ "$all_human" == "true" && "${#manifests[@]}" -gt 0 ]]; then
             manifest_paths="$(printf '%s\n' "${manifests[@]}" | jq -R . | jq -s .)"

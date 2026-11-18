@@ -276,6 +276,14 @@ Hard rules:
 
 Exception: if the user explicitly instructs the worker to continue across multiple units in the same response (for example, "continue through multiple batches" or "keep going until this whole set is complete"), the worker may cross the response barrier for that request. The exception applies only to that explicit request and does not become the new default.
 
+### Explicit standing authorization for the ATLAS master automation
+
+The user has explicitly authorized the existing scheduled **ATLAS 프로젝트 총괄** to execute multiple independent work units per invocation, within its available execution budget. Its saved multi-unit instruction is a standing explicit request for the exception above, including when the task is invoked through Run now. This is not an exception for arbitrary interactive workers or unrelated automations.
+
+For that master only, finishing or verifying the first unit releases that unit's resource and is a checkpoint, **not a reason to end the run**. Immediately select the next ready, authorized high-value work unit and actually execute its next substantive step. CI waiting, a completed historical batch, unavailable Production access for one lane, or an already-resolved defect do not justify a report-only exit while another independent safe action is available. Keep one current resume pointer per active artifact; preserve exact-head review, canonical writer, mutation approval, quota and resource-scoped conflict guards.
+
+The following are not deliverables in themselves: rereading old evidence, counting existing PRs, filing another task, writing a plan or checking an already completed result. A verification-only unit can close a genuine pending acceptance gate, but do not count it again as a new mutation. A run may end when its actual executor budget expires, no authorized independent actionable work remains, or a genuine tool/permission barrier prevents further safe execution. Record the actual stopping reason and exact next actionable artifact. Do not invent an ability to extend an executor's budget. This standing exception does not authorize new destructive mutations, bypass protection, or globally lock other workers.
+
 This response barrier overrides the general preference for maximum forward progress whenever continuing would cross from a completed work unit into a new one without a new user turn.
 
 ## 7. Verification proportional to risk
