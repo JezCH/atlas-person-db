@@ -12,7 +12,7 @@ test("UI P2 loads the dense Monumental Register after the global visual foundati
   assert.ok(register > foundation, "dense Register layer must load after V3 foundation");
   assert.match(html, /atlas-person-table-view\.js\?v=20261004-ui-p13-column-balance-polity-height-v1/);
   assert.match(html, /atlas-person-header-sorting\.js\?v=20261004-ui-p2-dense-register-v1/);
-  assert.match(html, /atlas-person-main\.js\?v=20261118-activity-confidence-chronology-v1/);
+  assert.match(html, /atlas-person-main\.js\?v=20261119-person-deeplink-lean-v1/);
 });
 
 test("UI P2 projects canonical Person domain into the register row", () => {

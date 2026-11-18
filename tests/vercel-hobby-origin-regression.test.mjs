@@ -31,15 +31,21 @@ test("Origin JSON diagnostics preserve response bytes without logging query para
   assert.doesNotMatch(messages[0], /SECRET_QUERY|SECRET_BODY/);
 });
 
-test("Non-Person initial routes do not eagerly trigger canonical full-list fetch", () => {
+test("Initial single-Person deep links skip full-list origin reads but preserve explicit register access", () => {
   const src = read("atlas-person-main.js");
   assert.match(src, /function ensurePersonsLoaded\(\)/);
-  assert.match(src, /initialDomain === "persons"\) void ensurePersonsLoaded\(\)/);
-  assert.match(src, /atlas-authority-domain-changed/);
-  assert.match(src, /event\?\.detail\?\.domain === "persons"\) void ensurePersonsLoaded\(\)/);
-  assert.match(src, /const loaded = await ensurePersonsLoaded\(\)/);
+  assert.match(src, /initialRoute\?\.entity_type !== "person"/);
+  assert.match(src, /if \(route\?\.entity_type !== "person"\) void ensurePersonsLoaded\(\)/);
+  const openPersonBody = src.slice(src.indexOf("async function openPerson("), src.indexOf("function clearSelection(", src.indexOf("async function openPerson(")));
+  assert.doesNotMatch(openPersonBody, /ensurePersonsLoaded|loadPersons/);
+  assert.match(openPersonBody, /return selectPerson\(id, \{ force:true, updateRoute \}\)/);
+  assert.match(src, /data-person-list-load/);
+  assert.match(src, /personListLoaded = true/);
+  assert.match(src, /if \(!personListLoaded\) \{ void ensurePersonsLoaded\(\); return true; \}/);
+  assert.match(src, /const loaded = await ensurePersonsLoaded\(\)/); // export always materializes the real register
   assert.doesNotMatch(src, /installShell\(\);\s*initialLoadPromise = loadPersons/);
 });
+
 
 test("Automatic visual Production smoke is bounded, with the complete release suite preserved", () => {
   const workflow = read(".github/workflows/atlas-spacetime-production-visual.yml");

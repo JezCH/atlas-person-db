@@ -21,6 +21,7 @@
   }
 
   let persons = [];
+  let personListLoaded = false;
   let facetCatalog = Object.freeze({ polities: [], relations: [], roles: [], period_bases: [] });
   let selectedPersonId = null;
   let query = "";
@@ -323,6 +324,20 @@
   function renderGroups() {
     const list = document.getElementById("personMainGroups");
     if (!list) return 0;
+    if (!personListLoaded) {
+      for (const child of [...list.children]) {
+        if (child.id !== "personEraNavigator") child.remove();
+      }
+      // An individual deep link needs only the bounded detail API. Offer an
+      // explicit path to the full registry instead of showing a false 0-person
+      // result or downloading every Person automatically.
+      list.insertAdjacentHTML("beforeend", `<section class="person-group person-group-historical">
+        <header class="person-group-head"><div><p class="eyebrow">개별 인물 보기</p>
+        <h3>전체 목록 탐색</h3><p>현재 선택한 인물의 상세정보를 표시합니다. 다른 인물을 탐색할 때 전체 목록을 불러옵니다.</p>
+        <button type="button" class="btn" data-person-list-load>전체 인물 목록 보기</button></div></header>
+      </section>`);
+      return 0;
+    }
     const groups = reader.preparePersonGroups(persons, {
       query,
       sortOrder,
@@ -354,6 +369,7 @@
     const next = String(value ?? "");
     if (query === next) return false;
     query = next;
+    if (!personListLoaded) { void ensurePersonsLoaded(); return true; }
     renderGroups();
     return true;
   }
@@ -384,6 +400,7 @@
     const next = !requested || validCodes.includes(requested) ? requested : "";
     if (facetFilters.domain === next) return false;
     facetFilters = { ...facetFilters, domain: next };
+    if (!personListLoaded) { void ensurePersonsLoaded(); return true; }
     renderGroups();
     return true;
   }
@@ -616,7 +633,7 @@
   // Person list. Share one request between direct links and Person navigation.
   function ensurePersonsLoaded() {
     if (!initialLoadPromise) {
-      initialLoadPromise = loadPersons({ keepSelection: false }).then((outcome) => {
+      initialLoadPromise = loadPersons({ keepSelection: true }).then((outcome) => {
         if (!outcome.ok) initialLoadPromise = null; // allow the next visit to retry
         return outcome;
       });
@@ -627,8 +644,8 @@
   async function openPerson(personId, { updateRoute = false } = {}) {
     const id = String(personId || "").trim().toLowerCase();
     if (!reader.UUID_PATTERN?.test?.(id)) return false;
-    const loaded = await ensurePersonsLoaded();
-    if (!loaded.ok) return false;
+    // The router opens a canonical Person detail directly. Do not make the
+    // unrelated full-register endpoint a prerequisite for that exact read.
     return selectPerson(id, { force:true, updateRoute });
   }
 
@@ -656,6 +673,7 @@
         dataStore.loadPersonDomains({ force }).catch(() => null)
       ]);
       persons = result.persons.slice();
+      personListLoaded = true;
       personDomainsById = Object.freeze({ ...(domainResult?.by_person_id || {}) });
       facetCatalog = result.facet_catalog || reader.facetCatalog(persons);
       if (facetFilters.polity_id && !polityOptions().some((item) => item.id === facetFilters.polity_id)) {
@@ -913,6 +931,8 @@
     if (exportButton) exportButton.disabled = true;
 
     try {
+      const loaded = await ensurePersonsLoaded();
+      if (!loaded.ok) throw loaded.error || new Error("PERSON_LIST_NOT_AVAILABLE");
       const exporter = await ensurePersonExcelExportModule();
       await exporter.exportPersons({ persons, boundaryLabel });
     } catch (error) {
@@ -959,6 +979,10 @@
     refresh?.addEventListener("click", refreshPersons);
     excelExport?.addEventListener("click", exportCurrentExcel);
     groups?.addEventListener("click", (event) => {
+      if (event.target.closest("[data-person-list-load]")) {
+        void ensurePersonsLoaded();
+        return;
+      }
       if (event.target.closest("[data-person-dashboard-filter-clear]")) {
         clearDashboardFilter();
         return;
@@ -999,10 +1023,14 @@
   installShell();
   // Domain routing initializes later in index.html. Resolve the initial hash
   // now, then load on demand whenever the user navigates to Person.
-  const initialDomain = window.ATLAS_ENTITY_ROUTE?.parseHash?.(window.location.hash)?.domain || "persons";
-  if (initialDomain === "persons") void ensurePersonsLoaded();
+  const initialRoute = window.ATLAS_ENTITY_ROUTE?.parseHash?.(window.location.hash);
+  if ((!initialRoute || initialRoute.domain === "persons") && initialRoute?.entity_type !== "person") {
+    void ensurePersonsLoaded();
+  }
   window.addEventListener("atlas-authority-domain-changed", (event) => {
-    if (event?.detail?.domain === "persons") void ensurePersonsLoaded();
+    if (event?.detail?.domain !== "persons") return;
+    const route = window.ATLAS_ENTITY_ROUTE?.parseHash?.(window.location.hash);
+    if (route?.entity_type !== "person") void ensurePersonsLoaded();
   });
 
   window.ATLAS_PERSON_MAIN = Object.freeze({
