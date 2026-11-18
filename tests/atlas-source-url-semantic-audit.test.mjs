@@ -32,11 +32,13 @@ test('full immutable Source citation graph is preserved for every shared URL', (
     shared_url_groups:2,source_uuid_rows:4,excess_over_url_uniqueness:2,
     title_variant_groups:1,type_variant_groups:1,
     same_activity_source_groups:1,same_activity_source_collisions:1,
-    human_authoring_source_rows:3,activity_source_links:4,designation_source_links:1
+    human_authoring_source_rows:3,activity_source_links:4,
+    activity_source_links_with_citations:0,same_activity_distinct_citation_collisions:0,
+    designation_source_links:1
   });
   const history=result.cases.find(c=>c.canonical_url==='https://example.org/history');
   assert.equal(history.review_priority,'SAME_ACTIVITY_MULTIPLE_SOURCE_UUIDS');
-  assert.deepEqual(history.same_activity_source_collisions,[{activity_id:'a1',source_ids:['s1','s2']}]);
+  assert.deepEqual(history.same_activity_source_collisions,[{activity_id:'a1',source_ids:['s1','s2'],citation_comparison:'EVIDENCE_UNAVAILABLE'}]);
   assert.deepEqual(history.sources.find(s=>s.id==='s1').references,[
     {table:'activity_sources',parent_id:'a1',source_locator_key:'chapter 1'},
     {table:'polity_sources',parent_id:'p1',source_locator_key:null}
@@ -89,4 +91,81 @@ test('preserves distinct citation text when supplied without inferring missing e
   assert.equal(history.safe_to_merge, false);
   const royal = result.cases.find(item => item.canonical_url === 'https://example.org/royal');
   assert.ok(royal.sources.every(source => !Object.hasOwn(source, 'citation_text')));
+});
+
+
+function fixtureWithRuntimeProvenance() {
+  const data = fixture();
+  const byActivity = new Map();
+  for (const link of data.raw.activity_sources) {
+    const source = data.raw.sources.find(row => row.id === link.source_id);
+    const citation = {
+      source_id: source.id, source_key: source.source_key,
+      title: source.title, source_type: source.source_type,
+      canonical_url: source.canonical_url,
+      source_locator_key: link.source_locator_key,
+      citation_text: source.id === 's1' ? '7 March 1945 specific assertion'
+        : source.id === 's2' ? 'March 1945 wider leadership claim'
+          : 'Different source claim ' + source.id
+    };
+    if (!byActivity.has(link.activity_id)) byActivity.set(link.activity_id, []);
+    byActivity.get(link.activity_id).push(citation);
+  }
+  data.raw.runtime_activities = [...byActivity].map(([id, normalized_sources]) => ({
+    activity: { id, provenance_snapshot: { normalized_sources } }
+  }));
+  return data;
+}
+
+test('joins original immutable Runtime citation to exact Activity and Source without inventing global Source citation', () => {
+  const data = fixtureWithRuntimeProvenance();
+  const result = auditSharedSourceUrls(data);
+  const history = result.cases.find(row => row.canonical_url === 'https://example.org/history');
+  assert.equal(result.production_mutation_authorized, false);
+  assert.deepEqual(result.operations, []);
+  assert.equal(result.summary.activity_source_links_with_citations, 4);
+  assert.equal(result.summary.same_activity_distinct_citation_collisions, 1);
+  assert.deepEqual(history.same_activity_source_collisions, [
+    {activity_id:'a1',source_ids:['s1','s2'],citation_comparison:'DISTINCT_ASSERTION_CITATIONS'}
+  ]);
+  assert.deepEqual(history.sources.find(s=>s.id==='s1').references, [
+    {table:'activity_sources',parent_id:'a1',source_locator_key:'chapter 1',citation_text:'7 March 1945 specific assertion'},
+    {table:'polity_sources',parent_id:'p1',source_locator_key:null}
+  ]);
+  assert.ok(!Object.hasOwn(history.sources.find(s=>s.id==='s1'), 'citation_text'));
+  assert.equal(history.safe_to_merge, false);
+});
+
+test('same citation on same Activity is an evidence comparison, never automatic Source identity merge', () => {
+  const data = fixtureWithRuntimeProvenance();
+  data.raw.runtime_activities[0].activity.provenance_snapshot.normalized_sources[1].citation_text =
+    data.raw.runtime_activities[0].activity.provenance_snapshot.normalized_sources[0].citation_text;
+  const r = auditSharedSourceUrls(data);
+  assert.equal(r.summary.same_activity_distinct_citation_collisions, 0);
+  assert.equal(r.cases.find(c=>c.canonical_url==='https://example.org/history')
+    .same_activity_source_collisions[0].citation_comparison,'IDENTICAL_ASSERTION_CITATIONS');
+  assert.equal(r.cases[0].safe_to_merge,false);
+  delete data.raw.runtime_activities[0].activity.provenance_snapshot.normalized_sources[1].citation_text;
+  assert.equal(auditSharedSourceUrls(data).cases.find(c=>c.canonical_url==='https://example.org/history')
+    .same_activity_source_collisions[0].citation_comparison,'EVIDENCE_UNAVAILABLE');
+});
+
+test('Runtime Source join refuses missing, ambiguous or changed provenance without any canonical write', () => {
+  for (const mutate of [
+    data => data.raw.runtime_activities[0].activity.provenance_snapshot.normalized_sources.pop(),
+    data => data.raw.runtime_activities[0].activity.provenance_snapshot.normalized_sources.push({
+      ...data.raw.runtime_activities[0].activity.provenance_snapshot.normalized_sources[0]
+    }),
+    data => { data.raw.runtime_activities[0].activity.provenance_snapshot.normalized_sources[0].source_key = 'different'; },
+    data => { data.raw.runtime_activities[0].activity.provenance_snapshot.normalized_sources[0].title = 'unreviewed different title'; },
+    data => { data.raw.runtime_activities[0].activity.provenance_snapshot.normalized_sources[0].canonical_url = 'https://different.example/'; },
+    data => { data.raw.runtime_activities[0].activity.provenance_snapshot.normalized_sources[0].source_locator_key = 'different locator'; },
+  ]) {
+    const data = fixtureWithRuntimeProvenance();
+    mutate(data);
+    assert.throws(()=>auditSharedSourceUrls(data),/SOURCE_URL_AUDIT_(DUPLICATE_RUNTIME_CITATION|RUNTIME_LINK_PROVENANCE_MISMATCH)/);
+  }
+  const malformed = fixtureWithRuntimeProvenance();
+  malformed.raw.runtime_activities[0].activity.provenance_snapshot = null;
+  assert.throws(()=>auditSharedSourceUrls(malformed),/SOURCE_URL_AUDIT_INVALID_RUNTIME_EVIDENCE/);
 });
