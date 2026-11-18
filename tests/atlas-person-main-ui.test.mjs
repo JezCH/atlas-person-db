@@ -154,7 +154,7 @@ test('Person detail binds canonical portrait read and authoring controls without
 test('portrait depth composition stays presentation-only and reuses canonical domain background plus portrait asset', () => {
   assert.match(html, /atlas-person-main\.css\?v=20260924-portrait-depth-v9/);
   assert.match(main, /person-detail-portrait\$\{href \? " has-portrait" : ""\}/);
-  assert.match(main, /portraitPresentation\.presentationFor\(person, personDomainsById\?\.\[person\?\.id\]\)/);
+  assert.match(main, /portraitPresentation\.presentationFor\(person, personDomainsById\?\.\[person\?\.id\] \|\| person\?\.representative_domain\)/);
   assert.match(main, /portrait\.asset_url/);
   assert.match(css, /--portrait-bg-scale:1\.035/);
   assert.match(css, /filter:blur\(var\(--portrait-bg-blur\)\) brightness\(var\(--portrait-bg-brightness\)\) saturate\(var\(--portrait-bg-saturation\)\)/);
