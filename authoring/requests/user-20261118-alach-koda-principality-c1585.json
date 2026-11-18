@@ -1,0 +1,81 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261118:alach:koda-principality:rule-c1585:v1",
+  "person": {
+    "canonical_name_en": "Alach",
+    "display_name_ko": "알라치",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-18",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Koda Principality",
+    "display_name_ko": "코다 공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "de_facto_rule",
+    "role": "Prince",
+    "role_display_name_ko": "공작",
+    "start_year": 1585,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1585,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Alach (Алач, Алачей) was a historical Khanty (Ostyak) ruler of the Koda Principality in the lower Ob region of western Siberia. Solodkin (2017) critically rejects the late Kungur chronicle's account that Yermak or Bogdan Bryazga appointed Alach ruler of the whole lower Ob in 1583 and allows that Alach may have recognized Moscow's authority in the mid-1580s. The c.1585 representative point records his approximate personal floruit as Koda's prince, not an exact accession, charter, vassalage or end date. Vershinin identifies Alach as deceased by the beginning of the 1590s and succeeded by his son Igichey. Do not ascribe universal rule of the Khanty, the later conquests of his descendants, or the principality's abolition in 1643 to him."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Ya. G. Solodkin, Was Prince of Koda Alach the vassal of Ermak and Ivan the Terrible? — Bulletin of Ugric Studies, 7(3), 2017",
+      "canonical_url": "https://vestnik-ugrovedenia.ru/en/content/was-prince-koda-alach-vassal-ermak-and-ivan-terrible",
+      "citation_text": "Peer-reviewed historical source criticism identifies Alach as prince of Koda and assesses the disputed 1583 appointment account; places possible recognition of Russian authority in the mid-1580s rather than treating the traditional date as certain."
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "E. V. Vershinin, Nevesta poslednego knyazya Kody (The Bride of the Last Prince of Koda)",
+      "canonical_url": "https://www.vostlit.info/Texts/Dokumenty/Russ/XVII/1620-1640/Alacev_D_M/zarjad_zapis_18_04_1637.htm",
+      "citation_text": "Historical study of the Koda Khanty principality and dynasty states that Alach had died by the beginning of the 1590s and was succeeded by his son Igichey; distinguishes Koda's subsequent military service and later rulers."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-11-18",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Historical studies identify the lower Ob in western Siberia as the community's location. The reviewed polity is Koda Principality, not all Khanty or modern Khanty-Mansi Autonomous Okrug. No exact canonical Place, coordinates or repository-backed binding is established by this request; preserve reviewed_hold rather than invent geometry. Existing western-Siberia leaf is a regional context only."
+  },
+  "review_context": {
+    "selection": "explicit_user_selected_registration_2026-11-18",
+    "aliases": [
+      "Алач",
+      "Алачей",
+      "Alachey",
+      "Alachei",
+      "Alatch",
+      "알라흐",
+      "알라체이"
+    ],
+    "namuwiki_review_evidence": "Indexed exact and alternate Korean names with Khanty/Koda context checked across namu.wiki and namu.moe; hits are unrelated or general regional pages, no independent exact Person article.",
+    "preflight_required": true,
+    "production_screen": "Repository and issue checks found no matching Alach registration. Direct public exact Person read could not be retrieved; authoritative protected OIDC preflight_batch required before any canonical write. No claimed READY or existing polity UUID."
+  }
+}
