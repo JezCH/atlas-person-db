@@ -34,7 +34,7 @@ test("Origin JSON diagnostics preserve response bytes without logging query para
 test("Initial single-Person deep links skip full-list origin reads but preserve explicit register access", () => {
   const src = read("atlas-person-main.js");
   assert.match(src, /function ensurePersonsLoaded\(\)/);
-  assert.match(src, /initialRoute\.entity_type !== "person"/);
+  assert.match(src, /initialRoute\?\.entity_type !== "person"/);
   assert.match(src, /if \(route\?\.entity_type !== "person"\) void ensurePersonsLoaded\(\)/);
   const openPersonBody = src.slice(src.indexOf("async function openPerson("), src.indexOf("function clearSelection(", src.indexOf("async function openPerson(")));
   assert.doesNotMatch(openPersonBody, /ensurePersonsLoaded|loadPersons/);
