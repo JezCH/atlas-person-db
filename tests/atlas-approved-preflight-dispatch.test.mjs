@@ -1,5 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
+import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { assessApprovedPreflightHandoff, assessApprovedBatchPreflightHandoff, approvedBatchSelectorPaths, continueApprovedPreflight, assessApprovedBatchIntake, checkChangedBatchIntake } from '../scripts/atlas-approved-preflight-dispatch.mjs';
 
 const target = 'authoring/requests/youtube39-20261023-edgar-allan-poe-representative.json';
@@ -227,4 +231,27 @@ test('actual changed selector delta blocks non-human schema, unknown ID and mixe
   const malformed=structuredClone(a);malformed.selector=malformed.selector.replace('preflight ','apply ');
   assert.equal(check(malformed).result.reason,'INVALID_EXACT_BATCH_SELECTOR');
   assert.equal(check(a,[...a.changedPaths,'server/unrelated.js']).result.reason,'BATCH_TOUCH_SET_MISMATCH');
+});
+
+
+test('pre-merge intake validator consumes actual committed Git blobs and fails invalid changed selector', () => {
+  const dir=mkdtempSync(join(tmpdir(),'atlas-intake-'));
+  const git=(args)=>execFileSync('git',args,{cwd:dir,encoding:'utf8',stdio:['ignore','pipe','pipe']});
+  try {
+    git(['init','-q']); git(['config','user.name','ATLAS CI']); git(['config','user.email','atlas-ci@example.test']);
+    mkdirSync(join(dir,'.github'),{recursive:true}); mkdirSync(join(dir,'authoring/requests'),{recursive:true});
+    writeFileSync(join(dir,'.github/atlas-authoring-preflight.txt'),'preflight authoring/requests/old.json\n');
+    git(['add','.']);git(['commit','-qm','base']);const baseSha=git(['rev-parse','HEAD']).trim();
+    const a=batchCase();
+    const paths=approvedBatchSelectorPaths(a.selector);
+    writeFileSync(join(dir,'.github/atlas-authoring-preflight.txt'),a.selector);
+    paths.forEach((p,i)=>writeFileSync(join(dir,p),JSON.stringify(a.manifests[i])));
+    git(['add','.']);git(['commit','-qm','valid exact batch']);const validSha=git(['rev-parse','HEAD']).trim();
+    assert.deepEqual(checkChangedBatchIntake({baseSha,headSha:validSha,git}),{ok:true,disposition:'STATIC_HANDOFF_ELIGIBLE_ONLY',count:2});
+    a.manifests[1].request_id='authoring:selected62-remaining30-20261018:unapproved:representative:v1';
+    writeFileSync(join(dir,paths[1]),JSON.stringify(a.manifests[1]));
+    git(['add','.']);git(['commit','-qm','invalid request']);const invalidSha=git(['rev-parse','HEAD']).trim();
+    assert.equal(checkChangedBatchIntake({baseSha,headSha:invalidSha,git}).reason,'BATCH_MANIFEST_NOT_INDIVIDUALLY_APPROVED');
+    assert.equal(checkChangedBatchIntake({baseSha:validSha,headSha:invalidSha,git}).disposition,'UNCHANGED_SELECTOR');
+  } finally {rmSync(dir,{recursive:true,force:true});}
 });
