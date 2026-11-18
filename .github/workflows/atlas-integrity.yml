@@ -74,6 +74,14 @@ jobs:
           echo "base_sha=$base_sha" >> "$GITHUB_OUTPUT"
           echo "head_sha=$head_sha" >> "$GITHUB_OUTPUT"
 
+      - name: Validate actual changed approved batch admission before merge
+        if: steps.range.outputs.base_sha != '' && steps.range.outputs.head_sha != ''
+        shell: bash
+        env:
+          INTAKE_BASE_SHA: ${{ steps.range.outputs.base_sha }}
+          INTAKE_HEAD_SHA: ${{ steps.range.outputs.head_sha }}
+        run: node scripts/atlas-approved-preflight-dispatch.mjs --check-intake "$INTAKE_BASE_SHA" "$INTAKE_HEAD_SHA"
+
       - id: classify
         name: Classify durable dependency impacts
         shell: bash
