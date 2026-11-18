@@ -37,5 +37,5 @@ test('Public Activity review and confidence enums have precise Korean labels and
 
 test('Public index invalidates both changed JS modules without changing the Spacetime scripts', () => {
   assert.match(index, /atlas-ui-localization\.js\?v=20261118-activity-status-labels-v1/);
-  assert.match(index, /atlas-person-main\.js\?v=20261119-person-deeplink-lean-v1/);
+  assert.match(index, /atlas-person-main\.js\?v=20261119-person-deeplink-domain-v2/);
 });
