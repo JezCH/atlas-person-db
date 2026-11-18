@@ -3,10 +3,10 @@
 
   const dataStore=window.ATLAS_CLIENT_DATA_STORE;
   const QUEUE_REVIEW_LABELS=Object.freeze({
-    PENDING:"검토 대기",IN_REVIEW:"검토 중",APPROVED:"승인됨",
+    PENDING:"검토 대기",WAITLIST_USER_SELECTED:"선정·등록 대기 (미승인)",IN_REVIEW:"검토 중",APPROVED:"승인됨",
     HOLD:"보류",REJECTED:"반려",DUPLICATE_EXISTING:"기등록 인물과 중복"
   });
-  const QUEUE_ORIGIN_LABELS=Object.freeze({ reviewed_intake:"검토를 거쳐 접수" });
+  const QUEUE_ORIGIN_LABELS=Object.freeze({ reviewed_intake:"검토를 거쳐 접수","admin-waitlist-intake":"관리자 대기열 접수" });
   function queueDomainLabel(value) {
     const code=String(value ?? "").trim();
     return !code ? "미분류" : (window.ATLAS_PERSON_DOMAIN_REGISTRY?.LABELS?.[code] || "분야 확인 필요");

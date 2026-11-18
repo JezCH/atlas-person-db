@@ -69,3 +69,10 @@ test("localization preserves request and internal state contracts",()=>{
   assert.match(src,/<th>기존 등급<\/th>/);
   assert.doesNotMatch(src,/<th>legacy 우선순위<\/th>/);
 });
+
+test("waitlist-only admission is visible as pending, never as approval",async()=>{
+  const {body}=await renderQueue({rows:[{candidate_id:"waitlist-1",name:"Waitlist Fixture",review_state:"WAITLIST_USER_SELECTED",origin:"admin-waitlist-intake",legacy_priority:"A"}]});
+  assert.match(body,/선정·등록 대기 \(미승인\)/);
+  assert.match(body,/관리자 대기열 접수/);
+  assert.doesNotMatch(body,/>승인됨<|검토 상태 확인 필요|출처 확인 필요/);
+});
