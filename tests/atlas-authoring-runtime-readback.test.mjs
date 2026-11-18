@@ -5,7 +5,7 @@ import { verifyPersonReadback, verifyProtectedProducer } from '../scripts/atlas-
 const personId = '44d38e5f-e48a-4bc5-9357-ab30f8625399';
 const activityId = '34d56578-a361-402a-a710-c643b52e8f2e';
 const polityId = '7d09bc56-1ea0-515e-a3e7-9863361b6f15';
-const source = { title: 'Library of Congress', canonical_url: 'https://www.loc.gov' };
+const source = { title: 'Library of Congress', canonical_url: 'https://www.loc.gov', citation_text: 'Reviewed literary biography', source_type: 'web_bibliographic_reference' };
 const manifest = {
   person: { person_type: 'historical', canonical_name_en: 'Mark Twain', representative_domain: 'culture' },
   activity: { relation_type: 'active_in', start_year: 1885, end_year: 1885 },
@@ -46,6 +46,16 @@ test('wrong Activity, Polity, period or relation never passes', () => {
   assert.equal(run((x) => { x.person.person.activities[0].start.year = 1884; }).reason, 'ACTIVITY_POLITY_OR_YEAR_MISMATCH');
   assert.equal(run((x) => { x.person.person.activities[0].relation.code = 'serves'; }).reason, 'ACTIVITY_POLITY_OR_YEAR_MISMATCH');
 });
+test('the same URL and title cannot claim a different historical assertion in live Runtime', () => {
+  assert.equal(run((x) => { x.person.person.activities[0].sources[0].citation_text='Unrelated historical claim'; }).reason,
+    'ACTIVITY_SOURCE_PROVENANCE_MISMATCH');
+  assert.equal(run((x) => { x.person.person.activities[0].sources[0].source_type='unknown'; }).reason,
+    'ACTIVITY_SOURCE_PROVENANCE_MISMATCH');
+  assert.equal(run((x) => { x.person.person.activities[0].sources[0].title='British monarch title'; }).reason,
+    'ACTIVITY_SOURCE_PROVENANCE_MISMATCH');
+  assert.equal(run((x) => { x.person.person.activities[0].sources[0].citation_text='  Reviewed   literary biography  '; }).ok, true);
+});
+
 test('no provenance or NamuWiki mismatch is silently accepted', () => {
   assert.equal(run((x) => { x.person.person.activities[0].sources = []; }).reason, 'ACTIVITY_SOURCE_PROVENANCE_MISMATCH');
   assert.equal(run((x) => { x.person.person.external_references.namuwiki.status = 'not_found'; }).reason, 'NAMUWIKI_REVIEW_MISMATCH');

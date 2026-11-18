@@ -72,3 +72,62 @@ test('Unit 9 executable Source mutations are centralized in atlas-source-service
     assert.doesNotMatch(body,/update\s+atlas_v2\.sources/i,path);
   }
 });
+
+
+test("reviewed Human Authoring refuses URL reuse when activity-specific title or assertion differs", async () => {
+  const existing = {
+    id:ID, source_key:"human-authoring:previous:1",
+    source_type:"web_bibliographic_reference",
+    title:"The Royal Family — Edward VIII (Jan–Dec 1936)",
+    citation_text:"King's 1936 reign; notes later governor appointment"
+  };
+  const calls = [];
+  const client = {async query(sql, params) {
+    calls.push({sql:String(sql),params});
+    if (/from atlas_v2\.sources/i.test(sql)) {
+      assert.match(String(sql),/source_type,title,citation_text/);
+      return {rowCount:1,rows:[existing]};
+    }
+    throw Error("WRITES_NOT_ALLOWED");
+  }};
+  const request = {source_type:existing.source_type,
+    canonical_url:"https://www.royal.uk/edward-viii",
+    title:"The Royal Family — Edward VIII",citation_text:"Governor of the Bahamas 1940–1945"};
+  await assert.rejects(source.createSource(client,request,{
+    lock:false,keyCollision:"error",urlReuseEvidence:"exact"
+  }),/SOURCE_CANONICAL_URL_ASSERTION_COLLISION_REVIEW_REQUIRED/);
+  await assert.rejects(source.createSource(client,{...request,title:existing.title},{
+    lock:false,keyCollision:"error",urlReuseEvidence:"exact"
+  }),/SOURCE_CANONICAL_URL_ASSERTION_COLLISION_REVIEW_REQUIRED/);
+  assert.equal(calls.length,2);
+  assert.ok(calls.every(x=>/select/i.test(x.sql)));
+});
+
+test("exact URL reuse preserves Source identity only for the same normalized reviewed assertion",async()=>{
+  const row={id:ID,source_key:"known",source_type:"web_bibliographic_reference",
+    title:"Archive Biography",citation_text:"Same reviewed historical assertion"};
+  let reads=0;
+  const client={async query(sql){reads++;assert.match(String(sql),/from atlas_v2\.sources/);return {rows:[row],rowCount:1}}};
+  const result=await source.createSource(client,{
+    title:" Archive Biography ",canonical_url:"https://example.org/known#part",
+    citation_text:" Same reviewed historical assertion ",
+    source_type:"web_bibliographic_reference"
+  },{lock:false,urlReuseEvidence:"exact"});
+  assert.equal(result.id,ID);assert.equal(result.replay,true);assert.equal(reads,1);
+  await assert.rejects(source.createSource(client,{title:"Archive Biography",canonical_url:"https://example.org/known"},{
+    lock:false,urlReuseEvidence:"invalid"
+  }),/SOURCE_URL_REUSE_EVIDENCE_MODE_INVALID/);
+});
+
+test("legacy URL reuse remains compatible while reviewed Person writer explicitly opts into strict assertion parity",async()=>{
+  const row={id:ID,source_key:"known",source_type:"web_bibliographic_reference",
+    title:"Earlier Title",citation_text:"Earlier specific assertion"};
+  const client={async query(){return {rowCount:1,rows:[row]}}};
+  const legacy=await source.createSource(client,{
+    canonical_url:"https://example.org/known",title:"Another Title",citation_text:"Another claim"
+  },{lock:false});
+  assert.equal(legacy.id,ID);
+  const human=fs.readFileSync(new URL("../server/atlas-human-authoring-service.js",import.meta.url),"utf8");
+  assert.match(human,/keyCollision:"error", urlReuseEvidence:"exact"/);
+  assert.match(human,/HUMAN_AUTHORING_SOURCE_CANONICAL_URL_ASSERTION_COLLISION/);
+});
