@@ -12,7 +12,7 @@ test("UI V5 loads Chronicle Detail after the global shell and Person Register", 
   assert.ok(foundation >= 0 && register > foundation);
   assert.ok(detail > register, "Chronicle Detail must override the older detail/table presentation layers");
   assert.match(html, /atlas-person-chronicle-detail\.css\?v=20261008-detail-lux2-chronicle-v1/);
-  assert.match(html, /atlas-person-main\.js\?v=20261119-person-deeplink-lean-v1/);
+  assert.match(html, /atlas-person-main\.js\?v=20261119-person-deeplink-domain-v2/);
 });
 
 test("DETAIL-M1 binds Chronicle material to the shared monumental token scale", () => {
