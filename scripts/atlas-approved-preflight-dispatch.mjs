@@ -247,7 +247,7 @@ export function checkChangedBatchIntake({ baseSha, headSha, git = (args) => exec
   const changedPaths = git(['diff', '--name-only', '--no-renames', '-z', baseSha, headSha, '--']).split('\0').filter(Boolean);
   if (!changedPaths.includes(SELECTOR_FILE)) return { ok: true, disposition: 'UNCHANGED_SELECTOR' };
   const selector = git(['show', headSha + ':' + SELECTOR_FILE]);
-  const lines = selector.trimEnd().split('\n');
+  const lines = (selector.endsWith('\n') ? selector.slice(0, -1) : selector).split('\n');
   if (lines.length <= 1) return { ok: true, disposition: 'SINGLE_SELECTOR_EXISTING_GATE' };
   const paths = approvedBatchSelectorPaths(selector);
   if (!paths) return { ok: false, reason: 'INVALID_EXACT_BATCH_SELECTOR' };
