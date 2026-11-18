@@ -1,4 +1,5 @@
-preflight authoring/requests/youtube39-20261023-pope-francis-representative.json
-preflight authoring/requests/youtube48-20261023-richard-iii-representative.json
-preflight authoring/requests/youtube39-20261023-charles-i-representative.json
-preflight authoring/requests/youtube48-20261023-edward-viii-representative.json
+preflight authoring/requests/youtube48-20261023-richard-iii-lord-protector.json
+preflight authoring/requests/youtube39-20261023-charles-scotland.json
+preflight authoring/requests/youtube39-20261023-charles-ireland.json
+preflight authoring/requests/youtube48-20261023-edward-viii-emperor-india.json
+preflight authoring/requests/youtube48-20261023-edward-viii-bahamas-governor.json
