@@ -87,7 +87,11 @@ test('canonical Source URL reuses one exact live Source instead of creating a re
     async query(sql) {
       const text=String(sql);
       statements.push(text);
-      if (/where canonical_url=\$1/.test(text)) return {rows:[{id:SOURCE_ID}]};
+      if (/where canonical_url=\$1/.test(text)) return {rows:[{
+        id:SOURCE_ID,source_key:'human-authoring:prior:1',
+        title:'Shared source',citation_text:'Shared source',
+        source_type:'web_bibliographic_reference'
+      }]};
       throw new Error(`unexpected SQL: ${text}`);
     }
   };
