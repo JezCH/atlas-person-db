@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { assessApprovedPreflightHandoff, assessApprovedBatchPreflightHandoff, approvedBatchSelectorPaths, continueApprovedPreflight } from '../scripts/atlas-approved-preflight-dispatch.mjs';
+import { assessApprovedPreflightHandoff, assessApprovedBatchPreflightHandoff, approvedBatchSelectorPaths, continueApprovedPreflight, assessApprovedBatchIntake, checkChangedBatchIntake } from '../scripts/atlas-approved-preflight-dispatch.mjs';
 
 const target = 'authoring/requests/youtube39-20261023-edgar-allan-poe-representative.json';
 const requestId = 'authoring:user-youtube39-20261023:edgar-allan-poe:representative:v1';
@@ -179,4 +179,52 @@ test('approved legacy selected62 IDs preserve exact immutable batch identities (
     mutate(b);
     assert.equal(assessApprovedBatchPreflightHandoff(b).ok, false, String(mutate));
   }
+});
+
+
+test('PR intake uses the same static predicate as protected batch handoff, without fake OIDC evidence', () => {
+  const a = batchCase();
+  const intake = assessApprovedBatchIntake(a);
+  assert.equal(intake.ok,true);
+  assert.deepEqual(intake.requests.map(r=>r.requestId),a.manifests.map(m=>m.request_id));
+  assert.deepEqual(assessApprovedBatchPreflightHandoff({...a,evidence:null}),{ok:false, reason:'BATCH_OIDC_NOT_ALL_READY'});
+  const b=structuredClone(a);
+  b.manifests[1].request_id='authoring:unreviewed:other:v1';
+  assert.equal(assessApprovedBatchIntake(b).ok,false);
+  const c=structuredClone(a);
+  c.changedPaths[2]=c.changedPaths[0];
+  assert.equal(assessApprovedBatchIntake(c).reason,'BATCH_TOUCH_SET_MISMATCH');
+});
+
+test('actual changed selector delta blocks non-human schema, unknown ID and mixed opt-in before OIDC', () => {
+  const baseSha='a'.repeat(40),headSha='b'.repeat(40);
+  const check=(a,changedPaths=a.changedPaths)=>{
+    const calls=[];
+    const result=checkChangedBatchIntake({baseSha,headSha,git:(args)=>{
+      calls.push(args);
+      if(args[0]==='diff') return changedPaths.join('\0')+'\0';
+      assert.equal(args[0],'show');
+      assert.ok(args[1].startsWith(headSha+':'));
+      const path=args[1].slice(headSha.length+1);
+      if(path==='.github/atlas-authoring-preflight.txt')return a.selector;
+      const paths=approvedBatchSelectorPaths(a.selector);
+      return JSON.stringify(a.manifests[paths.indexOf(path)]);
+    }});
+    return {result,calls};
+  };
+  const a=batchCase();
+  assert.deepEqual(check(a).result,{ok:true,disposition:'STATIC_HANDOFF_ELIGIBLE_ONLY',count:2});
+  assert.equal(check(a,['README.md']).calls.length,1);
+  assert.equal(check(a,['README.md']).result.disposition,'UNCHANGED_SELECTOR');
+  const mixedSchema=structuredClone(a); mixedSchema.manifests[1].schema='atlas-authoring-manifest/v2';
+  assert.equal(check(mixedSchema).result.reason,'READ_ONLY_BATCH_REQUIRES_APPROVED_HUMAN_SCHEMA');
+  const legacy=structuredClone(a);legacy.manifests[1].request_id='authoring:selected62-remaining30-20261018:unknown:representative:v1';
+  assert.equal(check(legacy).result.reason,'BATCH_MANIFEST_NOT_INDIVIDUALLY_APPROVED');
+  const mixedOpt=structuredClone(a);mixedOpt.manifests[1].review_context.auto_continue_after_preflight=false;
+  assert.equal(check(mixedOpt).result.reason,'BATCH_MANIFEST_NOT_INDIVIDUALLY_APPROVED');
+  mixedOpt.manifests[0].review_context.auto_continue_after_preflight=false;
+  assert.deepEqual(check(mixedOpt).result,{ok:true,disposition:'READ_ONLY_NO_AUTO_CONTINUATION',count:2});
+  const malformed=structuredClone(a);malformed.selector=malformed.selector.replace('preflight ','apply ');
+  assert.equal(check(malformed).result.reason,'INVALID_EXACT_BATCH_SELECTOR');
+  assert.equal(check(a,[...a.changedPaths,'server/unrelated.js']).result.reason,'BATCH_TOUCH_SET_MISMATCH');
 });
