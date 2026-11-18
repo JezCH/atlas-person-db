@@ -1,1 +1,4 @@
-preflight authoring/requests/youtube39-20261023-rosa-parks-representative.json
+preflight authoring/requests/youtube39-20261023-pope-francis-representative.json
+preflight authoring/requests/youtube48-20261023-richard-iii-representative.json
+preflight authoring/requests/youtube39-20261023-charles-i-representative.json
+preflight authoring/requests/youtube48-20261023-edward-viii-representative.json
