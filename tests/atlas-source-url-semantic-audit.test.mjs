@@ -75,3 +75,18 @@ test('unshared URLs and missing URLs are not presented as duplicate candidates',
   assert.equal(r.summary.shared_url_groups,2);
   assert.ok(!r.cases.some(c=>c.sources.some(s=>s.id==='s5'||s.id==='s6')));
 });
+
+
+test('preserves distinct citation text when supplied without inferring missing evidence', () => {
+  const data = fixture();
+  data.raw.sources[0].citation_text = 'First historical assertion';
+  data.raw.sources[1].citation_text = 'Second historical assertion';
+  const result = auditSharedSourceUrls(data);
+  const history = result.cases.find(item => item.canonical_url === 'https://example.org/history');
+  assert.deepEqual(history.sources.map(source => source.citation_text), [
+    'First historical assertion', 'Second historical assertion'
+  ]);
+  assert.equal(history.safe_to_merge, false);
+  const royal = result.cases.find(item => item.canonical_url === 'https://example.org/royal');
+  assert.ok(royal.sources.every(source => !Object.hasOwn(source, 'citation_text')));
+});
