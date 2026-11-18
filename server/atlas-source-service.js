@@ -91,7 +91,19 @@ async function lockKeys(client, keys) {
   }
 }
 
-async function createSource(client, raw, { lock = true, keyCollision = "replay" } = {}) {
+// An exact URL identifies a bibliographic location, not an interchangeable
+// historical assertion. Reviewed Human Authoring opts into evidence parity so
+// URL reuse can never silently replace a new Activity's claimed title/citation.
+function assertExactSourceUrlEvidence(current, requested) {
+  if (current?.source_type !== requested?.source_type ||
+      current?.title !== requested?.title ||
+      current?.citation_text !== requested?.citation_text) {
+    throw new Error("SOURCE_CANONICAL_URL_ASSERTION_COLLISION_REVIEW_REQUIRED");
+  }
+}
+
+async function createSource(client, raw, { lock = true, keyCollision = "replay", urlReuseEvidence = "legacy" } = {}) {
+  if (!["legacy", "exact"].includes(urlReuseEvidence)) throw new Error("SOURCE_URL_REUSE_EVIDENCE_MODE_INVALID");
   const source = normalizeBibliographicSource(raw);
   if (lock) await lockKeys(client, [
     `atlas-source:key:${source.source_key}`,
@@ -100,7 +112,7 @@ async function createSource(client, raw, { lock = true, keyCollision = "replay" 
 
   if (source.canonical_url) {
     const byUrl = await client.query(`
-      select id::text,source_key
+      select id::text,source_key,source_type,title,citation_text
         from atlas_v2.sources
        where canonical_url=$1
        order by id
@@ -108,6 +120,7 @@ async function createSource(client, raw, { lock = true, keyCollision = "replay" 
        for update`, [source.canonical_url]);
     if (byUrl.rows.length > 1) throw new Error("SOURCE_CANONICAL_URL_AMBIGUOUS_REVIEW_REQUIRED");
     if (byUrl.rows.length === 1) {
+      if (urlReuseEvidence === "exact") assertExactSourceUrlEvidence(byUrl.rows[0], source);
       return Object.freeze({ entity:"source", id:String(byUrl.rows[0].id).toLowerCase(), source_key:String(byUrl.rows[0].source_key), replay:true });
     }
   }
@@ -201,6 +214,7 @@ module.exports = Object.freeze({
   generatedSourceKey,
   normalizeBibliographicSource,
   createSource,
+  assertExactSourceUrlEvidence,
   insertExactSource,
   rewriteSourceCitation
 });

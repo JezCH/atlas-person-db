@@ -449,10 +449,11 @@ async function resolveOrCreateSources(client, requestId, sources) {
         title:source.title,
         canonical_url:source.canonical_url,
         citation_text:source.citation_text
-      }, { lock:false, keyCollision:"error" });
+      }, { lock:false, keyCollision:"error", urlReuseEvidence:"exact" });
     } catch (error) {
       const code=String(error?.message || "");
       if (code === "SOURCE_CANONICAL_URL_AMBIGUOUS_REVIEW_REQUIRED") throw new Error(`HUMAN_AUTHORING_SOURCE_CANONICAL_URL_AMBIGUOUS:${index + 1}`);
+      if (code === "SOURCE_CANONICAL_URL_ASSERTION_COLLISION_REVIEW_REQUIRED") throw new Error(`HUMAN_AUTHORING_SOURCE_CANONICAL_URL_ASSERTION_COLLISION:${index + 1}`);
       if (code === "SOURCE_KEY_CONFLICT") throw new Error(`HUMAN_AUTHORING_SOURCE_KEY_COLLISION:${index + 1}`);
       if (code === "SOURCE_CREATE_FAILED") throw new Error(`HUMAN_AUTHORING_SOURCE_CREATE_FAILED:${index + 1}`);
       throw error;
