@@ -25,9 +25,10 @@ function harness(initialHash) {
     addEventListener(type,cb){state.groupsListener=cb;},
     insertAdjacentHTML(_where,html){state.groupMarkup.push(html);}
   });
-  const detail=node({
-    get innerHTML(){return state.details;},
-    set innerHTML(value){state.details=value;}
+  const detail=node();
+  Object.defineProperty(detail,'innerHTML',{
+    get(){return state.details;},
+    set(value){state.details=value;}
   });
   const heading=node({append(){}});
   const topbar=node({querySelector(){return node();}});
