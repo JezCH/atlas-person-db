@@ -1,5 +1,5 @@
-preflight authoring/requests/selected62-remaining30-20261018-ellington.json
-preflight authoring/requests/selected62-remaining30-20261018-davis.json
-preflight authoring/requests/selected62-remaining30-20261018-welles.json
-preflight authoring/requests/youtube39-20261023-marilyn-monroe-representative.json
-preflight authoring/requests/youtube48-20261023-whitney-houston-representative.json
+preflight authoring/requests/youtube39-20261023-malcolm-x-minister-public-speaker-1963.json
+preflight authoring/requests/youtube39-20261023-swami-vivekananda-representative.json
+preflight authoring/requests/youtube39-20261023-bob-marley-representative.json
+preflight authoring/requests/youtube48-20261023-diana-princess-wales-representative.json
+preflight authoring/requests/youtube48-20261023-al-capone-representative.json
