@@ -169,3 +169,14 @@ test('Runtime Source join refuses missing, ambiguous or changed provenance witho
   malformed.raw.runtime_activities[0].activity.provenance_snapshot = null;
   assert.throws(()=>auditSharedSourceUrls(malformed),/SOURCE_URL_AUDIT_INVALID_RUNTIME_EVIDENCE/);
 });
+
+
+test('rejects extra Runtime citations absent from the canonical link census', () => {
+  const data = fixtureWithRuntimeProvenance();
+  data.raw.runtime_activities[0].activity.provenance_snapshot.normalized_sources.push({
+    source_id: 's5', source_key: 'unique', title: 'Unshared',
+    source_type: 'government_web', canonical_url: 'https://example.org/unique',
+    citation_text: 'Unexpected Runtime-only assertion'
+  });
+  assert.throws(() => auditSharedSourceUrls(data), /UNMATCHED_RUNTIME_CITATION/);
+});
