@@ -33,15 +33,57 @@ export function auditSharedSourceUrls(snapshot) {
     if (!byUrl.has(url)) byUrl.set(url, []);
     byUrl.get(url).push(source);
   }
+  // Immutable P2-10 census Source rows do not store citation_text, but its
+  // Runtime Activity provenance snapshots DO. Recover only the exact
+  // (Activity UUID, Source UUID) pair; never synthesize a Source-wide claim.
+  // If optional Runtime evidence is supplied, require its linkage to be
+  // complete and identical to the normalized Source census.
+  const runtimeProvenance = new Map();
+  const hasRuntimeProvenance = raw.runtime_activities != null;
+  if (hasRuntimeProvenance) {
+    if (!Array.isArray(raw.runtime_activities)) throw new Error('SOURCE_URL_AUDIT_INVALID_RUNTIME_EVIDENCE');
+    const seenActivities = new Set();
+    for (const wrapped of raw.runtime_activities) {
+      const activity = wrapped?.activity;
+      const id = activity?.id;
+      const citations = activity?.provenance_snapshot?.normalized_sources;
+      if (typeof id !== 'string' || !id || seenActivities.has(id) || !Array.isArray(citations)) {
+        throw new Error('SOURCE_URL_AUDIT_INVALID_RUNTIME_EVIDENCE');
+      }
+      seenActivities.add(id);
+      for (const citation of citations) {
+        if (typeof citation?.source_id !== 'string' || !citation.source_id) {
+          throw new Error('SOURCE_URL_AUDIT_INVALID_RUNTIME_EVIDENCE');
+        }
+        const key = id + '\0' + citation.source_id;
+        if (runtimeProvenance.has(key)) throw new Error('SOURCE_URL_AUDIT_DUPLICATE_RUNTIME_CITATION');
+        runtimeProvenance.set(key, citation);
+      }
+    }
+  }
   for (const [table, parentKey] of ROUTES) {
     for (const row of raw[table]) {
       if (!byId.has(row?.source_id)) throw new Error('SOURCE_URL_AUDIT_DANGLING_SOURCE');
       if (typeof row[parentKey] !== 'string' || !row[parentKey]) {
         throw new Error('SOURCE_URL_AUDIT_INCOMPLETE_REFERENCE');
       }
+      const locator = row.source_locator_key == null ? null : String(row.source_locator_key);
+      let citation = null;
+      if (hasRuntimeProvenance && table === 'activity_sources') {
+        citation = runtimeProvenance.get(row[parentKey] + '\0' + row.source_id);
+        const source = byId.get(row.source_id);
+        if (!citation ||
+            citation.source_key !== source.source_key ||
+            citation.title !== source.title ||
+            citation.source_type !== source.source_type ||
+            citation.canonical_url !== source.canonical_url ||
+            (citation.source_locator_key == null ? null : String(citation.source_locator_key)) !== locator) {
+          throw new Error('SOURCE_URL_AUDIT_RUNTIME_LINK_PROVENANCE_MISMATCH');
+        }
+      }
       references.get(row.source_id).push({
-        table, parent_id: row[parentKey],
-        source_locator_key: row.source_locator_key == null ? null : String(row.source_locator_key)
+        table, parent_id: row[parentKey], source_locator_key: locator,
+        ...(typeof citation?.citation_text === 'string' && { citation_text: citation.citation_text })
       });
     }
   }
@@ -67,7 +109,17 @@ export function auditSharedSourceUrls(snapshot) {
       }
       const same_activity_source_collisions = [...byActivity]
         .filter(([, ids]) => ids.size > 1)
-        .map(([activity_id, ids]) => ({ activity_id, source_ids: [...ids].sort() }))
+        .map(([activity_id, ids]) => {
+          const source_ids = [...ids].sort();
+          const citations = source_ids.map(source_id => sources.find(x => x.id === source_id)
+            ?.references.find(ref => ref.table === 'activity_sources' && ref.parent_id === activity_id)?.citation_text);
+          const allPresent = citations.every(value => typeof value === 'string' && value.trim().length);
+          return { activity_id, source_ids,
+            citation_comparison: !allPresent ? 'EVIDENCE_UNAVAILABLE'
+              : new Set(citations).size > 1 ? 'DISTINCT_ASSERTION_CITATIONS'
+                : 'IDENTICAL_ASSERTION_CITATIONS'
+          };
+        })
         .sort((a, b) => a.activity_id.localeCompare(b.activity_id));
       return {
         canonical_url, source_count: sources.length,
@@ -97,10 +149,12 @@ export function auditSharedSourceUrls(snapshot) {
       same_activity_source_collisions: cases.reduce((n, c) => n + c.same_activity_source_collisions.length, 0),
       human_authoring_source_rows: all.filter(s => s.source_key.startsWith('human-authoring:')).length,
       activity_source_links: all.reduce((n, s) => n + s.references.filter(r => r.table === 'activity_sources').length, 0),
+      activity_source_links_with_citations: all.reduce((n, s) => n + s.references.filter(r => r.table === 'activity_sources' && typeof r.citation_text === 'string' && r.citation_text.trim().length).length, 0),
+      same_activity_distinct_citation_collisions: cases.reduce((n,c)=>n+c.same_activity_source_collisions.filter(x=>x.citation_comparison==='DISTINCT_ASSERTION_CITATIONS').length,0),
       designation_source_links: all.reduce((n, s) => n + s.references.filter(r => r.table === 'designation_sources').length, 0)
     },
     limitations: [
-      'Some census snapshots omit Source citation_text and Human Authoring ledger semantics.',
+      'Source rows may omit citation_text. If immutable Runtime provenance is supplied, citations are recovered per exact Activity–Source link, not as global Source assertions.',
       'Same URL/title/type or same Activity cannot by itself establish Source identity equivalence.',
       'No canonical Source UUID can be deleted, merged or rebound by this report.'
     ],
