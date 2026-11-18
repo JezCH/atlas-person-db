@@ -35,7 +35,7 @@ export function verifyPersonReadback({ person, manifest, applied }) {
   // without the approved citation_text silently accepted unrelated claims for
   // the same Person (e.g. Charles I Scottish versus English crowns). Normalize
   // only the same nonsemantic whitespace folding as the canonical Source writer.
-  const citation = (text) => String(text ?? '').normalize('NFC').trim().replace(/\\s+/g, ' ');
+  const citation = (text) => String(text ?? '').normalize('NFC').trim().replace(/\s+/g, ' ');
   if (!Array.isArray(activity.sources) || !manifest.sources.every((source) =>
     activity.sources.some((liveSource) =>
       liveSource.canonical_url === source.canonical_url &&
