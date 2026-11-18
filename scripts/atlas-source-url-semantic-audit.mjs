@@ -54,6 +54,7 @@ export function auditSharedSourceUrls(snapshot) {
         source_type: item.source_type,
         title: item.title,
         external_identifier: item.external_identifier == null ? null : item.external_identifier,
+        ...(typeof item.citation_text === 'string' && { citation_text: item.citation_text }),
         references: references.get(item.id)
       })).sort((a, b) => a.id.localeCompare(b.id));
       const titles = [...new Set(sources.map(x => x.title))].sort();
@@ -99,7 +100,7 @@ export function auditSharedSourceUrls(snapshot) {
       designation_source_links: all.reduce((n, s) => n + s.references.filter(r => r.table === 'designation_sources').length, 0)
     },
     limitations: [
-      'The P2-10 snapshot does not include full Source citation_text or all Human Authoring ledger semantics.',
+      'Some census snapshots omit Source citation_text and Human Authoring ledger semantics.',
       'Same URL/title/type or same Activity cannot by itself establish Source identity equivalence.',
       'No canonical Source UUID can be deleted, merged or rebound by this report.'
     ],
