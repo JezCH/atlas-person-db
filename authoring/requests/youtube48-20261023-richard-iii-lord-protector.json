@@ -1,0 +1,73 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-youtube48-20261023:richard-iii-lord-protector:v1",
+  "person": {
+    "canonical_name_en": "Richard III of England",
+    "display_name_ko": "리처드 3세",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-23",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of England",
+    "display_name_ko": "잉글랜드 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "d3131d3e-ff4b-5d4d-b5d2-ddfd5e9bda1d"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Lord Protector of England for Edward V before becoming king",
+    "role_display_name_ko": "에드워드 5세 재위기 잉글랜드 호국경",
+    "start_year": 1483,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1483,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Richard (Duke of Gloucester) served as Lord Protector for his young nephew Edward V in 1483 before becoming King Richard III in June. This earlier protectorship was a distinct government office, not the same reign as his 1483–1485 kingship. Exact month/day not asserted until independent official evidence confirms."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "The Royal Family — Richard III",
+      "canonical_url": "https://www.royal.uk/richard-iii",
+      "citation_text": "Richard (Duke of Gloucester) served as Lord Protector for his young nephew Edward V in 1483 before becoming King Richard III in June. This earlier protectorship was a distinct government office, not the same reign as his 1483–1485 kingship. Exact month/day not asserted until independent official evidence confirms."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-23",
+      "document_title": "리처드 3세",
+      "url": "https://namu.wiki/w/%EB%A6%AC%EC%B2%98%EB%93%9C%203%EC%84%B8"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "HISTORICAL_POLITY_IDENTITY_AND_EXISTING_PERSON_ACTIVITY_PREFLIGHT_REQUIRED; no automatic duplicate/create. Exact Crown relation semantics and year-granularity chronology must pass canonical Authoring resolver."
+  },
+  "review_context": {
+    "source_draft_pr": 2589,
+    "preflight_required": true,
+    "auto_continue_after_preflight": true,
+    "existing_polity_identity_checked_at": "2026-11-19",
+    "original_polity_label": "Kingdom of England",
+    "distinct_activity_review": "1483 Lord Protector separate from 1483-1485 reign",
+    "prior_parent_person_registration_pr": 2702,
+    "prior_parent_person_must_be_runtime_verified": true,
+    "source_draft_head": "07d1571f90e2884764f1046cfa3d2fa455dce8dd"
+  }
+}
