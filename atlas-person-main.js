@@ -369,6 +369,7 @@
     const next = String(value ?? "");
     if (query === next) return false;
     query = next;
+    if (!personListLoaded) { void ensurePersonsLoaded(); return true; }
     renderGroups();
     return true;
   }
@@ -399,6 +400,7 @@
     const next = !requested || validCodes.includes(requested) ? requested : "";
     if (facetFilters.domain === next) return false;
     facetFilters = { ...facetFilters, domain: next };
+    if (!personListLoaded) { void ensurePersonsLoaded(); return true; }
     renderGroups();
     return true;
   }
