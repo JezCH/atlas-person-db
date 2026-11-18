@@ -333,7 +333,7 @@
       // result or downloading every Person automatically.
       list.insertAdjacentHTML("beforeend", `<section class="person-group person-group-historical">
         <header class="person-group-head"><div><p class="eyebrow">개별 인물 보기</p>
-        <h2>인물 목록</h2><p>현재 선택한 인물의 상세정보를 표시합니다. 다른 인물을 탐색할 때 전체 목록을 불러옵니다.</p>
+        <h3>전체 목록 탐색</h3><p>현재 선택한 인물의 상세정보를 표시합니다. 다른 인물을 탐색할 때 전체 목록을 불러옵니다.</p>
         <button type="button" class="btn" data-person-list-load>전체 인물 목록 보기</button></div></header>
       </section>`);
       return 0;
