@@ -21,7 +21,7 @@ This file is an entry point, not a second source of project policy.
 2. Work on the smallest relevant touch set.
 3. Run focused checks and respect required preflight/approval gates.
 4. Record a durable checkpoint with results, caveats, and exact resume point.
-5. Stop after completing the requested work unit unless explicitly asked to process more.
+5. Stop after completing the requested work unit unless explicitly asked to process more. The existing scheduled ATLAS 프로젝트 총괄 (including Run now) has standing explicit multi-unit authorization under WORK_EXECUTION.md; for it, a completed unit is a checkpoint, not a stop instruction.
 
 ## Automation-specific constraint
 GitHub issue dispatch, tests, and status checks are not proof of an AI execution trigger. Never claim a Codex Cloud or ChatGPT Work agent was automatically launched unless an actual supported integration was invoked and its run was verified. Do not use unofficial ChatGPT UI scripting, credential sharing, or a ChatGPT Plus subscription as an API key.
