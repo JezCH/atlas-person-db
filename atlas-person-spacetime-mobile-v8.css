@@ -207,7 +207,7 @@
   }
 
   .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-region-head-layer.is-macro .spacetime-region-head-band strong {
-    font-size: 8.5px;
+    font-size: 9.5px;
     letter-spacing: .045em;
   }
 
@@ -216,7 +216,7 @@
   }
 
   .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-sticky-corner {
-    font-size: 8px;
+    font-size: 9px;
   }
 
   .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-sticky-corner small {
@@ -224,16 +224,16 @@
   }
 
   .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-era-axis > div span {
-    font-size: 8px;
+    font-size: 9px;
     letter-spacing: .03em;
   }
 
   .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-year-axis span {
-    font-size: 8px;
+    font-size: 9px;
   }
 
   .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-year-axis span.is-major {
-    font-size: 9px;
+    font-size: 10px;
   }
 
   .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-era-boundary b {
@@ -318,7 +318,7 @@
   .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-actions button {
     min-width: 0;
     height: 30px;
-    font-size: 7.5px;
+    font-size: 9px;
   }
 
   .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-selection-evidence-list {
@@ -376,7 +376,7 @@
   }
 
   .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-actions button {
-    font-size: 7px;
+    font-size: 8.5px;
   }
 }
 
