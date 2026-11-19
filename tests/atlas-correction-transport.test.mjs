@@ -130,16 +130,27 @@ test("correction migration registry remains ordered archival/replay evidence and
   for (const migration of migrations) assert.doesNotMatch(migration.sql, /person_politics_v2\s+set|delete\s+from\s+atlas_v2\.person_politics_v2/i);
 });
 
-test("correction workflow exposes only reviewed v2 requests/plans and preserves dry-run-before-apply evidence", () => {
+test("correction workflow keeps approved v2 mutations separate from protected read-only preflight", () => {
   assert.match(workflow, /^\s*-\s*'corrections\/requests\/\*\.json'\s*$/m);
   assert.match(workflow, /^\s*-\s*'corrections\/plans\/\*\.json'\s*$/m);
+  assert.match(workflow, /^\s*-\s*'corrections\/evidence\/preflight-requests\/\*\.json'\s*$/m);
   assert.doesNotMatch(workflow, /corrections\/intents/);
   assert.doesNotMatch(workflow, /atlas-correction-intent\/v1/);
   assert.doesNotMatch(workflow, /synthesize_intent_manifest|snapshot_intent_target/);
   assert.doesNotMatch(workflow, /atlas-correction-manifest\/v1(?:\.[1-4])?(?:"|'|\s|;)/);
   assert.doesNotMatch(workflow, /ATLAS_CORRECTION_MANIFEST_V1(?:_[1-4])?\b/);
   assert.match(workflow, /ATLAS_CORRECTION_AUDIENCE: atlas-person-db-correction-apply/);
-  assert.match(workflow, /cancel-in-progress: true/);
+  // Queue distinct protected runs instead of cancelling an active transaction mid-flight.
+  assert.match(workflow, /cancel-in-progress: false/);
+  assert.match(workflow, /PREFLIGHT_MIXED_WITH_MUTATION_FORBIDDEN/);
+  const applyJob = workflow.split("  protected_preflight:")[0];
+  assert.match(applyJob, /PREFLIGHT_MIXED_WITH_MUTATION_FORBIDDEN_APPLY_GUARD/);
+  assert.match(workflow, /\.result\.before_counts\.activity_sources==\.result\.after_counts\.activity_sources/);
+  assert.match(workflow, /\.result\.after_counts\.sources==\(\.result\.before_counts\.sources \+ 4\)/);
+  assert.doesNotMatch(workflow, /before_counts\.persons==/);
+  assert.match(workflow, /ATLAS_PROTECTED_DRY_RUN_ONLY_SUCCESS/);
+  assert.match(workflow, /mode:"dry_run",plan:\$plan\[0\]/);
+  assert.match(workflow, /\.committed==false and \.replay==false/);
   assert.match(workflow, /workflow_sha:\$workflow_sha/);
   assert.match(workflow, /ATLAS_CORRECTION_TRANSPORT_WORKFLOW_SHA_V2/);
   assert.match(handlerSource, /expectedSha: payload\.workflowSha/);

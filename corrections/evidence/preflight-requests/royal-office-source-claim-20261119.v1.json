@@ -1,0 +1,14 @@
+{
+  "schema": "atlas-protected-correction-preflight/v1",
+  "mode": "dry_run",
+  "pr_number": 2707,
+  "head_sha": "4de24310bb76df3e5f5a868f969704822363ee66",
+  "plan_path": "corrections/plans/royal-office-source-claim-repair-20261119.v1.json",
+  "batch_id": "royal_office_source_claim_repair_20261119_v1",
+  "activity_ids": [
+    "b36731cd-6b6f-4dc3-af9b-d7b8cb9cd541",
+    "6f2f6fbc-a6c2-49f7-bc70-f0ba9c8ed783",
+    "7a9a8829-fa1d-42fb-9952-dcce2f6ab36e",
+    "60c169c9-e086-4d33-8fa9-266a7ead3b79"
+  ]
+}

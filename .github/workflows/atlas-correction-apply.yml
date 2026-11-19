@@ -7,6 +7,7 @@ on:
     paths:
       - 'corrections/requests/*.json'
       - 'corrections/plans/*.json'
+      - 'corrections/evidence/preflight-requests/*.json'
   workflow_dispatch:
     inputs:
       manifest:
@@ -16,11 +17,12 @@ on:
 
 permissions:
   contents: read
+  pull-requests: read # immutable reviewed PR-head validation during read-only preflight
   id-token: write
 
 concurrency:
   group: atlas-correction-production
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   apply:
@@ -41,6 +43,17 @@ jobs:
           set -euo pipefail
           : > /tmp/atlas-correction-candidates.txt
           : > /tmp/atlas-correction-plan.tsv
+
+          # Both independent jobs must reject a mixed preflight and mutation
+          # push BEFORE the protected writer may send an APPLY request.
+          if [[ "${{ github.event_name }}" == "push" ]]; then
+            git diff --name-only --diff-filter=AMR "${{ github.event.before }}" "${{ github.sha }}" > /tmp/atlas-correction-push-paths.txt
+            if grep -Eq '^corrections/evidence/preflight-requests/' /tmp/atlas-correction-push-paths.txt &&
+               grep -Eq '^corrections/(requests|plans)/' /tmp/atlas-correction-push-paths.txt; then
+              echo 'PREFLIGHT_MIXED_WITH_MUTATION_FORBIDDEN_APPLY_GUARD' >&2
+              exit 1
+            fi
+          fi
 
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
             printf '%s\n' "${{ inputs.manifest }}" > /tmp/atlas-correction-candidates.txt
@@ -97,6 +110,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          # A preflight-only main push has no executable plan. Never enter APPLY or full baseline.
+          [[ -s /tmp/atlas-correction-plan.tsv ]] || { echo 'NO_MUTATION_INPUT_SELECTED'; exit 0; }
           mkdir -p /tmp/atlas-correction-evidence/responses
           : > /tmp/atlas-correction-results.jsonl
 
@@ -224,5 +239,128 @@ jobs:
             /tmp/atlas-correction-results.json
             /tmp/atlas-correction-plan.tsv
             /tmp/atlas-correction-evidence/
-          if-no-files-found: error
+          if-no-files-found: warn
+          retention-days: 90
+
+  protected_preflight:
+    name: Protected live DB preflight (never apply)
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: production
+    env:
+      ATLAS_CORRECTION_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-correction-apply
+      ATLAS_CORRECTION_AUDIENCE: atlas-person-db-correction-apply
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Select exactly one read-only candidate, excluding mutation files
+        id: selection
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --name-only --diff-filter=AMR "${{ github.event.before }}" "$GITHUB_SHA" > changed-paths.txt
+          request="$(grep -E '^corrections/evidence/preflight-requests/[A-Za-z0-9._-]+[.]json$' changed-paths.txt || true)"
+          [[ -n "$request" ]] || { echo 'selected=false' >> "$GITHUB_OUTPUT"; exit 0; }
+          [[ "$(printf '%s\n' "$request" | wc -l)" -eq 1 ]] || exit 1
+          if grep -Eq '^corrections/(plans|requests)/' changed-paths.txt; then
+            echo PREFLIGHT_MIXED_WITH_MUTATION_FORBIDDEN >&2
+            exit 1
+          fi
+          echo 'selected=true' >> "$GITHUB_OUTPUT"
+          echo "request=$request" >> "$GITHUB_OUTPUT"
+      - name: Verify exact candidate against protected live state by rollback-only dry_run
+        if: steps.selection.outputs.selected == 'true'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REQUEST_PATH: ${{ steps.selection.outputs.request }}
+        run: |
+          set -euo pipefail
+          jq -e '
+            .schema == "atlas-protected-correction-preflight/v1" and
+            .mode == "dry_run" and
+            (.pr_number|type=="number" and .>0) and
+            (.head_sha|type=="string" and test("^[0-9a-f]{40}$")) and
+            (.plan_path|type=="string" and test("^corrections/plans/[A-Za-z0-9._-]+[.]json$")) and
+            (.batch_id|type=="string" and length>0) and
+            (.activity_ids|type=="array" and length==4 and (unique|length)==4)
+          ' "$REQUEST_PATH" >/dev/null
+          pr="$(jq -r .pr_number "$REQUEST_PATH")"
+          sha="$(jq -r .head_sha "$REQUEST_PATH")"
+          path="$(jq -r .plan_path "$REQUEST_PATH")"
+          current="$(gh api "repos/JezCH/atlas-person-db/pulls/$pr" --jq .head.sha)"
+          [[ "$sha" == "$current" ]] || { echo PREFLIGHT_CANDIDATE_HEAD_MOVED >&2; exit 1; }
+          gh api "repos/JezCH/atlas-person-db/contents/$path?ref=$sha" --jq .content |
+            tr -d '\n' | base64 --decode > preflight-candidate.json
+          jq -e --slurpfile request "$REQUEST_PATH" '
+            .schema=="atlas-stage2-correction-v2-execution-plan/v1" and
+            .batch_id==$request[0].batch_id and
+            .execution_rules.production_executable==false and
+            .execution_rules.production_mutation_authorized==false and
+            (.operations|length)==4 and
+            ([.operations[].activity_id]|sort)==($request[0].activity_ids|sort) and
+            ([.stage2_assertions[]|select(.type=="assert_source")]|length)==4
+          ' preflight-candidate.json >/dev/null
+          oidc="$(curl --fail-with-body --silent --show-error \
+            -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
+            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${ATLAS_CORRECTION_AUDIENCE}" | jq -er .value)"
+          payload="$(jq -cn --arg sha "$GITHUB_SHA" --arg path "$path" \
+            --slurpfile plan preflight-candidate.json \
+            '{deployment_sha:$sha,workflow_sha:$sha,plan_path:$path,mode:"dry_run",plan:$plan[0]}')"
+          for attempt in 1 2 3 4; do
+            status="$(curl --silent --show-error --output preflight-response.json \
+              --write-out '%{http_code}' --request POST \
+              -H 'content-type: application/json' -H "authorization: Bearer $oidc" \
+              --data "$payload" "$ATLAS_CORRECTION_ENDPOINT")"
+            [[ "$status" != "200" ]] || break
+            code="$(jq -r '.code // "UNKNOWN"' preflight-response.json 2>/dev/null || echo UNKNOWN)"
+            if [[ "$status" == "409" && "$code" == "DEPLOYMENT_SHA_MISMATCH" ]]; then
+              deployed="$(jq -r '.deployed_sha // ""' preflight-response.json)"
+              marker="$(jq -r '.transport_marker // ""' preflight-response.json)"
+              [[ "$marker" == "ATLAS_CORRECTION_TRANSPORT_WORKFLOW_SHA_V2" && "$deployed" =~ ^[0-9a-f]{40}$ ]] || exit 1
+              payload="$(jq -c --arg sha "$deployed" '.deployment_sha=$sha' <<<"$payload")"
+              continue
+            fi
+            cat preflight-response.json >&2; exit 1
+          done
+          [[ "$status" == "200" ]] || exit 1
+          jq -e '
+            .ok==true and .marker=="ATLAS_CORRECTION_MANIFEST_V2" and
+            .schema=="atlas-correction-manifest/v2" and
+            .dry_run==true and .committed==false and .replay==false and
+            (.exact_live_snapshot_digest|test("^sha256:[0-9a-f]{64}$")) and
+            (.manifest_sha256|test("^sha256:[0-9a-f]{64}$")) and
+            ([.result.operations[]|select(.type=="rewrite_activity")]|length)==4 and
+            ([.result.operations[]|select(.type=="assert_source")]|length)==4 and
+            (.result.before_counts.activities|type)=="number" and
+            (.result.before_counts.activity_sources|type)=="number" and
+            (.result.before_counts.sources|type)=="number" and
+            .result.before_counts.activities==.result.after_counts.activities and
+            .result.before_counts.activity_sources==.result.after_counts.activity_sources and
+            .result.after_counts.sources==(.result.before_counts.sources + 4)
+          ' preflight-response.json >/dev/null
+          jq --arg sha "$sha" --arg path "$path" '{
+            marker,dry_run,committed,replay,deployment_sha,
+            exact_live_snapshot_digest,manifest_sha256,
+            candidate_head:$sha,candidate_path:$path,
+            before_counts:.result.before_counts,after_counts:.result.after_counts,
+            targets:[.result.operations[]|select(.type=="rewrite_activity")|
+              {case_id,activity_id,existing:.exact_before.activity,
+               old_links:.exact_before.normalized_source_links,
+               new_links:.exact_after.normalized_source_links}]
+          }' preflight-response.json > preflight-summary.json
+          echo ATLAS_PROTECTED_DRY_RUN_ONLY_SUCCESS
+          cat preflight-summary.json
+      - name: Preserve preflight evidence without mutation
+        if: always() && steps.selection.outputs.selected == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-protected-preflight-${{ github.sha }}
+          path: |
+            preflight-candidate.json
+            preflight-response.json
+            preflight-summary.json
+          if-no-files-found: warn
           retention-days: 90
