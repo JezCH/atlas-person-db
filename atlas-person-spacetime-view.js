@@ -1213,12 +1213,9 @@
         && Number.isFinite(segment.x_anchor)
         && Number.isFinite(segment.start_ordinal)
         && Number.isFinite(segment.end_ordinal));
-    const segment = primary.find((item) => item.start_ordinal <= ordinal && ordinal <= item.end_ordinal)
-      || primary.slice().sort((a,b) => {
-        const aMid = (a.start_ordinal + a.end_ordinal) / 2;
-        const bMid = (b.start_ordinal + b.end_ordinal) / 2;
-        return Math.abs(aMid - ordinal) - Math.abs(bMid - ordinal);
-      })[0] || null;
+    // Never project the chosen moment horizontally onto a nearby but inactive
+    // primary segment. A gap between reviewed segments is not a valid location.
+    const segment = primary.find((item) => item.start_ordinal <= ordinal && ordinal <= item.end_ordinal) || null;
     if (segment) {
       const { exploration } = runtime();
       const insets = cameraInsets(scroll);
