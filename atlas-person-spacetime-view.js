@@ -81,6 +81,7 @@
   let pendingCameraAnchor = null;
   let meanwhileSelectedOrdinal = null;
   let meanwhileSelectionSource = null;
+  let meanwhileRegionFilter = null; // Local view-only region, never a historical data filter.
 
   function escapeHtml(value) {
     return String(value ?? "")
@@ -581,6 +582,7 @@
 
     meanwhileSelectedOrdinal = ordinal;
     meanwhileSelectionSource = "manual";
+    meanwhileRegionFilter = null;
     renderInto(mount);
     return true;
   }
@@ -589,6 +591,7 @@
     invalidateMeanwhileInteraction();
     meanwhileSelectedOrdinal = null;
     meanwhileSelectionSource = null;
+    meanwhileRegionFilter = null;
     renderInto(mount);
   }
 
@@ -608,19 +611,28 @@
     }
     const momentLabel = meanwhileMomentLabel();
     const sourceLabel = meanwhileSelectionSource === "activity" ? "선택 Activity 중간 시점" : "직접 선택 시점";
-    const regionCounts = (summary.region_counts || []).map((item) =>
-      `<span><b>${escapeHtml(meanwhileRegionLabel(item.code))}</b> ${item.unique_person_count}명</span>`
-    ).join("");
+    const regionCounts = [
+      `<button type="button" data-spacetime-meanwhile-region="" aria-pressed="${meanwhileRegionFilter == null}"><b>전체</b> ${summary.unique_person_count}명</button>`,
+      ...(summary.region_counts || []).map((item) =>
+        `<button type="button" data-spacetime-meanwhile-region="${escapeHtml(item.code)}" aria-pressed="${meanwhileRegionFilter === item.code}"${item.unique_person_count ? "" : " disabled"}><b>${escapeHtml(meanwhileRegionLabel(item.code))}</b> ${item.unique_person_count}명</button>`
+      )
+    ].join("");
     const entries = summary.entries || [];
-    const visibleEntries = entries.slice(0, 24);
-    const remainingEntries = entries.slice(visibleEntries.length);
+    const regionEntries = meanwhileRegionFilter == null
+      ? entries
+      : entries.filter((entry) => entry.macroregion_code === meanwhileRegionFilter);
+    const regionPersonCount = new Set(regionEntries.map((entry) => entry.person_id)).size;
+    const regionLabel = meanwhileRegionFilter == null ? "전체 권역" : meanwhileRegionLabel(meanwhileRegionFilter);
+    const visibleEntries = regionEntries.slice(0, 24);
+    const remainingEntries = regionEntries.slice(visibleEntries.length);
     const renderRows = (rows) => `<div class="spacetime-meanwhile-activities">${rows.map((entry) => `<button type="button" data-spacetime-meanwhile-person="${escapeHtml(entry.person_id)}"><strong>${escapeHtml(entry.display_name)}</strong><span>${escapeHtml(polityLabel(entry.activity))}</span><small>${escapeHtml(periodLabel(entry.activity))}</small></button>`).join("")}</div>`;
     const activityRows = visibleEntries.length
       ? renderRows(visibleEntries)
       : '<p class="spacetime-empty-inline">이 시점에 주 위치가 확정된 활성 활동이 없습니다.</p>';
     return `<section class="spacetime-meanwhile card" aria-label="${escapeHtml(momentLabel)} 동시대 탐색">
       <div class="spacetime-meanwhile-head"><div><small>동시대 탐색 · ${escapeHtml(sourceLabel)}</small><strong>${escapeHtml(momentLabel)}</strong><span>활동 중인 인물 ${summary.unique_person_count}명 · 활동 기록 ${summary.activity_count}건</span></div><button id="spacetimeMeanwhileClear" type="button">시점 해제</button></div>
-      <div class="spacetime-meanwhile-regions" aria-label="대권역별 동시대 인물 수">${regionCounts}</div>
+      <div class="spacetime-meanwhile-regions" role="group" aria-label="대권역별 동시대 인물 필터">${regionCounts}</div>
+      <p class="spacetime-meanwhile-region-status" role="status" aria-live="polite">${escapeHtml(regionLabel)} · 인물 ${regionPersonCount}명 · 활동 ${regionEntries.length}건 / 전체 ${summary.activity_count}건</p>
       ${activityRows}
       ${remainingEntries.length ? `<details><summary class="spacetime-more">활동 기록 ${remainingEntries.length}건 더 보기</summary>${renderRows(remainingEntries)}</details>` : ""}
     </section>`;
@@ -1785,6 +1797,15 @@
       if (year != null) setMeanwhileYear(mount, year);
     });
     mount.querySelector("#spacetimeMeanwhileClear")?.addEventListener("click", () => clearMeanwhile(mount));
+    mount.querySelectorAll("[data-spacetime-meanwhile-region]").forEach((button) => button.addEventListener("click", () => {
+      const region = button.dataset.spacetimeMeanwhileRegion || null;
+      if (region === meanwhileRegionFilter) return;
+      meanwhileRegionFilter = region;
+      renderInto(mount);
+      const nextButton = [...mount.querySelectorAll("[data-spacetime-meanwhile-region]")]
+        .find((item) => (item.dataset.spacetimeMeanwhileRegion || null) === region);
+      nextButton?.focus({ preventScroll: true });
+    }));
     mount.querySelectorAll("[data-spacetime-meanwhile-person]").forEach((button) => button.addEventListener("click", () => selectPerson(mount, button.dataset.spacetimeMeanwhilePerson, { focus: true })));
     mount.querySelector("#spacetimeCameraZoomOut")?.addEventListener("click", () => requestCameraZoom(mount, cameraZoom / CAMERA_ZOOM_STEP));
     mount.querySelector("#spacetimeCameraZoomIn")?.addEventListener("click", () => requestCameraZoom(mount, cameraZoom * CAMERA_ZOOM_STEP));
