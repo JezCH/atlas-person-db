@@ -387,7 +387,8 @@
       horizontalRatio: horizontalCameraRatioFromStoredGeometry(),
       meanwhileOrdinal: Number.isInteger(meanwhileSelectedOrdinal) ? meanwhileSelectedOrdinal : null,
       meanwhileSource: meanwhileSelectionSource,
-      regionCode: meanwhileRegionCode
+      regionCode: meanwhileRegionCode,
+      activityOrigin: explorationOrigin ? { ...explorationOrigin } : null
     };
   }
 
@@ -452,6 +453,31 @@
       && model.REGION_DEFINITIONS.some((region) => region.code === snapshot.regionCode)
       ? snapshot.regionCode : "";
     pendingFocusPersonId = null;
+    const prior = snapshot.activityOrigin;
+    const priorPersonId = window.ATLAS_ENTITY_ROUTE?.normalizeUuid?.(prior?.personId) || null;
+    const priorActivityId = window.ATLAS_ENTITY_ROUTE?.normalizeUuid?.(prior?.activityId) || null;
+    const priorTrack = priorPersonId
+      ? compileAtlas().partitioned.tracks.find((item) => item.person_id === priorPersonId) : null;
+    const validOrigin = priorActivityId && priorTrack?.primary_segments?.some(
+      (segment) => segment.activity_id === priorActivityId
+    );
+    explorationOrigin = validOrigin ? Object.freeze({
+      personId: priorPersonId,
+      activityId: priorActivityId,
+      query: typeof prior.query === "string" ? prior.query.slice(0, 240) : "",
+      zoom: Number.isFinite(prior.zoom)
+        ? Math.min(CAMERA_MAX_ZOOM, Math.max(CAMERA_MIN_ZOOM, prior.zoom)) : CAMERA_DEFAULT_ZOOM,
+      scrollLeft: Number.isFinite(prior.scrollLeft) ? Math.max(0, prior.scrollLeft) : 0,
+      scrollTop: Number.isFinite(prior.scrollTop) ? Math.max(0, prior.scrollTop) : 0,
+      centerOrdinal: within(prior.centerOrdinal) ? prior.centerOrdinal : null,
+      horizontalRatio: Number.isFinite(prior.horizontalRatio)
+        && prior.horizontalRatio >= 0 && prior.horizontalRatio <= 1 ? prior.horizontalRatio : null,
+      meanwhileOrdinal: Number.isInteger(prior.meanwhileOrdinal) && within(prior.meanwhileOrdinal)
+        ? prior.meanwhileOrdinal : null,
+      meanwhileSource: ["manual", "activity", "exploration"].includes(prior.meanwhileSource)
+        ? prior.meanwhileSource : null,
+      regionCode: model.REGION_DEFINITIONS.some((region) => region.code === prior.regionCode) ? prior.regionCode : ""
+    }) : null;
     pendingActivityFocus = null;
     pendingCameraAnchor = null;
     return true;
