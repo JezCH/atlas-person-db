@@ -1,0 +1,84 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261120:togo:heihachiro:tsushima:1905:v1",
+  "person": {
+    "canonical_name_en": "Togo Heihachiro",
+    "display_name_ko": "도고 헤이하치로",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-20",
+    "life_status_basis": "documented_death",
+    "representative_domain": "military",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Empire of Japan",
+    "display_name_ko": "대일본제국",
+    "existing_id": "7f146e58-c3e9-5af7-8cb8-346f03cd7cf6",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "military_activity",
+    "role": "Commander-in-Chief of the Combined Fleet",
+    "role_display_name_ko": "연합함대 사령장관",
+    "start_year": 1905,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1905,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Tōgō Heihachirō (1847–1934) commanded the Imperial Japanese Navy's Combined Fleet during the 1905 Battle of Tsushima against the Russian Baltic Fleet in the Russo-Japanese War. This records his directly sourced naval command and battle, not a claim that he alone determined the war's outcome. 1905 is a one-year representative military activity, not his full 1903–1905 tenure. The 1868–1945 Empire of Japan is the canonical historical polity; no new Japanese state, territory or fleet-polity identity is created."
+  },
+  "sources": [
+    {
+      "title": "Togo Heihachiro — Japan Center for Asian Historical Records, National Archives of Japan",
+      "canonical_url": "https://www.jacar.go.jp/english/exhibition/nichiro/cloud_togo.htm",
+      "citation_text": "Japan's archival exhibition identifies Togo as 1903 Combined Fleet commander and lists the Russo-Japanese War and Battle of Tsushima among the fleet engagements under his command.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Part 2 Chapter 5: Military men in Russo-Japanese War — National Diet Library Japan",
+      "canonical_url": "https://www.ndl.go.jp/en/jikihitsu/part2/s5_1",
+      "citation_text": "Japan's National Diet Library records Togo as commander-in-chief of the Combined Fleet that defeated the Russian Baltic Fleet at Tsushima.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Admiral of the Fleet Count Heihachiro Togo — Royal Museums Greenwich",
+      "canonical_url": "https://www.rmg.co.uk/collections/objects/rmgc-object-63995",
+      "citation_text": "The UK national maritime museum corroborates Togo's personal identity, dates, and command of Japan's victorious fleet at Tsushima, 1905.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-20",
+      "document_title": "도고 헤이하치로",
+      "url": "https://namu.wiki/w/%EB%8F%84%EA%B3%A0%20%ED%97%A4%EC%9D%B4%ED%95%98%EC%B9%98%EB%A1%9C"
+    }
+  },
+  "review_context": {
+    "selection": "explicit_user_selected_registration_2026-11-20",
+    "aliases": [
+      "Tōgō Heihachirō",
+      "Togo Heihachirō",
+      "東郷平八郎",
+      "Heihachiro Togo"
+    ],
+    "namuwiki_evidence": "External Korean search index independently resolves a dedicated real historical Person NamuWiki page with exact displayed title; fictional/game variants excluded.",
+    "preflight_required": true,
+    "production_screen": "Repository main authoring manifest tree and issue search show no exact matching existing request. Direct live public Person query inaccessible to this chat; protected OIDC preflight_batch must check all Person aliases and semantic Activity duplicates prior to any canonical mutation, and classify READY/ALREADY_PRESENT/BLOCKED without speculative writes.",
+    "existing_polity_basis": "Reviewed Empire of Japan was restored in Japan lineage repair PR #1737 and retained live as uuid 7f146e58-c3e9-5af7-8cb8-346f03cd7cf6 in 2026-10-08 protected audit. Exact current identity + Korean name 대일본제국 must be verified in SERIALIZABLE preflight, not duplicated or replaced by generic Japan.",
+    "comment": "Previously approved candidate IDs gp-20260921-052 (Togo), gp-20260921-053 (Yamamoto) are historical candidate status only, not proof of Production Person registration."
+  }
+}

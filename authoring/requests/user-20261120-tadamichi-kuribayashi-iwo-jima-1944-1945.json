@@ -1,0 +1,84 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261120:tadamichi:kuribayashi:iwo:jima:1944:1945:v1",
+  "person": {
+    "canonical_name_en": "Tadamichi Kuribayashi",
+    "display_name_ko": "구리바야시 다다미치",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-20",
+    "life_status_basis": "documented_death",
+    "representative_domain": "military",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Empire of Japan",
+    "display_name_ko": "대일본제국",
+    "existing_id": "7f146e58-c3e9-5af7-8cb8-346f03cd7cf6",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "military_activity",
+    "role": "Commander of Iwo Jima Garrison",
+    "role_display_name_ko": "이오지마 수비대 사령관",
+    "start_year": 1944,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1945,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Lieutenant General Tadamichi Kuribayashi (1891–1945) was appointed to command Japanese defenses on Iwo Jima in 1944 and organized underground and mutually supporting defensive positions before the U.S. assault of February–March 1945. This bounded 1944–1945 activity includes defensive preparations and the Iwo Jima battle, not an assertion that he ruled the island as a sovereign politician, that he won the battle, or that his actions alone determined subsequent strategic decisions. Sources disagree on details of his precise death, so no day-specific death or term-end is invented. The activity is attached to the historical Empire of Japan as military command."
+  },
+  "sources": [
+    {
+      "title": "Battle of Iwo Jima — U.S. Naval History and Heritage Command",
+      "canonical_url": "https://www.history.navy.mil/browse-by-topic/wars-conflicts-and-operations/world-war-ii/1945/battle-of-iwo-jima.html",
+      "citation_text": "The U.S. Navy official history identifies Kuribayashi as commander of Japanese forces, assigned in June 1944, and documents his defensive preparations and 1945 battle.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "H-042-1: Iwo Jima, Nightmare in Hell — U.S. Naval History and Heritage Command",
+      "canonical_url": "https://www.history.navy.mil/about-us/leadership/director/directors-corner/h-grams/h-gram-042/h-042-1.html",
+      "citation_text": "U.S. Navy command history documents Kuribayashi's Japanese army forces on Iwo Jima, February–March 1945, and their defensive positions.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Closing In: Marines in the Seizure of Iwo Jima — U.S. Marine Corps",
+      "canonical_url": "https://www.marines.mil/portals/1/Publications/Closing%20In-Marines%20in%20the%20Seizure%20of%20Iwo%20Jima%20PCN%2019000313100.pdf",
+      "citation_text": "U.S. Marine Corps official monograph identifies Lieutenant General Kuribayashi as commander of the 109th Division and Ogasawara Army Group on Iwo Jima.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-20",
+      "document_title": "구리바야시 다다미치",
+      "url": "https://namu.wiki/w/%EA%B5%AC%EB%A6%AC%EB%B0%94%EC%95%BC%EC%8B%9C%20%EB%8B%A4%EB%8B%A4%EB%AF%B8%EC%B9%98"
+    }
+  },
+  "review_context": {
+    "selection": "explicit_user_selected_registration_2026-11-20",
+    "aliases": [
+      "Kuribayashi Tadamichi",
+      "栗林忠道",
+      "쿠리바야시 타다미치",
+      "Kuribayashi"
+    ],
+    "namuwiki_evidence": "External Korean search index independently resolves a dedicated real historical Person NamuWiki page with exact displayed title; fictional/game variants excluded.",
+    "preflight_required": true,
+    "production_screen": "Repository main authoring manifest tree and issue search show no exact matching existing request. Direct live public Person query inaccessible to this chat; protected OIDC preflight_batch must check all Person aliases and semantic Activity duplicates prior to any canonical mutation, and classify READY/ALREADY_PRESENT/BLOCKED without speculative writes.",
+    "existing_polity_basis": "Reviewed Empire of Japan was restored in Japan lineage repair PR #1737 and retained live as uuid 7f146e58-c3e9-5af7-8cb8-346f03cd7cf6 in 2026-10-08 protected audit. Exact current identity + Korean name 대일본제국 must be verified in SERIALIZABLE preflight, not duplicated or replaced by generic Japan.",
+    "comment": "Previously approved candidate IDs gp-20260921-052 (Togo), gp-20260921-053 (Yamamoto) are historical candidate status only, not proof of Production Person registration."
+  }
+}

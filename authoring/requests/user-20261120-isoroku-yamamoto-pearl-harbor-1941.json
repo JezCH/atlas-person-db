@@ -1,0 +1,84 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261120:isoroku:yamamoto:pearl:harbor:1941:v1",
+  "person": {
+    "canonical_name_en": "Isoroku Yamamoto",
+    "display_name_ko": "야마모토 이소로쿠",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-20",
+    "life_status_basis": "documented_death",
+    "representative_domain": "military",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Empire of Japan",
+    "display_name_ko": "대일본제국",
+    "existing_id": "7f146e58-c3e9-5af7-8cb8-346f03cd7cf6",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "military_activity",
+    "role": "Commander-in-Chief of the Combined Fleet",
+    "role_display_name_ko": "연합함대 사령장관",
+    "start_year": 1941,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1941,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Isoroku Yamamoto (1884–1943), Combined Fleet commander-in-chief from 1939, directed Japanese naval strategy and developed the 1941 Pearl Harbor attack plan. The representative 1941 military Activity is planning and overall command, not physical tactical command of the carrier strike force, which was led by Chūichi Nagumo; he also directed naval strategy in subsequent campaigns including the failed Midway operation. Pearl Harbor precipitated the United States' entry into the Pacific War. Yamamoto was killed by U.S. aircraft in April 1943. This is documentation of his wartime role, not praise or an endorsement of the attack."
+  },
+  "sources": [
+    {
+      "title": "YAMAMOTO Isoroku — National Diet Library, Portraits of Modern Japanese Historical Figures",
+      "canonical_url": "https://www.ndl.go.jp/portrait/e/datas/344/",
+      "citation_text": "Japan's National Diet Library identifies Yamamoto as Combined Fleet commander from 1939 and explicitly notes his overall strategy including the 1941 Pearl Harbor attack and his death in April 1943.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Pearl Harbor Attack, December 7, 1941 — National WWII Museum",
+      "canonical_url": "https://www.nationalww2museum.org/war/topics/pearl-harbor-december-7-1941?page=0&type_1=article",
+      "citation_text": "US National WWII Museum identifies Yamamoto as commander-in-chief and developer of the Pearl Harbor attack plan of December 1941.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Operation Vengeance: The Killing of Isoroku Yamamoto — National WWII Museum",
+      "canonical_url": "https://www.nationalww2museum.org/war/articles/operation-vengeance-killing-isoroku-yamamoto",
+      "citation_text": "Museum account corroborates his wartime naval command and death during the 1943 U.S. interception operation.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-20",
+      "document_title": "야마모토 이소로쿠",
+      "url": "https://namu.wiki/w/%EC%95%BC%EB%A7%88%EB%AA%A8%ED%86%A0%20%EC%9D%B4%EC%86%8C%EB%A1%9C%EC%BF%A0"
+    }
+  },
+  "review_context": {
+    "selection": "explicit_user_selected_registration_2026-11-20",
+    "aliases": [
+      "Yamamoto Isoroku",
+      "山本五十六",
+      "Yamamoto Isoruku",
+      "야마모토 이소로꾸"
+    ],
+    "namuwiki_evidence": "External Korean search index independently resolves a dedicated real historical Person NamuWiki page with exact displayed title; fictional/game variants excluded.",
+    "preflight_required": true,
+    "production_screen": "Repository main authoring manifest tree and issue search show no exact matching existing request. Direct live public Person query inaccessible to this chat; protected OIDC preflight_batch must check all Person aliases and semantic Activity duplicates prior to any canonical mutation, and classify READY/ALREADY_PRESENT/BLOCKED without speculative writes.",
+    "existing_polity_basis": "Reviewed Empire of Japan was restored in Japan lineage repair PR #1737 and retained live as uuid 7f146e58-c3e9-5af7-8cb8-346f03cd7cf6 in 2026-10-08 protected audit. Exact current identity + Korean name 대일본제국 must be verified in SERIALIZABLE preflight, not duplicated or replaced by generic Japan.",
+    "comment": "Previously approved candidate IDs gp-20260921-052 (Togo), gp-20260921-053 (Yamamoto) are historical candidate status only, not proof of Production Person registration."
+  }
+}
