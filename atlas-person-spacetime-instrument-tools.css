@@ -1145,3 +1145,19 @@
     transition: none;
   }
 }
+
+/* A requested Person may have no evidence-backed spatial placement. */
+.person-spacetime-mount .spacetime-cross-link-status {
+  margin: 0 0 10px;
+  padding: 12px 14px;
+  border-left: 3px solid #c0ae88;
+  background: #20262b;
+  color: #e7e0d2;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.person-spacetime-mount .spacetime-cross-link-status a {
+  color: #e8cf98;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
