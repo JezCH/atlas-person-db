@@ -37,8 +37,7 @@
 | UI-02 인물/정치체 상세 | 인물명·역사성·지위·시기·근거·출처·초상(등록분만), 정치체 identity/시대·출처, 상세 탐색 | **PARTIAL**: #2660/#2666/#2678/#2681 등 현행 UI 반영분 재작업 금지. 화면 기능·정보 위계·한국어·실 브라우저 미검증을 확인. |
 | UI-03 시공간 | world X / chronological Y / 500% 기본 및 최소 / 통합 카메라/region ratio/LOD/검색·조작 불변. 시간 눈금·라벨·선택·도구판·가독성 | **PARTIAL**: 기존 VIS3-06 기술 감사와 사용자 미승인 도구판 선택을 분리. 새 장식 선택 없이 재설계/배포 금지. 기존 현재 화면의 재현 가능한 결함은 비파괴적으로 개선 가능. |
 | UI-04 공통쉘·Dashboard·모바일·접근성 | 로그인/네비게이션/앱바/KPI/상태·오류/키보드 focus·스크린리더·reduced motion, 390~1600px | **PARTIAL**: 기존 배포 개선을 재실행하지 않는다. #2716 Dashboard 검증기 라벨 수정 반영, 별도 실제 Dashboard Production Browser rerun 필요. |
-| UI-05 정보 완전성·Admin·전면 한국어·최종 수용 | Main vs Admin 정보 권한, Source/Activity 근거, 시간 확실성, 운영 상태, 전역 UI 번역/ARIA, 연동/API 오류, 전체 사용자 수용 | **PARTIAL**: 과거 Inventory의 '없음'을 최신 main 사실로 단정하지 않음. 실제 미표시·오표시·운영자 정보 누락을 하나씩 확인하고 수정; Admin 로그인·승인은 우회하지 않음. |
-
+| UI-05 정보 완전성·Admin·전면 한국어·1차 수용 | Main vs Admin 정보 권한, Source/Activity 근거, 시간 확실성, 운영 상태, 전역 UI 번역/ARIA, 연동/API 오류, UI-01~04의 1차 사용자 수용 | **PARTIAL**: 과거 Inventory의 '없음'을 최신 main 사실로 단정하지 않음. 실제 미표시·오표시·운영자 정보 누락을 하나씩 확인하고 수정; Admin 로그인·승인은 우회하지 않음. UI-05 합격이 UI-06/07 완료는 아님. |
 | UI-06A/B 동시대 전체 탐험·상태 복원 | 기존 Meanwhile의 첫 24개 화면 제한을 넘어 전체 해당 결과 탐색, Person→Spacetime→동시대→다른 Person→원래 년도·카메라·검색 복귀 | **PLANNED / NOT VERIFIED:** v1.1 신규 승인. UI-03 접점/조회 모델 보존, 집계 분모·unresolved·BCE 경계·라우트/뒤로가기/모바일 검증 필요. |
 | UI-07 두 인물 직접 비교 | 두 Person 실제 Activity 기간·정치체·Relation/Role·Source를 비교, 추정/불확실성·역법·상태 보존 | **PLANNED / NOT VERIFIED:** v1.1 신규 승인. UI-06B의 복귀 상태 계약 재사용; 생몰기간/Activity기간 혼동, 동시대=실제 교류 추론 금지. |
 
