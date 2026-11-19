@@ -1,0 +1,87 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261119:honda-tadakatsu:japan:sekigahara-1600:v1",
+  "person": {
+    "canonical_name_en": "Honda Tadakatsu",
+    "display_name_ko": "혼다 타다카츠",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-19",
+    "life_status_basis": "documented_death",
+    "representative_domain": "military",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Japan",
+    "display_name_ko": "일본",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "military_activity",
+    "role": "Military commander",
+    "role_display_name_ko": "도쿠가와군 지휘관",
+    "start_year": 1600,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1600,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Honda Tadakatsu (本多忠勝, 1548–1610), a military retainer of Tokugawa Ieyasu and one of the four leading Tokugawa generals, participated on the Tokugawa-led eastern side in the 1600 Sekigahara campaign. The historical reference entries distinguish his role as a military supervisor alongside Ii Naomasa and his contribution at Gifu/Sekigahara from any sovereign rulership. This is a sourced 1600 representative military-activity point, not a fictitious full career interval or a 1600 Tokugawa-shogunate office: the Tokugawa shogunate was established only in 1603. ATLAS reuses the existing Japan polity used for Tokugawa-era Person Activity; neither the clan nor the as-yet-unfounded shogunate is created as a new political state. Tadakatsu subsequently became lord of Kuwana in 1601; the later daimyo office is not backdated to the 1600 event."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "本多忠勝 — 国史大辞典 (JapanKnowledge)",
+      "canonical_url": "https://japanknowledge.com/introduction/keyword.html?i=62",
+      "citation_text": "The historical encyclopedia identifies Honda Tadakatsu's 1600 Sekigahara role alongside Ii Naomasa in oversight of eastern-army commanders, and his death in 1610. It separately describes his career as a Tokugawa retainer."
+    },
+    {
+      "source_type": "museum_web",
+      "title": "本多忠勝筆書状 — 慶應義塾ミュージアム・コモンズ / Keio Object Hub",
+      "canonical_url": "https://objecthub.keio.ac.jp/ja/object/1387",
+      "citation_text": "Keio's collection record identifies the surviving letter by Honda Tadakatsu (1548–1610), establishing the historical individual and his administrative direction to household officers."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "関ヶ原の戦い — 国立公文書館 (National Archives of Japan)",
+      "canonical_url": "https://www.archives.go.jp/exhibition/digital/ieyasu/contents3_01/",
+      "citation_text": "Japan's National Archives dates the Sekigahara campaign to 1600 and distinguishes the Toyotomi-era coalition from the subsequent 1603 shogunate, so it should not be retroactively labeled Tokugawa Shogunate in 1600."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-19",
+      "document_title": "혼다 타다카츠",
+      "url": "https://namu.wiki/w/%ED%98%BC%EB%8B%A4%20%ED%83%80%EB%8B%A4%EC%B9%B4%EC%B8%A0"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "The historical campaign was at Sekigahara (present-day Gifu Prefecture, Japan), but this Person registration supplies no invented person-owned location coordinates or new polity geometry; reuse the existing Japan political identity and its independent spatial record."
+  },
+  "review_context": {
+    "selection": "explicit_user_selected_registration_2026-11-19",
+    "aliases": [
+      "本多忠勝",
+      "ほんだ ただかつ",
+      "Tadakatsu Honda",
+      "Honda Heihachiro Tadakatsu",
+      "혼다 타다카쓰"
+    ],
+    "preflight_required": true,
+    "production_screen": "Repository main tree and issue/code search found no matching Honda Tadakatsu authoring manifest. Direct public Production Person SCREEN could not be reached in this session. Protected OIDC Human Authoring preflight_batch must resolve actual Production Person aliases, activity and exact Japan Polity, and skip ALREADY_PRESENT/BLOCKED without a duplicate write.",
+    "existing_polity_basis": "Japan is the existing ATLAS higher-level polity for Tokugawa Ieyasu and Tokugawa Yoshimune. No Tokugawa Shogunate polity can be backdated to the 1600 Sekigahara campaign.",
+    "namuwiki_evidence": "Independent NamuWiki historical-person article exact title '혼다 타다카츠' is indexed, distinct from '혼다 타다카츠(전국무쌍)' and other fictional/game representations."
+  }
+}
