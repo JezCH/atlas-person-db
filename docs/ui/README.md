@@ -2,6 +2,8 @@
 
 > 2026-11-19 현재 계획: [ATLAS_UI_DELIVERY_PLAN.md](ATLAS_UI_DELIVERY_PLAN.md) v1.1 · 작업 원장 [#1896](https://github.com/JezCH/atlas-person-db/issues/1896)
 
+**연구 기반 종합 실행·수용계획:** [ATLAS_UI_EVIDENCE_BASED_MASTERPLAN_20261119.md](ATLAS_UI_EVIDENCE_BASED_MASTERPLAN_20261119.md). 실제 UX 연구·기념비적 시각언어·표·지도·탐색 맥락·시간 불확실성·접근성·속도·사용자 검증을 현행 UI-01~07에 연결한다. 원래 승인된 기획을 대체하거나 보류된 기능을 재개하지 않는다.
+
 **전체 UI 계획을 관장하는 매니저 기준:** [UI_MANAGER_INTEGRATED_EXECUTION.md](UI_MANAGER_INTEGRATED_EXECUTION.md). 최신 UI-01~07과 향후 승인된 추가 트랙, Phase II/III·정보완전성·한국어·Admin의 계획 계보를 종합 점검하며, 기존 총괄 예약이 매 실행 책임과 성과를 확인한다. 최신 v1.1 계획을 덮어쓰거나 별도 예약을 만들지 않는다.
 
 ## Active plan (user-approved)
