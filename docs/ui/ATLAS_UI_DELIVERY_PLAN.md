@@ -9,6 +9,8 @@
 > 본 문서는 **실제 화면을 배포·수용하기 위한 개발 순서**이다. `docs/ui/UI_INFORMATION_COVERAGE.md`, `ATLAS_REQUIREMENTS.md`, `DATA_MODEL.md`, `WORK_EXECUTION.md`의 데이터·권한·운영 규칙을 대체하지 않는다.
 
 ## 최종 목표
+**연구 기반 전체 화면 개선·검증 실행표:** [ATLAS_UI_EVIDENCE_BASED_MASTERPLAN_20261119.md](ATLAS_UI_EVIDENCE_BASED_MASTERPLAN_20261119.md). W3C/NN-g/정보시각화/디자인 시스템/성능 등 외부 연구를 ATLAS의 승인된 UI-01~07에 연결한 후속 구현 및 PC·모바일 수용 기준이다. 이 문서는 새 독립 백로그나 보류된 기능의 자동 재승인이 아니며, 본 파일의 최신 사용자 승인·실제 소스/런타임 권위가 우선한다.
+
 
 실제 ATLAS의 역사 데이터, 연대·정치체·출처와 시공간 좌표를 손상하지 않으면서 기존 사이트를 아름답고 정확하며 사용하기 쉬운 **기념비적 역사 아틀라스**로 고급화한다. 설계 명칭은 확정된 **Monumental Chronographic Modernism**. Graphite/Champagne, 정밀 계측기의 눈금·재질감, 역사적 기록의 장엄함, 8개 Person 대표분야의 의미색을 재사용한다.
 
