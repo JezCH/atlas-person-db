@@ -34,7 +34,7 @@ test("UI-06B route bridge opens selected historical record and native Back retur
   const window={location:{hash:route.entityHash("spacetime","person",personB)},
     addEventListener(name,fn){handlers.set(name,fn);}};
   const callLog=[];
-  const history={back(){callLog.push("back")}};
+  const history={state:null,back(){callLog.push("back")},replaceState(next){this.state=next;}};
   const factory=new Function("window","routeModel","parseRoute","showEntity","history",
     nav.slice(start,end)+
     '\nreturn {setDomain:(next)=>currentDomain=next, getReturn:()=>explorationReturnHash};');
@@ -57,7 +57,7 @@ test("UI-06B route bridge opens selected historical record and native Back retur
 test("UI-06B resumes selection, exact historical moment, search and camera without refocusing Person",()=>{
   assert.match(view,/let resumeExplorationAfterDetail = false/);
   assert.match(view,/resumeExplorationAfterDetail = true;\s*window\.dispatchEvent\(new CustomEvent\("atlas-spacetime-open-person-record"/);
-  assert.match(view,/const canResumeExploration = resumeExplorationAfterDetail && requestedPersonId === selectedPersonId;/);
+  assert.match(view,/const canResumeExploration = \(resumeExplorationAfterDetail && requestedPersonId === selectedPersonId\) \|\| restoredFromHistory;/);
   assert.match(view,/resumeExplorationAfterDetail = false;\s*if \(requestedPersonId && !canResumeExploration\)/);
   assert.match(view,/let query = ""/);
   assert.match(view,/let cameraScrollTop = 0/);
