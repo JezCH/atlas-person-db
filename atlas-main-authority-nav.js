@@ -221,10 +221,10 @@
     if (spacetimeAssetsPromise) return spacetimeAssetsPromise;
     appendStylesheetOnce("./atlas-person-spacetime-view.css?v=20260923-runtime-ownership-v1&ui06b=roundtrip-v1");
     appendStylesheetOnce("./atlas-person-spacetime-monumental-canvas.css?v=20261008-spacetime-l1-chronograph-v1&ui=20261119-ui03a-readability-v1");
-    appendStylesheetOnce("./atlas-person-spacetime-instrument-tools.css?v=20261008-spacetime-l2-instrument-finish-v1&ui=20261119-ui03a-readability-v1&region=20261119-ui06a-v1&nav=20261119-person-spacetime-crosslink-v1&year=20261120-ui06a-direct-year-v1&ui06b=roundtrip-v1");
+    appendStylesheetOnce("./atlas-person-spacetime-instrument-tools.css?v=20261008-spacetime-l2-instrument-finish-v1&ui=20261119-ui03a-readability-v1&region=20261119-ui06a-v1&nav=20261119-person-spacetime-crosslink-v1&year=20261120-ui06a-direct-year-v1&ui06b=roundtrip-v1&activity=20261120-moment-return-v1");
     appendStylesheetOnce("./atlas-person-spacetime-mobile-v8.css?v=20261007-spacetime-m4-mobile-material-v1&ui=20261119-ui03a-readability-v1&ui06b=roundtrip-v1");
     spacetimeAssetsPromise = ensureSpacetimeModel()
-      .then(() => loadScriptOnce("./atlas-person-spacetime-view.js?v=20261119-meanwhile-all-activities-v1&region=20261119-ui06a-v1&fix=meanwhile-panel-only-v1&ui=20261119-person-crosslink-v1&year=20261120-ui06a-direct-year-v1&ui06b=roundtrip-v1", () => Boolean(window.ATLAS_PERSON_SPACETIME_VIEW)))
+      .then(() => loadScriptOnce("./atlas-person-spacetime-view.js?v=20261119-meanwhile-all-activities-v1&region=20261119-ui06a-v1&fix=meanwhile-panel-only-v1&ui=20261119-person-crosslink-v1&year=20261120-ui06a-direct-year-v1&ui06b=roundtrip-v1&activity=20261120-moment-return-v1", () => Boolean(window.ATLAS_PERSON_SPACETIME_VIEW)))
       .then(() => window.ATLAS_PERSON_SPACETIME_VIEW)
       .catch((error) => {
         spacetimeAssetsPromise = null;
@@ -233,12 +233,12 @@
     return spacetimeAssetsPromise;
   }
 
-  function activateSpacetime({ focusPersonId = null } = {}) {
+  function activateSpacetime({ focusPersonId = null, focusActivityId = null } = {}) {
     const mount = document.getElementById("personSpacetimeMount");
     if (!mount) return;
     mount.innerHTML = '<section class="card" style="padding:24px"><strong>시공간 인물도 모듈 준비 중</strong></section>';
     ensureSpacetimeAssets().then((view) => {
-      if (currentDomain === "spacetime") view?.activate?.({ focusPersonId });
+      if (currentDomain === "spacetime") view?.activate?.({ focusPersonId, focusActivityId });
     }).catch((error) => {
       console.error(error);
       const currentMount = document.getElementById("personSpacetimeMount");
@@ -402,7 +402,10 @@
     }
     if (next === "spacetime") {
       explorationReturnHash = null;
-      activateSpacetime({ focusPersonId:resolvedRoute.entity_type === "person" ? resolvedRoute.entity_id : null });
+      activateSpacetime({
+        focusPersonId:resolvedRoute.entity_type === "person" ? resolvedRoute.entity_id : null,
+        focusActivityId:resolvedRoute.activity_id || null
+      });
     }
     if (next === "polities") {
       const polityId = resolvedRoute.entity_type === "polity" ? resolvedRoute.entity_id : null;
@@ -445,6 +448,22 @@
 
   document.querySelector(".nav-list")?.addEventListener("click", handleNavigationClick);
   document.querySelector(".mobile-nav")?.addEventListener("click", handleNavigationClick);
+  window.addEventListener("atlas-person-open-activity-spacetime", (event) => {
+    if (currentDomain !== "persons") return;
+    const personId = routeModel.normalizeUuid?.(event?.detail?.personId);
+    const activityId = routeModel.normalizeUuid?.(event?.detail?.activityId);
+    if (!personId || !activityId || window.ATLAS_PERSON_MAIN?.getSelectedPersonId?.() !== personId) return;
+    const target = routeModel.activityHash?.(personId, activityId);
+    const route = parseRoute(target);
+    if (route.entity_id !== personId || route.activity_id !== activityId) return;
+    writeHash(target);
+    showDomain("spacetime", { route });
+  });
+  window.addEventListener("atlas-spacetime-activity-selected", (event) => {
+    if (currentDomain !== "spacetime") return;
+    const target = routeModel.activityHash?.(event?.detail?.personId, event?.detail?.activityId);
+    if (parseRoute(target).activity_id) writeHash(target, { replace:true });
+  });
   window.addEventListener("atlas-person-open-spacetime", (event) => {
     if (currentDomain !== "persons") return;
     const personId = routeModel.normalizeUuid?.(event?.detail?.personId);

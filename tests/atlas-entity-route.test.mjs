@@ -66,3 +66,28 @@ test("entityHash fails closed to the domain route for unsupported or invalid ide
   assert.equal(route.entityHash("events","event",PERSON_ID),"#atlas-events");
   assert.equal(route.entityHash("persons","person","Napoleon"),"#atlas-persons");
 });
+
+test("Activity deep links name one verified Person and Activity UUID without changing legacy routes",()=>{
+  const activityId="AA000001-BB02-CC03-DD04-EE0000000005";
+  const hash=route.activityHash(PERSON_ID,activityId);
+  assert.equal(hash,`#atlas-spacetime/person/${PERSON_ID.toLowerCase()}/activity/${activityId.toLowerCase()}`);
+  assert.deepEqual(route.parseHash(hash),{
+    domain:"spacetime",
+    entity_type:"person",
+    entity_id:PERSON_ID.toLowerCase(),
+    activity_id:activityId.toLowerCase(),
+    canonical_hash:hash
+  });
+  assert.equal(route.activityHash(PERSON_ID,"not-uuid"),route.entityHash("spacetime","person",PERSON_ID));
+  for(const candidate of [
+    `#atlas-spacetime/person/${PERSON_ID}/activity/not-a-uuid`,
+    `#atlas-spacetime/person/not-a-uuid/activity/${activityId}`,
+    `#atlas-polities/polity/${POLITY_ID}/activity/${activityId}`,
+    `#atlas-spacetime/person/${PERSON_ID}/activity/${activityId}/more`
+  ]){
+    const parsed=route.parseHash(candidate);
+    assert.equal(parsed.entity_id,null,candidate);
+    assert.equal(parsed.activity_id,undefined,candidate);
+    assert.equal(parsed.canonical_hash,route.domainHash(parsed.domain),candidate);
+  }
+});

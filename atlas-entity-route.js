@@ -33,6 +33,13 @@
     if(!expectedType||text(entityType)!==expectedType||!id) return domainHash(normalizedDomain);
     return `${domainHash(normalizedDomain)}/${expectedType}/${id}`;
   }
+  function activityHash(personId,activityId){
+    const id=normalizeUuid(personId);
+    const activity=normalizeUuid(activityId);
+    return id&&activity
+      ? `${entityHash("spacetime","person",id)}/activity/${activity}`
+      : (id ? entityHash("spacetime","person",id) : domainHash("spacetime"));
+  }
   function parseHash(hash){
     const raw=text(hash).replace(/^#/,"").replace(/^atlas-/,"");
     const segments=raw.split("/").filter(Boolean);
@@ -40,12 +47,17 @@
     const expectedType=ENTITY_BY_DOMAIN[domain]||null;
     const requestedType=text(segments[1]);
     const entityId=normalizeUuid(segments[2]);
-    const validEntity=Boolean(expectedType&&requestedType===expectedType&&entityId&&segments.length===3);
+    const activityId=domain==="spacetime"&&segments[3]==="activity"&&segments.length===5
+      ? normalizeUuid(segments[4]) : null;
+    const validActivity=Boolean(expectedType==="person"&&requestedType==="person"&&entityId&&activityId);
+    const validEntity=Boolean(expectedType&&requestedType===expectedType&&entityId&&(segments.length===3||validActivity));
     return Object.freeze({
       domain,
       entity_type:validEntity?expectedType:null,
       entity_id:validEntity?entityId:null,
-      canonical_hash:validEntity?entityHash(domain,expectedType,entityId):domainHash(domain)
+      ...(validActivity?{activity_id:activityId}:{}),
+      canonical_hash:validActivity?activityHash(entityId,activityId)
+        :validEntity?entityHash(domain,expectedType,entityId):domainHash(domain)
     });
   }
 
@@ -57,6 +69,7 @@
     normalizeUuid,
     domainHash,
     entityHash,
+    activityHash,
     parseHash
   });
 });

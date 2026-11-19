@@ -1271,3 +1271,28 @@
     font-size: 12px;
   }
 }
+
+/* UI-06B: origin-return navigation maintains its own camera and search snapshot. */
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-toolbar:has(.spacetime-return-activity) {
+  flex-wrap: wrap;
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-return-activity {
+  flex: 0 0 auto;
+  min-height: 36px;
+  padding: 6px 11px;
+  border: 1px solid rgba(208,188,145,.55);
+  border-radius: 3px;
+  background: rgba(192,174,136,.11);
+  color: #e8d9b8;
+  font-size: 12px;
+  font-weight: 760;
+  line-height: 1.4;
+  cursor: pointer;
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-return-activity:hover {
+  background: rgba(192,174,136,.18);
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-return-activity:focus-visible {
+  outline: 2px solid #e8cf98;
+  outline-offset: 2px;
+}

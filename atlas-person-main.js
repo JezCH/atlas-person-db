@@ -474,7 +474,9 @@
           <h4>${escapeHtml(polity)}</h4>
           <p class="person-activity-role-line"><span class="person-relation-badge">${escapeHtml(relation)}</span><span>${escapeHtml(role)}</span><span>${escapeHtml(basis)}</span></p>
         </div>
-        <div class="person-activity-actions"><button class="mini-btn danger delete" type="button" data-authoring-action="delete" data-activity-id="${activityId}">삭제</button></div>
+        <div class="person-activity-actions">${reader.UUID_PATTERN?.test?.(activity.id || "") ? `<button class="mini-btn person-activity-world-link" type="button" data-person-open-activity="${activityId}" title="이 활동을 기준으로 동시대 세계 살펴보기">동시대 세계</button>` : ""}
+          <button class="mini-btn danger delete" type="button" data-authoring-action="delete" data-activity-id="${activityId}">삭제</button>
+        </div>
       </header>
       <dl class="person-activity-dates">
         <div><dt>시작</dt><dd>${escapeHtml(boundaryLabel(activity.start))}${startMeta.length ? `<small>${startMeta.map(escapeHtml).join(" · ")}</small>` : ""}</dd></div>
@@ -1003,6 +1005,17 @@
     detail?.addEventListener("click", (event) => {
       if (event.target.closest?.("[data-person-return-spacetime]")) {
         window.dispatchEvent(new CustomEvent("atlas-person-return-to-exploration"));
+        return;
+      }
+      const activityButton = event.target.closest?.("[data-person-open-activity]");
+      if (activityButton) {
+        const activityId = String(activityButton.dataset.personOpenActivity || "").trim().toLowerCase();
+        const personId = String(selectedPersonDetail?.id || "").trim().toLowerCase();
+        if (reader.UUID_PATTERN?.test?.(personId) && reader.UUID_PATTERN?.test?.(activityId)
+          && selectedPersonId === personId
+          && selectedPersonDetail?.activities?.some((activity) => String(activity.id || "").toLowerCase() === activityId)) {
+          window.dispatchEvent(new CustomEvent("atlas-person-open-activity-spacetime", { detail:{ personId,activityId } }));
+        }
         return;
       }
       const spacetimeButton = event.target.closest?.("[data-person-open-spacetime]");

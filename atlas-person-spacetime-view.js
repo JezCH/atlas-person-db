@@ -66,6 +66,8 @@
   let query = "";
   let selectedPersonId = null;
   let externalFocusPersonId = null; // direct Person link stays visible while prior search remains intact
+  let explorationOrigin = null; // transient evidence-backed Activity exploration scene
+  let pendingActivityFocus = null; // focus the selected primary Activity, not the Person representative
   let selectedActivityId = null;
   let selectedTimeOrdinal = null;
   let pendingFocusPersonId = null;
@@ -506,7 +508,8 @@
       if (interactionSerial !== meanwhileInteractionSerial || !mount?.isConnected) return false;
     }
     if (options.preserveActivity !== true || nextPersonId !== selectedPersonId) {
-      clearActivityLinkedMeanwhile();
+      if (explorationOrigin && meanwhileSelectionSource === "activity") meanwhileSelectionSource = "exploration";
+      else clearActivityLinkedMeanwhile();
       selectedActivityId = null;
       selectedTimeOrdinal = null;
     }
@@ -558,8 +561,71 @@
     } else {
       clearActivityLinkedMeanwhile();
     }
-    pendingFocusPersonId = options.focus === true ? track.person_id : null;
+    pendingFocusPersonId = null;
+    pendingActivityFocus = options.focus === true && Number.isInteger(selectedTimeOrdinal)
+      ? { personId:track.person_id, activityId:activity.activity_id, ordinal:selectedTimeOrdinal } : null;
+    externalFocusPersonId = track.person_id;
     renderInto(mount);
+    window.dispatchEvent(new CustomEvent("atlas-spacetime-activity-selected", {
+      detail: { personId: track.person_id, activityId: activity.activity_id }
+    }));
+    return true;
+  }
+
+  function rememberActivityOrigin(mount, personId, activityId) {
+    const scroll = mount?.querySelector?.(".spacetime-scroll");
+    if (scroll && currentTimelineProjection) {
+      updateCameraPosition(scroll, currentTimelineProjection);
+      rememberHorizontalCameraGeometry(scroll);
+    }
+    explorationOrigin = Object.freeze({
+      personId, activityId, query, zoom: cameraZoom,
+      scrollLeft: scroll?.scrollLeft ?? cameraScrollLeft,
+      scrollTop: scroll?.scrollTop ?? cameraScrollTop,
+      centerOrdinal: cameraCenterOrdinal,
+      horizontalRatio: horizontalCameraRatioFromStoredGeometry(),
+      meanwhileOrdinal: meanwhileSelectedOrdinal,
+      meanwhileSource: meanwhileSelectionSource,
+      regionCode: meanwhileRegionCode
+    });
+    // The first Activity selection rendered before the origin was recorded.
+    // Insert the live return control without redrawing the expensive world canvas.
+    const toolbar = mount?.querySelector?.(".spacetime-toolbar");
+    if (toolbar && !toolbar.querySelector("#spacetimeReturnToActivity")) {
+      const button = document.createElement("button");
+      button.id = "spacetimeReturnToActivity";
+      button.type = "button";
+      button.className = "spacetime-return-activity";
+      button.textContent = "↶ 시작 활동 시점으로";
+      button.title = "처음 선택한 활동과 동시대 시점·카메라·검색으로 복귀";
+      toolbar.insertBefore(button, toolbar.firstChild);
+      button.addEventListener("click", () => void returnToActivityOrigin(mount));
+    }
+  }
+
+  async function beginActivityExploration(mount, personId, activityId, options = {}) {
+    const selected = await selectActivity(mount, personId, activityId, options);
+    if (selected) rememberActivityOrigin(mount, personId, activityId);
+    return selected;
+  }
+
+  async function returnToActivityOrigin(mount) {
+    const origin = explorationOrigin;
+    if (!origin) return false;
+    query = origin.query;
+    cameraZoom = origin.zoom;
+    cameraScrollLeft = origin.scrollLeft;
+    cameraScrollTop = origin.scrollTop;
+    pendingViewportHorizontalRatio = origin.horizontalRatio;
+    pendingViewportCameraOrdinal = origin.centerOrdinal;
+    externalFocusPersonId = origin.personId;
+    const selected = await selectActivity(mount, origin.personId, origin.activityId, { focus:false });
+    if (!selected) return false;
+    meanwhileSelectedOrdinal = origin.meanwhileOrdinal;
+    meanwhileSelectionSource = origin.meanwhileSource;
+    meanwhileRegionCode = origin.regionCode;
+    if (origin.regionCode) renderInto(mount);
+    mount.querySelector("#spacetimeReturnToActivity")?.focus({ preventScroll:true });
     return true;
   }
 
@@ -640,7 +706,8 @@
       return '<section class="spacetime-meanwhile is-empty" aria-label="동시대 탐색"><div><small>동시대 탐색</small><strong>동시대 보기</strong><span>활동·연도·빈 시공간을 선택해 동시대 인물을 봅니다.</span></div></section>';
     }
     const momentLabel = meanwhileMomentLabel();
-    const sourceLabel = meanwhileSelectionSource === "activity" ? "선택 Activity 중간 시점" : "직접 선택 시점";
+    const sourceLabel = meanwhileSelectionSource === "activity" ? "선택 Activity 중간 시점"
+      : meanwhileSelectionSource === "exploration" ? "활동에서 이어진 동시대 시점" : "직접 선택 시점";
     const regionCounts = [
       `<button type="button" class="spacetime-meanwhile-region-filter${regionCode ? "" : " is-active"}" data-spacetime-meanwhile-region="" aria-pressed="${regionCode ? "false" : "true"}">전체 <b>${summary.unique_person_count}</b>명</button>`,
       ...(summary.region_counts || []).filter((item) => item.unique_person_count > 0).map((item) =>
@@ -1135,6 +1202,41 @@
     scroll.scrollTop = target.top;
     updateCameraPosition(scroll, projection);
     return true;
+  }
+
+  function focusActivityInViewport(scroll, projection, track, activityId, ordinal, contentWidth) {
+    if (!scroll || !Number.isInteger(ordinal) || !projection?.yForOrdinal) return false;
+    const y = Number(projection.yForOrdinal(ordinal));
+    if (!Number.isFinite(y)) return false;
+    const primary = (Array.isArray(track?.primary_segments) ? track.primary_segments : [])
+      .filter((segment) => segment?.activity_id === activityId
+        && Number.isFinite(segment.x_anchor)
+        && Number.isFinite(segment.start_ordinal)
+        && Number.isFinite(segment.end_ordinal));
+    // Never project the chosen moment horizontally onto a nearby but inactive
+    // primary segment. A gap between reviewed segments is not a valid location.
+    const segment = primary.find((item) => item.start_ordinal <= ordinal && ordinal <= item.end_ordinal) || null;
+    if (segment) {
+      const { exploration } = runtime();
+      const insets = cameraInsets(scroll);
+      const target = exploration.focusScrollTarget(
+        { x:segment.x_anchor * contentWidth, y },
+        { width:scroll.clientWidth, height:scroll.clientHeight },
+        { scrollWidth:scroll.scrollWidth, scrollHeight:scroll.scrollHeight },
+        { leftInset:insets.left, topInset:insets.top }
+      );
+      if (!target) return false;
+      scroll.scrollLeft = target.left;
+      scroll.scrollTop = target.top;
+    } else {
+      // Activity has a documented moment but no reviewed primary position:
+      // move vertically to its year while preserving the current world region.
+      const maxTop = Math.max(0, scroll.scrollHeight - scroll.clientHeight);
+      scroll.scrollTop = Math.max(0, Math.min(maxTop,
+        cameraHeaderHeight(scroll) + y - cameraViewportCenterY(scroll)));
+    }
+    updateCameraPosition(scroll, projection);
+    return Boolean(segment);
   }
 
   function updateMinimapViewport(mount, scroll, contentWidth, timelineHeight) {
@@ -1716,6 +1818,7 @@
     const primarySegmentCount = compiled.partitioned.tracks.reduce((sum, track) => sum + (track.primary_segments?.length || 0), 0);
 
     mount.innerHTML = `<section class="spacetime-toolbar card">
+      ${explorationOrigin ? '<button type="button" id="spacetimeReturnToActivity" class="spacetime-return-activity" title="처음 선택한 활동과 동시대 시점·카메라·검색으로 복귀">↶ 시작 활동 시점으로</button>' : ""}
       <div class="spacetime-controls">
         <label>검색<input id="spacetimeSearch" type="search" value="${escapeHtml(query)}" placeholder="인물·정치체·역할 검색" /></label>
         <div class="spacetime-camera" role="group" aria-label="시공간 확대"><span>줌</span><button id="spacetimeCameraZoomOut" type="button" aria-label="시공간 축소">−</button><output id="spacetimeCameraZoomValue">${escapeHtml(cameraZoomLabel())}</output><button id="spacetimeCameraZoomIn" type="button" aria-label="시공간 확대">+</button><button id="spacetimeCameraZoomReset" type="button" aria-label="500% 기본 배율로 복귀">기본</button></div>
@@ -1779,6 +1882,12 @@
 
     bindCameraViewport(mount, projection, navigationItems);
     const scroll = mount.querySelector(".spacetime-scroll");
+    if (pendingActivityFocus) {
+      const requested = pendingActivityFocus;
+      pendingActivityFocus = null;
+      const focusedTrack = compiled.partitioned.tracks.find((track) => track.person_id === requested.personId) || null;
+      focusActivityInViewport(scroll, projection, focusedTrack, requested.activityId, requested.ordinal, contentWidth);
+    }
     bindVirtualizedLayers(mount, scroll, {
       projectedTracks,
       visibleTracks,
@@ -1878,7 +1987,7 @@
     mount.querySelector("#spacetimeCameraZoomIn")?.addEventListener("click", () => requestCameraZoom(mount, cameraZoom * CAMERA_ZOOM_STEP));
     mount.querySelector("#spacetimeCameraZoomReset")?.addEventListener("click", () => requestCameraZoom(mount, CAMERA_DEFAULT_ZOOM));
     mount.querySelectorAll("[data-spacetime-search-result]").forEach((button) => button.addEventListener("click", () => selectPerson(mount, button.dataset.spacetimeSearchResult, { focus: true })));
-    mount.querySelectorAll("[data-spacetime-inspector-activity]").forEach((button) => button.addEventListener("click", () => selectActivity(mount, selectedPersonId, button.dataset.spacetimeInspectorActivity, { focus: false })));
+    mount.querySelectorAll("[data-spacetime-inspector-activity]").forEach((button) => button.addEventListener("click", () => void beginActivityExploration(mount, selectedPersonId, button.dataset.spacetimeInspectorActivity, { focus: false })));
     mount.querySelector("#spacetimePrevPerson")?.addEventListener("click", () => {
       const personId = exploration.adjacentPersonId(navigationItems, selectedPersonId, -1);
       if (personId) selectPerson(mount, personId, { focus: true });
@@ -1900,6 +2009,7 @@
       window.dispatchEvent(new CustomEvent("atlas-spacetime-open-person-record", { detail: { personId } }));
     });
     mount.querySelector("#spacetimeClearPerson")?.addEventListener("click", () => clearSelection(mount));
+    mount.querySelector("#spacetimeReturnToActivity")?.addEventListener("click", () => void returnToActivityOrigin(mount));
     restoreRenderFocus(mount, renderFocus);
   }
 
@@ -1921,8 +2031,18 @@
     });
   }
 
-  async function activate({ focusPersonId = null } = {}) {
+  async function activate({ focusPersonId = null, focusActivityId = null } = {}) {
     const requestedPersonId = window.ATLAS_ENTITY_ROUTE?.normalizeUuid?.(focusPersonId) || null;
+    const requestedActivityId = requestedPersonId ? (window.ATLAS_ENTITY_ROUTE?.normalizeUuid?.(focusActivityId) || null) : null;
+    const resumingFromDossier = resumeExplorationAfterDetail && requestedPersonId === selectedPersonId;
+    if (!resumingFromDossier) {
+      explorationOrigin = null;
+      if (requestedActivityId) {
+        meanwhileSelectedOrdinal = null;
+        meanwhileSelectionSource = null;
+        meanwhileRegionCode = "";
+      }
+    }
     const mount = document.getElementById("personSpacetimeMount");
     if (!mount) return;
     invalidateMeanwhileInteraction();
@@ -1950,7 +2070,7 @@
           selectedActivityId = null;
           selectedTimeOrdinal = null;
           externalFocusPersonId = requestedPersonId;
-          pendingFocusPersonId = requestedPersonId;
+          pendingFocusPersonId = requestedActivityId ? null : requestedPersonId;
         } else {
           requestedPlacementMissing = true;
           externalFocusPersonId = null;
@@ -1961,6 +2081,21 @@
         }
       }
       renderInto(mount);
+      if (!canResumeExploration && !requestedPlacementMissing && requestedActivityId) {
+        const opened = await beginActivityExploration(mount, requestedPersonId, requestedActivityId, { focus:true });
+        if (!opened && mount.isConnected) {
+          mount.insertAdjacentHTML("afterbegin", '<p class="spacetime-cross-link-status" role="status">해당 활동을 시공간표에 연결할 검토된 기록이 없습니다. 인물의 다른 활동을 선택해 주세요.</p>');
+        } else if (opened && !Number.isInteger(selectedTimeOrdinal) && mount.isConnected) {
+          mount.insertAdjacentHTML("afterbegin", '<p class="spacetime-cross-link-status" role="status">이 활동은 기준 연대가 미확정되어 동시대 시점을 임의로 선택하지 않았습니다.</p>');
+        } else if (opened && mount.isConnected) {
+          const reviewedActivity = compileAtlas().partitioned.tracks
+            .find((track) => track.person_id === requestedPersonId)?.primary_segments
+            ?.some((segment) => segment.activity_id === requestedActivityId && Number.isFinite(segment.x_anchor)
+              && segment.start_ordinal <= selectedTimeOrdinal && selectedTimeOrdinal <= segment.end_ordinal);
+          if (!reviewedActivity) mount.insertAdjacentHTML("afterbegin",
+            '<p class="spacetime-cross-link-status" role="status">선택한 활동은 검토된 주 위치가 없어 연도만 표시하고 세계 권역 위치는 추정하지 않았습니다.</p>');
+        }
+      }
       if (requestedPlacementMissing) {
         const detailRoute = window.ATLAS_ENTITY_ROUTE.entityHash("persons", "person", requestedPersonId);
         mount.insertAdjacentHTML("afterbegin", '<p class="spacetime-cross-link-status" role="status">이 인물은 현재 검토된 주 위치가 없어 시공간표에서 위치를 표시할 수 없습니다. <a href="' + escapeHtml(detailRoute) + '">인물 상세로 돌아가기</a></p>');
