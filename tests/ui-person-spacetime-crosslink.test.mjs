@@ -39,7 +39,7 @@ test("Person Detail dispatches the selected UUID; main router transitions withou
   assert.match(nav, /addEventListener\("atlas-person-open-spacetime"/);
   assert.match(nav, /showEntity\("spacetime", "person", personId\)/);
   assert.match(nav, /focusPersonId:resolvedRoute\.entity_type === "person"/);
-  assert.match(nav, /view\?\.activate\?\.\(\{ focusPersonId \}\)/);
+  assert.match(nav, /view\?\.activate\?\.\(\{ focusPersonId, focusActivityId \}\)/);
   assert.doesNotMatch(nav, /\/api\/atlas-/);
 });
 
