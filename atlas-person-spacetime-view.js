@@ -574,6 +574,28 @@
     renderInto(mount);
   }
 
+
+  // Convert human historical years without inventing a year zero or changing
+  // the shared signed BCE/CE ordinal semantics.
+  function parseMeanwhileYearInput(value, range) {
+    const raw = String(value ?? "").trim();
+    const bce = raw.match(/^(?:기원전|BCE?)\s*(\d+)$/i);
+    const ce = raw.match(/^(?:서기|AD|CE)\s*(\d+)$/i);
+    const signed = raw.match(/^([+-]?)(\d+)$/);
+    const magnitude = bce ? Number(bce[1]) : ce ? Number(ce[1]) : signed ? Number(signed[2]) : NaN;
+    const year = bce || signed?.[1] === "-" ? -magnitude : magnitude;
+    if (!Number.isSafeInteger(year) || year === 0 || !Number.isInteger(model.historicalYearToOrdinal(year))) {
+      return { year: null, error: "연도는 0년 없이 정수로 입력하세요. 예: 기원전 500, -500, 1592." };
+    }
+    const start = model.historicalYearToOrdinal(range?.start_year);
+    const end = model.historicalYearToOrdinal(range?.end_year);
+    const ordinal = model.historicalYearToOrdinal(year);
+    if (!Number.isInteger(start) || !Number.isInteger(end) || ordinal < start || ordinal > end) {
+      return { year: null, error: "현재 시공간 범위(" + model.yearLabel(range?.start_year) + " ~ " + model.yearLabel(range?.end_year) + ") 안에서 입력하세요." };
+    }
+    return { year, error: "" };
+  }
+
   async function setMeanwhileYear(mount, year) {
     const ordinal = model.historicalYearToOrdinal(Number(year));
     if (ordinal == null) return false;
@@ -1696,6 +1718,13 @@
       <div class="spacetime-controls">
         <label>검색<input id="spacetimeSearch" type="search" value="${escapeHtml(query)}" placeholder="인물·정치체·역할 검색" /></label>
         <div class="spacetime-camera" role="group" aria-label="시공간 확대"><span>줌</span><button id="spacetimeCameraZoomOut" type="button" aria-label="시공간 축소">−</button><output id="spacetimeCameraZoomValue">${escapeHtml(cameraZoomLabel())}</output><button id="spacetimeCameraZoomIn" type="button" aria-label="시공간 확대">+</button><button id="spacetimeCameraZoomReset" type="button" aria-label="500% 기본 배율로 복귀">기본</button></div>
+        <form id="spacetimeMeanwhileYearForm" class="spacetime-year-jump" novalidate>
+          <label for="spacetimeMeanwhileYearInput">연도</label>
+          <input id="spacetimeMeanwhileYearInput" type="text" inputmode="text" autocomplete="off" spellcheck="false" aria-describedby="spacetimeMeanwhileYearHelp spacetimeMeanwhileYearError" placeholder="-500 / 1592" value="${escapeHtml(Number.isInteger(meanwhileSelectedOrdinal) ? model.ordinalToHistoricalYear(meanwhileSelectedOrdinal) : "")}" />
+          <button type="submit">동시대 보기</button>
+          <small id="spacetimeMeanwhileYearHelp" class="spacetime-year-jump-help">기원전은 -500 또는 기원전 500 · 0년 없음</small>
+          <span id="spacetimeMeanwhileYearError" class="spacetime-year-jump-error" role="alert"></span>
+        </form>
       </div>
       <details class="spacetime-precision-legend">
         <summary>표시 기준</summary>
@@ -1791,6 +1820,30 @@
         invalidateMeanwhileInteraction();
         renderInto(mount);
         requestAnimationFrame(() => mount.querySelector("#spacetimeSearch")?.focus());
+      }
+    });
+
+    // A keyboard-accessible time jump uses the same reviewed Activity-based
+    // Meanwhile projection as the existing year-axis selection.
+    mount.querySelector("#spacetimeMeanwhileYearForm")?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const input = mount.querySelector("#spacetimeMeanwhileYearInput");
+      const error = mount.querySelector("#spacetimeMeanwhileYearError");
+      if (!input || !error) return;
+      const parsed = parseMeanwhileYearInput(input.value, timelineRange());
+      if (parsed.error) {
+        error.textContent = parsed.error;
+        input.setAttribute("aria-invalid", "true");
+        input.focus({ preventScroll: true });
+        return;
+      }
+      error.textContent = "";
+      input.removeAttribute("aria-invalid");
+      const applied = await setMeanwhileYear(mount, parsed.year);
+      if (applied) {
+        requestAnimationFrame(() => mount.querySelector("#spacetimeMeanwhileYearInput")?.focus({ preventScroll: true }));
+      } else if (input.isConnected) {
+        error.textContent = "연도를 변경하지 못했습니다. 다시 시도하세요.";
       }
     });
     const yearAxis = mount.querySelector(".spacetime-year-axis");
