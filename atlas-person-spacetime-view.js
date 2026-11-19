@@ -86,6 +86,7 @@
   let meanwhileSelectionSource = null;
   let meanwhileRegionCode = "";
   let resumeExplorationAfterDetail = false;
+  let explorationHistorySnapshotTimer = null;
 
   function escapeHtml(value) {
     return String(value ?? "")
@@ -362,6 +363,98 @@
     const headerHeight = cameraHeaderHeight(scroll);
     const usableHeight = Math.max(1, scroll.clientHeight - headerHeight);
     return headerHeight + usableHeight / 2;
+  }
+
+  // History-scoped exploration snapshot: no database, account profile, or cross-tab persistence.
+  // The canonical route must match before a snapshot can affect a newly loaded view.
+  function captureExplorationState() {
+    const route = window.ATLAS_ENTITY_ROUTE?.parseHash?.(window.location.hash);
+    if (route?.domain !== "spacetime") return null;
+    const scroll = document.getElementById("personSpacetimeMount")?.querySelector?.(".spacetime-scroll");
+    if (scroll && currentTimelineProjection) {
+      updateCameraPosition(scroll, currentTimelineProjection);
+      rememberHorizontalCameraGeometry(scroll);
+    }
+    return {
+      version: 1,
+      routeHash: route.canonical_hash,
+      selectedPersonId, selectedActivityId, selectedTimeOrdinal,
+      query: query.slice(0, 240),
+      zoom: cameraZoom,
+      scrollLeft: cameraScrollLeft,
+      scrollTop: cameraScrollTop,
+      centerOrdinal: Number.isFinite(cameraCenterOrdinal) ? cameraCenterOrdinal : null,
+      horizontalRatio: horizontalCameraRatioFromStoredGeometry(),
+      meanwhileOrdinal: Number.isInteger(meanwhileSelectedOrdinal) ? meanwhileSelectedOrdinal : null,
+      meanwhileSource: meanwhileSelectionSource,
+      regionCode: meanwhileRegionCode
+    };
+  }
+
+  function persistExplorationState() {
+    const snapshot = captureExplorationState();
+    if (!snapshot) return false;
+    const base = history.state && typeof history.state === "object" && !Array.isArray(history.state) ? history.state : {};
+    try {
+      history.replaceState({ ...base, atlasSpacetimeExplorationV1: snapshot }, "", window.location.href);
+      return true;
+    } catch (error) {
+      console.warn("ATLAS exploration history snapshot unavailable", error);
+      return false;
+    }
+  }
+
+  function scheduleExplorationSnapshot() {
+    if (explorationHistorySnapshotTimer != null) clearTimeout(explorationHistorySnapshotTimer);
+    explorationHistorySnapshotTimer = setTimeout(() => {
+      explorationHistorySnapshotTimer = null;
+      persistExplorationState();
+    }, 220);
+  }
+
+  function restoreExplorationState(snapshot, requestedPersonId, requestedActivityId) {
+    const route = window.ATLAS_ENTITY_ROUTE?.parseHash?.(window.location.hash);
+    if (!snapshot || snapshot.version !== 1 || route?.domain !== "spacetime"
+      || snapshot.routeHash !== route.canonical_hash) return false;
+    const id = window.ATLAS_ENTITY_ROUTE?.normalizeUuid?.(snapshot.selectedPersonId) || null;
+    const activityId = window.ATLAS_ENTITY_ROUTE?.normalizeUuid?.(snapshot.selectedActivityId) || null;
+    if (id !== requestedPersonId || (requestedActivityId && activityId !== requestedActivityId)) return false;
+    const range = timelineRange();
+    const start = model.historicalYearToOrdinal(range.start_year);
+    const end = model.historicalYearToOrdinal(range.end_year);
+    if (!Number.isInteger(start) || !Number.isInteger(end)) return false;
+    const within = (number) => Number.isFinite(number) && number >= start && number <= end;
+    const track = id ? compileAtlas().partitioned.tracks.find((item) => item.person_id === id) : null;
+    if (id && !track) return false;
+    if (activityId && (!track || !inspectorRuntime().selectedActivity(track, activityId))) return false;
+
+    query = typeof snapshot.query === "string" ? snapshot.query.slice(0, 240) : "";
+    cameraZoom = Number.isFinite(snapshot.zoom)
+      ? Math.min(CAMERA_MAX_ZOOM, Math.max(CAMERA_MIN_ZOOM, snapshot.zoom))
+      : CAMERA_DEFAULT_ZOOM;
+    cameraScrollLeft = Number.isFinite(snapshot.scrollLeft) ? Math.max(0, snapshot.scrollLeft) : 0;
+    cameraScrollTop = Number.isFinite(snapshot.scrollTop) ? Math.max(0, snapshot.scrollTop) : 0;
+    pendingViewportHorizontalRatio = Number.isFinite(snapshot.horizontalRatio)
+      && snapshot.horizontalRatio >= 0 && snapshot.horizontalRatio <= 1 ? snapshot.horizontalRatio : null;
+    pendingViewportCameraOrdinal = within(snapshot.centerOrdinal) ? snapshot.centerOrdinal : null;
+    cameraCenterOrdinal = pendingViewportCameraOrdinal;
+    selectedPersonId = id;
+    externalFocusPersonId = id;
+    selectedActivityId = activityId;
+    selectedTimeOrdinal = Number.isInteger(snapshot.selectedTimeOrdinal) && within(snapshot.selectedTimeOrdinal)
+      ? snapshot.selectedTimeOrdinal : null;
+    meanwhileSelectedOrdinal = Number.isInteger(snapshot.meanwhileOrdinal)
+      && within(snapshot.meanwhileOrdinal) && window.ATLAS_PERSON_SPACETIME_MEANWHILE?.summarize
+      ? snapshot.meanwhileOrdinal : null;
+    meanwhileSelectionSource = meanwhileSelectedOrdinal != null
+      && ["manual", "activity", "exploration"].includes(snapshot.meanwhileSource) ? snapshot.meanwhileSource : null;
+    meanwhileRegionCode = meanwhileSelectedOrdinal != null
+      && model.REGION_DEFINITIONS.some((region) => region.code === snapshot.regionCode)
+      ? snapshot.regionCode : "";
+    pendingFocusPersonId = null;
+    pendingActivityFocus = null;
+    pendingCameraAnchor = null;
+    return true;
   }
 
   function captureRenderFocus(mount) {
