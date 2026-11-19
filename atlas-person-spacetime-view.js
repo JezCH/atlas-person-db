@@ -363,6 +363,8 @@
     const active = document.activeElement;
     if (!active || !mount?.contains?.(active)) return null;
     if (active.id) return Object.freeze({ id: active.id, viewport: false });
+    if (active.matches?.("details.spacetime-precision-legend > summary")) return Object.freeze({ summary: "precision" });
+    if (active.matches?.("details.spacetime-status-more > summary")) return Object.freeze({ summary: "status" });
     if (active.classList?.contains?.("spacetime-scroll")) return Object.freeze({ id: null, viewport: true });
     return null;
   }
@@ -371,6 +373,8 @@
     if (!snapshot) return false;
     const target = snapshot.id
       ? document.getElementById(snapshot.id)
+      : snapshot.summary === "precision" ? mount?.querySelector?.("details.spacetime-precision-legend > summary")
+      : snapshot.summary === "status" ? mount?.querySelector?.("details.spacetime-status-more > summary")
       : snapshot.viewport ? mount?.querySelector?.(".spacetime-scroll") : null;
     if (!target || !mount?.contains?.(target) || typeof target.focus !== "function") return false;
     try { target.focus({ preventScroll: true }); }
@@ -1622,6 +1626,9 @@
   function renderInto(mount) {
     mount.dataset.spacetimeTools = "instrument-v7";
     const renderFocus = captureRenderFocus(mount);
+    // Preserve user-owned disclosure state across full DOM replacements, including native page zoom.
+    const precisionLegendWasOpen = mount.querySelector("details.spacetime-precision-legend")?.open ?? false;
+    const statusMoreWasOpen = mount.querySelector("details.spacetime-status-more")?.open ?? false;
     const { timeProjection, spaceAxis, semanticAxis, spatialCompile, exploration, lod, presentationLayout } = runtime();
     const timeline = timelineRange();
     const viewportWidth = Number(mount.clientWidth) || window.innerWidth || 1280;
@@ -1803,6 +1810,10 @@
     });
     mount.querySelector("#spacetimeDetailPerson")?.addEventListener("click", () => selectPerson(mount, selectedPersonId, { focus: true, detail: true, preserveActivity: true }));
     mount.querySelector("#spacetimeClearPerson")?.addEventListener("click", () => clearSelection(mount));
+    const precisionLegend = mount.querySelector("details.spacetime-precision-legend");
+    const statusMore = mount.querySelector("details.spacetime-status-more");
+    if (precisionLegend) precisionLegend.open = precisionLegendWasOpen;
+    if (statusMore) statusMore.open = statusMoreWasOpen;
     restoreRenderFocus(mount, renderFocus);
   }
 
