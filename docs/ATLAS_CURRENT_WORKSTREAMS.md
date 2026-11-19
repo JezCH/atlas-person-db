@@ -8,6 +8,8 @@
 - **Cost risk still open:** [#2499](https://github.com/JezCH/atlas-person-db/issues/2499) exact Fast Origin Transfer 10.19GB/10GB route attribution is unresolved. Do not run Sandbox, bypass 402, or make unbounded Vercel requests; safe GitHub-only work does not depend on live Vercel Usage access.
 - **Scheduled orchestrator limitation (2026-11-17 observation):** Its 07:30 KST run reported zero delivery after `exec_command` failed to obtain an execution environment, while manual connector-based GitHub and canonical workflows succeeded. Scheduled run marked 'completed' is not development success. The scheduled prompt was replaced with a 4,098-character current-state-first contract; tool availability in a future autonomous run remains unverified.
 
+**2026-11-19 UI 탐험·가독성 보완 계획 (새 승인 범위):** 현재 공식 실행계획 [docs/ui/ATLAS_UI_DELIVERY_PLAN.md](ui/ATLAS_UI_DELIVERY_PLAN.md)의 §「표 중심 단계 보완」과 [UI owner #1896](https://github.com/JezCH/atlas-person-db/issues/1896)을 우선 확인한다. 기존 승인된 UI-01(표형 인물명부) → UI-02(Person/Polity 상세) → UI-03(시공간 인물도) → UI-04(쉘·모바일·접근성) → UI-05(1차 정보완전성·Production 수용)는 유지한다. 실행 세부 목표는 **UI-01A/B 인명·연대·Activity 밀도 가독성**, **UI-03A/B 연도·권역·레이블 시각 위계/LOD**, **UI-04 일반사용자 탐험 메뉴 우선**이다. 신규 후속 작업은 **UI-06A 동시대 결과 전체 탐색(현행 24개 화면 제한 해결) / UI-06B 인물↔연대기 탐험 상태 복원 / UI-07 두 인물 Activity·정치체 직접 비교**. UI-05 완료를 UI-06/07 완료로 오인하지 않는다. P14 Territory/Geometry PARKED, 신규 데이터/스키마·안전 게이트 변경 승인 없음. 기존 총괄 예약이 별도 예약 없이 #1896의 실제 미완료를 계속 줄이되 현재 PR/Production 확인 후 하나의 보이는 개선을 구현하고 실제 검증한다. **계획 반영 자체는 CODE/CI/MERGE/PRODUCTION 완료가 아니다.**
+
 **Historical 2026-10-18 workstream snapshot begins below.** Keep audit evidence but never reopen a completed item from this section without fresh owner/current-state verification.
 
 ## 1. Authority and execution
