@@ -12,7 +12,7 @@ const stop=view.indexOf('    mount.querySelector("#spacetimeCameraZoomOut")',sta
 assert.ok(start>=0 && stop>start,"Missing scoped Meanwhile-only interaction binding");
 const bindingSource=view.slice(start,stop);
 const createBinder=new Function(
-  "mount","meanwhileSummary","renderMeanwhile","clearMeanwhile","selectPerson","meanwhileRegionCode",
+  "mount","meanwhileSummary","renderMeanwhile","clearMeanwhile","selectPerson","meanwhileRegionCode","scheduleExplorationSnapshot",
   bindingSource+"\nreturn () => meanwhileRegionCode;"
 );
 
@@ -57,7 +57,7 @@ test("UI-06A region interaction updates only Meanwhile DOM and restores keyboard
   };
   const summary={unique_person_count:30,activity_count:30};
   const getRegion=createBinder(mount,summary,(_summary,region)=>"region="+region,
-    ()=>{clearClicks++;},(_mount,id,opts)=>{selectedPerson={id,opts};},"");
+    ()=>{clearClicks++;},(_mount,id,opts)=>{selectedPerson={id,opts};},"",()=>{});
   assert.equal(getRegion(),"");
   regionButtons[1].click();
   assert.equal(getRegion(),"east_asia");
