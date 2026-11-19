@@ -1,0 +1,78 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-writers-20261026:aleksandr-solzhenitsyn:one-day-novy-mir-1962:v1",
+  "person": {
+    "canonical_name_en": "Aleksandr Solzhenitsyn",
+    "display_name_ko": "알렉산드르 솔제니친",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-19",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Soviet Union",
+    "display_name_ko": "소련",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "c7ddf754-0faa-576f-af97-9d322cf64f01"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Writer publishing One Day in the Life of Ivan Denisovich in Novy Mir",
+    "role_display_name_ko": "《이반 데니소비치의 하루》 발표 작가",
+    "start_year": 1962,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1962,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Aleksandr Solzhenitsyn Center documents first publication in Novy Mir in November 1962. This point is the public literary publication event, not a claim the described prison-camp conditions occurred during 1962 or that his writing career was confined to this year."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Aleksandr Solzhenitsyn Center — One Day in the Life of Ivan Denisovich",
+      "canonical_url": "https://www.solzhenitsyncenter.org/one-day-in-the-life-of-ivan-denisovich",
+      "citation_text": "The authorized Center history documents the story's appearance in the November 1962 issue of Novy Mir after editorial review."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-19",
+      "document_title": "알렉산드르 솔제니친",
+      "url": "https://namu.wiki/w/%EC%95%8C%EB%A0%89%EC%82%B0%EB%93%9C%EB%A5%B4%20%EC%86%94%EC%A0%9C%EB%8B%88%EC%B9%9C"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Person-specific historical evidence and existing canonical polity ID reviewed. No fabricated coordinates; protected current alias, source, polity, NamuWiki, activity semantic and chronology preflight remains mandatory before any Production mutation."
+  },
+  "review_context": {
+    "source_issue": 2619,
+    "source_draft_pr": 0,
+    "cohort": "WRITERS-SSS-20261026",
+    "reviewed_person_registration_priority": "SSS",
+    "identity_aliases": [
+      "Alexander Solzhenitsyn",
+      "Aleksandr Isayevich Solzhenitsyn",
+      "Aleksandr Solženicyn",
+      "솔제니친"
+    ],
+    "preflight_required": true,
+    "auto_continue_after_preflight": true,
+    "existing_polity_identity_checked_at": "2026-11-19",
+    "source_identity_screen": "2026-11-19 current compact English-name screen negative; protected alias/semantic preflight is authoritative"
+  }
+}
