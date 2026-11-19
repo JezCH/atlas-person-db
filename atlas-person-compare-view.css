@@ -1,0 +1,219 @@
+/* ATLAS UI-07: side-by-side source-backed Activity comparison.
+ * This lives inside the existing Person surface, never inside the world canvas. */
+#personMainView .atlas-person-compare {
+  margin: 0 0 18px;
+  border: 1px solid rgba(192,174,136,.37);
+  border-radius: 5px;
+  background: #1b2228;
+  color: #e5e9e9;
+  box-shadow: 0 16px 28px rgba(0,0,0,.12);
+}
+#personMainView .atlas-person-compare[hidden] { display: none !important; }
+#personMainView .atlas-compare-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 19px;
+  border-bottom: 1px solid rgba(192,174,136,.27);
+}
+#personMainView .atlas-compare-head p {
+  margin: 0 0 5px;
+  color: #bbaa88;
+  font-size: 11px;
+  letter-spacing: .07em;
+}
+#personMainView .atlas-compare-head h3 {
+  margin: 0;
+  color: #f2e6cc;
+  font-size: 19px;
+  font-weight: 720;
+}
+#personMainView .atlas-compare-head button,
+#personMainView .atlas-compare-person-head button,
+#personMainView .person-compare-add {
+  min-height: 38px;
+  padding: 8px 12px;
+  border: 1px solid rgba(192,174,136,.42);
+  border-radius: 4px;
+  background: rgba(192,174,136,.10);
+  color: #efe1c7;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 650;
+  cursor: pointer;
+}
+#personMainView .atlas-compare-head button:hover,
+#personMainView .atlas-compare-person-head button:hover,
+#personMainView .person-compare-add:hover:not(:disabled) { background: rgba(192,174,136,.23); }
+#personMainView .person-compare-add:disabled { opacity: .5; cursor: default; }
+#personMainView .atlas-compare-head button:focus-visible,
+#personMainView .atlas-compare-person-head button:focus-visible,
+#personMainView .person-compare-add:focus-visible,
+#personMainView .atlas-compare-sources a:focus-visible {
+  outline: 2px solid #e7d4a4;
+  outline-offset: 3px;
+}
+#personMainView .person-compare-progress {
+  display: block;
+  margin: 9px 0 0;
+  color: #c8bdac;
+  font-size: 12px;
+  line-height: 1.5;
+}
+#personMainView .atlas-compare-disclaimer {
+  padding: 12px 19px;
+  margin: 0;
+  color: #c5ced1;
+  font-size: 12px;
+  line-height: 1.65;
+  border-bottom: 1px solid #353e42;
+}
+#personMainView .atlas-compare-columns {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+  gap: 0;
+  min-width: 0;
+}
+#personMainView .atlas-compare-person {
+  min-width: 0;
+  border-right: 1px solid #3b4347;
+}
+#personMainView .atlas-compare-person:last-child { border-right: 0; }
+#personMainView .atlas-compare-person-head {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) auto;
+  align-items: center;
+  gap: 6px 10px;
+  padding: 17px 19px 14px;
+  border-bottom: 1px solid #343d41;
+}
+#personMainView .atlas-compare-person-head small,
+#personMainView .atlas-compare-person-head h4,
+#personMainView .atlas-compare-person-head p,
+#personMainView .atlas-compare-person-head span { grid-column: 1; }
+#personMainView .atlas-compare-person-head small {
+  color: #b8a782;
+  font-size: 11px;
+}
+#personMainView .atlas-compare-person-head h4 {
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: #f1e9d8;
+  font-size: 18px;
+}
+#personMainView .atlas-compare-person-head p,
+#personMainView .atlas-compare-person-head span {
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: #c4ccce;
+  font-size: 12px;
+}
+#personMainView .atlas-compare-person-head button { grid-column: 2; grid-row: 1 / span 4; }
+#personMainView .atlas-compare-person-body {
+  padding: 12px 16px 18px;
+  max-height: min(70vh,820px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+#personMainView .atlas-compare-activity {
+  padding: 13px 13px 14px;
+  margin-bottom: 10px;
+  border: 1px solid #39454b;
+  border-radius: 3px;
+  background: #212b30;
+  overflow-wrap: anywhere;
+}
+#personMainView .atlas-compare-activity header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+#personMainView .atlas-compare-activity header small {
+  flex: 0 0 auto;
+  font-size: 10px;
+  color: #b9a981;
+}
+#personMainView .atlas-compare-activity h5 {
+  margin: 0;
+  color: #e6ecec;
+  font-size: 14px;
+  font-weight: 710;
+}
+#personMainView .atlas-compare-activity p {
+  margin: 5px 0;
+  color: #ced7d9;
+  line-height: 1.5;
+  font-size: 12px;
+}
+#personMainView .atlas-compare-activity .atlas-compare-period {
+  color: #f2dfa8;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+#personMainView .atlas-compare-activity dl {
+  display: grid;
+  gap: 6px;
+  margin: 9px 0;
+  border-top: 1px solid #354248;
+  padding-top: 9px;
+}
+#personMainView .atlas-compare-activity dl div {
+  display: grid;
+  grid-template-columns: 70px minmax(0,1fr);
+  gap: 10px;
+}
+#personMainView .atlas-compare-activity dt {
+  color: #a8b7ba;
+  font-size: 11px;
+}
+#personMainView .atlas-compare-activity dd {
+  margin: 0;
+  color: #d9dfdf;
+  font-size: 11px;
+}
+#personMainView .atlas-compare-source-details,
+#personMainView .atlas-compare-person-sources {
+  margin-top: 10px;
+  color: #d0dbdd;
+  font-size: 12px;
+}
+#personMainView .atlas-compare-source-details summary,
+#personMainView .atlas-compare-person-sources summary {
+  cursor: pointer;
+  color: #dfc99c;
+  min-height: 30px;
+}
+#personMainView .atlas-compare-sources {
+  display: grid;
+  gap: 8px;
+  padding-left: 16px;
+  margin: 8px 0 0;
+}
+#personMainView .atlas-compare-sources li { min-width: 0; overflow-wrap: anywhere; }
+#personMainView .atlas-compare-sources a { color: #d5e6ef; text-underline-offset: 3px; }
+#personMainView .atlas-compare-sources small {
+  display: block;
+  color: #adbbbe;
+  margin-top: 3px;
+  line-height: 1.55;
+}
+#personMainView .atlas-compare-empty {
+  margin: 8px 0;
+  font-size: 12px;
+  color: #b9c2c3;
+}
+@media (max-width: 760px) {
+  #personMainView .atlas-compare-columns { grid-template-columns: minmax(0,1fr); }
+  #personMainView .atlas-compare-person { border-right: 0; border-bottom: 1px solid #465056; }
+  #personMainView .atlas-compare-person:last-child { border-bottom: 0; }
+  #personMainView .atlas-compare-person-body { max-height: none; overflow-y: visible; }
+  #personMainView .atlas-compare-head { padding: 14px; }
+  #personMainView .atlas-compare-disclaimer { padding: 10px 14px; }
+  #personMainView .atlas-compare-person-head { padding: 13px 14px; }
+}
+@media (max-width: 390px) {
+  #personMainView .atlas-compare-person-head { grid-template-columns: minmax(0,1fr); }
+  #personMainView .atlas-compare-person-head button { grid-column: 1; grid-row: auto; justify-self: start; }
+}
