@@ -424,6 +424,55 @@
   color: #aaa083;
 }
 
+/* Meanwhile region chooser: same instrument strip, now operable and accessible.
+ * Filter state is local to the chosen historical moment; no spatial/world mutations.
+ */
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-regions button {
+  appearance: none;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 5px;
+  min-height: 34px;
+  padding: 5px 9px;
+  border: 1px solid var(--atlas-material-hairline);
+  border-radius: 3px;
+  background: rgba(192, 174, 136, .018);
+  color: var(--spacetime-tools-text);
+  font: inherit;
+  font-size: 11px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-regions button[aria-pressed="true"] {
+  border-color: var(--atlas-material-rail);
+  background: var(--atlas-material-wash-selected);
+  color: var(--atlas-text-strong);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-regions button:hover:not(:disabled) {
+  border-color: var(--atlas-material-hairline-strong);
+  background: var(--atlas-material-wash-hover);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-regions button:focus-visible {
+  outline: 2px solid var(--atlas-focus-ring);
+  outline-offset: -2px;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-regions button:disabled {
+  opacity: .5;
+  cursor: default;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-region-status {
+  margin: 3px 0 4px;
+  color: var(--atlas-text-secondary);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
 .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-activities button {
   min-width: 160px;
   max-width: 240px;
