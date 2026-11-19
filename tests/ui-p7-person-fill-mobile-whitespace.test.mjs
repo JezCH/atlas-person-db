@@ -27,7 +27,7 @@ test("P7 keeps factual text more visible while preserving compact geometry", () 
   const mobile = register.slice(register.indexOf("@media (max-width: 760px)"));
   assert.match(mobile, /person-table-identity > strong \{[\s\S]*?color: #ddd9d0;[\s\S]*?font-size: 15px/s);
   assert.match(mobile, /person-register-range \{[\s\S]*?color: #c8c3ba;[\s\S]*?font-size: 9\.2px/s);
-  assert.match(mobile, /person-card-activity-role \{[\s\S]*?color: #aaada9;[\s\S]*?font-size: 8\.4px/s);
+  assert.match(mobile, /person-card-activity-role \{[\s\S]*?color: #aaada9;[\s\S]*?font-size: 9\.5px/s);
   assert.match(mobile, /person-card-activity-head b \{[\s\S]*?color: #d4d1ca;[\s\S]*?font-size: 10\.2px/s);
 });
 
