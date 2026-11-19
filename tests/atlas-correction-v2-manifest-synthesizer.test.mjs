@@ -170,3 +170,82 @@ test('final manifest guards preserve exact-live and no-fake-provenance invariant
   assert.equal(manifest.execution_guards.territory_geometry_mutation_forbidden, true);
   assert.equal(manifest.execution_guards.physical_person_merge_forbidden, true);
 });
+
+
+const { synthesizeUnifiedCorrectionV2Manifest } = require('../server/atlas-correction-v2-unified-plan-synthesizer.js');
+const { requireUnifiedV2Manifest } = require('../server/atlas-correction-manifest-v2-unified-service.js');
+
+function reviewedCitationSwap() {
+  const corrected = structuredClone(plan);
+  const live = makeSnapshot();
+  const original = corrected.operations.find(row => row.type === "rewrite_activity");
+  const prior = live.normalized_activity_source_links.find(row => row.person_politics_id === original.activity_id);
+  const replacementId = "73172a19-63e1-4adf-a5ae-17bf0bc2c001";
+  original.after.replace_source_links = [{
+    source_id: prior.source_id, source_locator_key: prior.source_locator_key,
+    replacement_source_id: replacementId, replacement_source_locator_key: "reviewed:bahamas-governor-1940-1945"
+  }];
+  corrected.stage2_assertions = [{
+    type: "assert_source", decision_id: "approved:distinct-activity-source",
+    exact_before: { source_absent_id: replacementId },
+    exact_after: { source: {
+      id: replacementId, source_key: "human-authoring:reviewed:bahamas-governor-1940-1945",
+      title: "Royal Family — distinct Bahamas appointment",
+      source_type: "web_bibliographic_reference",
+      canonical_url: "https://www.royal.uk/edward-viii",
+      citation_text: "The 1940–1945 colonial governorship followed the distinct 1936 abdication.",
+      sha256: null, bytes: null
+    }}
+  }];
+  return { corrected, live, original, prior, replacementId };
+}
+
+test('reviewed same-URL Source replacement emits a newly asserted Source then exact Activity link swap', () => {
+  const { corrected,live,original,prior,replacementId } = reviewedCitationSwap();
+  const synthesized = synthesizeUnifiedCorrectionV2Manifest(corrected,live);
+  assert.equal(synthesized.operations[0].type,"assert_source");
+  assert.equal(synthesized.operations[0].exact_after.source.id,replacementId);
+  const rewrite = synthesized.operations.find(row => row.case_id === original.case_id);
+  assert.equal(rewrite.type,"rewrite_activity");
+  assert.equal(rewrite.exact_before.activity.id,rewrite.exact_after.activity.id);
+  assert.deepEqual(rewrite.exact_before.activity,rewrite.exact_after.activity);
+  assert.ok(rewrite.exact_before.normalized_source_links.some(row => row.source_id === prior.source_id));
+  assert.ok(!rewrite.exact_after.normalized_source_links.some(row => row.source_id === prior.source_id));
+  assert.ok(rewrite.exact_after.normalized_source_links.some(row =>
+    row.source_id === replacementId && row.source_locator_key === "reviewed:bahamas-governor-1940-1945"));
+  assert.equal(rewrite.exact_before.normalized_source_links.length,rewrite.exact_after.normalized_source_links.length);
+  const normalized = requireUnifiedV2Manifest(synthesized);
+  assert.equal(normalized.operations[0].type,"assert_source");
+  assert.equal(normalized.operations.find(row => row.case_id === original.case_id).exact_after.normalized_source_links.length,1);
+  assert.equal(synthesized.manifest_sha256,sha256((({manifest_sha256,production_executable,...core})=>core)(synthesized)));
+});
+
+test('reviewed Source replacement fails closed on missing new Source assertion or stale exact old link', () => {
+  const {corrected,live,original} = reviewedCitationSwap();
+  corrected.stage2_assertions = [];
+  assert.throws(() => synthesizeUnifiedCorrectionV2Manifest(corrected,live),/REPLACEMENT_SOURCE_ASSERTION_REQUIRED/);
+  const fresh=reviewedCitationSwap();
+  fresh.original.after.replace_source_links[0].source_locator_key="stale-locator";
+  assert.throws(() => synthesizeUnifiedCorrectionV2Manifest(fresh.corrected,fresh.live),/REPLACEMENT_EXACT_LINK_DRIFT/);
+});
+
+test('reviewed Source replacement rejects silent removal, link ID reuse and mixed additions', () => {
+  const transforms = [
+    row => { row.source_id="99999999-9999-4999-8999-999999999999"; },
+    row => { row.replacement_source_id=row.source_id; },
+    row => { row.source_locator_key=""; },
+    row => { row.replacement_source_locator_key=""; },
+    row => { row.unreviewed="unexpected"; }
+  ];
+  for (const transform of transforms) {
+    const {corrected,live,original} = reviewedCitationSwap();
+    transform(original.after.replace_source_links[0]);
+    assert.throws(()=>synthesizeUnifiedCorrectionV2Manifest(corrected,live),/REPLACEMENT_/);
+  }
+  const multiple=reviewedCitationSwap();
+  multiple.original.after.replace_source_links.push({...multiple.original.after.replace_source_links[0]});
+  assert.throws(()=>synthesizeUnifiedCorrectionV2Manifest(multiple.corrected,multiple.live),/REPLACEMENT_EXACT_LINK_DRIFT/);
+  const mixed=reviewedCitationSwap();
+  mixed.original.after.add_source_links=[{source_id:"99999999-9999-4999-8999-999999999999",source_locator_key:"reviewed"}];
+  assert.throws(()=>synthesizeUnifiedCorrectionV2Manifest(mixed.corrected,mixed.live),/MIXED_SOURCE_LINK_MUTATION_FORBIDDEN/);
+});
