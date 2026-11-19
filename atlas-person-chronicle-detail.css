@@ -203,7 +203,7 @@
   flex-wrap: wrap;
   gap: 0;
   margin: 16px 0 0;
-  color: #686f74;
+  color: #9ca5a5;
   font-size: 10.5px;
   font-weight: 700;
 }
@@ -306,7 +306,7 @@
 }
 
 .person-chronicle-section h3 small {
-  color: #555d62;
+  color: #9da8a9;
   font-size: 7.5px;
   font-weight: 750;
   letter-spacing: .14em;
@@ -321,7 +321,7 @@
 }
 
 .person-chronicle-section .person-detail-section-head > span {
-  color: #6d757a;
+  color: #a2aaad;
   font-size: 10.5px;
   font-weight: 650;
   font-variant-numeric: tabular-nums;
@@ -357,7 +357,7 @@
 }
 
 .person-name-register small {
-  color: #6e767b;
+  color: #a2a9aa;
   font-size: 10.5px;
   line-height: 1.45;
   text-align: right;
@@ -379,7 +379,7 @@
   position: absolute;
   top: 3px;
   left: 0;
-  color: #5f676c;
+  color: #a1a9aa;
   font-size: 10px;
   font-weight: 800;
   text-transform: uppercase;
@@ -458,7 +458,7 @@
 .person-activity-sequence {
   display: block;
   margin: 0 0 5px;
-  color: #555d62;
+  color: #a2aaad;
   font-size: 10px;
   font-weight: 800;
   letter-spacing: .1em;
@@ -562,7 +562,7 @@
 }
 
 .person-chronicle-activity .person-activity-dates dt {
-  color: #5e666b;
+  color: #a3aaae;
   font-size: 10px;
   font-weight: 800;
   letter-spacing: .08em;
@@ -578,14 +578,14 @@
 }
 
 .person-chronicle-activity .person-activity-dates small {
-  color: #626a70;
+  color: #a0a8aa;
   font-size: 10px;
   font-weight: 550;
 }
 
 .person-chronicle-activity .person-activity-meta {
   margin: 9px 0 0;
-  color: #5f676c;
+  color: #a1a8aa;
   font-size: 10px;
 }
 
@@ -619,7 +619,7 @@
 .person-chronicle-activity .person-evidence-inspector > summary {
   min-height: 0;
   padding: 10px 0 0;
-  color: #777f83;
+  color: #a6aeaf;
   background: transparent;
 }
 
