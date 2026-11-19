@@ -9,6 +9,7 @@
   const DOMAIN_ORDER=Object.freeze(["dashboard","persons","registration","spacetime","polities","places","events","sources","geometry"]);
   const ENTITY_BY_DOMAIN=Object.freeze({
     persons:"person",
+    spacetime:"person",
     polities:"polity"
   });
   const UUID_PATTERN=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
