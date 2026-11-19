@@ -37,7 +37,7 @@ test("SPACETIME-M2 restores shared focus ownership after late lazy-loaded CSS", 
   assert.match(nav, /atlas-person-spacetime-monumental-canvas\.css\?v=20261008-spacetime-l1-chronograph-v1/);
   assert.match(nav, /atlas-person-spacetime-instrument-tools\.css\?v=20261008-spacetime-l2-instrument-finish-v1/);
   assert.match(nav, /atlas-person-spacetime-mobile-v8\.css\?v=20261007-spacetime-m4-mobile-material-v1/);
-  assert.match(nav, /atlas-person-spacetime-view\.js\?v=20261003-ui-v7-tools-v1/);
+  assert.match(nav, /atlas-person-spacetime-view\.js\?v=20261119-meanwhile-all-activities-v1/);
 });
 
 
