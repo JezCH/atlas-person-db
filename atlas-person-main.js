@@ -16,7 +16,7 @@
   const mainArea = document.querySelector(".main-area");
   const topbar = mainArea?.querySelector(":scope > .topbar");
 
-  if (!reader || !dataStore || !portraitView?.createRenderer || !portraitControllerFactory?.createController || !portraitPresentation?.presentationFor || !profileEditorFactory?.createEditor || !evidenceView?.createRenderer || !compareView?.render || !mainArea || !topbar) {
+  if (!reader || !dataStore || !portraitView?.createRenderer || !portraitControllerFactory?.createController || !portraitPresentation?.presentationFor || !profileEditorFactory?.createEditor || !evidenceView?.createRenderer || !mainArea || !topbar) {
     console.error("ATLAS Person Main could not initialize required dependencies");
     return;
   }
@@ -556,6 +556,7 @@
       }));
       if (serial !== comparisonRequestSerial || !panel.isConnected
         || ids.some((id, index) => comparisonIds[index] !== id)) return;
+      if (!compareView?.render) throw new Error("PERSON_COMPARE_VIEW_UNAVAILABLE");
       panel.innerHTML = compareView.render(records);
     } catch (error) {
       if (serial !== comparisonRequestSerial || !panel.isConnected) return;
