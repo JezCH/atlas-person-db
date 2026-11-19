@@ -423,6 +423,40 @@
 .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-regions b {
   color: #aaa083;
 }
+/* UI-06A — the existing regional counts become semantic, keyboard-accessible filters. */
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-regions button {
+  flex: 0 0 auto;
+  min-height: 28px;
+  padding: 3px 8px;
+  border: 1px solid var(--spacetime-tools-line);
+  border-radius: 2px;
+  background: transparent;
+  color: #aab2b5;
+  font: inherit;
+  font-size: 10px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-regions button b {
+  color: #d4c8ae;
+  font-weight: 760;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-regions button[aria-pressed="true"] {
+  border-color: var(--atlas-material-rail);
+  background: var(--atlas-material-wash-selected);
+  color: var(--atlas-text-strong);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-regions button:hover,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-regions button:focus-visible {
+  border-color: var(--spacetime-tools-metal-strong);
+  color: var(--atlas-text-strong);
+  outline: 1px solid var(--atlas-focus-ring);
+  outline-offset: 2px;
+}
+
 
 .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-activities button {
   min-width: 160px;
