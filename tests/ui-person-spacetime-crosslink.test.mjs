@@ -62,7 +62,7 @@ test("entry point and detail CTA assets are cache-busted, accessible, and not a 
   for (const target of ["atlas-person-main.js", "atlas-main-authority-nav.js", "atlas-entity-route.js", "atlas-person-chronicle-detail.css"]) {
     assert.match(html, new RegExp(target.replaceAll(".","\\.") + '[^"]*person-spacetime-crosslink-v1'));
   }
-  assert.match(nav,/atlas-person-spacetime-view\.js\?v=20261119-meanwhile-all-activities-v1&region=20261119-ui06a-v1&ui=20261119-person-crosslink-v1/);
+  assert.match(nav,/atlas-person-spacetime-view\.js\?v=20261119-meanwhile-all-activities-v1&region=20261119-ui06a-v1&fix=meanwhile-panel-only-v1&ui=20261119-person-crosslink-v1/);
   assert.match(detailCss, /\.person-chronicle-identity \.person-chronicle-spacetime-link/);
   assert.match(detailCss, /\.person-chronicle-spacetime-link:focus-visible/);
   assert.doesNotMatch(person, /person-portrait-generated|new Portrait/);
