@@ -2090,7 +2090,8 @@
         } else if (opened && mount.isConnected) {
           const reviewedActivity = compileAtlas().partitioned.tracks
             .find((track) => track.person_id === requestedPersonId)?.primary_segments
-            ?.some((segment) => segment.activity_id === requestedActivityId && Number.isFinite(segment.x_anchor));
+            ?.some((segment) => segment.activity_id === requestedActivityId && Number.isFinite(segment.x_anchor)
+              && segment.start_ordinal <= selectedTimeOrdinal && selectedTimeOrdinal <= segment.end_ordinal);
           if (!reviewedActivity) mount.insertAdjacentHTML("afterbegin",
             '<p class="spacetime-cross-link-status" role="status">선택한 활동은 검토된 주 위치가 없어 연도만 표시하고 세계 권역 위치는 추정하지 않았습니다.</p>');
         }
