@@ -1,2 +1,2 @@
-preflight authoring/requests/user-writers60-20261026-adam-mickiewicz-ballads-romances-1822.json
-preflight authoring/requests/user-writers60-20261026-aleksandr-solzhenitsyn-one-day-1962.json
+preflight authoring/requests/user-writers-sss-20261119-ferdowsi-shahnameh-1010.json
+preflight authoring/requests/user-writers-sss-20261119-solzhenitsyn-one-day-1962.json
