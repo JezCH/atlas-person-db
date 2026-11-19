@@ -143,7 +143,7 @@
 .person-chronicle-identity .eyebrow {
   margin: 0 0 13px;
   color: var(--atlas-honor-metal);
-  font-size: 8px;
+  font-size: 10px;
   letter-spacing: .22em;
 }
 
@@ -182,7 +182,7 @@
   margin: 7px 0 0;
   padding-left: 13px;
   color: #9da3a5;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 720;
   letter-spacing: .055em;
 }
@@ -204,7 +204,7 @@
   gap: 0;
   margin: 16px 0 0;
   color: #686f74;
-  font-size: 8.5px;
+  font-size: 10.5px;
   font-weight: 700;
 }
 
@@ -291,7 +291,7 @@
   gap: 8px;
   margin: 0 0 15px;
   color: #dcd8d0;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 760;
   letter-spacing: .025em;
 }
@@ -299,7 +299,7 @@
 .person-detail-section-index {
   min-width: 18px;
   color: var(--atlas-honor-metal);
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 800;
   letter-spacing: .08em;
   font-variant-numeric: tabular-nums;
@@ -322,7 +322,7 @@
 
 .person-chronicle-section .person-detail-section-head > span {
   color: #6d757a;
-  font-size: 8.5px;
+  font-size: 10.5px;
   font-weight: 650;
   font-variant-numeric: tabular-nums;
 }
@@ -358,7 +358,7 @@
 
 .person-name-register small {
   color: #6e767b;
-  font-size: 8.5px;
+  font-size: 10.5px;
   line-height: 1.45;
   text-align: right;
 }
@@ -380,7 +380,7 @@
   top: 3px;
   left: 0;
   color: #5f676c;
-  font-size: 7.5px;
+  font-size: 10px;
   font-weight: 800;
   text-transform: uppercase;
 }
@@ -388,7 +388,7 @@
 .person-chronicle-section .person-description p {
   margin: 0;
   color: #b7b8b4;
-  font-size: 11.5px;
+  font-size: 13px;
   line-height: 1.72;
   white-space: pre-wrap;
 }
@@ -459,7 +459,7 @@
   display: block;
   margin: 0 0 5px;
   color: #555d62;
-  font-size: 7.5px;
+  font-size: 10px;
   font-weight: 800;
   letter-spacing: .1em;
   font-variant-numeric: tabular-nums;
@@ -468,7 +468,7 @@
 .person-activity-period-display {
   margin: 0 0 7px !important;
   color: #cbc5b9 !important;
-  font-size: 10px !important;
+  font-size: 12px !important;
   font-weight: 720 !important;
   line-height: 1.4;
   letter-spacing: .025em;
@@ -491,7 +491,7 @@
   gap: 0;
   margin: 7px 0 0 !important;
   color: #8d9498 !important;
-  font-size: 9px !important;
+  font-size: 11px !important;
   line-height: 1.45;
 }
 
@@ -563,7 +563,7 @@
 
 .person-chronicle-activity .person-activity-dates dt {
   color: #5e666b;
-  font-size: 7.5px;
+  font-size: 10px;
   font-weight: 800;
   letter-spacing: .08em;
 }
@@ -573,20 +573,20 @@
   gap: 2px;
   margin: 4px 0 0;
   color: #bdb9b0;
-  font-size: 9.5px;
+  font-size: 12px;
   font-weight: 700;
 }
 
 .person-chronicle-activity .person-activity-dates small {
   color: #626a70;
-  font-size: 7.5px;
+  font-size: 10px;
   font-weight: 550;
 }
 
 .person-chronicle-activity .person-activity-meta {
   margin: 9px 0 0;
   color: #5f676c;
-  font-size: 7.5px;
+  font-size: 10px;
 }
 
 .person-chronicle-activity .person-activity-notes {
@@ -597,7 +597,7 @@
   border-radius: 0;
   background: transparent;
   color: #989d9e;
-  font-size: 9.5px;
+  font-size: 11.5px;
   line-height: 1.6;
   white-space: pre-wrap;
 }
@@ -635,12 +635,12 @@
 
 .person-chronicle-activity .person-evidence-inspector > summary b {
   color: var(--atlas-text);
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .person-chronicle-activity .person-evidence-inspector > summary small {
   color: var(--atlas-text-secondary);
-  font-size: 9px;
+  font-size: 11px;
 }
 
 .person-chronicle-activity .person-evidence-summary-badges {
@@ -652,7 +652,7 @@
   border-radius: 0;
   background: transparent;
   color: var(--atlas-text-secondary);
-  font-size: 9px;
+  font-size: 10.5px;
 }
 
 .person-chronicle-activity .person-evidence-summary-badges i + i::before {
@@ -696,14 +696,14 @@
 .person-chronicle-activity .person-evidence-boundary > small,
 .person-chronicle-activity .person-evidence-sources-head span {
   color: var(--atlas-text-secondary);
-  font-size: 9px;
+  font-size: 10.5px;
 }
 
 .person-chronicle-activity .person-evidence-facts strong,
 .person-chronicle-activity .person-evidence-boundary > strong,
 .person-chronicle-activity .person-evidence-sources-head strong {
   color: var(--atlas-text);
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .person-chronicle-activity .person-evidence-boundary-meta > span {
@@ -715,7 +715,7 @@
 .person-chronicle-activity .person-evidence-boundary-meta small,
 .person-chronicle-activity .person-evidence-boundary-meta b {
   color: var(--atlas-text-secondary);
-  font-size: 9px;
+  font-size: 10.5px;
 }
 
 /* ---------- Sources: citation register rather than cards ---------- */
@@ -751,7 +751,7 @@
 .person-chronicle-section .person-source-item a,
 .person-chronicle-section .person-source-item span {
   color: #aeb1ae;
-  font-size: 9.5px;
+  font-size: 11.5px;
   line-height: 1.5;
   text-decoration-color: var(--atlas-material-rail-soft);
   text-underline-offset: 2px;
@@ -763,7 +763,7 @@
 
 .person-chronicle-section .person-source-item small {
   color: var(--atlas-text-secondary);
-  font-size: 9px;
+  font-size: 10.5px;
 }
 
 .person-chronicle-section .person-source-type {
@@ -772,7 +772,7 @@
   border-radius: 0 !important;
   background: transparent !important;
   color: var(--atlas-honor-metal) !important;
-  font-size: 7px !important;
+  font-size: 10px !important;
   font-weight: 800 !important;
   letter-spacing: .055em;
 }
