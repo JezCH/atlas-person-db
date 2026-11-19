@@ -39,13 +39,13 @@ test("Person Detail dispatches the selected UUID; main router transitions withou
   assert.match(nav, /addEventListener\("atlas-person-open-spacetime"/);
   assert.match(nav, /showEntity\("spacetime", "person", personId\)/);
   assert.match(nav, /focusPersonId:resolvedRoute\.entity_type === "person"/);
-  assert.match(nav, /view\?\.activate\?\.\(\{ focusPersonId, focusActivityId \}\)/);
+  assert.match(nav, /view\?\.activate\?\.\(\{ focusPersonId, focusActivityId, explorationState \}\)/);
   assert.doesNotMatch(nav, /\/api\/atlas-/);
 });
 
 test("Spacetime finds only verified placed tracks and retains existing search while focusing", () => {
   assert.doesNotThrow(() => new Function(spacetime));
-  assert.match(spacetime, /async function activate\(\{ focusPersonId = null, focusActivityId = null \} = \{\}\)/);
+  assert.match(spacetime, /async function activate\(\{ focusPersonId = null, focusActivityId = null, explorationState = null \} = \{\}\)/);
   assert.match(spacetime, /ATLAS_ENTITY_ROUTE\?\.normalizeUuid/);
   assert.match(spacetime, /compileAtlas\(\)\.partitioned\.tracks\.some/);
   assert.match(spacetime, /pendingFocusPersonId = requestedActivityId \? null : requestedPersonId/);
