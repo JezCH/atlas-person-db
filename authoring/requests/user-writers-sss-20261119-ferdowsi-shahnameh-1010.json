@@ -1,0 +1,79 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-writers-20261026:ferdowsi:shahnameh-completion-1010:v1",
+  "person": {
+    "canonical_name_en": "Ferdowsi",
+    "display_name_ko": "페르도우시",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-19",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Ghaznavid Empire",
+    "display_name_ko": "가즈나 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "93bebce8-a3cb-4a40-9b50-638d2d079212"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Persian epic poet completing an early form of the Shahnameh",
+    "role_display_name_ko": "《샤나메》 완성 페르시아 서사시인",
+    "start_year": 1010,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1010,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Encyclopaedia Iranica reports the poet's own dated completion of the Shahnameh in 1010; possible subsequent revisions or presentation to Mahmud around 1018/1019 are a distinct, debated event. 1010 is a single representative work-completion year, not an assertion of final publication or the span of his career. Ghaznavid territorial context concerns the Tus/Khorasan region and is not a claim of direct Ghaznavid official appointment."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Encyclopaedia Iranica — Ferdowsi, Life",
+      "canonical_url": "https://www.iranicaonline.org/articles/ferdowsi-i/",
+      "citation_text": "A textual colophon in the Shahnameh dates the initial completion to 8 March 1010; the encyclopaedia separately discusses debate over later revision or transmission under Mahmud of Ghazna."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-19",
+      "document_title": "페르도우시",
+      "url": "https://namu.wiki/w/%ED%8E%98%EB%A5%B4%EB%8F%84%EC%9A%B0%EC%8B%9C"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Person-specific historical evidence and existing canonical polity ID reviewed. No fabricated coordinates; protected current alias, source, polity, NamuWiki, activity semantic and chronology preflight remains mandatory before any Production mutation."
+  },
+  "review_context": {
+    "source_issue": 2619,
+    "source_draft_pr": 2713,
+    "cohort": "WRITERS-SSS-20261026",
+    "reviewed_person_registration_priority": "SSS",
+    "identity_aliases": [
+      "Firdawsi",
+      "Ferdousi",
+      "Abu'l-Qasim Ferdowsi",
+      "Abu al-Qasim Ferdowsi",
+      "피르다우시"
+    ],
+    "preflight_required": true,
+    "auto_continue_after_preflight": true,
+    "existing_polity_identity_checked_at": "2026-11-19",
+    "source_identity_screen": "2026-11-19 current compact English-name screen negative; protected alias/semantic preflight is authoritative"
+  }
+}
