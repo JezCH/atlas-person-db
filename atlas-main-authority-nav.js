@@ -447,6 +447,14 @@
     if (!personId || window.ATLAS_PERSON_MAIN?.getSelectedPersonId?.() !== personId) return;
     showEntity("spacetime", "person", personId);
   });
+  window.addEventListener("atlas-spacetime-person-selected", (event) => {
+    if (currentDomain !== "spacetime") return;
+    const target = routeModel.entityHash("spacetime", "person", event?.detail?.personId);
+    if (parseRoute(target).entity_id) writeHash(target, { replace:true });
+  });
+  window.addEventListener("atlas-spacetime-person-cleared", () => {
+    if (currentDomain === "spacetime") writeHash(routeModel.domainHash("spacetime"), { replace:true });
+  });
   window.addEventListener("atlas-person-selected", (event) => {
     if (currentDomain !== "persons") return;
     const target = routeModel.entityHash("persons","person",event?.detail?.personId);
