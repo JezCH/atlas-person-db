@@ -62,6 +62,9 @@
 
 ## 개발 단위 표준 흐름
 
+**실제 작업지시·파일 소유권·우선순위·테스트·수용의 상세 실행계획:** [ATLAS_UI_DEVELOPMENT_EXECUTION_PLAN.md](ATLAS_UI_DEVELOPMENT_EXECUTION_PLAN.md). 본 v1.1의 승인된 UI-01~07을 작업 패키지(QA/REG/DETAIL/MEAN/ROUTE/COMP/SHELL/I18N/ADMIN/A11Y/PERF)로 분해한 종속 실행표다. 실행 중인 기존 PR을 먼저 종결하고, 완료/보류 항목을 재구현하지 않는다. 이 문서의 계획 저장은 새 기능의 개발·Production 수용을 뜻하지 않는다.
+
+
 ```text
 정확한 화면/현재 미완료 PR 확인(짧게)
 → 실제 기존 소스 수정

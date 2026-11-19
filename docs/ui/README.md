@@ -8,6 +8,9 @@
 
 ## Active plan (user-approved)
 
+**착수용 세부 개발계획:** [ATLAS_UI_DEVELOPMENT_EXECUTION_PLAN.md](ATLAS_UI_DEVELOPMENT_EXECUTION_PLAN.md) — 실행 순서/기존 PR/실제 소스·테스트/QA·반응형·완료 증거. 이 파일은 현행 v1.1과 연구계획을 대체하지 않고 그 실행 상세를 맡는다.
+
+
 현재 표 중심 단계에서 **역사 인물/시대/권역의 가독성 + 연속 탐험 경험**을 구현한다. 옛 디자인 연구 문서를 다시 실행하지 않고, 정확한 최신 main/기존 PR에 실제 코드를 통합한다.
 
 1. UI-01A/B: 인물 명부의 인명·연대·열·복수 Activity 가독성 (최우선)
