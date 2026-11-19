@@ -68,7 +68,9 @@ test("List, detail, sources and chronology share the display layer and preserve 
 });
 
 test("Evidence data semantics stay unmodified while UI hides unknown raw codes",()=>{
-  assert.match(evidenceSrc,/return EVIDENCE_LABELS\[kind\]\?\.\[raw\] \|\| "표시 확인 필요"/);
+  assert.match(evidenceSrc,/Object\\.hasOwn\\(EVIDENCE_LABELS,kind\\)/);
+  assert.match(evidenceSrc,/Object\\.hasOwn\\(labels,raw\\)/);
+  assert.doesNotMatch(evidenceSrc,/return EVIDENCE_LABELS\\[kind\\]\\?\\.\\[raw\\]/);
   assert.match(evidenceSrc,/period_basis:periodBasis\|\|null/);
   assert.doesNotMatch(evidenceSrc,/title="\$\{escapeHtml\(raw\)\}"/);
 });
