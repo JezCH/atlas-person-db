@@ -1859,7 +1859,8 @@
     mount.innerHTML = '<section class="card spacetime-loading"><strong>시공간 인물도 준비 중</strong><p>인물의 활동 궤적과 검토된 공간 배치 자료를 읽고 있습니다.</p></section>';
     try {
       const prerequisites = [ensureRuntimeModules(), ensureData()];
-      if (selectedPersonId || requestedPersonId) prerequisites.push(ensureInspectorModule());
+      if (selectedPersonId) prerequisites.push(ensureInspectorModule());
+      else if (requestedPersonId) prerequisites.push(ensureInspectorModule());
       const results = await Promise.all(prerequisites);
       const loaded = results[1];
       if (!loaded || document.getElementById("personSpacetimeMount") !== mount) return;
