@@ -1798,17 +1798,27 @@
       const year = projection.historicalYearForScreenY(event.clientY - rect.top);
       if (year != null) setMeanwhileYear(mount, year);
     });
-    mount.querySelector("#spacetimeMeanwhileClear")?.addEventListener("click", () => clearMeanwhile(mount));
-    mount.querySelectorAll("[data-spacetime-meanwhile-region]").forEach((button) => button.addEventListener("click", () => {
-      const region = button.dataset.spacetimeMeanwhileRegion || null;
-      if (region === meanwhileRegionFilter) return;
-      meanwhileRegionFilter = region;
-      renderInto(mount);
-      const nextButton = [...mount.querySelectorAll("[data-spacetime-meanwhile-region]")]
-        .find((item) => (item.dataset.spacetimeMeanwhileRegion || null) === region);
-      nextButton?.focus({ preventScroll: true });
-    }));
-    mount.querySelectorAll("[data-spacetime-meanwhile-person]").forEach((button) => button.addEventListener("click", () => selectPerson(mount, button.dataset.spacetimeMeanwhilePerson, { focus: true })));
+    // Region filtering only replaces the small Meanwhile strip. Rebuilding the
+    // 500% Spacetime world would reset scroll state and do unnecessary LOD work.
+    const bindMeanwhileButtons = () => {
+      mount.querySelector("#spacetimeMeanwhileClear")?.addEventListener("click", () => clearMeanwhile(mount));
+      mount.querySelectorAll("[data-spacetime-meanwhile-region]").forEach((button) => button.addEventListener("click", () => {
+        const region = button.dataset.spacetimeMeanwhileRegion || null;
+        if (region === meanwhileRegionFilter) return;
+        meanwhileRegionFilter = region;
+        const panel = mount.querySelector(".spacetime-meanwhile");
+        if (!panel) return;
+        panel.outerHTML = renderMeanwhile(meanwhileSummary);
+        bindMeanwhileButtons();
+        const nextButton = [...mount.querySelectorAll("[data-spacetime-meanwhile-region]")]
+          .find((item) => (item.dataset.spacetimeMeanwhileRegion || null) === region);
+        nextButton?.focus({ preventScroll: true });
+      }));
+      mount.querySelectorAll("[data-spacetime-meanwhile-person]").forEach((button) =>
+        button.addEventListener("click", () => selectPerson(mount, button.dataset.spacetimeMeanwhilePerson, { focus: true }))
+      );
+    };
+    bindMeanwhileButtons();
     mount.querySelector("#spacetimeCameraZoomOut")?.addEventListener("click", () => requestCameraZoom(mount, cameraZoom / CAMERA_ZOOM_STEP));
     mount.querySelector("#spacetimeCameraZoomIn")?.addEventListener("click", () => requestCameraZoom(mount, cameraZoom * CAMERA_ZOOM_STEP));
     mount.querySelector("#spacetimeCameraZoomReset")?.addEventListener("click", () => requestCameraZoom(mount, CAMERA_DEFAULT_ZOOM));
