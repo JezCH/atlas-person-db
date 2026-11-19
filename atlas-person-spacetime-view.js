@@ -508,7 +508,7 @@
     if (options.preserveActivity !== true || nextPersonId !== selectedPersonId) {
       // Keep the chosen historical moment while visiting other contemporary people.
       // The Activity identity itself is no longer selected, so mark the moment manual.
-      if (explorationOrigin && meanwhileSelectionSource === "activity") meanwhileSelectionSource = "manual";
+      if (explorationOrigin && meanwhileSelectionSource === "activity") meanwhileSelectionSource = "exploration";
       else clearActivityLinkedMeanwhile();
       selectedActivityId = null;
       selectedTimeOrdinal = null;
@@ -669,7 +669,8 @@
       return '<section class="spacetime-meanwhile is-empty" aria-label="동시대 탐색"><div><small>동시대 탐색</small><strong>동시대 보기</strong><span>활동·연도·빈 시공간을 선택해 동시대 인물을 봅니다.</span></div></section>';
     }
     const momentLabel = meanwhileMomentLabel();
-    const sourceLabel = meanwhileSelectionSource === "activity" ? "선택 Activity 중간 시점" : "직접 선택 시점";
+    const sourceLabel = meanwhileSelectionSource === "activity" ? "선택 Activity 중간 시점"
+      : meanwhileSelectionSource === "exploration" ? "활동에서 이어진 동시대 시점" : "직접 선택 시점";
     const regionCounts = [
       `<button type="button" class="spacetime-meanwhile-region-filter${regionCode ? "" : " is-active"}" data-spacetime-meanwhile-region="" aria-pressed="${regionCode ? "false" : "true"}">전체 <b>${summary.unique_person_count}</b>명</button>`,
       ...(summary.region_counts || []).filter((item) => item.unique_person_count > 0).map((item) =>
@@ -1919,6 +1920,12 @@
     const requestedPersonId = window.ATLAS_ENTITY_ROUTE?.normalizeUuid?.(focusPersonId) || null;
     const requestedActivityId = requestedPersonId ? (window.ATLAS_ENTITY_ROUTE?.normalizeUuid?.(focusActivityId) || null) : null;
     explorationOrigin = null;
+    if (requestedActivityId) {
+      // A direct Activity link must not inherit an unrelated earlier manual year.
+      meanwhileSelectedOrdinal = null;
+      meanwhileSelectionSource = null;
+      meanwhileRegionCode = "";
+    }
     const mount = document.getElementById("personSpacetimeMount");
     if (!mount) return;
     invalidateMeanwhileInteraction();
