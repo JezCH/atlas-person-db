@@ -91,6 +91,7 @@
   topbar.insertAdjacentElement("afterend", shell);
 
   let currentDomain = "persons";
+  let explorationReturnHash = null; // In-session bridge from Spacetime to a Person dossier.
   let lastAppliedHash = null;
   let spacetimeModelPromise = null;
   let dashboardAssetsPromise = null;
@@ -399,7 +400,10 @@
         window.ATLAS_PERSON_MAIN?.clearSelection?.({ updateRoute:false });
       }
     }
-    if (next === "spacetime") activateSpacetime({ focusPersonId:resolvedRoute.entity_type === "person" ? resolvedRoute.entity_id : null });
+    if (next === "spacetime") {
+      explorationReturnHash = null;
+      activateSpacetime({ focusPersonId:resolvedRoute.entity_type === "person" ? resolvedRoute.entity_id : null });
+    }
     if (next === "polities") {
       const polityId = resolvedRoute.entity_type === "polity" ? resolvedRoute.entity_id : null;
       activatePolity(polityId);
@@ -447,6 +451,21 @@
     if (!personId || window.ATLAS_PERSON_MAIN?.getSelectedPersonId?.() !== personId) return;
     showEntity("spacetime", "person", personId);
   });
+  window.addEventListener("atlas-spacetime-open-person-record", (event) => {
+    if (currentDomain !== "spacetime") return;
+    const personId = routeModel.normalizeUuid?.(event?.detail?.personId);
+    if (!personId) return;
+    const fromRoute = parseRoute(window.location.hash);
+    if (fromRoute.domain !== "spacetime") return;
+    explorationReturnHash = fromRoute.canonical_hash;
+    showEntity("persons", "person", personId);
+  });
+  window.addEventListener("atlas-person-return-to-exploration", () => {
+    if (currentDomain !== "persons" || !explorationReturnHash) return;
+    // The Person record was pushed on top of the immediately preceding Spacetime route.
+    // A real browser Back restores the previous URL and keeps Forward useful.
+    history.back();
+  });
   window.addEventListener("atlas-spacetime-person-selected", (event) => {
     if (currentDomain !== "spacetime") return;
     const target = routeModel.entityHash("spacetime", "person", event?.detail?.personId);
@@ -457,6 +476,7 @@
   });
   window.addEventListener("atlas-person-selected", (event) => {
     if (currentDomain !== "persons") return;
+    explorationReturnHash = null; // Manual list selection starts a distinct navigation chain.
     const target = routeModel.entityHash("persons","person",event?.detail?.personId);
     if (parseRoute(target).entity_id) writeHash(target);
   });
@@ -473,6 +493,7 @@
   window.ATLAS_MAIN_AUTHORITY_NAV = Object.freeze({
     getDomain: () => currentDomain,
     getRoute: () => parseRoute(window.location.hash),
+    getExplorationReturnHash: () => currentDomain === "persons" ? explorationReturnHash : null,
     showDomain: (domain) => showDomain(domain, { updateHash: true }),
     showEntity,
     parseRoute,
