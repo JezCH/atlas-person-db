@@ -611,15 +611,18 @@
     const regionCounts = (summary.region_counts || []).map((item) =>
       `<span><b>${escapeHtml(meanwhileRegionLabel(item.code))}</b> ${item.unique_person_count}명</span>`
     ).join("");
-    const visibleEntries = (summary.entries || []).slice(0, 24);
+    const entries = summary.entries || [];
+    const visibleEntries = entries.slice(0, 24);
+    const remainingEntries = entries.slice(visibleEntries.length);
+    const renderRows = (rows) => `<div class="spacetime-meanwhile-activities">${rows.map((entry) => `<button type="button" data-spacetime-meanwhile-person="${escapeHtml(entry.person_id)}"><strong>${escapeHtml(entry.display_name)}</strong><span>${escapeHtml(polityLabel(entry.activity))}</span><small>${escapeHtml(periodLabel(entry.activity))}</small></button>`).join("")}</div>`;
     const activityRows = visibleEntries.length
-      ? `<div class="spacetime-meanwhile-activities">${visibleEntries.map((entry) => `<button type="button" data-spacetime-meanwhile-person="${escapeHtml(entry.person_id)}"><strong>${escapeHtml(entry.display_name)}</strong><span>${escapeHtml(polityLabel(entry.activity))}</span><small>${escapeHtml(periodLabel(entry.activity))}</small></button>`).join("")}</div>`
+      ? renderRows(visibleEntries)
       : '<p class="spacetime-empty-inline">이 시점에 주 위치가 확정된 활성 활동이 없습니다.</p>';
     return `<section class="spacetime-meanwhile card" aria-label="${escapeHtml(momentLabel)} 동시대 탐색">
       <div class="spacetime-meanwhile-head"><div><small>동시대 탐색 · ${escapeHtml(sourceLabel)}</small><strong>${escapeHtml(momentLabel)}</strong><span>활동 중인 인물 ${summary.unique_person_count}명 · 활동 기록 ${summary.activity_count}건</span></div><button id="spacetimeMeanwhileClear" type="button">시점 해제</button></div>
       <div class="spacetime-meanwhile-regions" aria-label="대권역별 동시대 인물 수">${regionCounts}</div>
       ${activityRows}
-      ${summary.entries.length > visibleEntries.length ? `<p class="spacetime-more">외 활동 기록 ${summary.entries.length - visibleEntries.length}건</p>` : ""}
+      ${remainingEntries.length ? `<details><summary class="spacetime-more">활동 기록 ${remainingEntries.length}건 더 보기</summary>${renderRows(remainingEntries)}</details>` : ""}
     </section>`;
   }
 

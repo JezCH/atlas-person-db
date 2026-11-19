@@ -21,7 +21,7 @@ test('authority navigation lazy-loads the canonical spacetime model and current 
   assert.doesNotMatch(indexHtml, /atlas-person-spacetime-model\.js/);
   assert.match(navScript, /function ensureSpacetimeModel\(\)/);
   assert.match(navScript, /atlas-person-spacetime-model\.js\?v=20260903-south-asia-r3/);
-  assert.match(navScript, /atlas-person-spacetime-view\.js\?v=20261003-ui-v7-tools-v1/);
+  assert.match(navScript, /atlas-person-spacetime-view\.js\?v=20261119-meanwhile-all-activities-v1/);
   assert.match(navScript, /atlas-person-spacetime-view\.css\?v=20260923-runtime-ownership-v1/);
   assert.match(navScript, /atlas-person-spacetime-monumental-canvas\.css\?v=20261008-spacetime-l1-chronograph-v1/);
   assert.match(navScript, /atlas-person-spacetime-instrument-tools\.css\?v=20261008-spacetime-l2-instrument-finish-v1/);

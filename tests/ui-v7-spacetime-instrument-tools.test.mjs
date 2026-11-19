@@ -20,7 +20,7 @@ test("UI V7 loads after the V6 chronology canvas and cache-busts the modified lo
   assert.ok(nav.indexOf(base) < nav.indexOf(v6));
   assert.ok(nav.indexOf(v6) < nav.indexOf(v7));
   assert.ok(nav.indexOf(v7) < nav.indexOf(v8));
-  assert.match(nav, /atlas-person-spacetime-view\.js\?v=20261003-ui-v7-tools-v1/);
+  assert.match(nav, /atlas-person-spacetime-view\.js\?v=20261119-meanwhile-all-activities-v1/);
 });
 
 test("UI V7 marks the Spacetime mount as an instrument surface", () => {

@@ -108,3 +108,15 @@ test("active Meanwhile state remains fail-closed even though its module is optio
   assert.doesNotMatch(runtimeBody,/meanwhile:\s*window\.ATLAS_PERSON_SPACETIME_MEANWHILE/);
   assert.match(runtimeBody,/ATLAS_SPACETIME_RUNTIME_INCOMPLETE/);
 });
+
+
+test("Meanwhile renders an expandable route to every Activity beyond the first 24",()=>{
+  const start=view.indexOf("  function renderMeanwhile(summary)");
+  const end=view.indexOf("  async function fetchSpatialIndex",start);
+  const render=new Function("meanwhileSelectedOrdinal","meanwhileSelectionSource","meanwhileMomentLabel","escapeHtml","polityLabel","periodLabel",view.slice(start,end)+"\nreturn renderMeanwhile;")(1,"manual",()=>"1년",String,()=>"정치체",()=>"기간");
+  const entries=Array.from({length:26},(_,i)=>({person_id:"p"+i,display_name:"인물 "+i}));
+  const html=render({entries,region_counts:[],unique_person_count:26,activity_count:26});
+  assert.equal((html.match(/data-spacetime-meanwhile-person=/g)||[]).length,26);
+  assert.match(html,/<details><summary[^>]*>활동 기록 2건 더 보기<\/summary>.*data-spacetime-meanwhile-person="p25"/s);
+  assert.doesNotMatch(render({entries:entries.slice(0,24),region_counts:[],unique_person_count:24,activity_count:24}),/<details>/);
+});
