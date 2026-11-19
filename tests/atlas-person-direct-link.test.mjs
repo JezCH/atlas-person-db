@@ -10,11 +10,11 @@ const person=Object.freeze({
   id, display_name:'Test Person', canonical_name_en:'Test Person',
   person_type:'historical', historicity:'historical', names:[],
   descriptions:[], sources:[], activity_count:0,activities:[],activity_summaries:[],
-  facets:emptyFacets(),first_activity_year:1700,last_activity_year:1750
+  facets:emptyFacets(),first_activity_year:1700,last_activity_year:1750,representative_domain:'science'
 });
 
 function harness(initialHash) {
-  const state={listCalls:0,detailCalls:0,portraitCalls:0,events:new Map(),groupMarkup:[],details:''};
+  const state={listCalls:0,detailCalls:0,portraitCalls:0,events:new Map(),groupMarkup:[],details:'',domainsPassedToPortrait:[]};
   const node=(extra={})=>({
     addEventListener(){},setAttribute(){},insertAdjacentElement(){},
     append(){},remove(){},removeAttribute(){},querySelector(){return null;},
@@ -73,10 +73,13 @@ function harness(initialHash) {
     ATLAS_PERSON_EXTERNAL_REFERENCES:{},
     ATLAS_PERSON_PORTRAIT_VIEW:{createRenderer:()=>({portraitEditorHtml:()=>''})},
     ATLAS_PERSON_PORTRAIT_CONTROLLER:{createController:()=>({})},
-    ATLAS_PERSON_PORTRAIT_PRESENTATION:{presentationFor:()=>({
-      era_label:'History',domain_label:'Arts',era_code:'modern',domain_code:'',
-      background_url:null
-    })},
+    ATLAS_PERSON_PORTRAIT_PRESENTATION:{presentationFor:(_person,domain)=>{
+      state.domainsPassedToPortrait.push(domain);
+      return {
+        era_label:'History',domain_label:'Science',era_code:'modern',domain_code:domain,
+        background_url:domain ? './portrait-assets/backgrounds/'+domain+'.png' : null
+      };
+    }},
     ATLAS_PERSON_PROFILE_EDITOR:{createEditor:()=>({profileEditorHtml:()=>''})},
     ATLAS_PERSON_EVIDENCE_VIEW:{createRenderer:()=>({activityEvidenceHtml:()=>''})},
     addEventListener(name,cb){events.set(name,cb);},
@@ -107,6 +110,8 @@ test('direct Person link reads only the bounded Person detail and portrait, not 
   assert.equal(h.state.portraitCalls,1);
   assert.equal(h.state.listCalls,0);
   assert.match(h.state.details,/Test Person/);
+  assert.deepEqual(h.state.domainsPassedToPortrait,['science']);
+  assert.match(h.state.details,/portrait-assets\/backgrounds\/science\.png/);
   assert.ok(h.state.groupMarkup.some(text=>text.includes('data-person-list-load')));
   assert.equal(h.window.ATLAS_PERSON_MAIN.getSelectedPersonId(),id);
 });

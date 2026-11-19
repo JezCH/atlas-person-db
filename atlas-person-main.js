@@ -488,7 +488,9 @@
 
   function portraitFrameHtml(person, portraitResult) {
     const displayName = person?.display_name || person?.canonical_name_en || "인물";
-    const presentation = portraitPresentation.presentationFor(person, personDomainsById?.[person?.id]);
+    // Direct Person links intentionally skip the full register; the exact detail
+    // already carries its authoritative representative domain.
+    const presentation = portraitPresentation.presentationFor(person, personDomainsById?.[person?.id] || person?.representative_domain);
     const portrait = portraitResult?.error ? null : (portraitResult?.portrait || null);
     const href = portrait ? safeHttpUrl(portrait.asset_url) : null;
     const meta = portrait ? [
