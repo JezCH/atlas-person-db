@@ -67,6 +67,7 @@
   let selectedPersonId = null;
   let externalFocusPersonId = null; // direct Person link stays visible while prior search remains intact
   let explorationOrigin = null; // transient evidence-backed Activity exploration scene
+  let pendingActivityFocus = null; // focus the selected primary Activity, not the Person representative
   let selectedActivityId = null;
   let selectedTimeOrdinal = null;
   let pendingFocusPersonId = null;
@@ -560,7 +561,9 @@
     } else {
       clearActivityLinkedMeanwhile();
     }
-    pendingFocusPersonId = options.focus === true ? track.person_id : null;
+    pendingFocusPersonId = null;
+    pendingActivityFocus = options.focus === true && Number.isInteger(selectedTimeOrdinal)
+      ? { personId:track.person_id, activityId:activity.activity_id, ordinal:selectedTimeOrdinal } : null;
     externalFocusPersonId = track.person_id;
     renderInto(mount);
     window.dispatchEvent(new CustomEvent("atlas-spacetime-activity-selected", {
@@ -585,6 +588,19 @@
       meanwhileSource: meanwhileSelectionSource,
       regionCode: meanwhileRegionCode
     });
+    // The first Activity selection rendered before the origin was recorded.
+    // Insert the live return control without redrawing the expensive world canvas.
+    const toolbar = mount?.querySelector?.(".spacetime-toolbar");
+    if (toolbar && !toolbar.querySelector("#spacetimeReturnToActivity")) {
+      const button = document.createElement("button");
+      button.id = "spacetimeReturnToActivity";
+      button.type = "button";
+      button.className = "spacetime-return-activity";
+      button.textContent = "↶ 시작 활동 시점으로";
+      button.title = "처음 선택한 활동과 동시대 시점·카메라·검색으로 복귀";
+      toolbar.insertBefore(button, toolbar.firstChild);
+      button.addEventListener("click", () => void returnToActivityOrigin(mount));
+    }
   }
 
   async function beginActivityExploration(mount, personId, activityId, options = {}) {
@@ -1186,6 +1202,44 @@
     scroll.scrollTop = target.top;
     updateCameraPosition(scroll, projection);
     return true;
+  }
+
+  function focusActivityInViewport(scroll, projection, track, activityId, ordinal, contentWidth) {
+    if (!scroll || !Number.isInteger(ordinal) || !projection?.yForOrdinal) return false;
+    const y = Number(projection.yForOrdinal(ordinal));
+    if (!Number.isFinite(y)) return false;
+    const primary = (Array.isArray(track?.primary_segments) ? track.primary_segments : [])
+      .filter((segment) => segment?.activity_id === activityId
+        && Number.isFinite(segment.x_anchor)
+        && Number.isFinite(segment.start_ordinal)
+        && Number.isFinite(segment.end_ordinal));
+    const segment = primary.find((item) => item.start_ordinal <= ordinal && ordinal <= item.end_ordinal)
+      || primary.slice().sort((a,b) => {
+        const aMid = (a.start_ordinal + a.end_ordinal) / 2;
+        const bMid = (b.start_ordinal + b.end_ordinal) / 2;
+        return Math.abs(aMid - ordinal) - Math.abs(bMid - ordinal);
+      })[0] || null;
+    if (segment) {
+      const { exploration } = runtime();
+      const insets = cameraInsets(scroll);
+      const target = exploration.focusScrollTarget(
+        { x:segment.x_anchor * contentWidth, y },
+        { width:scroll.clientWidth, height:scroll.clientHeight },
+        { scrollWidth:scroll.scrollWidth, scrollHeight:scroll.scrollHeight },
+        { leftInset:insets.left, topInset:insets.top }
+      );
+      if (!target) return false;
+      scroll.scrollLeft = target.left;
+      scroll.scrollTop = target.top;
+    } else {
+      // Activity has a documented moment but no reviewed primary position:
+      // move vertically to its year while preserving the current world region.
+      const maxTop = Math.max(0, scroll.scrollHeight - scroll.clientHeight);
+      scroll.scrollTop = Math.max(0, Math.min(maxTop,
+        cameraHeaderHeight(scroll) + y - cameraViewportCenterY(scroll)));
+    }
+    updateCameraPosition(scroll, projection);
+    return Boolean(segment);
   }
 
   function updateMinimapViewport(mount, scroll, contentWidth, timelineHeight) {
@@ -1831,6 +1885,12 @@
 
     bindCameraViewport(mount, projection, navigationItems);
     const scroll = mount.querySelector(".spacetime-scroll");
+    if (pendingActivityFocus) {
+      const requested = pendingActivityFocus;
+      pendingActivityFocus = null;
+      const focusedTrack = compiled.partitioned.tracks.find((track) => track.person_id === requested.personId) || null;
+      focusActivityInViewport(scroll, projection, focusedTrack, requested.activityId, requested.ordinal, contentWidth);
+    }
     bindVirtualizedLayers(mount, scroll, {
       projectedTracks,
       visibleTracks,
@@ -2013,7 +2073,7 @@
           selectedActivityId = null;
           selectedTimeOrdinal = null;
           externalFocusPersonId = requestedPersonId;
-          pendingFocusPersonId = requestedPersonId;
+          pendingFocusPersonId = requestedActivityId ? null : requestedPersonId;
         } else {
           requestedPlacementMissing = true;
           externalFocusPersonId = null;
@@ -2030,6 +2090,12 @@
           mount.insertAdjacentHTML("afterbegin", '<p class="spacetime-cross-link-status" role="status">해당 활동을 시공간표에 연결할 검토된 기록이 없습니다. 인물의 다른 활동을 선택해 주세요.</p>');
         } else if (opened && !Number.isInteger(selectedTimeOrdinal) && mount.isConnected) {
           mount.insertAdjacentHTML("afterbegin", '<p class="spacetime-cross-link-status" role="status">이 활동은 기준 연대가 미확정되어 동시대 시점을 임의로 선택하지 않았습니다.</p>');
+        } else if (opened && mount.isConnected) {
+          const reviewedActivity = compileAtlas().partitioned.tracks
+            .find((track) => track.person_id === requestedPersonId)?.primary_segments
+            ?.some((segment) => segment.activity_id === requestedActivityId && Number.isFinite(segment.x_anchor));
+          if (!reviewedActivity) mount.insertAdjacentHTML("afterbegin",
+            '<p class="spacetime-cross-link-status" role="status">선택한 활동은 검토된 주 위치가 없어 연도만 표시하고 세계 권역 위치는 추정하지 않았습니다.</p>');
         }
       }
       if (requestedPlacementMissing) {
