@@ -16,7 +16,7 @@ test("UI V6 loads a dedicated chronology canvas after the base Spacetime stylesh
   const v7 = 'atlas-person-spacetime-instrument-tools.css?v=20261008-spacetime-l2-instrument-finish-v1';
   assert.ok(nav.indexOf(base) < nav.indexOf(v6));
   assert.ok(nav.indexOf(v6) < nav.indexOf(v7));
-  assert.match(nav, /atlas-person-spacetime-view\.js\?v=20261003-ui-v7-tools-v1/);
+  assert.match(nav, /atlas-person-spacetime-view\.js\?v=20261119-meanwhile-all-activities-v1/);
 });
 
 test("UI V6 marks the canonical Spacetime frame without changing geometry constants", () => {
