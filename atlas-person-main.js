@@ -535,6 +535,7 @@
           <p class="person-detail-domain">${escapeHtml(domainLabel)}</p>
           <p class="person-detail-status"><span class="person-historicity">${escapeHtml(rawHistoricity)}</span><span class="person-type-badge">${escapeHtml(metaLabel("person_type", person.person_type, "인물 유형 확인 필요"))}</span>${timelineLabel ? `<span class="person-timeline-disposition">${escapeHtml(timelineLabel)}</span>` : ""}</p>
           <button type="button" class="person-chronicle-spacetime-link" data-person-open-spacetime="${escapeHtml(person.id || "")}" aria-label="${escapeHtml(displayName)}의 시공간 인물도에서 위치 찾기">⌗ 시공간 인물도에서 찾기</button>
+          ${window.ATLAS_MAIN_AUTHORITY_NAV?.getExplorationReturnHash?.() ? '<button type="button" class="person-chronicle-spacetime-link person-chronicle-return-link" data-person-return-spacetime>↶ 이전 시공간 탐험으로 돌아가기</button>' : ""}
         </div>
       </div>
       <div class="person-chronicle-body">
@@ -1002,6 +1003,10 @@
       if (input) previewPortraitFile(input);
     });
     detail?.addEventListener("click", (event) => {
+      if (event.target.closest?.("[data-person-return-spacetime]")) {
+        window.dispatchEvent(new CustomEvent("atlas-person-return-to-exploration"));
+        return;
+      }
       const activityButton = event.target.closest?.("[data-person-open-activity]");
       if (activityButton) {
         const activityId = String(activityButton.dataset.personOpenActivity || "").trim().toLowerCase();
