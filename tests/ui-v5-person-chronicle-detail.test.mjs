@@ -132,11 +132,11 @@ test("DETAIL-M4 preserves the Chronicle disclosure while making evidence metadat
     "person-evidence-facts strong",
     "person-evidence-boundary-meta b"
   ]) assert.ok(evidence.includes(selector),selector);
-  assert.match(evidence,/font-size:\s*9px/);
-  assert.match(evidence,/font-size:\s*10px/);
+  assert.match(evidence,/font-size:\s*10\\.5px/);
+  assert.match(evidence,/font-size:\s*12px/);
   assert.match(evidence,/color:\s*var\(--atlas-text-secondary\)/);
   assert.match(evidence,/color:\s*var\(--atlas-text\)/);
-  assert.match(css,/\.person-chronicle-section \.person-source-item small\s*\{\s*color: var\(--atlas-text-secondary\);\s*font-size: 9px;/);
+  assert.match(css,/\.person-chronicle-section \.person-source-item small\s*\{\s*color: var\(--atlas-text-secondary\);\s*font-size: 10.5px;/);
   assert.match(evidence,/\.person-chronicle-activity \.person-evidence-inspector \{/);
   assert.match(evidence,/\.person-chronicle-activity \.person-evidence-boundaries/);
 });
