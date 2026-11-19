@@ -1,0 +1,80 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-writers-20261026:lu-xun:diary-madman-1918:v1",
+  "person": {
+    "canonical_name_en": "Lu Xun",
+    "display_name_ko": "루쉰",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-19",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Republic of China",
+    "display_name_ko": "중화민국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "71bb422d-a182-5615-9eec-d00d92994155"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Writer publishing A Madman's Diary in New Youth",
+    "role_display_name_ko": "《광인일기》 발표 작가",
+    "start_year": 1918,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1918,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "May 1918 publication is one historically attributable event in Republican-era China, not a claim that his career ended in 1918. Lu Xun was a pen name of Zhou Shuren, not another separate Person."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Ohio State University MCLC — Lu Xun's Diary of a Madman 100 Years On",
+      "canonical_url": "https://u.osu.edu/mclc/2018/09/28/lu-xuns-diary-of-a-madman-100-years-on/",
+      "citation_text": "OSU Modern Chinese Literature and Culture Resource Center records that Lu Xun's A Madman's Diary appeared in New Youth in May 1918."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-19",
+      "document_title": "루쉰",
+      "url": "https://namu.wiki/w/%EB%A3%A8%EC%89%B0"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Historical association and year-level representative event only. Exact existing Person aliases, existing Polity identity, sources, NamuWiki, Role, period, and semantic Activity must pass protected Production preflight; no speculative Place or coordinate, duplicate or DB write in offline review."
+  },
+  "review_context": {
+    "source_issue": 2619,
+    "cohort": "WRITERS-SSS-20261026",
+    "preflight_required": true,
+    "auto_continue_after_preflight": true,
+    "existing_polity_identity_checked_at": "2026-11-19",
+    "identity_aliases": [
+      "Lu Hsun",
+      "Zhou Shuren",
+      "魯迅",
+      "鲁迅",
+      "周树人",
+      "노신"
+    ],
+    "reviewed_person_registration_priority": "SSS",
+    "source_draft_pr": 0,
+    "source_identity_screen": "2026-11-19: current compact Production Person identity shows no exact English reviewed name; authoritative alias/semantic preflight still required"
+  }
+}

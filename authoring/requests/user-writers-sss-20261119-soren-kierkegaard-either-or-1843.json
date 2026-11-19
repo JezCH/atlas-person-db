@@ -1,0 +1,77 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-writers-20261026:soren-kierkegaard:either-or-1843:v1",
+  "person": {
+    "canonical_name_en": "Søren Kierkegaard",
+    "display_name_ko": "쇠렌 키르케고르",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-19",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Denmark",
+    "display_name_ko": "덴마크",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "c117fb82-4943-40d6-bc2d-740f0665665a"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Philosopher publishing Either/Or under the Victor Eremita pseudonymous editorship",
+    "role_display_name_ko": "《이것이냐 저것이냐》 발표 철학자",
+    "start_year": 1843,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1843,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "1843 is the documented publication year of Either/Or, not a complete intellectual tenure. Its pseudonymous editor is part of the literary presentation and is not a separate historical author identity."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Stanford Encyclopedia of Philosophy — Søren Kierkegaard",
+      "canonical_url": "https://plato.stanford.edu/archives/spr2023/entries/kierkegaard/",
+      "citation_text": "Stanford Encyclopedia of Philosophy chronology records the 1843 publication of Either/Or under the pseudonymous editor Victor Eremita."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-19",
+      "document_title": "쇠렌 키르케고르",
+      "url": "https://namu.wiki/w/%EC%87%A0%EB%A0%8C%20%ED%82%A4%EB%A5%B4%EC%BC%80%EA%B3%A0%EB%A5%B4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Historical association and year-level representative event only. Exact existing Person aliases, existing Polity identity, sources, NamuWiki, Role, period, and semantic Activity must pass protected Production preflight; no speculative Place or coordinate, duplicate or DB write in offline review."
+  },
+  "review_context": {
+    "source_issue": 2619,
+    "cohort": "WRITERS-SSS-20261026",
+    "preflight_required": true,
+    "auto_continue_after_preflight": true,
+    "existing_polity_identity_checked_at": "2026-11-19",
+    "identity_aliases": [
+      "Soren Kierkegaard",
+      "Søren Aabye Kierkegaard",
+      "Soren Aabye Kierkegaard"
+    ],
+    "reviewed_person_registration_priority": "SSS",
+    "source_draft_pr": 0,
+    "source_identity_screen": "2026-11-19: current compact Production Person identity shows no exact English reviewed name; authoritative alias/semantic preflight still required"
+  }
+}
