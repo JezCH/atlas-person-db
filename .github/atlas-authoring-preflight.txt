@@ -1,4 +1,2 @@
-preflight authoring/requests/user-writers-sss-20261119-ts-eliot-waste-land-1922.json
-preflight authoring/requests/user-writers-sss-20261119-lu-xun-diary-madman-1918.json
-preflight authoring/requests/user-writers-sss-20261119-soren-kierkegaard-either-or-1843.json
-preflight authoring/requests/user-writers-sss-20261119-bertolt-brecht-threepenny-opera-1928.json
+preflight authoring/requests/user-writers60-20261026-adam-mickiewicz-ballads-romances-1822.json
+preflight authoring/requests/user-writers60-20261026-aleksandr-solzhenitsyn-one-day-1962.json

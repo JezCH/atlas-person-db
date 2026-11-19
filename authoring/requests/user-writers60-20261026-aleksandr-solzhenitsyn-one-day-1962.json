@@ -1,0 +1,77 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-writers60-20261026:aleksandr-solzhenitsyn-one-day-1962:v1",
+  "person": {
+    "canonical_name_en": "Aleksandr Solzhenitsyn",
+    "display_name_ko": "알렉산드르 솔제니친",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-19",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Soviet Union",
+    "display_name_ko": "소련",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "c7ddf754-0faa-576f-af97-9d322cf64f01"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Author of One Day in the Life of Ivan Denisovich published in Soviet literary journal Novy Mir",
+    "role_display_name_ko": "《이반 데니소비치의 하루》 출간·소설가",
+    "start_year": 1962,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1962,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The novella was published in the November 1962 issue of the Soviet journal Novy Mir. Its fictional prison-camp setting is not the author's Moscow residence and must not be represented as a verified Place. The 1962 point records publication rather than an invented literary tenure or political office."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Aleksandr Solzhenitsyn Center — One Day in the Life of Ivan Denisovich",
+      "canonical_url": "https://www.solzhenitsyncenter.org/one-day-in-the-life-of-ivan-denisovich",
+      "citation_text": "Solzhenitsyn Center verifies the publication of One Day in the Life of Ivan Denisovich in the November 1962 issue of Novy Mir."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-19",
+      "document_title": "알렉산드르 솔제니친",
+      "url": "https://namu.wiki/w/%EC%95%8C%EB%A0%89%EC%82%B0%EB%93%9C%EB%A5%B4%20%EC%86%94%EC%A0%9C%EB%8B%88%EC%B9%9C"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Publication or performance city is historical affiliation context only. No reviewed canonical Place UUID, coordinate or map geometry is established; no Place writes."
+  },
+  "review_context": {
+    "source_issue": 2619,
+    "selection": "user_selected_sss_20261026",
+    "preflight_required": true,
+    "auto_continue_after_preflight": true,
+    "identity_aliases": [
+      "Alexander Solzhenitsyn",
+      "Aleksandr Isayevich Solzhenitsyn",
+      "Александр Солженицын",
+      "솔제니친"
+    ],
+    "existing_polity_identity_checked_at": "2026-11-19",
+    "namuwiki_review_evidence": "Verified indexed exact Korean NamuWiki article title in namu.moe mirror on 2026-11-19. Protected Production Person and alias resolution remains authoritative.",
+    "source_draft_pr": 2712
+  }
+}
