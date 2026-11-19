@@ -53,7 +53,7 @@
 .spacetime-inspector-person>span{font-size:11px;color:#637188}
 .spacetime-inspector-person>p{margin:2px 0 0;font-size:10px;color:#4f617a;font-variant-numeric:tabular-nums}
 .spacetime-inspector-person>output{margin-top:3px;padding:4px 6px;border:1px solid #d9c99f;border-radius:6px;background:#fffaf0;color:#725a2d;font-size:9px;font-weight:750}
-.spacetime-inspector-actions{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px}
+.spacetime-inspector-actions{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:3px}
 .spacetime-inspector-actions button{height:28px;padding:0 4px;border:1px solid #cbd7e9;border-radius:7px;background:#fff;color:#42536b;font-size:9px;font-weight:750;white-space:nowrap;cursor:pointer}
 .spacetime-inspector-actions button:hover,.spacetime-inspector-actions button:focus-visible{border-color:#7790b9;background:#f6f9ff;outline:none}
 .spacetime-inspector-actions button:disabled{cursor:not-allowed;opacity:.45}
