@@ -1,0 +1,348 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "royal_office_source_claim_repair_20261119_v1",
+  "as_of": "2026-11-19",
+  "status": "REVIEWED_ORIGINAL_HUMAN_AUTHORING_CLAIMS_DRAFT_PENDING_FRESH_PROTECTED_CORRECTION_PREFLIGHT",
+  "release_order": 2800,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "Correct original #2704 Source URL-first misbinding against the exact previously approved #2589 Human Authoring claim. Preserve prior UK kingship/English Source and every Person/Activity identity. DO NOT MERGE without a fresh protected Correction target snapshot and exact dry-run review; a main push to corrections/plans triggers the protected apply workflow.",
+  "execution_rules": {
+    "production_executable": false,
+    "production_mutation_authorized": false,
+    "exact_live_before_snapshot_required": true,
+    "preserve_activity_identity": true,
+    "preserve_person_polity_relation_role_period_and_interval": true,
+    "preserve_unrelated_source_links": true,
+    "keep_original_global_sources": true,
+    "swap_exact_one_source_link_per_activity": true,
+    "no_source_delete": true,
+    "no_source_global_citation_rewrite": true,
+    "atomic_all_or_nothing": true,
+    "run_dry_run_before_apply": true
+  },
+  "evidence": {
+    "original_approved_apply_run": 44416621208,
+    "original_approved_artifact_id": 14480301012,
+    "original_approved_artifact_zip_sha256": "sha256:bd556234e3affdc0a2174aa53c25845db023fabcd80b3a18b57341cfef459d7e",
+    "runtime_publication_run_with_targeted_failure": 44416842197,
+    "runtime_failure": "PRODUCTION_READBACK_ACTIVITY_SOURCE_PROVENANCE_MISMATCH",
+    "prevention_pr": 2705,
+    "correction_engine_pr": 2706,
+    "approval_scope": "Four original reviewed royal-office claims, no expanded Person, Polity, Source global rewrite or deletion",
+    "live_baseline_verification": "PENDING — original Authoring Apply artifacts identify Activity IDs and Source links but are not current protected Correction V2 snapshot. Correction must reject drift and keep this PR unmerged until explicit verification."
+  },
+  "operations": [
+    {
+      "case_id": "charles-ireland-1625-1649",
+      "type": "rewrite_activity",
+      "activity_id": "b36731cd-6b6f-4dc3-af9b-d7b8cb9cd541",
+      "baseline_before": {
+        "person_id": "dd97085b-436c-4bed-bdfc-d0076feacc33",
+        "polity_id": "904f86dd-c786-4ac7-b248-901526b658ae",
+        "role_id": "59a2b0e0-c302-4850-82bf-1ce2e77fc636",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1625,
+        "activity_end": 1649,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "b36731cd-6b6f-4dc3-af9b-d7b8cb9cd541",
+        "person_id": "dd97085b-436c-4bed-bdfc-d0076feacc33",
+        "polity_id": "904f86dd-c786-4ac7-b248-901526b658ae",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "59a2b0e0-c302-4850-82bf-1ce2e77fc636",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1625,
+        "activity_end": 1649,
+        "activity_start_detail": {
+          "year": 1625,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end_detail": {
+          "year": 1649,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "replace_source_links": [
+          {
+            "source_id": "ac0053a8-61b5-46bc-8794-b44295a60ab1",
+            "source_locator_key": "https://www.royal.uk/charles-i",
+            "replacement_source_id": "0080404c-e9e4-5326-8062-d55d77e2628f",
+            "replacement_source_locator_key": "https://www.royal.uk/charles-i"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "charles-scotland-1625-1649",
+      "type": "rewrite_activity",
+      "activity_id": "6f2f6fbc-a6c2-49f7-bc70-f0ba9c8ed783",
+      "baseline_before": {
+        "person_id": "dd97085b-436c-4bed-bdfc-d0076feacc33",
+        "polity_id": "3fe1f601-3d5a-5589-88b3-b869239e7aae",
+        "role_id": "d4a0cb05-344d-40d7-b3b0-841bc5ec1a80",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1625,
+        "activity_end": 1649,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "6f2f6fbc-a6c2-49f7-bc70-f0ba9c8ed783",
+        "person_id": "dd97085b-436c-4bed-bdfc-d0076feacc33",
+        "polity_id": "3fe1f601-3d5a-5589-88b3-b869239e7aae",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "d4a0cb05-344d-40d7-b3b0-841bc5ec1a80",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1625,
+        "activity_end": 1649,
+        "activity_start_detail": {
+          "year": 1625,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end_detail": {
+          "year": 1649,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "replace_source_links": [
+          {
+            "source_id": "ac0053a8-61b5-46bc-8794-b44295a60ab1",
+            "source_locator_key": "https://www.royal.uk/charles-i",
+            "replacement_source_id": "13777d61-cb2f-55ab-92ca-73bd448ccc0b",
+            "replacement_source_locator_key": "https://www.royal.uk/charles-i"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "edward-viii-bahamas-1940-1945",
+      "type": "rewrite_activity",
+      "activity_id": "7a9a8829-fa1d-42fb-9952-dcce2f6ab36e",
+      "baseline_before": {
+        "person_id": "31acd151-8baa-4d2a-9a38-7683f222cf13",
+        "polity_id": "ba453e0c-a8d3-4cde-aead-0efd52291697",
+        "role_id": "163ca433-b568-4dff-8fcb-b1ba986d03fe",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1940,
+        "activity_end": 1945,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "7a9a8829-fa1d-42fb-9952-dcce2f6ab36e",
+        "person_id": "31acd151-8baa-4d2a-9a38-7683f222cf13",
+        "polity_id": "ba453e0c-a8d3-4cde-aead-0efd52291697",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "163ca433-b568-4dff-8fcb-b1ba986d03fe",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1940,
+        "activity_end": 1945,
+        "activity_start_detail": {
+          "year": 1940,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end_detail": {
+          "year": 1945,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "replace_source_links": [
+          {
+            "source_id": "e46d1411-b8a0-443c-ab30-cb0d2f960d4a",
+            "source_locator_key": "https://www.royal.uk/edward-viii",
+            "replacement_source_id": "7c3e12b7-51de-5c00-960d-eb447d8afe3d",
+            "replacement_source_locator_key": "https://www.royal.uk/edward-viii"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "richard-iii-lord-protector-1483",
+      "type": "rewrite_activity",
+      "activity_id": "60c169c9-e086-4d33-8fa9-266a7ead3b79",
+      "baseline_before": {
+        "person_id": "811b8a07-494f-4bfa-9704-171c696b622e",
+        "polity_id": "d3131d3e-ff4b-5d4d-b5d2-ddfd5e9bda1d",
+        "role_id": "6dd504c9-fb3a-42de-be04-0d337b8003b7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1483,
+        "activity_end": 1483,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "60c169c9-e086-4d33-8fa9-266a7ead3b79",
+        "person_id": "811b8a07-494f-4bfa-9704-171c696b622e",
+        "polity_id": "d3131d3e-ff4b-5d4d-b5d2-ddfd5e9bda1d",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "6dd504c9-fb3a-42de-be04-0d337b8003b7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1483,
+        "activity_end": 1483,
+        "activity_start_detail": {
+          "year": 1483,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end_detail": {
+          "year": 1483,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "replace_source_links": [
+          {
+            "source_id": "be006d2e-7a4c-4460-9f88-9909ae5cf38c",
+            "source_locator_key": "https://www.royal.uk/richard-iii",
+            "replacement_source_id": "dca2f9e7-72a6-5deb-886d-450852f176eb",
+            "replacement_source_locator_key": "https://www.royal.uk/richard-iii"
+          }
+        ]
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_source",
+      "decision_id": "reviewed-original-activity-specific-claim:charles-ireland-1625-1649",
+      "exact_before": {
+        "source_absent_id": "0080404c-e9e4-5326-8062-d55d77e2628f"
+      },
+      "exact_after": {
+        "source": {
+          "id": "0080404c-e9e4-5326-8062-d55d77e2628f",
+          "source_key": "source-claim:protected-royal-office-correction:20261119:charles-ireland-1625-1649",
+          "source_type": "web_bibliographic_reference",
+          "title": "Historical reference — Charles I of England",
+          "canonical_url": "https://www.royal.uk/charles-i",
+          "citation_text": "Held crown of Ireland in personal union 1625–1649; distinct crown rather than a modern UK polity; do not assert effective governance throughout rebellions.",
+          "sha256": null,
+          "bytes": null
+        }
+      }
+    },
+    {
+      "type": "assert_source",
+      "decision_id": "reviewed-original-activity-specific-claim:charles-scotland-1625-1649",
+      "exact_before": {
+        "source_absent_id": "13777d61-cb2f-55ab-92ca-73bd448ccc0b"
+      },
+      "exact_after": {
+        "source": {
+          "id": "13777d61-cb2f-55ab-92ca-73bd448ccc0b",
+          "source_key": "source-claim:protected-royal-office-correction:20261119:charles-scotland-1625-1649",
+          "source_type": "web_bibliographic_reference",
+          "title": "Historical reference — Charles I of England",
+          "canonical_url": "https://www.royal.uk/charles-i",
+          "citation_text": "Held distinct crown of Scotland in personal union 1625–1649; actual authority interrupted during civil wars, do not assert separate Great Britain state existed.",
+          "sha256": null,
+          "bytes": null
+        }
+      }
+    },
+    {
+      "type": "assert_source",
+      "decision_id": "reviewed-original-activity-specific-claim:edward-viii-bahamas-1940-1945",
+      "exact_before": {
+        "source_absent_id": "7c3e12b7-51de-5c00-960d-eb447d8afe3d"
+      },
+      "exact_after": {
+        "source": {
+          "id": "7c3e12b7-51de-5c00-960d-eb447d8afe3d",
+          "source_key": "source-claim:protected-royal-office-correction:20261119:edward-viii-bahamas-1940-1945",
+          "source_type": "web_bibliographic_reference",
+          "title": "The Royal Family — Edward VIII",
+          "canonical_url": "https://www.royal.uk/edward-viii",
+          "citation_text": "After his 1936 abdication Edward VIII (Duke of Windsor) was appointed Governor of the Bahamas in 1940 and held that colonial office until 1945, according to the Royal Family biography. This is a distinct GOVERNS colonial appointment, not a continuation of his British throne. Bahamas Crown Colony precise existing Polity UUID/title must pass canonical preflight; do not invent a new independent sovereign Bahamas in 1940.",
+          "sha256": null,
+          "bytes": null
+        }
+      }
+    },
+    {
+      "type": "assert_source",
+      "decision_id": "reviewed-original-activity-specific-claim:richard-iii-lord-protector-1483",
+      "exact_before": {
+        "source_absent_id": "dca2f9e7-72a6-5deb-886d-450852f176eb"
+      },
+      "exact_after": {
+        "source": {
+          "id": "dca2f9e7-72a6-5deb-886d-450852f176eb",
+          "source_key": "source-claim:protected-royal-office-correction:20261119:richard-iii-lord-protector-1483",
+          "source_type": "web_bibliographic_reference",
+          "title": "The Royal Family — Richard III",
+          "canonical_url": "https://www.royal.uk/richard-iii",
+          "citation_text": "Richard (Duke of Gloucester) served as Lord Protector for his young nephew Edward V in 1483 before becoming King Richard III in June. This earlier protectorship was a distinct government office, not the same reign as his 1483–1485 kingship. Exact month/day not asserted until independent official evidence confirms.",
+          "sha256": null,
+          "bytes": null
+        }
+      }
+    }
+  ],
+  "expected_canonical_delta": {
+    "persons": 0,
+    "polities": 0,
+    "activities": 0,
+    "activity_sources": 0,
+    "sources": 4
+  },
+  "acceptance_requirements": [
+    "Confirm exact current protected Correction snapshot for all four Activity IDs, including source_locator_key and legacy_source_key; reviewed original request differs from globally reused Source citation.",
+    "Confirm original old Source IDs remain linked to earlier UK/English historic activities and none are rewritten or deleted.",
+    "Preview exact 4 new Source UUIDs and only 4 targeted existing Activity–Source link swaps using protected dry_run; all fields and Person/Activity count unchanged.",
+    "Explicitly review dry-run and production deployment SHA before a main push / apply; never publish Draft or unreviewed plan to main.",
+    "After protected apply, compile Runtime and verify all 4 exact Activity citation/UUID readbacks and original kingship Source unchanged."
+  ]
+}
