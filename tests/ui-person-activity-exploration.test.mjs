@@ -118,3 +118,78 @@ test("Activity links are keyboard-visible, cache-busted, and do not add a new ba
   assert.doesNotMatch(person,/\/api\/atlas-mutate|\/api\/atlas-authoring/);
   assert.doesNotMatch(view,/\bgeometryMutation\b|\/api\/atlas-mutate/);
 });
+
+
+test("Activity deep-link focus uses the selected Activity primary position, never representative Person placement", () => {
+  const start=view.indexOf("  function focusActivityInViewport(");
+  const end=view.indexOf("  function updateMinimapViewport(",start);
+  assert.ok(start>0&&end>start,"Reviewed Activity focus helper required");
+  let projected=null;
+  let updated=0;
+  const focus=new Function("runtime","cameraInsets","updateCameraPosition","cameraHeaderHeight","cameraViewportCenterY",
+    view.slice(start,end)+"\nreturn focusActivityInViewport;"
+  )(
+    ()=>({exploration:{focusScrollTarget(item){projected=item;return {left:item.x-100,top:item.y-150};}}}),
+    ()=>({left:120,top:36}),
+    ()=>{updated+=1;},()=>36,()=>150
+  );
+  const scroll={clientWidth:400,clientHeight:300,scrollWidth:2000,scrollHeight:5000,scrollLeft:50,scrollTop:80};
+  const projection={yForOrdinal:(year)=>year*2};
+  const track={primary_segments:[
+    {activity_id:"representative",x_anchor:0.1,start_ordinal:1400,end_ordinal:1800},
+    {activity_id:"requested",x_anchor:0.8,start_ordinal:1580,end_ordinal:1600}
+  ]};
+  assert.equal(focus(scroll,projection,track,"requested",1590,1000),true);
+  assert.deepEqual(projected,{x:800,y:3180});
+  assert.equal(scroll.scrollLeft,700);
+  assert.equal(scroll.scrollTop,3030);
+  assert.equal(updated,1);
+  projected=null;
+  assert.equal(focus(scroll,projection,track,"unplaced",1592,1000),false);
+  assert.equal(projected,null,"No fabricated horizontal location for an unplaced Activity");
+  assert.equal(scroll.scrollLeft,700,"Keep world region without a reviewed primary Activity placement");
+  assert.equal(updated,2);
+});
+
+test("first Activity entry exposes a wired return button immediately, without canvas rerender", () => {
+  const start=view.indexOf("  function rememberActivityOrigin(");
+  const end=view.indexOf("  async function beginActivityExploration(",start);
+  assert.ok(start>0&&end>start);
+  let click=null,added=null;
+  const document={createElement:()=>({
+    addEventListener(type,handler){assert.equal(type,"click");click=handler;}
+  })};
+  const factory=new Function("document","returnToActivityOrigin",`
+    let query="";
+    let cameraZoom=5;
+    let cameraScrollLeft=10,cameraScrollTop=20,cameraCenterOrdinal=1592;
+    let meanwhileSelectedOrdinal=1592,meanwhileSelectionSource="activity",meanwhileRegionCode="";
+    let currentTimelineProjection={};
+    let explorationOrigin=null;
+    function updateCameraPosition(){}
+    function rememberHorizontalCameraGeometry(){}
+    function horizontalCameraRatioFromStoredGeometry(){return 0.5;}
+    ${view.slice(start,end)}
+    return {rememberActivityOrigin,getOrigin:()=>explorationOrigin};
+  `);
+  let returned=0;
+  const fn=factory(document,()=>{returned+=1;});
+  const toolbar={
+    firstChild:null,
+    querySelector(){return null;},
+    insertBefore(button){added=button;}
+  };
+  const mount={querySelector(selector){
+    if(selector===".spacetime-scroll")return {scrollLeft:10,scrollTop:20};
+    if(selector===".spacetime-toolbar")return toolbar;
+    return null;
+  }};
+  fn.rememberActivityOrigin(mount,"person-1","activity-2");
+  assert.equal(fn.getOrigin().activityId,"activity-2");
+  assert.equal(added?.id,"spacetimeReturnToActivity");
+  assert.equal(added?.type,"button");
+  assert.match(added?.textContent,/시작 활동 시점으로/);
+  assert.equal(typeof click,"function");
+  click();
+  assert.equal(returned,1);
+});
