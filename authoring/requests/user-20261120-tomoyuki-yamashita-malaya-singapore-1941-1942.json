@@ -1,0 +1,78 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261120:tomoyuki:yamashita:malaya:singapore:1941:1942:v1",
+  "person": {
+    "canonical_name_en": "Tomoyuki Yamashita",
+    "display_name_ko": "야마시타 도모유키",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-20",
+    "life_status_basis": "documented_death",
+    "representative_domain": "military",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Empire of Japan",
+    "display_name_ko": "대일본제국",
+    "existing_id": "7f146e58-c3e9-5af7-8cb8-346f03cd7cf6",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "military_activity",
+    "role": "Commander of the 25th Army",
+    "role_display_name_ko": "일본 제25군 사령관",
+    "start_year": 1941,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1942,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "General Tomoyuki Yamashita (1885–1946) commanded the Imperial Japanese 25th Army in the 1941–42 Malayan Campaign, advancing through Malaya and accepting the British capitulation at Singapore on 15 February 1942. The representative interval records operational army command, not rule of Singapore, Malaya, or a newly invented occupation-state identity. The campaign occurred during Japan's imperial invasion of Southeast Asia; Yamashita later commanded Japanese forces in the Philippines and was convicted after the war for command responsibility for atrocities. The historical command Activity is not a moral endorsement."
+  },
+  "sources": [
+    {
+      "title": "'Out-generalled, Outwitted, and Outfought': Generals Percival and Bennett in Malaya, 1941–42 — Australian Army Research Centre",
+      "canonical_url": "https://researchcentre.army.gov.au/library/australian-army-journal-aaj/volume-2-number-1-2004/out-generalled-outwitted-and-outfought-generals-percival-and-bennett-malaya-1941-42",
+      "citation_text": "Australian Army Journal research identifies Yamashita as commander of the Japanese 25th Army from November 1941, describes the Malayan campaign, and dates the fall of Singapore to 15 February 1942.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Fall of Singapore — National Museum of Australia",
+      "canonical_url": "https://www.nma.gov.au/defining-moments/resources/fall-of-singapore",
+      "citation_text": "Australian National Museum describes the surrender of Singapore in 1942 and specifically identifies the Japanese general Tomoyuki Yamashita and the military significance of the event.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-20",
+      "document_title": "야마시타 도모유키",
+      "url": "https://namu.wiki/w/%EC%95%BC%EB%A7%88%EC%8B%9C%ED%83%80%20%EB%8F%84%EB%AA%A8%EC%9C%A0%ED%82%A4"
+    }
+  },
+  "review_context": {
+    "selection": "explicit_user_selected_registration_2026-11-20",
+    "aliases": [
+      "Yamashita Tomoyuki",
+      "山下奉文",
+      "Yamashita Tomoyuki",
+      "말레이의 호랑이"
+    ],
+    "namuwiki_evidence": "External Korean search index independently resolves a dedicated real historical Person NamuWiki page with exact displayed title; fictional/game variants excluded.",
+    "preflight_required": true,
+    "production_screen": "Repository main authoring manifest tree and issue search show no exact matching existing request. Direct live public Person query inaccessible to this chat; protected OIDC preflight_batch must check all Person aliases and semantic Activity duplicates prior to any canonical mutation, and classify READY/ALREADY_PRESENT/BLOCKED without speculative writes.",
+    "existing_polity_basis": "Reviewed Empire of Japan was restored in Japan lineage repair PR #1737 and retained live as uuid 7f146e58-c3e9-5af7-8cb8-346f03cd7cf6 in 2026-10-08 protected audit. Exact current identity + Korean name 대일본제국 must be verified in SERIALIZABLE preflight, not duplicated or replaced by generic Japan.",
+    "comment": "Previously approved candidate IDs gp-20260921-052 (Togo), gp-20260921-053 (Yamamoto) are historical candidate status only, not proof of Production Person registration."
+  }
+}
