@@ -58,6 +58,20 @@ test("UI-06A region selection filters the displayed entries without changing glo
   assert.match(europe,/활동 중인 인물 30명 · 활동 기록 30건/);
 });
 
+test("UI-06A keeps region-unknown historical activity discoverable through All",()=>{
+  const withUnknown=meanwhile.summarize([...tracks,{
+    person_id:"unknown",
+    display_name:"권역 미확정 인물",
+    primary_segments:[{activity_id:"unknown-activity",macroregion_code:null,start_ordinal:-3,end_ordinal:3,activity:{}}]
+  }],0,["east_asia","europe"]);
+  assert.equal(withUnknown.activity_count,31);
+  assert.equal(withUnknown.unique_person_count,31);
+  assert.equal(withUnknown.region_counts.reduce((sum,region)=>sum+region.unique_person_count,0),30);
+  assert.equal((render(withUnknown).match(/data-spacetime-meanwhile-person=/g)||[]).length,31);
+  assert.equal((render(withUnknown,"east_asia").match(/data-spacetime-meanwhile-person=/g)||[]).length,27);
+  assert.match(render(withUnknown),/권역 미확정 인물/);
+});
+
 test("UI-06A keeps coordinate/LOD code intact and supports keyboard-accessible region filter",()=>{
   assert.match(view,/const regionEntries = meanwhileRegionFilter == null/);
   assert.match(view,/entry\.macroregion_code === meanwhileRegionFilter/);
