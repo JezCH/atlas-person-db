@@ -149,6 +149,11 @@ test("Activity deep-link focus uses the selected Activity primary position, neve
   assert.equal(projected,null,"No fabricated horizontal location for an unplaced Activity");
   assert.equal(scroll.scrollLeft,700,"Keep world region without a reviewed primary Activity placement");
   assert.equal(updated,2);
+  projected=null;
+  assert.equal(focus(scroll,projection,track,"requested",1610,1000),false,
+    "A reviewed Activity segment must not assign its region to a time outside the segment");
+  assert.equal(projected,null);
+  assert.equal(scroll.scrollLeft,700,"No inferred horizontal placement in a gap between Activity segments");
 });
 
 test("first Activity entry exposes a wired return button immediately, without canvas rerender", () => {
