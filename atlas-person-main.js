@@ -11,11 +11,12 @@
   const portraitPresentation = window.ATLAS_PERSON_PORTRAIT_PRESENTATION;
   const profileEditorFactory = window.ATLAS_PERSON_PROFILE_EDITOR;
   const evidenceView = window.ATLAS_PERSON_EVIDENCE_VIEW;
+  const compareView = window.ATLAS_PERSON_COMPARE_VIEW;
   const profileWriter = window.ATLAS_SERVER_WRITE_ADAPTER?.createAdapter?.() || null;
   const mainArea = document.querySelector(".main-area");
   const topbar = mainArea?.querySelector(":scope > .topbar");
 
-  if (!reader || !dataStore || !portraitView?.createRenderer || !portraitControllerFactory?.createController || !portraitPresentation?.presentationFor || !profileEditorFactory?.createEditor || !evidenceView?.createRenderer || !mainArea || !topbar) {
+  if (!reader || !dataStore || !portraitView?.createRenderer || !portraitControllerFactory?.createController || !portraitPresentation?.presentationFor || !profileEditorFactory?.createEditor || !evidenceView?.createRenderer || !compareView?.render || !mainArea || !topbar) {
     console.error("ATLAS Person Main could not initialize required dependencies");
     return;
   }
@@ -32,6 +33,9 @@
   let requestSerial = 0;
   let selectedPersonDetail = null;
   let selectedPortrait = null;
+  let comparisonIds = [];
+  let comparisonRequestSerial = 0;
+  const comparisonCache = new Map();
   let initialLoadPromise = null;
   const PERSON_PORTRAIT_IMAGE_SCRIPT_URL = "./atlas-person-portrait-image.js?v=20260924-upload-standard-v3";
   const PERSON_EXCEL_EXPORT_SCRIPT_URL = "./atlas-person-excel-export.js?v=20260922-feature-split-v1";
@@ -514,6 +518,53 @@
     return `<figure class="person-detail-portrait${href ? " has-portrait" : ""}" data-era="${escapeHtml(presentation.era_code)}" data-domain="${escapeHtml(presentation.domain_code || "")}" aria-label="${escapeHtml(displayName)} · ${escapeHtml(presentation.era_label)} · ${escapeHtml(presentation.domain_label)} · ${state}" title="${escapeHtml(titleParts.join(" · "))}">${layers}${legacyEmpty}<figcaption class="person-detail-portrait-state">${escapeHtml(state)}</figcaption></figure>`;
   }
 
+  function updateComparisonControls() {
+    const button = document.querySelector("#personMainDetail [data-person-compare-add]");
+    if (!button) return;
+    const isSelected = comparisonIds.includes(button.dataset.personCompareAdd);
+    button.setAttribute("aria-pressed", String(isSelected));
+    button.disabled = !isSelected && comparisonIds.length >= 2;
+    button.textContent = isSelected ? "비교에서 제외" :
+      comparisonIds.length >= 2 ? "비교 대상 2명 선택됨" : "이 인물을 비교에 추가 (" + (comparisonIds.length + 1) + "/2)";
+    const progress = document.getElementById("personCompareProgress");
+    if (progress) progress.textContent = comparisonIds.length === 1
+      ? "비교 인물 1명 선택됨 · 목록에서 두 번째 인물을 선택해 비교에 추가하세요."
+      : comparisonIds.length === 2 ? "비교 인물 2명 선택됨 · 아래 활동 기록을 나란히 표시합니다." : "";
+  }
+
+  async function renderComparisonPanel() {
+    const panel = document.getElementById("personComparePanel");
+    const serial = ++comparisonRequestSerial;
+    updateComparisonControls();
+    if (!panel) return;
+    if (comparisonIds.length !== 2) {
+      panel.hidden = true;
+      panel.innerHTML = "";
+      return;
+    }
+    const ids = comparisonIds.slice();
+    panel.hidden = false;
+    panel.innerHTML = '<p class="atlas-compare-disclaimer" role="status">두 인물의 등록된 활동과 출처를 불러오는 중입니다.</p>';
+    try {
+      // Only the two selected canonical details are read; never fetch the global register.
+      const records = await Promise.all(ids.map(async (id) => {
+        if (comparisonCache.has(id)) return comparisonCache.get(id);
+        const result = await reader.readPerson(id);
+        if (!result?.person || result.person.id !== id) throw new Error("INVALID_COMPARE_PERSON_RESPONSE");
+        comparisonCache.set(id, result.person);
+        return result.person;
+      }));
+      if (serial !== comparisonRequestSerial || !panel.isConnected
+        || ids.some((id, index) => comparisonIds[index] !== id)) return;
+      panel.innerHTML = compareView.render(records);
+    } catch (error) {
+      if (serial !== comparisonRequestSerial || !panel.isConnected) return;
+      console.error("ATLAS Person comparison failed", error);
+      panel.innerHTML = '<p class="atlas-compare-disclaimer" role="alert">인물 비교 자료를 불러오지 못했습니다. 다른 인물을 선택하거나 다시 시도해 주세요.</p>' +
+        '<button type="button" data-compare-close>비교 닫기</button>';
+    }
+  }
+
   function renderDetail(person) {
     const portraitResult = arguments[1] || null;
     const panel = document.getElementById("personMainDetail");
@@ -535,6 +586,8 @@
           <p class="person-detail-domain">${escapeHtml(domainLabel)}</p>
           <p class="person-detail-status"><span class="person-historicity">${escapeHtml(rawHistoricity)}</span><span class="person-type-badge">${escapeHtml(metaLabel("person_type", person.person_type, "인물 유형 확인 필요"))}</span>${timelineLabel ? `<span class="person-timeline-disposition">${escapeHtml(timelineLabel)}</span>` : ""}</p>
           <button type="button" class="person-chronicle-spacetime-link" data-person-open-spacetime="${escapeHtml(person.id || "")}" aria-label="${escapeHtml(displayName)}의 시공간 인물도에서 위치 찾기">⌗ 시공간 인물도에서 찾기</button>
+          <button type="button" class="person-compare-add" data-person-compare-add="${escapeHtml(person.id || "")}" aria-pressed="false">이 인물을 비교에 추가</button>
+          <small id="personCompareProgress" class="person-compare-progress" role="status" aria-live="polite"></small>
           ${window.ATLAS_MAIN_AUTHORITY_NAV?.getExplorationReturnHash?.() ? '<button type="button" class="person-chronicle-spacetime-link person-chronicle-return-link" data-person-return-spacetime>↶ 이전 시공간 탐험으로 돌아가기</button>' : ""}
         </div>
       </div>
@@ -563,6 +616,7 @@
           <div class="person-detail-authoring-body">${profileEditorHtml(person, portraitResult)}</div>
         </details>
       </div>`;
+    updateComparisonControls();
   }
 
   function renderDetailLoading() {
@@ -626,6 +680,7 @@
       if (serial !== requestSerial || selectedPersonId !== personId) return false;
       selectedPersonDetail = result.person;
       selectedPortrait = portraitResult?.portrait || null;
+      comparisonCache.set(result.person.id, result.person);
       renderDetail(result.person, portraitResult);
       return true;
     } catch (error) {
@@ -962,6 +1017,7 @@
     personView.id = "personMainView";
     personView.className = "person-main-view";
     personView.innerHTML = `<section class="person-main-toolbar card"><div class="person-main-toolbar-heading"><h2>인물</h2></div><div class="person-main-actions" aria-label="인물 관리 도구"><button id="personMainRefresh" class="btn" type="button">↻ 새로고침</button><button id="personMainExcelExport" class="btn" type="button">⇩ 엑셀 출력</button><a class="btn" href="./admin.html">관리자</a></div><div class="person-main-controls"><select id="personMainSort" aria-label="인물 정렬"><option value="start-asc">활동연도 ↑ 과거→현재</option><option value="start-desc">활동연도 ↓ 현재→과거</option></select></div></section>
+      <section id="personComparePanel" class="atlas-person-compare" role="region" aria-labelledby="atlasCompareTitle" hidden></section>
       <div class="person-main-layout"><div id="personMainGroups" class="person-main-groups"></div><aside id="personMainDetail" class="person-main-detail card" aria-live="polite"><p class="person-detail-placeholder">왼쪽에서 인물을 선택하면 이름·설명·출처와 모든 활동 정보를 확인할 수 있습니다.</p></aside></div>`;
 
     topbar.insertAdjacentElement("afterend", personView);
@@ -977,6 +1033,7 @@
     const excelExport = document.getElementById("personMainExcelExport");
     const groups = document.getElementById("personMainGroups");
     const detail = document.getElementById("personMainDetail");
+    const comparePanel = document.getElementById("personComparePanel");
 
     sort?.addEventListener("change", () => {
       sortOrder = sort.value === "start-desc" ? "start-desc" : "start-asc";
@@ -996,6 +1053,18 @@
       const card = event.target.closest("[data-person-id]");
       if (card) selectPerson(card.dataset.personId);
     });
+    comparePanel?.addEventListener("click", (event) => {
+      if (event.target.closest("[data-compare-close]")) {
+        comparisonIds = [];
+        void renderComparisonPanel();
+        return;
+      }
+      const remove = event.target.closest("[data-compare-remove]");
+      if (remove) {
+        comparisonIds = comparisonIds.filter((id) => id !== remove.dataset.compareRemove);
+        void renderComparisonPanel();
+      }
+    });
     detail?.addEventListener("submit", handleProfileSubmit);
     detail?.addEventListener("submit", handlePortraitSubmit);
     detail?.addEventListener("change", (event) => {
@@ -1003,6 +1072,16 @@
       if (input) previewPortraitFile(input);
     });
     detail?.addEventListener("click", (event) => {
+      const compareButton = event.target.closest?.("[data-person-compare-add]");
+      if (compareButton) {
+        const id = String(compareButton.dataset.personCompareAdd || "").trim().toLowerCase();
+        if (id && selectedPersonDetail?.id === id && reader.UUID_PATTERN?.test?.(id)) {
+          comparisonIds = comparisonIds.includes(id) ? comparisonIds.filter((item) => item !== id)
+            : comparisonIds.length < 2 ? [...comparisonIds, id] : comparisonIds;
+          void renderComparisonPanel();
+        }
+        return;
+      }
       if (event.target.closest?.("[data-person-return-spacetime]")) {
         window.dispatchEvent(new CustomEvent("atlas-person-return-to-exploration"));
         return;
