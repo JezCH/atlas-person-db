@@ -2191,6 +2191,7 @@
       if (!loaded || document.getElementById("personSpacetimeMount") !== mount) return;
       let requestedPlacementMissing = false;
       const restoredFromHistory = restoreExplorationState(explorationState, requestedPersonId, requestedActivityId);
+      if (!restoredFromHistory && !resumeExplorationAfterDetail) explorationOrigin = null;
       const canResumeExploration = (resumeExplorationAfterDetail && requestedPersonId === selectedPersonId) || restoredFromHistory;
       resumeExplorationAfterDetail = false;
       if (requestedPersonId && !canResumeExploration) {
