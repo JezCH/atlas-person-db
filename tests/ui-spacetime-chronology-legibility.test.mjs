@@ -32,12 +32,12 @@ test("UI-03A chronology uses readable major year, era and world-region labels wi
   assert.match(declarationBlock(canvas, canvasSelector(".spacetime-track-label")), /font-size: 10px/);
 });
 
-test("UI-03A inspector makes selected historical activity legible but keeps five navigation actions", () => {
+test("UI-03A inspector keeps selected activity legible with six navigation actions", () => {
   assert.match(declarationBlock(tools, toolsSelector(".spacetime-controls input")), /font-size: 12px/);
   assert.match(declarationBlock(tools, toolsSelector(".spacetime-inspector-person > p")), /font-size: 11px/);
   assert.match(declarationBlock(tools, toolsSelector(".spacetime-inspector-actions button")), /font-size: 10px/);
   assert.match(declarationBlock(tools, toolsSelector(".spacetime-inspector-activity-select strong")), /font-size: 11px/);
-  assert.match(declarationBlock(tools, toolsSelector(".spacetime-inspector-actions")), /grid-template-columns: repeat\(5,minmax\(0,1fr\)\)/);
+  assert.match(declarationBlock(tools, toolsSelector(".spacetime-inspector-actions")), /grid-template-columns: repeat\(6,minmax\(0,1fr\)\)/);
 });
 
 test("UI-03A responsive hierarchy and deployed lazy stylesheet versions stay attached", () => {

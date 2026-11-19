@@ -91,6 +91,7 @@
   topbar.insertAdjacentElement("afterend", shell);
 
   let currentDomain = "persons";
+  let explorationReturnHash = null;
   let lastAppliedHash = null;
   let spacetimeModelPromise = null;
   let dashboardAssetsPromise = null;
@@ -218,12 +219,12 @@
   function ensureSpacetimeAssets() {
     if (window.ATLAS_PERSON_SPACETIME_VIEW) return Promise.resolve(window.ATLAS_PERSON_SPACETIME_VIEW);
     if (spacetimeAssetsPromise) return spacetimeAssetsPromise;
-    appendStylesheetOnce("./atlas-person-spacetime-view.css?v=20260923-runtime-ownership-v1");
+    appendStylesheetOnce("./atlas-person-spacetime-view.css?v=20260923-runtime-ownership-v1&ui06b=roundtrip-v1");
     appendStylesheetOnce("./atlas-person-spacetime-monumental-canvas.css?v=20261008-spacetime-l1-chronograph-v1&ui=20261119-ui03a-readability-v1");
-    appendStylesheetOnce("./atlas-person-spacetime-instrument-tools.css?v=20261008-spacetime-l2-instrument-finish-v1&ui=20261119-ui03a-readability-v1&region=20261119-ui06a-v1&nav=20261119-person-spacetime-crosslink-v1&year=20261120-ui06a-direct-year-v1");
-    appendStylesheetOnce("./atlas-person-spacetime-mobile-v8.css?v=20261007-spacetime-m4-mobile-material-v1&ui=20261119-ui03a-readability-v1");
+    appendStylesheetOnce("./atlas-person-spacetime-instrument-tools.css?v=20261008-spacetime-l2-instrument-finish-v1&ui=20261119-ui03a-readability-v1&region=20261119-ui06a-v1&nav=20261119-person-spacetime-crosslink-v1&year=20261120-ui06a-direct-year-v1&ui06b=roundtrip-v1");
+    appendStylesheetOnce("./atlas-person-spacetime-mobile-v8.css?v=20261007-spacetime-m4-mobile-material-v1&ui=20261119-ui03a-readability-v1&ui06b=roundtrip-v1");
     spacetimeAssetsPromise = ensureSpacetimeModel()
-      .then(() => loadScriptOnce("./atlas-person-spacetime-view.js?v=20261119-meanwhile-all-activities-v1&region=20261119-ui06a-v1&fix=meanwhile-panel-only-v1&ui=20261119-person-crosslink-v1&year=20261120-ui06a-direct-year-v1", () => Boolean(window.ATLAS_PERSON_SPACETIME_VIEW)))
+      .then(() => loadScriptOnce("./atlas-person-spacetime-view.js?v=20261119-meanwhile-all-activities-v1&region=20261119-ui06a-v1&fix=meanwhile-panel-only-v1&ui=20261119-person-crosslink-v1&year=20261120-ui06a-direct-year-v1&ui06b=roundtrip-v1", () => Boolean(window.ATLAS_PERSON_SPACETIME_VIEW)))
       .then(() => window.ATLAS_PERSON_SPACETIME_VIEW)
       .catch((error) => {
         spacetimeAssetsPromise = null;
@@ -399,7 +400,10 @@
         window.ATLAS_PERSON_MAIN?.clearSelection?.({ updateRoute:false });
       }
     }
-    if (next === "spacetime") activateSpacetime({ focusPersonId:resolvedRoute.entity_type === "person" ? resolvedRoute.entity_id : null });
+    if (next === "spacetime") {
+      explorationReturnHash = null;
+      activateSpacetime({ focusPersonId:resolvedRoute.entity_type === "person" ? resolvedRoute.entity_id : null });
+    }
     if (next === "polities") {
       const polityId = resolvedRoute.entity_type === "polity" ? resolvedRoute.entity_id : null;
       activatePolity(polityId);
@@ -447,6 +451,19 @@
     if (!personId || window.ATLAS_PERSON_MAIN?.getSelectedPersonId?.() !== personId) return;
     showEntity("spacetime", "person", personId);
   });
+  window.addEventListener("atlas-spacetime-open-person-record", (event) => {
+    if (currentDomain !== "spacetime") return;
+    const personId = routeModel.normalizeUuid?.(event?.detail?.personId);
+    if (!personId) return;
+    const fromRoute = parseRoute(window.location.hash);
+    if (fromRoute.domain !== "spacetime") return;
+    explorationReturnHash = fromRoute.canonical_hash;
+    showEntity("persons", "person", personId);
+  });
+  window.addEventListener("atlas-person-return-to-exploration", () => {
+    if (currentDomain !== "persons" || !explorationReturnHash) return;
+    history.back();
+  });
   window.addEventListener("atlas-spacetime-person-selected", (event) => {
     if (currentDomain !== "spacetime") return;
     const target = routeModel.entityHash("spacetime", "person", event?.detail?.personId);
@@ -457,6 +474,7 @@
   });
   window.addEventListener("atlas-person-selected", (event) => {
     if (currentDomain !== "persons") return;
+    explorationReturnHash = null;
     const target = routeModel.entityHash("persons","person",event?.detail?.personId);
     if (parseRoute(target).entity_id) writeHash(target);
   });
@@ -473,6 +491,7 @@
   window.ATLAS_MAIN_AUTHORITY_NAV = Object.freeze({
     getDomain: () => currentDomain,
     getRoute: () => parseRoute(window.location.hash),
+    getExplorationReturnHash: () => currentDomain === "persons" ? explorationReturnHash : null,
     showDomain: (domain) => showDomain(domain, { updateHash: true }),
     showEntity,
     parseRoute,
