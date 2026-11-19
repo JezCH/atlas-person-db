@@ -208,7 +208,14 @@ test('reviewed same-URL Source replacement emits a newly asserted Source then ex
   const rewrite = synthesized.operations.find(row => row.case_id === original.case_id);
   assert.equal(rewrite.type,"rewrite_activity");
   assert.equal(rewrite.exact_before.activity.id,rewrite.exact_after.activity.id);
-  assert.deepEqual(rewrite.exact_before.activity,rewrite.exact_after.activity);
+  // The existing P6 fixture intentionally rewrites polity/relation; a Source
+  // swap must not prevent that separately reviewed correction.
+  assert.equal(rewrite.exact_before.activity.person_id,rewrite.exact_after.activity.person_id);
+  assert.equal(rewrite.exact_before.activity.activity_start,rewrite.exact_after.activity.activity_start);
+  assert.equal(rewrite.exact_before.activity.activity_end,rewrite.exact_after.activity.activity_end);
+  assert.equal(rewrite.exact_before.activity.notes,rewrite.exact_after.activity.notes);
+  assert.deepEqual(rewrite.exact_before.activity.source_locator,rewrite.exact_after.activity.source_locator);
+  assert.equal(rewrite.exact_before.activity.content_hash,rewrite.exact_after.activity.content_hash);
   assert.ok(rewrite.exact_before.normalized_source_links.some(row => row.source_id === prior.source_id));
   assert.ok(!rewrite.exact_after.normalized_source_links.some(row => row.source_id === prior.source_id));
   assert.ok(rewrite.exact_after.normalized_source_links.some(row =>
