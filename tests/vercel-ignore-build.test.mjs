@@ -62,6 +62,18 @@ test("agent-only GitHub development integration never consumes a Vercel build", 
   ]), true);
 });
 
+test("GitHub-only Production dashboard verifier patch does not consume a Hobby deployment", () => {
+  const patch = [
+    "scripts/verify-dashboard-production-acceptance.mjs",
+    "scripts/vercel-ignore-build.mjs",
+    "tests/dashboard-production-runtime-metric-label-contract.test.mjs",
+    "tests/vercel-ignore-build.test.mjs"
+  ];
+  assert.equal(isAgentCapabilityOnly(patch), true);
+  assert.equal(shouldBuildForChangedPaths(patch), false);
+  assert.equal(shouldBuildForChangedPaths([...patch, "atlas-dashboard.js"]), true);
+});
+
 test("documentation, research evidence, reviewed authoring data and integrity-only changes are safe to skip", () => {
   for (const file of [
     "README.md",

@@ -672,11 +672,11 @@ function verifyCanonicalContracts(modelState, desktopDom) {
   const runtimeDom=desktopDom.runtime_delta;
   assert(runtimeDom?.present === true, "Runtime Delta/Drift panel did not render", runtimeDom);
   const cards=Object.fromEntries((runtimeDom.cards || []).map((row)=>[row.label,row]));
-  assert(renderedInteger(cards["최신 Runtime"]?.value) === runtimeDelta.latest.row_count, "Rendered latest Runtime count differs from model", { dom:runtimeDom,model:runtimeDelta });
-  assert(renderedInteger(cards["직전 Runtime"]?.value) === runtimeDelta.previous.row_count, "Rendered previous Runtime count differs from model", { dom:runtimeDom,model:runtimeDelta });
-  assert(renderedInteger(cards["Runtime Activity 증감"]?.value) === runtimeDelta.runtime_activity_delta, "Rendered Runtime Activity delta differs from model", { dom:runtimeDom,model:runtimeDelta });
-  assert(renderedInteger(cards["Runtime 제외 증감"]?.value) === runtimeDelta.excluded_activity_delta, "Rendered Runtime excluded delta differs from model", { dom:runtimeDom,model:runtimeDelta });
-  assert(cards["최신 Runtime"]?.state === "ready", "Rendered Runtime Delta/Drift card is not in ready state", cards["최신 Runtime"]);
+  assert(renderedInteger(cards["최신 런타임"]?.value) === runtimeDelta.latest.row_count, "Rendered latest Runtime count differs from model", { dom:runtimeDom,model:runtimeDelta });
+  assert(renderedInteger(cards["직전 런타임"]?.value) === runtimeDelta.previous.row_count, "Rendered previous Runtime count differs from model", { dom:runtimeDom,model:runtimeDelta });
+  assert(renderedInteger(cards["런타임 활동 증감"]?.value) === runtimeDelta.runtime_activity_delta, "Rendered Runtime Activity delta differs from model", { dom:runtimeDom,model:runtimeDelta });
+  assert(renderedInteger(cards["런타임 제외 증감"]?.value) === runtimeDelta.excluded_activity_delta, "Rendered Runtime excluded delta differs from model", { dom:runtimeDom,model:runtimeDelta });
+  assert(cards["최신 런타임"]?.state === "ready", "Rendered Runtime Delta/Drift card is not in ready state", cards["최신 런타임"]);
 
   const comparisonLabel=runtimeDelta.compile_key_changed ? "직전과 다른 Compile 활성화" : "같은 Compile 재활성화";
   assert((runtimeDom.meta || []).includes(comparisonLabel), "Rendered Runtime activation comparison label differs from model", { dom:runtimeDom,model:runtimeDelta });
