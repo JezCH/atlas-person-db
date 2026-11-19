@@ -127,6 +127,40 @@ function mergeReviewedSourceLinks(activityId, baseLinks, additions, label) {
   return [...bySource.values()].sort((a,b)=>a.source_id.localeCompare(b.source_id) || a.source_locator_key.localeCompare(b.source_locator_key));
 }
 
+/** Exact Activity→Source replacement; all unrelated Source IDs and links survive. */
+function replaceReviewedSourceLinks(activityId, baseLinks, replacements, label) {
+  if (!Array.isArray(replacements) || !replacements.length) throw new Error(`CORRECTION_V2_${label}_EXPLICIT_SOURCE_REPLACEMENT_REQUIRED`);
+  const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
+  const original = mergeReviewedSourceLinks(activityId, baseLinks, [], label);
+  const byId = new Map(original.map(row => [row.source_id, row]));
+  const oldIds = new Set(), newIds = new Set();
+  for (const entry of replacements) {
+    if (!entry || typeof entry !== "object" || Array.isArray(entry) ||
+        Object.keys(entry).sort().join(",") !== "replacement_source_id,replacement_source_locator_key,source_id,source_locator_key") {
+      throw new Error(`CORRECTION_V2_${label}_REPLACEMENT_FIELDS_INVALID`);
+    }
+    const oldId = String(entry.source_id || "").trim().toLowerCase();
+    const newId = String(entry.replacement_source_id || "").trim().toLowerCase();
+    const oldLocator = String(entry.source_locator_key || "").trim();
+    const newLocator = String(entry.replacement_source_locator_key || "").trim();
+    if (!uuid.test(oldId) || !uuid.test(newId) || oldId === newId ||
+        !oldLocator || !newLocator || oldIds.has(oldId) || newIds.has(newId) ||
+        !byId.has(oldId) || byId.get(oldId).source_locator_key !== oldLocator ||
+        byId.has(newId)) throw new Error(`CORRECTION_V2_${label}_REPLACEMENT_EXACT_LINK_DRIFT`);
+    oldIds.add(oldId); newIds.add(newId);
+  }
+  for (const entry of replacements) byId.delete(String(entry.source_id).toLowerCase());
+  for (const entry of replacements) {
+    const newId = String(entry.replacement_source_id).toLowerCase();
+    byId.set(newId, {
+      person_politics_id: activityId, source_id: newId,
+      source_locator_key: String(entry.replacement_source_locator_key).trim()
+    });
+  }
+  if (byId.size !== original.length) throw new Error(`CORRECTION_V2_${label}_REPLACEMENT_CARDINALITY_DRIFT`);
+  return [...byId.values()].sort((a,b)=>a.source_id.localeCompare(b.source_id) || a.source_locator_key.localeCompare(b.source_locator_key));
+}
+
 function exactBundleForActivity(id, liveById, sourceLinksByActivity, claimsByActivity, descriptionsByActivity, label) {
   const live = liveById.get(id);
   if (!live) throw new Error(`CORRECTION_V2_LIVE_ACTIVITY_MISSING:${label}`);
@@ -242,7 +276,23 @@ function synthesizeCorrectionV2Manifest(plan, snapshot) {
     const exactBefore = exactBundleForActivity(item.activity_id, liveById, sourceLinksByActivity, claimsByActivity, descriptionsByActivity, item.case_id);
 
     if (item.type === "rewrite_activity") {
-      const afterSources = mergeReviewedSourceLinks(item.activity_id, exactSourceLinks, item.after.add_source_links, `${item.case_id}_REWRITE`);
+      const replacements = item.after?.replace_source_links || [];
+      const additions = item.after?.add_source_links || [];
+      if (replacements.length && additions.length) throw new Error(`CORRECTION_V2_${item.case_id}_MIXED_SOURCE_LINK_MUTATION_FORBIDDEN`);
+      if (replacements.length) {
+        // New per-Activity citation identity must be reviewed and asserted in this exact plan.
+        const newSourceIds = new Set((plan.stage2_assertions || [])
+          .filter(assertion => assertion?.type === "assert_source")
+          .map(assertion => String(assertion?.exact_after?.source?.id || "").toLowerCase()));
+        for (const replacement of replacements) {
+          if (!newSourceIds.has(String(replacement?.replacement_source_id || "").toLowerCase())) {
+            throw new Error(`CORRECTION_V2_${item.case_id}_REPLACEMENT_SOURCE_ASSERTION_REQUIRED`);
+          }
+        }
+      }
+      const afterSources = replacements.length
+        ? replaceReviewedSourceLinks(item.activity_id, exactSourceLinks, replacements, item.case_id)
+        : mergeReviewedSourceLinks(item.activity_id, exactSourceLinks, additions, `${item.case_id}_REWRITE`);
       const preservesSources = JSON.stringify(afterSources) === JSON.stringify(exactSourceLinks);
       operations.push({
         case_id: item.case_id,
@@ -388,6 +438,7 @@ module.exports = Object.freeze({
   applyActivityTemplate,
   sourceLinkForActivity,
   mergeReviewedSourceLinks,
+  replaceReviewedSourceLinks,
   exactBundleForActivity,
   requiredSnapshotActivityIds,
   normalizePolityRelationSourceLinkForExecution,
