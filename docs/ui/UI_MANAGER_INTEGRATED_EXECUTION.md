@@ -5,6 +5,9 @@
 > 목표는 과거 UI 기획을 다시 쓰거나 개별 CSS PR을 쌓는 것이 아니라, **역사 아틀라스의 모든 승인된 UI 목표를 한 눈에 관리하고 실제 Production에서 남은 미완료를 줄이는 것**이다. 이 문서는 UI 매니저의 라우팅·감독 규칙이다. 승인된 세부 디자인이나 기능·데이터 권한을 새로 부여하지 않으며 WORK_EXECUTION.md, ATLAS_REQUIREMENTS.md, DATA_MODEL.md의 안전·의미 계약을 변경하지 않는다.
 
 ## 1. 총괄과 UI 매니저의 책임 구분
+
+**직접 실행할 세부 개발계획:** [ATLAS_UI_DEVELOPMENT_EXECUTION_PLAN.md](ATLAS_UI_DEVELOPMENT_EXECUTION_PLAN.md). 전체 연구 마스터플랜과 승인된 UI-01~07을 정확한 파일 owner·현행 PR 우선권·의존관계·집중 테스트·Production 브라우저 인수조건으로 연결한다. 총괄은 매 회차 UI 매니저가 이 작업표에서 실제 사용자 결과를 바꾸는 미완료 단위를 골라 *코드→검증→병합→운영 화면 수용*의 가능한 다음 단계를 수행했는지 확인한다. 이 표의 스냅샷 SHA나 PR 상태는 업무 시작 때 최신 GitHub로 교체한다.
+
 **연구와 전체 실행계획의 단일 참고본:** [ATLAS_UI_EVIDENCE_BASED_MASTERPLAN_20261119.md](ATLAS_UI_EVIDENCE_BASED_MASTERPLAN_20261119.md) — 외부 UI/UX·정보시각화·시간불확실성·접근성·성능 근거를 승인된 UI-01~07 및 과거 Phase II/III/한국어/Admin 범위에 연결한다. UI 매니저는 매 실행 시 연구 문서를 전부 재독하지 않고 이 계획과 UI-01~07 실현 상태를 참조하여 가장 가치 큰 실제 제품 결함을 해결하고, 검증된 새 연구/사용자 피드백만 해당 계획에 갱신한다. 실측되지 않은 접근성/성능/시각 수용을 합격이라고 선언하지 않는다.
 
 
