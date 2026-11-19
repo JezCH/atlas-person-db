@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { activityLinkedMeanwhileIsConsistent } from "./spacetime-visual-interaction-contract.mjs";
 
 const DEBUG_URL = process.env.ATLAS_CDP_URL || "http://127.0.0.1:9222";
 const PRODUCTION_URL = process.env.ATLAS_PRODUCTION_URL || "https://atlas-person-db.vercel.app/#atlas-spacetime";
@@ -582,6 +583,8 @@ async function main() {
         inspectorEmpty:q('#spacetimeInspector')?.classList.contains('is-empty') ?? true,
         selectedActivityButtons:document.querySelectorAll('.spacetime-inspector-activity.is-selected').length,
         selectedOutput:(q('#spacetimeInspector output')?.textContent||'').trim(),
+        meanwhileLabel:(q('.spacetime-meanwhile-head small')?.textContent||'').trim(),
+        meanwhileMoment:(q('.spacetime-meanwhile-head strong')?.textContent||'').trim(),
         meanwhileText:(q('.spacetime-meanwhile:not(.is-empty)')?.textContent||'').replace(/\\s+/g,' ').trim(),
         linkedLine:Boolean(line),
         lineWidth:lr.width,
@@ -592,7 +595,7 @@ async function main() {
     assert(!interaction.inspectorEmpty, "Sticky inspector did not populate after Person selection", interaction);
     assert(interaction.selectedActivityButtons === 1, "Activity selection state is ambiguous", interaction);
     assert(/선택 Activity 중간 시점/.test(interaction.selectedOutput), "Inspector does not show Activity midpoint selection", interaction);
-    assert(/MEANWHILE/.test(interaction.meanwhileText) && /선택 Activity 중간 시점/.test(interaction.meanwhileText), "Activity selection did not drive Meanwhile", interaction);
+    assert(activityLinkedMeanwhileIsConsistent(interaction), "Activity selection did not drive Meanwhile", interaction);
     assert(interaction.linkedLine && interaction.lineWithinCanvas, "Activity-linked Meanwhile line is missing or outside the canvas", interaction);
     assert(Math.abs(interaction.lineWidth - interaction.canvasWidth) < 2, "Meanwhile line is not full-width", interaction);
     await screenshot(client, "spacetime-activity-meanwhile.png");

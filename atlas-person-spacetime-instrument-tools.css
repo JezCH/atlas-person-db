@@ -1196,6 +1196,82 @@
   text-underline-offset: 3px;
 }
 
+/* UI-06A direct-year-entry: a compact date instrument, not a second timeline. */
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-controls {
+  flex-wrap: wrap;
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-year-jump {
+  display: grid;
+  grid-template-columns: auto minmax(105px, 130px) auto;
+  gap: 4px 7px;
+  align-items: center;
+  margin-left: auto;
+  min-width: 0;
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-controls .spacetime-year-jump label {
+  color: #adb4b7;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-controls .spacetime-year-jump input {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  height: 32px;
+  font-size: 14px;
+  border-bottom: 1px solid #747e83;
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-year-jump button {
+  min-height: 32px;
+  padding: 4px 9px;
+  border: 1px solid var(--spacetime-tools-line);
+  border-radius: 2px;
+  background: rgba(192,174,136,.06);
+  color: #e7e0d2;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-year-jump button:focus-visible {
+  outline: 2px solid var(--atlas-focus-ring);
+  outline-offset: 2px;
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-year-jump-help,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-year-jump-error {
+  grid-column: 1 / -1;
+  font-size: 10.5px;
+  line-height: 1.4;
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-year-jump-help {
+  color: #a6afb2;
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-year-jump-error {
+  color: #f0b6a6;
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-year-jump-error:empty {
+  display: none;
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-controls .spacetime-year-jump input[aria-invalid="true"] {
+  border-bottom: 2px solid #e4a18d;
+}
+@media (max-width: 760px) {
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-year-jump {
+    grid-template-columns: 34px minmax(0, 1fr) auto;
+    width: 100%;
+    margin-left: 0;
+  }
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-controls .spacetime-year-jump input {
+    height: 36px;
+    font-size: 16px;
+  }
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-year-jump button {
+    min-height: 36px;
+    font-size: 12px;
+  }
+}
+
 /* UI-06B: origin-return navigation maintains its own camera and search snapshot. */
 .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-toolbar:has(.spacetime-return-activity) {
   flex-wrap: wrap;
