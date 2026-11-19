@@ -650,6 +650,13 @@
   display: none;
 }
 
+/* Ordinary desktop rows retain the compact scan rhythm with the larger labels. */
+@media (min-width: 1101px) {
+  .person-monumental-register .person-register-entry:not(.has-multiple-activities) {
+    padding-block: 2px;
+  }
+}
+
 /* Mid-width keeps the factual header aligned to the same two-row grammar
  * used by each Person entry: identity/range/count above, Activities below. */
 @media (max-width: 1100px) {

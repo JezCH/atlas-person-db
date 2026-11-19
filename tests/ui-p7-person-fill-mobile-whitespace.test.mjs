@@ -55,3 +55,9 @@ test("P7 publishes the new assets and tightens Production density acceptance", (
   assert.match(html, /atlas-person-table-view\.js\?v=20261004-ui-p13-column-balance-polity-height-v1/);
   assert.equal((verifier.match(/ordinaryMedianHeight<=56/g) || []).length, 2);
 });
+
+
+test("desktop density reduction is limited to ordinary register entries", () => {
+  assert.match(register, /@media \(min-width: 1101px\) \{\s*\.person-monumental-register \.person-register-entry:not\(\.has-multiple-activities\) \{\s*padding-block: 2px;/);
+  assert.match(html, /ui=20261120-desktop-density-v1/);
+});
