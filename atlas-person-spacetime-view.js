@@ -1801,7 +1801,10 @@
       focusPersonInViewport(scroll, projection, navigationItems, pendingFocusPersonId);
       pendingFocusPersonId = null;
     }
-    scroll.addEventListener("scroll", () => updateCameraPosition(scroll, projection), { passive: true });
+    scroll.addEventListener("scroll", () => {
+      updateCameraPosition(scroll, projection);
+      scheduleExplorationSnapshot();
+    }, { passive: true });
     scroll.addEventListener("wheel", (event) => {
       if (!event.ctrlKey && !event.metaKey) return;
       const factor = event.deltaY < 0 ? CAMERA_ZOOM_STEP : 1 / CAMERA_ZOOM_STEP;
@@ -2065,6 +2068,7 @@
         const panel = mount.querySelector(".spacetime-meanwhile");
         if (!panel) return;
         meanwhileRegionCode = regionCode;
+        scheduleExplorationSnapshot();
         panel.outerHTML = renderMeanwhile(meanwhileSummary, regionCode);
         bindMeanwhileControls();
         const nextButton = [...mount.querySelectorAll("[data-spacetime-meanwhile-region]")]
@@ -2104,6 +2108,7 @@
     mount.querySelector("#spacetimeClearPerson")?.addEventListener("click", () => clearSelection(mount));
     mount.querySelector("#spacetimeReturnToActivity")?.addEventListener("click", () => void returnToActivityOrigin(mount));
     restoreRenderFocus(mount, renderFocus);
+    scheduleExplorationSnapshot();
   }
 
   function bindResize() {
@@ -2124,10 +2129,10 @@
     });
   }
 
-  async function activate({ focusPersonId = null, focusActivityId = null } = {}) {
+  async function activate({ focusPersonId = null, focusActivityId = null, explorationState = null } = {}) {
     const requestedPersonId = window.ATLAS_ENTITY_ROUTE?.normalizeUuid?.(focusPersonId) || null;
     const requestedActivityId = requestedPersonId ? (window.ATLAS_ENTITY_ROUTE?.normalizeUuid?.(focusActivityId) || null) : null;
-    const resumingFromDossier = resumeExplorationAfterDetail && requestedPersonId === selectedPersonId;
+    const resumingFromDossier = (resumeExplorationAfterDetail && requestedPersonId === selectedPersonId) || Boolean(explorationState);
     if (!resumingFromDossier) {
       explorationOrigin = null;
       if (requestedActivityId) {
@@ -2149,11 +2154,18 @@
       const prerequisites = [ensureRuntimeModules(), ensureData()];
       if (selectedPersonId) prerequisites.push(ensureInspectorModule());
       else if (requestedPersonId) prerequisites.push(ensureInspectorModule());
+      if (explorationState && Number.isInteger(explorationState.meanwhileOrdinal)) {
+        prerequisites.push(ensureMeanwhileModule().catch((error) => {
+          console.warn("ATLAS saved historical moment could not be prepared", error);
+          return null;
+        }));
+      }
       const results = await Promise.all(prerequisites);
       const loaded = results[1];
       if (!loaded || document.getElementById("personSpacetimeMount") !== mount) return;
       let requestedPlacementMissing = false;
-      const canResumeExploration = resumeExplorationAfterDetail && requestedPersonId === selectedPersonId;
+      const restoredFromHistory = restoreExplorationState(explorationState, requestedPersonId, requestedActivityId);
+      const canResumeExploration = (resumeExplorationAfterDetail && requestedPersonId === selectedPersonId) || restoredFromHistory;
       resumeExplorationAfterDetail = false;
       if (requestedPersonId && !canResumeExploration) {
         const placedTrack = compileAtlas().partitioned.tracks.some((track) => track.person_id === requestedPersonId);
@@ -2200,5 +2212,11 @@
     }
   }
 
-  window.ATLAS_PERSON_SPACETIME_VIEW = Object.freeze({ activate });
+  window.addEventListener("pagehide", () => {
+    if (explorationHistorySnapshotTimer != null) clearTimeout(explorationHistorySnapshotTimer);
+    explorationHistorySnapshotTimer = null;
+    persistExplorationState();
+  });
+
+  window.ATLAS_PERSON_SPACETIME_VIEW = Object.freeze({ activate, captureExplorationState, persistExplorationState });
 })();
