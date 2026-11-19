@@ -1,0 +1,74 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-writers60-20261026:adam-mickiewicz-ballads-romances-1822:v1",
+  "person": {
+    "canonical_name_en": "Adam Mickiewicz",
+    "display_name_ko": "아담 미츠키에비치",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-19",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Russian Empire",
+    "display_name_ko": "러시아 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "dd07fc4c-b3ac-59ac-bdf2-9cc190893327"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Polish-language poet, first volume of Poetry including Ballads and Romances published in Vilnius",
+    "role_display_name_ko": "《발라드와 로망스》 출판·폴란드어 시인",
+    "start_year": 1822,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1822,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The first volume of Mickiewicz's Poetry including Ballads and Romances appeared in Vilnius in 1822 under the contemporary Russian Empire; this is a contextual sovereign polity at the publication site, NOT a claim of Russian ethnicity or service to the imperial government. His historical contribution is central to Polish Romantic literature."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Culture.pl — Ballads and Romances, Adam Mickiewicz",
+      "canonical_url": "https://culture.pl/en/work/ballads-and-romances-adam-mickiewicz",
+      "citation_text": "Poland's cultural institute dates Ballads and Romances in volume one of Poetry to 1822 and locates its publication in Vilnius."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-19",
+      "document_title": "아담 미츠키에비치",
+      "url": "https://namu.wiki/w/%EC%95%84%EB%8B%B4%20%EB%AF%B8%EC%B8%A0%ED%82%A4%EC%97%90%EB%B9%84%EC%B9%98"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Publication or performance city is historical affiliation context only. No reviewed canonical Place UUID, coordinate or map geometry is established; no Place writes."
+  },
+  "review_context": {
+    "source_issue": 2619,
+    "selection": "user_selected_sss_20261026",
+    "preflight_required": true,
+    "auto_continue_after_preflight": true,
+    "identity_aliases": [
+      "Adam Bernard Mickiewicz",
+      "아담 미츠키에비츠"
+    ],
+    "existing_polity_identity_checked_at": "2026-11-19",
+    "namuwiki_review_evidence": "Verified indexed exact Korean NamuWiki article title in namu.moe mirror on 2026-11-19. Protected Production Person and alias resolution remains authoritative."
+  }
+}

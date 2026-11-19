@@ -1,0 +1,81 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-writers60-20261026:bertolt-brecht-threepenny-opera-1928:v1",
+  "person": {
+    "canonical_name_en": "Bertolt Brecht",
+    "display_name_ko": "베르톨트 브레히트",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-19",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Weimar Republic",
+    "display_name_ko": "바이마르 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "7594c57e-0b32-49d6-84d0-f65cd46f759e"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "artistic_activity",
+    "role": "Dramatist and German-language co-adaptor of the 1928 premiere of Die Dreigroschenoper",
+    "role_display_name_ko": "《서푼짜리 오페라》 초연·공동 창작자",
+    "start_year": 1928,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1928,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Threepenny Opera premiered at Berlin's Theater am Schiffbauerdamm on 31 August 1928. Brecht's German adaptation belongs to a collaboration with Elisabeth Hauptmann (translation and textual work) and Kurt Weill (music), ultimately drawing on John Gay. This is a representative cultural Activity in the Weimar Republic, not a claim of sole authorship or political office."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Kurt Weill Foundation — Die Dreigroschenoper",
+      "canonical_url": "https://www.kwf.org/works/die-dreigroschenoper/",
+      "citation_text": "Kurt Weill Foundation documents the 31 August 1928 Berlin premiere and credits Bertolt Brecht and Kurt Weill in collaboration with Elisabeth Hauptmann."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Kurt Weill Foundation — Elisabeth Hauptmann Chronology",
+      "canonical_url": "https://www.kwf.org/research-center/elisabeth-hauptmann-chronology/",
+      "citation_text": "Foundation documents the historical production credits distinguishing Elisabeth Hauptmann's translation, Brecht's German adaptation and Weill's musical composition."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-19",
+      "document_title": "베르톨트 브레히트",
+      "url": "https://namu.wiki/w/%EB%B2%A0%EB%A5%B4%ED%86%A8%ED%8A%B8%20%EB%B8%8C%EB%A0%88%ED%9E%88%ED%8A%B8"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Publication or performance city is historical affiliation context only. No reviewed canonical Place UUID, coordinate or map geometry is established; no Place writes."
+  },
+  "review_context": {
+    "source_issue": 2619,
+    "selection": "user_selected_sss_20261026",
+    "preflight_required": true,
+    "auto_continue_after_preflight": true,
+    "identity_aliases": [
+      "Eugen Berthold Friedrich Brecht",
+      "Bert Brecht",
+      "브레히트"
+    ],
+    "existing_polity_identity_checked_at": "2026-11-19",
+    "namuwiki_review_evidence": "Verified indexed exact Korean NamuWiki article title in namu.moe mirror on 2026-11-19. Protected Production Person and alias resolution remains authoritative."
+  }
+}

@@ -1,5 +1,4 @@
-preflight authoring/requests/youtube48-20261023-richard-iii-lord-protector.json
-preflight authoring/requests/youtube39-20261023-charles-scotland.json
-preflight authoring/requests/youtube39-20261023-charles-ireland.json
-preflight authoring/requests/youtube48-20261023-edward-viii-emperor-india.json
-preflight authoring/requests/youtube48-20261023-edward-viii-bahamas-governor.json
+preflight authoring/requests/user-writers60-20261026-soren-kierkegaard-either-or-1843.json
+preflight authoring/requests/user-writers60-20261026-bertolt-brecht-threepenny-opera-1928.json
+preflight authoring/requests/user-writers60-20261026-adam-mickiewicz-ballads-romances-1822.json
+preflight authoring/requests/user-writers60-20261026-aleksandr-solzhenitsyn-one-day-1962.json

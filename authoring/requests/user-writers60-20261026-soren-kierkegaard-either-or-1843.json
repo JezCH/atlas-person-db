@@ -1,0 +1,75 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-writers60-20261026:soren-kierkegaard-either-or-1843:v1",
+  "person": {
+    "canonical_name_en": "Søren Kierkegaard",
+    "display_name_ko": "쇠렌 키르케고르",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-19",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Denmark",
+    "display_name_ko": "덴마크",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "c117fb82-4943-40d6-bc2d-740f0665665a"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Philosopher and pseudonymous author of Either/Or, first published in Copenhagen",
+    "role_display_name_ko": "《이것이냐 저것이냐》 출간·철학 저술가",
+    "start_year": 1843,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1843,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Either/Or (Enten–Eller) was published in Copenhagen in 1843 under the editorial pseudonym Victor Eremita. The one-year point is the book's publication, not a continuous office or the entire philosophical career. The Danish polity is location affiliation only, not an office. Authorial pseudonyms are not distinct historical Persons."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Stanford Encyclopedia of Philosophy — Søren Kierkegaard",
+      "canonical_url": "https://plato.stanford.edu/entries/kierkegaard/",
+      "citation_text": "The scholarly Kierkegaard entry identifies Either/Or as published in 1843 and explains his pseudonymous philosophical authorship."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-19",
+      "document_title": "쇠렌 키르케고르",
+      "url": "https://namu.wiki/w/%EC%87%A0%EB%A0%8C%20%ED%82%A4%EB%A5%B4%EC%BC%80%EA%B3%A0%EB%A5%B4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Publication or performance city is historical affiliation context only. No reviewed canonical Place UUID, coordinate or map geometry is established; no Place writes."
+  },
+  "review_context": {
+    "source_issue": 2619,
+    "selection": "user_selected_sss_20261026",
+    "preflight_required": true,
+    "auto_continue_after_preflight": true,
+    "identity_aliases": [
+      "Soren Kierkegaard",
+      "Søren Aabye Kierkegaard",
+      "쇠렌 키에르케고르"
+    ],
+    "existing_polity_identity_checked_at": "2026-11-19",
+    "namuwiki_review_evidence": "Verified indexed exact Korean NamuWiki article title in namu.moe mirror on 2026-11-19. Protected Production Person and alias resolution remains authoritative."
+  }
+}
