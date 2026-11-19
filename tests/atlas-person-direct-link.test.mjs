@@ -14,7 +14,7 @@ const person=Object.freeze({
 });
 
 function harness(initialHash) {
-  const state={listCalls:0,detailCalls:0,portraitCalls:0,events:new Map(),groupMarkup:[],details:'',domainsPassedToPortrait:[]};
+  const state={listCalls:0,detailCalls:0,portraitCalls:0,events:new Map(),groupMarkup:[],details:'',domainsPassedToPortrait:[],emitted:[],detailClickListener:null};
   const node=(extra={})=>({
     addEventListener(){},setAttribute(){},insertAdjacentElement(){},
     append(){},remove(){},removeAttribute(){},querySelector(){return null;},
@@ -25,7 +25,7 @@ function harness(initialHash) {
     addEventListener(type,cb){state.groupsListener=cb;},
     insertAdjacentHTML(_where,html){state.groupMarkup.push(html);}
   });
-  const detail=node();
+  const detail=node({addEventListener(type,cb){if(type==='click')state.detailClickListener=cb;}});
   Object.defineProperty(detail,'innerHTML',{
     get(){return state.details;},
     set(value){state.details=value;}
@@ -83,7 +83,7 @@ function harness(initialHash) {
     ATLAS_PERSON_PROFILE_EDITOR:{createEditor:()=>({profileEditorHtml:()=>''})},
     ATLAS_PERSON_EVIDENCE_VIEW:{createRenderer:()=>({activityEvidenceHtml:()=>''})},
     addEventListener(name,cb){events.set(name,cb);},
-    dispatchEvent(){}
+    dispatchEvent(event){state.emitted.push(event);}
   };
   vm.runInNewContext(source,{
     window,document,URL,console,
@@ -153,4 +153,20 @@ test('searching on direct link opts into full register once; non-Person route ke
   dashboard.events.get('atlas-authority-domain-changed')({detail:{domain:'dashboard'}});
   await settle();
   assert.equal(dashboard.state.listCalls,0);
+});
+
+
+test('Person detail offers a UUID-scoped Spacetime link and dispatches only the selected Person',async()=>{
+  const h=harness('#atlas-persons/person/'+id);
+  assert.equal(await h.window.ATLAS_PERSON_MAIN.openPerson(id),true);
+  assert.match(h.state.details,/data-person-open-spacetime="11111111-2222-4333-8444-555555555555"/);
+  assert.match(h.state.details,/시공간 인물도에서 찾기/);
+  const trigger=(personId)=>h.state.detailClickListener({target:{closest(selector){return selector==='[data-person-open-spacetime]'?{dataset:{personOpenSpacetime:personId}}:null;}}});
+  trigger('11111111-2222-4333-8444-000000000000');
+  trigger('not-a-uuid');
+  assert.equal(h.state.emitted.filter(e=>e.type==='atlas-person-open-spacetime').length,0);
+  trigger(id);
+  const events=h.state.emitted.filter(e=>e.type==='atlas-person-open-spacetime');
+  assert.equal(events.length,1);
+  assert.equal(events[0].detail.personId,id);
 });

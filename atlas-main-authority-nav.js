@@ -220,10 +220,10 @@
     if (spacetimeAssetsPromise) return spacetimeAssetsPromise;
     appendStylesheetOnce("./atlas-person-spacetime-view.css?v=20260923-runtime-ownership-v1");
     appendStylesheetOnce("./atlas-person-spacetime-monumental-canvas.css?v=20261008-spacetime-l1-chronograph-v1&ui=20261119-ui03a-readability-v1");
-    appendStylesheetOnce("./atlas-person-spacetime-instrument-tools.css?v=20261008-spacetime-l2-instrument-finish-v1&ui=20261119-ui03a-readability-v1&region=20261119-ui06a-v1");
+    appendStylesheetOnce("./atlas-person-spacetime-instrument-tools.css?v=20261008-spacetime-l2-instrument-finish-v1&ui=20261119-ui03a-readability-v1&region=20261119-ui06a-v1&nav=20261119-person-spacetime-crosslink-v1");
     appendStylesheetOnce("./atlas-person-spacetime-mobile-v8.css?v=20261007-spacetime-m4-mobile-material-v1&ui=20261119-ui03a-readability-v1");
     spacetimeAssetsPromise = ensureSpacetimeModel()
-      .then(() => loadScriptOnce("./atlas-person-spacetime-view.js?v=20261119-meanwhile-all-activities-v1&region=20261119-ui06a-v1&fix=meanwhile-panel-only-v1", () => Boolean(window.ATLAS_PERSON_SPACETIME_VIEW)))
+      .then(() => loadScriptOnce("./atlas-person-spacetime-view.js?v=20261119-meanwhile-all-activities-v1&region=20261119-ui06a-v1&fix=meanwhile-panel-only-v1&ui=20261119-person-crosslink-v1", () => Boolean(window.ATLAS_PERSON_SPACETIME_VIEW)))
       .then(() => window.ATLAS_PERSON_SPACETIME_VIEW)
       .catch((error) => {
         spacetimeAssetsPromise = null;
@@ -232,12 +232,12 @@
     return spacetimeAssetsPromise;
   }
 
-  function activateSpacetime() {
+  function activateSpacetime({ focusPersonId = null } = {}) {
     const mount = document.getElementById("personSpacetimeMount");
     if (!mount) return;
     mount.innerHTML = '<section class="card" style="padding:24px"><strong>시공간 인물도 모듈 준비 중</strong></section>';
     ensureSpacetimeAssets().then((view) => {
-      if (currentDomain === "spacetime") view?.activate?.();
+      if (currentDomain === "spacetime") view?.activate?.({ focusPersonId });
     }).catch((error) => {
       console.error(error);
       const currentMount = document.getElementById("personSpacetimeMount");
@@ -399,7 +399,7 @@
         window.ATLAS_PERSON_MAIN?.clearSelection?.({ updateRoute:false });
       }
     }
-    if (next === "spacetime") activateSpacetime();
+    if (next === "spacetime") activateSpacetime({ focusPersonId:resolvedRoute.entity_type === "person" ? resolvedRoute.entity_id : null });
     if (next === "polities") {
       const polityId = resolvedRoute.entity_type === "polity" ? resolvedRoute.entity_id : null;
       activatePolity(polityId);
@@ -441,6 +441,20 @@
 
   document.querySelector(".nav-list")?.addEventListener("click", handleNavigationClick);
   document.querySelector(".mobile-nav")?.addEventListener("click", handleNavigationClick);
+  window.addEventListener("atlas-person-open-spacetime", (event) => {
+    if (currentDomain !== "persons") return;
+    const personId = routeModel.normalizeUuid?.(event?.detail?.personId);
+    if (!personId || window.ATLAS_PERSON_MAIN?.getSelectedPersonId?.() !== personId) return;
+    showEntity("spacetime", "person", personId);
+  });
+  window.addEventListener("atlas-spacetime-person-selected", (event) => {
+    if (currentDomain !== "spacetime") return;
+    const target = routeModel.entityHash("spacetime", "person", event?.detail?.personId);
+    if (parseRoute(target).entity_id) writeHash(target, { replace:true });
+  });
+  window.addEventListener("atlas-spacetime-person-cleared", () => {
+    if (currentDomain === "spacetime") writeHash(routeModel.domainHash("spacetime"), { replace:true });
+  });
   window.addEventListener("atlas-person-selected", (event) => {
     if (currentDomain !== "persons") return;
     const target = routeModel.entityHash("persons","person",event?.detail?.personId);

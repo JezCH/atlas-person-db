@@ -1056,3 +1056,32 @@
     transition: none;
   }
 }
+
+/* Cross-domain historical exploration: a clear action, not an authoring control. */
+.person-chronicle-identity .person-chronicle-spacetime-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  max-inline-size: 100%;
+  margin-top: 18px;
+  padding: 9px 14px;
+  border: 1px solid rgba(208, 188, 145, .48);
+  border-radius: 4px;
+  background: rgba(192, 174, 136, .08);
+  color: #e9dec8;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: center;
+  cursor: pointer;
+}
+.person-chronicle-identity .person-chronicle-spacetime-link:hover {
+  background: rgba(192, 174, 136, .16);
+  border-color: rgba(208, 188, 145, .72);
+}
+.person-chronicle-identity .person-chronicle-spacetime-link:focus-visible {
+  outline: 2px solid #efdab1;
+  outline-offset: 3px;
+}

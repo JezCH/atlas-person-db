@@ -93,7 +93,7 @@ test("lazy Meanwhile interactions are race-safe and stale loads cannot restore s
   const searchInputBody=view.slice(searchInputStart,searchInputEnd);
   assert.match(searchInputBody,/invalidateMeanwhileInteraction\(\)/);
 
-  const activateStart=view.indexOf("async function activate()");
+  const activateStart=view.indexOf("async function activate(");
   const activateEnd=view.indexOf("\n  window.ATLAS_PERSON_SPACETIME_VIEW",activateStart);
   const activateBody=view.slice(activateStart,activateEnd);
   assert.match(activateBody,/invalidateMeanwhileInteraction\(\)/);

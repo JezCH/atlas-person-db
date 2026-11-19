@@ -65,6 +65,7 @@
   let searchTextCache = new Map();
   let query = "";
   let selectedPersonId = null;
+  let externalFocusPersonId = null; // direct Person link stays visible while prior search remains intact
   let selectedActivityId = null;
   let selectedTimeOrdinal = null;
   let pendingFocusPersonId = null;
@@ -509,6 +510,8 @@
       selectedTimeOrdinal = null;
     }
     selectedPersonId = nextPersonId;
+    externalFocusPersonId = nextPersonId; // explicit choice stays visible with existing search
+    if (selectedPersonId) window.dispatchEvent(new CustomEvent("atlas-spacetime-person-selected", { detail: { personId:selectedPersonId } }));
     pendingFocusPersonId = options.focus === false ? null : selectedPersonId;
     if (selectedPersonId && options.detail) {
       cameraZoom = Math.max(cameraZoom, FOCUS_DETAIL_ZOOM);
@@ -563,9 +566,11 @@
     invalidateMeanwhileInteraction();
     clearActivityLinkedMeanwhile();
     selectedPersonId = null;
+    externalFocusPersonId = null;
     selectedActivityId = null;
     selectedTimeOrdinal = null;
     pendingFocusPersonId = null;
+    window.dispatchEvent(new CustomEvent("atlas-spacetime-person-cleared"));
     renderInto(mount);
   }
 
@@ -1654,7 +1659,7 @@
       .filter(Boolean)
       .map((item) => presentationLayout.applyTrackPresentation(item, presentation))
       .filter(Boolean);
-    const projectedTracks = needle ? allProjectedTracks.filter((item) => trackSearchable(item.track).includes(needle)) : allProjectedTracks;
+    const projectedTracks = needle ? allProjectedTracks.filter((item) => trackSearchable(item.track).includes(needle) || item.person_id === externalFocusPersonId) : allProjectedTracks;
     const visibleTracks = projectedTracks.map((item) => item.track);
     const activePersonIds = new Set(projectedTracks.map((item) => item.person_id));
     if (selectedPersonId && !activePersonIds.has(selectedPersonId)) {
@@ -1766,6 +1771,7 @@
 
     const searchInput = mount.querySelector("#spacetimeSearch");
     searchInput?.addEventListener("input", (event) => {
+      externalFocusPersonId = null;
       query = event.target.value || "";
       if (event.isComposing) return;
       invalidateMeanwhileInteraction();
@@ -1855,7 +1861,8 @@
     });
   }
 
-  async function activate() {
+  async function activate({ focusPersonId = null } = {}) {
+    const requestedPersonId = window.ATLAS_ENTITY_ROUTE?.normalizeUuid?.(focusPersonId) || null;
     const mount = document.getElementById("personSpacetimeMount");
     if (!mount) return;
     invalidateMeanwhileInteraction();
@@ -1868,10 +1875,34 @@
     try {
       const prerequisites = [ensureRuntimeModules(), ensureData()];
       if (selectedPersonId) prerequisites.push(ensureInspectorModule());
+      else if (requestedPersonId) prerequisites.push(ensureInspectorModule());
       const results = await Promise.all(prerequisites);
       const loaded = results[1];
       if (!loaded || document.getElementById("personSpacetimeMount") !== mount) return;
+      let requestedPlacementMissing = false;
+      if (requestedPersonId) {
+        const placedTrack = compileAtlas().partitioned.tracks.some((track) => track.person_id === requestedPersonId);
+        if (placedTrack) {
+          clearActivityLinkedMeanwhile();
+          selectedPersonId = requestedPersonId;
+          selectedActivityId = null;
+          selectedTimeOrdinal = null;
+          externalFocusPersonId = requestedPersonId;
+          pendingFocusPersonId = requestedPersonId;
+        } else {
+          requestedPlacementMissing = true;
+          externalFocusPersonId = null;
+          selectedPersonId = null;
+          selectedActivityId = null;
+          selectedTimeOrdinal = null;
+          pendingFocusPersonId = null;
+        }
+      }
       renderInto(mount);
+      if (requestedPlacementMissing) {
+        const detailRoute = window.ATLAS_ENTITY_ROUTE.entityHash("persons", "person", requestedPersonId);
+        mount.insertAdjacentHTML("afterbegin", '<p class="spacetime-cross-link-status" role="status">이 인물은 현재 검토된 주 위치가 없어 시공간표에서 위치를 표시할 수 없습니다. <a href="' + escapeHtml(detailRoute) + '">인물 상세로 돌아가기</a></p>');
+      }
     } catch (error) {
       console.error(error);
       mount.innerHTML = `<section class="card spacetime-error"><strong>시공간 인물도를 불러오지 못했습니다.</strong><p>${escapeHtml(error?.code || error?.message || "UNKNOWN_ERROR")}</p><button id="spacetimeRetry" type="button" class="btn">다시 시도</button></section>`;
