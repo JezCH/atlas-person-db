@@ -83,6 +83,7 @@
   let meanwhileSelectedOrdinal = null;
   let meanwhileSelectionSource = null;
   let meanwhileRegionCode = "";
+  let resumeExplorationAfterDetail = false;
 
   function escapeHtml(value) {
     return String(value ?? "")
@@ -1002,7 +1003,7 @@
         <p>${escapeHtml(extent ? ordinalRangeLabel(extent.start_ordinal, extent.end_ordinal) : "활동 기간 미상")}</p>
         ${selectedActivity && Number.isInteger(selectedTimeOrdinal) ? `<output>선택 Activity 중간 시점 · ${escapeHtml(ordinalLabel(selectedTimeOrdinal))}</output>` : ""}
       </header>
-      <div class="spacetime-inspector-actions" role="group" aria-label="선택 인물 탐색"><button id="spacetimePrevPerson" type="button"${cycleDisabled}>이전</button><button id="spacetimeFocusPerson" type="button">위치로</button><button id="spacetimeDetailPerson" type="button">확대</button><button id="spacetimeNextPerson" type="button"${cycleDisabled}>다음</button><button id="spacetimeClearPerson" type="button">해제</button></div>
+      <div class="spacetime-inspector-actions" role="group" aria-label="선택 인물 탐색"><button id="spacetimePrevPerson" type="button"${cycleDisabled}>이전</button><button id="spacetimeFocusPerson" type="button">위치로</button><button id="spacetimeDetailPerson" type="button">확대</button><button id="spacetimeOpenPersonRecord" type="button">인물 상세</button><button id="spacetimeNextPerson" type="button"${cycleDisabled}>다음</button><button id="spacetimeClearPerson" type="button">해제</button></div>
       <section class="spacetime-inspector-activities"><div class="spacetime-inspector-section-title"><strong>활동 내역</strong><span>${activities.length}</span></div>${activities.map(renderInspectorActivity).join("") || '<p class="spacetime-empty-inline">활동 없음</p>'}</section>
       <footer class="spacetime-inspector-disclaimer">공간 정보는 인물의 실제 거주지·활동 영역이 아니라 ATLAS의 검토된 시공간 배치 기준입니다.</footer>
     </aside>`;
@@ -1892,6 +1893,12 @@
       activeScroll?.focus();
     });
     mount.querySelector("#spacetimeDetailPerson")?.addEventListener("click", () => selectPerson(mount, selectedPersonId, { focus: true, detail: true, preserveActivity: true }));
+    mount.querySelector("#spacetimeOpenPersonRecord")?.addEventListener("click", () => {
+      const personId = window.ATLAS_ENTITY_ROUTE?.normalizeUuid?.(selectedPersonId);
+      if (!personId) return;
+      resumeExplorationAfterDetail = true;
+      window.dispatchEvent(new CustomEvent("atlas-spacetime-open-person-record", { detail: { personId } }));
+    });
     mount.querySelector("#spacetimeClearPerson")?.addEventListener("click", () => clearSelection(mount));
     restoreRenderFocus(mount, renderFocus);
   }
@@ -1933,7 +1940,9 @@
       const loaded = results[1];
       if (!loaded || document.getElementById("personSpacetimeMount") !== mount) return;
       let requestedPlacementMissing = false;
-      if (requestedPersonId) {
+      const canResumeExploration = resumeExplorationAfterDetail && requestedPersonId === selectedPersonId;
+      resumeExplorationAfterDetail = false;
+      if (requestedPersonId && !canResumeExploration) {
         const placedTrack = compileAtlas().partitioned.tracks.some((track) => track.person_id === requestedPersonId);
         if (placedTrack) {
           clearActivityLinkedMeanwhile();
