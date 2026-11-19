@@ -45,7 +45,7 @@ test("Person Detail dispatches the selected UUID; main router transitions withou
 
 test("Spacetime finds only verified placed tracks and retains existing search while focusing", () => {
   assert.doesNotThrow(() => new Function(spacetime));
-  assert.match(spacetime, /async function activate\(\{ focusPersonId = null \} = \{\}\)/);
+  assert.match(spacetime, /async function activate\(\{ focusPersonId = null, focusActivityId = null \} = \{\}\)/);
   assert.match(spacetime, /ATLAS_ENTITY_ROUTE\?\.normalizeUuid/);
   assert.match(spacetime, /compileAtlas\(\)\.partitioned\.tracks\.some/);
   assert.match(spacetime, /pendingFocusPersonId = requestedPersonId/);
