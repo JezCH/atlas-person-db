@@ -487,6 +487,7 @@
     if (meanwhileSelectionSource === "activity") {
       meanwhileSelectedOrdinal = null;
       meanwhileSelectionSource = null;
+      meanwhileRegionFilter = null;
     }
   }
 
@@ -547,6 +548,7 @@
     selectedActivityId = activity.activity_id;
     selectedTimeOrdinal = nextTimeOrdinal;
     if (Number.isInteger(selectedTimeOrdinal) && meanwhileReady) {
+      if (meanwhileSelectedOrdinal !== selectedTimeOrdinal) meanwhileRegionFilter = null;
       meanwhileSelectedOrdinal = selectedTimeOrdinal;
       meanwhileSelectionSource = "activity";
     } else {
