@@ -151,3 +151,10 @@ test("Evidence period basis localizes the canonical code when the read contract 
   const missing=renderer.activityEvidenceHtml({...activity,period_basis:null});
   assert.match(missing,/<small>기간 기준<\/small><strong><span class="person-evidence-missing">미기록<\/span><\/strong>/);
 });
+
+
+test("unrecognized Activity evidence codes render the unknown label even if inherited by JavaScript objects",()=>{
+  for(const code of ["constructor","__proto__","toString"]){
+    assert.equal(evidenceView.humanEvidenceValue("period_basis",code),"표시 확인 필요");
+  }
+});

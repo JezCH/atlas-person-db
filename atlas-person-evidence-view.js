@@ -36,7 +36,8 @@
     const raw=text(value);
     if(!raw) return "";
     if(/[가-힣]/.test(raw) && !/[A-Za-z]/.test(raw)) return raw;
-    return EVIDENCE_LABELS[kind]?.[raw] || "표시 확인 필요";
+    const labels=Object.hasOwn(EVIDENCE_LABELS,kind)?EVIDENCE_LABELS[kind]:null;
+    return labels&&Object.hasOwn(labels,raw)?labels[raw]:"표시 확인 필요";
   }
 
   function boundaryMeta(boundary){
