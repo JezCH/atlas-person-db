@@ -532,6 +532,7 @@
           <p class="person-detail-era">${escapeHtml(rangeLabel(person))}</p>
           <p class="person-detail-domain">${escapeHtml(domainLabel)}</p>
           <p class="person-detail-status"><span class="person-historicity">${escapeHtml(rawHistoricity)}</span><span class="person-type-badge">${escapeHtml(metaLabel("person_type", person.person_type, "인물 유형 확인 필요"))}</span>${timelineLabel ? `<span class="person-timeline-disposition">${escapeHtml(timelineLabel)}</span>` : ""}</p>
+          <button type="button" class="person-chronicle-spacetime-link" data-person-open-spacetime="${escapeHtml(person.id || "")}" aria-label="${escapeHtml(displayName)}의 시공간 인물도에서 위치 찾기">⌗ 시공간 인물도에서 찾기</button>
         </div>
       </div>
       <div class="person-chronicle-body">
@@ -999,6 +1000,14 @@
       if (input) previewPortraitFile(input);
     });
     detail?.addEventListener("click", (event) => {
+      const spacetimeButton = event.target.closest?.("[data-person-open-spacetime]");
+      if (spacetimeButton) {
+        const personId = String(spacetimeButton.dataset.personOpenSpacetime || "").trim().toLowerCase();
+        if (personId && selectedPersonDetail?.id === personId && reader.UUID_PATTERN?.test?.(personId)) {
+          window.dispatchEvent(new CustomEvent("atlas-person-open-spacetime", { detail: { personId } }));
+        }
+        return;
+      }
       const portraitDelete = event.target.closest("[data-person-portrait-delete][data-person-id]");
       if (portraitDelete) {
         deletePersonPortrait(portraitDelete.dataset.personId);
