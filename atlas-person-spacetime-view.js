@@ -1793,12 +1793,27 @@
       const year = projection.historicalYearForScreenY(event.clientY - rect.top);
       if (year != null) setMeanwhileYear(mount, year);
     });
-    mount.querySelector("#spacetimeMeanwhileClear")?.addEventListener("click", () => clearMeanwhile(mount));
-    mount.querySelectorAll("[data-spacetime-meanwhile-region]").forEach((button) => button.addEventListener("click", () => {
-      meanwhileRegionCode = button.dataset.spacetimeMeanwhileRegion || "";
-      renderInto(mount);
-    }));
-    mount.querySelectorAll("[data-spacetime-meanwhile-person]").forEach((button) => button.addEventListener("click", () => selectPerson(mount, button.dataset.spacetimeMeanwhilePerson, { focus: true })));
+    // A region choice changes the Meanwhile results only, not the historical
+    // world. Keep the expensive 500% canvas, camera and scroll positions intact.
+    const bindMeanwhileControls = () => {
+      mount.querySelector("#spacetimeMeanwhileClear")?.addEventListener("click", () => clearMeanwhile(mount));
+      mount.querySelectorAll("[data-spacetime-meanwhile-region]").forEach((button) => button.addEventListener("click", () => {
+        const regionCode = button.dataset.spacetimeMeanwhileRegion || "";
+        if (regionCode === meanwhileRegionCode || !meanwhileSummary) return;
+        const panel = mount.querySelector(".spacetime-meanwhile");
+        if (!panel) return;
+        meanwhileRegionCode = regionCode;
+        panel.outerHTML = renderMeanwhile(meanwhileSummary, regionCode);
+        bindMeanwhileControls();
+        const nextButton = [...mount.querySelectorAll("[data-spacetime-meanwhile-region]")]
+          .find((item) => (item.dataset.spacetimeMeanwhileRegion || "") === regionCode);
+        nextButton?.focus({ preventScroll: true });
+      }));
+      mount.querySelectorAll("[data-spacetime-meanwhile-person]").forEach((button) =>
+        button.addEventListener("click", () => selectPerson(mount, button.dataset.spacetimeMeanwhilePerson, { focus: true }))
+      );
+    };
+    bindMeanwhileControls();
     mount.querySelector("#spacetimeCameraZoomOut")?.addEventListener("click", () => requestCameraZoom(mount, cameraZoom / CAMERA_ZOOM_STEP));
     mount.querySelector("#spacetimeCameraZoomIn")?.addEventListener("click", () => requestCameraZoom(mount, cameraZoom * CAMERA_ZOOM_STEP));
     mount.querySelector("#spacetimeCameraZoomReset")?.addEventListener("click", () => requestCameraZoom(mount, CAMERA_DEFAULT_ZOOM));
