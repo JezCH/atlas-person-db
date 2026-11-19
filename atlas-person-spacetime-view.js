@@ -510,7 +510,7 @@
       selectedTimeOrdinal = null;
     }
     selectedPersonId = nextPersonId;
-    externalFocusPersonId = null;
+    externalFocusPersonId = nextPersonId; // keep an explicit choice visible even if the preserved search differs
     if (selectedPersonId) window.dispatchEvent(new CustomEvent("atlas-spacetime-person-selected", { detail: { personId:selectedPersonId } }));
     pendingFocusPersonId = options.focus === false ? null : selectedPersonId;
     if (selectedPersonId && options.detail) {
