@@ -41,7 +41,7 @@
 .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-controls label,
 .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera > span {
   color: var(--spacetime-tools-muted);
-  font-size: 9px;
+  font-size: 10.5px;
   font-weight: 760;
   letter-spacing: .08em;
 }
@@ -57,7 +57,7 @@
   background: transparent;
   color: #e7e3da;
   box-shadow: none;
-  font-size: 11px;
+  font-size: 12px;
   transition: border-color 120ms ease, background 120ms ease;
 }
 
@@ -585,8 +585,8 @@
 
 .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-person > p {
   margin: 2px 0 0;
-  color: #9a927f;
-  font-size: 9px;
+  color: #b9ad97;
+  font-size: 11px;
   font-variant-numeric: tabular-nums;
 }
 
@@ -598,7 +598,7 @@
   border-radius: 0;
   background: transparent;
   color: #bba77e;
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 730;
 }
 
@@ -615,8 +615,8 @@
   border-left: 1px solid #2f363b;
   border-radius: 0;
   background: transparent;
-  color: #7c858a;
-  font-size: 8px;
+  color: #aeb8bc;
+  font-size: 10px;
   font-weight: 740;
   box-shadow: none;
   transition: color 120ms ease, background 120ms ease;
@@ -652,8 +652,8 @@
 }
 
 .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-section-title strong {
-  color: #898f92;
-  font-size: 9px;
+  color: #b5bfc3;
+  font-size: 10px;
   font-weight: 760;
   letter-spacing: .08em;
   text-transform: uppercase;
@@ -695,15 +695,17 @@
 
 .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-activity-select strong {
   color: #c8c6c0;
-  font-size: 9px;
+  font-size: 11px;
 }
 
 .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-activity-select small {
-  color: #6f787d;
+  color: #a3acb0;
+  font-size: 9px;
 }
 
 .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-activity-select > span:nth-child(2) {
-  color: #788186;
+  color: #a0a9ae;
+  font-size: 10px;
 }
 
 .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-activity-select em {
