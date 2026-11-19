@@ -13,7 +13,7 @@ const person=Object.freeze({
   facets:emptyFacets(),first_activity_year:1700,last_activity_year:1750,representative_domain:'science'
 });
 
-function harness(initialHash) {
+function harness(initialHash,detailPerson=person) {
   const state={listCalls:0,detailCalls:0,portraitCalls:0,events:new Map(),groupMarkup:[],details:'',domainsPassedToPortrait:[],emitted:[],detailClickListener:null};
   const node=(extra={})=>({
     addEventListener(){},setAttribute(){},insertAdjacentElement(){},
@@ -53,7 +53,7 @@ function harness(initialHash) {
   }};
   const reader={
     UUID_PATTERN:/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
-    readPerson:async()=>{state.detailCalls++;return {person};},
+    readPerson:async()=>{state.detailCalls++;return {person:detailPerson};},
     readPortrait:async()=>{state.portraitCalls++;return {portrait:null};},
     preparePersonGroups:(persons)=>({historical:persons,other_or_uncertain:[]}),
     comparePersons:()=>0,facetCatalog:()=>emptyFacets()
@@ -169,4 +169,34 @@ test('Person detail offers a UUID-scoped Spacetime link and dispatches only the 
   const events=h.state.emitted.filter(e=>e.type==='atlas-person-open-spacetime');
   assert.equal(events.length,1);
   assert.equal(events[0].detail.personId,id);
+});
+
+
+test('Activity-specific contemporaries action selects only a real Activity belonging to the active Person',async()=>{
+  const activityId='aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee';
+  const anotherId='aaaaaaaa-bbbb-4ccc-8ddd-000000000000';
+  const fixture={...person,activity_count:1,activities:[{
+    id:activityId,
+    role:{display_name:'기록상 활동'},
+    relation:{code:'served'},
+    polity:{display_name:'기록상 정치체'},
+    period_basis:'activity',
+    start:{},end:{}
+  }]};
+  const h=harness('#atlas-persons/person/'+id,fixture);
+  assert.equal(await h.window.ATLAS_PERSON_MAIN.openPerson(id),true);
+  assert.match(h.state.details,/data-person-open-activity="aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee"/);
+  assert.match(h.state.details,/동시대 세계/);
+  const click=(value)=>h.state.detailClickListener({target:{closest(selector){
+    return selector==='[data-person-open-activity]' ? {dataset:{personOpenActivity:value}} : null;
+  }}});
+  click(anotherId);
+  click('not-uuid');
+  assert.equal(h.state.emitted.filter(x=>x.type==='atlas-person-open-activity-spacetime').length,0);
+  click(activityId);
+  const emitted=h.state.emitted.filter(x=>x.type==='atlas-person-open-activity-spacetime');
+  assert.equal(emitted.length,1);
+  assert.equal(emitted[0].detail.personId,id);
+  assert.equal(emitted[0].detail.activityId,activityId);
+  assert.equal(h.state.listCalls,0);
 });
