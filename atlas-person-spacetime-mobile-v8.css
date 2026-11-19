@@ -312,7 +312,7 @@
   }
 
   .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-actions {
-    grid-template-columns: repeat(5,minmax(0,1fr));
+    grid-template-columns: repeat(3,minmax(0,1fr));
   }
 
   .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-actions button {
