@@ -2,6 +2,8 @@
 
 > 2026-11-19 현재 계획: [ATLAS_UI_DELIVERY_PLAN.md](ATLAS_UI_DELIVERY_PLAN.md) v1.1 · 작업 원장 [#1896](https://github.com/JezCH/atlas-person-db/issues/1896)
 
+**전체 UI 계획을 관장하는 매니저 기준:** [UI_MANAGER_INTEGRATED_EXECUTION.md](UI_MANAGER_INTEGRATED_EXECUTION.md). 최신 UI-01~07과 향후 승인된 추가 트랙, Phase II/III·정보완전성·한국어·Admin의 계획 계보를 종합 점검하며, 기존 총괄 예약이 매 실행 책임과 성과를 확인한다. 최신 v1.1 계획을 덮어쓰거나 별도 예약을 만들지 않는다.
+
 ## Active plan (user-approved)
 
 현재 표 중심 단계에서 **역사 인물/시대/권역의 가독성 + 연속 탐험 경험**을 구현한다. 옛 디자인 연구 문서를 다시 실행하지 않고, 정확한 최신 main/기존 PR에 실제 코드를 통합한다.
