@@ -268,6 +268,7 @@ async function collectMain(client){
       ordinaryMedianHeight:median(ordinaryHeights),
       ordinarySampleHeights:ordinaryHeights,
       mobileTypographySamples,
+      desktopTypographySamples:mobileTypographySamples,
       centerCoverageRate,
       medianActivityWidthRatio,
       medianIdentityWidthRatio,
@@ -579,6 +580,19 @@ async function main(){
     assert(desktopMain.headerCells.length===5,"Desktop Person factual header column count changed",desktopMain);
     assert(desktopMain.ordinaryMedianHeight!=null&&desktopMain.ordinaryMedianHeight<=56,
       "Desktop Person Register lost compact scan density",desktopMain);
+    // These are real computed browser values for current registered Persons.
+    // A large canvas is not readable if actual Polity, Role or chronology
+    // remains 9–10px despite passing older density-only tests.
+    assert(desktopMain.desktopTypographySamples?.length>=5
+      && desktopMain.desktopTypographySamples.every((item)=>
+        item.namePx>=17
+        &&(item.polityPx==null||item.polityPx>=12.5)
+        &&(item.rolePx==null||item.rolePx>=12)
+        &&(item.rangePx==null||item.rangePx>=12)
+        &&(item.periodPx==null||item.periodPx>=12))
+      && desktopMain.desktopTypographySamples.some((item)=>item.polityPx!=null)
+      && desktopMain.desktopTypographySamples.some((item)=>item.rolePx!=null),
+      "Desktop Person factual typography is too small or missing in real DOM",desktopMain.desktopTypographySamples);
 
     const desktopInteraction=await verifyRegisterInteraction(client);
     const desktopNameContrast=contrastRatio(desktopInteraction.normalNameColor,desktopMain.bodyBackground);
