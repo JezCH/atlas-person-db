@@ -52,7 +52,7 @@ function runCommandGate(gate){
     stderr,
     result.error ? `runner_error=${String(result.error?.stack||result.error)}` : ""
   ].join("\n");
-  const relativeLogPath=path.posix.join("artifacts","core-final-acceptance","logs",`${safeLogName(gate.id)}.log`);
+  const relativeLogPath=path.relative(root,path.join(logDir,`${safeLogName(gate.id)}.log`));
   fs.writeFileSync(path.join(root,relativeLogPath),combined);
   const exitCode=Number.isInteger(result.status) ? result.status : 1;
   const failures=[];
@@ -112,3 +112,4 @@ try {
   process.stderr.write(String(error?.stack||error)+"\n");
   process.exitCode=1;
 }
+
