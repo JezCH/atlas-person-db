@@ -41,7 +41,7 @@
 .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-controls label,
 .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera > span {
   color: var(--spacetime-tools-muted);
-  font-size: 10.5px;
+  font-size: 12px;
   font-weight: 760;
   letter-spacing: .08em;
 }
@@ -57,7 +57,7 @@
   background: transparent;
   color: #e7e3da;
   box-shadow: none;
-  font-size: 12px;
+  font-size: 14px;
   transition: border-color 120ms ease, background 120ms ease;
 }
 
@@ -94,7 +94,7 @@
   background: transparent;
   color: #a7adb0;
   box-shadow: none;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 760;
 }
 
@@ -508,8 +508,8 @@
 }
 
 .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-minimap-head strong {
-  color: #aaaeb0;
-  font-size: 9px;
+  color: #c0c5c6;
+  font-size: 11px;
   font-weight: 760;
   letter-spacing: .08em;
 }
@@ -547,8 +547,8 @@
 
 .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-minimap-status {
   margin: 4px 7px 5px;
-  color: #5f676c;
-  font-size: 7.5px;
+  color: #a3aaae;
+  font-size: 10px;
 }
 
 /* INSPECTOR — quiet before selection, stronger only after selection. */
@@ -581,8 +581,8 @@
 
 .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-sticky-inspector.is-empty small,
 .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-person > small {
-  color: #636b70;
-  font-size: 8px;
+  color: #8f999d;
+  font-size: 10px;
   font-weight: 760;
   letter-spacing: .14em;
 }
@@ -613,14 +613,14 @@
 }
 
 .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-person > span {
-  color: #7b8489;
-  font-size: 10px;
+  color: #a0a9ad;
+  font-size: 12px;
 }
 
 .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-person > p {
   margin: 2px 0 0;
-  color: #b9ad97;
-  font-size: 11px;
+  color: #c6b99e;
+  font-size: 12px;
   font-variant-numeric: tabular-nums;
 }
 
@@ -637,26 +637,26 @@
 }
 
 .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-actions {
-  grid-template-columns: repeat(6,minmax(0,1fr));
+  grid-template-columns: repeat(3,minmax(0,1fr));
   gap: 0;
   border-bottom: 1px solid #2f363b;
 }
 
 .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-actions button {
-  height: 27px;
-  padding: 0 3px;
+  height: 32px;
+  padding: 0 4px;
   border: 0;
   border-left: 1px solid #2f363b;
   border-radius: 0;
   background: transparent;
-  color: #aeb8bc;
-  font-size: 10px;
+  color: #bfc7c8;
+  font-size: 11px;
   font-weight: 740;
   box-shadow: none;
   transition: color 120ms ease, background 120ms ease;
 }
 
-.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-actions button:first-child {
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-actions button:nth-child(3n + 1) {
   border-left: 0;
 }
 
@@ -686,8 +686,8 @@
 }
 
 .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-section-title strong {
-  color: #b5bfc3;
-  font-size: 10px;
+  color: #c6ced1;
+  font-size: 12px;
   font-weight: 760;
   letter-spacing: .08em;
   text-transform: uppercase;
@@ -728,18 +728,18 @@
 }
 
 .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-activity-select strong {
-  color: #c8c6c0;
-  font-size: 11px;
+  color: #d9d5ca;
+  font-size: 12px;
 }
 
 .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-activity-select small {
-  color: #a3acb0;
-  font-size: 9px;
+  color: #aeb8bb;
+  font-size: 11px;
 }
 
 .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-activity-select > span:nth-child(2) {
-  color: #a0a9ae;
-  font-size: 10px;
+  color: #aeb8bb;
+  font-size: 11px;
 }
 
 .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-activity-select em {

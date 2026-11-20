@@ -34,14 +34,14 @@ const item = (id,name,x,y) => ({
 test("UI-03 P0 increases actual Person name glyphs on desktop/mobile and preserves a single text-strip", () => {
   const desktopLabel = desktop.slice(desktop.indexOf('.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-track-label {'));
   assert.match(desktopLabel, /height: 22px/);
-  assert.match(desktopLabel, /font-size: 12\.5px/);
+  assert.match(desktopLabel, /font-size: 14px/);
   assert.match(desktopLabel, /line-height: 22px/);
   assert.match(mobile, /\.spacetime-track-label \{\s*height: 21px;[\s\S]*?font-size: 12px;\s*line-height: 21px/);
   assert.match(desktopLabel, /border-left: 2px solid var\(--spacetime-person-domain-edge\)/);
   assert.doesNotMatch(desktopLabel.slice(0,550), /text-overflow: ellipsis/);
 });
 
-test("UI-03 P0 live engine allocates 12.5px CJK widths and 22px heights before collisions", () => {
+test("UI-03 P0 live engine allocates 14px CJK widths and 22px heights before collisions", () => {
   const results = pack([
     item("selected", "미나모토노 요시츠네", 75, 120),
     item("other", "가마쿠라 막부 인물", 84, 120),
@@ -51,7 +51,7 @@ test("UI-03 P0 live engine allocates 12.5px CJK widths and 22px heights before c
   const selected = results.placed.find(x=>x.person_id==="selected");
   assert.ok(selected, "Selected Person is prioritized rather than hidden among dense labels");
   const expectedWidth = engine.naturalWidth({ text:"미나모토노 요시츠네" },
-    {charWidth:8.7,cjkCharWidth:12.5,labelChromeWidth:13,labelWidthSafety:6});
+    {charWidth:9.4,cjkCharWidth:14,labelChromeWidth:13,labelWidthSafety:6});
   assert.equal(selected.width,expectedWidth);
   assert.equal(selected.height,22);
   assert.equal(selected.label_y,120);
@@ -122,7 +122,7 @@ test("UI-03 P0 viewport-edge Activity names use the same 22px half-height as the
 
 test("UI-03 P0 ships both readable styles and matching JS metrics through current public lazy loader", () => {
   assert.match(view,/const PERSON_NAME_LABEL_PACK_HEIGHT = 22;/);
-  assert.match(view,/labelHeight:PERSON_NAME_LABEL_PACK_HEIGHT,\s*charWidth:8\.7,\s*cjkCharWidth:12\.5,\s*labelChromeWidth:13,\s*labelWidthSafety:6/);
+  assert.match(view,/labelHeight:PERSON_NAME_LABEL_PACK_HEIGHT,\s*charWidth:9\.4,\s*cjkCharWidth:14,\s*labelChromeWidth:13,\s*labelWidthSafety:6/);
   for(const resource of [
     "atlas-person-spacetime-monumental-canvas.css",
     "atlas-person-spacetime-mobile-v8.css",

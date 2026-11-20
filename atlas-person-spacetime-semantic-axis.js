@@ -150,11 +150,14 @@
     if (!Number.isFinite(width) || width <= 0) throw new RangeError("space header width must be > 0");
     const zoom = readableZoom(zoomInput);
     const placeOpacity = smoothstep(PLACE_DETAIL_START_ZOOM, PLACE_DETAIL_FULL_ZOOM, zoom);
+    // Readability LOD only; no normalized historical region geometry changes.
+    const subregionReadability = smoothstep(42, 78, width / continuum.subregions.length);
+    const macroOnly = subregionReadability <= 0.04;
     return Object.freeze({
-      stage: zoom > PLACE_DETAIL_START_ZOOM ? "place" : "subregion",
-      stage_label: zoom > PLACE_DETAIL_START_ZOOM ? "검토된 장소" : "세부 지역",
-      macro_opacity: 0.38,
-      subregion_opacity: 1 - 0.18 * placeOpacity,
+      stage: macroOnly ? "macroregion" : zoom > PLACE_DETAIL_START_ZOOM ? "place" : "subregion",
+      stage_label: macroOnly ? "대권역" : zoom > PLACE_DETAIL_START_ZOOM ? "검토된 장소" : "세부 지역",
+      macro_opacity: 1,
+      subregion_opacity: subregionReadability * (1 - 0.18 * placeOpacity),
       place_opacity: placeOpacity,
       macroregions: buildBandGeometry(continuum.macroregions, width),
       subregions: buildBandGeometry(continuum.subregions, width),

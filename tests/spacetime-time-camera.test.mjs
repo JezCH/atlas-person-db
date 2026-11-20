@@ -54,6 +54,6 @@ test("pointer anchored zoom preserves historical Y", () => {
 
 test("spacetime remains an independent scroll camera", () => {
   assert.match(css, /\.spacetime-scroll\{[^}]*overflow:auto/);
-  assert.match(css, /height:clamp\(480px,62vh,720px\)/);
+  assert.match(css, /height:clamp\(540px,72vh,840px\)/);
   assert.match(css, /overscroll-behavior:contain/);
 });

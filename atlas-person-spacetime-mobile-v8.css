@@ -389,3 +389,27 @@
     scroll-behavior: auto;
   }
 }
+
+/* The 390px first view previously showed an unexplained empty BCE grid.
+ * This visible guide is only mounted when no actual rail intersects the viewport. */
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-viewport-empty[hidden] { display: none !important; }
+@media (min-width: 761px) { .spacetime-viewport-empty { display: none !important; } }
+@media (max-width: 760px) {
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-viewport-empty {
+    position: absolute; z-index: 34; top: 50%; left: 50%;
+    transform: translate(-50%,-50%); display: grid; gap: 8px;
+    width: min(300px,calc(100% - 36px)); padding: 16px 14px;
+    box-sizing: border-box; color: #e5e1d7; text-align: center;
+    background: rgba(21,26,30,.95); border: 1px solid #666052;
+    box-shadow: 0 10px 30px rgba(0,0,0,.38);
+  }
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-viewport-empty strong { font-size: 15px; line-height: 1.35; }
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-viewport-empty p { margin: 0; font-size: 12px; line-height: 1.5; color: #b8b4ab; }
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-viewport-empty-actions { display: grid; gap: 7px; }
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-viewport-empty-actions button {
+    min-height: 42px; padding: 6px 10px; border: 1px solid #7a6a4b;
+    border-radius: 4px; background: rgba(192,174,136,.12);
+    color: #eee4d0; font-size: 13px; font-weight: 720; cursor: pointer;
+  }
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-viewport-empty-actions button:focus-visible { outline: 2px solid #e4c98b; outline-offset: 2px; }
+}
