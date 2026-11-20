@@ -66,6 +66,8 @@ function harness(initialHash,detailPerson=person,options={}) {
     UUID_PATTERN:/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
     readPerson:async()=>{state.detailCalls++;return {person:detailPerson};},
     readPortrait:async()=>{state.portraitCalls++;return options.portraitPromise || {portrait:null};},
+    personMatchesQuery:()=>true,
+    personMatchesFacets:()=>true,
     preparePersonGroups:(persons)=>({historical:persons,other_or_uncertain:[]}),
     comparePersons:()=>0,facetCatalog:()=>emptyFacets()
   };
@@ -82,7 +84,9 @@ function harness(initialHash,detailPerson=person,options={}) {
     ATLAS_PERSON_DOMAIN_REGISTRY:{LABELS:{},CODES:[],DEFINITIONS:[]},
     ATLAS_UI_I18N:{enumLabel:(_kind,_value,{fallback})=>fallback},
     ATLAS_PERSON_EXTERNAL_REFERENCES:{},
-    ATLAS_PERSON_PORTRAIT_VIEW:{createRenderer:()=>({portraitEditorHtml:()=>''})},
+    ATLAS_PERSON_PORTRAIT_VIEW:{createRenderer:()=>({portraitEditorHtml:(_person,result)=>result?.loading
+      ? '<div class="person-portrait-editor is-loading">초상화 정보를 불러오는 중입니다.</div>'
+      : `<div class="person-portrait-editor">${result?.portrait?'초상 교체':'초상 업로드'}</div>`})},
     ATLAS_PERSON_PORTRAIT_CONTROLLER:{createController:()=>({})},
     ATLAS_PERSON_PORTRAIT_PRESENTATION:{presentationFor:(_person,domain)=>{
       state.domainsPassedToPortrait.push(domain);
