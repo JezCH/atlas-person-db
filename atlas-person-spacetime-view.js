@@ -837,8 +837,9 @@
     const activeRegionSummary = regionCode ? `${escapeHtml(meanwhileRegionLabel(regionCode))} ${filteredUniquePersonCount}명 · 활동 ${entries.length}건` : "";
     const visibleEntries = entries.slice(0, 24);
     const remainingEntries = entries.slice(visibleEntries.length);
+    const selectedActiveAtMoment = (summary.entries || []).some((entry) => entry.person_id === selectedPersonId);
     const renderRows = (rows) => `<div class="spacetime-meanwhile-activities">${rows.map((entry) => {
-      const canCompare = window.ATLAS_ENTITY_ROUTE?.normalizeUuid?.(selectedPersonId)
+      const canCompare = selectedActiveAtMoment && window.ATLAS_ENTITY_ROUTE?.normalizeUuid?.(selectedPersonId)
         && window.ATLAS_ENTITY_ROUTE?.normalizeUuid?.(entry.person_id) && selectedPersonId !== entry.person_id;
       const compareAction = canCompare
         ? `<button type="button" class="spacetime-meanwhile-compare" data-spacetime-meanwhile-compare="${escapeHtml(entry.person_id)}" aria-label="${escapeHtml(entry.display_name)}과 선택한 인물 비교" title="두 인물의 활동·출처를 나란히 비교">비교</button>` : "";
@@ -2115,6 +2116,7 @@
           const firstPersonId = window.ATLAS_ENTITY_ROUTE?.normalizeUuid?.(selectedPersonId);
           const secondPersonId = window.ATLAS_ENTITY_ROUTE?.normalizeUuid?.(button.dataset.spacetimeMeanwhileCompare);
           if (!firstPersonId || !secondPersonId || firstPersonId === secondPersonId) return;
+          if (!(meanwhileSummary?.entries || []).some((entry) => entry.person_id === firstPersonId)) return;
           if (!(meanwhileSummary?.entries || []).some((entry) => entry.person_id === secondPersonId
             && (!meanwhileRegionCode || entry.macroregion_code === meanwhileRegionCode))) return;
           resumeExplorationAfterDetail = true;
