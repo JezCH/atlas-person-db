@@ -18,6 +18,7 @@ function fixture(t){
   put('server/c.js',"export {thing} from '../scripts/b.mjs';\n");
   put('tests/c.test.mjs',"import '../server/c.js';\n");
   put('tests/a.test.mjs',"import '../scripts/a.mjs';\n");
+  put('tests/a-offline.test.mjs','// No static import of the target.\n');
   put('scripts/fake.mjs',"// import './a.mjs'\nconst text = \"from './a.mjs'\";\n");
   run('add','.');
   run('-c','user.name=ATLAS Test','-c','user.email=test@example.invalid','commit','-qm','fixture');
@@ -29,7 +30,8 @@ test('identifies direct and transitive module consumers and tests without edits'
   assert.deepEqual(r.dependencies,[]);
   assert.deepEqual(r.direct_importers,['scripts/b.mjs','tests/a.test.mjs']);
   assert.deepEqual(r.reverse_levels[1].paths,['server/c.js']);
-  assert.ok(r.related_tests.some(x=>x.file==='tests/a.test.mjs'));
+  assert.equal(r.related_tests.find(x=>x.file==='tests/a.test.mjs')?.reason,'static direct/transitive importer');
+  assert.equal(r.related_tests.find(x=>x.file==='tests/a-offline.test.mjs')?.reason,'filename match, not verified coverage');
   assert.equal(r.head_sha.length,40);
   assert.equal(run('status','--porcelain'),before);
 });
