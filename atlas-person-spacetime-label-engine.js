@@ -180,9 +180,15 @@
   }
   function freeLeftPosition(label, placed, viewportWidth, gap = 0, options = {}) {
     const anchorGap = Math.max(0, Number(options.anchorGap ?? DEFAULT_ANCHOR_GAP) || 0);
-    const preferredLeft = label.anchor_x + anchorGap;
-    const preferredCenter = preferredLeft + label.width / 2;
+    const homeLeft = clamp(Number.isFinite(label.min_left) ? label.min_left : 0, 0, viewportWidth);
+    const homeRight = clamp(Number.isFinite(label.max_right) ? label.max_right : viewportWidth, homeLeft, viewportWidth);
     for (const range of placementRanges(label, viewportWidth, options)) {
+      // Prefer the home region whenever the full name fits. If it cannot,
+      // center borrowed space on the historical rail instead of placing the
+      // entire long name in the neighboring region to its right.
+      const borrowed = range.left < homeLeft - EPSILON || range.right > homeRight + EPSILON;
+      const preferredLeft = borrowed ? label.anchor_x - label.width / 2 : label.anchor_x + anchorGap;
+      const preferredCenter = borrowed ? label.anchor_x : preferredLeft + label.width / 2;
       const intervals = freeIntervals(label, placed, range, gap);
       if (!intervals.length) continue;
       let best = null;

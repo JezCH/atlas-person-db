@@ -35,7 +35,7 @@
     ["./atlas-person-spacetime-person-tracks.js?v=20260902-inspector-evidence", "ATLAS_PERSON_SPACETIME_PERSON_TRACKS"],
     ["./atlas-person-spacetime-political-placement.js?v=20260918-opposition-context", "ATLAS_PERSON_SPACETIME_POLITICAL_PLACEMENT"],
     ["./atlas-person-spacetime-lod.js?v=20260920-exact-fit-floor", "ATLAS_PERSON_SPACETIME_LOD"],
-    ["./atlas-person-spacetime-label-engine.js?v=20260920-global-name-overlay", "ATLAS_PERSON_SPACETIME_LABEL_ENGINE"]
+    ["./atlas-person-spacetime-label-engine.js?v=20260920-global-name-overlay&homeband=20261121-centered-rail-origin-v1", "ATLAS_PERSON_SPACETIME_LABEL_ENGINE"]
   ]);
   const RUNTIME_OPTIONAL_ASSETS = Object.freeze({
     inspector: Object.freeze(["./atlas-person-spacetime-inspector.js?v=20260903-c8", "ATLAS_PERSON_SPACETIME_INSPECTOR"]),
@@ -1122,6 +1122,8 @@
         anchor_y:anchorY,
         min_left:zoneLeft,
         max_right:zoneRight,
+        home_left_world:zoneLeftWorld,
+        home_right_world:zoneRightWorld,
         region_code:bandCode,
         forced:forceAll || selectedPersonId === item.track.person_id
       });
@@ -1168,6 +1170,10 @@
           y2:label.connector.y2 + viewportTop
         }) : null,
         region_code:label.region_code || "world",
+        // Label text is never shortened. Borrowing width is presentational;
+        // the historical rail stays at the original X and receives a home tick.
+        borrowed_from_home_band:label.rect.left + viewportLeft < label.home_left_world - 0.5
+          || label.rect.right + viewportLeft > label.home_right_world + 0.5,
         region_left:0,
         region_right:worldWidth
       })),
@@ -1343,8 +1349,14 @@
       const forced = Boolean(needle) || personSelected;
       const opacity = forced ? 1 : lodWeights.labels;
       const connector = label.connector ? `<i class="spacetime-label-connector${personSelected ? " is-selected" : ""}" aria-hidden="true" style="left:${label.region_left + Math.min(label.connector.x1, label.connector.x2)}px;top:${label.connector.y1}px;width:${label.connector.length}px"></i>` : "";
+      const homeAnchor = label.borrowed_from_home_band
+        ? `<i class="spacetime-label-home-anchor${personSelected ? " is-selected" : ""}" aria-hidden="true" style="left:${label.anchor_x}px;top:${label.label_y + 11}px"></i>`
+        : "";
       const meanwhileActive = meanwhilePersonIds.has(item.track.person_id);
-      return `${connector}<button type="button" class="spacetime-track-label${personSelected ? " is-selected" : ""}${meanwhileActive ? " is-meanwhile-active" : ""}" data-spacetime-person="${escapeHtml(item.track.person_id)}" data-spacetime-band="${escapeHtml(label.region_code)}" style="left:${label.label_x}px;top:${label.label_y}px;width:${label.width}px;opacity:${opacity}" title="${escapeHtml(item.track.display_name)}">${escapeHtml(item.track.display_name)}</button>`;
+      const tooltip = label.borrowed_from_home_band
+        ? `${item.track.display_name} · 이름표는 인접 지역 칸을 빌려 표시됩니다. 하단 표식이 원래 활동선의 위치입니다.`
+        : item.track.display_name;
+      return `${connector}${homeAnchor}<button type="button" class="spacetime-track-label${personSelected ? " is-selected" : ""}${meanwhileActive ? " is-meanwhile-active" : ""}" data-spacetime-person="${escapeHtml(item.track.person_id)}" data-spacetime-band="${escapeHtml(label.region_code)}" data-spacetime-label-borrowed="${label.borrowed_from_home_band ? "true" : "false"}" style="left:${label.label_x}px;top:${label.label_y}px;width:${label.width}px;opacity:${opacity}" title="${escapeHtml(tooltip)}">${escapeHtml(item.track.display_name)}</button>`;
     }).join("");
   }
 

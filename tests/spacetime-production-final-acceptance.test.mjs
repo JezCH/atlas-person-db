@@ -234,3 +234,80 @@ test("changing the selected Person moves the connector accent without moving eit
   context.selectedPersonId = "two";
   assert.deepEqual(lines(render()), [[false, "left:105px;top:35px;width:17px"], [true, "left:155px;top:35px;width:17px"]]);
 });
+
+
+test("borrowed full-width Person name stays centered on its historical rail, while home-fit labels retain their preferred side", () => {
+  const sandbox = { module: { exports: {} } };
+  vm.runInNewContext(read("atlas-person-spacetime-label-engine.js"), sandbox);
+  const engine = sandbox.module.exports;
+  const options = {
+    labelHeight:22, charWidth:9.4, cjkCharWidth:14, labelChromeWidth:13,
+    labelWidthSafety:6, maxHorizontalShift:600, borrowHorizontalSpace:true,
+    preserveFullTextWidth:true
+  };
+  const wide = engine.packLabels([{
+    person_id:"wide", text:"알렉산더 대왕", anchor_x:200, anchor_y:44,
+    min_left:180, max_right:220, forced:false
+  }], {width:600,height:150}, options);
+  assert.equal(wide.deferred.length, 0);
+  assert.equal(wide.placed.length, 1);
+  assert.ok(wide.placed[0].width > 40);
+  assert.ok(Math.abs(wide.placed[0].label_x + wide.placed[0].width / 2 - 200) < 0.01,
+    "a borrowed label must span around the owning rail, not start entirely in the next leaf");
+  const short = engine.packLabels([{
+    person_id:"short", text:"A", anchor_x:300, anchor_y:44,
+    min_left:280, max_right:350, forced:false
+  }], {width:600,height:150}, options);
+  assert.equal(short.deferred.length, 0);
+  assert.equal(short.placed.length, 1);
+  assert.ok(short.placed[0].label_x >= 280 && short.placed[0].rect.right <= 350);
+  assert.ok(short.placed[0].label_x > 300, "home-fit labels still start to the right of their rail");
+});
+
+test("cross-band marker marks only labels exceeding their actual source band and follows selection without moving X/Y", () => {
+  const sandbox = { module: { exports: {} } };
+  vm.runInNewContext(read("atlas-person-spacetime-label-engine.js"), sandbox);
+  const engine = sandbox.module.exports;
+  const view = read("atlas-person-spacetime-view.js");
+  const packStart = view.indexOf("  function packTrackLabels(");
+  const packEnd = view.indexOf("  function reasonLabel(", packStart);
+  const renderStart = view.indexOf("  function renderLabels(");
+  const renderEnd = view.indexOf("  function restoreCameraViewport(", renderStart);
+  assert.ok(packStart > 0 && packEnd > packStart && renderStart > 0 && renderEnd > renderStart);
+  const context = vm.createContext({
+    runtime: () => ({labelEngine:engine}), selectedPersonId:"wide",
+    PERSON_NAME_LABEL_PACK_HEIGHT:22, text:(v) => String(v || "").trim(), escapeHtml:String
+  });
+  vm.runInContext(view.slice(packStart, packEnd), context);
+  vm.runInContext(view.slice(renderStart, renderEnd), context);
+  const tracks = [
+    {track:{person_id:"wide",track_id:"w",display_name:"알렉산더 대왕"},
+      x:200, y:44, label_zone_left:180, label_zone_right:220, presentation_band_code:"western-europe"},
+    {track:{person_id:"short",track_id:"s",display_name:"A"},
+      x:300, y:96, label_zone_left:280, label_zone_right:350, presentation_band_code:"western-europe"}
+  ];
+  const pack = context.packTrackLabels(tracks, 150, 600, false);
+  assert.equal(pack.deferred.length, 0);
+  assert.equal(pack.placed.length, 2);
+  const wide = pack.placed.find(label => label.person_id === "wide");
+  const short = pack.placed.find(label => label.person_id === "short");
+  assert.equal(wide.borrowed_from_home_band, true);
+  assert.equal(short.borrowed_from_home_band, false);
+  assert.equal(wide.anchor_x, 200);
+  assert.equal(wide.anchor_y, 44);
+  const html = context.renderLabels(tracks, pack, {labels:1}, "");
+  assert.match(html, /class="spacetime-label-home-anchor is-selected" aria-hidden="true" style="left:200px;top:55px"/);
+  assert.match(html, /data-spacetime-person="wide"[^>]+data-spacetime-label-borrowed="true"/);
+  assert.match(html, /data-spacetime-person="short"[^>]+data-spacetime-label-borrowed="false"/);
+  assert.equal((html.match(/class="spacetime-label-home-anchor/g) || []).length, 1);
+  context.selectedPersonId = "short";
+  const changed = context.renderLabels(tracks, pack, {labels:1}, "");
+  assert.match(changed, /class="spacetime-label-home-anchor" aria-hidden="true" style="left:200px;top:55px"/);
+  assert.doesNotMatch(changed, /class="spacetime-label-home-anchor is-selected"/);
+  const css = read("atlas-person-spacetime-monumental-canvas.css");
+  assert.match(css, /\.spacetime-label-home-anchor\s*\{[^}]*pointer-events: none/);
+  assert.match(css, /\.spacetime-label-home-anchor\.is-selected\s*\{/);
+  const loader = read("atlas-main-authority-nav.js");
+  assert.match(loader, /homeband=20261121-centered-rail-origin-v1/);
+  assert.match(view, /spacetime-label-engine\.js\?v=.*homeband=20261121-centered-rail-origin-v1/);
+});

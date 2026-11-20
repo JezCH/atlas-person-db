@@ -306,6 +306,30 @@
   opacity: 1;
 }
 
+/* When a full Person name borrows an adjacent leaf's horizontal space,
+ * show its own rail anchor just below the label: typography is not geography.
+ * No marker is added for names fitting entirely inside their home subregion. */
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-label-home-anchor {
+  position: absolute;
+  z-index: 35;
+  width: 5px;
+  height: 5px;
+  margin: -2.5px 0 0 -2.5px;
+  border: 1px solid var(--spacetime-selection-metal);
+  border-radius: 50%;
+  background: var(--spacetime-ink);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.58);
+  opacity: .86;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-label-home-anchor.is-selected {
+  border-color: var(--spacetime-selection-metal-strong);
+  background: var(--spacetime-selection-metal-strong);
+  opacity: 1;
+}
+
 /* Domain color is strongest on the temporal rail. Selection adds neutral metal
  * around the rail; it never replaces a governance/military/etc identity color. */
 .spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-track-rail {
