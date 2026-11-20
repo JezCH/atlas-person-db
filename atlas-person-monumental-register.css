@@ -97,7 +97,7 @@
   border-right: 1px solid rgba(48, 54, 59, .72);
   background: transparent;
   color: inherit;
-  font-size: 10px;
+  font-size: 11.5px;
   font-weight: 760;
   line-height: 1.25;
   letter-spacing: .04em;
@@ -127,14 +127,14 @@
 .person-monumental-register > .person-table-head .person-table-head-title {
   padding: 5px 9px 3px;
   color: #687178;
-  font-size: 9.5px;
+  font-size: 11px;
   letter-spacing: .07em;
 }
 
 .person-monumental-register > .person-table-head .person-table-activity-subhead {
   border-top: 1px solid rgba(48, 54, 59, .62);
   color: #7f878d;
-  font-size: 9.5px;
+  font-size: 11px;
 }
 
 .person-monumental-register > .person-table-head .person-table-activity-subhead > span {
@@ -203,7 +203,7 @@
   text-orientation: mixed;
   color: #d4cfc4;
   font-family: var(--atlas-font-display);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 650;
   line-height: 1.22;
   letter-spacing: -.01em;
@@ -213,7 +213,7 @@
   max-width: 72px;
   color: #656e74;
   font-family: inherit;
-  font-size: 9.5px;
+  font-size: 11.5px;
   font-weight: 700;
   line-height: 1.35;
   letter-spacing: .035em;
@@ -346,6 +346,8 @@
   background: rgba(255, 255, 255, .03);
 }
 
+/* VIS-01: names and source-backed Activities remain readable at desktop widths;
+ * existing mobile two-line layout keeps its own geometry and all facts. */
 /* 1. Name — the primary historical object. */
 .person-monumental-register .person-table-identity,
 .person-monumental-register .person-register-identity,
@@ -368,7 +370,7 @@
   margin: 0;
   color: #e9e5dd;
   font-family: var(--atlas-font-display);
-  font-size: 15px;
+  font-size: 17.5px;
   font-weight: 620;
   line-height: 1.24;
   letter-spacing: -.025em;
@@ -425,9 +427,9 @@
 }
 
 .person-monumental-register .person-table-identity > .person-card-canonical {
-  color: #7d858b;
+  color: #b1b8bc;
   font-family: inherit;
-  font-size: 10.5px;
+  font-size: 11.5px;
   font-weight: 600;
   line-height: 1.35;
   letter-spacing: .015em;
@@ -442,8 +444,8 @@
   justify-content: flex-start;
   gap: 0;
   margin-top: 1px;
-  color: #697279;
-  font-size: 9px;
+  color: #a8b1b6;
+  font-size: 10.5px;
   font-weight: 700;
   line-height: 1.35;
 }
@@ -476,7 +478,7 @@
   padding: 1px 12px 0 0;
   border: 0;
   color: #c7c2b8;
-  font-size: 10.5px;
+  font-size: 12.5px;
   font-weight: 750;
   line-height: 1.45;
   letter-spacing: .025em;
@@ -510,7 +512,7 @@
   align-items: flex-start;
   padding-top: 1px;
   color: #747d83;
-  font-size: 9px;
+  font-size: 11.5px;
 }
 
 .person-monumental-register .person-table-activities .person-card-activity {
@@ -549,7 +551,7 @@
 
 .person-monumental-register .person-table-activities .person-card-activity-head b {
   color: #ddd9d0;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 760;
   line-height: 1.35;
   overflow-wrap: anywhere;
@@ -561,8 +563,8 @@
   border: 0;
   border-radius: 0;
   background: transparent;
-  color: #7a8389;
-  font-size: 9.5px;
+  color: #acb5b9;
+  font-size: 11px;
   font-weight: 750;
   line-height: 1.35;
 }
@@ -574,16 +576,16 @@
 
 .person-monumental-register .person-table-activities .person-card-activity-role {
   grid-column: 2;
-  color: #9ca2a5;
-  font-size: 10px;
+  color: #c2c6c4;
+  font-size: 12px;
   font-weight: 650;
   line-height: 1.45;
 }
 
 .person-monumental-register .person-table-activities .person-card-activity-period {
   grid-column: 3;
-  color: #bdb8ae;
-  font-size: 10px;
+  color: #d4cec2;
+  font-size: 12px;
   font-weight: 700;
   line-height: 1.45;
   letter-spacing: .018em;
@@ -597,7 +599,7 @@
 .person-monumental-register .person-table-activities .person-card-activity > small {
   grid-column: 1 / -1;
   color: #737c82;
-  font-size: 9.5px;
+  font-size: 11px;
   line-height: 1.35;
 }
 
@@ -611,7 +613,7 @@
   border-radius: 0;
   background: transparent;
   color: #a98f58;
-  font-size: 8px;
+  font-size: 10.5px;
   font-weight: 700;
 }
 
@@ -627,7 +629,7 @@
   padding: 2px 3px 0 0;
   border: 0;
   color: #656e74;
-  font-size: 9px;
+  font-size: 10.5px;
   font-weight: 700;
   line-height: 1.35;
   text-align: right;
@@ -650,51 +652,10 @@
   display: none;
 }
 
-/* Ordinary desktop rows retain compact scan density while making the
- * registered Person name, Polity, Role and chronology genuinely readable.
- * This scoped 1101px+ rule does not compete with the approved 390px
- * factual two-line mobile Register; neither Activity nor Source is removed. */
+/* Ordinary desktop rows retain the compact scan rhythm with the larger labels. */
 @media (min-width: 1101px) {
   .person-monumental-register .person-register-entry:not(.has-multiple-activities) {
     padding-block: 2px;
-  }
-  .person-monumental-register .person-table-identity > strong {
-    font-size: 17px;
-    line-height: 1.28;
-  }
-  .person-monumental-register .person-register-range {
-    font-size: 12px;
-    line-height: 1.4;
-  }
-  .person-monumental-register .person-table-activities .person-card-activity-head b {
-    font-size: 12.5px;
-    line-height: 1.4;
-  }
-  .person-monumental-register .person-table-activities .person-card-activity-role,
-  .person-monumental-register .person-table-activities .person-card-activity-period {
-    min-width: 0;
-    font-size: 12px;
-    line-height: 1.4;
-    white-space: normal;
-    overflow-wrap: anywhere;
-  }
-  .person-monumental-register .person-relation-badge {
-    font-size: 11px;
-  }
-  .person-monumental-register .person-table-activities .person-card-activity > small {
-    font-size: 11px;
-    line-height: 1.4;
-  }
-  .person-monumental-register .person-era-band > span {
-    font-size: 12px;
-  }
-  .person-monumental-register .person-era-band-range {
-    font-size: 11px;
-  }
-  .person-monumental-register > .person-table-head .person-table-head-cell,
-  .person-monumental-register > .person-table-head .person-table-head-title,
-  .person-monumental-register > .person-table-head .person-table-activity-subhead {
-    font-size: 11px;
   }
 }
 
