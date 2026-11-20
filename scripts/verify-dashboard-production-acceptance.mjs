@@ -531,11 +531,17 @@ async function collectMobileDom(client) {
       el.scrollTop=Math.min(120,Math.max(0,el.scrollHeight-el.clientHeight));
       const after=el.scrollTop;
       el.scrollTop=before;
+      const beforeX=el.scrollLeft;
+      el.scrollLeft=Math.min(120,Math.max(0,el.scrollWidth-el.clientWidth));
+      const afterX=el.scrollLeft;
+      el.scrollLeft=beforeX;
       return {
         client_width:el.clientWidth,scroll_width:el.scrollWidth,
         client_height:el.clientHeight,scroll_height:el.scrollHeight,
         overflow_x:style.overflowX,overflow_y:style.overflowY,max_height:style.maxHeight,
-        scroll_probe:after
+        scroll_probe:after,scroll_probe_x:afterX,
+        keyboard_focusable:el.tabIndex===0,
+        aria_label:el.getAttribute("aria-label")
       };
     };
     const visible=(el)=>{const r=el.getBoundingClientRect();const st=getComputedStyle(el);return r.width>0&&r.height>0&&st.display!=="none"&&st.visibility!=="hidden";};
@@ -550,6 +556,12 @@ async function collectMobileDom(client) {
       kpi_columns:getComputedStyle(q(".dashboard-kpi-grid")).gridTemplateColumns,
       heatmap_wrap:scrollProbe(heat),
       completeness_wrap:scrollProbe(complete),
+      matrix_type:{
+        heatmap_header_px:Number.parseFloat(getComputedStyle(q(".dashboard-heatmap .dashboard-heatmap-region-head"))?.fontSize||"0")||0,
+        heatmap_number_px:Number.parseFloat(getComputedStyle(q(".dashboard-heatmap tbody td>strong"))?.fontSize||"0")||0,
+        completeness_header_px:Number.parseFloat(getComputedStyle(q(".dashboard-completeness thead th"))?.fontSize||"0")||0,
+        completeness_number_px:Number.parseFloat(getComputedStyle(q(".dashboard-completeness tbody td"))?.fontSize||"0")||0
+      },
       timeline:scrollProbe(timeline),
       timeline_entry_count:qa(".dashboard-timeline-entry").length,
       touch_targets:touchTargets,
@@ -777,10 +789,18 @@ async function main() {
     await sleep(500);
     const mobileDom=await collectMobileDom(client);
     assert(mobileDom.global_scroll.overflow_x <= 1, "Mobile Dashboard causes page-level horizontal overflow", mobileDom.global_scroll);
-    assert(mobileDom.heatmap_wrap && mobileDom.heatmap_wrap.overflow_x === "hidden", "Mobile Heatmap wrapper does not use viewport-fit overflow", mobileDom.heatmap_wrap);
-    assert(mobileDom.heatmap_wrap.scroll_width - mobileDom.heatmap_wrap.client_width <= 1, "Mobile Heatmap still requires horizontal scrolling", mobileDom.heatmap_wrap);
-    assert(mobileDom.completeness_wrap && mobileDom.completeness_wrap.overflow_x === "hidden", "Mobile Completeness wrapper does not use viewport-fit overflow", mobileDom.completeness_wrap);
-    assert(mobileDom.completeness_wrap.scroll_width - mobileDom.completeness_wrap.client_width <= 1, "Mobile Completeness still requires horizontal scrolling", mobileDom.completeness_wrap);
+    // 390px cannot legibly display 6+ historic facts in fixed 7px columns.
+    // The actual matrix scrolls inside its panel: never the entire document.
+    for(const [label,matrix] of [["Heatmap",mobileDom.heatmap_wrap],["Completeness",mobileDom.completeness_wrap]]){
+      assert(matrix&&["auto","scroll"].includes(matrix.overflow_x),label+" matrix must allow horizontal scrolling",matrix);
+      assert(matrix.scroll_width>matrix.client_width+50&&matrix.scroll_probe_x>0,label+" did not actually scroll inside its panel",matrix);
+      assert(matrix.keyboard_focusable&&matrix.aria_label?.includes("스크롤"),label+" table must be keyboard-accessible and described",matrix);
+    }
+    assert(mobileDom.matrix_type?.heatmap_header_px>=11
+      &&mobileDom.matrix_type?.heatmap_number_px>=12
+      &&mobileDom.matrix_type?.completeness_header_px>=11
+      &&mobileDom.matrix_type?.completeness_number_px>=12,
+      "Mobile Dashboard factual matrix text remains too small",mobileDom.matrix_type);
     assert(mobileDom.timeline && mobileDom.timeline.overflow_y === "auto", "Mobile timeline scroll contract is not active", mobileDom.timeline);
     if (mobileDom.timeline.scroll_height > mobileDom.timeline.client_height) {
       assert(mobileDom.timeline.scroll_probe > 0, "Mobile timeline had overflow but did not actually scroll", mobileDom.timeline);
