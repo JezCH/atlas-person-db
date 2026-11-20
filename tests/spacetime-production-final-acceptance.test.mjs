@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import vm from "node:vm";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -211,4 +212,25 @@ test("the selected Person label and its connector share selection state", () => 
   assert.ok(view.includes('spacetime-label-connector${personSelected ? " is-selected" : ""}" aria-hidden="true"'));
   assert.ok(view.includes('spacetime-track-label${personSelected ? " is-selected" : ""}'));
   assert.match(css, /\.spacetime-label-connector\.is-selected\s*\{[^}]*--spacetime-selection-metal-strong/);
+});
+
+test("changing the selected Person moves the connector accent without moving either line", () => {
+  const source = read("atlas-person-spacetime-view.js");
+  const start = source.indexOf("  function renderLabels(");
+  const end = source.indexOf("  function restoreCameraViewport(", start);
+  assert.ok(start >= 0 && end > start);
+  const context = vm.createContext({ escapeHtml: String, selectedPersonId: "one" });
+  vm.runInContext(source.slice(start, end), context);
+  const tracks = ["one", "two"].map(person_id => ({ track: { person_id, display_name: person_id } }));
+  const labels = { placed: tracks.map(({ track }, i) => ({
+    person_id: track.person_id, region_left: 100 + i * 50,
+    connector: { x1: 5, x2: 22, y1: 35, length: 17 },
+    label_x: 122 + i * 50, label_y: 30, width: 50
+  })) };
+  const render = () => context.renderLabels(tracks, labels, { labels: 0.7 }, "");
+  const lines = (html) => Array.from(html.matchAll(/<i class="spacetime-label-connector( is-selected)?" aria-hidden="true" style="([^"]+)"/g),
+    ([, selected, style]) => [Boolean(selected), style]);
+  assert.deepEqual(lines(render()), [[true, "left:105px;top:35px;width:17px"], [false, "left:155px;top:35px;width:17px"]]);
+  context.selectedPersonId = "two";
+  assert.deepEqual(lines(render()), [[false, "left:105px;top:35px;width:17px"], [true, "left:155px;top:35px;width:17px"]]);
 });
