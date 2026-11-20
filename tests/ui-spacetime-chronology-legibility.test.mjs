@@ -21,23 +21,23 @@ const canvasSelector = (suffix) => `.spacetime-frame[data-spacetime-visual="chro
 const toolsSelector = (suffix) => `.person-spacetime-mount[data-spacetime-tools="instrument-v7"] ${suffix}`;
 
 test("UI-03A chronology uses readable major year, era and world-region labels without resizing the world model", () => {
-  assert.match(declarationBlock(canvas, canvasSelector(".spacetime-region-head-layer.is-macro .spacetime-region-head-band strong")), /font-size: 11px/);
-  assert.match(declarationBlock(canvas, canvasSelector(".spacetime-region-head-layer.is-macro .spacetime-region-head-band small")), /font-size: 9px/);
-  assert.match(declarationBlock(canvas, canvasSelector(".spacetime-region-head-layer.is-subregion .spacetime-region-head-band strong")), /font-size: 10px/);
-  assert.match(declarationBlock(canvas, canvasSelector(".spacetime-era-axis > div span")), /font-size: 11px/);
-  assert.match(declarationBlock(canvas, canvasSelector(".spacetime-year-axis span")), /font-size: 10px/);
-  assert.match(declarationBlock(canvas, canvasSelector(".spacetime-year-axis span.is-major")), /font-size: 11\.5px/);
+  assert.match(declarationBlock(canvas, canvasSelector(".spacetime-region-head-layer.is-macro .spacetime-region-head-band strong")), /font-size: 14px/);
+  assert.match(declarationBlock(canvas, canvasSelector(".spacetime-region-head-layer.is-macro .spacetime-region-head-band small")), /font-size: 10px/);
+  assert.match(declarationBlock(canvas, canvasSelector(".spacetime-region-head-layer.is-subregion .spacetime-region-head-band strong")), /font-size: 12px/);
+  assert.match(declarationBlock(canvas, canvasSelector(".spacetime-era-axis > div span")), /font-size: 12px/);
+  assert.match(declarationBlock(canvas, canvasSelector(".spacetime-year-axis span")), /font-size: 11px/);
+  assert.match(declarationBlock(canvas, canvasSelector(".spacetime-year-axis span.is-major")), /font-size: 13px/);
   assert.match(canvas, /--spacetime-label-muted: #a9b2b6/);
   assert.match(declarationBlock(canvas, canvasSelector(".spacetime-track-label")), /height: 22px/);
-  assert.match(declarationBlock(canvas, canvasSelector(".spacetime-track-label")), /font-size: 12\.5px/);
+  assert.match(declarationBlock(canvas, canvasSelector(".spacetime-track-label")), /font-size: 14px/);
 });
 
 test("UI-03A inspector keeps selected activity legible with six navigation actions", () => {
-  assert.match(declarationBlock(tools, toolsSelector(".spacetime-controls input")), /font-size: 12px/);
-  assert.match(declarationBlock(tools, toolsSelector(".spacetime-inspector-person > p")), /font-size: 11px/);
-  assert.match(declarationBlock(tools, toolsSelector(".spacetime-inspector-actions button")), /font-size: 10px/);
-  assert.match(declarationBlock(tools, toolsSelector(".spacetime-inspector-activity-select strong")), /font-size: 11px/);
-  assert.match(declarationBlock(tools, toolsSelector(".spacetime-inspector-actions")), /grid-template-columns: repeat\(6,minmax\(0,1fr\)\)/);
+  assert.match(declarationBlock(tools, toolsSelector(".spacetime-controls input")), /font-size: 14px/);
+  assert.match(declarationBlock(tools, toolsSelector(".spacetime-inspector-person > p")), /font-size: 12px/);
+  assert.match(declarationBlock(tools, toolsSelector(".spacetime-inspector-actions button")), /font-size: 11px/);
+  assert.match(declarationBlock(tools, toolsSelector(".spacetime-inspector-activity-select strong")), /font-size: 12px/);
+  assert.match(declarationBlock(tools, toolsSelector(".spacetime-inspector-actions")), /grid-template-columns: repeat\(3,minmax\(0,1fr\)\)/);
 });
 
 test("UI-03A responsive hierarchy and deployed lazy stylesheet versions stay attached", () => {
