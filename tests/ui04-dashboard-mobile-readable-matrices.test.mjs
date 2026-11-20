@@ -10,7 +10,7 @@ const root=read("index.html");
 const browser=read("scripts/verify-dashboard-production-acceptance.mjs");
 
 test("VIS-04: both factual mobile Dashboard matrices are natively scrollable rather than unreadable 6–8px grids",()=>{
-  const comp=css.slice(css.indexOf("/* VIS-04: six factual completeness columns"),css.indexOf(".dashboard-kpi-action{position:relative}"));
+  const comp=css.slice(css.indexOf("/* VIS-04: six factual completeness columns"),css.indexOf(".dashboard-kpi-action{position:relative;"));
   const heat=css.slice(css.indexOf("/* VIS-04: preserve all reviewed Era × Region values"),css.indexOf("/* Polity concentration */"));
   assert.ok(comp.length>400&&heat.length>400);
   assert.match(comp,/\.dashboard-completeness-wrap\{overflow-x:auto/);
