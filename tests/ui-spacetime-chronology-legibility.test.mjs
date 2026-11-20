@@ -28,8 +28,8 @@ test("UI-03A chronology uses readable major year, era and world-region labels wi
   assert.match(declarationBlock(canvas, canvasSelector(".spacetime-year-axis span")), /font-size: 10px/);
   assert.match(declarationBlock(canvas, canvasSelector(".spacetime-year-axis span.is-major")), /font-size: 11\.5px/);
   assert.match(canvas, /--spacetime-label-muted: #a9b2b6/);
-  assert.match(declarationBlock(canvas, canvasSelector(".spacetime-track-label")), /height: 18px/);
-  assert.match(declarationBlock(canvas, canvasSelector(".spacetime-track-label")), /font-size: 10px/);
+  assert.match(declarationBlock(canvas, canvasSelector(".spacetime-track-label")), /height: 22px/);
+  assert.match(declarationBlock(canvas, canvasSelector(".spacetime-track-label")), /font-size: 12\.5px/);
 });
 
 test("UI-03A inspector keeps selected activity legible with six navigation actions", () => {

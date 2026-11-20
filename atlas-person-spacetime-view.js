@@ -7,6 +7,8 @@
   const AXIS_WIDTH = 140;
   const ERA_AXIS_WIDTH = 68;
   const DEFAULT_TIMELINE_HEIGHT = 4200;
+  // Shared actual name-rectangle height for clipping and packing (desktop 22px, mobile 21px).
+  const PERSON_NAME_LABEL_PACK_HEIGHT = 22;
   const CAMERA_HEADER_HEIGHT = 36;
   const CAMERA_MIN_ZOOM = 0.5;
   const CAMERA_DEFAULT_ZOOM = 5;
@@ -1010,13 +1012,13 @@
   }
 
   function visibleRailLabelItems(projectedTracks, segmentTracks, projection, presentation, contentWidth, cullRect) {
-    const { exploration, presentationLayout, labelEngine } = runtime();
+    const { exploration, presentationLayout } = runtime();
     const projectedByPerson = new Map((Array.isArray(projectedTracks) ? projectedTracks : []).map((item) => [item.person_id, item]));
     const visibleLeft = Number(cullRect?.visible_left) || 0;
     const visibleTop = Number(cullRect?.visible_top) || 0;
     const visibleRight = visibleLeft + Math.max(1, Number(cullRect?.visible_width) || 1);
     const visibleBottom = visibleTop + Math.max(1, Number(cullRect?.visible_height) || 1);
-    const labelHalfHeight = labelEngine.DEFAULT_LABEL_HEIGHT / 2;
+    const labelHalfHeight = PERSON_NAME_LABEL_PACK_HEIGHT / 2;
     const result = [];
 
     for (const track of Array.isArray(segmentTracks) ? segmentTracks : []) {
@@ -1129,6 +1131,14 @@
       labels,
       { width:packingWidth, height:packingHeight },
       {
+        // UI-03 P0: reserve the real 12.5px readable name strip, not the
+        // legacy 10px-width estimate. Conservative on 12px mobile text too.
+        // The label engine never adjusts historical Y or the world/camera.
+        labelHeight:PERSON_NAME_LABEL_PACK_HEIGHT,
+        charWidth:8.7,
+        cjkCharWidth:12.5,
+        labelChromeWidth:13,
+        labelWidthSafety:6,
         maxHorizontalShift:packingWidth,
         borrowHorizontalSpace:true,
         preserveFullTextWidth:true,
