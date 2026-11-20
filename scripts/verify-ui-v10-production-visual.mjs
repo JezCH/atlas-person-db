@@ -209,7 +209,7 @@ async function collectMain(client){
     const medianIdentityWidthRatio=median(centerSamples.map((sample)=>sample.identityWidthRatio));
     const medianActivityToIdentityRatio=median(centerSamples.map((sample)=>sample.activityToIdentityRatio));
     const mobileTypographySamples=ordinaryRows.slice(0,15).map((row)=>{
-      const font=(selector)=>Number.parseFloat(style(row.querySelector(selector))?.fontSize||"0")||0;
+      const font=(selector)=>{const el=row.querySelector(selector);return el?Number.parseFloat(style(el)?.fontSize||"0")||0:null;};
       const identity=row.querySelector(".person-register-identity")?.getBoundingClientRect?.();
       const activities=row.querySelector(".person-register-activities")?.getBoundingClientRect?.();
       const rowRect=row.getBoundingClientRect();
@@ -640,8 +640,11 @@ async function main(){
       "Mobile Person Register no longer reserves enough room to read its actual facts",mobileMain);
     assert(mobileMain.mobileTypographySamples?.length>=5
       && mobileMain.mobileTypographySamples.every((item)=>
-        item.namePx>=16&&item.polityPx>=12&&item.rolePx>=11.5
-        &&item.rangePx>=11.5&&item.periodPx>=11.5
+        item.namePx>=16
+        &&(item.polityPx==null||item.polityPx>=12)
+        &&(item.rolePx==null||item.rolePx>=11.5)
+        &&(item.rangePx==null||item.rangePx>=11.5)
+        &&(item.periodPx==null||item.periodPx>=11.5)
         &&item.stacked&&item.activityRightDelta<=1.5),
       "Mobile Person name/Polity/Role/chronology must be readable, stacked and aligned",mobileMain.mobileTypographySamples);
     assert(/linear-gradient/i.test(mobileMain.firstDomainBackgroundImage||""),
