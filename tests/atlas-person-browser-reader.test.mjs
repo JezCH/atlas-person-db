@@ -312,3 +312,21 @@ test('compact projection rejects unknown schema and retains legacy read response
   })});
   assert.equal(result.persons[0].id,'x1');
 });
+
+
+test('Person Main can skip group sorting when merging both categories into one final chronology',()=>{
+  const reader=loadReader();
+  const rows=[
+    person('l1','legendary',200,'Legend'),
+    person('h2','historical',100,'Later'),
+    person('h1','historical',-200,'Earlier'),
+    person('h3','historical',null,'Unknown')
+  ];
+  const sorted=reader.preparePersonGroups(rows,{sortOrder:'start-asc'});
+  const fast=reader.preparePersonGroups(rows,{sortOrder:'start-asc',sortGroups:false,includeFacetCatalog:false});
+  assert.deepEqual(Array.from(fast.historical,x=>x.id),['h2','h1','h3'],'fast path must leave group order untouched');
+  const expected=[...sorted.historical,...sorted.other_or_uncertain].sort((a,b)=>reader.comparePersons(a,b,'start-asc'));
+  const actual=[...fast.historical,...fast.other_or_uncertain].sort((a,b)=>reader.comparePersons(a,b,'start-asc'));
+  assert.deepEqual(Array.from(actual,x=>x.id),Array.from(expected,x=>x.id));
+  assert.equal(fast.facet_catalog,null);
+});
