@@ -13,8 +13,8 @@ const person=Object.freeze({
   facets:emptyFacets(),first_activity_year:1700,last_activity_year:1750,representative_domain:'science'
 });
 
-function harness(initialHash,detailPerson=person) {
-  const state={listCalls:0,detailCalls:0,portraitCalls:0,events:new Map(),groupMarkup:[],details:'',domainsPassedToPortrait:[],emitted:[],detailClickListener:null};
+function harness(initialHash,detailPerson=person,options={}) {
+  const state={listCalls:0,detailCalls:0,portraitCalls:0,events:new Map(),groupMarkup:[],details:'',domainsPassedToPortrait:[],emitted:[],detailClickListener:null,rowSelectionChanges:[],portraitPatch:null,editorPatch:null};
   const node=(extra={})=>({
     addEventListener(){},setAttribute(){},insertAdjacentElement(){},
     append(){},remove(){},removeAttribute(){},querySelector(){return null;},
@@ -23,9 +23,20 @@ function harness(initialHash,detailPerson=person) {
   const groups=node({
     children:[],
     addEventListener(type,cb){state.groupsListener=cb;},
-    insertAdjacentHTML(_where,html){state.groupMarkup.push(html);}
+    insertAdjacentHTML(_where,html){state.groupMarkup.push(html);},
+    querySelector(selector){
+      if (selector.includes(`[data-person-id="${id}"]`)) return {classList:{toggle(_name,selected){state.rowSelectionChanges.push(selected);}}};
+      return null;
+    }
   });
-  const detail=node({addEventListener(type,cb){if(type==='click')state.detailClickListener=cb;}});
+  const detail=node({
+    addEventListener(type,cb){if(type==='click')state.detailClickListener=cb;},
+    querySelector(selector) {
+      if (selector === '.person-chronicle-hero > .person-detail-portrait') return {set outerHTML(value){state.portraitPatch=value;}};
+      if (selector === '.person-detail-authoring .person-portrait-editor') return {set outerHTML(value){state.editorPatch=value;}};
+      return null;
+    }
+  });
   Object.defineProperty(detail,'innerHTML',{
     get(){return state.details;},
     set(value){state.details=value;}
@@ -54,7 +65,9 @@ function harness(initialHash,detailPerson=person) {
   const reader={
     UUID_PATTERN:/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
     readPerson:async()=>{state.detailCalls++;return {person:detailPerson};},
-    readPortrait:async()=>{state.portraitCalls++;return {portrait:null};},
+    readPortrait:async()=>{state.portraitCalls++;return options.portraitPromise || {portrait:null};},
+    personMatchesQuery:()=>true,
+    personMatchesFacets:()=>true,
     preparePersonGroups:(persons)=>({historical:persons,other_or_uncertain:[]}),
     comparePersons:()=>0,facetCatalog:()=>emptyFacets()
   };
@@ -71,7 +84,9 @@ function harness(initialHash,detailPerson=person) {
     ATLAS_PERSON_DOMAIN_REGISTRY:{LABELS:{},CODES:[],DEFINITIONS:[]},
     ATLAS_UI_I18N:{enumLabel:(_kind,_value,{fallback})=>fallback},
     ATLAS_PERSON_EXTERNAL_REFERENCES:{},
-    ATLAS_PERSON_PORTRAIT_VIEW:{createRenderer:()=>({portraitEditorHtml:()=>''})},
+    ATLAS_PERSON_PORTRAIT_VIEW:{createRenderer:()=>({portraitEditorHtml:(_person,result)=>result?.loading
+      ? '<div class="person-portrait-editor is-loading">초상화 정보를 불러오는 중입니다.</div>'
+      : `<div class="person-portrait-editor">${result?.portrait?'초상 교체':'초상 업로드'}</div>`})},
     ATLAS_PERSON_PORTRAIT_CONTROLLER:{createController:()=>({})},
     ATLAS_PERSON_PORTRAIT_PRESENTATION:{presentationFor:(_person,domain)=>{
       state.domainsPassedToPortrait.push(domain);
@@ -80,7 +95,7 @@ function harness(initialHash,detailPerson=person) {
         background_url:domain ? './portrait-assets/backgrounds/'+domain+'.png' : null
       };
     }},
-    ATLAS_PERSON_PROFILE_EDITOR:{createEditor:()=>({profileEditorHtml:()=>''})},
+    ATLAS_PERSON_PROFILE_EDITOR:{createEditor:()=>({profileEditorHtml:(_person,{portraitHtml})=>portraitHtml})},
     ATLAS_PERSON_EVIDENCE_VIEW:{createRenderer:()=>({activityEvidenceHtml:()=>''})},
     addEventListener(name,cb){events.set(name,cb);},
     dispatchEvent(event){state.emitted.push(event);}
@@ -199,4 +214,47 @@ test('Activity-specific contemporaries action selects only a real Activity belon
   assert.equal(emitted[0].detail.personId,id);
   assert.equal(emitted[0].detail.activityId,activityId);
   assert.equal(h.state.listCalls,0);
+});
+
+
+test('slow portrait never blocks factual Person detail; late result patches only portrait and editor',async()=>{
+  let resolvePortrait;
+  const delayed = new Promise(resolve=>{resolvePortrait=resolve;});
+  const h=harness('#atlas-persons/person/'+id,person,{portraitPromise:delayed});
+  assert.equal(await h.window.ATLAS_PERSON_MAIN.openPerson(id),true);
+  assert.match(h.state.details,/Test Person/);
+  assert.match(h.state.details,/초상화 조회 중/);
+  assert.match(h.state.details,/초상화 정보를 불러오는 중입니다/);
+  assert.equal(h.state.portraitPatch,null);
+  const detailSnapshot=h.state.details;
+  resolvePortrait({portrait:{asset_url:'https://example.org/portrait.webp',portrait_kind:'photo'}});
+  await settle();
+  assert.equal(h.state.details,detailSnapshot,'late portrait must not rerender detail form or chronology');
+  assert.match(h.state.portraitPatch,/portrait.webp/);
+  assert.match(h.state.editorPatch,/초상 교체/);
+  assert.equal(h.state.portraitCalls,1);
+});
+
+test('late portrait after clearing selection cannot overwrite the new detail state',async()=>{
+  let resolvePortrait;
+  const delayed=new Promise(resolve=>{resolvePortrait=resolve;});
+  const h=harness('#atlas-persons/person/'+id,person,{portraitPromise:delayed});
+  await h.window.ATLAS_PERSON_MAIN.openPerson(id);
+  h.window.ATLAS_PERSON_MAIN.clearSelection();
+  resolvePortrait({portrait:{asset_url:'https://example.org/stale.webp'}});
+  await settle();
+  assert.equal(h.state.portraitPatch,null);
+  assert.match(h.state.details,/왼쪽에서 인물을 선택/);
+});
+
+test('selecting and clearing Person only toggles row selection, not the full rendered register',async()=>{
+  const h=harness('#atlas-persons');
+  await settle();
+  const renderCount=h.state.groupMarkup.length;
+  assert.equal(await h.window.ATLAS_PERSON_MAIN.openPerson(id),true);
+  assert.equal(h.state.groupMarkup.length,renderCount);
+  assert.equal(h.state.rowSelectionChanges.at(-1),true);
+  h.window.ATLAS_PERSON_MAIN.clearSelection();
+  assert.equal(h.state.groupMarkup.length,renderCount);
+  assert.equal(h.state.rowSelectionChanges.at(-1),false);
 });

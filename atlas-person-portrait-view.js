@@ -5,6 +5,7 @@
     function portraitEditorHtml(person, portraitResult = null) {
       const personId = escapeHtml(person?.id || "");
       if (!personId) return "";
+      if (portraitResult?.loading) return '<div class="person-portrait-editor is-loading" aria-busy="true"><p class="person-profile-help">초상화 정보를 불러오는 중입니다.</p></div>';
       if (portraitResult?.error) return '<div class="person-portrait-editor is-error"><p class="person-profile-help">초상화 조회에 실패해 업로드·삭제를 비활성화했습니다. 새로고침 후 다시 시도하세요.</p></div>';
       const portrait = portraitResult?.portrait || null;
       return `<div class="person-portrait-editor">
