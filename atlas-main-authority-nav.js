@@ -221,7 +221,7 @@
     if (spacetimeAssetsPromise) return spacetimeAssetsPromise;
     appendStylesheetOnce("./atlas-person-spacetime-view.css?v=20260923-runtime-ownership-v1&ui06b=roundtrip-v1");
     appendStylesheetOnce("./atlas-person-spacetime-monumental-canvas.css?v=20261008-spacetime-l1-chronograph-v1&ui=20261119-ui03a-readability-v1");
-    appendStylesheetOnce("./atlas-person-spacetime-instrument-tools.css?v=20261008-spacetime-l2-instrument-finish-v1&ui06bmobile=20261120-touch-return-v1&ui=20261119-ui03a-readability-v1&region=20261119-ui06a-v1&nav=20261119-person-spacetime-crosslink-v1&year=20261120-ui06a-direct-year-v1&ui06b=roundtrip-v1&activity=20261120-moment-return-v1&polity=20261120-ui06a-id-filter-v1");
+    appendStylesheetOnce("./atlas-person-spacetime-instrument-tools.css?v=20261008-spacetime-l2-instrument-finish-v1&ui=20261119-ui03a-readability-v1&region=20261119-ui06a-v1&nav=20261119-person-spacetime-crosslink-v1&year=20261120-ui06a-direct-year-v1&ui06b=roundtrip-v1&activity=20261120-moment-return-v1&polity=20261120-ui06a-id-filter-v1&ui06bmobile=20261120-touch-return-v1");
     appendStylesheetOnce("./atlas-person-spacetime-mobile-v8.css?v=20261007-spacetime-m4-mobile-material-v1&ui=20261119-ui03a-readability-v1&ui06b=roundtrip-v1");
     appendStylesheetOnce("./atlas-person-spacetime-compare-crosslink.css?v=20261120-ui07-spacetime-v1");
     spacetimeAssetsPromise = ensureSpacetimeModel()
