@@ -1350,7 +1350,7 @@
       const opacity = forced ? 1 : lodWeights.labels;
       const connector = label.connector ? `<i class="spacetime-label-connector${personSelected ? " is-selected" : ""}" aria-hidden="true" style="left:${label.region_left + Math.min(label.connector.x1, label.connector.x2)}px;top:${label.connector.y1}px;width:${label.connector.length}px"></i>` : "";
       const homeAnchor = label.borrowed_from_home_band
-        ? `<i class="spacetime-label-home-anchor${personSelected ? " is-selected" : ""}" aria-hidden="true" style="left:${label.anchor_x}px;top:${label.label_y + 11}px"></i>`
+        ? `<i class="spacetime-label-home-anchor${personSelected ? " is-selected" : ""}" aria-hidden="true" style="left:${label.anchor_x}px;top:${label.label_y + 11}px" data-spacetime-person="${escapeHtml(item.track.person_id)}"></i>`
         : "";
       const meanwhileActive = meanwhilePersonIds.has(item.track.person_id);
       const tooltip = label.borrowed_from_home_band
