@@ -484,7 +484,7 @@ async function verifyMobileTwoPersonComparison(client) {
     assert(picked.id===row&&picked.pressed==="true","Real Person comparison control failed",picked);
     selected.push(picked);
   }
-  assert.notEqual(selected[0].id,selected[1].id,"Two distinct Persons required");
+  assert(selected[0].id !== selected[1].id,"Two distinct Persons required");
   await waitFor(client,
     "document.querySelectorAll('#personComparePanel .atlas-compare-person').length === 2 && Boolean(document.querySelector('#personComparePanel .atlas-compare-period-analysis'))",
     65000);
@@ -515,7 +515,8 @@ async function verifyMobileTwoPersonComparison(client) {
     };
   });
   assert(!view.error && view.stacked,"390px source-backed comparison did not stack",view);
-  assert.deepEqual(view.activityCounts,[1,1],"Live Person Activity records were lost",view);
+  assert(view.activityCounts.length===2 && view.activityCounts[0]===1 && view.activityCounts[1]===1,
+    "Live Person Activity records were lost",view);
   assert(view.totals.length===4&&view.totals.reduce((a,b)=>a+b,0)===1,
     "Historical Activity pairing count is not conserved",view);
   assert(view.sourceLinks>0,"Two-Person comparison lost source access",view);
