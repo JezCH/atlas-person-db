@@ -35,7 +35,7 @@
     ["./atlas-person-spacetime-person-tracks.js?v=20260902-inspector-evidence", "ATLAS_PERSON_SPACETIME_PERSON_TRACKS"],
     ["./atlas-person-spacetime-political-placement.js?v=20260918-opposition-context", "ATLAS_PERSON_SPACETIME_POLITICAL_PLACEMENT"],
     ["./atlas-person-spacetime-lod.js?v=20260920-exact-fit-floor", "ATLAS_PERSON_SPACETIME_LOD"],
-    ["./atlas-person-spacetime-label-engine.js?v=20260920-global-name-overlay", "ATLAS_PERSON_SPACETIME_LABEL_ENGINE"]
+    ["./atlas-person-spacetime-label-engine.js?v=20260920-global-name-overlay&homeband=20261121-centered-rail-origin-v1", "ATLAS_PERSON_SPACETIME_LABEL_ENGINE"]
   ]);
   const RUNTIME_OPTIONAL_ASSETS = Object.freeze({
     inspector: Object.freeze(["./atlas-person-spacetime-inspector.js?v=20260903-c8", "ATLAS_PERSON_SPACETIME_INSPECTOR"]),
