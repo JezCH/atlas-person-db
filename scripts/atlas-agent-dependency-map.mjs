@@ -157,7 +157,7 @@ export function analyzeDependencies({root=process.cwd(),target,depth=2,cap=25}={
     if(/^tests\/.+\.test\.(?:mjs|js|cjs)$/.test(p))
       tests.set(p,'static direct/transitive importer');
   for(const p of paths)
-    if(p.startsWith('tests/')&&p.includes(stem)&&/\.test\.(?:mjs|js|cjs)$/.test(p))
+    if(!tests.has(p)&&p.startsWith('tests/')&&p.includes(stem)&&/\.test\.(?:mjs|js|cjs)$/.test(p))
       tests.set(p,'filename match, not verified coverage');
   return {version:2,target,head_sha:git(base,['rev-parse','HEAD']).trim(),
     scope:'Static literal relative module edges only. Not full AST, call graph, runtime routes or verified test coverage.',
