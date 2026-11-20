@@ -66,6 +66,8 @@ test("UI-07B marks approximate, uncertain, missing precision and cross-calendar 
     detail("b",110,130,{endCertainty:"uncertain"}),
     detail("b",110,130,{startGranularity:"month"}),
     detail("b",110,130,{calendar:"julian"}),
+    detail("b",110,130,{calendar:"unspecified_historical"}),
+    detail("b",110,130,{calendar:"source_calendar"}),
     detail("b",110,130,{chronology:"disputed"}),
     { ...detail("b",110,130),start:{year:110} }
   ]){
@@ -94,6 +96,20 @@ test("UI-07B unknown and ongoing periods never acquire fabricated end dates or n
     assert.equal(result.candidates.length,0);
     assert.equal(result.inconclusive,1);
     assert.match(compare.render(people([base],[activity])),/근거 부족으로 판별할 수 없습니다/);
+  }
+  for (const placeholder of ["unspecified_historical","source_calendar"]) {
+    const candidate=compare.compareIntervals(people(
+      [detail("a",100,120,{calendar:placeholder})],
+      [detail("b",110,130,{calendar:placeholder})]
+    ));
+    assert.equal(candidate.confirmed.length,0,"Matching placeholder must not count as an identified calendar");
+    assert.equal(candidate.candidates.length,1);
+    const noOverlap=compare.compareIntervals(people(
+      [detail("a",100,110,{calendar:placeholder})],
+      [detail("b",200,220,{calendar:placeholder})]
+    ));
+    assert.equal(noOverlap.separate,0,"An unknown calendar cannot prove two historical periods do not overlap");
+    assert.equal(noOverlap.inconclusive,1);
   }
   const differingCalendarWithNoNumericOverlap=compare.compareIntervals(
     people([detail("a",100,110)],[detail("b",200,220,{calendar:"julian"})])
