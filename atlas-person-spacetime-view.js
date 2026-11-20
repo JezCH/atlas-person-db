@@ -25,7 +25,7 @@
     ["./atlas-person-spacetime-time-projection.js?v=20260920-exact-fit-floor", "ATLAS_PERSON_SPACETIME_TIME_PROJECTION"],
     ["./atlas-person-spacetime-space-axis.js?v=20261001-east-asia-v4", "ATLAS_PERSON_SPACETIME_SPACE_AXIS"],
     ["./atlas-person-spacetime-presentation-layout.js?v=20260903-south-asia-r3", "ATLAS_PERSON_SPACETIME_PRESENTATION_LAYOUT"],
-    ["./atlas-person-spacetime-semantic-axis.js?v=20260920-exact-fit-floor", "ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS"],
+    ["./atlas-person-spacetime-semantic-axis.js?v=20260920-exact-fit-floor&ui03p2=header-v1", "ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS"],
     ["./atlas-person-spacetime-uncertainty.js?v=20260903-c6", "ATLAS_PERSON_SPACETIME_UNCERTAINTY"],
     ["./atlas-person-spacetime-temporal-certainty.js?v=20260906-boundary-certainty", "ATLAS_PERSON_SPACETIME_TEMPORAL_CERTAINTY"],
     ["./atlas-person-spacetime-control-state.js?v=20260923-spacetime-owner-v1", "ATLAS_PERSON_SPACETIME_CONTROL_STATE"],
@@ -1610,6 +1610,8 @@
       const signature = `${personIds.join(",")}|${segmentIds.join(",")}|${selectedPersonId || ""}|${selectedActivityId || ""}|${state.meanwhileOrdinal ?? ""}|${state.needle}|${state.lodWeights.labels}|${state.lodWeights.rails}|${state.lodWeights.activities}|${Math.round(cullRect.visible_left)}|${Math.round(cullRect.visible_top)}`;
 
       if (signature !== lastSignature) {
+        const emptyHint = mount.querySelector("#spacetimeViewportEmptyHint");
+        if (emptyHint) emptyHint.hidden = Boolean(state.needle) || segmentTracks.length > 0;
         const labelPack = packTrackLabels(personItems, state.timelineHeight, state.contentWidth, Boolean(state.needle), cullRect);
         const railLayer = mount.querySelector("#spacetimeRailLayer");
         const uncertaintyLayer = mount.querySelector("#spacetimeUncertaintyLayer");
@@ -2039,7 +2041,7 @@
     </section>
     ${renderMeanwhile(meanwhileSummary, meanwhileRegionCode, meanwhilePolityId)}
     <div class="spacetime-workspace">
-    <section class="spacetime-frame card${responsive.mobile ? " is-mobile-presentation" : ""}" data-spacetime-visual="chronology-v6" data-spacetime-presentation="${responsive.mobile ? "mobile" : "desktop"}" data-spacetime-zoom="${Math.round(cameraZoom * 100)}" data-spacetime-overview="${cameraZoom <= CAMERA_DEFAULT_ZOOM ? "true" : "false"}" style="--spacetime-axis-width:${responsive.axisWidth}px;--spacetime-header-height:${responsive.headerHeight}px;--spacetime-era-axis-width:${responsive.eraAxisWidth}px;--spacetime-year-axis-width:${responsive.axisWidth - responsive.eraAxisWidth}px"><div class="spacetime-scroll" tabindex="0" aria-label="역사 시간과 검토된 정치체 권역에 따른 인물 활동 궤적 및 등록 인물 밀도 분포">
+    <section class="spacetime-frame card${responsive.mobile ? " is-mobile-presentation" : ""}" data-spacetime-visual="chronology-v6" data-spacetime-presentation="${responsive.mobile ? "mobile" : "desktop"}" data-spacetime-space-stage="${escapeHtml(spaceHeader.stage)}" data-spacetime-zoom="${Math.round(cameraZoom * 100)}" data-spacetime-overview="${cameraZoom <= CAMERA_DEFAULT_ZOOM ? "true" : "false"}" style="--spacetime-axis-width:${responsive.axisWidth}px;--spacetime-header-height:${responsive.headerHeight}px;--spacetime-era-axis-width:${responsive.eraAxisWidth}px;--spacetime-year-axis-width:${responsive.axisWidth - responsive.eraAxisWidth}px"><div class="spacetime-scroll" tabindex="0" aria-label="역사 시간과 검토된 정치체 권역에 따른 인물 활동 궤적 및 등록 인물 밀도 분포">
       <div class="spacetime-sticky-corner"><span>시대</span><span>연도<small>${escapeHtml(timeAxis.stage_label)}</small></span></div>
       <div class="spacetime-region-head" style="width:${contentWidth}px">
         <div class="spacetime-region-head-layer is-macro" style="opacity:${spaceHeader.macro_opacity}">${spaceHeader.macroregions.map((region) => `<div class="spacetime-region-head-band" data-spacetime-band="${escapeHtml(region.code)}" style="left:${region.left}px;width:${region.width}px"><strong>${escapeHtml(region.label)}</strong><small>${escapeHtml(region.code)}</small></div>`).join("")}</div>
@@ -2062,7 +2064,16 @@
         <div id="spacetimeLabelLayer" class="spacetime-runtime-layer"></div>
         <div id="spacetimeActivityLayer" class="spacetime-runtime-layer"></div>
       </div>
-    </div></section>
+    </div>
+      <div id="spacetimeViewportEmptyHint" class="spacetime-viewport-empty" role="status" hidden>
+        <strong>현재 화면에 인물이 없습니다</strong>
+        <p>등록된 인물을 찾아 이동하거나 연도를 변경해 보세요.</p>
+        <div class="spacetime-viewport-empty-actions">
+          <button type="button" id="spacetimeFocusNearbyPerson">가까운 인물로 이동</button>
+          <button type="button" id="spacetimeEmptySearch">인물 검색</button>
+        </div>
+      </div>
+    </section>
     <aside class="spacetime-sidecar">
       ${renderMinimap()}
       ${renderStickyInspector(selectedTrack, navigationItems.length)}
@@ -2097,6 +2108,27 @@
       bindMinimap(mount, scroll, projection, allProjectedTracks, activePersonIds, regions, eras, contentWidth, timelineHeight);
     });
     if (!selectedTrack) scheduleOptionalRuntimePrefetch("inspector");
+
+    mount.querySelector("#spacetimeEmptySearch")?.addEventListener("click", () => {
+      mount.querySelector("#spacetimeSearch")?.focus();
+    });
+    // Empty-screen navigation is explicit; the default historical camera is preserved.
+    mount.querySelector("#spacetimeFocusNearbyPerson")?.addEventListener("click", () => {
+      const activeScroll = mount.querySelector(".spacetime-scroll");
+      if (!activeScroll) return;
+      const insets = cameraInsets(activeScroll);
+      const width = Math.max(1, activeScroll.clientWidth - insets.left);
+      const height = Math.max(1, activeScroll.clientHeight - insets.top);
+      const x = activeScroll.scrollLeft + insets.left + width / 2;
+      const y = activeScroll.scrollTop + insets.top + height / 2;
+      let nearest = null, best = Number.POSITIVE_INFINITY;
+      for (const candidate of projectedTracks) {
+        if (!Number.isFinite(candidate?.x) || !Number.isFinite(candidate?.y)) continue;
+        const distance = Math.hypot((candidate.x - x) / width, (candidate.y - y) / height);
+        if (distance < best) { best = distance; nearest = candidate; }
+      }
+      if (nearest?.person_id) selectPerson(mount, nearest.person_id, { focus: true });
+    });
 
     const searchInput = mount.querySelector("#spacetimeSearch");
     searchInput?.addEventListener("input", (event) => {

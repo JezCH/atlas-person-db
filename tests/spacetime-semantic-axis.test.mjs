@@ -55,6 +55,7 @@ test("space header is fixed to reviewed subregion hierarchy at the readable floo
   assert.equal(plan.stage, "subregion");
   assert.equal(plan.macroregions.length, 9);
   assert.equal(plan.subregions.length, continuum.subregions.length);
+  assert.equal(plan.macro_opacity, 1);
   assert.equal(plan.subregion_opacity, 1);
   assert.equal(plan.minimum_zoom, 0.5);
 
@@ -191,4 +192,22 @@ test("Place semantic LOD is driven only by reviewed bindings, never Person densi
   assert.deepEqual(a.places, b.places);
   assert.equal(a.macroregions.length, 9);
   assert.equal(b.macroregions.length, 9);
+});
+test("semantic head drops unreadably narrow leaf names without changing the world layout", () => {
+  const world = spaceAxis.createSpatialContinuum();
+  const overview = semanticAxis.buildSpaceHeaderPlan(world, 900, 5);
+  const detail = semanticAxis.buildSpaceHeaderPlan(world, 4500, 5);
+  assert.equal(overview.stage, "macroregion");
+  assert.equal(overview.subregion_opacity, 0);
+  assert.equal(overview.macro_opacity, 1);
+  assert.equal(detail.stage, "subregion");
+  assert.equal(detail.subregion_opacity, 1);
+  assert.equal(detail.macroregions.length, 9);
+  assert.equal(detail.subregions.length, 45);
+  for (const band of detail.subregions) {
+    const parent = detail.macroregions.find((macro) => macro.code === band.parent_code);
+    assert.ok(parent);
+    assert.ok(band.left >= parent.left);
+    assert.ok(band.left + band.width <= parent.left + parent.width + 1e-6);
+  }
 });
