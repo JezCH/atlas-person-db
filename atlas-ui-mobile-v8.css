@@ -83,6 +83,9 @@
     min-height: 44px;
   }
 
+  /* VIS-01: make era and domain controls physically readable and operable.
+   * Keep the existing horizontally scrolling lists, filters and sticky offsets;
+   * the historical Register still owns its two-line mobile rows. */
   /* Person controls: one hierarchy at a time instead of three cramped columns. */
   .person-era-navigator {
     top: 58px;
@@ -105,7 +108,7 @@
   .person-era-search,
   .person-era-polity-filter,
   .person-era-relation-filter {
-    height: 32px;
+    height: 44px;
     border: 0;
     border-bottom: 1px solid #40484d;
     border-radius: 0;
@@ -128,13 +131,13 @@
   }
 
   .person-era-nav-track {
-    grid-template-columns: 28px minmax(0,1fr) 28px;
+    grid-template-columns: 44px minmax(0,1fr) 44px;
     gap: 4px;
   }
 
   .person-era-nav-step {
-    width: 28px;
-    height: 28px;
+    width: 44px;
+    height: 44px;
     border: 0;
     border-radius: 0;
     background: transparent;
@@ -155,14 +158,14 @@
   }
 
   .person-era-jump {
-    min-width: 66px;
-    min-height: 28px;
-    padding: 3px 5px;
+    min-width: 104px;
+    min-height: 44px;
+    padding: 6px 8px;
     border: 0;
     border-left: 1px solid #343b40;
     border-radius: 0;
     background: transparent !important;
-    color: #777f83 !important;
+    color: #b6bfc3 !important;
   }
 
   .person-era-jump:hover {
@@ -173,7 +176,7 @@
   .person-era-jump.is-current {
     outline: 0;
     border-left-color: var(--atlas-honor-metal);
-    color: #d3cec4 !important;
+    color: #f0e8da !important;
     background: linear-gradient(90deg, rgba(192,174,136,.055), transparent) !important;
   }
 
@@ -196,18 +199,18 @@
   }
 
   .person-era-jump-label {
-    font-size: 9px;
+    font-size: 12px;
     font-weight: 740;
   }
 
   .person-era-jump-count {
-    min-width: 17px;
-    height: 17px;
+    min-width: 22px;
+    height: 22px;
     padding: 0 3px;
     border-radius: 0;
     background: transparent;
-    color: #5f676c;
-    font-size: 7px;
+    color: #bec7ca;
+    font-size: 10px;
   }
 
   .person-domain-filter-row {
@@ -218,8 +221,8 @@
   }
 
   .person-domain-filter-row > strong {
-    color: #676f74;
-    font-size: 7.5px;
+    color: #b8c0c4;
+    font-size: 11px;
     letter-spacing: .04em;
   }
 
@@ -229,20 +232,20 @@
   }
 
   .person-domain-filter {
-    min-height: 22px;
+    min-height: 44px;
     gap: 4px;
-    padding: 2px 5px;
+    padding: 6px 9px;
     border: 0;
     border-bottom: 1px solid transparent;
     border-radius: 0;
     background: transparent;
-    color: #747c80;
-    font-size: 8px;
+    color: #b6bec0;
+    font-size: 12px;
   }
 
   .person-domain-filter[data-domain]::before {
-    width: 5px;
-    height: 5px;
+    width: 7px;
+    height: 7px;
     box-shadow: none;
   }
 
@@ -254,15 +257,15 @@
     border-color: var(--person-filter-domain-color);
     background: rgba(255,255,255,.02);
     box-shadow: none;
-    color: #c5c3bd;
+    color: #eee6d8;
   }
 
   .person-domain-filter em {
     padding: 0;
     border-radius: 0;
     background: transparent;
-    color: #555d62;
-    font-size: 6.5px;
+    color: #b9c1c4;
+    font-size: 10px;
   }
 
   /* P4 ownership boundary: compact Person Register geometry is defined only in
