@@ -311,3 +311,44 @@ test("cross-band marker marks only labels exceeding their actual source band and
   assert.match(loader, /homeband=20261121-centered-rail-origin-v1/);
   assert.match(view, /spacetime-label-engine\.js\?v=.*homeband=20261121-centered-rail-origin-v1/);
 });
+
+test("real-Chrome audit checks every borrowed name's home marker against its own Person rail", () => {
+  const script = read("scripts/verify-spacetime-production-visual.mjs");
+  const markerSource = 'const labelAssociationCode = `';
+  const first = script.indexOf(markerSource);
+  const last = script.indexOf('`;', first + markerSource.length);
+  assert.ok(first >= 0 && last > first);
+  const probe = vm.runInNewContext("(" + script.slice(first + markerSource.length, last) + ")");
+  assert.equal(typeof probe, "function");
+
+  const element = (id, coords, borrowed) => ({
+    dataset: borrowed === undefined
+      ? {spacetimePerson:id}
+      : {spacetimePerson:id,spacetimeLabelBorrowed:borrowed ? "true" : "false"},
+    getBoundingClientRect: () => coords
+  });
+  const longLabel = element("long", {left:150,top:200,right:260,bottom:222}, true);
+  const shortLabel = element("short", {left:302,top:240,right:341,bottom:262}, false);
+  const marker = element("long", {left:197.5,top:219.5,right:202.5,bottom:224.5});
+  const longRail = element("long", {left:198,top:180,right:202,bottom:260});
+  const shortRail = element("short", {left:298,top:230,right:302,bottom:300});
+
+  const accepted = probe([longLabel,shortLabel], [marker], [longRail,shortRail]);
+  assert.equal(accepted.label_count, 2);
+  assert.equal(accepted.borrowed_count, 1);
+  assert.equal(accepted.marker_count, 1);
+  assert.equal(accepted.violation_count, 0);
+
+  const displaced = element("long", {left:224,top:219.5,right:229,bottom:224.5});
+  const wrong = probe([longLabel,shortLabel], [displaced], [longRail,shortRail]);
+  assert.ok(wrong.violations.some(v => v.reason === "home_marker_not_on_person_rail"));
+  const missing = probe([longLabel,shortLabel], [], [longRail,shortRail]);
+  assert.ok(missing.violations.some(v => v.reason === "borrowed_name_missing_home_marker"));
+  const orphan = probe([longLabel,shortLabel], [marker,element("short", {left:298,top:259,right:303,bottom:264})], [longRail,shortRail]);
+  assert.ok(orphan.violations.some(v => v.reason === "orphan_home_marker"));
+
+  assert.match(script, /at500\.labelAssociation\.violation_count === 0/);
+  assert.match(script, /at1500\.labelAssociation\.violation_count === 0/);
+  const view = read("atlas-person-spacetime-view.js");
+  assert.match(view, /data-spacetime-person="\$\{escapeHtml\(item\.track\.person_id\)\}"><\/i>/);
+});
