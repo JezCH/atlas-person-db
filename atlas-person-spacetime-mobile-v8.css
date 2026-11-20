@@ -246,12 +246,14 @@
     height: 5px;
   }
 
-  /* Labels remain readable, but occupy less simultaneous horizontal space. */
+  /* Labels are the primary history navigation, not 9px decorative captions.
+   * Packing reserves the larger desktop-sized rectangle, so 12px mobile text
+   * stays inside the calculated collision geometry without moving history Y. */
   .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-track-label {
-    height: 17px;
-    padding: 0 3px 0 4px;
-    font-size: 9px;
-    line-height: 17px;
+    height: 21px;
+    padding: 0 4px 0 5px;
+    font-size: 12px;
+    line-height: 21px;
   }
 
   .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-activity-glyph {
