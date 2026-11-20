@@ -625,7 +625,7 @@ async function main() {
     assert(origin.returnVisible && origin.origin?.activityId===origin.activityId,
       "UI-06B first Activity selection did not expose an accessible origin-return control",origin);
     const switched = await evaluate(client, `(() => {
-      const current="__ID_REPLACED__";
+      const current=__ID_REPLACED__;
       const button=[...document.querySelectorAll("[data-spacetime-meanwhile-person]")]
         .find((el)=>el.dataset.spacetimeMeanwhilePerson!==current)
         || document.querySelector("#spacetimeNextPerson:not([disabled])");
