@@ -37,9 +37,11 @@ test("P10 Production acceptance measures whether Activity facts actually cover t
   assert.match(verifier,/const centerSamples=ordinaryRows\.slice\(0,30\)/);
   assert.match(verifier,/coversCenter:activityRect\.left<=centerX&&activityRect\.right>=centerX/);
   assert.match(verifier,/centerCoverageRate>=0\.8/);
-  assert.match(verifier,/medianActivityWidthRatio>=0\.24/);
+  assert.match(verifier,/medianActivityWidthRatio>=0\.88/);
+  assert.match(verifier,/mobileTypographySamples/);
 });
 
-test("P10 publishes the center-column Register asset",()=>{
+test("P10 historical center-column spec is superseded by the latest readable P0 asset",()=>{
   assert.match(html,/atlas-person-monumental-register\.css\?v=20261004-ui-p13-column-balance-polity-height-v1/);
+  assert.match(html,/mobile=20261120-ui01-readable-two-line-v1/);
 });
