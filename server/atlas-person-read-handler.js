@@ -67,6 +67,21 @@ function listLimitFromRequest(req) {
   return requestQueryValue(req, "limit");
 }
 
+function listProjectionFromRequest(req) {
+  return requestQueryValue(req, "projection");
+}
+
+// Facets in the full Person list are computed solely from activity_summaries.
+// The browser can derive them without a second SQL query. Preserve the default
+// public API unchanged and opt in only for the ATLAS browser's compact view.
+function compactListPayload(payload) {
+  return {
+    ...payload,
+    projection: "compact-facets-v1",
+    persons: payload.persons.map(({ facets: _facets, ...person }) => person)
+  };
+}
+
 function normalizeSearchText(value) {
   return String(value || "").normalize("NFKC").trim().toLocaleLowerCase("und").replace(/\s+/gu, " ");
 }
@@ -145,6 +160,12 @@ function createPersonReadHandler({ clientFactory, env = process.env, readListSem
       return;
     }
 
+    const requestedProjection = listProjectionFromRequest(req);
+    if (requestedProjection != null && requestedProjection !== "compact") {
+      sendJson(res, 400, { ok:false, code:"INVALID_PERSON_PROJECTION" });
+      return;
+    }
+
     const requestedView = requestQueryValue(req, "view");
     if (requestedView != null && requestedView !== "identity") {
       sendJson(res, 400, { ok:false, code:"INVALID_PERSON_VIEW" });
@@ -190,6 +211,11 @@ function createPersonReadHandler({ clientFactory, env = process.env, readListSem
         code: "INVALID_LIST_LIMIT",
         error: `limit must be an integer from 1 to ${MAX_LIST_LIMIT}`
       });
+      return;
+    }
+
+    if (requestedProjection && (requestedView || requestedPersonId || requestedQuery || requestedNamuWikiStatus || requestedLimitValue != null)) {
+      sendJson(res, 400, { ok:false, code:"PERSON_READ_MODE_CONFLICT" });
       return;
     }
 
@@ -288,7 +314,7 @@ function createPersonReadHandler({ clientFactory, env = process.env, readListSem
         };
       });
       // Do not hold the read snapshot open across HTTP serialization.
-      sendJson(res, 200, payload);
+      sendJson(res, 200, requestedProjection === "compact" ? compactListPayload(payload) : payload);
     } catch (error) {
       console.error("ATLAS Person read failed", error);
       sendJson(res, client ? 500 : 503, {
@@ -312,6 +338,8 @@ module.exports = Object.freeze({
   personQueryFromRequest,
   namuwikiStatusFromRequest,
   listLimitFromRequest,
+  listProjectionFromRequest,
+  compactListPayload,
   normalizeSearchText,
   personMatchesQuery,
   personMatchesNamuWikiStatus,

@@ -15,7 +15,7 @@ const {
 } = require('../server/atlas-person-read-service.js');
 const runtimeRead = require('../server/atlas-runtime-person-read-service.js');
 const {
-  createPersonReadHandler, personIdFromRequest, personQueryFromRequest,
+  createPersonReadHandler, compactListPayload, personIdFromRequest, personQueryFromRequest, listProjectionFromRequest,
   listLimitFromRequest, namuwikiStatusFromRequest, PERSON_LIST_SNAPSHOT_BEGIN_SQL
 } = require('../server/atlas-person-read-handler.js');
 
@@ -461,4 +461,38 @@ test('Person read preserves equivalent UUID spellings and rewritten framework-on
   assert.equal(personQueryFromRequest({ url: '/?q=Caesar', query: { q: ' Caesar ' } }), 'Caesar');
   assert.equal(listLimitFromRequest({ url: '/?limit=10', query: { limit: '10' } }), '10');
   assert.equal(namuwikiStatusFromRequest({ query: { namuwiki_status: 'linked' } }), 'linked');
+});
+
+
+test('compact-facets list projection drops only duplicated Activity facets, preserving default payload', () => {
+  const activity={id:ACTIVITY_ID, polity:{id:POLITY_ID,display_name:'스키타이'}, relation:{id:RELATION_ID,code:'rules'},role:{id:ROLE_ID,display_name:'왕'},period_basis:{id:PERIOD_BASIS_ID,code:'reign'}, notes:'의미 검색 유지'};
+  const person={id:PERSON_ID,display_name:'아테아스',activity_count:1,activity_summaries:[activity],
+    names:[{name:'아테아스'}],descriptions:[{content:'기원전 기록'}],
+    facets:{polities:[activity.polity],relations:[activity.relation],roles:[activity.role],period_bases:[activity.period_basis]}};
+  const source={ok:true,mode:'list',persons:[person],summary:{total:1}};
+  const compact=compactListPayload(source);
+  assert.equal(compact.projection,'compact-facets-v1');
+  assert.equal('facets' in compact.persons[0],false);
+  assert.equal(compact.persons[0].activity_summaries,person.activity_summaries);
+  assert.deepEqual(source.persons,[person],'unfiltered canonical list must not be mutated');
+  assert.ok(Buffer.byteLength(JSON.stringify(compact))<Buffer.byteLength(JSON.stringify(source)));
+  assert.equal(listProjectionFromRequest({url:'/?projection=compact'}),'compact');
+});
+
+test('compact projection rejects unsupported, duplicated and mixed lookup parameters before DB access', async () => {
+  let clientCalls=0;
+  const handler=createPersonReadHandler({env:{SUPABASE_DB_URL:'postgresql://example.invalid/atlas'},clientFactory:async()=>{clientCalls++;throw Error('must not connect');}});
+  for (const [url,code] of [
+    ['/?projection=unknown','INVALID_PERSON_PROJECTION'],
+    ['/?projection=compact&projection=compact','INVALID_PERSON_PROJECTION'],
+    ['/?projection=compact&person_id='+PERSON_ID,'PERSON_READ_MODE_CONFLICT'],
+    ['/?projection=compact&q=test','PERSON_READ_MODE_CONFLICT'],
+    ['/?view=identity&projection=compact','PERSON_READ_MODE_CONFLICT']
+  ]) {
+    const res=mockResponse();
+    await handler({method:'GET',url},res);
+    assert.equal(res.statusCode,400,url);
+    assert.equal(JSON.parse(res.body).code,code,url);
+  }
+  assert.equal(clientCalls,0);
 });
