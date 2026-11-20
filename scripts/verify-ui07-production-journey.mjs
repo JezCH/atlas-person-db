@@ -83,6 +83,16 @@ export async function verifyUi07MobileJourney(client,h,desktopPair,productionUrl
   await client.call("Page.navigate",{url});
   await h.waitFor(client,"document.readyState==='complete'",45000);
   await h.waitFor(client,"Boolean(document.querySelector('#personSpacetimeMount .spacetime-frame'))",90000);
+  // Spacetime first paints its world, then asynchronously resolves the reviewed
+  // Activity and its Meanwhile module. A frame alone is not a settled Activity.
+  // Never treat the interim shell as evidence that the real peer is absent.
+  await h.waitFor(client,
+    "(() => {const s=window.ATLAS_PERSON_SPACETIME_VIEW?.captureExplorationState?.();"
+    + "return s?.selectedPersonId==="+JSON.stringify(desktopPair.personId)
+    + "&&s?.selectedActivityId==="+JSON.stringify(desktopPair.activityId)
+    + "&&s?.meanwhileOrdinal==="+JSON.stringify(desktopPair.moment)
+    + "&&[...document.querySelectorAll('[data-spacetime-meanwhile-compare]')].some(b=>b.dataset.spacetimeMeanwhileCompare==="+JSON.stringify(desktopPair.personB)+");})()",
+    45000);
   const pair=await inspectPair(client,h,desktopPair);
   const initial=await clickCompare(client,h,pair,true);
   await h.screenshot(client,"ui07-mobile-390-compare.png");
