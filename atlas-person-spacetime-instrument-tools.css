@@ -1351,3 +1351,14 @@
     grid-column: 1/-1;
   }
 }
+
+/* UI-06B: return to Activity origin must remain touch-accessible on the
+ * narrow Spacetime surface, without altering chronology or world geometry. */
+@media (max-width: 760px) {
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-return-activity {
+    min-height: 44px;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}
