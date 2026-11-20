@@ -416,6 +416,8 @@
     window.dispatchEvent(new CustomEvent("atlas-authority-domain-changed", { detail: { domain: next } }));
 
     if (next === "persons") {
+      // Each Person history entry owns its own bounded comparison selection.
+      window.ATLAS_PERSON_MAIN?.restoreComparisonFromHistory?.();
       if (resolvedRoute.entity_type === "person" && resolvedRoute.entity_id) {
         window.ATLAS_PERSON_MAIN?.openPerson?.(resolvedRoute.entity_id,{ updateRoute:false });
       } else {
