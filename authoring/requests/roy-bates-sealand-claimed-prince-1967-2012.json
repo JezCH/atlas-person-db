@@ -1,0 +1,83 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected:roy-bates:sealand-claimed-prince:1967-2012:20261107:v1",
+  "person": {
+    "canonical_name_en": "Roy Bates",
+    "display_name_ko": "로이 베이츠",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-07",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Principality of Sealand",
+    "display_name_ko": "시랜드 공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "claims_rule",
+    "period_basis": "reign",
+    "role": "Self-proclaimed Prince of Sealand",
+    "role_display_name_ko": "시랜드 공국 건국자·자칭 대공",
+    "start_year": 1967,
+    "start_month": 9,
+    "start_day": 2,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2012,
+    "end_month": 10,
+    "end_day": 9,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Patrick Roy Bates (1921-08-29 to 2012-10-09), a former British army officer and pirate radio operator, proclaimed the Principality of Sealand on HM Fort Roughs / Roughs Tower on 2 September 1967, styling himself Prince Roy. The date bounds here represent his personal sovereign CLAIM, not the legal recognition of an independent country, not sovereignty granted by a British court, and not continuous direct day-to-day administration. Sealand is an unrecognised micronation based on a man-made offshore platform, not a recognised sovereign state. A British court's 1968 ruling concerned jurisdiction over an incident when the platform lay beyond the then territorial sea, not recognition of statehood. Michael Bates exercised practical administration as prince regent from approximately 1999 while Roy retained the claimed title until his death. The historicity, identity and dates of Bates's founding claim are well established; its asserted statehood is not endorsed. Some NamuWiki chronology tables use 1967-08-29 as a title date, but the independent historical references and the claimant's own public history support 1967-09-02 for the declaration; do not silently substitute the disputed August date."
+  },
+  "sources": [
+    {
+      "source_type": "government_reference",
+      "title": "Foreign & Commonwealth Office — The Sealand Affair: the last great adventure of the twentieth century? (2010)",
+      "canonical_url": "https://www.gov.uk/government/news/the-sealand-affair-the-last-great-adventure-of-the-twentieth-century",
+      "citation_text": "UK Foreign and Commonwealth Office historical note states that in 1967 Roy Bates occupied Roughs Tower and proclaimed its independence, styling himself regent; the article analyzes the asserted sovereignty and British legal/diplomatic context."
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "James Grimmelmann — Sealand, HavenCo, and the Rule of Law (2012), Illinois Law Review",
+      "canonical_url": "https://james.grimmelmann.net/files/articles/sealand.pdf",
+      "citation_text": "Legal-historical research documents Roy Bates's 2 September 1967 declaration on Roughs Tower, claims to the title Prince, and the distinction between practical jurisdictional rulings and recognition of statehood."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Phil Davison — Major Roy Bates: The self-proclaimed 'Prince of Sealand', The Independent (2012-10-12)",
+      "canonical_url": "https://www.independent.co.uk/news/obituaries/major-roy-bates-the-selfproclaimed-prince-of-sealand-8207988.html",
+      "citation_text": "Contemporary obituary identifies Patrick Roy Bates; born 29 August 1921; died 9 October 2012; describes his military and pirate-radio career and the 1967 creation claim."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Principality of Sealand — Sealand: The History of the World's Smallest Country",
+      "canonical_url": "https://sealandgov.org/pages/the-story",
+      "citation_text": "The claimant organisation's own account records that its founder Roy Bates declared the Principality of Sealand independent on 2 September 1967; this is direct evidence of the claim, not independent state recognition."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-07",
+      "document_title": "로이 1세",
+      "url": "https://namu.wiki/w/%EB%A1%9C%EC%9D%B4%201%EC%84%B8"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "The historically occupied site is the existing man-made offshore structure HM Fort Roughs (Roughs Tower), North Sea near the coast of England, as documented by the UK FCO (https://www.gov.uk/government/news/the-sealand-affair-the-last-great-adventure-of-the-twentieth-century) and Grimmelmann (https://james.grimmelmann.net/files/articles/sealand.pdf). Sealand's founders asserted sovereignty but no recognised sovereign territory is established. No verified canonical Place UUID, time-bounded PolityPlaceFunction relation or approved Atlas spatial placement has been resolved from current Production. If this Polity identity must be newly created, hold spatial display without inventing a polygon, a territorial claim as fact, or a Place binding; identity reuse and spatial readiness require scoped live preflight."
+  },
+  "review_context": {
+    "request_batch": "user-selected-roy-bates-20261107",
+    "requested_item": 1
+  }
+}
