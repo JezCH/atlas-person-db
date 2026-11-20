@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { relativeSpecifiers } from '../../../scripts/atlas-agent-dependency-map.mjs';
 
 const root = path.resolve(process.argv[2] || '.');
 const out = process.argv[3] ? path.resolve(process.argv[3]) : null;
@@ -49,17 +50,7 @@ function resolveLocal(from, spec) {
 
 function localDependencies(rel) {
   if (!jsFiles.has(rel)) return [];
-  const source = text(rel);
-  const specs = new Set();
-  for (const regex of [
-    /require\(\s*['"]([^'"]+)['"]\s*\)/g,
-    /from\s+['"]([^'"]+)['"]/g,
-    /import\s*\(\s*['"]([^'"]+)['"]\s*\)/g
-  ]) {
-    let match;
-    while ((match = regex.exec(source))) specs.add(match[1]);
-  }
-  return [...specs].map((spec) => resolveLocal(rel, spec)).filter(Boolean);
+  return relativeSpecifiers(text(rel)).map((spec) => resolveLocal(rel, spec)).filter(Boolean);
 }
 
 function closure(entries) {
