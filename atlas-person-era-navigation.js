@@ -170,6 +170,8 @@
     nav.append(top, track, domains);
     nav.addEventListener("click", onNavigatorClick);
     nav.addEventListener("input", onNavigatorInput);
+    nav.addEventListener("compositionstart", onNavigatorCompositionStart);
+    nav.addEventListener("compositionend", onNavigatorCompositionEnd);
     nav.addEventListener("change", onNavigatorChange);
     list.addEventListener("keydown", onEraListKeyDown);
     return nav;
@@ -398,7 +400,19 @@
 
   function onNavigatorInput(event) {
     const search = event.target?.closest?.("input[data-era-search]");
+    if (!search || event.isComposing) return;
+    window.dispatchEvent(new CustomEvent(SEARCH_EVENT, { detail: { query: String(search.value || "") } }));
+  }
+
+  function onNavigatorCompositionStart(event) {
+    if (!event.target?.closest?.("input[data-era-search]")) return;
+    window.dispatchEvent(new CustomEvent(SEARCH_EVENT, { detail: { composing: true } }));
+  }
+
+  function onNavigatorCompositionEnd(event) {
+    const search = event.target?.closest?.("input[data-era-search]");
     if (!search) return;
+    // Korean IME composition must be committed before the register is rebuilt.
     window.dispatchEvent(new CustomEvent(SEARCH_EVENT, { detail: { query: String(search.value || "") } }));
   }
 
