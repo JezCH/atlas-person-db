@@ -29,6 +29,8 @@ on:
       - "atlas-person-domain-ui.js"
       - "atlas-person-spacetime-*.js"
       - "atlas-person-spacetime-*.css"
+      - "scripts/verify-ui-v10-production-visual.mjs"
+      - "scripts/verify-spacetime-production-visual.mjs"
       - "experiments/vis2-05-monumental-watermark-candidate.css"
   workflow_dispatch:
     inputs:
