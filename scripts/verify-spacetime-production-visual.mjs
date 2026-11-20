@@ -261,7 +261,7 @@ const labelAssociationCode = `
   return {label_count:labels.length,borrowed_count:borrowed.length,marker_count:markers.length,
     linked_count:borrowed.length-violations.filter(v=>v.reason==="borrowed_name_missing_home_marker").length,
     violation_count:violations.length,violations:violations.slice(0,30)};
-};
+}
 `;
 
 async function collect500(client) {
