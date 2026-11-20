@@ -14,7 +14,7 @@ assert.ok(renderStart >= 0 && renderEnd > renderStart);
 const render = new Function(
   "meanwhileSelectedOrdinal", "meanwhileSelectionSource", "meanwhileMomentLabel",
   "escapeHtml", "polityLabel", "periodLabel", "meanwhileRegionLabel", "selectedPersonId",
-  view.slice(renderStart, renderEnd) + "\nreturn renderMeanwhile;"
+  "const text = (value) => value == null ? \"\" : String(value).trim();\n" + view.slice(renderStart, renderEnd) + "\nreturn renderMeanwhile;"
 )(1, "manual", () => "1592년", String, () => "정치체", () => "기간", (code) => ({ europe:"유럽", africa:"아프리카" }[code] || code), null);
 
 const entries = [
@@ -55,8 +55,8 @@ test("regional filter limits Activity rows while preserving the global denominat
 
 test("UI regional filtering resets with year/Activity changes and remains keyboard accessible", () => {
   assert.match(view, /let meanwhileRegionCode = ""/);
-  assert.match(view, /meanwhileRegionCode = "";\s*renderInto\(mount\)/);
-  assert.match(view, /renderMeanwhile\(meanwhileSummary, meanwhileRegionCode\)/);
+  assert.match(view, /meanwhileRegionCode = "";\s*meanwhilePolityId = "";\s*renderInto\(mount\)/);
+  assert.match(view, /renderMeanwhile\(meanwhileSummary, meanwhileRegionCode, meanwhilePolityId\)/);
   assert.match(view, /querySelectorAll\("\[data-spacetime-meanwhile-region\]"\)/);
   assert.match(view, /button\.dataset\.spacetimeMeanwhileRegion \|\| ""/);
   assert.match(css, /\.spacetime-meanwhile-regions button\[aria-pressed="true"\]/);

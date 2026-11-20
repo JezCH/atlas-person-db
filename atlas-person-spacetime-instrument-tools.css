@@ -1296,3 +1296,58 @@
   outline: 2px solid #e8cf98;
   outline-offset: 2px;
 }
+
+
+/* UI-06A reviewed polity filter: ID-scoped Activity filtering, no geographic inference. */
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-polity-filter {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 5px 0 6px;
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-polity-filter label {
+  color: #c8beb0;
+  font-size: 12px;
+  font-weight: 700;
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-polity-filter select {
+  box-sizing: border-box;
+  min-width: 135px;
+  max-width: min(360px,100%);
+  min-height: 34px;
+  padding: 4px 9px;
+  border: 1px solid var(--spacetime-tools-line);
+  border-radius: 2px;
+  background: #232b30;
+  color: #e7e0d2;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-polity-filter select:focus-visible {
+  outline: 2px solid var(--atlas-focus-ring);
+  outline-offset: 2px;
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-polity-filter small {
+  color: #a9b0b4;
+  font-size: 11px;
+  line-height: 1.45;
+}
+@media (max-width: 760px) {
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-polity-filter {
+    display: grid;
+    grid-template-columns: 48px minmax(0,1fr);
+    column-gap: 7px;
+  }
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-polity-filter select {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    font-size: 16px;
+    min-height: 38px;
+  }
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-polity-filter small {
+    grid-column: 1/-1;
+  }
+}

@@ -17,13 +17,13 @@ const a = "11111111-1111-4111-8111-111111111111";
 const b = "22222222-2222-4222-8222-222222222222";
 const c = "33333333-3333-4333-8333-333333333333";
 
-const renderStart = view.indexOf("  function renderMeanwhile(summary, regionCode = \"\") {");
+const renderStart = view.indexOf("  function renderMeanwhile(summary, regionCode = \"\", polityId = \"\") {");
 const renderEnd = view.indexOf("  async function fetchSpatialIndex(", renderStart);
 assert.ok(renderStart > 0 && renderEnd > renderStart, "Missing real Meanwhile renderer");
 const renderFunction = new Function(
   "window", "selectedPersonId", "meanwhileSelectedOrdinal", "meanwhileSelectionSource",
   "meanwhileMomentLabel", "meanwhileRegionLabel", "escapeHtml", "polityLabel", "periodLabel",
-  view.slice(renderStart,renderEnd) + "\nreturn renderMeanwhile;"
+  "const text = (value) => value == null ? \"\" : String(value).trim();\n" + view.slice(renderStart,renderEnd) + "\nreturn renderMeanwhile;"
 );
 const escapeHtml = (value) => String(value ?? "")
   .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
@@ -79,7 +79,7 @@ test("UI-07 Meanwhile compare click validates current selection and real filtere
       return selector === "[data-spacetime-meanwhile-compare]" ? [button] : [];
     }
   };
-  const source = "let resumeExplorationAfterDetail = false;\n" + binding
+  const source = "let meanwhilePolityId = \"\"; const text = (value) => value == null ? \"\" : String(value).trim();\n" + "let resumeExplorationAfterDetail = false;\n" + binding
     + "\nreturn {wasResuming:()=>resumeExplorationAfterDetail};";
   const create = new Function(
     "mount","meanwhileSummary","renderMeanwhile","clearMeanwhile","selectPerson",

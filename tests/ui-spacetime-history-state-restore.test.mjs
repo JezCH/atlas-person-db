@@ -11,7 +11,7 @@ const html = read("index.html");
 const person = "11111111-1111-4111-8111-111111111111";
 const activity = "22222222-2222-4222-8222-222222222222";
 const hash = route.activityHash(person, activity);
-const begin = view.indexOf("  function captureExplorationState() {");
+const begin = view.indexOf("  function isReviewedPolityAtMoment(");
 const end = view.indexOf("  function captureRenderFocus(mount) {", begin);
 assert.ok(begin >= 0 && end > begin, "Missing production capture/restore logic");
 const actual = view.slice(begin, end);
@@ -28,6 +28,7 @@ function makeSandbox() {
   const declarations = [
     "const CAMERA_MIN_ZOOM = 0.5, CAMERA_MAX_ZOOM = 15, CAMERA_DEFAULT_ZOOM = 5;",
     "let explorationHistorySnapshotTimer = null, currentTimelineProjection = null;",
+    "let meanwhilePolityId = ''; const text = (value) => value == null ? '' : String(value).trim();",
     "let selectedPersonId = " + JSON.stringify(person) + ", selectedActivityId = " + JSON.stringify(activity) + ";",
     "let selectedTimeOrdinal = 20, query = '한글 검색', cameraZoom = 6.5;",
     "let cameraScrollLeft = 110, cameraScrollTop = 230, cameraCenterOrdinal = 30.5;",
@@ -41,7 +42,7 @@ function makeSandbox() {
     "return { captureExplorationState, restoreExplorationState, persistExplorationState,",
     "reset() { selectedPersonId=null; selectedActivityId=null; selectedTimeOrdinal=null; query='';",
     "cameraZoom=5; cameraScrollLeft=0; cameraScrollTop=0; cameraCenterOrdinal=null;",
-    "meanwhileSelectedOrdinal=null; meanwhileSelectionSource=null; meanwhileRegionCode=''; explorationOrigin=null; },",
+    "meanwhileSelectedOrdinal=null; meanwhileSelectionSource=null; meanwhileRegionCode=''; meanwhilePolityId=''; explorationOrigin=null; },",
     "read() { return {selectedPersonId,selectedActivityId,selectedTimeOrdinal,query,cameraZoom,",
     "cameraScrollLeft,cameraScrollTop,pendingViewportHorizontalRatio,pendingViewportCameraOrdinal,",
     "meanwhileSelectedOrdinal,meanwhileRegionCode,explorationOrigin,pendingFocusPersonId,pendingActivityFocus}; } };"

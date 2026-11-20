@@ -13,7 +13,7 @@ assert.ok(start>=0 && stop>start,"Missing scoped Meanwhile-only interaction bind
 const bindingSource=view.slice(start,stop);
 const createBinder=new Function(
   "mount","meanwhileSummary","renderMeanwhile","clearMeanwhile","selectPerson","meanwhileRegionCode","scheduleExplorationSnapshot",
-  bindingSource+"\nreturn () => meanwhileRegionCode;"
+  "let meanwhilePolityId = \"\"; const text = (value) => value == null ? \"\" : String(value).trim();\n" + bindingSource+"\nreturn () => meanwhileRegionCode;"
 );
 
 test("UI-06A region interaction updates only Meanwhile DOM and restores keyboard focus",()=>{
@@ -76,7 +76,7 @@ test("UI-06A region interaction updates only Meanwhile DOM and restores keyboard
 
 test("UI-06A filter does not reconstruct historical Spacetime or bypass asset freshness",()=>{
   assert.doesNotMatch(bindingSource,/renderInto\(mount\)/);
-  assert.match(bindingSource,/panel\.outerHTML = renderMeanwhile\(meanwhileSummary, regionCode\)/);
+  assert.match(bindingSource,/panel\.outerHTML = renderMeanwhile\(meanwhileSummary, regionCode, meanwhilePolityId\)/);
   assert.match(bindingSource,/nextButton\?\.focus\(\{ preventScroll: true \}\)/);
   assert.match(view,/meanwhile\.summarize\(\s*compiled\.partitioned\.tracks/);
   assert.match(nav,/atlas-person-spacetime-view\.js\?v=20261119-meanwhile-all-activities-v1&region=20261119-ui06a-v1&fix=meanwhile-panel-only-v1/);
