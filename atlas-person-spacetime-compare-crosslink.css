@@ -55,6 +55,6 @@
   }
   .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-compare-row > [data-spacetime-meanwhile-compare] {
     width: 56px;
-    min-height: 40px;
+    min-height: 44px;
   }
 }
