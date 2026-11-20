@@ -6,11 +6,12 @@ const css=fs.readFileSync(new URL("../atlas-person-monumental-register.css",impo
 const acceptance=fs.readFileSync(new URL("../scripts/verify-ui-v10-production-visual.mjs",import.meta.url),"utf8");
 
 test("mobile Activity date content wraps at its parent column instead of extending the document",()=>{
-  const origin=css.indexOf(".person-monumental-register .person-table-activities .person-card-activity-period {");
-  assert.ok(origin>0);
-  assert.match(css.slice(origin,origin+300),/white-space: nowrap/,"Desktop/compact legacy date convention remains documented");
   const start=css.indexOf("/* UI-01 mobile overflow fix:");
-  assert.ok(start>origin);
+  assert.ok(start>0);
+  const previousDateRule=css.lastIndexOf(".person-monumental-register .person-table-activities .person-card-activity-period {",start);
+  assert.ok(previousDateRule>=0);
+  assert.match(css.slice(previousDateRule,start),/white-space: nowrap/,"Previous compact date rule is overridden, not erased");
+  assert.ok(start>previousDateRule);
   const end=css.indexOf("@media (max-width: 340px)",start);
   assert.ok(end>start);
   const block=css.slice(start,end);
