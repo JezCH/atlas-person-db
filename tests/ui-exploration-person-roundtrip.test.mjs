@@ -74,7 +74,7 @@ test("UI-06B links only active return contexts, supports native button actions a
   assert.match(view,/id="spacetimeOpenPersonRecord" type="button">인물 상세<\/button>/);
   assert.match(view,/mount\.querySelector\("#spacetimeOpenPersonRecord"\)\?\.addEventListener\("click"/);
   assert.match(base,/spacetime-inspector-actions\{display:grid;grid-template-columns:repeat\(6,minmax\(0,1fr\)\)/);
-  assert.match(tools,/\.spacetime-inspector-actions \{\s*grid-template-columns: repeat\(6,minmax\(0,1fr\)\)/);
+  assert.match(tools,/\.spacetime-inspector-actions \{\s*grid-template-columns: repeat\(3,minmax\(0,1fr\)\)/);
   assert.match(mobile,/\.spacetime-inspector-actions \{\s*grid-template-columns: repeat\(3,minmax\(0,1fr\)\)/);
   assert.match(nav,/atlas-person-spacetime-view\.js\?v=[^"]+&ui06b=roundtrip-v1/);
   assert.match(html,/atlas-person-main\.js\?v=[^"]+&ui06b=roundtrip-v1/);
