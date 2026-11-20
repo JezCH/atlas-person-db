@@ -400,3 +400,15 @@
   #personMainView .atlas-compare-overlap-head span { font-size: 12px; }
   #personMainView .atlas-compare-overlap-counts span { flex: 1 1 calc(50% - 6px); }
 }
+
+/* UI-07 mobile: all Person comparison choices remain finger-accessible
+ * in a stacked single-column reader, including history return and close. */
+@media (max-width: 760px) {
+  #personMainView .atlas-compare-head button,
+  #personMainView .atlas-compare-person-head button {
+    min-height: 44px;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}
