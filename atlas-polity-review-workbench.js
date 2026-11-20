@@ -177,13 +177,9 @@
     root.innerHTML = '<section class="polity-browser-shell">' +
       '<header class="polity-browser-summary card">' +
         '<div><p class="eyebrow">정치체 기준 목록</p><h2>정치체</h2>' +
-        '<p>이 화면의 정치체 목록·이름·UUID·연결 활동은 별도 정적 목록이 아니라 현재 기준 정치체 조회에서 직접 가져옵니다. 이 목록은 기준 정치체 조회를 직접 사용합니다. 첫 화면은 12개만 표시하고 나머지는 ‘더 보기’로 펼칩니다. 아래에는 별도의 충돌·식별정보 검토 작업대를 함께 표시합니다.</p></div>' +
+        '<p>현재 등록된 정치체를 이름·별칭·연결 인물로 검색하고 역사권별로 탐색할 수 있습니다. 정치체를 펼치면 연결 활동과 근거를 확인할 수 있습니다.</p></div>' +
         '<button type="button" class="btn" data-polity-refresh>현재 데이터 새로고침</button>' +
       '</header>' +
-      '<section class="polity-browser-dataset card" aria-live="polite">' +
-        '<div class="polity-browser-dataset-head"><div><small>현재 정치체 원본</small><strong data-polity-source>불러오는 중</strong></div><span data-polity-status>조회 중</span></div>' +
-        '<div data-polity-kpis>' + summaryHtml(null) + '</div>' +
-      '</section>' +
       '<section class="polity-browser-controls card">' +
         '<input type="search" data-polity-search placeholder="정치체명·별칭·인물·역할 검색" />' +
         '<div class="polity-browser-filters">' +
@@ -195,6 +191,10 @@
         '<label>역사권 탐색 <select data-polity-collection aria-label="역사권 탐색"><option value="">전체 정치체</option></select></label>' +
         '<p data-polity-collection-note></p>' +
         '<span data-polity-count></span>' +
+      '</section>' +
+      '<section class="polity-browser-dataset card" aria-live="polite">' +
+        '<div class="polity-browser-dataset-head"><div><small>현재 정치체 원본</small><strong data-polity-source>불러오는 중</strong></div><span data-polity-status>조회 중</span></div>' +
+        '<div data-polity-kpis>' + summaryHtml(null) + '</div>' +
       '</section>' +
       '<div class="polity-browser-list" data-current-polity-list></div>' +
       '<button type="button" class="btn polity-browser-more" data-polity-load-more hidden>더 보기</button>' +
