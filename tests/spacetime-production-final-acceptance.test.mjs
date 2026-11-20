@@ -350,5 +350,5 @@ test("real-Chrome audit checks every borrowed name's home marker against its own
   assert.match(script, /at500\.labelAssociation\.violation_count === 0/);
   assert.match(script, /at1500\.labelAssociation\.violation_count === 0/);
   const view = read("atlas-person-spacetime-view.js");
-  assert.match(view, /data-spacetime-person="\$\{escapeHtml\(item\.track\.person_id\)\}"<\/i>/);
+  assert.match(view, /data-spacetime-person="\$\{escapeHtml\(item\.track\.person_id\)\}"><\/i>/);
 });
