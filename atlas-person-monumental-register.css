@@ -1136,6 +1136,20 @@
   }
 }
 
+/* UI-01 mobile overflow fix: a long factual Activity date must wrap inside
+ * its own Activities column. Production Chrome at 390px found one period
+ * span at x=199.45..396.56 (body scrollWidth=397, viewport=390).
+ * Preserve the full BCE/CE text; do not mask the failure with body clipping. */
+@media (max-width: 760px) {
+  .person-monumental-register .person-table-activities .person-card-activity-period {
+    flex: 0 1 auto;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}
+
 @media (max-width: 340px) {
   .person-monumental-register .person-era-rows > .person-card,
   .person-monumental-register .person-register-entry {
@@ -1180,8 +1194,3 @@
     transition: none;
   }
 }
-
-/* UI-01 acceptance checkpoint (2026-11-20): request one exact-SHA live Chrome
-   capture for the observed 390px -> 397px overflow. The acceptance script now
-   records offending DOM bounds; this comment changes no layout or threshold.
-   Remove this inert checkpoint on the subsequent actual CSS root-cause fix. */
