@@ -156,7 +156,7 @@ test("UI-07 retains Person source-backed rendering and provides Back only with r
   assert.match(main,/void renderComparisonPanel\(\)/);
   assert.match(main,/data-compare-return-spacetime/);
   assert.match(main,/CustomEvent\("atlas-person-return-to-exploration"\)/);
-  assert.match(main,/openComparison,\s*clearSelection/);
+  assert.match(main,/openComparison,\s*restoreComparisonFromHistory,\s*clearSelection/);
   assert.match(main,/returnToExploration: Boolean\(window\.ATLAS_MAIN_AUTHORITY_NAV\?\.getExplorationReturnHash\?\.\(\)\)/);
   assert.match(nav,/history\.back\(\)/);
 });
