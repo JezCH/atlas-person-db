@@ -352,3 +352,29 @@ test("real-Chrome audit checks every borrowed name's home marker against its own
   const view = read("atlas-person-spacetime-view.js");
   assert.match(view, /data-spacetime-person="\$\{escapeHtml\(item\.track\.person_id\)\}"><\/i>/);
 });
+
+test("Inspector rerender restores the same Person and Activity button without scrolling", () => {
+  const source = read("atlas-person-spacetime-view.js");
+  const helperStart = source.indexOf("  function captureRenderFocus(");
+  const helperEnd = source.indexOf("  function horizontalCameraGeometry(", helperStart);
+  assert.ok(helperStart >= 0 && helperEnd > helperStart);
+  const makeButton = (personId, activityId) => ({
+    dataset: { spacetimePerson: personId, spacetimeInspectorActivity: activityId },
+    focus: (options) => calls.push({ personId, activityId, ...options })
+  });
+  const calls = [];
+  const original = makeButton("person-one", "activity-one");
+  const replacement = makeButton("person-one", "activity-one");
+  const mismatchedPerson = makeButton("person-two", "activity-one");
+  let buttons = [original];
+  const mount = { contains: (node) => buttons.includes(node), querySelectorAll: () => buttons };
+  const context = vm.createContext({ document: { activeElement: original } });
+  vm.runInContext(source.slice(helperStart, helperEnd), context);
+  const snapshot = context.captureRenderFocus(mount);
+  buttons = [mismatchedPerson, replacement];
+  assert.equal(context.restoreRenderFocus(mount, snapshot), true);
+  assert.deepEqual(calls, [{ personId: "person-one", activityId: "activity-one", preventScroll: true }]);
+  buttons = [mismatchedPerson];
+  assert.equal(context.restoreRenderFocus(mount, snapshot), false);
+  assert.equal(calls.length, 1);
+});
