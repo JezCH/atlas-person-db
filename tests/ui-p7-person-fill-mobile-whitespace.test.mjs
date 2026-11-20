@@ -53,7 +53,9 @@ test("P7 keeps genuinely different Activity periods visible and protects very na
 test("P7 publishes the new assets and tightens Production density acceptance", () => {
   assert.match(html, /atlas-person-monumental-register\.css\?v=20261004-ui-p13-column-balance-polity-height-v1/);
   assert.match(html, /atlas-person-table-view\.js\?v=20261004-ui-p13-column-balance-polity-height-v1/);
-  assert.equal((verifier.match(/ordinaryMedianHeight<=56/g) || []).length, 2);
+  assert.equal((verifier.match(/ordinaryMedianHeight<=56/g) || []).length, 1);
+  assert.match(verifier,/ordinaryMedianHeight>=52&&mobileMain\.ordinaryMedianHeight<=128/);
+  assert.match(verifier,/mobileTypographySamples/);
 });
 
 
