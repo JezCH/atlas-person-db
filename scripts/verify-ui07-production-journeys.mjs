@@ -215,10 +215,14 @@ async function verifySpacetimeJourney(c){
   }));
   assert.ok(comparison.headerButton&&!comparison.hasError,"Spacetime comparison must display both real Person records");
   assert.ok(comparison.returnHash?.startsWith("#atlas-spacetime"),"Spacetime return route missing");
-  await evaluate(c,()=>window.ATLAS_PERSON_MAIN.clearSelection());
   await evaluate(c,()=>document.querySelector("#personComparePanel")?.scrollIntoView({block:"start"}));
   await shot(c,"ui07-spacetime-person-comparison.png");
-  await evaluate(c,()=>document.querySelector("#personComparePanel [data-compare-return-spacetime]")?.click());
+  const history = await c.call("Page.getNavigationHistory");
+  const previous = history.entries[history.currentIndex - 1];
+  assert.ok(previous, "Comparison must create a browser history entry");
+  assert.equal(new URL(previous.url).hash, before.hash,
+    "The previous browser history entry must point to the original explorer route");
+  await c.call("Page.navigateToHistoryEntry", { entryId: previous.id });
   await until(c,(year)=>window.ATLAS_MAIN_AUTHORITY_NAV?.getDomain()==="spacetime"&&
     Boolean(document.querySelector(".spacetime-frame"))&&
     document.querySelector("#spacetimeMeanwhileYearInput")?.value===String(year),90000,selectedYear);
@@ -252,12 +256,14 @@ async function verifySpacetimeJourney(c){
   }));
   const others=await evaluate(c,(personId)=>[...document.querySelectorAll("[data-spacetime-meanwhile-person]")]
     .map(x=>x.dataset.spacetimeMeanwhilePerson).filter(x=>x!==personId).length,first);
-  if(others){
+  assert.ok(others > 0, "Activity return must be exercised after visiting a different Person");
+  {
     await evaluate(c,(personId)=>{
       [...document.querySelectorAll("[data-spacetime-meanwhile-person]")]
         .find(x=>x.dataset.spacetimeMeanwhilePerson!==personId)?.click();
     },first);
-    await until(c,(personId)=>window.ATLAS_PERSON_SPACETIME_VIEW?.captureExplorationState?.()?.selectedPersonId!==personId,30000,first);
+    await until(c,(personId)=>window.ATLAS_PERSON_SPACETIME_VIEW?.captureExplorationState?.()?.selectedPersonId &&
+      window.ATLAS_PERSON_SPACETIME_VIEW.captureExplorationState().selectedPersonId!==personId,30000,first);
   }
   await evaluate(c,()=>document.querySelector("#spacetimeReturnToActivity")?.click());
   await until(c,(personId)=>window.ATLAS_PERSON_SPACETIME_VIEW?.captureExplorationState?.()?.selectedPersonId===personId&&
