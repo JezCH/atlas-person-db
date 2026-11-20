@@ -484,7 +484,7 @@ async function verifyMobileTwoPersonComparison(client) {
     assert(picked.id===row&&picked.pressed==="true","Real Person comparison control failed",picked);
     selected.push(picked);
   }
-  assert.notEqual(selected[0].id,selected[1].id,"Two distinct Persons required");
+  assert(selected[0].id !== selected[1].id,"Two distinct Persons required");
   await waitFor(client,
     "document.querySelectorAll('#personComparePanel .atlas-compare-person').length === 2 && Boolean(document.querySelector('#personComparePanel .atlas-compare-period-analysis'))",
     65000);
