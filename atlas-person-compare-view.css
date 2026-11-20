@@ -412,3 +412,19 @@
     overflow-wrap: anywhere;
   }
 }
+
+/* UI-07: source evidence disclosures must be keyboard- and touch-reachable
+ * in the same mobile reader as the Person comparison controls. */
+#personMainView .atlas-compare-source-details summary:focus-visible,
+#personMainView .atlas-compare-person-sources summary:focus-visible {
+  outline: 2px solid #e7d4a4;
+  outline-offset: 3px;
+}
+@media (max-width: 760px) {
+  #personMainView .atlas-compare-source-details summary,
+  #personMainView .atlas-compare-person-sources summary {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}
