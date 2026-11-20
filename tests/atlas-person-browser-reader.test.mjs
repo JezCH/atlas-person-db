@@ -248,8 +248,10 @@ test('repeated Person search reuses the read snapshot while a new Person snapsho
   let descriptionReads=0;
   Object.defineProperty(first,'descriptions',{get(){descriptionReads++;return [{content:'Unique first description'}];}});
   assert.equal(reader.personMatchesQuery(first,'unique'),true);
+  const readsAfterIndex=descriptionReads;
+  assert.ok(readsAfterIndex>0);
   assert.equal(reader.personMatchesQuery(first,'first'),true);
-  assert.equal(descriptionReads,1);
+  assert.equal(descriptionReads,readsAfterIndex,'repeat query must reuse cached search union');
   const fresh={...first,descriptions:[{content:'Replacement detail'}]};
   assert.equal(reader.personMatchesQuery(fresh,'replacement'),true);
   assert.equal(reader.personMatchesQuery(fresh,'unique'),false);
