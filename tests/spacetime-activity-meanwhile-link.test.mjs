@@ -113,7 +113,7 @@ test("active Meanwhile state remains fail-closed even though its module is optio
 test("Meanwhile renders an expandable route to every Activity beyond the first 24",()=>{
   const start=view.indexOf("  function renderMeanwhile(summary");
   const end=view.indexOf("  async function fetchSpatialIndex",start);
-  const render=new Function("meanwhileSelectedOrdinal","meanwhileSelectionSource","meanwhileMomentLabel","escapeHtml","polityLabel","periodLabel",view.slice(start,end)+"\nreturn renderMeanwhile;")(1,"manual",()=>"1년",String,()=>"정치체",()=>"기간");
+  const render=new Function("meanwhileSelectedOrdinal","meanwhileSelectionSource","meanwhileMomentLabel","escapeHtml","polityLabel","periodLabel","selectedPersonId",view.slice(start,end)+"\nreturn renderMeanwhile;")(1,"manual",()=>"1년",String,()=>"정치체",()=>"기간",null);
   const entries=Array.from({length:26},(_,i)=>({person_id:"p"+i,display_name:"인물 "+i}));
   const html=render({entries,region_counts:[],unique_person_count:26,activity_count:26});
   assert.equal((html.match(/data-spacetime-meanwhile-person=/g)||[]).length,26);
