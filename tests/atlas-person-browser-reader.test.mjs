@@ -241,3 +241,26 @@ test('browser reader never embeds write endpoints, secrets, or a closed historic
   assert.doesNotMatch(source, /SUPABASE_DB_URL|ATLAS_SESSION_SECRET|ATLAS_MUTATION_TOKEN|authorization|bearer\s/i);
   assert.doesNotMatch(source, /legendary\s*[,\]]|mythic\s*[,\]]|uncertain\s*[,\]]/i);
 });
+
+test('repeated Person search reuses the read snapshot while a new Person snapshot reindexes', () => {
+  const reader=loadReader();
+  const first=person('cache-a','historical',100,'A');
+  let descriptionReads=0;
+  Object.defineProperty(first,'descriptions',{get(){descriptionReads++;return [{content:'Unique first description'}];}});
+  assert.equal(reader.personMatchesQuery(first,'unique'),true);
+  assert.equal(reader.personMatchesQuery(first,'first'),true);
+  assert.equal(descriptionReads,1);
+  const fresh={...first,descriptions:[{content:'Replacement detail'}]};
+  assert.equal(reader.personMatchesQuery(fresh,'replacement'),true);
+  assert.equal(reader.personMatchesQuery(fresh,'unique'),false);
+});
+
+test('render-only grouping omits unused facet catalog without changing filtered rows', () => {
+  const reader=loadReader();
+  const rows=[person('a','historical',100,'Alpha'),person('b','historical',200,'Beta')];
+  const normal=reader.preparePersonGroups(rows,{query:'Alpha'});
+  const fast=reader.preparePersonGroups(rows,{query:'Alpha',includeFacetCatalog:false});
+  assert.deepEqual(Array.from(fast.historical,row=>row.id),Array.from(normal.historical,row=>row.id));
+  assert.equal(fast.facet_catalog,null);
+  assert.ok(normal.facet_catalog.polities);
+});
