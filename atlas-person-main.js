@@ -272,17 +272,16 @@
   }
 
   function domainFilterCounts() {
-    const baseFilters = {
-      polity_id: facetFilters.polity_id,
-      relation_type_id: facetFilters.relation_type_id
-    };
-    const groups = reader.preparePersonGroups(persons, {
-      query,
-      sortOrder,
-      facetFilters: baseFilters,
-      secondaryPredicate: dashboardMatches
-    });
-    const baseRows = [...groups.historical, ...groups.other_or_uncertain];
+    // Counts do not depend on ordering or historicity. Reuse the already-loaded
+    // canonical Person snapshot instead of sorting and rebuilding facet metadata.
+    const baseRows = persons.filter((person) =>
+      reader.personMatchesQuery(person, query)
+      && reader.personMatchesFacets(person, {
+        polity_id: facetFilters.polity_id,
+        relation_type_id: facetFilters.relation_type_id
+      })
+      && dashboardMatches(person)
+    );
     const counts = { all: baseRows.length };
     const definitions = Array.isArray(domainRegistry?.DEFINITIONS) ? domainRegistry.DEFINITIONS : [];
     for (const item of definitions) counts[item.code] = 0;
@@ -346,7 +345,8 @@
       query,
       sortOrder,
       facetFilters: { polity_id: facetFilters.polity_id, relation_type_id: facetFilters.relation_type_id },
-      secondaryPredicate: secondaryMatches
+      secondaryPredicate: secondaryMatches,
+      includeFacetCatalog: false
     });
     const rows = [
       ...groups.historical,
@@ -513,7 +513,7 @@
       presentation.background_url ? `<img class="person-detail-portrait-background" src="${escapeHtml(presentation.background_url)}" alt="" aria-hidden="true" />` : '<span class="person-detail-portrait-neutral" aria-hidden="true"></span>',
       href ? `<img class="person-detail-portrait-subject" data-person-portrait-image src="${escapeHtml(href)}" alt="${escapeHtml(displayName)} 초상화" loading="lazy" decoding="async" referrerpolicy="no-referrer" />` : ""
     ].join("");
-    const state = portraitResult?.error ? "초상화 조회 실패" : (href ? "초상화 등록" : "초상화 미등록");
+    const state = portraitResult?.loading ? "초상화 조회 중" : (portraitResult?.error ? "초상화 조회 실패" : (href ? "초상화 등록" : "초상화 미등록"));
     const legacyEmpty = href ? "" : '<span hidden class="person-detail-portrait-empty">없음</span>';
     return `<figure class="person-detail-portrait${href ? " has-portrait" : ""}" data-era="${escapeHtml(presentation.era_code)}" data-domain="${escapeHtml(presentation.domain_code || "")}" aria-label="${escapeHtml(displayName)} · ${escapeHtml(presentation.era_label)} · ${escapeHtml(presentation.domain_label)} · ${state}" title="${escapeHtml(titleParts.join(" · "))}">${layers}${legacyEmpty}<figcaption class="person-detail-portrait-state">${escapeHtml(state)}</figcaption></figure>`;
   }
@@ -691,6 +691,16 @@
     updateComparisonControls();
   }
 
+  function updatePortraitDetail(person, portraitResult) {
+    // The identity, chronology, evidence and open editor must not be recreated
+    // when the slower, optional portrait request finishes.
+    const panel = document.getElementById("personMainDetail");
+    const figure = panel?.querySelector?.(".person-chronicle-hero > .person-detail-portrait");
+    if (figure) figure.outerHTML = portraitFrameHtml(person, portraitResult);
+    const editor = panel?.querySelector?.(".person-detail-authoring .person-portrait-editor");
+    if (editor) editor.outerHTML = portraitEditorHtml(person, portraitResult);
+  }
+
   function renderDetailLoading() {
     const panel = document.getElementById("personMainDetail");
     if (panel) panel.innerHTML = '<p class="person-detail-placeholder">인물 상세정보를 불러오는 중입니다.</p>';
@@ -731,14 +741,27 @@
     preview.hidden = false;
   }
 
+  function syncSelectedPersonRow(previousId, nextId) {
+    if (!personListLoaded) return;
+    const list = document.getElementById("personMainGroups");
+    if (!list?.querySelector) return;
+    // UUID-only selectors are safe and touch at most the old and new row.
+    for (const id of new Set([previousId, nextId])) {
+      if (!reader.UUID_PATTERN?.test?.(id || "")) continue;
+      const row = list.querySelector(`.person-card[data-person-id="${id}"]`);
+      row?.classList?.toggle("is-selected", id === nextId);
+    }
+  }
+
   async function selectPerson(personId, { force = false, updateRoute = true } = {}) {
     personId = String(personId || "").trim().toLowerCase();
     if (!personId || (!force && selectedPersonId === personId)) return false;
     clearPortraitPreviewUrl();
+    const previousPersonId = selectedPersonId;
     selectedPersonId = personId;
     selectedPersonDetail = null;
     selectedPortrait = null;
-    renderGroups();
+    syncSelectedPersonRow(previousPersonId, personId);
     renderDetailLoading();
     if (updateRoute) {
       window.dispatchEvent(new CustomEvent("atlas-person-selected", { detail:{ personId } }));
@@ -746,16 +769,30 @@
       if (comparisonIds.length) persistComparisonHistory();
     }
     const serial = ++requestSerial;
+    let portraitReady = false;
+    let portraitResult = null;
+    // Start both reads immediately, but never wait for the optional portrait
+    // before showing the authoritative detail. Handle rejection even if the
+    // Person detail fails so no orphan request can reject unobserved.
+    const portraitRequest = reader.readPortrait(personId).then(
+      (value) => { portraitReady = true; portraitResult = value; return value; },
+      (error) => { portraitReady = true; portraitResult = Object.freeze({ error }); return portraitResult; }
+    );
     try {
-      const [result, portraitResult] = await Promise.all([
-        reader.readPerson(personId),
-        reader.readPortrait(personId).catch((error) => Object.freeze({ error }))
-      ]);
+      const result = await reader.readPerson(personId);
       if (serial !== requestSerial || selectedPersonId !== personId) return false;
       selectedPersonDetail = result.person;
-      selectedPortrait = portraitResult?.portrait || null;
       comparisonCache.set(result.person.id, result.person);
-      renderDetail(result.person, portraitResult);
+      selectedPortrait = portraitReady ? portraitResult?.portrait || null : null;
+      renderDetail(result.person, portraitReady ? portraitResult : { loading: true });
+      if (!portraitReady) {
+        void portraitRequest.then((value) => {
+          // A late portrait must never overwrite a newer selection.
+          if (serial !== requestSerial || selectedPersonId !== personId || selectedPersonDetail !== result.person) return;
+          selectedPortrait = value?.portrait || null;
+          updatePortraitDetail(result.person, value);
+        });
+      }
       return true;
     } catch (error) {
       if (serial !== requestSerial) return false;
@@ -791,10 +828,11 @@
     }
     requestSerial += 1;
     clearPortraitPreviewUrl();
+    const previousPersonId = selectedPersonId;
     selectedPersonId = null;
     selectedPersonDetail = null;
     selectedPortrait = null;
-    renderGroups();
+    syncSelectedPersonRow(previousPersonId, null);
     renderDetailPlaceholder();
     if (updateRoute) window.dispatchEvent(new CustomEvent("atlas-person-selection-cleared"));
     return true;
