@@ -579,7 +579,17 @@
       : comparisonIds.length === 2 ? "비교 인물 2명 선택됨 · 아래 활동 기록을 나란히 표시합니다." : "";
   }
 
-  async function renderComparisonPanel() {
+  // Newly completed comparisons must be discoverable from the detail button
+  // that creates them. A History restore is intentionally not auto-focused.
+  function focusComparisonPanel(panel) {
+    if (!panel?.isConnected || panel.hidden || document.getElementById("personMainView")?.hidden) return false;
+    panel.setAttribute("tabindex", "-1");
+    panel.scrollIntoView?.({ block:"start", behavior:"auto" });
+    panel.focus?.({ preventScroll:true });
+    return true;
+  }
+
+  async function renderComparisonPanel({ focusOnComplete = false } = {}) {
     const panel = document.getElementById("personComparePanel");
     const serial = ++comparisonRequestSerial;
     updateComparisonControls();
@@ -608,6 +618,7 @@
       panel.innerHTML = compareView.render(records, {
         returnToExploration: Boolean(window.ATLAS_MAIN_AUTHORITY_NAV?.getExplorationReturnHash?.())
       });
+      if (focusOnComplete) focusComparisonPanel(panel);
     } catch (error) {
       if (serial !== comparisonRequestSerial || !panel.isConnected) return;
       console.error("ATLAS Person comparison failed", error);
@@ -622,7 +633,7 @@
     const ids = personIds.map((id) => routeModel?.normalizeUuid?.(id) || null);
     if (!ids[0] || !ids[1] || ids[0] === ids[1]) return false;
     comparisonIds = ids;
-    void renderComparisonPanel();
+    void renderComparisonPanel({ focusOnComplete:true });
     return true;
   }
 
@@ -1143,9 +1154,10 @@
       if (compareButton) {
         const id = String(compareButton.dataset.personCompareAdd || "").trim().toLowerCase();
         if (id && selectedPersonDetail?.id === id && reader.UUID_PATTERN?.test?.(id)) {
+          const completing = comparisonIds.length === 1 && !comparisonIds.includes(id);
           comparisonIds = comparisonIds.includes(id) ? comparisonIds.filter((item) => item !== id)
             : comparisonIds.length < 2 ? [...comparisonIds, id] : comparisonIds;
-          void renderComparisonPanel();
+          void renderComparisonPanel({ focusOnComplete:completing });
         }
         return;
       }
