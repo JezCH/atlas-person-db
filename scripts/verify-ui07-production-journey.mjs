@@ -83,6 +83,21 @@ export async function verifyUi07MobileJourney(client,h,desktopPair,productionUrl
   await client.call("Page.navigate",{url});
   await h.waitFor(client,"document.readyState==='complete'",45000);
   await h.waitFor(client,"Boolean(document.querySelector('#personSpacetimeMount .spacetime-frame'))",90000);
+  // The frame is mounted before the direct Activity route and its peers finish loading.
+  const expected = JSON.stringify({
+    personId: desktopPair.personId,
+    activityId: desktopPair.activityId,
+    moment: desktopPair.moment,
+    personB: desktopPair.personB
+  });
+  await h.waitFor(client, `(() => {
+    const state = ${capture};
+    const expected = ${expected};
+    return state.personId === expected.personId &&
+      state.activityId === expected.activityId &&
+      state.moment === expected.moment &&
+      state.peers.includes(expected.personB);
+  })()`,90000);
   const pair=await inspectPair(client,h,desktopPair);
   const initial=await clickCompare(client,h,pair,true);
   await h.screenshot(client,"ui07-mobile-390-compare.png");
