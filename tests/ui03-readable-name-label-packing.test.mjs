@@ -16,12 +16,12 @@ const start = view.indexOf("  function packTrackLabels(");
 const end = view.indexOf("  function reasonLabel(", start);
 assert.ok(start > 0 && end > start, "Use real production packing implementation");
 const pack = new Function(
-  "runtime", "text", "selectedPersonId",
+  "runtime", "text", "selectedPersonId", "PERSON_NAME_LABEL_PACK_HEIGHT",
   view.slice(start, end) + "\nreturn packTrackLabels;"
 )(
   () => ({ labelEngine:engine }),
   (v) => v == null ? "" : String(v).trim(),
-  "selected"
+  "selected", 22
 );
 
 const item = (id,name,x,y) => ({
@@ -77,8 +77,52 @@ test("UI-03 P0 impossible full-name labels defer rather than clip their identity
   assert.ok(result.deferred[0].width>390);
 });
 
+
+test("UI-03 P0 viewport-edge Activity names use the same 22px half-height as the packing engine", () => {
+  const begin = view.indexOf("  function visibleRailLabelItems(");
+  const stop = view.indexOf("  function reasonLabel(",begin);
+  assert.ok(begin > 0 && stop > begin);
+  const runtime = () => ({
+    labelEngine:engine,
+    exploration:{ projectTrack(track){
+      return { person_id:track.person_id,track,x:95,y:track.primary_segments[0].start_ordinal,
+        presentation_band_code:"europe",label_zone_left:30,label_zone_right:210 };
+    } },
+    presentationLayout:{
+      geometryForSegment(){return {rail_x:95};},
+      applyTrackPresentation(projected){return projected;}
+    }
+  });
+  const factory = new Function(
+    "runtime","text","selectedPersonId","PERSON_NAME_LABEL_PACK_HEIGHT",
+    view.slice(begin,stop) + "\nreturn {visibleRailLabelItems,packTrackLabels};"
+  )(runtime,(v)=>String(v||"").trim(),"person-top",22);
+  const tracks = [
+    {person_id:"person-top",track_id:"top",display_name:"화면 위쪽 인물",primary_segments:[
+      {x_anchor:0.2,start_ordinal:101,end_ordinal:103}
+    ]},
+    {person_id:"person-bottom",track_id:"bottom",display_name:"화면 아래쪽 인물",primary_segments:[
+      {x_anchor:0.2,start_ordinal:217,end_ordinal:219}
+    ]}
+  ];
+  const viewport={visible_left:0,visible_top:100,visible_width:400,visible_height:120};
+  const projected = factory.visibleRailLabelItems([],tracks,{yForOrdinal:n=>n},{},940,viewport);
+  assert.equal(projected.length,2);
+  assert.deepEqual(projected.map(x=>x.y),[111,209],
+    "Only the name presentation anchor is clamped to an 11px viewport inset");
+  const packed=factory.packTrackLabels(projected,400,940,false,viewport);
+  assert.equal(packed.placed.length,2);
+  assert.equal(packed.deferred.length,0);
+  for(const rect of packed.placed){
+    assert.equal(rect.height,22);
+    assert.ok(rect.rect.top>=100 && rect.rect.bottom<=220,
+      "No selected or bottom-edge name is deferred or clipped at viewport boundary");
+  }
+});
+
 test("UI-03 P0 ships both readable styles and matching JS metrics through current public lazy loader", () => {
-  assert.match(view,/labelHeight:22,\s*charWidth:8\.7,\s*cjkCharWidth:12\.5,\s*labelChromeWidth:13,\s*labelWidthSafety:6/);
+  assert.match(view,/const PERSON_NAME_LABEL_PACK_HEIGHT = 22;/);
+  assert.match(view,/labelHeight:PERSON_NAME_LABEL_PACK_HEIGHT,\s*charWidth:8\.7,\s*cjkCharWidth:12\.5,\s*labelChromeWidth:13,\s*labelWidthSafety:6/);
   for(const resource of [
     "atlas-person-spacetime-monumental-canvas.css",
     "atlas-person-spacetime-mobile-v8.css",
