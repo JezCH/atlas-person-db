@@ -39,6 +39,50 @@ ATLAS를 단순 세계사 인물 DB가 아니라 **인류 문명의 시간·공�
 
 **다음 실행 우선순위(기존 UI #1896 범위):** ① 기존 exact-SHA Chromium/브라우저 수단으로 위 2건의 실제 화면 수용을 먼저 종결한다. ② 이미 병합된 #2761 deep History 검사기는 수동 Production 여정 실행·실제 결과가 남아 있어 별도 확인한다. ③ UI-01~07의 현재 미수용 화면만 증상별 수정하되 정상 부분·완료 코드(#2725/#2756/#2760/#2762)를 다시 구현하지 않는다. ④ UI 정보 완전성·Dashboard/Admin·A11Y는 기존 [UI 실행계획](ui/ATLAS_UI_DEVELOPMENT_EXECUTION_PLAN.md)과 [#1896](https://github.com/JezCH/atlas-person-db/issues/1896)의 승인 범위 내에서 진행한다. 새 UI 주제/P14/대량 초상·스키마·과금은 별도 승인 대상이다.
 
+
+## 1A. Production 차단 이후 전체 통합 실행계획 — 2026-11-20
+
+> **성격:** 10월 Vercel 402 이후 밀린 개발, 복구 후 실제 완료, 남은 작업, 장기 구상을 **현재 기존 owner와 실행 계약**에 연결한 포트폴리오. 별도의 DB 원장/신규 예약이나 자동 발주 목록이 아니다. 매 회차 owner Issue·현행 main·실제 Production을 우선하며, 계획 저장은 신규 기능·데이터·삭제·과금·PARKED 해제 승인과 다르다.
+
+### 1A-1. 복구 결과와 완료·미완료 구분
+
+| 단계 | 확인된 결과 | 실행상 의미 |
+| --- | --- | --- |
+| 2026-10 Hobby 정지 | 402 / Fast Origin Transfer 10.19GB/10GB. Sandbox CPU 초과는 별도 경위 | 당시 79커밋 및 복구 PR 장부를 현재 미배포로 재실행하지 않는다 |
+| 2026-11-16 #2629/#2630 | ignored build 누락 수정, 기존 6개 기능 패치 실서비스 출고/READY | 이미 출고한 동일 파일을 재병합·재배포하지 않는다 |
+| 2026-11-17~19 | 사용자 승인된 일부 Person의 canonical commit·Compile·readback, 인물 탐험 UI-01~07 진전, #2699 Person deep-link 전체 목록 다운로드 제거 | 완료된 request_id와 사용자 기능을 다시 만들지 않는다 |
+| 2026-11-20 #2776/#2781 | 시공간표 개선 MERGED·Production READY, [#2781 실Chrome 인수 PASS](https://github.com/JezCH/atlas-person-db/issues/1896#issuecomment-7037151233) | 보이는 rail/label 43/43, Place 20원본→14그룹/글로벌 겹침 0. **이름표 37개 경계 초과** 및 사용자 시각 수용은 별도 |
+| #2783 | 선택 인물 label-rail connector 변경 PR OPEN; latest head/CI는 시작 시 재조회 | 병합/배포/Chrome 미완료를 PASS로 올리지 않음 |
+
+### 1A-2. 12개 영역 통합 포트폴리오
+
+| 우선순위·분야 | 구체적 다음 작업 | 공식 owner / 실제 종결 조건 |
+| --- | --- | --- |
+| **P0 ① 시공간** | #2783 현행 head와 충돌 점검→승인된 병합·배포·실Chrome. 이어 500% 이름표 43개 중 37개의 하위권역 경계 초과/connector 해석을 실제 측정한 조건에서 개선. 확대·모바일과 Inspector 검증 | [UI #1896](https://github.com/JezCH/atlas-person-db/issues/1896) · UI-03/VIS-02. 역사적 X/Y·권역비·LOD·Activity/Source 불변; 사용자 시각 승인 별도 |
+| **P0 ② 전체 UI** | 기병합 #2756/#2760/#2761/#2762/#2774/#2777/#2778의 미수용 PC·390/600px 실제 여정만 확인. 명부/Detail/Polity 검색/비교/Dashboard/모바일/키보드/전역 CSS 결함만 수리 | [UI #1896](https://github.com/JezCH/atlas-person-db/issues/1896) · [VIS-00~07](ui/ATLAS_UI_DEVELOPMENT_EXECUTION_PLAN.md). 같은 현재 SHA의 브라우저 결과·최종 사용자 수용 |
+| **P0 ③ UI 정보 완전성** | Main/Runtime/Admin의 Person–Activity Relation·Role·기간 근거·uncertainty·Source 서지·Polity lifecycle·초상 provenance/authoring history 대조 | [UI #1896](https://github.com/JezCH/atlas-person-db/issues/1896) · [정보 노출 계약](ui/UI_INFORMATION_COVERAGE.md). DONE/PARTIAL/MISSING/STALE/INTENTIONALLY_NOT_EXPOSED 분류, 관리자 비밀 보존 |
+| **P0 ④ Place·Function** | 과거 13 Polities/20 Places/27 Sources/23 Functions의 승인·Source·현재 정확한 DB 재고 재검토. 기존 assert_place/Function writer 재사용 | [Place #2476](https://github.com/JezCH/atlas-person-db/issues/2476). 과거 0 live PPF와 이후 공개 Place 검색 0은 당시 증거. 승인된 Source→Place→Function에만 canonical commit/Compile/readback |
+| **P0 ⑤ Source** | Edward VIII 바하마·Charles I 스코틀랜드/아일랜드 왕위·Richard III 호국경의 Source/claim 손상 정정, 그 외 URL 공유 83군/197 UUID는 주장별 검토 | [Source #2478](https://github.com/JezCH/atlas-person-db/issues/2478). #2705는 재발 방지지 기존 오류 복구가 아님. 같은 URL만으로 merge/삭제 금지 |
+| **P0/P1 ⑥ Polity** | 75개 seed의 마지막 확인 67 종결/8 검토를 최신 Registry로 재확인. 역사적 family/rupture 8건을 각각 판정. 일본 live 3개/Activity12 vs tombstone3 해결은 분리 | [Polity #1895](https://github.com/JezCH/atlas-person-db/issues/1895)·[일본 #2479](https://github.com/JezCH/atlas-person-db/issues/2479). #2547 DO NOT MERGE, tombstone 삭제/retirement 별도 승인 |
+| **P0/P1 ⑦ Person 등록** | 선택 62등록+14대기(#2545), 작가60등록+15대기(#2619), YouTube 48선택(#2589), #2549의 94후보/125요청 초안, 러시아 내전 초안(#2550), Roy Bates(#2626) 등을 현재 Production UUID·별칭 기준으로 중복 대조 | [Apply #1375](https://github.com/JezCH/atlas-person-db/issues/1375)·[후보 #1374](https://github.com/JezCH/atlas-person-db/issues/1374). **숫자 합산 금지**. 대기 전용은 Person 신규 생성 금지. Authoring/Compile/Runtime 확인, #2570 pre-Production HOLD |
+| **P1 ⑧ 레거시 인물 품질** | 실존/전설·비연대표·연대 불확실성·기등록 중복/오래된 Domain·Spatial·NamuWiki와 실제 잔여 정합성. 과거 제거 판정 33명은 정확한 현재 영향/승인 분리 | Person 원본 감사 + #1375. 삭제·퇴역은 사용자 별도 명확한 승인 없이 금지 |
+| **P1 ⑨ Spatial** | 신규 Polity·Place와 실제 잔여의 placement/Source 및 정밀도 검토, 고정 수도 근거 없으면 reviewed_hold | #1895/#2476. 표시용 Place header와 역사적 PlaceFunction 분리, 완료된 옛 Spatial residual 전수 재실행 금지 |
+| **P1 ⑩ 자동개발 총괄** | 기존 예약·Codex/GitHub 도구로 승인된 독립 작업의 실개발·검증·종결을 연속 처리. 이미 병합된 #2780/#2782 결함 패치 재시도 금지 | [총괄 #2627](https://github.com/JezCH/atlas-person-db/issues/2627)·[#2603](https://github.com/JezCH/atlas-person-db/issues/2603). 예약 completed ≠ 개발 완료; 실제 자동 병렬 직원 존재를 허위 주장 금지 |
+| **P1/P2 ⑪ Production 안전·YouTube 은퇴** | Production READY 유지·Hobby quota 가드, YouTube #2592 코드 폐기 후 live 화면/API 및 남은 DB 자산 read-only 검증/승인 분리 | [비용 #2499](https://github.com/JezCH/atlas-person-db/issues/2499)·[은퇴 #2594](https://github.com/JezCH/atlas-person-db/issues/2594). FOT 과금경로 미확정; 사용자 지시에 따라 능동 원인 재조사는 우선 작업에서 제외. Sandbox/DB DROP 미승인 |
+| **PARKED/제안 ⑫ 지도·초상·AI·차세대** | 지도 G1~G8(검증된 Place→수도→사료 기반 영토/시점비교), 고증 초상 dossier/복원, Event/Work/Institution 관계, World Moment·시점 비교·큐레이션·출처 기반 AI·다국어 | 본 문서 §3~4. **P14/대량 초상/새 스키마/유료 AI는 별도 승인 전 구현·DB 작업 금지** |
+
+### 1A-3. 병렬 실행 순서와 의존성
+
+1. **즉시 독립 실행:** UI-03 선택 connector·밀집 이름표, UI-01~07 미수용 여정, Source 오류 3사례 exact-before 준비, 사용자 선택 인물의 최신 기등록 대조, Polity 개별 family 검토. 서로 다른 담당자는 연구·코드·테스트를 병렬화하고 실제 같은 파일·UUID/Runtime writer에서만 짧게 충돌 조정한다.
+2. **Place는 증거와 승인부터:** 역사적 23개 계획 행을 무조건 삽입하지 않는다. Source/Place/Polity exact identity와 사료·시기·승인이 맞는 항목만 기존 writer로 적용한다.
+3. **Person 등록은 신규/기존/대기/HOLD 분리:** 기존 canonical committed/readback 13명 등 이미 끝난 immutable 요청을 replay하지 않는다. 초안 PR의 CI 성공은 DB 등록이 아니다.
+4. **브라우저 수용과 성능:** 인물표→상세→시공간→Meanwhile→비교→History 원위치 여정과 390px·키보드를 대표 실제 데이터로 확인한다. 역사 이름표/활동선/Source가 사라지면 실패다.
+5. **추가 승인 단계:** P14 영역, 대량 초상, 새로운 historical entity schema, 유료 API, 승인되지 않은 파괴적 DB 작업은 기존 활성 포트폴리오에서 독립적으로 보류한다. 다른 합법적인 작업을 기다리게 하지 않는다.
+
+### 1A-4. 개별 작업의 완료 계약
+
+매 회차 **owner·task_key·정확한 before-state·변경 자원·실제 source/DB write·focused CI·main SHA·Production 배포 자산 또는 committed Runtime·브라우저/DB readback·독립 사용자 성과·남은 승인/HOLD·다음 재개점**으로 종결을 판단한다. 문서 갱신/PR 생성/CI 요청/자동화 예약 완료만으로 성과를 계수하지 않는다. 같은 리소스가 바뀌면 그 부분만 preflight하고 전체 backlog를 다시 접지 않는다.
+
 ## 2. 우선순위와 진행 범위
 
 | 등급 | 작업군 | 재사용/선행조건 | 종결 기준 | 실행 상태 |
@@ -70,7 +114,7 @@ P0/P1/P2는 **상대적 제품 가치 및 의존성**이며 신규 제안의 실
 5. Event, Institution, Work, Movement, Technology, Law/Treaty 등을 **실제로 필요한 사례부터** 검토; 읽기용 연결 그래프를 DB 재구축 없이 점진 투영.
 6. 시대·지역·분야별 실제 데이터 공백과 미상/자료 부재를 구별하고, 등록가치 평가와 기록 완전성을 혼합하지 않음.
 
-**2026-11-20 UI-03 시공간표 개선 우선 실행:** 시공간표 글자 크기·비율·배치 불만은 기존 승인된 UI-03A/B·VIS-02의 실제 제품 품질 미완료다. [공식 상세 실행계획 §「2026-11-20 UI-03 시공간표 전면 품질 개선」](ui/ATLAS_UI_DEVELOPMENT_EXECUTION_PLAN.md)에 P0 실제 배포 화면 기준선 → P1 캔버스/패널 → P2 시간·지역축 → P3 Person 표시 이름 충돌 엔진 → P4 탐색/상세 → P5 실Chrome/Production 사용자 수용과 정확한 종료조건을 기록했다. 현재 [Draft PR #2776](https://github.com/JezCH/atlas-person-db/pull/2776)은 미배포 1차 보정이고 최종 디자인 아님. **45개 동일폭 leaf / 9개 동일폭 macro 문서 충돌**은 좌표 무단변경 대신 A안(기존 역사적 세계·비율 보존)부터 확인하고 B안은 별도 사용자 선택 전 실행하지 않는다.
+**2026-11-20 UI-03 시공간표 개선 우선 실행:** 시공간표 글자 크기·비율·배치 불만은 기존 승인된 UI-03A/B·VIS-02의 실제 제품 품질 미완료다. [공식 상세 실행계획 §「2026-11-20 UI-03 시공간표 전면 품질 개선」](ui/ATLAS_UI_DEVELOPMENT_EXECUTION_PLAN.md)에 P0 실제 배포 화면 기준선 → P1 캔버스/패널 → P2 시간·지역축 → P3 Person 표시 이름 충돌 엔진 → P4 탐색/상세 → P5 실Chrome/Production 사용자 수용과 정확한 종료조건을 기록했다. 이후 [#2776](https://github.com/JezCH/atlas-person-db/pull/2776)은 MERGED·Production READY, [#2781](https://github.com/JezCH/atlas-person-db/pull/2781)은 exact-SHA 실Chrome PASS. 이름표 경계 초과·사용자 심미 수용은 별도 미완료다. **45개 동일폭 leaf / 9개 동일폭 macro 문서 충돌**은 좌표 무단변경 대신 A안(기존 역사적 세계·비율 보존)부터 확인하고 B안은 별도 사용자 선택 전 실행하지 않는다.
 
 
 ### B. 시공간 인물도와 역사 탐험
