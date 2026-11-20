@@ -95,7 +95,7 @@ function harness(initialHash,detailPerson=person,options={}) {
         background_url:domain ? './portrait-assets/backgrounds/'+domain+'.png' : null
       };
     }},
-    ATLAS_PERSON_PROFILE_EDITOR:{createEditor:()=>({profileEditorHtml:()=>''})},
+    ATLAS_PERSON_PROFILE_EDITOR:{createEditor:()=>({profileEditorHtml:(_person,{portraitHtml})=>portraitHtml})},
     ATLAS_PERSON_EVIDENCE_VIEW:{createRenderer:()=>({activityEvidenceHtml:()=>''})},
     addEventListener(name,cb){events.set(name,cb);},
     dispatchEvent(event){state.emitted.push(event);}
