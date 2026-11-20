@@ -483,7 +483,7 @@
       <span class="dashboard-heatmap-scale" aria-hidden="true"><i data-level="1"></i><i data-level="2"></i><i data-level="3"></i><i data-level="4"></i><i data-level="5"></i></span>
       <span>셀 숫자 = 활동 수 · 작은 % = 시대 내 비중</span>
     </div>
-    <div class="dashboard-heatmap-wrap"><table class="dashboard-heatmap">
+    <div class="dashboard-heatmap-wrap" role="region" aria-label="시대별 권역 활동표, 좌우로 스크롤" tabindex="0"><table class="dashboard-heatmap">
       <thead><tr><th scope="col">시대</th>${head}<th scope="col" class="dashboard-heatmap-total-head">시대 합계</th></tr></thead>
       <tbody>${body}</tbody>
       <tfoot><tr><th scope="row"><strong>권역 합계</strong><small>시대·권역 구간 기준</small></th>${foot}<td class="dashboard-heatmap-total-cell"><strong>${value(matrixTotal)}</strong><small>셀 합계</small></td></tr></tfoot>
@@ -510,7 +510,7 @@
         <td>${known ? value(row.total) : `<span title="${escapeHtml(reasonLabel(row.unavailable_reason || "SOURCE_UNAVAILABLE"))}">—</span>`}</td>
       </tr>`;
     }).join("");
-    return `<div class="dashboard-completeness-wrap"><table class="dashboard-completeness">
+    return `<div class="dashboard-completeness-wrap" role="region" aria-label="인물과 활동 완성도 표, 좌우로 스크롤" tabindex="0"><table class="dashboard-completeness">
       <thead><tr><th scope="col">항목</th><th scope="col">단위</th><th scope="col">완료</th><th scope="col">미완료</th><th scope="col">완성도</th><th scope="col">전체</th></tr></thead>
       <tbody>${rows}</tbody>
     </table></div>`;
@@ -594,7 +594,7 @@
       <td>${escapeHtml(timestampBasisLabel(row.data_basis))}</td>
       <td>${escapeHtml(formatTimestamp(row.read_at))}</td>
     </tr>`).join("");
-    return `<div class="dashboard-completeness-wrap"><table class="dashboard-completeness dashboard-source-freshness">
+    return `<div class="dashboard-completeness-wrap" role="region" aria-label="원본 최신성 표, 좌우로 스크롤" tabindex="0"><table class="dashboard-completeness dashboard-source-freshness">
       <thead><tr><th scope="col">원본</th><th scope="col">상태</th><th scope="col">원본 시각</th><th scope="col">기준</th><th scope="col">마지막 읽기</th></tr></thead>
       <tbody>${rows}</tbody>
     </table></div>`;
