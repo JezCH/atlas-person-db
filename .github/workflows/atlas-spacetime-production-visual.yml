@@ -139,9 +139,22 @@ jobs:
           # Automatic main-deployment smoke only: keep user-visible Production
           # acceptance, but never replay the 19-script complete UI suite on
           # every small commit. Full run is an explicit manual release review.
+          # Keep independent ATLAS visual tracks observable in the same
+          # existing Chrome session. One failure must not hide the other two
+          # results; however, the final acceptance gate remains fail-closed.
+          set +e
           node scripts/verify-spacetime-production-visual.mjs
+          spacetime_result=$?
           node scripts/verify-ui-v10-production-visual.mjs
+          person_result=$?
           node scripts/verify-polity-production-visual.mjs
+          polity_result=$?
+          set -e
+          echo "ATLAS_VISUAL_TRACK_RESULTS spacetime=$spacetime_result person=$person_result polity=$polity_result"
+          if (( spacetime_result != 0 || person_result != 0 || polity_result != 0 )); then
+            echo "ATLAS_VISUAL_ACCEPTANCE_FAILED: independent track(s) failed; review each JSON artifact." >&2
+            exit 1
+          fi
           if [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]]; then
             echo "Running explicit complete Production visual release acceptance"
             node scripts/verify-ui07-production-journeys.mjs
