@@ -9,7 +9,7 @@ const read = name => fs.readFileSync(new URL("../" + name, import.meta.url),"utf
 const person = read("atlas-person-main.js");
 const nav = read("atlas-main-authority-nav.js");
 const html = read("index.html");
-const A="11111111-1111-4111-8111-111111111111";
+const A="a1111111-1111-4111-8111-111111111111";
 const B="22222222-2222-4222-8222-222222222222";
 const C="33333333-3333-4333-8333-333333333333";
 const hashB=route.entityHash("persons","person",B);
