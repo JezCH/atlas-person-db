@@ -217,3 +217,164 @@
   #personMainView .atlas-compare-person-head { grid-template-columns: minmax(0,1fr); }
   #personMainView .atlas-compare-person-head button { grid-column: 1; grid-row: auto; justify-self: start; }
 }
+
+
+/* UI-07B: a restrained, evidence-graded chronological comparison strip.
+   Bars represent recorded year ranges, not literal travel or human contact. */
+#personMainView .atlas-compare-period-analysis {
+  padding: 17px 19px 19px;
+  border-bottom: 1px solid rgba(192,174,136,.27);
+  background: linear-gradient(180deg,rgba(192,174,136,.045),transparent 80%);
+}
+#personMainView .atlas-compare-period-analysis > header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  margin: 0 0 13px;
+}
+#personMainView .atlas-compare-period-analysis header small {
+  display: block;
+  margin-bottom: 4px;
+  color: #b2a382;
+  letter-spacing: .09em;
+  font-size: 10px;
+}
+#personMainView .atlas-compare-period-analysis header h4 {
+  margin: 0;
+  color: #f0e4cd;
+  font-size: 16px;
+  line-height: 1.4;
+}
+#personMainView .atlas-compare-period-analysis header > span {
+  color: #c3cacf;
+  font-size: 11px;
+}
+#personMainView .atlas-compare-overlap-counts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+#personMainView .atlas-compare-overlap-counts span {
+  padding: 7px 9px;
+  border: 1px solid #3b4448;
+  border-radius: 3px;
+  background: #242c30;
+  color: #ced4d4;
+  font-size: 11px;
+  line-height: 1.3;
+}
+#personMainView .atlas-compare-overlap-counts strong {
+  color: #f2e6cd;
+  font-variant-numeric: tabular-nums;
+  font-size: 13px;
+}
+#personMainView .atlas-compare-overlap-note {
+  margin: 12px 0 14px;
+  color: #bfc7c9;
+  font-size: 12px;
+  line-height: 1.75;
+}
+#personMainView .atlas-compare-overlap-empty {
+  margin: 12px 0 0;
+  color: #d1d5d3;
+  font-size: 12px;
+}
+#personMainView .atlas-compare-overlap-list {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#personMainView .atlas-compare-overlap {
+  min-width: 0;
+  padding: 12px 13px;
+  border-left: 3px solid #b9aa85;
+  background: #252d31;
+}
+#personMainView .atlas-compare-overlap--candidate {
+  border-left-color: #8b979c;
+  background: #20292f;
+}
+#personMainView .atlas-compare-overlap-head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 5px 12px;
+}
+#personMainView .atlas-compare-overlap-head strong {
+  color: #edddbd;
+  font-size: 12px;
+}
+#personMainView .atlas-compare-overlap--candidate .atlas-compare-overlap-head strong { color: #cbd6dc; }
+#personMainView .atlas-compare-overlap-head span {
+  color: #f4f0e5;
+  font-size: 13px;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+}
+#personMainView .atlas-compare-overlap-pair {
+  margin: 8px 0 9px;
+  color: #cfd5d7;
+  font-size: 11px;
+  line-height: 1.55;
+}
+#personMainView .atlas-compare-overlap-pair b { color: #ecf0ed; }
+#personMainView .atlas-compare-interval-graphic { display: grid; gap: 5px; }
+#personMainView .atlas-compare-interval-row {
+  display: grid;
+  grid-template-columns: 46px minmax(0,1fr);
+  align-items: center;
+  gap: 8px;
+}
+#personMainView .atlas-compare-interval-row > span { color: #b4bfc2; font-size: 10px; }
+#personMainView .atlas-compare-interval-rail {
+  position: relative;
+  min-width: 0;
+  height: 7px;
+  background: #121b1f;
+  border: 1px solid #384246;
+  border-radius: 4px;
+}
+#personMainView .atlas-compare-interval-bar {
+  position: absolute;
+  inset-block-start: -1px;
+  height: 7px;
+  border-radius: 3px;
+}
+#personMainView .atlas-compare-interval-bar.is-first { background: #92a8bb; }
+#personMainView .atlas-compare-interval-bar.is-second { background: #b7a7ce; }
+#personMainView .atlas-compare-interval-bar.is-intersection { background: #d9ba79; }
+#personMainView .atlas-compare-overlap--candidate .atlas-compare-interval-bar.is-intersection {
+  background: repeating-linear-gradient(90deg,#8c979b 0,#8c979b 4px,#414b51 4px,#414b51 8px);
+}
+#personMainView .atlas-compare-overlap > small {
+  display: block;
+  margin-top: 9px;
+  color: #bdc7c9;
+  font-size: 10.5px;
+  line-height: 1.6;
+}
+#personMainView .atlas-compare-overlap-more { margin-top: 11px; }
+#personMainView .atlas-compare-overlap-more > summary {
+  min-height: 36px;
+  padding: 8px 11px;
+  border: 1px solid rgba(192,174,136,.42);
+  color: #e9dbc1;
+  cursor: pointer;
+  font-size: 12px;
+}
+#personMainView .atlas-compare-overlap-more[open] > summary { margin-bottom: 11px; }
+#personMainView .atlas-compare-overlap-more > summary:focus-visible {
+  outline: 2px solid #e7d4a4;
+  outline-offset: 3px;
+}
+@media (max-width: 760px) {
+  #personMainView .atlas-compare-period-analysis { padding: 13px 12px 15px; }
+  #personMainView .atlas-compare-overlap { padding: 10px; }
+  #personMainView .atlas-compare-overlap-head span { font-size: 12px; }
+  #personMainView .atlas-compare-overlap-counts span { flex: 1 1 calc(50% - 6px); }
+}
