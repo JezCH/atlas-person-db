@@ -131,6 +131,45 @@ async function collectMain(client){
       return Boolean(el&&s&&s.display!=="none"&&s.visibility!=="hidden"&&Number(s.opacity||1)>0);
     };
     const bodyWidth=Math.max(document.documentElement.scrollWidth,document.body.scrollWidth);
+    // Diagnose actual horizontal layout offenders before failing a live 390px
+    // acceptance. A CSS clip may mask a child but not explain scrollWidth.
+    const overflowProbe=bodyWidth > innerWidth+1 ? (() => {
+      const selectors=[
+        "html","body",".workspace-shell",".main-area","#personMainView",
+        ".person-main-layout",".person-main-groups",".person-era-navigator",
+        "#personEraNavigator",".person-monumental-register",".mobile-appbar"
+      ];
+      const keyBoxes=selectors.map((selector)=>{
+        const el=q(selector);
+        const rect=el?.getBoundingClientRect?.();
+        const st=style(el);
+        return el&&rect ? {
+          selector,left:Number(rect.left.toFixed(2)),right:Number(rect.right.toFixed(2)),
+          width:Number(rect.width.toFixed(2)),scrollWidth:el.scrollWidth,
+          overflowX:st?.overflowX,position:st?.position,boxSizing:st?.boxSizing
+        } : null;
+      }).filter(Boolean);
+      const offenders=qa("body *").map((el)=>{
+        const rect=el.getBoundingClientRect();
+        if (!(rect.right > innerWidth+0.75 && rect.left < bodyWidth+32)) return null;
+        const st=style(el);
+        if(st?.display==="none"||st?.visibility==="hidden")return null;
+        const classes=typeof el.className==="string"?el.className.slice(0,130):"";
+        return {tag:el.tagName.toLowerCase(),id:el.id||"",classes,
+          parentClass:typeof el.parentElement?.className==="string"?el.parentElement.className.slice(0,100):"",
+          left:Number(rect.left.toFixed(2)),right:Number(rect.right.toFixed(2)),
+          width:Number(rect.width.toFixed(2)),scrollWidth:el.scrollWidth,
+          overflowX:st?.overflowX,position:st?.position,boxSizing:st?.boxSizing
+        };
+      }).filter(Boolean).sort((a,b)=>b.right-a.right||a.width-b.width);
+      const seen=new Set();
+      return {keyBoxes,offenders:offenders.filter((x)=>{
+        const key=[x.tag,x.id,x.classes,x.right].join("|");
+        if(seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      }).slice(0,25)};
+    })() : null;
     const rows=qa('.person-register-entry');
     const ordinaryRows=rows.filter((row)=>!row.classList.contains('has-multiple-activities'));
     const entry=rows[0]||null;
@@ -206,6 +245,7 @@ async function collectMain(client){
     return {
       viewport:{width:innerWidth,height:innerHeight,dpr:devicePixelRatio},
       bodyScrollWidth:bodyWidth,
+      overflowProbe,
       mainVisible:Boolean(main && !main.hidden),
       registerCount:rows.length,
       ordinaryRegisterCount:ordinaryRows.length,
@@ -491,6 +531,7 @@ async function main(){
     await navigatePerson(client,MOBILE);
     const mobileMain=await collectMain(client);
     assert(mobileMain.viewport.width===390&&mobileMain.viewport.height===844,"Unexpected mobile viewport",mobileMain);
+    if (mobileMain.bodyScrollWidth>391) await screenshot(client,"person-main-overflow-diagnostic-390x844.png");
     assert(mobileMain.bodyScrollWidth<=391,"Person mobile page has horizontal document overflow",mobileMain);
     assert(mobileMain.mainVisible&&mobileMain.registerCount>0,"Person Register did not render on mobile",mobileMain);
     assert(mobileMain.mainPortraitCount===0,"Person Main must not render portraits on mobile",mobileMain);
