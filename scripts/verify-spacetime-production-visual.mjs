@@ -207,6 +207,63 @@ const bandContainmentCode = `
   };
 }`;
 
+const labelAssociationCode = `
+(labels, markers, rails) => {
+  // The display label may borrow another subregion. Its origin tick must
+  // still identify the same Person and its actual historical activity rail.
+  const violations = [];
+  const markerByPerson = new Map();
+  const railByPerson = new Map();
+  for (const rail of rails) {
+    const id = rail.dataset.spacetimePerson;
+    if (!id) continue;
+    if (!railByPerson.has(id)) railByPerson.set(id, []);
+    railByPerson.get(id).push(rail);
+  }
+  for (const marker of markers) {
+    const id = marker.dataset.spacetimePerson;
+    if (!id || markerByPerson.has(id)) {
+      violations.push({ person_id:id || null, reason:"missing_or_duplicate_marker_person_id" });
+      continue;
+    }
+    markerByPerson.set(id, marker);
+  }
+  const borrowed = labels.filter(el => el.dataset.spacetimeLabelBorrowed === "true");
+  const borrowedIds = new Set(borrowed.map(el => el.dataset.spacetimePerson));
+  for (const label of borrowed) {
+    const id = label.dataset.spacetimePerson;
+    const marker = markerByPerson.get(id);
+    if (!marker) { violations.push({person_id:id,reason:"borrowed_name_missing_home_marker"}); continue; }
+    const m = marker.getBoundingClientRect();
+    const l = label.getBoundingClientRect();
+    const markerCenterX = (m.left + m.right) / 2;
+    const markerCenterY = (m.top + m.bottom) / 2;
+    const railsForPerson = railByPerson.get(id) || [];
+    if (!railsForPerson.length) {
+      violations.push({person_id:id,reason:"home_marker_without_person_rail"});
+      continue;
+    }
+    const closestRailDistance = Math.min(...railsForPerson.map(rail => {
+      const r = rail.getBoundingClientRect();
+      return Math.abs((r.left + r.right) / 2 - markerCenterX);
+    }));
+    if (closestRailDistance > 2) violations.push({person_id:id,reason:"home_marker_not_on_person_rail",distance_px:closestRailDistance});
+    const bottomGap = Math.abs(markerCenterY - l.bottom);
+    if (bottomGap > 2) violations.push({person_id:id,reason:"home_marker_not_on_label_bottom",distance_px:bottomGap});
+  }
+  for (const id of markerByPerson.keys()) {
+    if (!borrowedIds.has(id)) violations.push({person_id:id,reason:"orphan_home_marker"});
+  }
+  for (const label of labels) {
+    if (label.dataset.spacetimeLabelBorrowed !== "true" && label.dataset.spacetimeLabelBorrowed !== "false")
+      violations.push({person_id:label.dataset.spacetimePerson || null,reason:"missing_borrowed_classification"});
+  }
+  return {label_count:labels.length,borrowed_count:borrowed.length,marker_count:markers.length,
+    linked_count:borrowed.length-violations.filter(v=>v.reason==="borrowed_name_missing_home_marker").length,
+    violation_count:violations.length,violations:violations.slice(0,30)};
+};
+`;
+
 async function collect500(client) {
   return evaluate(client, `(() => {
     const q=(s)=>document.querySelector(s);
@@ -220,6 +277,7 @@ async function collect500(client) {
     const header=q(".spacetime-region-head"), corner=q(".spacetime-sticky-corner"), scroll=q(".spacetime-scroll");
     const labelOverlap=(${overlapCode})(qa(".spacetime-track-label"));
     const bandContainment=(${bandContainmentCode})(qa(".spacetime-track-label"),qa(".spacetime-region-head-band[data-spacetime-band]"),qa(".spacetime-track-rail"));
+    const labelAssociation=(${labelAssociationCode})(qa(".spacetime-track-label"),qa(".spacetime-label-home-anchor"),qa(".spacetime-track-rail"));
     const dataViewport=(() => {
       const sr=scroll.getBoundingClientRect();
       const clientLeft=Number(scroll.clientLeft)||0;
@@ -284,6 +342,7 @@ async function collect500(client) {
       missingVisibleLabelPersonIds,
       extraVisibleLabelPersonIds,
       labelOverlap,
+      labelAssociation,
       bandContainment
     };
   })()`);
@@ -303,6 +362,7 @@ async function collect1500(client, geometry500) {
     const placeGlobalOverlap=(${globalPlaceOverlapCode})(markers);
     const labelOverlap=(${overlapCode})(qa(".spacetime-track-label"));
     const bandContainment=(${bandContainmentCode})(qa(".spacetime-track-label"),qa(".spacetime-region-head-band[data-spacetime-band]"),qa(".spacetime-track-rail"));
+    const labelAssociation=(${labelAssociationCode})(qa(".spacetime-track-label"),qa(".spacetime-label-home-anchor"),qa(".spacetime-track-rail"));
     const scroll=q(".spacetime-scroll");
     const dataViewport=(() => {
       const sr=scroll.getBoundingClientRect();
@@ -351,6 +411,7 @@ async function collect1500(client, geometry500) {
       missingVisibleLabelPersonIds,
       extraVisibleLabelPersonIds,
       labelOverlap,
+      labelAssociation,
       bandContainment,
       macro,sub,
       uncertaintyCount:qa(".spacetime-spatial-uncertainty").length,
@@ -537,6 +598,7 @@ async function main() {
     assert(at500.missingVisibleLabelPersonIds.length === 0, "A visible rail Person is missing a visible name at 500%", at500);
     assert(at500.extraVisibleLabelPersonIds.length === 0, "A visible Person name has no visible rail at 500%", at500);
     assert(at500.bandContainment.rail_violation_count === 0, "Presentation rails drift back toward band centers at 500%", at500.bandContainment);
+    assert(at500.labelAssociation.violation_count === 0, "Borrowed 500% Person labels lost their own historical rail anchor", at500.labelAssociation);
     await screenshot(client, "spacetime-500.png");
 
     for (let i=0;i<5;i++) {
@@ -575,6 +637,7 @@ async function main() {
     assert(at1500.missingVisibleLabelPersonIds.length === 0, "A visible rail Person is missing a visible name at 1500%", at1500);
     assert(at1500.extraVisibleLabelPersonIds.length === 0, "A visible Person name has no visible rail at 1500%", at1500);
     assert(at1500.bandContainment.rail_violation_count === 0, "Presentation rails drift back toward band centers at 1500%", at1500.bandContainment);
+    assert(at1500.labelAssociation.violation_count === 0, "Borrowed 1500% Person labels lost their own historical rail anchor", at1500.labelAssociation);
     assertNormalizedGeometryInvariant(at500.macro, at1500.macro, "Macroregion");
     assertNormalizedGeometryInvariant(at500.sub, at1500.sub, "Subregion");
     assert(at1500.uncertaintyCount > 0, "No C6 spatial uncertainty evidence was rendered in the inspected 1500% viewport", at1500);
