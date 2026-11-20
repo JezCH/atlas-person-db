@@ -106,12 +106,14 @@
       renderSources(person?.sources) + '</details></div></section>';
   }
 
-  function render(persons) {
+  function render(persons, { returnToExploration = false } = {}) {
     if (!Array.isArray(persons) || persons.length !== 2 || !persons[0]?.id || !persons[1]?.id ||
       persons[0].id === persons[1].id) throw new Error("ATLAS_COMPARE_REQUIRES_TWO_DISTINCT_PERSONS");
     return '<header class="atlas-compare-head"><div><p>ATLAS · 인물 연구</p>' +
       '<h3 id="atlasCompareTitle">두 인물의 활동 기록 비교</h3></div>' +
-      '<button type="button" data-compare-close aria-label="인물 비교 닫기">닫기</button></header>' +
+      '<div class="atlas-compare-head-actions">' +
+      (returnToExploration ? '<button type="button" data-compare-return-spacetime>↶ 이전 시공간 탐험으로</button>' : '') +
+      '<button type="button" data-compare-close aria-label="인물 비교 닫기">닫기</button></div></header>' +
       '<p class="atlas-compare-disclaimer">아래 기간은 출생·사망 연도가 아니라 각 인물의 등록된 Activity 기간입니다. ' +
       '연도·역법·확실성이 미상인 경계는 추정하지 않으며, 동시대 활동이 실제 접촉·영향·관계를 뜻하지 않습니다.</p>' +
       '<div class="atlas-compare-columns">' + renderPerson(persons[0], 1) +
