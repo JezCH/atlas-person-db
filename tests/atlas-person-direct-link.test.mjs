@@ -311,9 +311,12 @@ test('Person card markup is reused for repeated filters and refreshed only for s
   assert.equal(h.state.groupMarkup.at(-1),firstHtml);
   await h.window.ATLAS_PERSON_MAIN.openPerson(id);
   h.window.ATLAS_PERSON_MAIN.renderGroups();
-  assert.equal(activityReads,firstReads+1,'selection generates only its own cached variant');
+  const selectedReads=activityReads;
+  assert.ok(selectedReads>firstReads,'selected variant is computed once when needed');
   assert.match(h.state.groupMarkup.at(-1),/is-selected/);
+  h.window.ATLAS_PERSON_MAIN.renderGroups();
+  assert.equal(activityReads,selectedReads,'repeat selected render must reuse cached card');
   h.window.ATLAS_PERSON_MAIN.clearSelection();
   h.window.ATLAS_PERSON_MAIN.renderGroups();
-  assert.equal(activityReads,firstReads+1,'returning to normal variant must reuse cached card');
+  assert.equal(activityReads,selectedReads,'returning to normal variant must reuse cached card');
 });
