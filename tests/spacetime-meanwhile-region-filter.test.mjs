@@ -13,9 +13,9 @@ const renderEnd = view.indexOf("  async function fetchSpatialIndex", renderStart
 assert.ok(renderStart >= 0 && renderEnd > renderStart);
 const render = new Function(
   "meanwhileSelectedOrdinal", "meanwhileSelectionSource", "meanwhileMomentLabel",
-  "escapeHtml", "polityLabel", "periodLabel", "meanwhileRegionLabel",
+  "escapeHtml", "polityLabel", "periodLabel", "meanwhileRegionLabel", "selectedPersonId",
   view.slice(renderStart, renderEnd) + "\nreturn renderMeanwhile;"
-)(1, "manual", () => "1592년", String, () => "정치체", () => "기간", (code) => ({ europe:"유럽", africa:"아프리카" }[code] || code));
+)(1, "manual", () => "1592년", String, () => "정치체", () => "기간", (code) => ({ europe:"유럽", africa:"아프리카" }[code] || code), null);
 
 const entries = [
   { person_id:"p1", display_name:"A", activity_id:"a1", macroregion_code:"europe" },
