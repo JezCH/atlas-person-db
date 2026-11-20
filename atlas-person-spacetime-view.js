@@ -1339,11 +1339,12 @@
     return projectedTracks.map((item) => {
       const label = labelsByPerson.get(item.track.person_id);
       if (!label) return "";
-      const forced = Boolean(needle) || selectedPersonId === item.track.person_id;
+      const personSelected = selectedPersonId === item.track.person_id;
+      const forced = Boolean(needle) || personSelected;
       const opacity = forced ? 1 : lodWeights.labels;
-      const connector = label.connector ? `<i class="spacetime-label-connector" style="left:${label.region_left + Math.min(label.connector.x1, label.connector.x2)}px;top:${label.connector.y1}px;width:${label.connector.length}px"></i>` : "";
+      const connector = label.connector ? `<i class="spacetime-label-connector${personSelected ? " is-selected" : ""}" aria-hidden="true" style="left:${label.region_left + Math.min(label.connector.x1, label.connector.x2)}px;top:${label.connector.y1}px;width:${label.connector.length}px"></i>` : "";
       const meanwhileActive = meanwhilePersonIds.has(item.track.person_id);
-      return `${connector}<button type="button" class="spacetime-track-label${selectedPersonId === item.track.person_id ? " is-selected" : ""}${meanwhileActive ? " is-meanwhile-active" : ""}" data-spacetime-person="${escapeHtml(item.track.person_id)}" data-spacetime-band="${escapeHtml(label.region_code)}" style="left:${label.label_x}px;top:${label.label_y}px;width:${label.width}px;opacity:${opacity}" title="${escapeHtml(item.track.display_name)}">${escapeHtml(item.track.display_name)}</button>`;
+      return `${connector}<button type="button" class="spacetime-track-label${personSelected ? " is-selected" : ""}${meanwhileActive ? " is-meanwhile-active" : ""}" data-spacetime-person="${escapeHtml(item.track.person_id)}" data-spacetime-band="${escapeHtml(label.region_code)}" style="left:${label.label_x}px;top:${label.label_y}px;width:${label.width}px;opacity:${opacity}" title="${escapeHtml(item.track.display_name)}">${escapeHtml(item.track.display_name)}</button>`;
     }).join("");
   }
 
