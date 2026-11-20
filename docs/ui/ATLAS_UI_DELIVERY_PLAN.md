@@ -8,11 +8,28 @@
 >
 > 본 문서는 **실제 화면을 배포·수용하기 위한 개발 순서**이다. `docs/ui/UI_INFORMATION_COVERAGE.md`, `ATLAS_REQUIREMENTS.md`, `DATA_MODEL.md`, `WORK_EXECUTION.md`의 데이터·권한·운영 규칙을 대체하지 않는다.
 
+
+## 2026-11-20 전체 통합계획 반영 — 현행 UI 완료/남은 범위
+
+**전체 개발 로드맵:** [Production 차단 이후 12개 개발 영역 통합 실행계획](../ATLAS_PRODUCT_UPGRADE_ROADMAP_20261120.md#1a-production-차단-이후-전체-통합-실행계획--2026-11-20). **UI 단일 owner:** [#1896](https://github.com/JezCH/atlas-person-db/issues/1896). 기존 UI-01~07/VIS-00~07의 범위를 확장·중복 생성하지 않고 **현재 실제 미수용 영역만** 순차 종결한다.
+
+| 최신 실개발 체크포인트 | 확인된 완료 단계 | 계속해야 할 작업 |
+| --- | --- | --- |
+| #2776 시공간 가독성·공간 비율 | MERGED, Production READY, #2781 이전 exact-SHA Chrome PASS | 기본 화면/모바일 등 현행 자료에 대한 사용자 최종 시각 수용은 별개 |
+| #2781 Place header 겹침 개선 | MERGED·Production READY·실Chrome PASS, 전체 Place 원본 20개 유지, 표지 14그룹, 글로벌 Place label overlap 0, 500% Person 43/43 | 이름표 37개가 하위권역 시각 경계를 넘는 **위치 해석 문제**. 이름/Activity 누락이나 역사적 X 좌표 오류로 단정하지 않음 |
+| #2783 선택 인물 label→rail 강조 | PR OPEN/미배포; 정확한 최신 head와 CI 재조회 | 기존 PR 검토→허용되는 병합→Production/브라우저 시각 인수. 37개 경계 문제 전체 해결과 구별 |
+| #2756/#2760/#2761/#2762 | 이미 main에 병합된 모바일 표·비교 초점·History 검사·무초상 상세 | 실제 PC/390px에서 **아직 인수되지 않은 여정만** 확인. 증거가 확보된 기존 검사를 반복하지 않음 |
+| #2774/#2777/#2778 | 검색 우선 Polity·데스크톱 Person row·모바일 Dashboard 정보표 개선 병합 | 새 배포 SHA의 해당 화면에서 사용자 행동·읽기 품질·정보 누락을 확인한 뒤 필요한 부분만 국소 수정 |
+
+**우선 실행:** (1) UI-03 P3 실측/연결 명확화, (2) UI-01/02/04/06/07 현재 사용자 여정의 판독·복귀·접근성 인수, (3) UI-05의 Person/Activity/Polity/Source/Provenance와 Admin/Main 실제 누락 비교, (4) 기존 디자인 체계(Graphite/Champagne, 분야 의미색·권력자 금색)를 보존하면서 중복 CSS·불필요한 재렌더만 제거. **기존 메인 표를 카드·초상 중심 UI로 변경하거나, 역사적 연대·region X/Y·source facts를 화면 편의로 수정하지 않는다.**
+
+**각 항목 완료:** 재현한 화면/동작 → 해당 소스의 수정 또는 수정 불필요 판정 → focused CI → 합법적 병합 → 실제 Production 동일 자산과 페이지 → PC/390px·필요한 viewport 브라우저 → 사용자 시각 수용을 별도 기록. 이 문서 변경 자체는 PLAN_RECORDED이며 구현/배포/사용자 승인으로 간주하지 않는다.
+
 ## 2026-11-20 UI-03 시공간표 글자·비율·배치 전면 개선 (최신 사용자 지시)
 
 현 시공간표의 **글자 크기·전체 비율·배치가 만족스럽지 않다**는 피드백을 기존 승인된 UI-03A/B·VIS-02의 우선 수용 조건으로 반영한다. CSS 폰트 크기만 조정하는 부분수정이 아니라 **P0 현재 배포 브라우저 실측 → P1 캔버스/패널 공간 배치 → P2 지역/연도축 타이포그래피·LOD → P3 실제 이름폭/충돌 엔진 → P4 Inspector/탐색 → P5 동조건 전후 PNG/JSON·CI·Production/실Chrome/사용자 수용** 순서로 진행한다.
 
-**작업 소유·파일·검증·중단 기준:** [상세 개발실행계획의 UI-03 2026-11-20 전면 개선 실행계약](ATLAS_UI_DEVELOPMENT_EXECUTION_PLAN.md), owner [#1896](https://github.com/JezCH/atlas-person-db/issues/1896). 기존 [Draft PR #2776](https://github.com/JezCH/atlas-person-db/pull/2776)은 부분 보정/미병합/미배포/실브라우저 미수용으로서 원본과 대조해 재사용·보완한다.
+**초기 계획 당시의 코드 진입점 이후 결과:** [#2776](https://github.com/JezCH/atlas-person-db/pull/2776)은 이미 병합되어 Production READY와 브라우저 검증을 거쳤다. 후속 [#2781](https://github.com/JezCH/atlas-person-db/pull/2781)도 Production Chrome에서 확인했다. **남은 P3 이름표 지역 경계·선택 연결선, 최종 미감 수용**을 [상세 개발실행계획](ATLAS_UI_DEVELOPMENT_EXECUTION_PLAN.md)과 #1896에 따라 진행한다.
 
 **계약 불일치 선해결:** 현 코드의 45개 동일폭 하위지역 기반 대권역 폭과 기존 문서의 '9대권역 동일 폭' 표기가 충돌한다. **A안(현 정규화 X/지역 폭 유지 + 정보위계 개선) 우선**, B안(대권역 폭/좌표 재배분)은 사용자 별도 선택 전에는 개발·배포하지 않는다. 기존 viewport-fit/500~1500%/0.748 공통 글로벌 줌, historical Y, 140px 연도축/36px 헤더, 8분야색, Activity/Source/정밀도/Meanwhile/History는 보호한다.
 
