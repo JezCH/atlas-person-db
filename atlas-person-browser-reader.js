@@ -95,16 +95,23 @@
     ].map(text).filter(Boolean);
   }
 
+  const searchTextByPerson = new WeakMap();
+
   function searchableText(person) {
+    // Person list rows are immutable read snapshots. Reuse their search union
+    // during repeated queries; fresh API snapshots receive new object keys.
+    if (person && typeof person === "object" && searchTextByPerson.has(person)) return searchTextByPerson.get(person);
     const names = Array.isArray(person?.names) ? person.names.map((row) => row?.name) : [];
     const descriptions = Array.isArray(person?.descriptions) ? person.descriptions.map((row) => row?.content) : [];
     const facets = ["polities", "relations", "roles", "period_bases"]
       .flatMap((key) => facetRows(person, key).flatMap(facetText));
     const activities = activityRows(person).flatMap(activitySearchText);
-    return [person?.display_name, person?.canonical_name_en, person?.preferred_name_ko, ...names, ...descriptions, ...facets, ...activities]
+    const combined = [person?.display_name, person?.canonical_name_en, person?.preferred_name_ko, ...names, ...descriptions, ...facets, ...activities]
       .map(text)
       .join("\n")
       .toLocaleLowerCase("ko");
+    if (person && typeof person === "object") searchTextByPerson.set(person, combined);
+    return combined;
   }
 
   function personMatchesQuery(person, query) {
@@ -169,7 +176,8 @@
     query = "",
     sortOrder = "start-asc",
     facetFilters = {},
-    secondaryPredicate = null
+    secondaryPredicate = null,
+    includeFacetCatalog = true
   } = {}) {
     const visiblePersons = publicPersons(persons);
     const partitioned = partitionByHistoricity(visiblePersons);
@@ -184,7 +192,7 @@
       historical: Object.freeze(filterAndSort(partitioned.historical)),
       other_or_uncertain: Object.freeze(filterAndSort(partitioned.other_or_uncertain)),
       observed_historicity_values: partitioned.observed_historicity_values,
-      facet_catalog: facetCatalog(visiblePersons)
+      facet_catalog: includeFacetCatalog ? facetCatalog(visiblePersons) : null
     });
   }
 
