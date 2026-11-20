@@ -85,6 +85,7 @@
   let meanwhileSelectedOrdinal = null;
   let meanwhileSelectionSource = null;
   let meanwhileRegionCode = "";
+  let meanwhilePolityId = "";
   let resumeExplorationAfterDetail = false;
   let explorationHistorySnapshotTimer = null;
 
@@ -367,6 +368,20 @@
 
   // History-scoped exploration snapshot: no database, account profile, or cross-tab persistence.
   // The canonical route must match before a snapshot can affect a newly loaded view.
+  // Never infer a polity from a similar label. All choices are bound to
+  // primary Activities with reviewed historical time and world placement.
+  function isReviewedPolityAtMoment(polityId, ordinal, regionCode = "") {
+    if (!text(polityId) || !Number.isInteger(ordinal)) return false;
+    return compileAtlas().partitioned.tracks.some((track) =>
+      (track.primary_segments || []).some((segment) =>
+        text(segment.activity?.polity?.id) === polityId
+        && Number.isInteger(segment.start_ordinal) && Number.isInteger(segment.end_ordinal)
+        && segment.start_ordinal <= ordinal && ordinal <= segment.end_ordinal
+        && (!regionCode || segment.macroregion_code === regionCode)
+      )
+    );
+  }
+
   function captureExplorationState() {
     const route = window.ATLAS_ENTITY_ROUTE?.parseHash?.(window.location.hash);
     if (route?.domain !== "spacetime") return null;
@@ -388,6 +403,7 @@
       meanwhileOrdinal: Number.isInteger(meanwhileSelectedOrdinal) ? meanwhileSelectedOrdinal : null,
       meanwhileSource: meanwhileSelectionSource,
       regionCode: meanwhileRegionCode,
+      polityId: meanwhilePolityId,
       activityOrigin: explorationOrigin ? { ...explorationOrigin } : null
     };
   }
@@ -452,6 +468,8 @@
     meanwhileRegionCode = meanwhileSelectedOrdinal != null
       && model.REGION_DEFINITIONS.some((region) => region.code === snapshot.regionCode)
       ? snapshot.regionCode : "";
+    meanwhilePolityId = isReviewedPolityAtMoment(snapshot.polityId, meanwhileSelectedOrdinal, meanwhileRegionCode)
+      ? snapshot.polityId : "";
     pendingFocusPersonId = null;
     const prior = snapshot.activityOrigin;
     const priorPersonId = window.ATLAS_ENTITY_ROUTE?.normalizeUuid?.(prior?.personId) || null;
@@ -476,7 +494,9 @@
         ? prior.meanwhileOrdinal : null,
       meanwhileSource: ["manual", "activity", "exploration"].includes(prior.meanwhileSource)
         ? prior.meanwhileSource : null,
-      regionCode: model.REGION_DEFINITIONS.some((region) => region.code === prior.regionCode) ? prior.regionCode : ""
+      regionCode: model.REGION_DEFINITIONS.some((region) => region.code === prior.regionCode) ? prior.regionCode : "",
+      polityId: isReviewedPolityAtMoment(prior.polityId, prior.meanwhileOrdinal, prior.regionCode)
+        ? prior.polityId : ""
     }) : null;
     pendingActivityFocus = null;
     pendingCameraAnchor = null;
@@ -611,6 +631,7 @@
       meanwhileSelectedOrdinal = null;
       meanwhileSelectionSource = null;
       meanwhileRegionCode = "";
+      meanwhilePolityId = "";
     }
   }
 
@@ -674,6 +695,7 @@
     selectedActivityId = activity.activity_id;
     selectedTimeOrdinal = nextTimeOrdinal;
     meanwhileRegionCode = "";
+    meanwhilePolityId = "";
     if (Number.isInteger(selectedTimeOrdinal) && meanwhileReady) {
       meanwhileSelectedOrdinal = selectedTimeOrdinal;
       meanwhileSelectionSource = "activity";
@@ -705,7 +727,8 @@
       horizontalRatio: horizontalCameraRatioFromStoredGeometry(),
       meanwhileOrdinal: meanwhileSelectedOrdinal,
       meanwhileSource: meanwhileSelectionSource,
-      regionCode: meanwhileRegionCode
+      regionCode: meanwhileRegionCode,
+      polityId: meanwhilePolityId
     });
     // The first Activity selection rendered before the origin was recorded.
     // Insert the live return control without redrawing the expensive world canvas.
@@ -743,7 +766,8 @@
     meanwhileSelectedOrdinal = origin.meanwhileOrdinal;
     meanwhileSelectionSource = origin.meanwhileSource;
     meanwhileRegionCode = origin.regionCode;
-    if (origin.regionCode) renderInto(mount);
+    meanwhilePolityId = origin.polityId || "";
+    if (origin.regionCode || origin.polityId) renderInto(mount);
     mount.querySelector("#spacetimeReturnToActivity")?.focus({ preventScroll:true });
     return true;
   }
@@ -798,6 +822,7 @@
     meanwhileSelectedOrdinal = ordinal;
     meanwhileSelectionSource = "manual";
     meanwhileRegionCode = "";
+    meanwhilePolityId = "";
     renderInto(mount);
     return true;
   }
@@ -807,6 +832,7 @@
     meanwhileSelectedOrdinal = null;
     meanwhileSelectionSource = null;
     meanwhileRegionCode = "";
+    meanwhilePolityId = "";
     renderInto(mount);
   }
 
@@ -820,7 +846,7 @@
     return year == null ? "시점 미상" : model.yearLabel(year);
   }
 
-  function renderMeanwhile(summary, regionCode = "") {
+  function renderMeanwhile(summary, regionCode = "", polityId = "") {
     if (!summary || meanwhileSelectedOrdinal == null) {
       return '<section class="spacetime-meanwhile is-empty" aria-label="동시대 탐색"><div><small>동시대 탐색</small><strong>동시대 보기</strong><span>활동·연도·빈 시공간을 선택해 동시대 인물을 봅니다.</span></div></section>';
     }
@@ -832,9 +858,33 @@
       ...(summary.region_counts || []).filter((item) => item.unique_person_count > 0).map((item) =>
         `<button type="button" class="spacetime-meanwhile-region-filter${regionCode === item.code ? " is-active" : ""}" data-spacetime-meanwhile-region="${escapeHtml(item.code)}" aria-pressed="${regionCode === item.code ? "true" : "false"}"><b>${escapeHtml(meanwhileRegionLabel(item.code))}</b> ${item.unique_person_count}명</button>`)
     ].join("");
-    const entries = (summary.entries || []).filter((entry) => !regionCode || entry.macroregion_code === regionCode);
+    const regionEntries = (summary.entries || []).filter((entry) => !regionCode || entry.macroregion_code === regionCode);
+    const polityChoices = new Map();
+    for (const entry of regionEntries) {
+      const polityIdForActivity = text(entry.activity?.polity?.id);
+      if (!polityIdForActivity) continue;
+      if (!polityChoices.has(polityIdForActivity)) {
+        polityChoices.set(polityIdForActivity, { label:polityLabel(entry.activity), persons:new Set() });
+      }
+      polityChoices.get(polityIdForActivity).persons.add(entry.person_id);
+    }
+    const sortedPolities = [...polityChoices.entries()].sort((a, b) =>
+      a[1].label.localeCompare(b[1].label, "ko") || a[0].localeCompare(b[0])
+    );
+    const selectedPolityId = polityChoices.has(polityId) ? polityId : "";
+    const entries = regionEntries.filter((entry) =>
+      !selectedPolityId || text(entry.activity?.polity?.id) === selectedPolityId
+    );
     const filteredUniquePersonCount = new Set(entries.map((entry) => entry.person_id)).size;
-    const activeRegionSummary = regionCode ? `${escapeHtml(meanwhileRegionLabel(regionCode))} ${filteredUniquePersonCount}명 · 활동 ${entries.length}건` : "";
+    const currentScopeLabel = [
+      regionCode ? meanwhileRegionLabel(regionCode) : "",
+      selectedPolityId ? polityChoices.get(selectedPolityId).label : ""
+    ].filter(Boolean).join(" · ");
+    const activeRegionSummary = currentScopeLabel
+      ? `${escapeHtml(currentScopeLabel)} ${filteredUniquePersonCount}명 · 활동 ${entries.length}건` : "";
+    const polityOptions = sortedPolities.map(([id, info]) =>
+      `<option value="${escapeHtml(id)}"${id === selectedPolityId ? " selected" : ""}>${escapeHtml(info.label)} · ${info.persons.size}명</option>`
+    ).join("");
     const visibleEntries = entries.slice(0, 24);
     const remainingEntries = entries.slice(visibleEntries.length);
     const selectedActiveAtMoment = (summary.entries || []).some((entry) => entry.person_id === selectedPersonId);
@@ -851,6 +901,7 @@
     return `<section class="spacetime-meanwhile card" aria-label="${escapeHtml(momentLabel)} 동시대 탐색">
       <div class="spacetime-meanwhile-head"><div><small>동시대 탐색 · ${escapeHtml(sourceLabel)}</small><strong>${escapeHtml(momentLabel)}</strong><span>전체 인물 ${summary.unique_person_count}명 · 활동 ${summary.activity_count}건${activeRegionSummary ? ` / 현재 ${activeRegionSummary}` : ""}</span></div><button id="spacetimeMeanwhileClear" type="button">시점 해제</button></div>
       <div class="spacetime-meanwhile-regions" role="group" aria-label="동시대 권역 필터, 인물 수">${regionCounts}</div>
+      <div class="spacetime-meanwhile-polity-filter"><label for="spacetimeMeanwhilePolity">정치체</label><select id="spacetimeMeanwhilePolity" aria-label="검토된 활동의 정치체 필터"><option value="">전체 정치체</option>${polityOptions}</select><small>검토된 주 위치 활동만 표시 · 정치체 미상은 전체에 포함</small></div>
       ${activityRows}
       ${remainingEntries.length ? `<details><summary class="spacetime-more">활동 기록 ${remainingEntries.length}건 더 보기</summary>${renderRows(remainingEntries)}</details>` : ""}
     </section>`;
@@ -1976,7 +2027,7 @@
         </div>
       </details>
     </section>
-    ${renderMeanwhile(meanwhileSummary, meanwhileRegionCode)}
+    ${renderMeanwhile(meanwhileSummary, meanwhileRegionCode, meanwhilePolityId)}
     <div class="spacetime-workspace">
     <section class="spacetime-frame card${responsive.mobile ? " is-mobile-presentation" : ""}" data-spacetime-visual="chronology-v6" data-spacetime-presentation="${responsive.mobile ? "mobile" : "desktop"}" data-spacetime-zoom="${Math.round(cameraZoom * 100)}" data-spacetime-overview="${cameraZoom <= CAMERA_DEFAULT_ZOOM ? "true" : "false"}" style="--spacetime-axis-width:${responsive.axisWidth}px;--spacetime-header-height:${responsive.headerHeight}px;--spacetime-era-axis-width:${responsive.eraAxisWidth}px;--spacetime-year-axis-width:${responsive.axisWidth - responsive.eraAxisWidth}px"><div class="spacetime-scroll" tabindex="0" aria-label="역사 시간과 검토된 정치체 권역에 따른 인물 활동 궤적 및 등록 인물 밀도 분포">
       <div class="spacetime-sticky-corner"><span>시대</span><span>연도<small>${escapeHtml(timeAxis.stage_label)}</small></span></div>
@@ -2101,13 +2152,31 @@
         const panel = mount.querySelector(".spacetime-meanwhile");
         if (!panel) return;
         meanwhileRegionCode = regionCode;
+        meanwhilePolityId = "";
         scheduleExplorationSnapshot();
-        panel.outerHTML = renderMeanwhile(meanwhileSummary, regionCode);
+        panel.outerHTML = renderMeanwhile(meanwhileSummary, regionCode, meanwhilePolityId);
         bindMeanwhileControls();
         const nextButton = [...mount.querySelectorAll("[data-spacetime-meanwhile-region]")]
           .find((item) => (item.dataset.spacetimeMeanwhileRegion || "") === regionCode);
         nextButton?.focus({ preventScroll: true });
       }));
+      mount.querySelector("#spacetimeMeanwhilePolity")?.addEventListener("change", (event) => {
+        const requestedId = text(event.target?.value);
+        if (!meanwhileSummary) return;
+        const allowed = requestedId && (meanwhileSummary.entries || []).some((entry) =>
+          text(entry.activity?.polity?.id) === requestedId
+          && (!meanwhileRegionCode || entry.macroregion_code === meanwhileRegionCode)
+        );
+        const nextId = allowed ? requestedId : "";
+        if (nextId === meanwhilePolityId) return;
+        const panel = mount.querySelector(".spacetime-meanwhile");
+        if (!panel) return;
+        meanwhilePolityId = nextId;
+        scheduleExplorationSnapshot();
+        panel.outerHTML = renderMeanwhile(meanwhileSummary, meanwhileRegionCode, meanwhilePolityId);
+        bindMeanwhileControls();
+        mount.querySelector("#spacetimeMeanwhilePolity")?.focus({ preventScroll:true });
+      });
       mount.querySelectorAll("[data-spacetime-meanwhile-person]").forEach((button) =>
         button.addEventListener("click", () => selectPerson(mount, button.dataset.spacetimeMeanwhilePerson, { focus: true }))
       );
@@ -2118,7 +2187,8 @@
           if (!firstPersonId || !secondPersonId || firstPersonId === secondPersonId) return;
           if (!(meanwhileSummary?.entries || []).some((entry) => entry.person_id === firstPersonId)) return;
           if (!(meanwhileSummary?.entries || []).some((entry) => entry.person_id === secondPersonId
-            && (!meanwhileRegionCode || entry.macroregion_code === meanwhileRegionCode))) return;
+            && (!meanwhileRegionCode || entry.macroregion_code === meanwhileRegionCode)
+            && (!meanwhilePolityId || text(entry.activity?.polity?.id) === meanwhilePolityId))) return;
           resumeExplorationAfterDetail = true;
           window.dispatchEvent(new CustomEvent("atlas-spacetime-compare-persons",
             { detail: { personIds: [firstPersonId, secondPersonId] } }));
@@ -2185,6 +2255,7 @@
         meanwhileSelectedOrdinal = null;
         meanwhileSelectionSource = null;
         meanwhileRegionCode = "";
+        meanwhilePolityId = "";
       }
     }
     const mount = document.getElementById("personSpacetimeMount");
