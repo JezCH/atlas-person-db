@@ -550,6 +550,7 @@ async function collectMobileDom(client) {
       .map((el)=>{const r=el.getBoundingClientRect();return {tag:el.tagName,text:(el.textContent||"").trim().replace(/\\s+/g," ").slice(0,80),width:r.width,height:r.height};});
     const progressMeta=qa("#atlasDashboardMount .dashboard-progress-meta").map((el)=>{const st=getComputedStyle(el);return {flex_wrap:st.flexWrap,client_width:el.clientWidth,scroll_width:el.scrollWidth,height:el.getBoundingClientRect().height};});
     const panelHeads=qa("#atlasDashboardMount .dashboard-panel-head").map((el)=>({client_width:el.clientWidth,scroll_width:el.scrollWidth,height:el.getBoundingClientRect().height}));
+    const fontPx=(selector)=>{const el=q(selector);return el?Number.parseFloat(getComputedStyle(el).fontSize)||0:0;};
     return {
       viewport:{width:innerWidth,height:innerHeight,dpr:devicePixelRatio},
       global_scroll:{client_width:doc.clientWidth,scroll_width:doc.scrollWidth,overflow_x:doc.scrollWidth-doc.clientWidth},
@@ -557,10 +558,10 @@ async function collectMobileDom(client) {
       heatmap_wrap:scrollProbe(heat),
       completeness_wrap:scrollProbe(complete),
       matrix_type:{
-        heatmap_header_px:Number.parseFloat(getComputedStyle(q(".dashboard-heatmap .dashboard-heatmap-region-head"))?.fontSize||"0")||0,
-        heatmap_number_px:Number.parseFloat(getComputedStyle(q(".dashboard-heatmap tbody td>strong"))?.fontSize||"0")||0,
-        completeness_header_px:Number.parseFloat(getComputedStyle(q(".dashboard-completeness thead th"))?.fontSize||"0")||0,
-        completeness_number_px:Number.parseFloat(getComputedStyle(q(".dashboard-completeness tbody td"))?.fontSize||"0")||0
+        heatmap_header_px:fontPx(".dashboard-heatmap .dashboard-heatmap-region-head"),
+        heatmap_number_px:fontPx(".dashboard-heatmap tbody td>strong"),
+        completeness_header_px:fontPx(".dashboard-completeness thead th"),
+        completeness_number_px:fontPx(".dashboard-completeness tbody td")
       },
       timeline:scrollProbe(timeline),
       timeline_entry_count:qa(".dashboard-timeline-entry").length,
