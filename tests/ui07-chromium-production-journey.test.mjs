@@ -5,6 +5,7 @@ import {verifyUi07DesktopJourney, verifyUi07MobileJourney} from "../scripts/veri
 
 const read=(name)=>fs.readFileSync(new URL("../"+name,import.meta.url),"utf8");
 const smoke=read("scripts/verify-spacetime-production-visual.mjs");
+const workflow=read(".github/workflows/atlas-spacetime-production-visual.yml");
 const journey=read("scripts/verify-ui07-production-journey.mjs");
 const css=read("atlas-person-spacetime-compare-crosslink.css");
 const nav=read("atlas-main-authority-nav.js");
@@ -69,4 +70,15 @@ test("UI-07 mobile compare touch target is at least 44px, with one CSS and JS ca
   assert.match(journey,/Input\.dispatchMouseEvent/);
   assert.match(journey,/row\.second\.top>=row\.first\.bottom-1/);
   assert.match(journey,/row\.bodyWidth<=392/);
+});
+
+
+test("UI-07 real Production Chromium smoke automatically reruns when its validator or workflow changes",()=>{
+  assert.match(workflow, /- "scripts\/verify-spacetime-production-visual\.mjs"/);
+  assert.match(workflow, /- "scripts\/verify-ui07-production-journey\.mjs"/);
+  assert.match(workflow, /- "\.github\/workflows\/atlas-spacetime-production-visual\.yml"/);
+  assert.match(workflow, /workflow_dispatch:/);
+  assert.match(workflow, /node scripts\/verify-spacetime-production-visual\.mjs/);
+  assert.match(workflow, /node scripts\/verify-ui-v10-production-visual\.mjs/);
+  assert.match(workflow, /node scripts\/verify-polity-production-visual\.mjs/);
 });
