@@ -600,6 +600,92 @@ async function main() {
     assert(Math.abs(interaction.lineWidth - interaction.canvasWidth) < 2, "Meanwhile line is not full-width", interaction);
     await screenshot(client, "spacetime-activity-meanwhile.png");
 
+    // UI-06B exact-SHA live acceptance: exercise an actual registered
+    // Activity origin, a different Person and the in-session origin return.
+    // Runs within the existing Spacetime Chrome script, not a fourth
+    // automatic paid workflow or a synthetic fixture.
+    const origin = await evaluate(client, `(() => {
+      const state=window.ATLAS_PERSON_SPACETIME_VIEW?.captureExplorationState?.();
+      const scroll=document.querySelector(".spacetime-scroll");
+      return {
+        personId:state?.selectedPersonId||null,
+        activityId:state?.selectedActivityId||null,
+        moment:state?.meanwhileOrdinal??null,
+        query:state?.query??null,
+        zoom:state?.zoom??null,
+        cameraX:scroll?.scrollLeft??null,
+        cameraY:scroll?.scrollTop??null,
+        returnVisible:Boolean(document.querySelector("#spacetimeReturnToActivity")),
+        origin:state?.activityOrigin||null,
+        route:location.hash
+      };
+    })()`);
+    assert(origin.personId && origin.activityId && Number.isInteger(origin.moment),
+      "UI-06B actual Activity was not selected with an evidence-backed historical moment", origin);
+    assert(origin.returnVisible && origin.origin?.activityId===origin.activityId,
+      "UI-06B first Activity selection did not expose an accessible origin-return control",origin);
+    const switched = await evaluate(client, `(() => {
+      const current=__ID_REPLACED__;
+      const button=[...document.querySelectorAll("[data-spacetime-meanwhile-person]")]
+        .find((el)=>el.dataset.spacetimeMeanwhilePerson!==current)
+        || document.querySelector("#spacetimeNextPerson:not([disabled])");
+      if (!button) return {attempted:false,route:location.hash};
+      const next=button.dataset.spacetimeMeanwhilePerson||null;
+      button.click();
+      return {attempted:true,next,route:location.hash};
+    })()`.replace("__ID_REPLACED__",JSON.stringify(origin.personId)));
+    assert(switched.attempted,
+      "The real Spacetime world did not offer a second registered Person for origin-return acceptance",
+      {origin,switched});
+    await waitFor(client,
+      `window.ATLAS_PERSON_SPACETIME_VIEW?.captureExplorationState?.()?.selectedPersonId !== ${JSON.stringify(origin.personId)} && Boolean(document.querySelector("#spacetimeReturnToActivity"))`,
+      25000);
+    const visited=await evaluate(client,`(() => ({
+      personId:window.ATLAS_PERSON_SPACETIME_VIEW?.captureExplorationState?.()?.selectedPersonId,
+      returnVisible:Boolean(document.querySelector("#spacetimeReturnToActivity")),
+      route:location.hash
+    }))()`);
+    assert(visited.personId && visited.personId!==origin.personId&&visited.returnVisible,
+      "UI-06B second Person should remain in the same historical exploration",visited);
+    await evaluate(client,`(() => {
+      const button=document.querySelector("#spacetimeReturnToActivity");
+      if(!button)throw new Error("UI06B_ORIGIN_BUTTON_LOST");
+      button.click();
+      return true;
+    })()`);
+    await waitFor(client,
+      `(() => {const s=window.ATLAS_PERSON_SPACETIME_VIEW?.captureExplorationState?.();
+        return s?.selectedPersonId===${JSON.stringify(origin.personId)}
+          && s?.selectedActivityId===${JSON.stringify(origin.activityId)}
+          && s?.meanwhileOrdinal===${Number(origin.moment)};
+      })()`,30000);
+    await sleep(350);
+    const restored=await evaluate(client,`(() => {
+      const state=window.ATLAS_PERSON_SPACETIME_VIEW?.captureExplorationState?.();
+      const scroll=document.querySelector(".spacetime-scroll");
+      return {
+        personId:state?.selectedPersonId, activityId:state?.selectedActivityId,
+        moment:state?.meanwhileOrdinal, query:state?.query, zoom:state?.zoom,
+        cameraX:scroll?.scrollLeft, cameraY:scroll?.scrollTop,
+        buttonVisible:Boolean(document.querySelector("#spacetimeReturnToActivity")),
+        route:location.hash
+      };
+    })()`);
+    assert(restored.personId===origin.personId&&restored.activityId===origin.activityId
+      &&restored.moment===origin.moment&&restored.query===origin.query
+      &&Math.abs(Number(restored.zoom)-Number(origin.zoom))<1e-6,
+      "UI-06B Activity/person/year/search/zoom did not restore after a different Person", {origin,visited,restored});
+    assert(Number.isFinite(restored.cameraX)&&Number.isFinite(restored.cameraY)
+      &&Math.abs(restored.cameraX-origin.cameraX)<45
+      &&Math.abs(restored.cameraY-origin.cameraY)<45,
+      "UI-06B Activity origin camera X/Y drifted after roundtrip", {origin,restored});
+    assert(restored.buttonVisible,
+      "UI-06B return button disappeared after returning to the first Activity",{origin,restored});
+    const ui06bRoundtrip={origin,visited,restored,status:"PASS"};
+    console.log("ATLAS_UI06B_PRODUCTION_ACTIVITY_ORIGIN_RETURN_PASS");
+    await screenshot(client,"ui06b-activity-origin-return.png");
+
+
     await client.call("Emulation.setDeviceMetricsOverride", MOBILE_VIEWPORT);
     await client.call("Page.navigate", { url: "about:blank" });
     await waitFor(client, "document.readyState === 'complete'", 10000);
@@ -668,11 +754,12 @@ async function main() {
       at_500_percent:at500,
       at_1500_percent:at1500,
       interaction,
+      ui06b_roundtrip:ui06bRoundtrip,
       mobile,
       console_errors:filteredConsoleErrors,
       resource_errors:resourceErrors,
       runtime_exceptions:exceptions,
-      screenshots:["spacetime-500.png","spacetime-1500.png","spacetime-activity-meanwhile.png","spacetime-mobile-390.png"],
+      screenshots:["spacetime-500.png","spacetime-1500.png","spacetime-activity-meanwhile.png","ui06b-activity-origin-return.png","spacetime-mobile-390.png"],
       status:"PASS"
     };
     fs.writeFileSync(path.join(OUT_DIR,"visual-acceptance.json"), JSON.stringify(report,null,2)+"\n");
