@@ -650,10 +650,51 @@
   display: none;
 }
 
-/* Ordinary desktop rows retain the compact scan rhythm with the larger labels. */
+/* Ordinary desktop rows retain compact scan density while making the
+ * registered Person name, Polity, Role and chronology genuinely readable.
+ * This scoped 1101px+ rule does not compete with the approved 390px
+ * factual two-line mobile Register; neither Activity nor Source is removed. */
 @media (min-width: 1101px) {
   .person-monumental-register .person-register-entry:not(.has-multiple-activities) {
     padding-block: 2px;
+  }
+  .person-monumental-register .person-table-identity > strong {
+    font-size: 17px;
+    line-height: 1.28;
+  }
+  .person-monumental-register .person-register-range {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+  .person-monumental-register .person-table-activities .person-card-activity-head b {
+    font-size: 12.5px;
+    line-height: 1.4;
+  }
+  .person-monumental-register .person-table-activities .person-card-activity-role,
+  .person-monumental-register .person-table-activities .person-card-activity-period {
+    min-width: 0;
+    font-size: 12px;
+    line-height: 1.4;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .person-monumental-register .person-relation-badge {
+    font-size: 11px;
+  }
+  .person-monumental-register .person-table-activities .person-card-activity > small {
+    font-size: 11px;
+    line-height: 1.4;
+  }
+  .person-monumental-register .person-era-band > span {
+    font-size: 12px;
+  }
+  .person-monumental-register .person-era-band-range {
+    font-size: 11px;
+  }
+  .person-monumental-register > .person-table-head .person-table-head-cell,
+  .person-monumental-register > .person-table-head .person-table-head-title,
+  .person-monumental-register > .person-table-head .person-table-activity-subhead {
+    font-size: 11px;
   }
 }
 
