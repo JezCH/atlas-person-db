@@ -837,7 +837,13 @@
     const activeRegionSummary = regionCode ? `${escapeHtml(meanwhileRegionLabel(regionCode))} ${filteredUniquePersonCount}명 · 활동 ${entries.length}건` : "";
     const visibleEntries = entries.slice(0, 24);
     const remainingEntries = entries.slice(visibleEntries.length);
-    const renderRows = (rows) => `<div class="spacetime-meanwhile-activities">${rows.map((entry) => `<button type="button" data-spacetime-meanwhile-person="${escapeHtml(entry.person_id)}"><strong>${escapeHtml(entry.display_name)}</strong><span>${escapeHtml(polityLabel(entry.activity))}</span><small>${escapeHtml(periodLabel(entry.activity))}</small></button>`).join("")}</div>`;
+    const renderRows = (rows) => `<div class="spacetime-meanwhile-activities">${rows.map((entry) => {
+      const canCompare = window.ATLAS_ENTITY_ROUTE?.normalizeUuid?.(selectedPersonId)
+        && window.ATLAS_ENTITY_ROUTE?.normalizeUuid?.(entry.person_id) && selectedPersonId !== entry.person_id;
+      const compareAction = canCompare
+        ? `<button type="button" class="spacetime-meanwhile-compare" data-spacetime-meanwhile-compare="${escapeHtml(entry.person_id)}" aria-label="${escapeHtml(entry.display_name)}과 선택한 인물 비교" title="두 인물의 활동·출처를 나란히 비교">비교</button>` : "";
+      return `<div class="spacetime-meanwhile-compare-row"><button type="button" data-spacetime-meanwhile-person="${escapeHtml(entry.person_id)}"><strong>${escapeHtml(entry.display_name)}</strong><span>${escapeHtml(polityLabel(entry.activity))}</span><small>${escapeHtml(periodLabel(entry.activity))}</small></button>${compareAction}</div>`;
+    }).join("")}</div>`;
     const activityRows = visibleEntries.length
       ? renderRows(visibleEntries)
       : '<p class="spacetime-empty-inline">이 시점·권역에 주 위치가 확정된 활성 활동이 없습니다.</p>';
@@ -2103,6 +2109,18 @@
       }));
       mount.querySelectorAll("[data-spacetime-meanwhile-person]").forEach((button) =>
         button.addEventListener("click", () => selectPerson(mount, button.dataset.spacetimeMeanwhilePerson, { focus: true }))
+      );
+      mount.querySelectorAll("[data-spacetime-meanwhile-compare]").forEach((button) =>
+        button.addEventListener("click", () => {
+          const firstPersonId = window.ATLAS_ENTITY_ROUTE?.normalizeUuid?.(selectedPersonId);
+          const secondPersonId = window.ATLAS_ENTITY_ROUTE?.normalizeUuid?.(button.dataset.spacetimeMeanwhileCompare);
+          if (!firstPersonId || !secondPersonId || firstPersonId === secondPersonId) return;
+          if (!(meanwhileSummary?.entries || []).some((entry) => entry.person_id === secondPersonId
+            && (!meanwhileRegionCode || entry.macroregion_code === meanwhileRegionCode))) return;
+          resumeExplorationAfterDetail = true;
+          window.dispatchEvent(new CustomEvent("atlas-spacetime-compare-persons",
+            { detail: { personIds: [firstPersonId, secondPersonId] } }));
+        })
       );
     };
     bindMeanwhileControls();
