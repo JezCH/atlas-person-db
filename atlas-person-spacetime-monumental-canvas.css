@@ -69,27 +69,27 @@
 
 .spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-region-head-layer.is-macro .spacetime-region-head-band strong {
   color: #d1cdc5;
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 760;
-  letter-spacing: .04em;
+  letter-spacing: .02em;
   text-transform: uppercase;
 }
 
 .spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-region-head-layer.is-macro .spacetime-region-head-band small {
   color: #a4adb1;
-  font-size: 9px;
-  letter-spacing: .08em;
+  font-size: 10px;
+  letter-spacing: .025em;
 }
 
 .spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-region-head-layer.is-subregion .spacetime-region-head-band strong {
   color: #b9c2c6;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 680;
 }
 
 .spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-region-head-layer.is-subregion .spacetime-region-head-band small {
   color: #929da2;
-  font-size: 8.5px;
+  font-size: 9.5px;
 }
 
 .spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-place-head-marker {
@@ -112,7 +112,7 @@
 
 .spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-place-head-marker strong {
   color: #aeb8bd;
-  font-size: 9px;
+  font-size: 10.5px;
   font-weight: 650;
 }
 
@@ -132,23 +132,23 @@
 .spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-era-axis > div span {
   color: #8f9698;
   font-family: var(--atlas-font-display, "Noto Serif KR", "Nanum Myeongjo", AppleMyungjo, Batang, Georgia, serif);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: .09em;
+  letter-spacing: .04em;
   opacity: 1;
 }
 
 .spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-year-axis span {
   right: 8px;
-  color: #666e73;
-  font-size: 10px;
+  color: #929da3;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: .025em;
 }
 
 .spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-year-axis span.is-major {
-  color: var(--spacetime-chronograph);
-  font-size: 11.5px;
+  color: var(--spacetime-chronograph-strong);
+  font-size: 13px;
   font-weight: 780;
 }
 
@@ -221,7 +221,7 @@
   background: rgba(18,21,24,.94);
   color: #8f9698;
   font-family: var(--atlas-font-display, "Noto Serif KR", "Nanum Myeongjo", AppleMyungjo, Batang, Georgia, serif);
-  font-size: 8px;
+  font-size: 9.5px;
   font-weight: 600;
   line-height: 16px;
   letter-spacing: .055em;
@@ -255,8 +255,8 @@
     linear-gradient(90deg, var(--spacetime-person-domain-tint), rgba(18,21,24,.84) 36%, rgba(18,21,24,.54) 78%, rgba(18,21,24,0));
   box-shadow: none;
   color: var(--spacetime-label-text);
-  font-size: 12.5px;
-  font-weight: 720;
+  font-size: 14px;
+  font-weight: 700;
   line-height: 22px;
   text-shadow: 0 1px 0 rgba(0,0,0,.45);
 }
@@ -385,8 +385,8 @@
   border-radius: 2px;
   background: rgba(19,23,26,.88);
   box-shadow: none;
-  color: #8e969a;
-  font-size: 8.5px;
+  color: #a9b0b2;
+  font-size: 10px;
 }
 
 .spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-activity-glyph:hover {
