@@ -25,7 +25,7 @@
     ["./atlas-person-spacetime-time-projection.js?v=20260920-exact-fit-floor", "ATLAS_PERSON_SPACETIME_TIME_PROJECTION"],
     ["./atlas-person-spacetime-space-axis.js?v=20261001-east-asia-v4", "ATLAS_PERSON_SPACETIME_SPACE_AXIS"],
     ["./atlas-person-spacetime-presentation-layout.js?v=20260903-south-asia-r3", "ATLAS_PERSON_SPACETIME_PRESENTATION_LAYOUT"],
-    ["./atlas-person-spacetime-semantic-axis.js?v=20260920-exact-fit-floor&ui03p2=header-v1", "ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS"],
+    ["./atlas-person-spacetime-semantic-axis.js?v=20260920-exact-fit-floor&ui03p2=header-v1&ui03p3=place-groups-v1", "ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS"],
     ["./atlas-person-spacetime-uncertainty.js?v=20260903-c6", "ATLAS_PERSON_SPACETIME_UNCERTAINTY"],
     ["./atlas-person-spacetime-temporal-certainty.js?v=20260906-boundary-certainty", "ATLAS_PERSON_SPACETIME_TEMPORAL_CERTAINTY"],
     ["./atlas-person-spacetime-control-state.js?v=20260923-spacetime-owner-v1", "ATLAS_PERSON_SPACETIME_CONTROL_STATE"],
@@ -2046,7 +2046,7 @@
       <div class="spacetime-region-head" style="width:${contentWidth}px">
         <div class="spacetime-region-head-layer is-macro" style="opacity:${spaceHeader.macro_opacity}">${spaceHeader.macroregions.map((region) => `<div class="spacetime-region-head-band" data-spacetime-band="${escapeHtml(region.code)}" style="left:${region.left}px;width:${region.width}px"><strong>${escapeHtml(region.label)}</strong><small>${escapeHtml(region.code)}</small></div>`).join("")}</div>
         <div class="spacetime-region-head-layer is-subregion" style="opacity:${spaceHeader.subregion_opacity}">${spaceHeader.subregions.map((region) => `<div class="spacetime-region-head-band" data-spacetime-band="${escapeHtml(region.code)}" style="left:${region.left}px;width:${region.width}px"><strong>${escapeHtml(region.label)}</strong><small>${escapeHtml(region.parent_code)}</small></div>`).join("")}</div>
-        <div class="spacetime-region-head-layer is-place" style="opacity:${spaceHeader.place_opacity}">${spaceHeader.places.map((place) => `<div class="spacetime-place-head-marker" style="left:${place.x}px" title="${escapeHtml(`검토된 장소 · ${place.place_name} · ${place.subregion_code}의 표시용 기준점 · 정확한 지리 좌표 아님`)}"><i></i><strong>${escapeHtml(place.place_name)}</strong></div>`).join("")}</div>
+        <div class="spacetime-region-head-layer is-place" style="opacity:${spaceHeader.place_opacity}">${spaceHeader.place_groups.map((group) => `<div class="spacetime-place-head-marker" data-spacetime-place-count="${group.place_count}" style="left:${group.x}px" title="${escapeHtml(`검토된 장소 · ${group.place_names.join(" · ")} · ${group.subregion_code}의 표시용 기준점 · 정확한 지리 좌표 아님`)}" aria-label="${escapeHtml(`검토된 장소 ${group.place_count}곳: ${group.place_names.join(", ")}. 정확한 지리 좌표 아님`)}"><i></i><strong>${escapeHtml(group.display_label)}</strong></div>`).join("")}</div>
       </div>
       <div class="spacetime-time-axis" style="height:${timelineHeight}px">
         <div class="spacetime-era-axis" style="--spacetime-era-content-opacity:${timeAxis.era_opacity}">${eras.map((era) => `<div class="person-era-${escapeHtml(era.code)}" data-spacetime-era="${escapeHtml(era.code)}" style="top:${era.top}px;height:${era.height}px"><span>${escapeHtml(era.label)}</span></div>`).join("")}</div>
@@ -2057,7 +2057,7 @@
         ${eras.filter((era) => era.top > 0).map((era) => `<i class="spacetime-era-boundary person-era-${escapeHtml(era.code)}" data-spacetime-era="${escapeHtml(era.code)}" style="top:${era.top}px"><span class="spacetime-era-boundary-emblem" aria-hidden="true"></span><b>${escapeHtml(era.label)}</b></i>`).join("")}
         ${regions.map((region) => `<i class="spacetime-region-line" style="left:${region.left}px;height:${timelineHeight}px"></i>`).join("")}
         ${spaceHeader.subregions.map((subregion) => `<i class="spacetime-subregion-line" style="left:${subregion.left}px;height:${timelineHeight}px;opacity:${spaceHeader.subregion_opacity}" title="${escapeHtml(subregion.label)}"></i>`).join("")}
-        ${spaceHeader.places.map((place) => `<i class="spacetime-place-guide" style="left:${place.x}px;opacity:${spaceHeader.place_opacity}" title="${escapeHtml(`검토된 장소: ${place.place_name} · 표시용 기준점 · 정확한 지리 좌표 아님`)}"></i>`).join("")}
+        ${spaceHeader.place_groups.map((group) => `<i class="spacetime-place-guide" style="left:${group.x}px;opacity:${spaceHeader.place_opacity}" title="${escapeHtml(`검토된 장소: ${group.place_names.join(" · ")} · 표시용 기준점 · 정확한 지리 좌표 아님`)}"></i>`).join("")}
         ${meanwhileOrdinal == null ? "" : `<div class="spacetime-meanwhile-line${meanwhileSelectionSource === "activity" ? " is-activity-linked" : ""}" style="top:${projection.yForOrdinal(meanwhileOrdinal)}px;width:${contentWidth}px"><span>${escapeHtml(meanwhileMomentLabel())}</span></div>`}
         <div id="spacetimeRailLayer" class="spacetime-runtime-layer"></div>
         <div id="spacetimeUncertaintyLayer" class="spacetime-runtime-layer"></div>

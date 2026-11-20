@@ -152,6 +152,28 @@ const overlapCode = `
   return { count:overlaps.length, overlaps };
 }`;
 
+const globalPlaceOverlapCode = `
+(elements) => {
+  // Inspect every reviewed Place marker, including offscreen X positions.
+  // The older generic overlap probe only checked the visible viewport.
+  const rows = elements.filter((el) => {
+    const r = el.getBoundingClientRect();
+    const style = getComputedStyle(el);
+    return r.width > 0 && r.height > 0 && Number(style.opacity) > 0.02;
+  }).map((el) => {
+    const r = el.getBoundingClientRect();
+    return {left:r.left,top:r.top,right:r.right,bottom:r.bottom,text:(el.textContent||"").trim()};
+  });
+  const overlaps = [];
+  for (let i=0;i<rows.length;i++) for (let j=i+1;j<rows.length;j++) {
+    const a=rows[i], b=rows[j];
+    const width=Math.min(a.right,b.right)-Math.max(a.left,b.left);
+    const height=Math.min(a.bottom,b.bottom)-Math.max(a.top,b.top);
+    if (width > 0.5 && height > 0.5) overlaps.push({a:a.text,b:b.text,width,height});
+  }
+  return {count:overlaps.length,overlaps};
+}`;
+
 const bandContainmentCode = `
 (labels,bands,rails) => {
   const bandMap = new Map(bands.map((el) => {
@@ -236,6 +258,7 @@ async function collect500(client) {
         return semantic.buildReviewedPlaceGeometry(spatial.REVIEWED_PLACE_BINDINGS, axis.createSpatialContinuum(), width).length;
       })(),
       placeMarkerCount:qa(".spacetime-place-head-marker").length,
+      placeSourceCount:qa(".spacetime-place-head-marker").reduce((sum,el)=>sum+Number(el.dataset.spacetimePlaceCount||1),0),
       placeVisibleCount:Number(style(placeLayer).opacity) > 0.02 ? qa(".spacetime-place-head-marker").filter(el=>Number(style(el).opacity) > 0.02).length : 0,
       macro, sub,
       workspaceRect:rect(workspace),
@@ -277,6 +300,7 @@ async function collect1500(client, geometry500) {
     const placeLayer=q(".spacetime-region-head-layer.is-place");
     const markers=qa(".spacetime-place-head-marker");
     const placeOverlap=(${overlapCode})(markers);
+    const placeGlobalOverlap=(${globalPlaceOverlapCode})(markers);
     const labelOverlap=(${overlapCode})(qa(".spacetime-track-label"));
     const bandContainment=(${bandContainmentCode})(qa(".spacetime-track-label"),qa(".spacetime-region-head-band[data-spacetime-band]"),qa(".spacetime-track-rail"));
     const scroll=q(".spacetime-scroll");
@@ -315,8 +339,10 @@ async function collect1500(client, geometry500) {
         return semantic.buildReviewedPlaceGeometry(spatial.REVIEWED_PLACE_BINDINGS, axis.createSpatialContinuum(), width).length;
       })(),
       placeMarkerCount:markers.length,
+      placeSourceCount:markers.reduce((sum,el)=>sum+Number(el.dataset.spacetimePlaceCount||1),0),
       placeMarkers:markers.map(rect),
       placeOverlap,
+      placeGlobalOverlap,
       domPersonCount:Number((q("#spacetimeDomPersonCount")?.textContent||"0").trim())||0,
       domLabelCount:Number((q("#spacetimeDomLabelCount")?.textContent||"0").trim())||0,
       deferredLabelCount:Number((q("#spacetimeDeferredLabelCount")?.textContent||"0").trim())||0,
@@ -492,7 +518,7 @@ async function main() {
     assert(at500.reviewedPlaceBindingCount > 0, "Reviewed Place registry is unavailable at 500%", at500);
     assert(at500.reviewedDisplayPlaceCount > 0, "Reviewed display Place plan is unavailable at 500%", at500);
     assert(at500.reviewedPlaceBindingCount >= at500.reviewedDisplayPlaceCount, "Reviewed display Place plan exceeds the source registry at 500%", at500);
-    assert(at500.placeMarkerCount === at500.reviewedDisplayPlaceCount, "Rendered Place marker count does not match the semantic-axis display plan at 500%", at500);
+    assert(at500.placeSourceCount === at500.reviewedDisplayPlaceCount && at500.placeMarkerCount <= at500.placeSourceCount, "Grouped Place markers lost reviewed Place identities at 500%", at500);
     assert(at500.placeVisibleCount === 0, "Reviewed Place markers are visibly leaking into 500%", at500);
     assert(at500.sidecarPosition === "sticky", "Desktop sidecar is not sticky", at500);
     assert(at500.inspectorPosition === "relative", "Inspector should scroll inside the sticky sidecar", at500);
@@ -539,7 +565,8 @@ async function main() {
     assert(at1500.placeOpacity > 0.99, "Reviewed Place layer is not fully visible at 1500%", at1500);
     assert(at1500.reviewedPlaceBindingCount === at500.reviewedPlaceBindingCount, "Reviewed Place registry changed across camera zoom", { at500, at1500 });
     assert(at1500.reviewedDisplayPlaceCount === at500.reviewedDisplayPlaceCount, "Reviewed display Place plan changed across camera zoom", { at500, at1500 });
-    assert(at1500.placeMarkerCount === at1500.reviewedDisplayPlaceCount, "Rendered Place marker count does not match the semantic-axis display plan at 1500%", at1500);
+    assert(at1500.placeSourceCount === at1500.reviewedDisplayPlaceCount && at1500.placeMarkerCount <= at1500.placeSourceCount, "Grouped Place markers lost reviewed Place identities at 1500%", at1500);
+    assert(at1500.placeGlobalOverlap.count === 0, "Reviewed Place header markers overlap anywhere in the world at 1500%", at1500.placeGlobalOverlap);
     assert(at1500.placeOverlap.count === 0, "Reviewed Place header markers overlap at 1500%", at1500.placeOverlap);
     assert(at1500.labelOverlap.count === 0, "Visible Person labels overlap at 1500%", at1500.labelOverlap);
     assert(at1500.deferredLabelCount === 0, "Person names are deferred at 1500%", at1500);

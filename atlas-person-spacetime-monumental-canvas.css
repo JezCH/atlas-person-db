@@ -101,6 +101,12 @@
   border-radius: 0;
   background: rgba(18,21,24,.82);
   box-shadow: none;
+  pointer-events: auto;
+  cursor: help;
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-place-head-marker[data-spacetime-place-count]:not([data-spacetime-place-count="1"]) {
+  border-bottom: 1px dotted var(--spacetime-selection-metal);
 }
 
 .spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-place-head-marker i {
