@@ -71,8 +71,10 @@ export function auditSharedSourceUrls(snapshot) {
       const locator = row.source_locator_key == null ? null : String(row.source_locator_key);
       let citation = null;
       if (hasRuntimeProvenance && table === 'activity_sources') {
-        citation = runtimeProvenance.get(row[parentKey] + '\0' + row.source_id);
-        matchedRuntimeLinks.add(row[parentKey] + '\0' + row.source_id);
+        const key = row[parentKey] + '\0' + row.source_id;
+        if (matchedRuntimeLinks.has(key)) throw new Error('SOURCE_URL_AUDIT_DUPLICATE_ACTIVITY_SOURCE_LINK');
+        citation = runtimeProvenance.get(key);
+        matchedRuntimeLinks.add(key);
         const source = byId.get(row.source_id);
         if (!citation ||
             citation.source_key !== source.source_key ||
@@ -182,3 +184,4 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     process.exitCode = 1;
   }
 }
+
