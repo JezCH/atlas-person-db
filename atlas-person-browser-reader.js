@@ -177,16 +177,20 @@
     sortOrder = "start-asc",
     facetFilters = {},
     secondaryPredicate = null,
-    includeFacetCatalog = true
+    includeFacetCatalog = true,
+    sortGroups = true
   } = {}) {
     const visiblePersons = publicPersons(persons);
     const partitioned = partitionByHistoricity(visiblePersons);
-    const filterAndSort = (rows) => rows
-      .filter((person) => personMatchesQuery(person, query))
-      .filter((person) => personMatchesFacets(person, facetFilters))
-      .filter((person) => typeof secondaryPredicate === "function" ? secondaryPredicate(person) : true)
-      .slice()
-      .sort((left, right) => comparePersons(left, right, sortOrder));
+    const filterAndSort = (rows) => {
+      // filter() already creates a fresh array. Sorting is optional because
+      // the Person Main merges both groups into one final chronological sort.
+      const filtered = rows
+        .filter((person) => personMatchesQuery(person, query))
+        .filter((person) => personMatchesFacets(person, facetFilters))
+        .filter((person) => typeof secondaryPredicate === "function" ? secondaryPredicate(person) : true);
+      return sortGroups ? filtered.sort((left, right) => comparePersons(left, right, sortOrder)) : filtered;
+    };
 
     return Object.freeze({
       historical: Object.freeze(filterAndSort(partitioned.historical)),
