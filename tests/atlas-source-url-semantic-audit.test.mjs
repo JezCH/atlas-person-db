@@ -180,3 +180,10 @@ test('rejects extra Runtime citations absent from the canonical link census', ()
   });
   assert.throws(() => auditSharedSourceUrls(data), /UNMATCHED_RUNTIME_CITATION/);
 });
+
+test('rejects duplicate canonical Activity–Source links even with a unique Runtime citation', () => {
+  const data = fixtureWithRuntimeProvenance();
+  data.raw.activity_sources.push({ ...data.raw.activity_sources[0] });
+  assert.throws(() => auditSharedSourceUrls(data), /DUPLICATE_ACTIVITY_SOURCE_LINK/);
+});
+
