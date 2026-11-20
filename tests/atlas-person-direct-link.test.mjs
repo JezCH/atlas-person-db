@@ -72,7 +72,7 @@ function harness(initialHash,detailPerson=person,options={}) {
     comparePersons:()=>0,facetCatalog:()=>emptyFacets()
   };
   const dataStore={
-    loadPersons:async()=>{state.listCalls++;return {persons:[person],facet_catalog:emptyFacets()};},
+    loadPersons:async()=>{state.listCalls++;return {persons:options.listPersons || [person],facet_catalog:emptyFacets()};},
     loadPersonDomains:async()=>({by_person_id:{}})
   };
   const events=new Map();
@@ -103,7 +103,8 @@ function harness(initialHash,detailPerson=person,options={}) {
   vm.runInNewContext(source,{
     window,document,URL,console,
     CustomEvent:class{constructor(type,props){this.type=type;this.detail=props?.detail;}},
-    clearTimeout,setTimeout
+    clearTimeout:options.clock?.clearTimeout || clearTimeout,
+    setTimeout:options.clock?.setTimeout || setTimeout
   });
   return {state,window,groups,events};
 }
@@ -257,4 +258,62 @@ test('selecting and clearing Person only toggles row selection, not the full ren
   h.window.ATLAS_PERSON_MAIN.clearSelection();
   assert.equal(h.state.groupMarkup.length,renderCount);
   assert.equal(h.state.rowSelectionChanges.at(-1),false);
+});
+
+
+test('typing search batches full-register rerenders; programmatic queries and filter renders stay immediate',async()=>{
+  const callbacks=new Map();
+  let nextId=0;
+  const clock={
+    setTimeout(callback){const id=++nextId;callbacks.set(id,callback);return id;},
+    clearTimeout(id){callbacks.delete(id);}
+  };
+  const h=harness('#atlas-persons',person,{clock});
+  await settle();
+  const before=h.state.groupMarkup.length;
+  const input=(query,composing=false)=>h.events.get('atlas-person-search-change')({detail:{query,composing}});
+  input('A');input('Al');input('Ale');
+  assert.equal(h.window.ATLAS_PERSON_MAIN.getSearchQuery(),'Ale');
+  assert.equal(h.state.groupMarkup.length,before,'rapid input must not rebuild thousands of rows');
+  assert.equal(callbacks.size,1,'only one trailing render is scheduled');
+  const pending=[...callbacks.values()][0];callbacks.clear();pending();
+  assert.equal(h.state.groupMarkup.length,before+1);
+  input('Alex');
+  assert.equal(callbacks.size,1);
+  h.window.ATLAS_PERSON_MAIN.renderGroups();
+  assert.equal(h.state.groupMarkup.length,before+2,'other render must consume newest query immediately');
+  assert.equal(callbacks.size,0,'no stale render may run after a filter/sort rerender');
+  input('Alexander');
+  assert.equal(callbacks.size,1);
+  h.window.ATLAS_PERSON_MAIN.setSearchQuery('Socrates');
+  assert.equal(h.window.ATLAS_PERSON_MAIN.getSearchQuery(),'Socrates');
+  assert.equal(callbacks.size,0);
+  assert.equal(h.state.groupMarkup.length,before+3,'programmatic search remains immediate');
+  input('So');
+  input('',false);
+  assert.equal(callbacks.size,0,'clearing search flushes immediately');
+  assert.equal(h.state.groupMarkup.length,before+4);
+});
+
+test('Person card markup is reused for repeated filters and refreshed only for selected variant',async()=>{
+  let activityReads=0;
+  const mutable={...person};
+  Object.defineProperty(mutable,'activity_summaries',{
+    get(){activityReads+=1;return [];}
+  });
+  const h=harness('#atlas-persons',person,{listPersons:[mutable]});
+  await settle();
+  assert.ok(activityReads>0);
+  const firstReads=activityReads;
+  const firstHtml=h.state.groupMarkup.at(-1);
+  h.window.ATLAS_PERSON_MAIN.renderGroups();
+  assert.equal(activityReads,firstReads,'same immutable Person snapshot must reuse rendered activities');
+  assert.equal(h.state.groupMarkup.at(-1),firstHtml);
+  await h.window.ATLAS_PERSON_MAIN.openPerson(id);
+  h.window.ATLAS_PERSON_MAIN.renderGroups();
+  assert.equal(activityReads,firstReads+1,'selection generates only its own cached variant');
+  assert.match(h.state.groupMarkup.at(-1),/is-selected/);
+  h.window.ATLAS_PERSON_MAIN.clearSelection();
+  h.window.ATLAS_PERSON_MAIN.renderGroups();
+  assert.equal(activityReads,firstReads+1,'returning to normal variant must reuse cached card');
 });
