@@ -518,6 +518,53 @@
     return `<figure class="person-detail-portrait${href ? " has-portrait" : ""}" data-era="${escapeHtml(presentation.era_code)}" data-domain="${escapeHtml(presentation.domain_code || "")}" aria-label="${escapeHtml(displayName)} · ${escapeHtml(presentation.era_label)} · ${escapeHtml(presentation.domain_label)} · ${state}" title="${escapeHtml(titleParts.join(" · "))}">${layers}${legacyEmpty}<figcaption class="person-detail-portrait-state">${escapeHtml(state)}</figcaption></figure>`;
   }
 
+  // A comparison belongs to one native browser-history Person entry, never to
+  // unrelated deep links, the global Person register, or account-level storage.
+  function validHistoryComparison(route, saved) {
+    const routeModel = window.ATLAS_ENTITY_ROUTE;
+    if (route?.domain !== "persons" || route?.entity_type !== "person" || !route?.entity_id
+      || saved?.version !== 1 || saved.routeHash !== route.canonical_hash) return null;
+    const ids = saved.personIds;
+    if (!Array.isArray(ids) || ids.length < 1 || ids.length > 2 || new Set(ids).size !== ids.length
+      || !ids.every((id) => typeof id === "string" && routeModel?.normalizeUuid?.(id) === id)) return null;
+    return ids.slice();
+  }
+
+  function persistComparisonHistory() {
+    const route = window.ATLAS_ENTITY_ROUTE?.parseHash?.(window.location.hash);
+    const nativeHistory = window.history;
+    if (!nativeHistory?.replaceState || route?.domain !== "persons"
+      || route.entity_type !== "person" || !route.entity_id) return false;
+    const current = nativeHistory.state && typeof nativeHistory.state === "object"
+      && !Array.isArray(nativeHistory.state) ? nativeHistory.state : {};
+    const next = { ...current };
+    const ids = comparisonIds.slice();
+    if (ids.length > 0 && ids.length <= 2 && new Set(ids).size === ids.length
+      && ids.every((id) => window.ATLAS_ENTITY_ROUTE?.normalizeUuid?.(id) === id)) {
+      if (validHistoryComparison(route, current.atlasPersonCompareV1)?.join(",") === ids.join(",")) return true;
+      next.atlasPersonCompareV1 = { version: 1, routeHash: route.canonical_hash, personIds: ids };
+    } else {
+      if (!("atlasPersonCompareV1" in current)) return true;
+      delete next.atlasPersonCompareV1;
+    }
+    try {
+      nativeHistory.replaceState(next, "", window.location.href);
+      return true;
+    } catch (error) {
+      console.warn("ATLAS Person comparison History snapshot unavailable", error);
+      return false;
+    }
+  }
+
+  function restoreComparisonFromHistory() {
+    const route = window.ATLAS_ENTITY_ROUTE?.parseHash?.(window.location.hash);
+    const restored = validHistoryComparison(route, window.history?.state?.atlasPersonCompareV1);
+    comparisonIds = restored || [];
+    // Invalidate any pending detail responses from a previous History entry.
+    void renderComparisonPanel();
+    return Boolean(restored);
+  }
+
   function updateComparisonControls() {
     const button = document.querySelector("#personMainDetail [data-person-compare-add]");
     if (!button) return;
@@ -536,6 +583,7 @@
     const panel = document.getElementById("personComparePanel");
     const serial = ++comparisonRequestSerial;
     updateComparisonControls();
+    persistComparisonHistory();
     if (!panel) return;
     if (comparisonIds.length !== 2) {
       panel.hidden = true;
@@ -683,6 +731,8 @@
     renderDetailLoading();
     if (updateRoute) {
       window.dispatchEvent(new CustomEvent("atlas-person-selected", { detail:{ personId } }));
+      // Preserve an in-progress first selection on the newly opened Person entry.
+      if (comparisonIds.length) persistComparisonHistory();
     }
     const serial = ++requestSerial;
     try {
@@ -1163,6 +1213,7 @@
     selectPerson,
     openPerson,
     openComparison,
+    restoreComparisonFromHistory,
     clearSelection,
     getSelectedPersonId:() => selectedPersonId,
     renderGroups,
