@@ -52,6 +52,7 @@ test("UI-06A region interaction updates only Meanwhile DOM and restores keyboard
     querySelectorAll(selector){
       if(selector==="[data-spacetime-meanwhile-region]")return regionButtons;
       if(selector==="[data-spacetime-meanwhile-person]")return activeButtons;
+      if(selector==="[data-spacetime-meanwhile-compare]")return [];
       throw new Error("Unexpected selector: "+selector);
     }
   };
