@@ -88,11 +88,13 @@ export function buildContext({ root = process.cwd(), query, limit = 8 } = {}) {
     const rank = n => n.startsWith('scripts/') || n.startsWith('server/') || n.startsWith('api/') ? 0 : n.startsWith('tests/') ? 1 : 2;
     return rank(a) - rank(b) || a.localeCompare(b);
   });
-  const files = candidates.slice(0, limit).flatMap(name => {
+  const files = [];
+  for (const name of candidates) {
     const text = readText(path.join(base, name));
-    if (text === null) return [];
-    return [{path: name, matches: excerpts(text, query), symbols: declarations(text), relative_imports: imports(text)}];
-  });
+    if (text === null) continue;
+    files.push({path: name, matches: excerpts(text, query), symbols: declarations(text), relative_imports: imports(text)});
+    if (files.length === limit) break;
+  }
   const skills = Object.entries(SKILL_TAGS).filter(([name, expression]) =>
     expression.test(query) && fs.existsSync(path.join(base, 'skills', name, 'SKILL.md')))
     .map(([name]) => 'skills/' + name + '/SKILL.md');
