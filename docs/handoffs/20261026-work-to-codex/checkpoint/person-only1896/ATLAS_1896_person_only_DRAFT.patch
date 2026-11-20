@@ -1,0 +1,128 @@
+diff --git a/atlas-admin-identity.js b/atlas-admin-identity.js
+index d56ab58..fa139ba 100644
+--- a/atlas-admin-identity.js
++++ b/atlas-admin-identity.js
+@@ -117,7 +117,7 @@
+     panel.setAttribute("aria-labelledby", "human-authoring-title");
+     panel.innerHTML = `
+       <div class="panel-head"><div><p class="status-label">일반 등록 · 2단계 원본</p><h2 id="human-authoring-title">일반 신규 인물 등록</h2><p>UUID나 JSON을 입력하지 않습니다. 기존 인물·정치체·역할·출처는 정확히 일치하는 현재 식별정보가 있으면 재사용하고, 없으면 같은 트랜잭션 안에서 생성합니다. 신규 인물 또는 나무위키 미검토 인물만 나무위키 판정이 필요하며, 이미 검토된 기존 인물은 비워두면 서버가 기존 값을 재사용합니다.</p></div></div>
+-      <form id="humanAuthoringForm" class="identity-form">
++      <form id="humanAuthoringForm" class="identity-form"><label>비연대표 인물만 등록<input id="humanPersonOnly" type="checkbox" /></label><label>비연대표 판정<select id="humanTimelineDisposition"><option value="">판정을 선택하세요</option><option value="chronology_unresolved">개인 활동연대 미상</option><option value="legendary">전설</option><option value="mythical">신화</option><option value="other_reviewed_exclusion">기타 검토된 제외</option></select></label><label>판정 근거<textarea id="humanTimelineReason"></textarea></label>
+         <div class="identity-two"><label>인물 영문명<input id="humanPersonEn" required /></label><label>인물 한국어명 <small>신규 인물 생성 시 필수</small><input id="humanPersonKo" /></label></div>
+         <h3>생존 상태 검토</h3>
+         <div class="identity-two"><label>생존 상태<select id="humanLifeStatus"><option value="">기존 인물 재사용 시 생략 가능</option><option value="deceased">사망 확인됨</option></select></label><label>검토일<input id="humanLifeStatusCheckedAt" type="date" /></label></div>
+@@ -255,6 +255,7 @@
+       populateRepresentativeDomains(domainSelect, representativeDomains, body.catalogs?.representative_domain_reviewed_null_allowed === true);
+       populateSpatialStates(spatialSelect, spatialStates);
+       syncSpatialDispositionFields();
++      syncPersonOnlyFields();
+       output.textContent = "일반 신규등록 준비됨";
+       output.dataset.type = "success";
+     } catch (error) {
+@@ -383,20 +384,44 @@
+     })[code] || fallback || code;
+   }
+ 
++  function syncPersonOnlyFields() {
++    const only = checked("humanPersonOnly");
++    for (const id of ["humanPolityEn","humanPolityKo","humanRelation","humanPeriodBasis","humanRoleEn","humanRoleKo","humanStartYear","humanStartMonth","humanStartDay","humanStartCertainty","humanStartCalendar","humanEndYear","humanEndMonth","humanEndDay","humanEndCertainty","humanEndCalendar","humanConfidence","humanNotes","humanSpatialDispositionState","humanSpatialDispositionEvidence"]) {
++      const control = document.getElementById(id);
++      if (!control) continue;
++      if (control.dataset.activityRequired == null) control.dataset.activityRequired = String(control.required);
++      control.disabled = only;
++      control.required = !only && control.dataset.activityRequired === "true";
++    }
++    for (const id of ["humanTimelineDisposition", "humanTimelineReason"]) {
++      const control = document.getElementById(id);
++      if (control) { control.disabled = !only; control.required = only; }
++    }
++    const koreanName = document.getElementById("humanPersonKo");
++    if (koreanName) {
++      if (koreanName.dataset.originalRequired == null) koreanName.dataset.originalRequired = String(koreanName.required);
++      koreanName.required = only || koreanName.dataset.originalRequired === "true";
++    }
++    const button = document.querySelector("#humanAuthoringForm button[type=submit]");
++    if (button) button.textContent = only ? "비연대표 인물·출처 등록" : "인물·활동·출처 한 번에 등록";
++    if (!only) syncSpatialDispositionFields();
++  }
++
+   async function submitHumanAuthoring(event) {
+     event.preventDefault();
++    const personOnly = checked("humanPersonOnly");
+     const button = event.submitter;
+     const output = document.getElementById("humanAuthoringResult");
+     if (button) button.disabled = true;
+     if (output) {
+-      output.textContent = "Person · Polity · Role · Source · Activity를 저장 중입니다. 기존 나무위키 검토값과 Source URL은 가능한 경우 재사용합니다...";
++      output.textContent = personOnly ? "비연대표 Person · Source를 저장 중입니다. Activity는 생성하지 않습니다." : "Person · Polity · Role · Source · Activity를 저장 중입니다. 기존 나무위키 검토값과 Source URL은 가능한 경우 재사용합니다...";
+       output.dataset.type = "info";
+     }
+     try {
+       const sourceUrl = value("humanSourceUrl");
+       const namuwiki = namuwikiReference();
+-      const spatialDisposition = spatialDispositionReview();
+-      const payload = {
++      const spatialDisposition = personOnly ? null : spatialDispositionReview();
++      let payload = {
+         schema: "atlas-human-authoring/v1",
+         request_id: requestId(),
+         person: {
+@@ -413,8 +438,8 @@
+           period_basis: value("humanPeriodBasis"),
+           role: value("humanRoleEn") || null,
+           role_display_name_ko: value("humanRoleKo") || null,
+-          ...boundary("Start", "시작"),
+-          ...boundary("End", "종료"),
++          ...(personOnly ? {} : boundary("Start", "시작")),
++          ...(personOnly ? {} : boundary("End", "종료")),
+           confidence: value("humanConfidence"),
+           chronology_status: "reviewed",
+           notes: value("humanNotes") || null
+@@ -428,6 +453,17 @@
+         external_references: namuwiki ? { namuwiki } : {},
+         ...(spatialDisposition ? { spatial_disposition:spatialDisposition } : {})
+       };
++      if (personOnly) {
++        const disposition = value("humanTimelineDisposition");
++        if (!["chronology_unresolved", "legendary", "mythical", "other_reviewed_exclusion"].includes(disposition)) throw new Error("검토된 비연대표 판정을 선택하세요.");
++        const reason = value("humanTimelineReason");
++        const domain = payload.person.representative_domain;
++        if (!reason || !domain || !value("humanPersonKo")) throw new Error("비연대표 판정 근거·대표 분야·한국어 이름이 필요합니다.");
++        payload = { schema:"atlas-human-person-authoring/v1", request_id:payload.request_id,
++          person:payload.person, representative_domain:domain,
++          timeline_disposition:{ disposition, reason },
++          sources:payload.sources, external_references:payload.external_references };
++      }
+       const response = await fetch(authoringEndpoint, {
+         method: "POST",
+         credentials: "same-origin",
+@@ -446,16 +482,16 @@
+         output.textContent = [
+           `등록 완료${body.replay ? " (동일 요청 재검증)" : ""}`,
+           `Person UUID: ${body.person_id}`,
+-          `Polity UUID: ${body.polity_id}`,
+-          body.role_id ? `Role UUID: ${body.role_id}` : "Role: 없음",
+-          `Activity UUID: ${body.relationship_id}`,
++          body.polity_id ? `Polity UUID: ${body.polity_id}` : "",
++          body.role_id ? `Role UUID: ${body.role_id}` : "",
++          body.relationship_id ? `Activity UUID: ${body.relationship_id}` : (personOnly ? "비연대표 인물 등록 · 활동 생성 없음" : "Activity UUID: 응답에서 확인되지 않음"),
+           `Source UUID: ${(body.source_ids || []).join(", ")}`,
+           savedNamuWiki?.status === "linked"
+             ? `나무위키: 연결됨 — ${savedNamuWiki.document_title}`
+             : savedNamuWiki?.status === "not_found"
+               ? `나무위키: 문서 없음 — ${savedNamuWiki.review_reason || "세부 사유 미기록"}`
+               : "나무위키: 기존 검토값 없음"
+-        ].join("\n");
++        ].filter(Boolean).join("\n");
+         output.dataset.type = "success";
+       }
+       humanRequestId = null;
+@@ -475,5 +511,7 @@
+   syncNamuWikiFields();
+   syncSpatialDispositionFields();
+   document.getElementById("humanAuthoringForm")?.addEventListener("submit", submitHumanAuthoring);
++  document.getElementById("humanPersonOnly")?.addEventListener("change", syncPersonOnlyFields);
++  syncPersonOnlyFields();
+   loadHumanCatalogs();
+ })();
+\ No newline at end of file
