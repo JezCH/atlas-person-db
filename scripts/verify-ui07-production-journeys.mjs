@@ -219,7 +219,7 @@ async function verifySpacetimeJourney(c){
   await evaluate(c,()=>document.querySelector("#personComparePanel")?.scrollIntoView({block:"start"}));
   await shot(c,"ui07-spacetime-person-comparison.png");
   await evaluate(c,()=>document.querySelector("#personComparePanel [data-compare-return-spacetime]")?.click());
-  await until(c,()=>window.ATLAS_MAIN_AUTHORITY_NAV?.getDomain()==="spacetime"&&
+  await until(c,(year)=>window.ATLAS_MAIN_AUTHORITY_NAV?.getDomain()==="spacetime"&&
     Boolean(document.querySelector(".spacetime-frame"))&&
     document.querySelector("#spacetimeMeanwhileYearInput")?.value===String(year),90000,selectedYear);
   await pause(450);
