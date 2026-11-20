@@ -509,15 +509,24 @@
     const active = document.activeElement;
     if (!active || !mount?.contains?.(active)) return null;
     if (active.id) return Object.freeze({ id: active.id, viewport: false });
+    const { spacetimeInspectorActivity, spacetimePerson } = active.dataset || {};
+    if (spacetimeInspectorActivity && spacetimePerson) {
+      return Object.freeze({ activityId: spacetimeInspectorActivity, personId: spacetimePerson });
+    }
     if (active.classList?.contains?.("spacetime-scroll")) return Object.freeze({ id: null, viewport: true });
     return null;
   }
 
   function restoreRenderFocus(mount, snapshot) {
     if (!snapshot) return false;
-    const target = snapshot.id
-      ? document.getElementById(snapshot.id)
-      : snapshot.viewport ? mount?.querySelector?.(".spacetime-scroll") : null;
+    let target = snapshot.id ? document.getElementById(snapshot.id) : null;
+    if (snapshot.viewport) target = mount?.querySelector?.(".spacetime-scroll");
+    if (snapshot.activityId) {
+      target = Array.from(mount?.querySelectorAll?.("[data-spacetime-inspector-activity]") || []).find(
+        (button) => button.dataset.spacetimeInspectorActivity === snapshot.activityId
+          && button.dataset.spacetimePerson === snapshot.personId
+      );
+    }
     if (!target || !mount?.contains?.(target) || typeof target.focus !== "function") return false;
     try { target.focus({ preventScroll: true }); }
     catch { target.focus(); }
