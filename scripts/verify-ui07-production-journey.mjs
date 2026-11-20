@@ -39,9 +39,11 @@ async function inspectPair(client,h,selectedPair=null) {
   h.assert(false,"No two real same-year Activity Persons available in bounded Production inspector traversal",{selectedPair});
 }
 async function clickCompare(client,h,pair,mobile=false) {
-  const click=await h.evaluate(client,"(() => {const b=[...document.querySelectorAll('"+COMPARE+"')].find(e=>e.dataset.spacetimeMeanwhileCompare==="+JSON.stringify(pair.personB)+");if(!b)return null;b.scrollIntoView({block:'nearest',inline:'nearest'});const r=b.getBoundingClientRect();const size={width:r.width,height:r.height};b.click();return size})()");
-  h.assert(click?.width>0&&click.height>0,"UI-07 compare button not rendered",{pair,click});
+  const click=await h.evaluate(client,"(() => {const b=[...document.querySelectorAll('"+COMPARE+"')].find(e=>e.dataset.spacetimeMeanwhileCompare==="+JSON.stringify(pair.personB)+");if(!b)return null;b.scrollIntoView({block:'nearest',inline:'nearest'});const r=b.getBoundingClientRect();const x=r.left+r.width/2,y=r.top+r.height/2;const top=document.elementFromPoint(x,y);return {width:r.width,height:r.height,x,y,hit:top===b||b.contains(top),inside:x>=0&&x<innerWidth&&y>=0&&y<innerHeight}})()");
+  h.assert(click?.width>0&&click.height>0&&click.hit&&click.inside,"UI-07 compare button not reachable by a real pointer hit test",{pair,click});
   if(mobile)h.assert(click.width>=44&&click.height>=44,"UI-07 mobile compare touch target below 44px",{pair,click});
+  await client.call("Input.dispatchMouseEvent",{type:"mousePressed",x:click.x,y:click.y,button:"left",clickCount:1});
+  await client.call("Input.dispatchMouseEvent",{type:"mouseReleased",x:click.x,y:click.y,button:"left",clickCount:1});
   await h.waitFor(client,"(() => {const ids=[...document.querySelectorAll('#personComparePanel [data-compare-remove]')].map(e=>e.dataset.compareRemove);return ids.length===2&&ids[0]==="+JSON.stringify(pair.personId)+"&&ids[1]==="+JSON.stringify(pair.personB)+"&&Boolean(document.querySelector('#atlasComparePeriodsTitle'))})()",90000);
   const row=await readDossier(client,h);checkDossier(row,pair,h,mobile);return row;
 }
