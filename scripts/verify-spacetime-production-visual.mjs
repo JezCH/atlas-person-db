@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { activityLinkedMeanwhileIsConsistent } from "./spacetime-visual-interaction-contract.mjs";
+import { verifyUi07DesktopJourney, verifyUi07MobileJourney } from "./verify-ui07-production-journey.mjs";
 
 const DEBUG_URL = process.env.ATLAS_CDP_URL || "http://127.0.0.1:9222";
 const PRODUCTION_URL = process.env.ATLAS_PRODUCTION_URL || "https://atlas-person-db.vercel.app/#atlas-spacetime";
@@ -685,6 +686,12 @@ async function main() {
     console.log("ATLAS_UI06B_PRODUCTION_ACTIVITY_ORIGIN_RETURN_PASS");
     await screenshot(client,"ui06b-activity-origin-return.png");
 
+    // Existing exact-SHA Chromium session: test two actual registered Persons,
+    // source-graded overlap, History-scoped reload, native Back/Forward and Return.
+    const ui07Helpers = { evaluate, waitFor, screenshot, assert, sleep };
+    const ui07Desktop = await verifyUi07DesktopJourney(client, ui07Helpers);
+    console.log("ATLAS_UI07_DESKTOP_PRODUCTION_COMPARE_ROUNDTRIP_PASS");
+
 
     await client.call("Emulation.setDeviceMetricsOverride", MOBILE_VIEWPORT);
     await client.call("Page.navigate", { url: "about:blank" });
@@ -726,6 +733,10 @@ async function main() {
     assert(mobile.statusSummaryVisible && !mobile.statusMoreOpen, "Mobile secondary status details are not collapsed by default", mobile);
     await screenshot(client, "spacetime-mobile-390.png");
 
+    // Reuse the same real selected pair, not synthetic historical Person IDs.
+    const ui07Mobile = await verifyUi07MobileJourney(client, ui07Desktop.pair, ui07Helpers, PRODUCTION_URL);
+    console.log("ATLAS_UI07_MOBILE_PRODUCTION_COMPARE_ROUNDTRIP_PASS");
+
     await sleep(500);
     const ignorableResource = (item) => {
       try {
@@ -755,11 +766,13 @@ async function main() {
       at_1500_percent:at1500,
       interaction,
       ui06b_roundtrip:ui06bRoundtrip,
+      ui07_desktop_roundtrip:ui07Desktop,
+      ui07_mobile_roundtrip:ui07Mobile,
       mobile,
       console_errors:filteredConsoleErrors,
       resource_errors:resourceErrors,
       runtime_exceptions:exceptions,
-      screenshots:["spacetime-500.png","spacetime-1500.png","spacetime-activity-meanwhile.png","ui06b-activity-origin-return.png","spacetime-mobile-390.png"],
+      screenshots:["spacetime-500.png","spacetime-1500.png","spacetime-activity-meanwhile.png","ui06b-activity-origin-return.png","spacetime-mobile-390.png","ui07-desktop-compare.png","ui07-desktop-return.png","ui07-mobile-390-compare.png","ui07-mobile-390-return.png"],
       status:"PASS"
     };
     fs.writeFileSync(path.join(OUT_DIR,"visual-acceptance.json"), JSON.stringify(report,null,2)+"\n");
