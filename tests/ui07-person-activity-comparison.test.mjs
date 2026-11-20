@@ -93,7 +93,8 @@ test("UI-07 Person Main selects two validated detail IDs and reads only their bo
   assert.match(main,/const result = await reader\.readPerson\(id\)/);
   assert.match(main,/comparisonCache\.set\(id, result\.person\)/);
   assert.match(main,/serial !== comparisonRequestSerial/);
-  assert.match(main,/panel\.innerHTML = compareView\.render\(records\)/);
+  assert.match(main,/panel\.innerHTML = compareView\.render\(records,\s*\{/);
+  assert.match(main,/returnToExploration: Boolean\(window\.ATLAS_MAIN_AUTHORITY_NAV/);
   assert.match(main,/data-person-compare-add/);
   assert.match(main,/data-compare-remove/);
   assert.match(main,/data-compare-close/);

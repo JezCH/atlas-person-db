@@ -17,6 +17,28 @@
   padding: 16px 19px;
   border-bottom: 1px solid rgba(192,174,136,.27);
 }
+#personMainView .atlas-compare-head-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+#personMainView .atlas-compare-head-actions [data-compare-return-spacetime] {
+  border-color: rgba(213,185,128,.72);
+  color: #f4e3c0;
+}
+@media (max-width: 760px) {
+  #personMainView .atlas-compare-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  #personMainView .atlas-compare-head-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
 #personMainView .atlas-compare-head p {
   margin: 0 0 5px;
   color: #bbaa88;

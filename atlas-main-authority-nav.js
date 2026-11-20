@@ -223,8 +223,9 @@
     appendStylesheetOnce("./atlas-person-spacetime-monumental-canvas.css?v=20261008-spacetime-l1-chronograph-v1&ui=20261119-ui03a-readability-v1");
     appendStylesheetOnce("./atlas-person-spacetime-instrument-tools.css?v=20261008-spacetime-l2-instrument-finish-v1&ui=20261119-ui03a-readability-v1&region=20261119-ui06a-v1&nav=20261119-person-spacetime-crosslink-v1&year=20261120-ui06a-direct-year-v1&ui06b=roundtrip-v1&activity=20261120-moment-return-v1");
     appendStylesheetOnce("./atlas-person-spacetime-mobile-v8.css?v=20261007-spacetime-m4-mobile-material-v1&ui=20261119-ui03a-readability-v1&ui06b=roundtrip-v1");
+    appendStylesheetOnce("./atlas-person-spacetime-compare-crosslink.css?v=20261120-ui07-spacetime-v1");
     spacetimeAssetsPromise = ensureSpacetimeModel()
-      .then(() => loadScriptOnce("./atlas-person-spacetime-view.js?v=20261119-meanwhile-all-activities-v1&region=20261119-ui06a-v1&fix=meanwhile-panel-only-v1&ui=20261119-person-crosslink-v1&year=20261120-ui06a-direct-year-v1&ui06b=roundtrip-v1&activity=20261120-moment-return-v1&history=20261120-v1", () => Boolean(window.ATLAS_PERSON_SPACETIME_VIEW)))
+      .then(() => loadScriptOnce("./atlas-person-spacetime-view.js?v=20261119-meanwhile-all-activities-v1&region=20261119-ui06a-v1&fix=meanwhile-panel-only-v1&ui=20261119-person-crosslink-v1&year=20261120-ui06a-direct-year-v1&ui06b=roundtrip-v1&activity=20261120-moment-return-v1&history=20261120-v1&ui07=20261120-cross-compare-v1", () => Boolean(window.ATLAS_PERSON_SPACETIME_VIEW)))
       .then(() => window.ATLAS_PERSON_SPACETIME_VIEW)
       .catch((error) => {
         spacetimeAssetsPromise = null;
@@ -509,6 +510,23 @@
         atlasSpacetimeReturnV1: { routeHash: fromRoute.canonical_hash, personId }
       }, "", window.location.href);
     }
+  });
+  window.addEventListener("atlas-spacetime-compare-persons", (event) => {
+    if (currentDomain !== "spacetime" || !window.ATLAS_PERSON_MAIN?.openComparison) return;
+    const ids = event?.detail?.personIds;
+    if (!Array.isArray(ids) || ids.length !== 2) return;
+    const [firstPersonId, secondPersonId] = ids.map((id) => routeModel.normalizeUuid?.(id) || null);
+    const fromRoute = parseRoute(window.location.hash);
+    if (!firstPersonId || !secondPersonId || firstPersonId === secondPersonId
+      || fromRoute.domain !== "spacetime" || fromRoute.entity_id !== firstPersonId) return;
+    window.ATLAS_PERSON_SPACETIME_VIEW?.persistExplorationState?.();
+    explorationReturnHash = fromRoute.canonical_hash;
+    if (!showEntity("persons", "person", firstPersonId)) return;
+    const base = history.state && typeof history.state === "object" ? history.state : {};
+    history.replaceState({ ...base, atlasSpacetimeReturnV1: {
+      routeHash: fromRoute.canonical_hash, personId: firstPersonId
+    } }, "", window.location.href);
+    window.ATLAS_PERSON_MAIN.openComparison([firstPersonId, secondPersonId]);
   });
   window.addEventListener("atlas-person-return-to-exploration", () => {
     if (currentDomain !== "persons" || !explorationReturnHash) return;
