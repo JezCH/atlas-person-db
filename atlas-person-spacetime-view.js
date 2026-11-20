@@ -1131,12 +1131,12 @@
       labels,
       { width:packingWidth, height:packingHeight },
       {
-        // UI-03 P0: reserve the real 12.5px readable name strip, not the
-        // legacy 10px-width estimate. Conservative on 12px mobile text too.
+        // Reserve the actual 14px inscription width; geometry must cover
+        // rendered text on both desktop and the smaller mobile label.
         // The label engine never adjusts historical Y or the world/camera.
         labelHeight:PERSON_NAME_LABEL_PACK_HEIGHT,
-        charWidth:8.7,
-        cjkCharWidth:12.5,
+        charWidth:9.4,
+        cjkCharWidth:14,
         labelChromeWidth:13,
         labelWidthSafety:6,
         maxHorizontalShift:packingWidth,
