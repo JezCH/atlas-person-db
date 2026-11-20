@@ -70,6 +70,9 @@ P0/P1/P2는 **상대적 제품 가치 및 의존성**이며 신규 제안의 실
 5. Event, Institution, Work, Movement, Technology, Law/Treaty 등을 **실제로 필요한 사례부터** 검토; 읽기용 연결 그래프를 DB 재구축 없이 점진 투영.
 6. 시대·지역·분야별 실제 데이터 공백과 미상/자료 부재를 구별하고, 등록가치 평가와 기록 완전성을 혼합하지 않음.
 
+**2026-11-20 UI-03 시공간표 개선 우선 실행:** 시공간표 글자 크기·비율·배치 불만은 기존 승인된 UI-03A/B·VIS-02의 실제 제품 품질 미완료다. [공식 상세 실행계획 §「2026-11-20 UI-03 시공간표 전면 품질 개선」](ui/ATLAS_UI_DEVELOPMENT_EXECUTION_PLAN.md)에 P0 실제 배포 화면 기준선 → P1 캔버스/패널 → P2 시간·지역축 → P3 Person 표시 이름 충돌 엔진 → P4 탐색/상세 → P5 실Chrome/Production 사용자 수용과 정확한 종료조건을 기록했다. 현재 [Draft PR #2776](https://github.com/JezCH/atlas-person-db/pull/2776)은 미배포 1차 보정이고 최종 디자인 아님. **45개 동일폭 leaf / 9개 동일폭 macro 문서 충돌**은 좌표 무단변경 대신 A안(기존 역사적 세계·비율 보존)부터 확인하고 B안은 별도 사용자 선택 전 실행하지 않는다.
+
+
 ### B. 시공간 인물도와 역사 탐험
 1. 기존 500% 중심 canvas, long-name packing, collision, semantic LOD, mini-map, Inspector의 **실제 판독·사용성** 개선. 밀집 때문에 historical Y 또는 권역 X 비율 변형 금지.
 2. World Moment: 연도 직접 진입→동시대 주요 인물/Activity/Polity별 권역·분야 필터→상세·근거→탐험 상태 복귀.

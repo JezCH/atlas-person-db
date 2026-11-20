@@ -8,6 +8,17 @@
 >
 > 본 문서는 **실제 화면을 배포·수용하기 위한 개발 순서**이다. `docs/ui/UI_INFORMATION_COVERAGE.md`, `ATLAS_REQUIREMENTS.md`, `DATA_MODEL.md`, `WORK_EXECUTION.md`의 데이터·권한·운영 규칙을 대체하지 않는다.
 
+## 2026-11-20 UI-03 시공간표 글자·비율·배치 전면 개선 (최신 사용자 지시)
+
+현 시공간표의 **글자 크기·전체 비율·배치가 만족스럽지 않다**는 피드백을 기존 승인된 UI-03A/B·VIS-02의 우선 수용 조건으로 반영한다. CSS 폰트 크기만 조정하는 부분수정이 아니라 **P0 현재 배포 브라우저 실측 → P1 캔버스/패널 공간 배치 → P2 지역/연도축 타이포그래피·LOD → P3 실제 이름폭/충돌 엔진 → P4 Inspector/탐색 → P5 동조건 전후 PNG/JSON·CI·Production/실Chrome/사용자 수용** 순서로 진행한다.
+
+**작업 소유·파일·검증·중단 기준:** [상세 개발실행계획의 UI-03 2026-11-20 전면 개선 실행계약](ATLAS_UI_DEVELOPMENT_EXECUTION_PLAN.md), owner [#1896](https://github.com/JezCH/atlas-person-db/issues/1896). 기존 [Draft PR #2776](https://github.com/JezCH/atlas-person-db/pull/2776)은 부분 보정/미병합/미배포/실브라우저 미수용으로서 원본과 대조해 재사용·보완한다.
+
+**계약 불일치 선해결:** 현 코드의 45개 동일폭 하위지역 기반 대권역 폭과 기존 문서의 '9대권역 동일 폭' 표기가 충돌한다. **A안(현 정규화 X/지역 폭 유지 + 정보위계 개선) 우선**, B안(대권역 폭/좌표 재배분)은 사용자 별도 선택 전에는 개발·배포하지 않는다. 기존 viewport-fit/500~1500%/0.748 공통 글로벌 줌, historical Y, 140px 연도축/36px 헤더, 8분야색, Activity/Source/정밀도/Meanwhile/History는 보호한다.
+
+**완료:** 390/768/900/1280/1600px, viewport-fit/500%/1500% 및 밀집 유럽 AD1800~1950·동아시아 AD500~1900에서 실제 브라우저의 overlap 0/deferred 0/visible rail-label ID 동등/Y편차 0, 정교한 정보 위계와 조작 안정성, 전후 비교·사용자 수용 확보. **계획 저장은 PLAN_RECORDED이고 CODE/CI/MERGE/PRODUCTION 완료가 아니다.**
+
+
 ## 현재 실행 상태 갱신 — 2026-11-20 (이전 11월 19일 계획 우선순위보다 최신)
 
 **이 문서는 여전히 승인된 UI-01~07 범위를 정의하며, 다음 상태는 해당 계획의 실제 구현 체크포인트입니다.** 정확한 세부 CI/commit/배포 증거와 다음 수용은 [전 프로젝트 로드맵 §1](../ATLAS_PRODUCT_UPGRADE_ROADMAP_20261120.md)의 2026-11-20 체크포인트 및 [UI #1896](https://github.com/JezCH/atlas-person-db/issues/1896#issuecomment-7031754503)을 참조합니다.

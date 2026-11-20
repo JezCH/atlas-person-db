@@ -8,6 +8,57 @@
 >
 > 목표: 기존 제품의 역사 전체 조망 → 인물 검색·명부 → 활동/정치체/Source 상세 → 시공간 동시대 → 두 인물 실제 활동 비교 → 원래 탐색 위치 복귀를 PC·모바일·키보드에서 정확하고 아름답게 수행한다. 기존 밀집 인물표를 카드/초상 중심 화면으로 바꾸지 않으며 실제 연대·지리·8분야색·Source 의미를 손상하지 않는다.
 
+## 2026-11-20 UI-03 시공간표 전면 품질 개선 실행계약 — UI-03A/B·VIS-02 (PLAN_RECORDED)
+
+> **최신 사용자 지시:** 현재 시공간표의 글씨 크기, 비율, 배치 전반이 만족스럽지 않다. 폰트 몇 px 확대나 CSS 덧씌우기로 종결하지 말고 **화면 정보 구조·축/공간 비율·이름 배치·도구판 우선순위를 실브라우저 결과 기준으로 다시 정비**한다.
+>
+> **공식 owner:** UI [#1896](https://github.com/JezCH/atlas-person-db/issues/1896), 기존 UI-03A/B·VIS-02 / 기존 총괄·UI 매니저. 새 예약·독립 제품 트랙을 만들지 않는다. 다른 화면의 진행을 막는 전역 게이트도 아니다.
+>
+> **기존 구현 재사용:** [Draft PR #2776](https://github.com/JezCH/atlas-person-db/pull/2776)은 기존 명칭/영역/font metric 1차 보정으로, 아직 MERGED/PRODUCTION/BROWSER/USER 수용이 아니다. 현재 main과 다른 PR의 최신 상태를 확인하여 유효한 수정만 사용한다. 기존 코드와 500%/1500% 검증 계약을 다시 만드는 일은 금지한다.
+
+### 0. 성공 정의
+
+- 연도 → 대권역 → 하위지역/검토 장소 → 해당 시대 인물명·활동선의 시각적 위계가 분명하고, 실제 공간은 시공간표가 우선 점유한다.
+- 사용자가 검색/시대 선택/인물 선택/한 시대의 동시대 비교/Inspector/원위치 복귀를 하는 과정에서 역사적 사실과 현재 탐색 맥락이 명확하고 안정적이다.
+- 글꼴 크기, 대비, 줄높이, 정렬, 실제 길이, 지역 경계, 패널 폭, 표시 밀도를 함께 최적화한다. 글자를 키운 대신 겹침·잘림·누락이 늘면 미완료다.
+- 역사적 normalized X, historical Y, 실제 Activity 연대, spatial precision, Source/Relation/Role, 8개 대표분야 의미색, selection/Meanwhile 강조 의미를 손상하지 않는다.
+- 계획 문서/정적 단위테스트/CI/머지/Production READY는 각각 한 단계의 증거일 뿐, **실제 사용자 시각 수용의 대체물이 아니다**.
+
+### 1. 확인된 원인 후보와 해결 전제
+
+1. 소스 확인 사실: atlas-person-spacetime-space-axis.js의 createSpatialContinuum은 45개 하위권역에 같은 폭(1/45)을 부여하고 macroregion 폭은 포함한 하위권역 수의 합이다. 지역의 Person 밀도에 따라 폭이 바뀌는 것은 아니다.
+2. **계약 불일치:** docs/spacetime-completion-contract.md 및 일부 이전 디자인 문서에는 9개 대권역의 equal stable band라는 서술이 있어 현재 45 leaf 기반 실제 구현과 일치하지 않는다. 9개 대권역을 CSS만으로 강제 재배분하거나 normalized X를 수정하지 않는다. P0에서 의도/기존 사용자 확정 선택/하위 좌표 의존성을 대조한다.
+3. 현행 기본 계약: viewport-fit 유효 최소 줌, 기본/reset 500%, 최대 1500%, 전 세계 X/Y 공통 글로벌 줌, 공통 압축 0.748, 연도축 140px, 헤더 36px, 선형 역사 시간 Y, 지역/시대별 밀도 가변 압축 금지. 필요한 변화가 있다면 별도 근거와 사용자 결정 이후 정식 완료계약을 함께 갱신한다.
+4. 현재 인물이름 엔진은 이미 표시용 이름 위치를 역사적 레일과 분리하고, visible rail의 표시 영역 안에서 가로공간을 빌리며 collision guard도 가로 이동만 한다. 문제는 이 기능의 부재가 아니라 **실제로 어떤 글자폭/실DOM/밀집 창에서 실패하는지 미측정**된 상태다.
+5. 폰트/헤더 불균형, 부속 패널의 시공간표 면적 점유, 작은 조작부는 정적 소스상 개선 후보이지만 **실제 사용자 불편의 크기/최적 크기는 아직 실브라우저에서 재검증해야 할 가설**이다.
+
+### 2. P0~P5 실행 순서 — 각 단계 별도 완료 판정
+
+| ID / 상태 | 할 일(기존 원본에 직접 통합) | 반드시 남길 결과와 합격 기준 |
+| --- | --- | --- |
+| **P0 실측 기준선 / OPEN** | 실제 배포 SHA 확인 후 현행 브라우저의 390/768/900/1280/1600px, viewport-fit/500%/1500%, Person/Activity/Meanwhile 선택·미선택, 밀집·희박 화면을 캡처. computed font-size/line-height, 캔버스 면적, 패널 점유, 클리핑, rail/label ID, overlap/deferred를 측정. 기존 Chrome workflow/artifact 재사용 | **정확한 배포 SHA + 전 화면 기준 PNG/JSON + 재현 가능한 상위 병목**. 실브라우저 수단 부재 시 BLOCKED_VISUAL 표시; 정적 CSS 위험을 실제 화면의 확정 결함으로 오인하지 않음 |
+| **P1 전체 배치 / OPEN** | atlas-person-spacetime-view.css / atlas-person-spacetime-instrument-tools.css / 필요시 view.js. 넓은 PC의 캔버스 우선·선택 전후 고정 패널, 900~1200px에서 풀폭 캔버스+아래 Inspector 대안, 모바일에서 탐색 행동을 정보 패널보다 먼저 노출. 중복 상태/장식·여백 제거 우선 | 390/768/900/1280/1600px에서 표/연도축/지역 헤더/컨트롤 잘림·겹침 없음, 선택 전후 캔버스 가로폭 도약 없음, 검색과 zoom/미니맵의 발견성 보존 |
+| **P2 시간·지역축 정보 위계 / OPEN** | monumental-canvas.css, semantic-axis.js 및 헤더 DOM의 실제 winning CSS 확인. 대권역/하위지역/장소 LOD, major/minor year, activity/rail의 강조 수준을 일관된 서체·행간·대비로 정비. 36px 머리글 안에서 단계적 노출을 우선 비교 | 연도→대권역→인물명/활동선→세부지역의 위계가 실화면에서 분명. 연도·권역의 절단/가림 없음. 헤더 2단/140px 연도축 변경 또는 지역 비율 변경은 별도 승인 전 보류 |
+| **P3 인물 이름·활동선 엔진 / OPEN** | view.js, presentation-layout.js, label-engine.js, label-overlap-guard.js, label CSS. 한글/한자/로마자 혼합·장문 이름의 실제 렌더 글자폭과 추정값 정합, 후보 horizontal placement, 연결선 업데이트, 선택/Meanwhile 우선순위, 성능 측정. 이름표를 위해 historical rail Y/normalized X 이동 금지 | 유럽 AD 1800~1950 및 동아시아 AD 500~1900에서 **500%·1500% 실제 Chrome**의 이름 overlap 0 / deferred 0 / 가시 rail Person ID와 label Person ID 정확히 동일 / historical Y 편차 0px. 물리적 수용량 부족을 가리거나 글자 축소로 속이지 않음 |
+| **P4 Inspector·탐색 동선 / OPEN** | Inspector·미니맵·검색·Meanwhile 실제 상태 owner 및 CSS/DOM. Person 이름/실제 기간/Activity/Polity·Role/Source·precision 순으로 읽는 흐름을 정돈. keyboard/touch/History, 선택 전후·화면 이동 중에도 컨텍스트 유지 | 줌(포인터 중심 포함)·reset·미니맵·검색/선택·동시대 탐색·Person/Activity 상세·Back/Forward 정상. 390/1600px의 조작부 명칭/터치/선택 상태 판독 |
+| **P5 통합 및 실브라우저 수용 / OPEN** | 동일 SHA·화면폭·연대·지역·배율의 **수정 전/후 PNG/JSON 비교**, 집중 회귀, 정확한 PR head CI, 승인된 병합, Production exact-SHA/HTTP 확인, 실 Chrome과 사용자 시각 승인 | CODE_CHANGED → FOCUSED_TEST_PASS → EXACT_HEAD_CI_PASS → MERGED → PRODUCTION_ASSET_HTTP_VERIFIED → BROWSER_ACCEPTED → USER_VISUAL_APPROVED 각각 실증. 사용자 불만 해소 확인 없이 DONE 금지 |
+
+**타이포그래피 시작 가설(확정 값 아님):** PC Person 14~16px, 대권역 14px, 하위권역 11~12px, 주요 연도 13~14px, Activity 11~12px, Inspector 본문 12~14px를 비교한다. 실제 CJK 글자폭·pack height·collision·culling과 CSS를 반드시 함께 검증하고, 브라우저 화면의 읽기 품질과 한 화면 정보량으로 선택한다.
+
+### 3. 지역 비율 결정: A안 우선, B안은 별도 사용자 선택
+
+- **A / 기본 실행:** 현재 45 leaf 기반 지역 폭과 normalized X, 모든 역사 Y 및 통합 줌 계약을 유지한다. 우선 제목/표시 레벨/패널 공간/레이블 배치만 개선하여 실제 가독성이 해결되는지 판정한다.
+- **B / 의사결정 대기:** 9대권역 동일 폭, 내부 leaf 재배분 등 정규화 공간 모델 변경안을 원인 증거, 기존 합의와 회귀 범위, 기존 위치/탐색 영향과 함께 비교만 한다. **이 계획 저장으로 B안을 승인한 것이 아니며, 코드는 사용자 선택 전 변경 금지**.
+- 36px 헤더/140px 연도축을 바꾸거나 2단 헤더를 채택하는 일도 기존 계약과 대조하고 실제 개선 효과 확인 후 승인 처리. 지역별 인물 밀도 가변폭, 시대별 Y 가변압축, 허구의 정확 좌표는 A/B 모두 금지.
+
+### 4. 기존 소스·검증·안전 경계
+
+- **주요 코드:** atlas-person-spacetime-view.css, atlas-person-spacetime-monumental-canvas.css, atlas-person-spacetime-instrument-tools.css, atlas-person-spacetime-view.js, atlas-person-spacetime-presentation-layout.js, atlas-person-spacetime-label-engine.js, atlas-person-spacetime-label-overlap-guard.js, atlas-person-spacetime-semantic-axis.js. **atlas-person-spacetime-space-axis.js는 현 단계 진단 대상이며 재설계 승인 전 쓰기 금지**.
+- **기존 테스트 재사용:** tests/spacetime-dense-label-acceptance.test.mjs, tests/ui-spacetime-chronology-legibility.test.mjs, 기존 camera/navigation/LOD/space-axis 회귀 및 scripts/verify-spacetime-production-visual.mjs. 오래된 고정 font px 기대값 수정 = 회귀 검증이며 실브라우저 미학 승인 아님. 최종 exact-SHA gate는 [현재 렌더러 수용 계약](../spacetime-current-renderer-final-acceptance.md) 적용.
+- **권한/비용:** 역사 정규화 데이터·Polity/Place/Source·8분야 의미색·권력자색 변경 없음, P14 지도·신규 스키마/유료 API/Vercel Sandbox 금지, Production 잦은 재검증 금지. 기존 #1896·#2776의 상태/충돌 확인 후 실변경은 코드·테스트·브라우저 증거로 별도 기록한다.
+- **현재 완료:** 이 절은 PLAN_RECORDED뿐이며 시공간표의 실제 추가 개발/병합/Production 적용/시각 수용을 의미하지 않는다.
+
+
 ## 2026-11-20 실개발 체크포인트 — 오래된 §2·§5 스냅샷보다 우선
 
 > §2의 2026-11-19 GitHub 상태와 §5의 당시 작업 순서는 **역사적 작업 설계 근거**다. 현재 살아 있는 작업 목록이 아니다. 완료된 #2725, #2722, #2728 및 UI-07 구현을 재실행하지 않는다. 정확한 최신 owner는 [#1896](https://github.com/JezCH/atlas-person-db/issues/1896)이고 상위 프로그램 범위는 [전 프로젝트 업그레이드 로드맵](../ATLAS_PRODUCT_UPGRADE_ROADMAP_20261120.md)이다.
