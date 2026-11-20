@@ -75,3 +75,19 @@ test('finds tracked code whose path Git would quote', t => {
   assert.equal(result.matching_files, 1);
   assert.equal(result.files[0].path, filename);
 });
+
+test('fills the result limit with readable matches when an earlier candidate is oversized', t => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'atlas-agent-context-limit-'));
+  t.after(() => fs.rmSync(root, {recursive:true, force:true}));
+  run(root, 'init', '-q');
+  fs.mkdirSync(path.join(root, 'scripts'));
+  fs.writeFileSync(path.join(root, 'scripts/a-large.mjs'), '// periodMarker\n' + ' '.repeat(196608));
+  fs.writeFileSync(path.join(root, 'scripts/z-small.mjs'), 'export const periodMarker = true;\n');
+  run(root, 'add', '.');
+  run(root, '-c', 'user.name=ATLAS Test', '-c', 'user.email=test@example.invalid', 'commit', '-qm', 'fixture');
+
+  const result = buildContext({root, query:'periodMarker', limit:1});
+  assert.equal(result.matching_files, 2);
+  assert.deepEqual(result.files.map(({path}) => path), ['scripts/z-small.mjs']);
+  assert.equal(result.truncated, true);
+});
