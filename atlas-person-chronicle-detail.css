@@ -1057,6 +1057,56 @@
   }
 }
 
+/* MOBILE-DETAIL-P0 — Compact missing portrait, show verified history first.
+ * A non-portrait background/empty silhouette must not consume the first mobile
+ * screen. Actual registered portrait images retain the same priority, ratio,
+ * size, and visual source treatment. The missing-portrait status stays readable.
+ * No changes to Person, chronology, sources or authoring controls.
+ */
+@media (max-width: 760px) {
+  /* A real portrait stays before identity (default order 0). On an absent
+   * portrait, read the Person's identity and actions before the short status. */
+  #personMainDetail.person-main-detail .person-chronicle-hero .person-chronicle-identity {
+    order: 1;
+  }
+
+  #personMainDetail.person-main-detail .person-chronicle-hero.person-detail-head .person-detail-portrait:not(.has-portrait) {
+    order: 2;
+    justify-self: start;
+    width: auto;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: auto;
+    margin: -9px 0 0;
+    padding: 0;
+    overflow: visible;
+    isolation: auto;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  /* A decorative era/domain image is not evidence of a person's likeness. */
+  #personMainDetail.person-main-detail .person-chronicle-hero .person-detail-portrait:not(.has-portrait) > .person-detail-portrait-background,
+  #personMainDetail.person-main-detail .person-chronicle-hero .person-detail-portrait:not(.has-portrait) > .person-detail-portrait-neutral {
+    display: none;
+  }
+
+  #personMainDetail.person-main-detail .person-chronicle-hero .person-detail-portrait:not(.has-portrait)::before {
+    content: none;
+  }
+
+  #personMainDetail.person-main-detail .person-chronicle-hero .person-detail-portrait:not(.has-portrait) .person-detail-portrait-state {
+    display: inline-block;
+    position: static;
+    margin: 0;
+    color: var(--atlas-text-secondary);
+    font-size: 11px;
+    line-height: 1.5;
+  }
+}
+
 /* Cross-domain historical exploration: a clear action, not an authoring control. */
 .person-chronicle-identity .person-chronicle-spacetime-link {
   display: inline-flex;
