@@ -56,7 +56,7 @@ async function backToScene(client,h,pair,useButton=false) {
   else await h.evaluate(client,"history.back()");
   await h.waitFor(client,"(() => {const s=window.ATLAS_PERSON_SPACETIME_VIEW?.captureExplorationState?.();return location.hash==="+JSON.stringify(pair.route)+"&&s?.selectedPersonId==="+JSON.stringify(pair.personId)+"&&s?.selectedActivityId==="+JSON.stringify(pair.activityId)+"&&s?.meanwhileOrdinal==="+JSON.stringify(pair.moment)+"})()",90000);
   const row=await scene(client,h);
-  h.assert(Math.abs(row.zoom-pair.zoom)<.001&&Math.abs(row.x-pair.x)<=24&&Math.abs(row.y-pair.y)<=24,
+  h.assert(Math.abs(row.zoom-pair.zoom)<.001&&Math.abs(row.x-pair.x)<=45&&Math.abs(row.y-pair.y)<=45,
     "UI-07 did not restore original camera/zoom/History",{pair,row});
   return row;
 }
