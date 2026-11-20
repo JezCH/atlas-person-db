@@ -16,10 +16,10 @@ function rule(source, selector) {
 }
 
 function declaration(source, selector, property) {
-  const escaped = property.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
-  const match = rule(source, selector).match(new RegExp(`(?:^|\\n)\\s*${escaped}:\\s*([^;]+);`));
-  assert.ok(match, `Missing declaration ${property} in ${selector}`);
-  return match[1].trim();
+  const line = rule(source, selector).split("\n").map((item) => item.trim())
+    .find((item) => item.startsWith(`${property}:`));
+  assert.ok(line, `Missing declaration ${property} in ${selector}`);
+  return line.slice(property.length + 1).split(";")[0].trim();
 }
 
 test("VIS-01 desktop: Person names and historical Activity facts use readable type hierarchy", () => {
