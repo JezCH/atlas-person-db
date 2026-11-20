@@ -170,6 +170,7 @@ test("first Activity entry exposes a wired return button immediately, without ca
     let cameraZoom=5;
     let cameraScrollLeft=10,cameraScrollTop=20,cameraCenterOrdinal=1592;
     let meanwhileSelectedOrdinal=1592,meanwhileSelectionSource="activity",meanwhileRegionCode="";
+    let meanwhilePolityId="";
     let currentTimelineProjection={};
     let explorationOrigin=null;
     function updateCameraPosition(){}
