@@ -1180,3 +1180,8 @@
     transition: none;
   }
 }
+
+/* UI-01 acceptance checkpoint (2026-11-20): request one exact-SHA live Chrome
+   capture for the observed 390px -> 397px overflow. The acceptance script now
+   records offending DOM bounds; this comment changes no layout or threshold.
+   Remove this inert checkpoint on the subsequent actual CSS root-cause fix. */
