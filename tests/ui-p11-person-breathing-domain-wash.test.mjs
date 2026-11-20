@@ -36,9 +36,10 @@ test("P11 preserves the P10 center-column scan geometry",()=>{
 });
 
 test("P11 Production acceptance enforces a breathing-density band and rendered wash",()=>{
-  assert.match(verifier,/ordinaryMedianHeight>=30&&mobileMain\.ordinaryMedianHeight<=56/);
+  assert.match(verifier,/ordinaryMedianHeight>=52&&mobileMain\.ordinaryMedianHeight<=128/);
   assert.match(verifier,/linear-gradient\/i\.test\(mobileMain\.firstDomainBackgroundImage/);
   assert.match(verifier,/firstDomainBackgroundImage/);
+  assert.match(verifier,/mobileTypographySamples/);
 });
 
 test("P11 publishes the breathing-domain-wash Register asset",()=>{
