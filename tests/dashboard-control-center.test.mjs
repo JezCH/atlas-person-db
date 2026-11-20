@@ -1040,21 +1040,32 @@ test("Dashboard follows operator priority from work status through analysis to s
   assert.ok(system > polity && publication > system && drift > publication && freshness > drift && workspace > freshness);
 });
 
-test("mobile Dashboard fits the Era × Region heatmap and Completeness Matrix inside their cards", () => {
-  assert.match(dashboardCssSource, /\.dashboard-heatmap-wrap\{overflow-x:hidden\}/);
-  assert.match(dashboardCssSource, /\.dashboard-heatmap\{width:100%;min-width:0;font-size:7px\}/);
-  assert.match(dashboardCssSource, /dashboard-heatmap-region-head\{height:56px;line-height:1;writing-mode:vertical-rl;text-orientation:upright/);
-  assert.match(dashboardCssSource, /dashboard-heatmap-total-head,\.dashboard-heatmap \.dashboard-heatmap-total-cell\{width:32px\}/);
-  assert.doesNotMatch(dashboardCssSource, /dashboard-heatmap\{min-width:760px/);
-  assert.match(dashboardCssSource, /\.dashboard-completeness-wrap\{overflow-x:hidden\}/);
-  assert.match(dashboardCssSource, /\.dashboard-completeness\{width:100%;min-width:0;table-layout:fixed;font-size:8px\}/);
-  assert.match(dashboardCssSource, /dashboard-completeness th:nth-child\(1\),\.dashboard-completeness td:nth-child\(1\)\{width:34%\}/);
-  assert.match(dashboardCssSource, /dashboard-completeness th:nth-child\(4\),\.dashboard-completeness td:nth-child\(4\)\{width:14%\}/);
-  assert.doesNotMatch(dashboardCssSource, /dashboard-completeness\{min-width:540px/);
-  assert.match(dashboardCssSource, /\.dashboard-timeline\{max-height:360px;overflow:auto;overscroll-behavior:contain;padding-right:4px\}/);
-  assert.match(dashboardSource, /timeline\.entries\.map\(recentTimelineEntry\)/);
+test("mobile Dashboard keeps full Era × Region and Completeness facts readable through contained horizontal scrolling", () => {
+  const compStart=dashboardCssSource.indexOf("/* VIS-04: six factual completeness columns");
+  const compEnd=dashboardCssSource.indexOf(".dashboard-kpi-action{position:relative}",compStart);
+  const heatStart=dashboardCssSource.indexOf("/* VIS-04: preserve all reviewed Era × Region values");
+  const heatEnd=dashboardCssSource.indexOf("/* Polity concentration */",heatStart);
+  assert.ok(compStart>0&&compEnd>compStart&&heatStart>compEnd&&heatEnd>heatStart);
+  const complete=dashboardCssSource.slice(compStart,compEnd);
+  const heatmap=dashboardCssSource.slice(heatStart,heatEnd);
+  assert.match(complete,/\.dashboard-completeness-wrap\{overflow-x:auto;overscroll-behavior-x:contain\}/);
+  assert.match(complete,/\.dashboard-completeness\{width:max-content;min-width:760px;table-layout:auto;font-size:12px\}/);
+  assert.match(complete,/\.dashboard-completeness thead th\{font-size:11px/);
+  assert.match(complete,/\.dashboard-completeness tbody th strong\{font-size:12px/);
+  assert.match(complete,/\.dashboard-completeness tbody th small\{font-size:10\.5px/);
+  assert.match(complete,/\.dashboard-completeness td\{font-size:12px/);
+  assert.match(complete,/\.dashboard-completeness td button\{width:100%;min-width:44px;min-height:44px/);
+  assert.doesNotMatch(complete,/overflow-x:hidden|table-layout:fixed|font-size:[6789]px|th:nth-child/);
+  assert.match(heatmap,/\.dashboard-heatmap-wrap\{overflow-x:auto;overscroll-behavior-x:contain\}/);
+  assert.match(heatmap,/\.dashboard-heatmap\{width:max-content;min-width:900px;table-layout:auto;font-size:12px\}/);
+  assert.match(heatmap,/\.dashboard-heatmap-region-head\{height:auto;min-width:80px;writing-mode:horizontal-tb/);
+  assert.match(heatmap,/\.dashboard-heatmap tbody th strong\{font-size:12px/);
+  assert.match(heatmap,/\.dashboard-heatmap tbody td>strong,\.dashboard-heatmap tfoot td>strong\{font-size:12px\}/);
+  assert.match(heatmap,/\.dashboard-heatmap-key\{align-items:flex-start;gap:6px 9px;font-size:11px/);
+  assert.doesNotMatch(heatmap,/overflow-x:hidden|writing-mode:vertical-rl|font-size:[6789]px/);
+  assert.match(dashboardCssSource,/\.dashboard-timeline\{max-height:360px;overflow:auto;overscroll-behavior:contain;padding-right:4px\}/);
+  assert.match(dashboardSource,/timeline\.entries\.map\(recentTimelineEntry\)/);
 });
-
 
 test("Source Freshness separates intrinsic source timestamps from browser read timestamps", () => {
   const freshness=model.buildSourceFreshness({
