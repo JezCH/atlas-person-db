@@ -65,6 +65,8 @@ test("UI-07 mobile compare touch target is at least 44px, with one CSS and JS ca
   assert.match(nav,/atlas-person-spacetime-compare-crosslink\.css\?v=20261120-ui07-spacetime-v1&ui07touch=20261120-44px-v1/);
   assert.match(html,/atlas-main-authority-nav\.js\?v=[^"]+&ui07touch=20261120-44px-v1/);
   assert.match(journey,/click\.width>=44&&click\.height>=44/);
+  assert.match(journey,/document\.elementFromPoint/);
+  assert.match(journey,/Input\.dispatchMouseEvent/);
   assert.match(journey,/row\.second\.top>=row\.first\.bottom-1/);
   assert.match(journey,/row\.bodyWidth<=392/);
 });
