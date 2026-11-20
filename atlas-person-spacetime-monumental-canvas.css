@@ -301,6 +301,11 @@
   opacity: .82;
 }
 
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-label-connector.is-selected {
+  background: var(--spacetime-selection-metal-strong);
+  opacity: 1;
+}
+
 /* Domain color is strongest on the temporal rail. Selection adds neutral metal
  * around the rail; it never replaces a governance/military/etc identity color. */
 .spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-track-rail {
