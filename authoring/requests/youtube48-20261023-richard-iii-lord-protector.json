@@ -41,9 +41,15 @@
   "sources": [
     {
       "source_type": "web_bibliographic_reference",
-      "title": "The Royal Family — Richard III",
-      "canonical_url": "https://www.royal.uk/richard-iii",
-      "citation_text": "Richard (Duke of Gloucester) served as Lord Protector for his young nephew Edward V in 1483 before becoming King Richard III in June. This earlier protectorship was a distinct government office, not the same reign as his 1483–1485 kingship. Exact month/day not asserted until independent official evidence confirms."
+      "title": "The Royal Family — Edward V (Protector Richard, Duke of Gloucester)",
+      "canonical_url": "https://www.royal.uk/edward-v",
+      "citation_text": "The Royal Family's Edward V biography states that Edward V was a minor and that Richard, Duke of Gloucester, was made Protector by Edward IV's will, before Richard took the throne in mid-June 1483. This source supports the earlier Lord Protector office rather than using Richard III's kingly biography as a substitute."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "The National Archives — Richard III: From Protector to King, 1483",
+      "canonical_url": "https://www.nationalarchives.gov.uk/explore-the-collection/stories/richard-iii/",
+      "citation_text": "UK National Archives records Richard, Duke of Gloucester, exercising the protectorship under Edward V in spring/June 1483, before becoming King Richard III. Its archival exhibition includes Edward V and Gloucester's signatures on a June 1483 warrant and contemporary material. Protector and King are distinct offices; no exact appointment day is inferred here."
     }
   ],
   "external_references": {
