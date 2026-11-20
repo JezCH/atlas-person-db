@@ -20,6 +20,7 @@ test('Place evidence delta retains the original immutable fact and Source identi
   assert.equal(handoff.cases.length, expected.size);
   for (const entry of handoff.cases) {
     assert.equal(entry.source_id, expected.get(entry.fact_index));
+    expected.delete(entry.fact_index);
     assert.ok(entry.historical_claim.function_type === 'capital');
     assert.ok(Number.isInteger(entry.historical_claim.start_year));
     assert.ok(entry.historical_claim.end_year == null || entry.historical_claim.end_year >= entry.historical_claim.start_year);
@@ -33,6 +34,7 @@ test('Place evidence delta retains the original immutable fact and Source identi
       assert.ok(evidence.supports.length >= 20);
     }
   }
+  assert.equal(expected.size, 0);
 });
 
 test('Place evidence never turns bibliographic search or chronology ambiguity into authorized canonical writes', () => {
@@ -88,3 +90,4 @@ test('Cairo evidence corroborates capital at year granularity without authorizin
   assert.equal(handoff.production_mutation_authorized,false);
   assert.deepEqual(handoff.operations,[]);
 });
+
