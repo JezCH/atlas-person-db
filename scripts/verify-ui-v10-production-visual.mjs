@@ -208,6 +208,21 @@ async function collectMain(client){
     const medianActivityWidthRatio=median(centerSamples.map((sample)=>sample.widthRatio));
     const medianIdentityWidthRatio=median(centerSamples.map((sample)=>sample.identityWidthRatio));
     const medianActivityToIdentityRatio=median(centerSamples.map((sample)=>sample.activityToIdentityRatio));
+    const mobileTypographySamples=ordinaryRows.slice(0,15).map((row)=>{
+      const font=(selector)=>Number.parseFloat(style(row.querySelector(selector))?.fontSize||"0")||0;
+      const identity=row.querySelector(".person-register-identity")?.getBoundingClientRect?.();
+      const activities=row.querySelector(".person-register-activities")?.getBoundingClientRect?.();
+      const rowRect=row.getBoundingClientRect();
+      return {
+        namePx:font(".person-table-identity > strong"),
+        polityPx:font(".person-card-activity-head b"),
+        rolePx:font(".person-card-activity-role"),
+        rangePx:font(".person-register-range"),
+        periodPx:font(".person-card-activity-period"),
+        stacked:Boolean(identity&&activities&&activities.top>=identity.bottom-2),
+        activityRightDelta:activities?Math.abs(rowRect.right-activities.right):null
+      };
+    });
     const personRowSurfaceSamples=rows.slice(0,5).map((row)=>{
       const computed=style(row);
       return {classes:String(row.className),border_radius:computed?.borderRadius,box_shadow:computed?.boxShadow,background:computed?.backgroundColor,selector_matches:{monumental:!!row.closest(".person-monumental-register"),era_rows:!!row.closest(".person-era-rows")}};
@@ -252,6 +267,7 @@ async function collectMain(client){
       multiActivityCount:multiRows.length,
       ordinaryMedianHeight:median(ordinaryHeights),
       ordinarySampleHeights:ordinaryHeights,
+      mobileTypographySamples,
       centerCoverageRate,
       medianActivityWidthRatio,
       medianIdentityWidthRatio,
@@ -620,20 +636,26 @@ async function main(){
     assert(mobileMain.cardLikeCount===0,"Mobile Person rows regressed toward card geometry",mobileMain);
     assert(mobileMain.quietCountVisible===0,"Mobile ordinary rows expose Activity-count noise",mobileMain);
     assert(mobileMain.activityDomIntegrity,"Mobile multi-Activity DOM lost Activity information",mobileMain);
-    assert(mobileMain.ordinaryMedianHeight!=null&&mobileMain.ordinaryMedianHeight>=30&&mobileMain.ordinaryMedianHeight<=56,
-      "Mobile Person Register left the intended breathing-density band",mobileMain);
+    assert(mobileMain.ordinaryMedianHeight!=null&&mobileMain.ordinaryMedianHeight>=52&&mobileMain.ordinaryMedianHeight<=128,
+      "Mobile Person Register no longer reserves enough room to read its actual facts",mobileMain);
+    assert(mobileMain.mobileTypographySamples?.length>=5
+      && mobileMain.mobileTypographySamples.every((item)=>
+        item.namePx>=16&&item.polityPx>=12&&item.rolePx>=11.5
+        &&item.rangePx>=11.5&&item.periodPx>=11.5
+        &&item.stacked&&item.activityRightDelta<=1.5),
+      "Mobile Person name/Polity/Role/chronology must be readable, stacked and aligned",mobileMain.mobileTypographySamples);
     assert(/linear-gradient/i.test(mobileMain.firstDomainBackgroundImage||""),
       "Mobile Person domain wash is not rendered",mobileMain);
     assert(mobileMain.centerCoverageRate!=null&&mobileMain.centerCoverageRate>=0.8,
       "Mobile Person factual Activity column no longer occupies the visual center",mobileMain);
-    assert(mobileMain.medianActivityWidthRatio!=null&&mobileMain.medianActivityWidthRatio>=0.24,
-      "Mobile Person factual Activity column became too narrow and reopened center whitespace",mobileMain);
-    assert(mobileMain.medianIdentityWidthRatio!=null&&mobileMain.medianIdentityWidthRatio>=0.32,
-      "Mobile Person identity column is still too narrow",mobileMain);
+    assert(mobileMain.medianActivityWidthRatio!=null&&mobileMain.medianActivityWidthRatio>=0.88,
+      "Mobile Person Activity data must occupy its own legible full-width second row",mobileMain);
+    assert(mobileMain.medianIdentityWidthRatio!=null&&mobileMain.medianIdentityWidthRatio>=0.58,
+      "Mobile Person identity must retain the majority of its first factual line",mobileMain);
     assert(mobileMain.medianActivityToIdentityRatio!=null
-      &&mobileMain.medianActivityToIdentityRatio>=0.75
-      &&mobileMain.medianActivityToIdentityRatio<=1.15,
-      "Mobile Person identity and Activity columns are no longer balanced",mobileMain);
+      &&mobileMain.medianActivityToIdentityRatio>=1.30
+      &&mobileMain.medianActivityToIdentityRatio<=1.85,
+      "Mobile Person identity first line and Activity full-width second line are misaligned",mobileMain);
 
     const mobileMultiActivity=await verifyMultiActivityVisibility(client);
     assert(mobileMultiActivity&&mobileMultiActivity.declared===mobileMultiActivity.total&&mobileMultiActivity.total>1,
@@ -650,9 +672,9 @@ async function main(){
       &&mobileMultiActivity.periodRightDeltas.every((delta)=>delta<=1.5),
       "Mobile multi-Activity periods are not aligned to the ordinary chronology edge",mobileMultiActivity);
     assert(mobileMultiActivity.activityHeights.length===mobileMultiActivity.total
-      &&mobileMultiActivity.activityHeights.every((height)=>height>=34),
+      &&mobileMultiActivity.activityHeights.every((height)=>height>=44),
       "Mobile multi-Activity rows compress individual polity Activities below the standard row rhythm",mobileMultiActivity);
-    assert(mobileMultiActivity.rowHeight!=null&&mobileMultiActivity.rowHeight>=mobileMultiActivity.total*34,
+    assert(mobileMultiActivity.rowHeight!=null&&mobileMultiActivity.rowHeight>=mobileMultiActivity.total*44,
       "Mobile multi-Activity Person height is no longer driven by visible polity Activity count",mobileMultiActivity);
 
     await screenshot(client,"person-main-390x844.png");
