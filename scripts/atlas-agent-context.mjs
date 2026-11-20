@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { relativeSpecifiers } from './atlas-agent-dependency-map.mjs';
 
 const MAX_QUERY = 120;
 const SOURCE_SCOPES = ['scripts', 'server', 'api', 'tests', 'db', 'config', 'atlas-*.js'];
@@ -48,13 +49,9 @@ function declarations(text) {
   return out;
 }
 function imports(text) {
-  const result = new Set();
-  const regex = /(?:\bfrom\s*|\bimport\s*\(\s*|\brequire\s*\(\s*)['"](\.{1,2}\/[^'"\s)]+)['"]/g;
-  for (const match of text.matchAll(regex)) {
-    result.add(match[1]);
-    if (result.size >= 18) break;
-  }
-  return [...result];
+  // Share the comment/string/template-aware static import scanner with the
+  // dependency map. Lexical hints must not manufacture source edges.
+  return relativeSpecifiers(text).slice(0,18);
 }
 function excerpts(text, query) {
   const lines = text.split('\n');

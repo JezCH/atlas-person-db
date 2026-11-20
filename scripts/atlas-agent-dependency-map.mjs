@@ -25,27 +25,39 @@ function safeFile(root,name){
   try{return fs.realpathSync(full)===full&&fs.statSync(full).isFile()&&fs.statSync(full).size<=MAX_BYTES}
   catch{return false}
 }
-function blank(c){return c==='\n'?'\n':' '}
 export function codeMask(source){
-  let out='',state='code',escaped=false;
+  let out = "";
+  const stack = [{type:"code"}];
   for(let i=0;i<source.length;i++){
-    const c=source[i],next=source[i+1];
-    if(state==='code'){
-      if(c==='/'&&next==='/'){out+='  ';i++;state='line';continue}
-      if(c==='/'&&next==='*'){out+='  ';i++;state='block';continue}
-      if(c==='"'||c==="'"||c.charCodeAt(0)===96){out+=' ';state=c;escaped=false;continue}
+    const c=source[i],next=source[i+1],state=stack[stack.length-1];
+    const blank=ch=>ch==="\n"?"\n":" ";
+    if(state.type==="code"||state.type==="interpolation"){
+      if(c==="/"&&next==="/"){out+="  ";i++;stack.push({type:"line"});continue;}
+      if(c==="/"&&next==="*"){out+="  ";i++;stack.push({type:"block"});continue;}
+      if(c==="'"||c==='"'){out+=" ";stack.push({type:"quote",quote:c,escaped:false});continue;}
+      if(c==="`"){out+=" ";stack.push({type:"template",escaped:false});continue;}
+      if(state.type==="interpolation"){
+        if(c==="{"){state.depth++;out+=c;continue;}
+        if(c==="}"){state.depth--;out+=state.depth===0?" ":c;if(state.depth===0)stack.pop();continue;}
+      }
       out+=c;continue;
     }
-    if(state==='line'){out+=blank(c);if(c==='\n')state='code';continue}
-    if(state==='block'){
-      if(c==='*'&&next==='/'){out+='  ';i++;state='code'}
-      else out+=blank(c);
+    if(state.type==="line"){out+=blank(c);if(c==="\n")stack.pop();continue;}
+    if(state.type==="block"){if(c==="*"&&next==="/"){out+="  ";i++;stack.pop();}else out+=blank(c);continue;}
+    if(state.type==="template"){
+      if(state.escaped){out+=blank(c);state.escaped=false;continue;}
+      if(c==="\\"){out+=" ";state.escaped=true;continue;}
+      if(c==="$"&&next==="{"){out+="  ";i++;stack.push({type:"interpolation",depth:1});continue;}
+      out+=blank(c);
+      if(c==="`")stack.pop();
       continue;
     }
-    out+=blank(c);
-    if(escaped){escaped=false;continue}
-    if(c==='\\'){escaped=true;continue}
-    if(c===state)state='code';
+    if(state.type==="quote"){
+      out+=blank(c);
+      if(state.escaped){state.escaped=false;continue;}
+      if(c==="\\"){state.escaped=true;continue;}
+      if(c===state.quote)stack.pop();
+    }
   }
   return out;
 }
@@ -81,6 +93,10 @@ export function relativeSpecifiers(source){
   const mask=codeMask(source),result=new Set();
   for(const match of mask.matchAll(/\b(?:import|require|from)\b/g)){
     const token=match[0],i=match.index;
+    // Member helpers (including optional chaining) are not module imports.
+    let previous=i-1;
+    while(previous>=0&&/\s/.test(mask[previous]))previous--;
+    if(mask[previous]==='.')continue;
     if(token==='from'){
       const prefix=mask.slice(Math.max(0,i-320),i).split(';').pop();
       if(!/\b(?:import|export)\b/.test(prefix))continue;

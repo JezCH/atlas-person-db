@@ -48,3 +48,13 @@ test('rejects outside paths and excessive traversal depth',t=>{
     assert.throws(()=>analyzeDependencies({root,target}),/TARGET|NOT_TRACKED/);
   assert.throws(()=>analyzeDependencies({root,target:'scripts/a.mjs',depth:99}),/OPTIONS/);
 });
+
+test('captures literal dependencies in nested template interpolation but not template text',()=>{
+  const source="const literal = `import('./decoy.js')`;\nconst direct = `${import('./live.mjs')}`;\nconst nested = `${`inner ${require('./nested.cjs')}`}`;\nconst escaped = `\\${import('./escaped.js')}`;\nconst object = `${ {flag: true, loader: import('./object.js')} }`;\nconst quoted = \"require('./string.js')\";";
+  assert.deepEqual(relativeSpecifiers(source).sort(),['./live.mjs','./nested.cjs','./object.js'].sort());
+  assert.equal(codeMask(source).length,source.length);
+});
+test('does not treat object require/import methods as module dependencies',()=>{
+  const source="loader.require('./fake.js');\nloader /*comment*/ . require('./fake2.js');\nservice?.import('./fake3.js');\nrequire('./real.cjs');\nconst lazy=import('./live.js');";
+  assert.deepEqual(relativeSpecifiers(source).sort(),['./real.cjs','./live.js'].sort());
+});

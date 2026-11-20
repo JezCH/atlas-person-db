@@ -47,3 +47,16 @@ test('no match does not invent evidence; invalid queries are rejected',t=>{
   assert.throws(()=>buildContext({root,query:''}),/QUERY_REQUIRED/);
   assert.throws(()=>buildContext({root,query:'foo\nbar'}),/QUERY_REQUIRED/);
 });
+
+test('targeted context reports real static imports and rejects phantom string/comment edges',t=>{
+  const root=fs.mkdtempSync(path.join(os.tmpdir(),'atlas-agent-context-import-'));
+  t.after(()=>fs.rmSync(root,{recursive:true,force:true}));
+  run(root,'init','-q');
+  fs.mkdirSync(path.join(root,'scripts'),{recursive:true});
+  fs.writeFileSync(path.join(root,'scripts','sample.mjs'),"// require('./phantom.mjs')\nconst decoy = \"require('./string.mjs')\";\nimport /* actual dependency */ './actual.mjs';\nconst expression = `${import('./template.mjs')}`;\nexport const marker = true;\n");
+  run(root,'add','.');
+  run(root,'-c','user.name=ATLAS Test','-c','user.email=test@example.invalid','commit','-qm','fixture');
+  const result=buildContext({root,query:'marker'});
+  assert.equal(result.matching_files,1);
+  assert.deepEqual(result.files[0].relative_imports,['./actual.mjs','./template.mjs']);
+});
