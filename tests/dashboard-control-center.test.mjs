@@ -1042,7 +1042,7 @@ test("Dashboard follows operator priority from work status through analysis to s
 
 test("mobile Dashboard keeps full Era × Region and Completeness facts readable through contained horizontal scrolling", () => {
   const compStart=dashboardCssSource.indexOf("/* VIS-04: six factual completeness columns");
-  const compEnd=dashboardCssSource.indexOf(".dashboard-kpi-action{position:relative}",compStart);
+  const compEnd=dashboardCssSource.indexOf(".dashboard-kpi-action{position:relative;",compStart);
   const heatStart=dashboardCssSource.indexOf("/* VIS-04: preserve all reviewed Era × Region values");
   const heatEnd=dashboardCssSource.indexOf("/* Polity concentration */",heatStart);
   assert.ok(compStart>0&&compEnd>compStart&&heatStart>compEnd&&heatEnd>heatStart);
