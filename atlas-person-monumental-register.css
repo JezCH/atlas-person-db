@@ -652,10 +652,27 @@
   display: none;
 }
 
-/* Ordinary desktop rows retain the compact scan rhythm with the larger labels. */
+/* VIS-01 density regression: actual 1600px Chrome measured 61.38px ordinary
+ * row height after the font enlargement, above the 56px factual scan gate.
+ * Keep 17.5px Person names and 12–13px historical facts; reclaim vertical
+ * height only from the three identity text line boxes, extra flex gap and
+ * status margin. Multi-Activity rows, all facts and mobile layout are intact. */
 @media (min-width: 1101px) {
   .person-monumental-register .person-register-entry:not(.has-multiple-activities) {
     padding-block: 2px;
+  }
+  .person-monumental-register .person-register-entry:not(.has-multiple-activities) .person-table-identity {
+    gap: 1px;
+  }
+  .person-monumental-register .person-register-entry:not(.has-multiple-activities) .person-table-identity > strong {
+    line-height: 1.16;
+  }
+  .person-monumental-register .person-register-entry:not(.has-multiple-activities) .person-table-identity > .person-card-canonical {
+    line-height: 1.2;
+  }
+  .person-monumental-register .person-register-entry:not(.has-multiple-activities) .person-table-status-inline {
+    margin-top: 0;
+    line-height: 1.2;
   }
 }
 

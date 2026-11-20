@@ -54,10 +54,13 @@ test("UI P4 leaves compact Person Register geometry to one canonical mobile owne
   assert.match(view, /person-register-count/);
 });
 
-test("UI V8 keeps Detail rich on mobile while centering the portrait-first hero", () => {
+test("UI V8 keeps real portraits ahead of identity, but absent portraits yield to historical facts", () => {
   const css = read("atlas-ui-mobile-v8.css");
+  const chronicle = read("atlas-person-chronicle-detail.css");
 
-  assert.match(css, /Detail: portrait first, identity second, then editorial chronology/);
+  assert.ok(css.includes("A real portrait leads; the existing Chronicle no-portrait rule"));
+  assert.ok(chronicle.includes(".person-detail-portrait:not(.has-portrait)"));
+  assert.match(chronicle, /\.person-detail-portrait:not\(\.has-portrait\)\s*\{[\s\S]*?order: 2;/);
   assert.match(css, /#personMainDetail\.person-main-detail \{[\s\S]*?width: calc\(100vw - 8px\)/);
   assert.match(css, /\.person-chronicle-hero \.person-detail-portrait \{\n    width: min\(248px, 70vw\)/);
   assert.match(css, /\.person-chronicle-identity \{\n    text-align: center;/);

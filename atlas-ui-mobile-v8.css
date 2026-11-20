@@ -272,7 +272,8 @@
    * atlas-person-monumental-register.css. This later mobile shell layer does
    * not redeclare Person row, Activity, count, or identity geometry. */
 
-  /* Detail: portrait first, identity second, then editorial chronology. */
+  /* A real portrait leads; the existing Chronicle no-portrait rule puts identity
+   * first and collapses the empty figure. Keep all factual text readable. */
   #personMainDetail.person-main-detail {
     top: 58px;
     right: 4px;
@@ -316,12 +317,12 @@
 
   .person-detail-canonical {
     margin-top: 6px;
-    font-size: 10px;
+    font-size: 12px;
   }
 
   .person-detail-era {
     margin-top: 14px;
-    font-size: 12px;
+    font-size: 13px;
   }
 
   .person-detail-domain {
@@ -332,7 +333,8 @@
   .person-detail-status {
     justify-content: center;
     margin-top: 11px;
-    font-size: 7.5px;
+    font-size: 12px;
+    line-height: 1.45;
   }
 
   .person-chronicle-section.person-detail-section {
@@ -345,8 +347,8 @@
   }
 
   .person-chronicle-section .person-description p {
-    font-size: 11px;
-    line-height: 1.68;
+    font-size: 13px;
+    line-height: 1.6;
   }
 
   .person-chronicle-activities .person-activity-list {
