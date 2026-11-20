@@ -61,8 +61,8 @@ test("subregion context remains available across the widened range", () => {
 });
 
 test("desktop sidecar stays compact and expands the inspector only when populated", () => {
-  assert.match(css, /\.spacetime-sidecar\{display:grid;gap:8px;min-width:0;align-self:start;position:sticky;top:8px;max-height:clamp\(480px,62vh,720px\);overflow:hidden\}/);
-  assert.match(css, /\.spacetime-sticky-inspector:not\(\.is-empty\)\{max-height:calc\(clamp\(480px,62vh,720px\) - 148px\)\}/);
+  assert.match(css, /\.spacetime-sidecar\{display:grid;gap:8px;min-width:0;align-self:start;position:sticky;top:8px;max-height:clamp\(540px,72vh,840px\);overflow:hidden\}/);
+  assert.match(css, /\.spacetime-sticky-inspector:not\(\.is-empty\)\{max-height:calc\(clamp\(540px,72vh,840px\) - 148px\)\}/);
   assert.match(css, /\.spacetime-sticky-inspector\.is-empty\{min-height:0;max-height:76px;padding:9px 10px/);
   assert.match(css, /\.spacetime-minimap-surface\{[^}]*height:112px/);
   assert.match(css, /\.spacetime-sidecar\{position:relative;top:auto;max-height:none;overflow:visible\}/);
@@ -97,8 +97,8 @@ test("spacetime top chrome keeps compact controls and moves precision guidance b
 
 test("the timeline remains a map-like camera viewport", () => {
   assert.match(css, /\.spacetime-scroll\{[^}]*overflow:auto/);
-  assert.match(css, /height:clamp\(480px,62vh,720px\)/);
-  assert.match(css, /max-height:720px/);
+  assert.match(css, /height:clamp\(540px,72vh,840px\)/);
+  assert.match(css, /max-height:840px/);
   assert.match(css, /overscroll-behavior:contain/);
 });
 
