@@ -461,6 +461,13 @@ async function openFirstDetail(client){
       heroRect:rect(hero),
       portraitRect:rect(portrait),
       portraitCount:qa('#personMainDetail .person-detail-portrait').length,
+      hasPortrait:Boolean(portrait?.classList.contains('has-portrait')),
+      portraitStatusText:(portrait?.querySelector('.person-detail-portrait-state')?.textContent||'').trim(),
+      portraitStatusVisible:portrait ? getComputedStyle(portrait.querySelector('.person-detail-portrait-state')).display!=='none' : false,
+      identityRect:rect(q('#personMainDetail .person-chronicle-identity')),
+      statusFontPx:Number.parseFloat(getComputedStyle(q('#personMainDetail .person-detail-status')).fontSize),
+      descriptionFontPx:q('#personMainDetail .person-description p')
+        ? Number.parseFloat(getComputedStyle(q('#personMainDetail .person-description p')).fontSize) : null,
       activityCount:qa('#personMainDetail .person-chronicle-activity').length,
       sectionCount:qa('#personMainDetail .person-chronicle-section').length,
       authoringPresent:Boolean(q('#personMainDetail .person-detail-authoring')),
@@ -505,6 +512,20 @@ async function verifyMobileTwoPersonComparison(client) {
   await waitFor(client,
     "document.querySelectorAll('#personComparePanel .atlas-compare-person').length === 2 && Boolean(document.querySelector('#personComparePanel .atlas-compare-period-analysis'))",
     65000);
+  // Before the legacy inspector helper dismisses the detail and scrolls
+  // manually, prove that the actual second Person click focused its result.
+  const completedFocus=await evaluateUi07(client,()=>{
+    const panel=document.querySelector("#personComparePanel");
+    return {
+      activeId:document.activeElement?.id||null,
+      panelVisible:Boolean(panel?.isConnected&&!panel.hidden),
+      panelTabindex:panel?.getAttribute("tabindex")||null,
+      personCount:panel?.querySelectorAll(".atlas-compare-person").length||0
+    };
+  });
+  assert(completedFocus.panelVisible&&completedFocus.activeId==="personComparePanel"
+    &&completedFocus.panelTabindex==="-1"&&completedFocus.personCount===2,
+    "UI-07 completed mobile comparison must focus its real result before any test-initiated scroll",completedFocus);
   await evaluateUi07(client,()=>{
     const close=document.querySelector(".person-detail-overlay-close");
     if(close && getComputedStyle(close).display!=="none")close.click();
@@ -547,7 +568,7 @@ async function verifyMobileTwoPersonComparison(client) {
     return document.querySelector("#personComparePanel")?.hidden===true;
   });
   assert(closed,"Comparison close did not restore the reader");
-  return {selected,view,closePassed:closed};
+  return {selected,completedFocus,view,closePassed:closed};
 }
 
 async function main(){
@@ -743,7 +764,24 @@ async function main(){
     const mobileDetail=await openFirstDetail(client);
     assert(!mobileDetail.panelHidden&&mobileDetail.portraitCount===1,"Person Detail portrait contract failed on mobile",mobileDetail);
     assert(mobileDetail.panelRect?.left>=-1&&mobileDetail.panelRect?.right<=391,"Person Detail escapes mobile viewport",mobileDetail);
-    assert(mobileDetail.portraitRect?.width>=220&&mobileDetail.portraitRect?.width<=260,"Mobile Detail portrait left reviewed range",mobileDetail);
+    // Registered historical portraits remain 4:5; no-portrait dossiers were
+    // deliberately changed in #2762 to present Person identity before a short
+    // visible "not registered" status, rather than a 230px empty image.
+    if(mobileDetail.hasPortrait){
+      assert(mobileDetail.portraitRect?.width>=220&&mobileDetail.portraitRect?.width<=260,
+        "Real registered portrait must retain its reviewed mobile 4:5 width",mobileDetail);
+    } else {
+      assert(mobileDetail.portraitRect?.height>0&&mobileDetail.portraitRect?.height<=45
+        &&mobileDetail.portraitRect?.width<200,
+        "Empty portrait must not consume an image-sized first mobile screen",mobileDetail);
+      assert(mobileDetail.identityRect?.top<mobileDetail.portraitRect.top,
+        "Person identity must appear before empty-portrait status on mobile",mobileDetail);
+      assert(mobileDetail.portraitStatusVisible&&/초상화 (미등록|조회 실패)/.test(mobileDetail.portraitStatusText),
+        "Missing-portrait factual status must remain visible",mobileDetail);
+    }
+    assert(mobileDetail.statusFontPx>=11.5
+      &&(mobileDetail.descriptionFontPx===null||mobileDetail.descriptionFontPx>=13),
+      "Actual mobile Person factual text is still microscopic",mobileDetail);
     await screenshot(client,"person-detail-390x844.png");
     const mobileComparison=await verifyMobileTwoPersonComparison(client);
     console.log("ATLAS_UI07_PRODUCTION_MOBILE_COMPARISON_PASS");
