@@ -510,6 +510,23 @@
       }, "", window.location.href);
     }
   });
+  window.addEventListener("atlas-spacetime-compare-persons", (event) => {
+    if (currentDomain !== "spacetime" || !window.ATLAS_PERSON_MAIN?.openComparison) return;
+    const ids = event?.detail?.personIds;
+    if (!Array.isArray(ids) || ids.length !== 2) return;
+    const [firstPersonId, secondPersonId] = ids.map((id) => routeModel.normalizeUuid?.(id) || null);
+    const fromRoute = parseRoute(window.location.hash);
+    if (!firstPersonId || !secondPersonId || firstPersonId === secondPersonId
+      || fromRoute.domain !== "spacetime" || fromRoute.entity_id !== firstPersonId) return;
+    window.ATLAS_PERSON_SPACETIME_VIEW?.persistExplorationState?.();
+    explorationReturnHash = fromRoute.canonical_hash;
+    if (!showEntity("persons", "person", firstPersonId)) return;
+    const base = history.state && typeof history.state === "object" ? history.state : {};
+    history.replaceState({ ...base, atlasSpacetimeReturnV1: {
+      routeHash: fromRoute.canonical_hash, personId: firstPersonId
+    } }, "", window.location.href);
+    window.ATLAS_PERSON_MAIN.openComparison([firstPersonId, secondPersonId]);
+  });
   window.addEventListener("atlas-person-return-to-exploration", () => {
     if (currentDomain !== "persons" || !explorationReturnHash) return;
     history.back();
