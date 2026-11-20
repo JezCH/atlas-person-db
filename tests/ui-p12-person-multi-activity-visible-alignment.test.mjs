@@ -20,8 +20,8 @@ test("P12 makes multi-Activity mobile rows use the same Person columns as ordina
   const mobileStart=register.indexOf("@media (max-width: 760px)");
   const narrowStart=register.indexOf("@media (max-width: 340px)");
   const mobile=register.slice(mobileStart,narrowStart);
-  assert.match(mobile,/grid-template-columns: minmax\(118px, 1\.05fr\) minmax\(0, 1fr\) auto/);
-  assert.match(mobile,/grid-template-areas: "identity activities range"/);
+  assert.match(register.slice(register.indexOf("/* UI-01 P0")),/grid-template-columns: minmax\(0, 1fr\) minmax\(0, 34%\)/);
+  assert.match(register.slice(register.indexOf("/* UI-01 P0")),/grid-template-areas:\s*"identity range"\s*"activities activities"/);
   assert.doesNotMatch(mobile,/identity activities range count|--atlas-person-mobile-count-width/);
   assert.match(mobile,/\.person-register-count \{\s*display: none;/s);
 });
@@ -31,7 +31,7 @@ test("P12 aligns every multi-Activity period to the ordinary chronology edge",()
   const narrowStart=register.indexOf("@media (max-width: 340px)");
   const mobile=register.slice(mobileStart,narrowStart);
   assert.match(mobile,/has-multiple-activities \.person-register-range \{\s*display: none;/s);
-  assert.match(mobile,/has-multiple-activities \.person-register-activities \{\s*grid-column: 2 \/ 4;\s*grid-row: 1;/s);
+  assert.match(register.slice(register.indexOf("/* UI-01 P0")),/has-multiple-activities \.person-register-activities \{[\s\S]*?grid-column: 1 \/ -1;\s*grid-row: 2;/s);
   assert.match(mobile,/\.person-card-activity-period \{[\s\S]*?margin-left: auto;[\s\S]*?text-align: right;/s);
   assert.match(verifier,/periodRightDeltas/);
   assert.match(verifier,/activityAreaRightDelta<=1\.5/);

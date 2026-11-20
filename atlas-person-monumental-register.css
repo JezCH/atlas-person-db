@@ -1194,3 +1194,132 @@
     transition: none;
   }
 }
+
+
+/* UI-01 P0 — factual two-line mobile register, from 2026-11-20 user feedback.
+ * Replaces the cramped name/polity/date three-column presentation at <=760px.
+ * Flat register rows, complete source-backed Activity data and era groupings
+ * remain; long names and chronology wrap within their own cells, never clip. */
+@media (max-width: 760px) {
+  .person-monumental-register .person-era-rows > .person-card,
+  .person-monumental-register .person-register-entry {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 34%);
+    grid-template-areas:
+      "identity range"
+      "activities activities";
+    align-items: start;
+    column-gap: 10px;
+    row-gap: 4px;
+    padding-block: 9px;
+    min-width: 0;
+  }
+
+  .person-monumental-register .person-register-identity,
+  .person-monumental-register .person-table-identity {
+    grid-area: identity;
+    min-width: 0;
+    padding-inline-end: 0;
+  }
+  .person-monumental-register .person-table-identity > strong {
+    font-size: 16.5px;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+  }
+  .person-monumental-register .person-register-range {
+    grid-area: range;
+    justify-self: end;
+    min-width: 0;
+    max-width: 100%;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.35;
+    text-align: end;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .person-monumental-register .person-register-activities,
+  .person-monumental-register .person-register-entry.has-multiple-activities .person-register-activities {
+    grid-area: activities;
+    grid-column: 1 / -1;
+    grid-row: 2;
+    min-width: 0;
+    padding: 0 0 0 11px;
+  }
+  .person-monumental-register .person-register-entry.has-multiple-activities {
+    grid-template-areas:
+      "identity identity"
+      "activities activities";
+    padding-block: 5px;
+  }
+  .person-monumental-register .person-register-entry.has-multiple-activities .person-register-identity {
+    padding-block: 6px 3px;
+  }
+  .person-monumental-register .person-register-entry.has-multiple-activities .person-card-activity,
+  .person-monumental-register .person-register-entry.has-multiple-activities .person-card-activity + .person-card-activity {
+    min-height: 44px;
+    padding-block: 7px;
+  }
+  .person-monumental-register .person-table-activities .person-card-activity {
+    min-width: 0;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: 7px;
+    row-gap: 2px;
+    padding-block: 2px;
+  }
+  .person-monumental-register .person-card-activity-head {
+    min-width: 0;
+    flex: 0 1 auto;
+    flex-wrap: wrap;
+  }
+  .person-monumental-register .person-table-activities .person-card-activity-head b {
+    font-size: 12.5px;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+  }
+  .person-monumental-register .person-table-activities .person-card-activity-role {
+    flex: 0 1 auto;
+    min-width: 0;
+    color: #c3c6c0;
+    font-size: 12px;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+  }
+  .person-monumental-register .person-table-activities .person-card-activity-period {
+    flex: 0 1 auto;
+    margin-left: auto;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    color: #c9c3b9;
+    font-size: 12px;
+    line-height: 1.35;
+    text-align: end;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    font-variant-numeric: tabular-nums;
+  }
+  .person-monumental-register .person-relation-badge {
+    color: #adb7bc;
+    font-size: 11px;
+    line-height: 1.35;
+  }
+  .person-monumental-register .person-table-activities .person-card-activity > small {
+    flex-basis: 100%;
+    font-size: 11px;
+    line-height: 1.35;
+  }
+  .person-monumental-register .person-era-band > span {
+    font-size: 12px;
+  }
+  .person-monumental-register .person-era-band-range {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 340px) {
+  .person-monumental-register .person-era-rows > .person-card,
+  .person-monumental-register .person-register-entry {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 38%);
+    column-gap: 6px;
+  }
+}
