@@ -654,13 +654,17 @@ async function main() {
     await waitFor(client, "Boolean(document.querySelector('#spacetimeInspector:not(.is-empty)'))", 10000);
     await waitFor(client, "document.querySelectorAll('[data-spacetime-inspector-activity]').length > 0", 10000);
 
-    const activitySelected = await evaluate(client, `(() => {
+    const activityFocus = await evaluate(client, `(() => {
       const button=[...document.querySelectorAll('[data-spacetime-inspector-activity]')].find((el)=>!el.disabled);
-      if (!button) return false;
-      button.click();
-      return true;
+      if (!button) return null;
+      button.focus();
+      if (document.activeElement !== button) return null;
+      return { person:button.dataset.spacetimePerson, activity:button.dataset.spacetimeInspectorActivity };
     })()`);
-    assert(activitySelected, "No inspectable Activity was available for interaction acceptance");
+    assert(activityFocus?.person && activityFocus?.activity, "No focusable Inspector Activity was available");
+    const activation = { key:" ", code:"Space", windowsVirtualKeyCode:32 };
+    await client.call("Input.dispatchKeyEvent", { ...activation, type:"keyDown" });
+    await client.call("Input.dispatchKeyEvent", { ...activation, type:"keyUp" });
     await waitFor(client, "Boolean(document.querySelector('.spacetime-meanwhile-line.is-activity-linked'))", 10000);
     await waitFor(client, "Boolean(document.querySelector('#spacetimeInspector output'))", 10000);
     await sleep(500);
@@ -673,6 +677,10 @@ async function main() {
       return {
         inspectorEmpty:q('#spacetimeInspector')?.classList.contains('is-empty') ?? true,
         selectedActivityButtons:document.querySelectorAll('.spacetime-inspector-activity.is-selected').length,
+        activityFocus:{
+          person:document.activeElement?.dataset?.spacetimePerson ?? null,
+          activity:document.activeElement?.dataset?.spacetimeInspectorActivity ?? null
+        },
         selectedOutput:(q('#spacetimeInspector output')?.textContent||'').trim(),
         meanwhileLabel:(q('.spacetime-meanwhile-head small')?.textContent||'').trim(),
         meanwhileMoment:(q('.spacetime-meanwhile-head strong')?.textContent||'').trim(),
@@ -685,6 +693,8 @@ async function main() {
     })()`);
     assert(!interaction.inspectorEmpty, "Sticky inspector did not populate after Person selection", interaction);
     assert(interaction.selectedActivityButtons === 1, "Activity selection state is ambiguous", interaction);
+    assert(interaction.activityFocus.person === activityFocus.person && interaction.activityFocus.activity === activityFocus.activity,
+      "Keyboard activation did not retain focus on the same Inspector Activity", interaction);
     assert(/선택 Activity 중간 시점/.test(interaction.selectedOutput), "Inspector does not show Activity midpoint selection", interaction);
     assert(activityLinkedMeanwhileIsConsistent(interaction), "Activity selection did not drive Meanwhile", interaction);
     assert(interaction.linkedLine && interaction.lineWithinCanvas, "Activity-linked Meanwhile line is missing or outside the canvas", interaction);
