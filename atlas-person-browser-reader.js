@@ -215,10 +215,32 @@
     return payload;
   }
 
+  function restoreActivityFacets(person) {
+    const facets = { polities:[], relations:[], roles:[], period_bases:[] };
+    const seen = { polities:new Set(), relations:new Set(), roles:new Set(), period_bases:new Set() };
+    function add(key, item) {
+      if (!item?.id || seen[key].has(item.id)) return;
+      seen[key].add(item.id);
+      facets[key].push(item);
+    }
+    for (const activity of Array.isArray(person?.activity_summaries) ? person.activity_summaries : []) {
+      if (activity?.relation?.code !== "opposes") add("polities", activity?.polity);
+      add("relations", activity?.relation);
+      add("roles", activity?.role);
+      add("period_bases", activity?.period_basis);
+    }
+    return Object.freeze(Object.fromEntries(
+      Object.entries(facets).map(([key, values]) => [key, Object.freeze(values)])
+    ));
+  }
+
   async function listPersons({ fetchImpl = globalThis.fetch } = {}) {
-    const payload = await getJson(ENDPOINT, fetchImpl);
+    const payload = await getJson(`${ENDPOINT}?projection=compact`, fetchImpl);
     if (payload.mode !== "list" || !Array.isArray(payload.persons)) throw new Error("INVALID_PERSON_LIST_RESPONSE");
-    const persons = publicPersons(payload.persons);
+    if (payload.projection && payload.projection !== "compact-facets-v1") throw new Error("INVALID_PERSON_LIST_PROJECTION");
+    const persons = publicPersons(payload.projection === "compact-facets-v1"
+      ? payload.persons.map((person) => Object.freeze({ ...person, facets:restoreActivityFacets(person) }))
+      : payload.persons);
     return Object.freeze({
       schema: payload.schema,
       source: payload.source,
