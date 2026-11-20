@@ -204,3 +204,11 @@ test("final acceptance documentation keeps established stable-world invariants",
   assert.match(doc, /Missing, unknown, future, or unclassified values remain neutral/);
   assert.match(doc, /leftover_artifacts: \[\]/);
 });
+
+test("the selected Person label and its connector share selection state", () => {
+  const view = read("atlas-person-spacetime-view.js");
+  const css = read("atlas-person-spacetime-monumental-canvas.css");
+  assert.ok(view.includes('spacetime-label-connector${personSelected ? " is-selected" : ""}" aria-hidden="true"'));
+  assert.ok(view.includes('spacetime-track-label${personSelected ? " is-selected" : ""}'));
+  assert.match(css, /\.spacetime-label-connector\.is-selected\s*\{[^}]*--spacetime-selection-metal-strong/);
+});
