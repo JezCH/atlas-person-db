@@ -60,3 +60,18 @@ test('targeted context reports real static imports and rejects phantom string/co
   assert.equal(result.matching_files,1);
   assert.deepEqual(result.files[0].relative_imports,['./actual.mjs','./template.mjs']);
 });
+test('finds tracked code whose path Git would quote', t => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'atlas-agent-context-path-'));
+  t.after(() => fs.rmSync(root, {recursive:true, force:true}));
+  run(root, 'init', '-q');
+  run(root, 'config', 'core.quotePath', 'true');
+  const filename = 'scripts/연대 검증.mjs';
+  fs.mkdirSync(path.join(root, 'scripts'));
+  fs.writeFileSync(path.join(root, filename), 'export const periodMarker = true;\n');
+  run(root, 'add', '.');
+  run(root, '-c', 'user.name=ATLAS Test', '-c', 'user.email=test@example.invalid', 'commit', '-qm', 'fixture');
+
+  const result = buildContext({root, query:'periodMarker'});
+  assert.equal(result.matching_files, 1);
+  assert.equal(result.files[0].path, filename);
+});

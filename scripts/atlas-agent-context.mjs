@@ -82,8 +82,8 @@ export function buildContext({ root = process.cwd(), query, limit = 8 } = {}) {
   const base = fs.realpathSync(root);
   git(base, ['rev-parse', '--show-toplevel']);
   const head = git(base, ['rev-parse', 'HEAD']);
-  const names = git(base, ['grep', '-l', '-i', '-F', '-e', query, '--', ...SOURCE_SCOPES]);
-  const candidates = names ? names.split('\n').filter(n => CODE_EXT.test(n) && validRepositoryPath(base, n)) : [];
+  const names = git(base, ['grep', '-l', '-z', '-i', '-F', '-e', query, '--', ...SOURCE_SCOPES]);
+  const candidates = names ? names.split('\0').filter(n => CODE_EXT.test(n) && validRepositoryPath(base, n)) : [];
   candidates.sort((a, b) => {
     const rank = n => n.startsWith('scripts/') || n.startsWith('server/') || n.startsWith('api/') ? 0 : n.startsWith('tests/') ? 1 : 2;
     return rank(a) - rank(b) || a.localeCompare(b);
