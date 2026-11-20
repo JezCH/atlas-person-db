@@ -1,6 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import os from "node:os";
+import { spawnSync } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
@@ -16,7 +18,8 @@ const {
   validateContract,
   productionGateResult,
   evaluateAcceptance,
-  assertGeneratedPass
+  assertGeneratedPass,
+  sha256Text
 }=require("../server/atlas-core-final-acceptance.js");
 
 const contract=json("contracts/core-final-acceptance-contract.v2.json");
@@ -211,3 +214,37 @@ test("P13 lifecycle requirement is completed only with generated acceptance auth
   assert.match(closure,/9 \/ 9 PASS/);
   assert.match(closure,/26 \/ 26 PASS/);
 });
+
+test("runner writes evidence logs beside a configured output and records their hashes", (t)=>{
+  const fixture=fs.mkdtempSync(path.join(os.tmpdir(),"atlas-core-acceptance-"));
+  t.after(()=>fs.rmSync(fixture,{recursive:true,force:true}));
+  for (const dir of ["scripts","server","contracts"]) fs.mkdirSync(path.join(fixture,dir));
+  for (const file of ["scripts/run-core-final-acceptance.mjs","server/atlas-core-final-acceptance.js"]) {
+    fs.copyFileSync(path.join(root,file),path.join(fixture,file));
+  }
+  const fixtureContract={
+    ...contract,
+    gates:[
+      {id:"fixture_command",kind:"command",command:"echo acceptance-fixture"},
+      {id:"production_exact_sha_readiness",kind:"production_readiness"}
+    ],
+    invariants:[{id:"fixture_invariant",gate_ids:["fixture_command","production_exact_sha_readiness"]}]
+  };
+  fs.writeFileSync(path.join(fixture,"contracts/core-final-acceptance-contract.v2.json"),JSON.stringify(fixtureContract));
+  fs.writeFileSync(path.join(fixture,"readiness.json"),JSON.stringify(productionResponse()));
+  const output="custom directory/report.json";
+  const result=spawnSync(process.execPath,["scripts/run-core-final-acceptance.mjs"],{
+    cwd:fixture,
+    env:{...process.env,GITHUB_SHA:SHA,ATLAS_PRODUCTION_READINESS_JSON:"readiness.json",ATLAS_CORE_FINAL_ACCEPTANCE_OUTPUT:output},
+    encoding:"utf8"
+  });
+  assert.equal(result.status,0,result.stderr);
+  const evidence=JSON.parse(fs.readFileSync(path.join(fixture,output),"utf8"));
+  assert.equal(evidence.status,"PASS");
+  const gate=evidence.gates.find((entry)=>entry.id==="fixture_command");
+  assert.equal(gate.log_path,path.join("custom directory","logs","fixture_command.log"));
+  const log=fs.readFileSync(path.join(fixture,gate.log_path),"utf8");
+  assert.match(log,/acceptance-fixture/);
+  assert.equal(gate.log_sha256,sha256Text(log));
+});
+
