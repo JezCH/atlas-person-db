@@ -26,6 +26,10 @@
   let facetCatalog = Object.freeze({ polities: [], relations: [], roles: [], period_bases: [] });
   let selectedPersonId = null;
   let query = "";
+  let searchRenderTimer = null;
+  // Person objects are immutable read snapshots; cache the expensive activity
+  // markup between search/filter passes, not across refreshed snapshots.
+  const personCardMarkupCache = new WeakMap();
   let sortOrder = "start-asc";
   let facetFilters = { polity_id: "", relation_type_id: "", domain: "" };
   let personDomainsById = Object.freeze({});
@@ -206,15 +210,18 @@
   }
 
   function personCard(person) {
+    const representativeDomain = String(personDomainsById?.[person?.id] || "").trim();
+    const cacheKey = `${selectedPersonId === person?.id ? "selected" : "normal"}:${representativeDomain}`;
+    const variants = personCardMarkupCache.get(person);
+    if (variants?.has(cacheKey)) return variants.get(cacheKey);
     const rawHistoricity = historicityLabel(person);
     const canonical = person?.canonical_name_en && person.canonical_name_en !== person.display_name
       ? `<small class="person-card-canonical">${escapeHtml(person.canonical_name_en)}</small>` : "";
     const selectedClass = selectedPersonId === person.id ? " is-selected" : "";
-    const representativeDomain = String(personDomainsById?.[person?.id] || "").trim();
     const domainAttribute = representativeDomain ? ` data-representative-domain="${escapeHtml(representativeDomain)}"` : "";
     const open = `<button class="person-card${selectedClass}" type="button" data-person-id="${escapeHtml(person.id)}"${domainAttribute}>`;
     const close = "</button>";
-    return `${open}
+    const markup = `${open}
       <span class="person-card-top"><span class="person-historicity">${escapeHtml(rawHistoricity)}</span><span>${escapeHtml(metaLabel("person_type", person.person_type, "인물 유형 확인 필요"))}</span></span>
       <strong>${escapeHtml(person.display_name || person.canonical_name_en || "이름 미상")}</strong>
       ${canonical}
@@ -222,6 +229,10 @@
       <span class="person-card-count">활동 ${Number(person.activity_count || 0)}건</span>
       ${compactActivitiesHtml(person)}
     ${close}`;
+    const cached = variants || new Map();
+    cached.set(cacheKey, markup);
+    if (!variants) personCardMarkupCache.set(person, cached);
+    return markup;
   }
 
   function groupSection({ title, description, rows }) {
@@ -324,7 +335,16 @@
     }));
   }
 
+  function cancelPendingSearchRender() {
+    if (searchRenderTimer === null) return;
+    clearTimeout(searchRenderTimer);
+    searchRenderTimer = null;
+  }
+
   function renderGroups() {
+    // A filter/sort/refresh render must consume the freshest query and cancel
+    // any delayed input render so it cannot redraw the same register twice.
+    cancelPendingSearchRender();
     const list = document.getElementById("personMainGroups");
     if (!list) return 0;
     if (!personListLoaded) {
@@ -346,7 +366,8 @@
       sortOrder,
       facetFilters: { polity_id: facetFilters.polity_id, relation_type_id: facetFilters.relation_type_id },
       secondaryPredicate: secondaryMatches,
-      includeFacetCatalog: false
+      includeFacetCatalog: false,
+      sortGroups: false
     });
     const rows = [
       ...groups.historical,
@@ -369,12 +390,22 @@
     return shown;
   }
 
-  function setSearchQuery(value) {
+  function setSearchQuery(value, { debounce = false } = {}) {
     const next = String(value ?? "");
     if (query === next) return false;
     query = next;
     if (!personListLoaded) { void ensurePersonsLoaded(); return true; }
-    renderGroups();
+    if (debounce && next.trim()) {
+      // Update the query state immediately, but rebuild the large Person DOM
+      // only after typing settles. Programmatic queries remain synchronous.
+      cancelPendingSearchRender();
+      searchRenderTimer = setTimeout(() => {
+        searchRenderTimer = null;
+        renderGroups();
+      }, 150);
+    } else {
+      renderGroups();
+    }
     return true;
   }
 
@@ -1234,7 +1265,11 @@
       if (actionButton.dataset.authoringAction === "delete") deleteActivity(actionButton.dataset.activityId);
     });
     window.addEventListener("atlas-person-search-change", (event) => {
-      setSearchQuery(event?.detail?.query);
+      if (event?.detail?.composing) {
+        cancelPendingSearchRender();
+        return;
+      }
+      setSearchQuery(event?.detail?.query, { debounce: true });
     });
     window.addEventListener("atlas-person-polity-filter-change", (event) => {
       setPolityFilter(event?.detail?.polityId);
