@@ -452,6 +452,86 @@ async function openFirstDetail(client){
   })()`);
 }
 
+
+async function evaluateUi07(client, fn, ...args) {
+  return evaluate(client,"("+fn.toString()+")("+args.map((x)=>JSON.stringify(x)).join(",")+")");
+}
+
+async function verifyMobileTwoPersonComparison(client) {
+  const selected=[];
+  for (const term of ["James Baldwin","Ernest Hemingway"]) {
+    const row=await evaluateUi07(client,(needle)=>{
+      const api=window.ATLAS_PERSON_MAIN;
+      if(!api)return null;
+      api.setSearchQuery(needle);
+      const rows=[...document.querySelectorAll(".person-register-entry[data-person-id]")];
+      const matched=rows.find((r)=>String(r.querySelector(".person-main-name-link")?.textContent||"")
+        .toLowerCase().includes(needle.toLowerCase()))||rows[0];
+      if(!matched)return null;
+      matched.click();
+      return matched.dataset.personId;
+    },term);
+    assert(row,"No actual registered Person for comparison: "+term);
+    await waitFor(client,
+      "document.querySelector('#personMainDetail [data-person-compare-add]')?.dataset.personCompareAdd === window.ATLAS_PERSON_MAIN?.getSelectedPersonId()",45000);
+    const picked=await evaluateUi07(client,()=>{
+      const button=document.querySelector("#personMainDetail [data-person-compare-add]");
+      const name=document.querySelector("#personMainDetail .person-chronicle-identity h2")?.textContent?.trim();
+      const id=button?.dataset.personCompareAdd||null;
+      button?.click();
+      return {id,name,pressed:button?.getAttribute("aria-pressed")};
+    });
+    assert(picked.id===row&&picked.pressed==="true","Real Person comparison control failed",picked);
+    selected.push(picked);
+  }
+  assert.notEqual(selected[0].id,selected[1].id,"Two distinct Persons required");
+  await waitFor(client,
+    "document.querySelectorAll('#personComparePanel .atlas-compare-person').length === 2 && Boolean(document.querySelector('#personComparePanel .atlas-compare-period-analysis'))",
+    65000);
+  await evaluateUi07(client,()=>{
+    const close=document.querySelector(".person-detail-overlay-close");
+    if(close && getComputedStyle(close).display!=="none")close.click();
+    else window.ATLAS_PERSON_MAIN?.clearSelection?.();
+    document.querySelector("#personComparePanel")?.scrollIntoView({block:"start",inline:"nearest"});
+    return true;
+  });
+  const view=await evaluateUi07(client,()=>{
+    const panel=document.querySelector("#personComparePanel");
+    const columns=[...panel.querySelectorAll(".atlas-compare-person")];
+    const bounds=columns.map((el)=>el.getBoundingClientRect());
+    const rect=panel.getBoundingClientRect();
+    return {
+      viewport:innerWidth,documentWidth:document.body.scrollWidth,panelWidth:rect.width,
+      panelScrollWidth:panel.scrollWidth,
+      activityCounts:columns.map((el)=>el.querySelectorAll(".atlas-compare-activity").length),
+      personNames:columns.map((el)=>el.querySelector("h4")?.textContent?.trim()),
+      sourceLinks:panel.querySelectorAll(".atlas-compare-sources a[href^='http']").length,
+      totals:[...panel.querySelectorAll(".atlas-compare-overlap-counts span")].map((el)=>
+        Number.parseInt(el.querySelector("strong")?.textContent||"",10)),
+      stacked:bounds.length===2&&bounds[1].top>=bounds[0].bottom-1,
+      actions:[...panel.querySelectorAll(".atlas-compare-head button,.atlas-compare-person-head button")]
+        .map((el)=>({label:el.textContent.trim(),height:el.getBoundingClientRect().height})),
+      error:panel.querySelector("[role=alert]")?.textContent||null
+    };
+  });
+  assert(!view.error && view.stacked,"390px source-backed comparison did not stack",view);
+  assert.deepEqual(view.activityCounts,[1,1],"Live Person Activity records were lost",view);
+  assert(view.totals.length===4&&view.totals.reduce((a,b)=>a+b,0)===1,
+    "Historical Activity pairing count is not conserved",view);
+  assert(view.sourceLinks>0,"Two-Person comparison lost source access",view);
+  assert(view.documentWidth<=391&&view.panelScrollWidth<=view.panelWidth+2,
+    "UI-07 introduces real horizontal document overflow",view);
+  assert(view.actions.length>=3&&view.actions.every((a)=>a.height>=43.5),
+    "Mobile compare action touch target smaller than 44px",view);
+  await screenshot(client,"ui07-person-comparison-mobile-390x844.png");
+  const closed=await evaluateUi07(client,()=>{
+    document.querySelector("#personComparePanel [data-compare-close]")?.click();
+    return document.querySelector("#personComparePanel")?.hidden===true;
+  });
+  assert(closed,"Comparison close did not restore the reader");
+  return {selected,view,closePassed:closed};
+}
+
 async function main(){
   assert(/^[0-9a-f]{40}$/i.test(EXPECTED_RUNTIME_SHA),"ATLAS_EXPECTED_RUNTIME_SHA_REQUIRED",{expected_runtime_sha:EXPECTED_RUNTIME_SHA||null});
   const pages=await jsonFetch(`${DEBUG_URL}/json/list`);
@@ -625,6 +705,8 @@ async function main(){
     assert(mobileDetail.panelRect?.left>=-1&&mobileDetail.panelRect?.right<=391,"Person Detail escapes mobile viewport",mobileDetail);
     assert(mobileDetail.portraitRect?.width>=220&&mobileDetail.portraitRect?.width<=260,"Mobile Detail portrait left reviewed range",mobileDetail);
     await screenshot(client,"person-detail-390x844.png");
+    const mobileComparison=await verifyMobileTwoPersonComparison(client);
+    console.log("ATLAS_UI07_PRODUCTION_MOBILE_COMPARISON_PASS");
 
     const report={
       schema:"atlas-ui-v10-production-visual-acceptance/v1",
@@ -639,14 +721,15 @@ async function main(){
         multiActivity:desktopMultiActivity,
         detail:desktopDetail
       },
-      mobile:{main:mobileMain,multiActivity:mobileMultiActivity,detail:mobileDetail},
+      mobile:{main:mobileMain,multiActivity:mobileMultiActivity,detail:mobileDetail,comparison:mobileComparison},
       screenshots:[
         "person-main-1600x1000.png",
         "person-detail-1600x1000.png",
         "person-main-390x844.png",
         "mobile-drawer-open-390x844.png",
         "mobile-drawer-closed-390x844.png",
-        "person-detail-390x844.png"
+        "person-detail-390x844.png",
+        "ui07-person-comparison-mobile-390x844.png"
       ],
       status:"PASS"
     };
