@@ -25,6 +25,20 @@ ATLAS를 단순 세계사 인물 DB가 아니라 **인류 문명의 시간·공�
 - **비용/자동개발:** [#2499](https://github.com/JezCH/atlas-person-db/issues/2499)의 FOT 근본 원인 미확정. 기존 하루 8회 총괄 예약 재활용; 예약 실행됨 ≠ 실개발 완료. Work/GitHub/CI의 실제 권한과 출력만 근거로 삼는다.
 - **P14 Territory/Geometry:** PARKED. 대량 초상화 생성 역시 자동 실행 범위 아님.
 
+
+### 2026-11-20 확정 구현 체크포인트 — 최신 개발 결과와 남은 인수
+
+| 구분 | 실제 반영된 결과 | 확인된 증거 | 남은 작업 |
+| --- | --- | --- | --- |
+| UI-01 모바일 인물표 | 3열 압축 대신 2단 역사 정보 정렬 · [#2756](https://github.com/JezCH/atlas-person-db/pull/2756) | **MERGED** `819dac467e6ed7379203fdc9883cd68d469c3b91` | 최신 버전의 390/600px 이름·Activity·연대 정렬, 다중 활동, 사용자 판독 수용 |
+| UI-06B 경로 | Person→Spacetime 기존 UUID 이동 · [#2725](https://github.com/JezCH/atlas-person-db/pull/2725), native History 검증 보정 · [#2761](https://github.com/JezCH/atlas-person-db/pull/2761) | **둘 다 MERGED**; #2761 `37728737448d3e71e07b0bcc7cbcac41096c41b5` (**테스트 코드**, 신규 UX 구현 아님) | **실제 브라우저**에서 다른 Person 방문 후 Back/Forward/새로고침·Activity 출발 연도·검색·카메라 복원, 원래와 다른 Person 진입 증거 확인 |
+| UI-07 비교 결과 발견 | 두 번째 Person 선택 시 새 비교 결과로 자동 스크롤 + 키보드 초점; History restore 때 무단 초점 이동 금지 · [#2760](https://github.com/JezCH/atlas-person-db/pull/2760) | **CI PASS** [#44668346374](https://github.com/JezCH/atlas-person-db/actions/runs/44668346374), **MERGED** `c0c438be908390353cb47d7146e3c451466e9b22`, **Vercel READY** `dpl_8u4mUvzUwMkZEaoqnPjcuCNdkcJg` exact SHA/공식 alias | PC/390px 비교 완성 직후 실제 scroll/focus; Back/Forward는 focus steal 없는지 **브라우저 수용 미확인** |
+| UI-02 모바일 Person 상세 | **초상 미등록** 때 약 230×288px의 장식성 4:5 빈 프레임을 간결한 상태문으로 대체, 이름·연대·역사 탐색 버튼을 먼저 보여줌; 실제 등록 초상 유지 · [#2762](https://github.com/JezCH/atlas-person-db/pull/2762) | **CI PASS** [#44683878773](https://github.com/JezCH/atlas-person-db/actions/runs/44683878773), **MERGED** `c28559726c13bb171647cdfccbd38ee726463e5d`, **Vercel READY** `dpl_Fnv2vdfd2aNgxArpcaHB9jjSpAGP` exact SHA/공식 alias | 390/600px **실브라우저**에서 무초상/유초상 인물 비교, 첫 화면 정보 노출·가로 넘침·Source/Activity 보존 수용 |
+
+**상태 구분:** #2760/#2762의 SOURCE/CI/MERGED/PRODUCTION_READY_EXACT_SHA는 확인했다. Production READY·alias는 HTTP 200 실제 본문 검사나 실브라우저 PC/모바일 수용과 **다르며, 이번 확인 시점 두 PR의 BROWSER_ACCEPTED / USER_VISUAL_APPROVED는 아직 미확인**이다. 이전 [#2749/#2750](https://github.com/JezCH/atlas-person-db/pull/2750)의 390px 모바일 비교 Chrome PASS는 **그 당시 SHA**의 증거이므로 신규 #2760 초점 UX 수용으로 재사용하지 않는다.
+
+**다음 실행 우선순위(기존 UI #1896 범위):** ① 기존 exact-SHA Chromium/브라우저 수단으로 위 2건의 실제 화면 수용을 먼저 종결한다. ② 이미 병합된 #2761 deep History 검사기는 수동 Production 여정 실행·실제 결과가 남아 있어 별도 확인한다. ③ UI-01~07의 현재 미수용 화면만 증상별 수정하되 정상 부분·완료 코드(#2725/#2756/#2760/#2762)를 다시 구현하지 않는다. ④ UI 정보 완전성·Dashboard/Admin·A11Y는 기존 [UI 실행계획](ui/ATLAS_UI_DEVELOPMENT_EXECUTION_PLAN.md)과 [#1896](https://github.com/JezCH/atlas-person-db/issues/1896)의 승인 범위 내에서 진행한다. 새 UI 주제/P14/대량 초상·스키마·과금은 별도 승인 대상이다.
+
 ## 2. 우선순위와 진행 범위
 
 | 등급 | 작업군 | 재사용/선행조건 | 종결 기준 | 실행 상태 |

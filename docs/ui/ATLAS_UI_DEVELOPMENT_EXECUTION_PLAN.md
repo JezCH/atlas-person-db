@@ -8,6 +8,21 @@
 >
 > 목표: 기존 제품의 역사 전체 조망 → 인물 검색·명부 → 활동/정치체/Source 상세 → 시공간 동시대 → 두 인물 실제 활동 비교 → 원래 탐색 위치 복귀를 PC·모바일·키보드에서 정확하고 아름답게 수행한다. 기존 밀집 인물표를 카드/초상 중심 화면으로 바꾸지 않으며 실제 연대·지리·8분야색·Source 의미를 손상하지 않는다.
 
+## 2026-11-20 실개발 체크포인트 — 오래된 §2·§5 스냅샷보다 우선
+
+> §2의 2026-11-19 GitHub 상태와 §5의 당시 작업 순서는 **역사적 작업 설계 근거**다. 현재 살아 있는 작업 목록이 아니다. 완료된 #2725, #2722, #2728 및 UI-07 구현을 재실행하지 않는다. 정확한 최신 owner는 [#1896](https://github.com/JezCH/atlas-person-db/issues/1896)이고 상위 프로그램 범위는 [전 프로젝트 업그레이드 로드맵](../ATLAS_PRODUCT_UPGRADE_ROADMAP_20261120.md)이다.
+
+| 실제 작업 단위 | 최신 실행 결과 | 현행 미종결 수용 |
+| --- | --- | --- |
+| **REG-01/02 (UI-01)** | [#2756](https://github.com/JezCH/atlas-person-db/pull/2756) **MERGED** 모바일 Person 사실 2단 정렬 | 390/600/768px의 이름·기간·Polity/Role·다중 Activity, 검색·정렬·선택, overflow 확인 |
+| **DETAIL-01 (UI-02)** | [#2762](https://github.com/JezCH/atlas-person-db/pull/2762) **CI SUCCESS** [#44683878773](https://github.com/JezCH/atlas-person-db/actions/runs/44683878773), **MERGED** main `c28559726c13bb171647cdfccbd38ee726463e5d`, Production `dpl_Fnv2vdfd2aNgxArpcaHB9jjSpAGP` **READY exact SHA / official alias** | **QA-01 / UI-02 P0:** 실제 초상 없는 인물에서 첫 화면에 이름·연대·시공간/비교 동작이 나타나는지, 등록 초상 있는 인물은 4:5 이미지를 유지하는지, Source/Activity/분야·모바일 스크롤·가로폭을 390/600px 브라우저 확인 |
+| **ROUTE-01/02 (UI-06B)** | [#2725](https://github.com/JezCH/atlas-person-db/pull/2725) **MERGED**, [#2761](https://github.com/JezCH/atlas-person-db/pull/2761) **MERGED** native History 여정 검사 수정 (검사만 변경) | **QA-02 deep Production:** Person A→Spacetime/동시대 Person B(실제로 A와 다른 인물)→native Back/Forward→활동 원점/카메라/검색 복귀·새로고침. 여정 스크립트 존재 ≠ 성공 실행 |
+| **COMP-01~03 (UI-07)** | 2인 비교/기간·출처, History 저장, 기존 390px 모바일 Chrome 비교 PASS는 구현 완료 이력. 추가 scroll/focus [#2760](https://github.com/JezCH/atlas-person-db/pull/2760) **CI SUCCESS** [#44668346374](https://github.com/JezCH/atlas-person-db/actions/runs/44668346374), **MERGED** main `c0c438be908390353cb47d7146e3c451466e9b22`, Production `dpl_8u4mUvzUwMkZEaoqnPjcuCNdkcJg` **READY exact SHA / official alias** | **QA-03 UI-07:** 실제 PC/390px 두 번째 선택 직후 결과 패널이 읽을 수 있는 위치로 scroll/focus되고 결과/source가 온전히 보이는지; reload/Back/Forward는 초점 탈취 없이 복원되는지 확인 |
+
+**검증상태 경계:** 두 #2760/#2762 모두 `CODE_CHANGED → FOCUSED_TEST/EXACT_HEAD_CI_PASS → MERGED → VERCEL_PRODUCTION_READY_EXACT_SHA`까지만 관찰. 해당 exact SHA의 공개 HTTP 200, Chrome 실조작/스크린샷, 사용자 수용 여부는 **NOT VERIFIED**다. 다른 이전 SHA Chrome PASS를 신규 UX 검증으로 합산하지 않는다. 현행 [WORK_EXECUTION](../../WORK_EXECUTION.md)의 생산 완료 단계 구분을 유지한다.
+
+**바로 다음 독립 실행:** 기존 Chrome/브라우저 수단을 활용한 위 UI-02·UI-07 두 수용을 우선하고, 별도로 [#2761](https://github.com/JezCH/atlas-person-db/pull/2761) deep History 실제 Production manual workflow 수용. 도구/권한이 없으면 그대로 PENDING으로 기록하고 다른 독립 승인 작업 진행. Vercel Hobby 반복 호출/새 자동 실행기/유료 API/중복 PR 생성 금지. 새 데이터/스키마/P14/대량 초상은 포함하지 않는다.
+
 ## 1. 완료 상태와 안전 경계
 
 CODE_CHANGED / FOCUSED_TEST_PASS / EXACT_HEAD_CI_PASS / MERGED / PRODUCTION_ASSET_HTTP_VERIFIED / BROWSER_ACCEPTED / USER_VISUAL_APPROVED는 **각각 서로 다른 단계**다. READY 또는 병합만으로 실제 UI가 완성되었다고 집계하지 않는다. 인증 제한·브라우저 도구 미제공·무료 플랜 자원 부족 시 마지막으로 검증한 단계까지 기록하고 **별개로 수행 가능한 단위**는 이어서 처리한다.
@@ -207,4 +222,4 @@ CODE_CHANGED / FOCUSED_TEST_PASS / EXACT_HEAD_CI_PASS / MERGED / PRODUCTION_ASSE
 
 ## 7. 완료 조건 요약
 
-이 문서를 병합하면 **UI 작업에 필요한 작업 패키지·의존성·기존 파일/테스트·검증 기준을 저장한 것**만 완료다. 남아 있는 #2725의 독립 release, UI-01/02/03/06A의 실제 브라우저 수용, Dashboard verifier 새 run, MEAN-01/02·ROUTE-02·COMP-01~03 및 Main/Admin/모바일 최종 검증이 끝나야 전체 사용자 경험이 완료된다. 보류된 Phase III B2 장식 선택·P14·Canonical DB 변경은 여전히 별도 승인 범위.
+이 문서의 **계획 작성/병합은 UI 기능 완료가 아니다.** #2725와 UI-06A 핵심 기능, UI-07 두 인물 비교·History, #2756 인물 모바일 2단 표, #2760 결과 scroll/focus, #2762 무초상 상세 표시 등은 실제 main 반영된 코드를 재개발하지 않는다. 최신 UI 사용자 완료를 위해 남은 **우선 게이트**는 #2760/#2762 exact-SHA PC·390px 실브라우저 수용, #2761 deep Activity/History 왕복 실조작, UI-01/02/03 및 Dashboard/Admin·정보완전성·키보드/접근성의 실제 미합격 범위 확인/수리다. 계획의 MEAN/ROUTE/COMP 실행 순위는 2026-11-19의 역사 기록이며 현재 남은 작업은 이 문서 첫머리의 **2026-11-20 실개발 체크포인트와 #1896 최신 원장**이 정한다. P14·Canonical DB 변경·대량 초상·추가 과금은 사용자 별도 승인 범위다.

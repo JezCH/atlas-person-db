@@ -8,6 +8,17 @@
 >
 > 본 문서는 **실제 화면을 배포·수용하기 위한 개발 순서**이다. `docs/ui/UI_INFORMATION_COVERAGE.md`, `ATLAS_REQUIREMENTS.md`, `DATA_MODEL.md`, `WORK_EXECUTION.md`의 데이터·권한·운영 규칙을 대체하지 않는다.
 
+## 현재 실행 상태 갱신 — 2026-11-20 (이전 11월 19일 계획 우선순위보다 최신)
+
+**이 문서는 여전히 승인된 UI-01~07 범위를 정의하며, 다음 상태는 해당 계획의 실제 구현 체크포인트입니다.** 정확한 세부 CI/commit/배포 증거와 다음 수용은 [전 프로젝트 로드맵 §1](../ATLAS_PRODUCT_UPGRADE_ROADMAP_20261120.md)의 2026-11-20 체크포인트 및 [UI #1896](https://github.com/JezCH/atlas-person-db/issues/1896#issuecomment-7031754503)을 참조합니다.
+
+- **UI-01:** 모바일 인물명/정치체/활동 연대의 2단 정렬 PR [#2756](https://github.com/JezCH/atlas-person-db/pull/2756) MERGED. 새 구조를 다시 설계하지 않고 최신 실화면에서 가독성·다중 활동·가로 넘침 수용.
+- **UI-02:** 모바일 상세 **무초상일 때만** 정보 먼저/빈 4:5 그림 축소 PR [#2762](https://github.com/JezCH/atlas-person-db/pull/2762) CI PASS / MERGED / Vercel READY exact SHA. 실제 등록 초상 디자인과 역사 Source 보존. **390px 실브라우저 수용은 OPEN**.
+- **UI-06B:** Person→시공간 이동 PR [#2725](https://github.com/JezCH/atlas-person-db/pull/2725) 이미 MERGED, 네이티브 History 검증 수정 [#2761](https://github.com/JezCH/atlas-person-db/pull/2761) 이미 MERGED. **원점 복귀 deep Production 브라우저 여정은 OPEN**.
+- **UI-07:** 2인 비교 및 History 영속 복원과 기존 모바일 Chrome 비교 수용은 구축됨. 비교가 완성될 때 자동 scroll/focus PR [#2760](https://github.com/JezCH/atlas-person-db/pull/2760) CI PASS / MERGED / Vercel READY exact SHA. **새 초점 UX의 실제 PC·390px 실브라우저 수용은 OPEN**.
+- **해당 작업의 우선순위:** 새로운 디자인 계획이나 UI-07 재구축보다 #2760/#2762 실제 화면 검증과 #2761 deep History 여정 결과 수용 → 발견된 현재 결함만 실제 원본 수정. CI/READY만으로 BROWSER_ACCEPTED·USER_VISUAL_APPROVED 기입 금지.
+- 전체 제품의 전 영역 업그레이드 후보는 [ATLAS 전체 업그레이드 로드맵](../ATLAS_PRODUCT_UPGRADE_ROADMAP_20261120.md)에 보존한다. 신규 제안은 자동 승인/구현 큐가 아니고, P14·대량 초상은 PARKED.
+
 ## 최종 목표
 **연구 기반 전체 화면 개선·검증 실행표:** [ATLAS_UI_EVIDENCE_BASED_MASTERPLAN_20261119.md](ATLAS_UI_EVIDENCE_BASED_MASTERPLAN_20261119.md). W3C/NN-g/정보시각화/디자인 시스템/성능 등 외부 연구를 ATLAS의 승인된 UI-01~07에 연결한 후속 구현 및 PC·모바일 수용 기준이다. 이 문서는 새 독립 백로그나 보류된 기능의 자동 재승인이 아니며, 본 파일의 최신 사용자 승인·실제 소스/런타임 권위가 우선한다.
 
@@ -230,4 +241,4 @@
 
 **전체 표 중심 탐험 완료 조건:** UI-01~05의 인물명부/상세/시공간 가독성과 정보완전성, UI-06/07의 동시대·연속 탐험·2인 비교가 실제 데이터로 작동하고, PC/모바일·검색·줌·라우팅·연대/공간/출처 무결성이 Production에서 검증될 것.
 
-**가장 먼저 실행할 정확한 일:** 현재 #1896 및 UI-01 관련 PR을 확인한 다음, 인물 명부의 실제 DOM·computed style을 기준으로 UI-01A의 글자/열/대비/행 선택 구조를 실소스에서 개선하고 테스트·배포까지 독립 종결할 것. 이미 진행 중인 UI-01 작업이 있다면 이를 재사용하고 새로운 계획서만 반복 생산하지 않을 것.
+**현행 실행 첫 번째 대상(2026-11-20 갱신):** #2756 UI-01 모바일 2단 사실표는 이미 MERGED이므로 재개발 금지. #2760 UI-07 완성 비교 결과 초점과 #2762 UI-02 모바일 무초상 정보 우선 수정은 CI·MERGE·Vercel READY까지 끝났으며 **실제 PC/390px 브라우저 수용이 미완료**다. 그 수용과 #2761 native History deep 여정 실제 실행을 우선하고, 새로운 결함만 소스에서 수정할 것. #1896 최신 상태가 이 기록보다 새로우면 우선 적용한다.
