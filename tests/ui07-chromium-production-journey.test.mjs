@@ -70,3 +70,37 @@ test("UI-07 mobile compare touch target is at least 44px, with one CSS and JS ca
   assert.match(journey,/row\.second\.top>=row\.first\.bottom-1/);
   assert.match(journey,/row\.bodyWidth<=392/);
 });
+
+
+test("UI-07 mobile direct Activity hash waits for settled Person, Activity, year and actual source-backed peer",async()=>{
+  const a="11111111-1111-4111-8111-111111111111";
+  const b="22222222-2222-4222-8222-222222222222";
+  const activityId="33333333-3333-4333-8333-333333333333";
+  const begin=journey.indexOf("export async function verifyUi07MobileJourney(");
+  assert.ok(begin>0);
+  const body=journey.slice(begin);
+  const order=[body.indexOf("Boolean(document.querySelector('#personSpacetimeMount .spacetime-frame'))"),
+    body.indexOf("s?.selectedPersonId==="),
+    body.indexOf("s?.selectedActivityId==="),
+    body.indexOf("s?.meanwhileOrdinal==="),
+    body.indexOf("data-spacetime-meanwhile-compare"),
+    body.indexOf("const pair=await inspectPair(client,h,desktopPair)")];
+  assert.ok(order.every(x=>x>=0), "Mobile readiness gate must require real exact Person/Activity/moment/peer");
+  assert.deepEqual([...order].sort((x,y)=>x-y),order, "Cannot inspect the interim shell before the actual peer is loaded");
+  const calls=[];
+  const helpers={
+    waitFor:async(_client,expression)=>{
+      calls.push(expression);
+      if(calls.length===3)throw new Error("Mobile Activity peer not actually loaded");
+    }
+  };
+  const client={call:async()=>{}};
+  await assert.rejects(verifyUi07MobileJourney(client,helpers,{
+    route:"#atlas-spacetime/person/"+a+"/activity/"+activityId,
+    personId:a,activityId,moment:1592,personB:b
+  },"https://atlas-person-db.vercel.app/"),/Mobile Activity peer not actually loaded/);
+  assert.equal(calls.length,3,"A missing real contemporary Person must fail closed, not invent a pair");
+  assert.match(calls[2],new RegExp(a));
+  assert.match(calls[2],new RegExp(b));
+  assert.match(calls[2],/s\?\.meanwhileOrdinal/);
+});
