@@ -150,7 +150,7 @@ test('list reader is GET-only and returns server summary plus derived groups and
   };
   const result = await reader.listPersons({ fetchImpl });
   assert.equal(calls.length, 1);
-  assert.equal(calls[0].url, '/api/atlas-person-read');
+  assert.equal(calls[0].url, '/api/atlas-person-read?projection=compact');
   assert.equal(calls[0].options.method, 'GET');
   assert.equal(calls[0].options.credentials, 'same-origin');
   assert.equal(result.summary.total, 2);
@@ -265,4 +265,50 @@ test('render-only grouping omits unused facet catalog without changing filtered 
   assert.deepEqual(Array.from(fast.historical,row=>row.id),Array.from(normal.historical,row=>row.id));
   assert.equal(fast.facet_catalog,null);
   assert.ok(normal.facet_catalog.polities);
+});
+
+
+test('compact list projection restores exact search and facet-filter meaning without Person detail reads', async () => {
+  const reader = loadReader();
+  const polityA = { id:'polity-a', display_name:'스키타이 왕국' };
+  const polityB = { id:'polity-b', display_name:'상대 정치체' };
+  const rules = { id:'relation-rules', code:'rules', category:'authority' };
+  const opposes = { id:'relation-opposes', code:'opposes', category:'opposition' };
+  const king = { id:'role-king', display_name:'왕' };
+  const basis = { id:'basis-reign', display_name:'재위' };
+  const a = person('p1','historical',-360,'아테아스');
+  a.activity_summaries = [
+    { polity:polityA, relation:rules, role:king, period_basis:basis, notes:'기원전 역사' },
+    { polity:polityA, relation:rules, role:king, period_basis:basis, notes:'전쟁' },
+    { polity:polityB, relation:opposes, role:king, period_basis:basis, notes:'대립' }
+  ];
+  a.facets = {
+    polities:[polityA], relations:[rules,opposes],
+    roles:[king],period_bases:[basis]
+  };
+  const fetchImpl=async()=>({ok:true,status:200,json:async()=>({
+    ok:true,mode:'list',projection:'compact-facets-v1',
+    persons:[{...a,facets:undefined}],summary:{total:1}
+  })});
+  const loaded=await reader.listPersons({fetchImpl});
+  const actual=JSON.parse(JSON.stringify(loaded.persons[0].facets));
+  assert.deepEqual(actual,a.facets);
+  assert.equal(reader.personMatchesQuery(loaded.persons[0],'스키타이'),true);
+  assert.equal(reader.personMatchesQuery(loaded.persons[0],'대립'),true);
+  assert.equal(reader.personMatchesFacets(loaded.persons[0],{polity_id:'polity-a',relation_type_id:'relation-opposes'}),true);
+  assert.equal(reader.personMatchesFacets(loaded.persons[0],{polity_id:'polity-b'}),false);
+  assert.equal(loaded.facet_catalog.polities.length,1);
+  assert.equal(loaded.groups.historical.length,1);
+});
+
+test('compact projection rejects unknown schema and retains legacy read response compatibility', async () => {
+  const reader=loadReader();
+  const payload={ok:true,mode:'list',persons:[person('x1','historical',100,'X')],summary:{total:1}};
+  await assert.rejects(()=>reader.listPersons({fetchImpl:async()=>({
+    ok:true,status:200,json:async()=>({...payload,projection:'unexpected'})
+  })}),/INVALID_PERSON_LIST_PROJECTION/);
+  const result=await reader.listPersons({fetchImpl:async()=>({
+    ok:true,status:200,json:async()=>payload
+  })});
+  assert.equal(result.persons[0].id,'x1');
 });
