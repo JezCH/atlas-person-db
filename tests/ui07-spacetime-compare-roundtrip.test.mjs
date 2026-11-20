@@ -54,6 +54,11 @@ test("UI-07 Meanwhile compare buttons appear only beside a distinct, canonical c
     ()=>"AD 1592",(code)=>code,escapeHtml,()=>"Polity",()=>"AD 1592"
   )(summary);
   assert.doesNotMatch(noAnchor,/data-spacetime-meanwhile-compare=/);
+  const inactiveAnchor = renderFunction(
+    { ATLAS_ENTITY_ROUTE: route },c,1592,"manual",
+    ()=>"AD 1592",(code)=>code,escapeHtml,()=>"Polity",()=>"AD 1592"
+  )(summary);
+  assert.doesNotMatch(inactiveAnchor,/data-spacetime-meanwhile-compare=/);
 });
 
 test("UI-07 Meanwhile compare click validates current selection and real filtered evidence without rebuilding canvas", () => {
@@ -82,7 +87,7 @@ test("UI-07 Meanwhile compare click validates current selection and real filtere
     source
   );
   const window = {ATLAS_ENTITY_ROUTE:route,dispatchEvent(event){events.push(event);}};
-  const summary = {entries:[{person_id:b,macroregion_code:"europe"}]};
+  const summary = {entries:[{person_id:a,macroregion_code:"east_asia"},{person_id:b,macroregion_code:"europe"}]};
   const bound = create(mount,summary,()=>"",()=>{},()=>{},"",()=>{},a,window,Event);
   button.click();
   assert.equal(events.length,1);
@@ -93,6 +98,10 @@ test("UI-07 Meanwhile compare click validates current selection and real filtere
   button.click();
   assert.equal(events.length,1,"A hidden region cannot initiate an unrelated compare event");
   assert.equal(forged.wasResuming(),false);
+  const unplaced = create(mount,summary,()=>"",()=>{},()=>{},"",()=>{},c,window,Event);
+  button.click();
+  assert.equal(events.length,1,"The selected Person must itself be active in the chosen year");
+  assert.equal(unplaced.wasResuming(),false);
 });
 
 test("UI-07 authority router opens verified canonical pair with preserved History and no forged navigation", () => {
