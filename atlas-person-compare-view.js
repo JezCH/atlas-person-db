@@ -130,9 +130,10 @@
       || start?.status === "ongoing") return Object.freeze({ usable:false });
     const boundaries = [start,end];
     const calendars = boundaries.map((value) => text(value?.calendar).toLowerCase());
+    const knownCalendar = (code) => code === "gregorian" || code === "julian";
     const documented = boundaries.every((value) =>
       value?.certainty === "exact" && value?.granularity === "year")
-      && Boolean(calendars[0]) && calendars[0] === calendars[1]
+      && knownCalendar(calendars[0]) && calendars[0] === calendars[1]
       && !/conflict|disput|unreview|unresolved|approx|uncertain/i.test(text(activity?.chronology_status));
     return Object.freeze({
       usable:true, first, last, documented, calendar:calendars[0] || null,
