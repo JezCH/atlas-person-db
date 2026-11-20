@@ -604,7 +604,7 @@ async function main() {
     // Activity origin, a different Person and the in-session origin return.
     // Runs within the existing Spacetime Chrome script, not a fourth
     // automatic paid workflow or a synthetic fixture.
-    const origin = await evaluate(client, \`(() => {
+    const origin = await evaluate(client, `(() => {
       const state=window.ATLAS_PERSON_SPACETIME_VIEW?.captureExplorationState?.();
       const scroll=document.querySelector(".spacetime-scroll");
       return {
@@ -619,12 +619,12 @@ async function main() {
         origin:state?.activityOrigin||null,
         route:location.hash
       };
-    })()\`);
+    })()`);
     assert(origin.personId && origin.activityId && Number.isInteger(origin.moment),
       "UI-06B actual Activity was not selected with an evidence-backed historical moment", origin);
     assert(origin.returnVisible && origin.origin?.activityId===origin.activityId,
       "UI-06B first Activity selection did not expose an accessible origin-return control",origin);
-    const switched = await evaluate(client, \`(() => {
+    const switched = await evaluate(client, `(() => {
       const current="__ID_REPLACED__";
       const button=[...document.querySelectorAll("[data-spacetime-meanwhile-person]")]
         .find((el)=>el.dataset.spacetimeMeanwhilePerson!==current)
@@ -633,34 +633,34 @@ async function main() {
       const next=button.dataset.spacetimeMeanwhilePerson||null;
       button.click();
       return {attempted:true,next,route:location.hash};
-    })()\`.replace("__ID_REPLACED__",JSON.stringify(origin.personId)));
+    })()`.replace("__ID_REPLACED__",JSON.stringify(origin.personId)));
     assert(switched.attempted,
       "The real Spacetime world did not offer a second registered Person for origin-return acceptance",
       {origin,switched});
     await waitFor(client,
-      \`window.ATLAS_PERSON_SPACETIME_VIEW?.captureExplorationState?.()?.selectedPersonId !== \${JSON.stringify(origin.personId)} && Boolean(document.querySelector("#spacetimeReturnToActivity"))\`,
+      `window.ATLAS_PERSON_SPACETIME_VIEW?.captureExplorationState?.()?.selectedPersonId !== ${JSON.stringify(origin.personId)} && Boolean(document.querySelector("#spacetimeReturnToActivity"))`,
       25000);
-    const visited=await evaluate(client,\`(() => ({
+    const visited=await evaluate(client,`(() => ({
       personId:window.ATLAS_PERSON_SPACETIME_VIEW?.captureExplorationState?.()?.selectedPersonId,
       returnVisible:Boolean(document.querySelector("#spacetimeReturnToActivity")),
       route:location.hash
-    }))()\`);
+    }))()`);
     assert(visited.personId && visited.personId!==origin.personId&&visited.returnVisible,
       "UI-06B second Person should remain in the same historical exploration",visited);
-    await evaluate(client,\`(() => {
+    await evaluate(client,`(() => {
       const button=document.querySelector("#spacetimeReturnToActivity");
       if(!button)throw new Error("UI06B_ORIGIN_BUTTON_LOST");
       button.click();
       return true;
-    })()\`);
+    })()`);
     await waitFor(client,
-      \`(() => {const s=window.ATLAS_PERSON_SPACETIME_VIEW?.captureExplorationState?.();
-        return s?.selectedPersonId===\${JSON.stringify(origin.personId)}
-          && s?.selectedActivityId===\${JSON.stringify(origin.activityId)}
-          && s?.meanwhileOrdinal===\${Number(origin.moment)};
-      })()\`,30000);
+      `(() => {const s=window.ATLAS_PERSON_SPACETIME_VIEW?.captureExplorationState?.();
+        return s?.selectedPersonId===${JSON.stringify(origin.personId)}
+          && s?.selectedActivityId===${JSON.stringify(origin.activityId)}
+          && s?.meanwhileOrdinal===${Number(origin.moment)};
+      })()`,30000);
     await sleep(350);
-    const restored=await evaluate(client,\`(() => {
+    const restored=await evaluate(client,`(() => {
       const state=window.ATLAS_PERSON_SPACETIME_VIEW?.captureExplorationState?.();
       const scroll=document.querySelector(".spacetime-scroll");
       return {
@@ -670,7 +670,7 @@ async function main() {
         buttonVisible:Boolean(document.querySelector("#spacetimeReturnToActivity")),
         route:location.hash
       };
-    })()\`);
+    })()`);
     assert(restored.personId===origin.personId&&restored.activityId===origin.activityId
       &&restored.moment===origin.moment&&restored.query===origin.query
       &&Math.abs(Number(restored.zoom)-Number(origin.zoom))<1e-6,
