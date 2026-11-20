@@ -1,0 +1,60 @@
+/* UI-07: two-person compare bridge, scoped to the existing Meanwhile cards only.
+   No world-canvas width, coordinate, camera, axis, or activity layout changes. */
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-activities > .spacetime-meanwhile-compare-row {
+  flex: 0 0 250px;
+  width: 250px;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 55px;
+  align-items: stretch;
+  gap: 1px;
+  background: #323940;
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-compare-row > [data-spacetime-meanwhile-person] {
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  overflow: hidden;
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-compare-row > [data-spacetime-meanwhile-person]:only-child {
+  grid-column: 1 / -1;
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-compare-row > [data-spacetime-meanwhile-compare] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-template-areas: none;
+  min-width: 0;
+  width: 55px;
+  max-width: none;
+  padding: 8px 4px;
+  border: 1px solid rgba(201,177,130,.40);
+  border-radius: 0;
+  background: #293038;
+  color: #eed7aa;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.3;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-compare-row > [data-spacetime-meanwhile-compare]:hover {
+  background: #3e3a32;
+  border-color: #d5bc87;
+  color: #fff1d4;
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-compare-row > [data-spacetime-meanwhile-compare]:focus-visible {
+  outline: 2px solid #f0d9a5;
+  outline-offset: -2px;
+}
+@media (max-width: 760px) {
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-activities > .spacetime-meanwhile-compare-row {
+    flex-basis: 225px;
+    width: 225px;
+    grid-template-columns: minmax(0,1fr) 56px;
+  }
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-compare-row > [data-spacetime-meanwhile-compare] {
+    width: 56px;
+    min-height: 40px;
+  }
+}
