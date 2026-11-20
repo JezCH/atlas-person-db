@@ -55,6 +55,7 @@ test("Activity origin and return helpers restore real camera, query and Meanwhil
     let meanwhileSelectedOrdinal=1592;
     let meanwhileSelectionSource="activity";
     let meanwhileRegionCode="europe";
+    let meanwhilePolityId="";
     let pendingViewportHorizontalRatio=null;
     let pendingViewportCameraOrdinal=null;
     let externalFocusPersonId=null;
