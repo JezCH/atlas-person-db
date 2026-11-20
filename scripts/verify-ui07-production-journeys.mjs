@@ -43,10 +43,10 @@ async function evaluate(c,fn,...args){
   if(v.exceptionDetails)throw new Error(v.exceptionDetails.exception?.description||v.exceptionDetails.text||"Chrome evaluation failed");
   return v.result?.value;
 }
-async function until(c,fn,timeout=45000){
+async function until(c,fn,timeout=45000,...args){
   const start=Date.now();
   while(Date.now()-start<timeout){
-    try{const v=await evaluate(c,fn);if(v)return v}catch{}
+    try{const v=await evaluate(c,fn,...args);if(v)return v}catch{}
     await pause(220);
   }
   throw new Error("Timed out waiting for real browser condition: "+fn.toString().slice(0,280));
@@ -157,7 +157,7 @@ async function openSpacetimeYear(c,year){
   await until(c,()=>{
     const form=document.querySelector("#spacetimeMeanwhileYearForm");
     const panel=document.querySelector(".spacetime-meanwhile");
-    return Boolean(form&&panel&&form.querySelector("input")?.value);
+    return Boolean(form&&panel&&!panel.classList.contains("is-empty")&&form.querySelector("input")?.value);
   },60000);
   await pause(300);
   return evaluate(c,()=>({
@@ -221,7 +221,7 @@ async function verifySpacetimeJourney(c){
   await evaluate(c,()=>document.querySelector("#personComparePanel [data-compare-return-spacetime]")?.click());
   await until(c,()=>window.ATLAS_MAIN_AUTHORITY_NAV?.getDomain()==="spacetime"&&
     Boolean(document.querySelector(".spacetime-frame"))&&
-    document.querySelector("#spacetimeMeanwhileYearInput")?.value===String(selectedYear),90000);
+    document.querySelector("#spacetimeMeanwhileYearInput")?.value===String(year),90000,selectedYear);
   await pause(450);
   const after=await evaluate(c,()=>({
     hash:location.hash,year:document.querySelector("#spacetimeMeanwhileYearInput")?.value,
@@ -257,11 +257,11 @@ async function verifySpacetimeJourney(c){
       [...document.querySelectorAll("[data-spacetime-meanwhile-person]")]
         .find(x=>x.dataset.spacetimeMeanwhilePerson!==personId)?.click();
     },first);
-    await until(c,()=>window.ATLAS_PERSON_SPACETIME_VIEW?.captureExplorationState?.()?.selectedPersonId!==first,30000);
+    await until(c,(personId)=>window.ATLAS_PERSON_SPACETIME_VIEW?.captureExplorationState?.()?.selectedPersonId!==personId,30000,first);
   }
   await evaluate(c,()=>document.querySelector("#spacetimeReturnToActivity")?.click());
-  await until(c,()=>window.ATLAS_PERSON_SPACETIME_VIEW?.captureExplorationState?.()?.selectedPersonId===first&&
-    Boolean(document.querySelector("#spacetimeReturnToActivity")),60000);
+  await until(c,(personId)=>window.ATLAS_PERSON_SPACETIME_VIEW?.captureExplorationState?.()?.selectedPersonId===personId&&
+    Boolean(document.querySelector("#spacetimeReturnToActivity")),60000,first);
   const activityAfter=await evaluate(c,()=>({
     hash:location.hash,year:document.querySelector("#spacetimeMeanwhileYearInput")?.value,
     person:window.ATLAS_PERSON_SPACETIME_VIEW.captureExplorationState()?.selectedPersonId
