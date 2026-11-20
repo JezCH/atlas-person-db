@@ -15,7 +15,7 @@ test("UI-07 Chromium acceptance runs in the existing Production smoke without ex
   assert.equal(typeof verifyUi07MobileJourney,"function");
   assert.match(smoke,/import \{ verifyUi07DesktopJourney, verifyUi07MobileJourney \} from "\.\/verify-ui07-production-journey\.mjs"/);
   assert.match(smoke,/const ui07Desktop = await verifyUi07DesktopJourney\(client, ui07Helpers\)/);
-  assert.match(smoke,/const ui07Mobile = await verifyUi07MobileJourney\(client, ui07Desktop\.pair, ui07Helpers, PRODUCTION_URL\)/);
+  assert.match(smoke,/const ui07Mobile = await verifyUi07MobileJourney\(client, ui07Helpers, ui07Desktop\.pair, PRODUCTION_URL\)/);
   assert.match(smoke,/ui06b_roundtrip:ui06bRoundtrip/);
   assert.match(smoke,/ui07_desktop_roundtrip:ui07Desktop/);
   assert.match(smoke,/ui07_mobile_roundtrip:ui07Mobile/);
