@@ -23,6 +23,29 @@
 
 **바로 다음 독립 실행:** 기존 Chrome/브라우저 수단을 활용한 위 UI-02·UI-07 두 수용을 우선하고, 별도로 [#2761](https://github.com/JezCH/atlas-person-db/pull/2761) deep History 실제 Production manual workflow 수용. 도구/권한이 없으면 그대로 PENDING으로 기록하고 다른 독립 승인 작업 진행. Vercel Hobby 반복 호출/새 자동 실행기/유료 API/중복 PR 생성 금지. 새 데이터/스키마/P14/대량 초상은 포함하지 않는다.
 
+## 2026-11-20 전면 UI 체감 품질 실행 패키지 — VIS-00~VIS-07 (ACTIVE)
+
+> **근거 및 범위:** 사용자는 기존 PC 인명·모바일 명부·시공간 3건만의 수정을 거부하고 **전체 ATLAS 화면을 동일한 판독성/정보 배열/공간 효율/실제 역사 탐험 기준으로 재검토·개선**하도록 지시했다. 상위 [UI 제품화 계획의 2026-11-20 전면 가독성 수용계약](ATLAS_UI_DELIVERY_PLAN.md)을 따른다. 이 단위는 UI-01~07, QA/REG/DETAIL/SHELL/A11Y/ADMIN에 **귀속**하며 새 독립 디자인 큐나 자동 승인된 기능 확장이 아니다.
+>
+> 증거: [2026-11-20 이전 Production SHA 54598faf Chrome 캡처/JSON #44662938810](https://github.com/JezCH/atlas-person-db/actions/runs/44662938810) 및 [#1896 전면 감사](https://github.com/JezCH/atlas-person-db/issues/1896#issuecomment-7028385317). 해당 SHA 이후 **#2756 2단 모바일 명부, #2760 비교 결과 scroll/focus, #2761 History 검사, #2762 무초상 상세**가 반영됐다. 이를 다시 개발하거나 이전 SHA의 시각적 결함을 최신 결함으로 단정하지 말 것.
+
+| 작업 ID / 기존 owner | 최우선 사용자 결과 | 구체 소스 범위(변경 전 재확인) | 정확한 인수/중복 방지 |
+| --- | --- | --- | --- |
+| **VIS-00 / QA-01~03** | 이미 병합된 UI 변경의 사용자 가시 효과 확인 | 기존 production Chrome acceptance / #1896 | #2756 모바일 2단·#2762 유/무초상·#2760 비교 scroll/focus·#2761 native History를 **현행 Production exact SHA**로 확인. CI/READY/기존 구버전 PASS 재사용 금지. 자동 기존 검사 통과만으로 UX 합격 금지 |
+| **VIS-01 / REG-01/02** | 1600/390 화면에서 **이름·기간·정치체·다중 Activity가 정돈되어 잘 읽힘** | atlas-person-monumental-register.css, atlas-person-table-view.js/css, atlas-person-era-navigation.css | PC 이름/활동 폰트·계층, 모바일 #2756 2단 그리드/행간·장문/다중 Activity/연대 미상. 기존 행·관계·Source/검색·정렬·시대·분야 유지. 이전 #2746 가로 397px 문제는 당시 수정 전 기준일 뿐 |
+| **VIS-02 / QA-02, UI-03** | 첫 화면부터 실제 인물을 발견하고 확대해도 **인명이 읽힘** | atlas-person-spacetime-view.js, atlas-person-spacetime-monumental-canvas.css, atlas-person-spacetime-mobile-v8.css, atlas-person-spacetime-label-engine.js, 실제 충돌/LOD owner | PC 500%, 모바일 390, 고확대 1500%에서 빈 화면 발견/검색·이동, 이름·눈금·범례/Inspector, 실제 중첩·가림/라벨 개수. **CSS 글자 크기와 label metrics/packing을 같이 검증**. historical world X/Y·region ratio·camera·LOD·History 불변 |
+| **VIS-03 / DETAIL-01, UI-02** | 인물·정치체 화면에서 **역사 사실/탐색 행동을 먼저** 봄 | atlas-person-chronicle-detail.css, atlas-person-main.js, atlas-polity-review-workbench.css, 관련 Polity DOM owner | #2762 무초상 축소는 재사용. 출처·Activity 우선, 유초상 디자인 보호. 정치체 검색·목록이 소개·KPI에 밀리는지 현행 모바일 첫 화면 확인 후 국소 교정. retired/redirect·Source/Role/Relation 유지 |
+| **VIS-04 / SHELL-01, QA-03** | 대시보드·메뉴·시대/분야/검색에서 즉시 탐색할 수 있음 | atlas-dashboard.css, atlas-dashboard-monumental-v11.css, atlas-ui-mobile-v8.css, atlas-ui-visual-foundation.css, atlas-person-era-navigation.css, nav DOM owner | 6~10px dashboard caption/7~9px era·분야 label은 **코드 위험**. Dashboard 실화면 부재이므로 현행 브라우저 확인 후 필요부만 개선. 메뉴 탐색 우선순위·사용자 지향 빈/오류 상태, 터치영역 측정 |
+| **VIS-05 / COMP-01~03, ADMIN-01** | 비교와 등록검토에서 **판정에 중요한 원문이 명확히 보임** | atlas-person-compare-view.css, atlas-registration-review.css, 실제 Admin owner | 비교 A/B 기간·근거 먼저, 경고/반복 제목 시각 위계 조절. 기존 #2760 scroll/focus 보호. Admin은 권한·원시 provenance/UUID 보존, 헤더/상태 readable·오작동/비인가 없음. Admin도 현재 실화면 미검증 시 FAIL 단정 금지 |
+| **VIS-06 / A11Y-01, I18N-01** | 모바일·확대·키보드에서 같은 사실과 동작에 접근 | 실제 수정 표면 CSS/JS owner만 | 390/600/768/1440/1600px, 200/400% 확대, Tab/Shift+Tab/Enter/Escape/Back, 키보드 focus, 44px 내외 실터치 목표, 긴 한/영 이름, BCE/CE/근사·ongoing·미상·Source 0/다수. 역사 원문 숨김·가짜 생성·임의 색 의미 변화 금지 |
+| **VIS-07 / SHELL/A11Y/PERF** | 화면 간 스타일 일관성과 원래 탐험 상태 보존 | index.html 스타일 로드 순서, 현재 owner stylesheet, navigation/history/LOD JS **실제로 증상 발생한 부분만** | computed winning CSS·기존 media/!important 중복 원인 확인, 불필요한 덮어쓰기 *제거* 우선. 데이터 로딩/Origin 비용·재렌더/상태 복귀 악화 금지. 결과는 Production 인물표/상세/정치체/시공간/비교/대시보드/Admin 각각 별도 수용 |
+
+**작업 실행 판별:** VIS-00의 실제 미완료 수용을 우선하되, 각 화면의 직접 재현 가능한 미해결 결함은 **검증·수정·통합 가능한 독립 단위**로 이어간다. 외관만 수정한 것은 대상 캡처 전후 비교를 필수로 한다. 글자를 키워 겹치거나 중요한 정보를 숨긴 경우에는 합격하지 않는다. 현재/과거 source mixed state를 섞지 않는다.
+
+**지켜야 할 원본:** 기존 표형 Person register(카드 전환 금지), 초상은 이미 등록된 자산만, 8분야 의미색·금색, 역사적 Activity/period basis/precision/calendar/Source/certainty, Person↔Polity identity, 시공간 고정 세계·시간 좌표/LOD/camera. P14·대량 초상·역사 데이터/DB/API·추가 유료 인프라는 이번 UI 계획에 포함하지 않는다.
+
+**종결 상태:** 개별 `VIS-xx | 실제 current SHA 기준 화면/스크린샷 | 재현 증상 | 실제 수정 파일·PR | CI | MERGED | PRODUCTION SHA/HTTP | BROWSER_ACCEPTED | USER_VISUAL_APPROVED | 남은 문제`로 #1896에 기록. **본 표 자체는 PLAN_RECORDED일 뿐 기능·시각 수용 완료가 아니다.** 구버전 Chrome 시각 증거는 '당시 PASS'로만 분류한다.
+
 ## 1. 완료 상태와 안전 경계
 
 CODE_CHANGED / FOCUSED_TEST_PASS / EXACT_HEAD_CI_PASS / MERGED / PRODUCTION_ASSET_HTTP_VERIFIED / BROWSER_ACCEPTED / USER_VISUAL_APPROVED는 **각각 서로 다른 단계**다. READY 또는 병합만으로 실제 UI가 완성되었다고 집계하지 않는다. 인증 제한·브라우저 도구 미제공·무료 플랜 자원 부족 시 마지막으로 검증한 단계까지 기록하고 **별개로 수행 가능한 단위**는 이어서 처리한다.
