@@ -78,6 +78,66 @@
 @media(max-width:520px){.polity-dossier-overview,.polity-dossier-identity{grid-template-columns:1fr}.polity-dossier-person>header button{min-height:44px}}
 
 
+/* VIS-03 — Mobile Polity information-first experience.
+ * The real search/list now precedes the operational dataset in DOM order.
+ * Six canonical statistics, person/activity evidence, UUIDs and review tools
+ * remain in the page: no hidden historical content or invented entities. */
+@media (max-width: 700px) {
+  .polity-browser-summary {
+    gap: 10px;
+    padding: 12px 14px;
+  }
+  .polity-browser-summary h2 {
+    margin-bottom: 4px;
+    font-size: 25px;
+  }
+  .polity-browser-summary p:not(.eyebrow) {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .polity-browser-controls {
+    gap: 8px;
+    padding: 12px;
+  }
+  .polity-browser-controls input[type="search"] {
+    min-height: 44px;
+    min-width: 0;
+    font-size: 16px;
+  }
+  .polity-browser-filters button,
+  .polity-browser-controls select {
+    min-height: 44px;
+    font-size: 12px;
+  }
+  .polity-browser-dataset {
+    padding: 12px;
+  }
+  .polity-browser-kpis {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+  }
+  .polity-browser-kpis > div {
+    min-width: 0;
+    padding: 8px 7px;
+  }
+  .polity-browser-kpis small {
+    font-size: 11px;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+  }
+  .polity-browser-card > summary {
+    padding: 12px 14px;
+  }
+  .polity-browser-title strong {
+    font-size: 17px;
+  }
+}
+@media (max-width: 360px) {
+  .polity-browser-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 /* UI POL-C1 — Polity plaque material.
  * Visual-only refinement for canonical Polity browser cards and dossier panels.
  * Structure, grid geometry, spacing, typography scale, data semantics, routing,
@@ -436,3 +496,4 @@
   color: var(--atlas-text-strong);
   font-variant-numeric: tabular-nums;
 }
+
