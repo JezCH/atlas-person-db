@@ -557,13 +557,25 @@
       if (serial !== comparisonRequestSerial || !panel.isConnected
         || ids.some((id, index) => comparisonIds[index] !== id)) return;
       if (!compareView?.render) throw new Error("PERSON_COMPARE_VIEW_UNAVAILABLE");
-      panel.innerHTML = compareView.render(records);
+      panel.innerHTML = compareView.render(records, {
+        returnToExploration: Boolean(window.ATLAS_MAIN_AUTHORITY_NAV?.getExplorationReturnHash?.())
+      });
     } catch (error) {
       if (serial !== comparisonRequestSerial || !panel.isConnected) return;
       console.error("ATLAS Person comparison failed", error);
       panel.innerHTML = '<p class="atlas-compare-disclaimer" role="alert">인물 비교 자료를 불러오지 못했습니다. 다른 인물을 선택하거나 다시 시도해 주세요.</p>' +
         '<button type="button" data-compare-close>비교 닫기</button>';
     }
+  }
+
+  function openComparison(personIds) {
+    const routeModel = window.ATLAS_ENTITY_ROUTE;
+    if (!Array.isArray(personIds) || personIds.length !== 2) return false;
+    const ids = personIds.map((id) => routeModel?.normalizeUuid?.(id) || null);
+    if (!ids[0] || !ids[1] || ids[0] === ids[1]) return false;
+    comparisonIds = ids;
+    void renderComparisonPanel();
+    return true;
   }
 
   function renderDetail(person) {
@@ -1055,6 +1067,10 @@
       if (card) selectPerson(card.dataset.personId);
     });
     comparePanel?.addEventListener("click", (event) => {
+      if (event.target.closest("[data-compare-return-spacetime]")) {
+        window.dispatchEvent(new CustomEvent("atlas-person-return-to-exploration"));
+        return;
+      }
       if (event.target.closest("[data-compare-close]")) {
         comparisonIds = [];
         void renderComparisonPanel();
@@ -1146,6 +1162,7 @@
     loadPersons,
     selectPerson,
     openPerson,
+    openComparison,
     clearSelection,
     getSelectedPersonId:() => selectedPersonId,
     renderGroups,
