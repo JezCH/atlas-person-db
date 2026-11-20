@@ -141,10 +141,10 @@ jobs:
           # every small commit. Full run is an explicit manual release review.
           node scripts/verify-spacetime-production-visual.mjs
           node scripts/verify-ui-v10-production-visual.mjs
-          node scripts/verify-ui07-production-journeys.mjs
           node scripts/verify-polity-production-visual.mjs
           if [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]]; then
             echo "Running explicit complete Production visual release acceptance"
+            node scripts/verify-ui07-production-journeys.mjs
             node --check scripts/verify-vis2-11-production-polity-dashboard.mjs
             node --check scripts/verify-vis2-12-production-interaction-motion.mjs
             node --check scripts/verify-vis2-13-production-keyboard-density.mjs
