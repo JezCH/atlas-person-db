@@ -24,6 +24,10 @@ export function auditSharedSourceUrls(snapshot) {
     if (!source || typeof source.id !== 'string' || !source.id ||
         typeof source.source_key !== 'string' || !source.source_key ||
         byId.has(source.id)) throw new Error('SOURCE_URL_AUDIT_INVALID_SOURCE_ID');
+    if (typeof source.title !== 'string' || !source.title.trim() ||
+        typeof source.source_type !== 'string' || !source.source_type.trim()) {
+      throw new Error('SOURCE_URL_AUDIT_INVALID_SOURCE_BIBLIOGRAPHY');
+    }
     if (sourceKeys.has(source.source_key)) throw new Error('SOURCE_URL_AUDIT_DUPLICATE_SOURCE_KEY');
     sourceKeys.add(source.source_key);
     byId.set(source.id, source);
@@ -184,4 +188,5 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     process.exitCode = 1;
   }
 }
+
 

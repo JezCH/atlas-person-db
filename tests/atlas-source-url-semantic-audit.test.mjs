@@ -187,3 +187,14 @@ test('rejects duplicate canonical Activity–Source links even with a unique Run
   assert.throws(() => auditSharedSourceUrls(data), /DUPLICATE_ACTIVITY_SOURCE_LINK/);
 });
 
+
+test('rejects incomplete canonical bibliography before classifying shared URLs', () => {
+  for (const [field, invalid] of [
+    ['title', undefined], ['title', '   '], ['source_type', null], ['source_type', 42]
+  ]) {
+    const input = fixture();
+    input.raw.sources[0][field] = invalid;
+    assert.throws(() => auditSharedSourceUrls(input), /SOURCE_URL_AUDIT_INVALID_SOURCE_BIBLIOGRAPHY/);
+  }
+});
+
