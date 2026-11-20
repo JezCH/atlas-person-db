@@ -187,12 +187,12 @@
   function ensureDashboardAssets() {
     if (window.ATLAS_DASHBOARD) return Promise.resolve(window.ATLAS_DASHBOARD);
     if (dashboardAssetsPromise) return dashboardAssetsPromise;
-    appendStylesheetOnce("./atlas-dashboard.css?v=20261001-canonical-nontimeline-v1");
+    appendStylesheetOnce("./atlas-dashboard.css?v=20261001-canonical-nontimeline-v1&ui=20261120-readable-matrices-v1");
     appendStylesheetOnce("./atlas-dashboard-monumental-v11.css?v=20261010-vis3-05t-d-kpi-caption-v1");
     appendVis211FinishLast("./atlas-vis2-11-polity-dashboard-archive.css?v=20261009-vis2-11-v1");
     dashboardAssetsPromise = ensureSpacetimeModel()
       .then(() => loadScriptOnce("./atlas-dashboard-model.js?v=20261001-canonical-nontimeline-v1", () => Boolean(window.ATLAS_DASHBOARD_MODEL)))
-      .then(() => loadScriptOnce("./atlas-dashboard.js?v=20261001-canonical-nontimeline-v1", () => Boolean(window.ATLAS_DASHBOARD)))
+      .then(() => loadScriptOnce("./atlas-dashboard.js?v=20261001-canonical-nontimeline-v1&ui=20261120-readable-matrices-v1", () => Boolean(window.ATLAS_DASHBOARD)))
       .then(() => window.ATLAS_DASHBOARD)
       .catch((error) => {
         dashboardAssetsPromise = null;
