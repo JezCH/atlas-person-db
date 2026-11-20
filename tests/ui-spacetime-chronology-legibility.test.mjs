@@ -55,3 +55,18 @@ test("UI-03A responsive hierarchy and deployed lazy stylesheet versions stay att
   assert.match(read("atlas-person-spacetime-view.js"), /const CAMERA_DEFAULT_ZOOM = 5;/);
   assert.match(read("atlas-person-spacetime-view.js"), /const GLOBAL_EXTENT_COMPRESSION = 0\.748;/);
 });
+
+test("UI-03 semantic tiers separate region titles and mobile blank canvas offers real navigation", () => {
+  const axis = read("atlas-person-spacetime-semantic-axis.js");
+  const view = read("atlas-person-spacetime-view.js");
+  assert.match(axis, /macro_opacity: 1/);
+  assert.match(canvas, /\.spacetime-region-head-layer\.is-subregion \.spacetime-region-head-band \{\s*top: calc\(var\(--spacetime-header-height,36px\) \/ 2\)/);
+  assert.match(canvas, /\.spacetime-region-head-layer\.is-macro \.spacetime-region-head-band \{\s*top: 0/);
+  assert.match(canvas, /\.spacetime-region-head-layer \.spacetime-region-head-band small \{\s*display: none/);
+  assert.match(view, /data-spacetime-space-stage="/);
+  assert.match(view, /id="spacetimeViewportEmptyHint"/);
+  assert.match(view, /emptyHint\.hidden = Boolean\(state\.needle\) \|\| personItems\.length > 0/);
+  assert.match(view, /selectPerson\(mount, nearest\.person_id, \{ focus: true \}\)/);
+  assert.match(mobile, /\.spacetime-viewport-empty\[hidden\] \{ display: none !important/);
+  assert.match(view, /const CAMERA_DEFAULT_ZOOM = 5/);
+});

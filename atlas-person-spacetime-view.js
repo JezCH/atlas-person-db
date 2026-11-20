@@ -1611,7 +1611,7 @@
 
       if (signature !== lastSignature) {
         const emptyHint = mount.querySelector("#spacetimeViewportEmptyHint");
-        if (emptyHint) emptyHint.hidden = Boolean(state.needle) || segmentTracks.length > 0;
+        if (emptyHint) emptyHint.hidden = Boolean(state.needle) || personItems.length > 0;
         const labelPack = packTrackLabels(personItems, state.timelineHeight, state.contentWidth, Boolean(state.needle), cullRect);
         const railLayer = mount.querySelector("#spacetimeRailLayer");
         const uncertaintyLayer = mount.querySelector("#spacetimeUncertaintyLayer");

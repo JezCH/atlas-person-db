@@ -55,8 +55,8 @@ test("subregion context remains available across the widened range", () => {
   assert.match(view, /semanticAxis\.buildSpaceHeaderPlan\(compiled\.continuum, contentWidth, cameraZoom, spatialCompile\.REVIEWED_PLACE_BINDINGS\)/);
   assert.match(view, /spacetime-region-head-layer is-subregion/);
   assert.match(semanticAxis, /PLACE_DETAIL_START_ZOOM = 7\.2/);
-  assert.match(semanticAxis, /stage: zoom > PLACE_DETAIL_START_ZOOM \? "place" : "subregion"/);
-  assert.match(semanticAxis, /subregion_opacity: 1 - 0\.18 \* placeOpacity/);
+  assert.match(semanticAxis, /stage: macroOnly \? "macroregion" : zoom > PLACE_DETAIL_START_ZOOM \? "place" : "subregion"/);
+  assert.match(semanticAxis, /subregion_opacity: subregionReadability \* \(1 - 0\.18 \* placeOpacity\)/);
   assert.doesNotMatch(semanticAxis, /stage: "macroregion"/);
 });
 
