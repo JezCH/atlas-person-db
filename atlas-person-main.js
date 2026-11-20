@@ -742,7 +742,9 @@
   }
 
   function syncSelectedPersonRow(previousId, nextId) {
-    if (!personListLoaded) return;
+    // Direct links without the full register still need the lightweight
+    // "전체 인물 목록 보기" placeholder. Never rebuild loaded Person rows.
+    if (!personListLoaded) { renderGroups(); return; }
     const list = document.getElementById("personMainGroups");
     if (!list?.querySelector) return;
     // UUID-only selectors are safe and touch at most the old and new row.
