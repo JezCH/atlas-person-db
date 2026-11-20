@@ -1243,7 +1243,7 @@
     grid-column: 1 / -1;
     grid-row: 2;
     min-width: 0;
-    padding: 0 10px 0 11px;
+    padding: 0 0 0 11px;
   }
   .person-monumental-register .person-register-entry.has-multiple-activities {
     grid-template-areas:
