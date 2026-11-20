@@ -8,13 +8,31 @@
 >
 > 목표: 기존 제품의 역사 전체 조망 → 인물 검색·명부 → 활동/정치체/Source 상세 → 시공간 동시대 → 두 인물 실제 활동 비교 → 원래 탐색 위치 복귀를 PC·모바일·키보드에서 정확하고 아름답게 수행한다. 기존 밀집 인물표를 카드/초상 중심 화면으로 바꾸지 않으며 실제 연대·지리·8분야색·Source 의미를 손상하지 않는다.
 
+
+## 2026-11-20 최신 인수 이후 **UI-03 P3/P4/P5 + 전 화면 실제 실행** 연결
+
+> **상위 통합 포트폴리오:** [ATLAS 전체 12영역 실행계획](../ATLAS_PRODUCT_UPGRADE_ROADMAP_20261120.md#1a-production-차단-이후-전체-통합-실행계획--2026-11-20). 이 절은 기존 UI-03A/B·VIS-02와 VIS-00~07의 **현재 실행 대상만 교정**하며 새 프로젝트·예약·지도 P14·데이터 writer를 열지 않는다. 정확한 사용자 인수 원장은 [UI #1896](https://github.com/JezCH/atlas-person-db/issues/1896).
+
+| 단위 | 현재 검증된 전제 | 실제 구현·수용 다음 단위 | 중단/성공 조건 |
+| --- | --- | --- | --- |
+| **UI03-P0/P1/P2** | #2776 MERGED·Production READY; #2781 exact-SHA Chrome PASS. 500% Person 43/43, deferred 0, visible rail-label parity, Place source 20건/marker group 14건, global Place header overlap 0 | 완료한 렌더러·header·모바일 CTA 코드를 **재구현하지 않음**; 이 시점 인수는 사용자 미감 확정과 별개 | 기존 자료/등록 Person/Activity/좌표·region width 그대로 |
+| **UI03-P3a** | 500% Person 43명 중 37개의 표시용 label이 자기 하위권역 시각 경계를 초과. 이름/연대 누락 0인 Chrome 근거 | 현재 실제 font metric·label box·rail connector·zoom/LOD·열 너비 비교. 범위 초과가 실제 이름–활동선 관계를 혼동시키는 표본부터 수정. 하위권역 너비 변경·인명 축약·숨김 없이 가독성 확보 | 경계 초과 건수만 0으로 만들어 인물 의미를 왜곡하면 실패; viewport 밖 전체와 고밀도·모바일 동시 확인 |
+| **UI03-P3b** | #2783 선택 Person 연결선 강조 PR OPEN; PR의 최신 head/CI 상태 재조회 필요 | 기존 코드 PR에 기능/상태 표시를 추가로 중복 작성하지 말고, 현행 CI/review/merge gate 확인→Production→실브라우저 선택·비선택 rail/label 시각 확인 | PR CI 성공만으로 사용자 시각 합격 아님. 이 변경은 P3a 37건 완전 종결이 아님 |
+| **UI03-P4** | 기존 Inspector·Meanwhile·검색/연도·History 기능 이미 구현·병합한 범위 존재 | 기존 500/1500%·390px의 인물 발견, 상세/출처, 탐색 카메라·Back/Forward, 키보드/터치·빈 viewport 확인. 이미 통과한 동일 SHA 여정 재실행 금지 | 실제 Activity/Source/선택/서브리전·연대 보존; missing fact를 표현용 임의 데이터로 보정 금지 |
+| **UI03-P5** | #2781 변경은 exact-SHA Chrome 검증 완료, #2783은 미완료 | 변경된 새 head만 기존 bounded Chrome 시각 인수: 1600/390, 500/1500, global overlap·deferred·ID 동등·사용자 최종 시각 비교 | CODE·CI·MERGED·READY·BROWSER·USER 상태 분리; 원본 20 Place source와 8분야색·world X/historical Y 불변 |
+| **VIS-00~07** | #2756/#2760/#2761/#2762/#2774/#2777/#2778 일부 코드/배포 출고 | Person register·유/무초상 Detail·Polity search·Dashboard·2인 비교·Back/History·Main/Admin·I18N/A11Y·비용 측면의 실제 불합격 **표면만** 해당 owner 소스에서 수정 | 7개 실제 사용자 여정과 정보원본 일치, 390/600/768/1440/1600; 재현 증상 없으면 새 CSS/PR 불필요 |
+
+**실행 순서:** 정확한 현행 #1896/PR/Production 기준 확인 → 이미 완료한 P0/P1/P2 재개발 금지 → P3a와 #2783(P3b)을 충돌 리소스만 조정하며 처리 → P4 탐험/정보 동작 → P5 exact-SHA 브라우저/사용자 인수 → 다른 VIS 결함 중 독립 작업을 이어간다.
+
+**실제 작업 인수에 필요한 증거:** 고유 task-key, before-state/실제 화면 PNG·DOM/변경 소스, 정확한 PR head·focused tests·전체 CI, merge main SHA, 공식 Production alias/asset/HTTP, 해당 사용자 행동의 시각/키보드·모바일 판정, 남은 이슈. 별도 승인 필요한 사용자 미감·과금·DB·P14/대량 초상은 HOLD에 남긴다.
+
 ## 2026-11-20 UI-03 시공간표 전면 품질 개선 실행계약 — UI-03A/B·VIS-02 (PLAN_RECORDED)
 
 > **최신 사용자 지시:** 현재 시공간표의 글씨 크기, 비율, 배치 전반이 만족스럽지 않다. 폰트 몇 px 확대나 CSS 덧씌우기로 종결하지 말고 **화면 정보 구조·축/공간 비율·이름 배치·도구판 우선순위를 실브라우저 결과 기준으로 다시 정비**한다.
 >
 > **공식 owner:** UI [#1896](https://github.com/JezCH/atlas-person-db/issues/1896), 기존 UI-03A/B·VIS-02 / 기존 총괄·UI 매니저. 새 예약·독립 제품 트랙을 만들지 않는다. 다른 화면의 진행을 막는 전역 게이트도 아니다.
 >
-> **기존 구현 재사용:** [Draft PR #2776](https://github.com/JezCH/atlas-person-db/pull/2776)은 기존 명칭/영역/font metric 1차 보정으로, 아직 MERGED/PRODUCTION/BROWSER/USER 수용이 아니다. 현재 main과 다른 PR의 최신 상태를 확인하여 유효한 수정만 사용한다. 기존 코드와 500%/1500% 검증 계약을 다시 만드는 일은 금지한다.
+> **2026-11-20 최초 설계 대비 진행된 구현:** [#2776](https://github.com/JezCH/atlas-person-db/pull/2776) MERGED·Production READY, [#2781](https://github.com/JezCH/atlas-person-db/pull/2781) MERGED·exact-SHA 실Chrome PASS. 새로운 작업은 상단 현재 실행 표(P3a/P3b/P4/P5)를 따른다. 500%/1500% 계약이나 과거 통과한 테스트를 다시 만들지 않는다.
 
 ### 0. 성공 정의
 
