@@ -734,7 +734,7 @@ async function main() {
     await screenshot(client, "spacetime-mobile-390.png");
 
     // Reuse the same real selected pair, not synthetic historical Person IDs.
-    const ui07Mobile = await verifyUi07MobileJourney(client, ui07Desktop.pair, ui07Helpers, PRODUCTION_URL);
+    const ui07Mobile = await verifyUi07MobileJourney(client, ui07Helpers, ui07Desktop.pair, PRODUCTION_URL);
     console.log("ATLAS_UI07_MOBILE_PRODUCTION_COMPARE_ROUNDTRIP_PASS");
 
     await sleep(500);
