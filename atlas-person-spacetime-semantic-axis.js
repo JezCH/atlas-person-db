@@ -144,6 +144,34 @@
     return Object.freeze(rows);
   }
 
+  // Presentation-only: several reviewed Places can share a subregion's
+  // canonical display anchor. Keep every identity in `places`, and render
+  // a single legible header marker for the shared anchor.
+  function groupReviewedPlaceMarkers(places = []) {
+    const grouped = new Map();
+    for (const place of Array.isArray(places) ? places : []) {
+      const key = String(place.subregion_code || "");
+      if (!key) continue;
+      if (!grouped.has(key)) grouped.set(key, {
+        x:place.x, subregion_code:key, macroregion_code:place.macroregion_code,
+        place_ids:[], place_names:[]
+      });
+      const group = grouped.get(key);
+      group.place_ids.push(place.place_id);
+      group.place_names.push(place.place_name);
+    }
+    return Object.freeze([...grouped.values()].map((group) => Object.freeze({
+      x:group.x,
+      subregion_code:group.subregion_code,
+      macroregion_code:group.macroregion_code,
+      place_ids:Object.freeze(group.place_ids),
+      place_names:Object.freeze(group.place_names),
+      place_count:group.place_names.length,
+      display_label:group.place_names.length > 1 ? `장소 ${group.place_names.length}곳` : group.place_names[0],
+      exact_geographic_coordinate_claimed:false
+    })));
+  }
+
   function buildSpaceHeaderPlan(continuum, contentWidth, zoomInput = MIN_SUPPORTED_ZOOM, reviewedPlaceBindings = []) {
     if (!continuum || !Array.isArray(continuum.macroregions) || !Array.isArray(continuum.subregions)) throw new TypeError("space header requires a spatial continuum");
     const width = Number(contentWidth);
@@ -153,6 +181,7 @@
     // Readability LOD only; no normalized historical region geometry changes.
     const subregionReadability = smoothstep(42, 78, width / continuum.subregions.length);
     const macroOnly = subregionReadability <= 0.04;
+    const places = buildReviewedPlaceGeometry(reviewedPlaceBindings, continuum, width);
     return Object.freeze({
       stage: macroOnly ? "macroregion" : zoom > PLACE_DETAIL_START_ZOOM ? "place" : "subregion",
       stage_label: macroOnly ? "대권역" : zoom > PLACE_DETAIL_START_ZOOM ? "검토된 장소" : "세부 지역",
@@ -161,7 +190,8 @@
       place_opacity: placeOpacity,
       macroregions: buildBandGeometry(continuum.macroregions, width),
       subregions: buildBandGeometry(continuum.subregions, width),
-      places: buildReviewedPlaceGeometry(reviewedPlaceBindings, continuum, width),
+      places,
+      place_groups: groupReviewedPlaceMarkers(places),
       minimum_zoom: MIN_SUPPORTED_ZOOM,
       place_detail_start_zoom: PLACE_DETAIL_START_ZOOM,
       place_detail_full_zoom: PLACE_DETAIL_FULL_ZOOM
@@ -178,6 +208,7 @@
     candidateHistoricalYears,
     buildTimeAxisPlan,
     buildReviewedPlaceGeometry,
+    groupReviewedPlaceMarkers,
     buildSpaceHeaderPlan
   });
 });

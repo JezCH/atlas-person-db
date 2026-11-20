@@ -211,3 +211,31 @@ test("semantic head drops unreadably narrow leaf names without changing the worl
     assert.ok(band.left + band.width <= parent.left + parent.width + 1e-6);
   }
 });
+
+test("reviewed Place header groups shared subregion anchors without losing identity or modifying world X", () => {
+  const continuum = spaceAxis.createSpatialContinuum();
+  const bindings = [
+    {place_id:"pella",place_name:"Pella",macroregion_code:"europe",subregion_code:"balkans"},
+    {place_id:"edirne",place_name:"Edirne",macroregion_code:"europe",subregion_code:"balkans"},
+    {place_id:"constantinople",place_name:"Constantinople",macroregion_code:"europe",subregion_code:"balkans"},
+    {place_id:"rome",place_name:"Rome",macroregion_code:"europe",subregion_code:"italy"}
+  ];
+  const plan = semanticAxis.buildSpaceHeaderPlan(continuum, 3600, 15, bindings);
+  assert.equal(plan.places.length, 4, "All reviewed Place IDs remain in the canonical semantic plan");
+  assert.equal(plan.place_groups.length, 2, "Three names sharing one displayed X become one header marker");
+  const balkans = plan.place_groups.find(group => group.subregion_code === "balkans");
+  const italy = plan.place_groups.find(group => group.subregion_code === "italy");
+  assert.ok(balkans && italy);
+  assert.equal(balkans.place_count, 3);
+  assert.equal(balkans.display_label, "장소 3곳");
+  assert.deepEqual(balkans.place_names, ["Constantinople","Edirne","Pella"]);
+  assert.deepEqual(balkans.place_ids, ["constantinople","edirne","pella"]);
+  assert.equal(italy.place_count, 1);
+  assert.equal(italy.display_label, "Rome");
+  assert.equal(balkans.x, continuum.bandForCode("balkans").center_space * 3600);
+  assert.equal(italy.x, continuum.bandForCode("italy").center_space * 3600);
+  assert.equal(plan.place_groups.reduce((sum,group)=>sum+group.place_count,0),plan.places.length);
+  assert.ok(plan.place_groups.every(group=>group.exact_geographic_coordinate_claimed === false));
+  assert.equal(plan.macroregions.length, 9);
+  assert.equal(plan.subregions.length, 45);
+});
