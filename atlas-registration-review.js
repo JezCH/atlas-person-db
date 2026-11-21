@@ -34,6 +34,7 @@
   let lastForcedPersonsAt=0;
   let focusListenerRegistered=false;
   let queueRows=[];
+  let quotaSuspended=false;
   function escapeHtml(value) {
     return String(value ?? "")
       .replaceAll("&","&amp;")
@@ -58,6 +59,11 @@
     const response=await fetch(url,{ method:"GET",credentials:"same-origin",cache:"no-store",headers:{ accept:"application/json" } });
     let payload=null;
     try { payload=await response.json(); } catch {}
+    if (response.status===402) {
+      const error=new Error("ATLAS_QUOTA_402");
+      error.status=402;
+      throw error;
+    }
     if (!response.ok || payload?.ok !== true) throw new Error(payload?.code || payload?.error || `HTTP ${response.status}`);
     return payload;
   }
@@ -139,6 +145,10 @@
   async function refresh({ forcePersons=true }={}) {
     const root=activeRoot;
     if (!root?.isConnected) return;
+    if (quotaSuspended) {
+      setStatus("서비스 사용량 제한(HTTP 402)으로 자동 갱신을 중단했습니다. 서비스 복구 후 페이지를 다시 열어주세요.","error");
+      return;
+    }
     const serial=++requestSerial;
     const refreshButton=root.querySelector("#registrationReviewRefresh");
     if (refreshButton) refreshButton.disabled=true;
@@ -159,6 +169,13 @@
       setStatus(`${forceRoster ? "인물·대기열 최신 조회" : "대기열 최신 조회 · 인물 명부 재사용"} · ${new Date().toLocaleTimeString("ko-KR")}`,"ready");
     } catch(error) {
       if (serial !== requestSerial || root !== activeRoot) return;
+      const quotaFailure=error?.status===402
+        || /(?:ATLAS_SOURCE_HTTP_402|ATLAS_QUOTA_402|HTTP[ _]402)\b/.test(String(error?.message || ""));
+      if (quotaFailure) {
+        quotaSuspended=true;
+        setStatus("서비스 사용량 제한(HTTP 402)으로 자동 갱신을 중단했습니다. 서비스 복구 후 페이지를 다시 열어주세요.","error");
+        return;
+      }
       console.error("ATLAS registration review refresh failed",error);
       setStatus("갱신 실패 · 데이터를 불러오지 못했습니다. 다시 시도해 주세요.","error");
     } finally {
@@ -208,6 +225,10 @@
         refreshTimer=null;
         return;
       }
+      // No user can observe a background tab's queue changes. Avoid idle
+      // reads (and preserve the regular cadence as soon as it is visible).
+      if (typeof document !== "undefined" && document.visibilityState === "hidden") return;
+      if (quotaSuspended) return;
       if (activeRoot.querySelector("#registrationReviewStatus")?.dataset.state==="loading") return;
       refresh({forcePersons:false});
     },REFRESH_INTERVAL_MS);
