@@ -118,7 +118,10 @@ jobs:
           head_sha='${{ needs.classify.outputs.head_sha }}'
           [[ -n "$base_sha" && -n "$head_sha" ]]
 
-          mapfile -t manifests < <(git diff --name-only --diff-filter=ACMRTUXB "$base_sha" "$head_sha" -- 'authoring/requests/*.json')
+          changed_paths="$(mktemp)"
+          trap 'rm -f -- "$changed_paths"' EXIT
+          git diff --name-only -z --diff-filter=ACMRTUXB "$base_sha" "$head_sha" -- 'authoring/requests/*.json' > "$changed_paths"
+          mapfile -d '' -t manifests < "$changed_paths"
           if [[ "${#manifests[@]}" -gt 0 ]]; then
             node scripts/validate-authoring-request-files.mjs "${manifests[@]}"
           fi
@@ -161,13 +164,16 @@ jobs:
           head_sha='${{ needs.classify.outputs.head_sha }}'
           [[ -n "$base_sha" && -n "$head_sha" ]]
 
-          while IFS= read -r path; do
+          changed_paths="$(mktemp)"
+          trap 'rm -f -- "$changed_paths"' EXIT
+          git diff --name-only -z --diff-filter=ACMRTUXB "$base_sha" "$head_sha" -- > "$changed_paths"
+          while IFS= read -r -d '' path; do
             case "$path" in
               *.js|*.mjs|*.cjs)
                 [[ -f "$path" ]] && node --check "$path"
                 ;;
             esac
-          done < <(git diff --name-only --diff-filter=ACMRTUXB "$base_sha" "$head_sha" --)
+          done < "$changed_paths"
       - name: Run focused UI contract tests
         shell: bash
         run: |
