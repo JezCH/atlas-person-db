@@ -13,6 +13,9 @@ function fixture() {
       ENDPOINT:"/api/atlas-person-read",
       listPersons:async()=>({persons:[]})
     },
+    ATLAS_PERSON_DOMAIN_REGISTRY:{
+      CODES:["governance","military","science","technology","commerce","culture","religion","exploration"]
+    },
     dispatchEvent(){}
   };
   const fetch=(url)=>new Promise((resolve,reject)=>requests.push({url,resolve,reject}));
@@ -80,4 +83,22 @@ test("fresh forced refresh after patch does not coalesce with superseded request
   await old;
   assert.equal((await store.loadPersonDomains()).by_person_id[PERSON],"science");
   assert.equal(store.getSourceState("personDomains").status,"ready");
+});
+
+test("invalid representative domain code never overwrites or invalidates a valid shared snapshot",async()=>{
+  const {store,requests,resolve}=fixture();
+  const init=store.loadPersonDomains();
+  await Promise.resolve();
+  resolve(requests[0],"culture");
+  await init;
+  assert.equal(store.patchPersonDomain(PERSON,"not-a-real-domain"),false);
+  assert.equal((await store.loadPersonDomains()).by_person_id[PERSON],"culture");
+  assert.equal(store.getSourceState("personDomains").status,"ready");
+  assert.equal(requests.length,1,"Invalid input must not trigger another request");
+  for(const valid of ["science","governance","military","technology","commerce","religion","exploration"]){
+    assert.equal(store.patchPersonDomain(PERSON,valid),true);
+    assert.equal((await store.loadPersonDomains()).by_person_id[PERSON],valid);
+  }
+  assert.equal(store.patchPersonDomain(PERSON,null),true,"Explicit unclassification is allowed");
+  assert.equal((await store.loadPersonDomains()).by_person_id[PERSON],undefined);
 });

@@ -136,9 +136,14 @@
   function patchPersonDomain(personId, representativeDomain) {
     const id = String(personId || "").trim();
     if (!id || !cache.has("personDomains")) return false;
+    const domain = String(representativeDomain || "").trim() || null;
+    // This is a local cache projection, never an alternate authoritative writer.
+    // Reject unknown codes rather than reporting a successful visual patch that
+    // disagrees with the fixed eight-domain Person registry.
+    const allowedCodes = window.ATLAS_PERSON_DOMAIN_REGISTRY?.CODES;
+    if (domain && (!Array.isArray(allowedCodes) || !allowedCodes.includes(domain))) return false;
     const current = cache.get("personDomains");
     const nextRows = current.rows.filter((row) => row.person_id !== id);
-    const domain = String(representativeDomain || "").trim() || null;
     if (domain) nextRows.push(Object.freeze({ person_id:id, representative_domain:domain }));
     nextRows.sort((a, b) => a.person_id.localeCompare(b.person_id));
     const byPersonId = {};
