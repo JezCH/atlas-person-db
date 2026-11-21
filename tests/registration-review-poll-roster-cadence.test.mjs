@@ -5,8 +5,9 @@ import vm from "node:vm";
 
 const source=readFileSync(new URL("../atlas-registration-review.js",import.meta.url),"utf8");
 function fixture(){
-  let now=1_000_000, periodic=null, interval=0, queueRequests=0, pending=2;
+  let now=1_000_000, periodic=null, interval=0, queueRequests=0, pending=2, queueHttpStatus=200;
   const calls=[],listeners={},elements=new Map();
+  const document={visibilityState:"visible"};
   const element=(selector)=>{
     if(!elements.has(selector))elements.set(selector,{
       dataset:{state:"ready"},textContent:"",innerHTML:"",value:"",
@@ -34,10 +35,11 @@ function fixture(){
     addEventListener(type,handler){listeners[type]=handler;}
   };
   const fetch=async()=>{queueRequests++;return {
-    ok:true,json:async()=>({ok:true,summary:{pending_count:pending},candidates:[]})
+    ok:queueHttpStatus===200,status:queueHttpStatus,
+    json:async()=>({ok:queueHttpStatus===200,summary:{pending_count:pending},candidates:[]})
   };};
   vm.runInNewContext(source,{
-    window,fetch,Date:ClockDate,Promise,
+    window,document,fetch,Date:ClockDate,Promise,
     setInterval(handler,ms){periodic=handler;interval=ms;return 1;},
     clearInterval(){},console:{error(){}}
   },{filename:"atlas-registration-review.js"});
@@ -48,6 +50,8 @@ function fixture(){
     get interval(){return interval;},
     advance(ms){now+=ms;periodic();},
     setPending(n){pending=n;},
+    setQueueStatus(n){queueHttpStatus=n;},
+    setVisibility(value){document.visibilityState=value;},
     manual(){element("#registrationReviewRefresh").handlers.click();},
     focus(){listeners.focus();},
     drain:()=>new Promise(resolve=>setImmediate(resolve))
@@ -92,4 +96,36 @@ test("pending registration counts remain live during cached-roster interval read
   assert.match(stats,/>7<\/strong><span>등록대기열/);
   assert.equal(x.calls.at(-1),false);
   assert.equal(x.queueRequests,2);
+});
+
+test("hidden registration tab makes no queue or full-roster requests and resumes on focus",async()=>{
+  const x=fixture();await x.drain();
+  assert.equal(x.queueRequests,1);
+  x.setVisibility("hidden");
+  x.advance(10000);await x.drain();
+  x.advance(120000);await x.drain();
+  x.advance(20000);await x.drain();
+  assert.deepEqual(x.calls,[true],"Do not refresh even the large roster in a background tab");
+  assert.equal(x.queueRequests,1,"10-second queue polling must pause for hidden tabs");
+  x.setVisibility("visible");
+  x.focus();await x.drain();
+  assert.deepEqual(x.calls,[true,true],"Return focus restores an immediate fresh roster");
+  assert.equal(x.queueRequests,2);
+  x.advance(10000);await x.drain();
+  assert.deepEqual(x.calls,[true,true,false],"Foreground queue cadence resumes normally");
+  assert.equal(x.queueRequests,3);
+});
+
+test("HTTP 402 quota response halts automated and interactive retry until full page reload",async()=>{
+  const x=fixture();await x.drain();
+  x.setQueueStatus(402);
+  x.advance(10000);await x.drain();
+  assert.equal(x.queueRequests,2,"Exactly one 402 was observed");
+  assert.match(x.element("#registrationReviewStatus").textContent,/HTTP 402.*자동 갱신을 중단/);
+  x.advance(10000);await x.drain();
+  x.advance(120000);await x.drain();
+  x.focus();await x.drain();
+  x.manual();await x.drain();
+  assert.equal(x.queueRequests,2,"Do not retry quota-exhausted endpoint automatically or on focus/click");
+  assert.equal(x.calls.length,2,"Do not repeatedly reload the Person roster after a 402");
 });
