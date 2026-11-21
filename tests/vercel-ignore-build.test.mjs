@@ -232,12 +232,19 @@ test("leading whitespace in real Git paths cannot disguise unsafe files as appro
 
 
 const VERCEL_IGNORE_CLI = fileURLToPath(new URL("../scripts/vercel-ignore-build.mjs", import.meta.url));
-function gitFixture(changedFiles, {previousMissing=false, workflow="", priorChangedFiles=null}={}) {
+function gitFixture(changedFiles, {previousMissing=false, workflow="", priorChangedFiles=null, baselineFiles={}, moves=[]}={}) {
   const root=mkdtempSync(join(tmpdir(),"atlas-vercel-cli-"));
   const gitEnv={...process.env,GIT_CONFIG_NOSYSTEM:"1",GIT_CONFIG_GLOBAL:"/dev/null"};
   const git=(...args)=>execFileSync("git",args,{cwd:root,encoding:"utf8",env:gitEnv}).trim();
   try {
     git("init","-q");
+    git("config","diff.renames","true");
+    for (const [name, body] of Object.entries(baselineFiles)) {
+      const file=join(root,name);
+      mkdirSync(dirname(file),{recursive:true});
+      writeFileSync(file,body);
+    }
+    git("add","-A");
     git("-c","user.name=ATLAS Test","-c","user.email=atlas@example.invalid",
       "commit","-q","--allow-empty","-m","baseline");
     const previous=git("rev-parse","HEAD");
@@ -250,6 +257,10 @@ function gitFixture(changedFiles, {previousMissing=false, workflow="", priorChan
       git("add","-A");
       git("-c","user.name=ATLAS Test","-c","user.email=atlas@example.invalid",
         "commit","-q","-m","older undeployed runtime change");
+    }
+    for (const [source, destination] of moves) {
+      mkdirSync(dirname(join(root,destination)),{recursive:true});
+      git("mv",source,destination);
     }
     for(const [name,body] of Object.entries(changedFiles)) {
       const file=join(root,name);
@@ -383,3 +394,22 @@ test("SOURCE2478 offline-only audit and exact gate update never rebuild a runtim
   assert.equal(shouldBuildForChangedPaths([...offline, "index.html"]), true);
   assert.equal(shouldBuildForChangedPaths([...offline, "vercel.json"]), true);
 });
+
+test("moving runtime code into a skippable directory still builds for the removed runtime path",()=>{
+  const result=gitFixture({},{
+    baselineFiles:{"server/retired-runtime.js":"module.exports = { active: true };\n"},
+    moves:[["server/retired-runtime.js","docs/retired-runtime.js"]]
+  });
+  assert.equal(result.status,1,result.stdout+"\n"+result.stderr);
+  assert.match(result.stdout,/BUILD: deployment-relevant change detected/);
+  assert.match(result.stdout,/server\/retired-runtime\.js/);
+});
+
+test("moving documentation between two skippable paths still skips",()=>{
+  const result=gitFixture({},{
+    baselineFiles:{"docs/rationale.md":"Deployment rationale\n"},
+    moves:[["docs/rationale.md","research/rationale.md"]]
+  });
+  assert.equal(result.status,0,result.stdout+"\n"+result.stderr);
+});
+

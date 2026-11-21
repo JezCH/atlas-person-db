@@ -226,7 +226,8 @@ export function main(env = process.env) {
 
   let changedPaths;
   try {
-    changedPaths = parsePaths(git(["diff", "--name-only", "-z", "--diff-filter=ACDMRTUXB", previousSha, currentSha, "--"]));
+    // Treat a move as removal plus addition so both paths are classified.
+    changedPaths = parsePaths(git(["diff", "--no-renames", "--name-only", "-z", "--diff-filter=ACDMRTUXB", previousSha, currentSha, "--"]));
   } catch {
     exitBuild("git diff failed");
     return;
@@ -245,3 +246,4 @@ export function main(env = process.env) {
 
 const invokedPath = process.argv[1] ? pathToFileURL(process.argv[1]).href : null;
 if (invokedPath && import.meta.url === invokedPath) main();
+
