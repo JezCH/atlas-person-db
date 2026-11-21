@@ -378,3 +378,49 @@ test("Inspector rerender restores the same Person and Activity button without sc
   assert.equal(context.restoreRenderFocus(mount, snapshot), false);
   assert.equal(calls.length, 1);
 });
+
+
+test("canvas Person name, rail and Activity keyboard focus survives rerender by canonical identities", () => {
+  const source = read("atlas-person-spacetime-view.js");
+  const helperStart = source.indexOf("  function captureRenderFocus(");
+  const helperEnd = source.indexOf("  function horizontalCameraGeometry(", helperStart);
+  assert.ok(helperStart >= 0 && helperEnd > helperStart);
+  const calls = [];
+  const cssClass = {label:"spacetime-track-label",rail:"spacetime-track-rail",glyph:"spacetime-activity-glyph"};
+  const element = (kind,personId,activityId = "") => ({
+    id:"",
+    dataset:{spacetimePerson:personId,spacetimeActivity:activityId},
+    classList:{contains:(cls)=>cls===cssClass[kind]},
+    focus:(options)=>calls.push({kind,personId,activityId,preventScroll:options?.preventScroll===true})
+  });
+  const context = vm.createContext({document:{activeElement:null,getElementById:()=>null}});
+  vm.runInContext(source.slice(helperStart, helperEnd), context);
+  for (const kind of ["label","rail","glyph"]) {
+    const active = element(kind,"person-a","activity-a");
+    const replacement = element(kind,"person-a","activity-a");
+    const sameActivityWrongPerson = element(kind,"person-b","activity-a");
+    const samePersonWrongActivity = element(kind,"person-a","activity-b");
+    let nodes = [active];
+    const mount = {
+      contains:(node)=>nodes.includes(node),
+      querySelectorAll:(selector)=>nodes.filter(node=>selector==="."+cssClass[kind])
+    };
+    context.document.activeElement = active;
+    const snapshot = context.captureRenderFocus(mount);
+    assert.equal(snapshot.canvasKind,kind);
+    assert.equal(snapshot.canvasPersonId,"person-a");
+    nodes = [sameActivityWrongPerson,samePersonWrongActivity,replacement];
+    assert.equal(context.restoreRenderFocus(mount,snapshot),true);
+    assert.deepEqual(calls.at(-1),{kind,personId:"person-a",activityId:"activity-a",preventScroll:true});
+    const priorCalls = calls.length;
+    nodes = [sameActivityWrongPerson, ...(kind==="label" ? [] : [samePersonWrongActivity])];
+    assert.equal(context.restoreRenderFocus(mount,snapshot),false,
+      "focus must not jump to another Person or Activity");
+    assert.equal(calls.length,priorCalls);
+  }
+  // A bare historical canvas surface is not a focusable Person control.
+  const inactive = {id:"",dataset:{spacetimePerson:"person-a"},classList:{contains:()=>false}};
+  const mount = {contains:el=>el===inactive};
+  context.document.activeElement = inactive;
+  assert.equal(context.captureRenderFocus(mount),null);
+});
