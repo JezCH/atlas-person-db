@@ -92,7 +92,15 @@
     detailPanel.addEventListener("click", (event) => { if (event.target.closest(".person-detail-overlay-close")) setDetailOpen(false, { restoreFocus: true }); });
     backdrop.addEventListener("click", () => setDetailOpen(false, { restoreFocus: true }));
     document.addEventListener("keydown", (event) => { if (event.key === "Escape" && !detailPanel.hidden) setDetailOpen(false, { restoreFocus: true }); });
-    window.addEventListener("atlas-authority-domain-changed", (event) => { if (event.detail?.domain !== "persons") setDetailOpen(false); });
+    window.addEventListener("atlas-authority-domain-changed", (event) => {
+      const { domain, route } = event.detail || {};
+      if (domain === "persons" && route?.entity_type === "person" && route.entity_id) {
+        lastTrigger = null;
+        setDetailOpen(true);
+      } else {
+        setDetailOpen(false);
+      }
+    });
     const observer = new MutationObserver(() => { if (!requestedOpen) { detailPanel.hidden = true; backdrop.hidden = true; return; } ensureCloseButton(); detailPanel.hidden = false; backdrop.hidden = false; });
     observer.observe(detailPanel, { childList: true });
   }
