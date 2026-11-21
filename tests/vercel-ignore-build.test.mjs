@@ -413,3 +413,11 @@ test("moving documentation between two skippable paths still skips",()=>{
   assert.equal(result.status,0,result.stdout+"\n"+result.stderr);
 });
 
+test("GitHub acceptance and manifest validators skip only without runtime changes", () => {
+  for (const script of ["scripts/verify-spacetime-production-exact-sha.mjs","scripts/validate-authoring-request-files.mjs"]) {
+    const paths = [script, "scripts/vercel-ignore-build.mjs", "tests/vercel-ignore-build.test.mjs"];
+    assert.equal(shouldBuildForChangedPaths(paths), false, script);
+    assert.equal(shouldBuildForChangedPaths([...paths, "server/atlas-read-http.js"]), true, script);
+    assert.equal(shouldBuildForChangedPaths([...paths, "index.html"]), true, script);
+  }
+});
