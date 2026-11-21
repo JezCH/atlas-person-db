@@ -1062,7 +1062,13 @@
         const historicalX = Number(segment?.x_anchor) * Number(contentWidth);
         const railX = Number(geometry?.rail_x);
         const x = Number.isFinite(railX) ? railX : historicalX;
-        if (!Number.isFinite(x) || x < visibleLeft - 2 || x > visibleRight + 2) continue;
+        // A 4px rail is centered at x. Match the browser acceptance's
+        // >0.5px *visible rail rectangle* test, not the older +/-2px
+        // near-viewport tolerance that created a name for an invisible rail.
+        const railHalfWidth = 2;
+        if (!Number.isFinite(x)
+          || x <= visibleLeft - railHalfWidth + 0.5
+          || x >= visibleRight + railHalfWidth - 0.5) continue;
 
         const y1 = Number(projection?.yForOrdinal?.(segment.start_ordinal));
         const y2 = Number(projection?.yForOrdinal?.(segment.end_ordinal));
@@ -1071,9 +1077,10 @@
         const bottom = top + Math.max(2, Math.abs(y2 - y1));
         const overlapTop = Math.max(top, visibleTop);
         const overlapBottom = Math.min(bottom, visibleBottom);
-        if (overlapBottom < overlapTop) continue;
-
         const overlap = Math.max(0, overlapBottom - overlapTop);
+        // A rail merely touching the top/bottom boundary has zero visible
+        // screen area. The name must not be rendered for an invisible rail.
+        if (overlap <= 0.5) continue;
         const viewportCenterY = visibleTop + (visibleBottom - visibleTop) / 2;
         const rawAnchorY = (overlapTop + overlapBottom) / 2;
         const anchorY = Math.min(

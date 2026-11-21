@@ -183,3 +183,42 @@ test("dense Person overflow does not counterfeit on-map coverage or alter histor
   assert.ok(nav.includes("overflow=20261121-dense-fullnames-v1"));
   assert.match(read("index.html"),/overflow=20261121-dense-fullnames-v1/);
 });
+
+test("UI-03 dense boundary labels require an actually visible rail rectangle", () => {
+  const view = read("atlas-person-spacetime-view.js");
+  const start=view.indexOf("  function visibleRailLabelItems(");
+  const end=view.indexOf("  function packTrackLabels(",start);
+  assert.ok(start>0&&end>start);
+  const railX={ "touch-left":-2, "visible-left":-1,
+    "touch-right":402,"visible-right":401,"valid":95,"touch-bottom":95,
+    "tiny-overlap":95,"valid-bottom":95 };
+  const runtime=()=>({
+    exploration:{projectTrack(track){return {person_id:track.person_id,track,
+      x:railX[track.person_id],y:track.primary_segments[0].start_ordinal};}},
+    presentationLayout:{
+      geometryForSegment(_presentation,segment){return {rail_x:railX[segment.person_id]};},
+      applyTrackPresentation(value){return value;}
+    }
+  });
+  const makeTrack=(id,start,end)=>({person_id:id,display_name:id,
+    primary_segments:[{person_id:id,x_anchor:0.5,start_ordinal:start,end_ordinal:end}]});
+  const items=[
+    makeTrack("touch-left",120,150),
+    makeTrack("visible-left",120,150),
+    makeTrack("touch-right",120,150),
+    makeTrack("visible-right",120,150),
+    makeTrack("touch-bottom",50,100),
+    makeTrack("tiny-overlap",98,100.2),
+    makeTrack("valid",120,150),
+    makeTrack("valid-bottom",99.1,100.9)
+  ];
+  const extractor=new Function("runtime","PERSON_NAME_LABEL_PACK_HEIGHT",
+    view.slice(start,end)+"\nreturn visibleRailLabelItems;")(runtime,22);
+  const result=extractor([],items,{yForOrdinal:n=>n},{},1000,
+    {visible_left:0,visible_top:100,visible_width:400,visible_height:120});
+  assert.deepEqual(result.map(x=>x.person_id).sort(),
+    ["valid","valid-bottom","visible-left","visible-right"],
+    "Only rails with more than half a screen pixel inside the actual viewport may earn names");
+  assert.ok(result.every(x=>x.y>=111&&x.y<=209));
+  assert.match(view,/overlap <= 0\.5/);
+});
