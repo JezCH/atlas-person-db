@@ -208,7 +208,7 @@ test("UI-03 dense boundary labels require an actually visible rail rectangle", (
     makeTrack("touch-right",120,150),
     makeTrack("visible-right",120,150),
     makeTrack("touch-bottom",50,100),
-    makeTrack("tiny-overlap",99.8,100.2),
+    makeTrack("tiny-overlap",98,100.2),
     makeTrack("valid",120,150),
     makeTrack("valid-bottom",99.1,100.9)
   ];
