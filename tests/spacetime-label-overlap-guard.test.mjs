@@ -75,7 +75,12 @@ test("impossible capacity is reported instead of changing historical Y", () => {
 
 test("browser integration never writes label top/Y geometry", () => {
   const source = fs.readFileSync(path.join(root, "atlas-person-spacetime-label-overlap-guard.js"), "utf8");
-  assert.doesNotMatch(source, /style\.top\s*=/);
+  assert.doesNotMatch(source, /element\.style\.top\s*=/);
+  assert.doesNotMatch(source, /label\.style\.top\s*=/);
+  // Decoration lines/ticks may be positioned at the historical label's Y,
+  // but the Person's own temporal position must remain untouched.
+  assert.match(source, /connector\.style\.top\s*=/);
+  assert.match(source, /home\.style\.top\s*=/);
   assert.match(source, /element\.style\.left\s*=/);
   assert.match(source, /data-spacetime-band/);
   assert.match(source, /borrowWorld:true/);
