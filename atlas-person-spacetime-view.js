@@ -509,6 +509,10 @@
     const active = document.activeElement;
     if (!active || !mount?.contains?.(active)) return null;
     if (active.id) return Object.freeze({ id: active.id, viewport: false });
+    // Dense overflow buttons are replaced by renderInto(); track the
+    // canonical Person, not a recycled list position or DOM id.
+    const overflowPersonId = active.dataset?.spacetimeOverflowPerson;
+    if (overflowPersonId) return Object.freeze({ overflowPersonId });
     const { spacetimeInspectorActivity, spacetimePerson } = active.dataset || {};
     if (spacetimeInspectorActivity && spacetimePerson) {
       return Object.freeze({ activityId: spacetimeInspectorActivity, personId: spacetimePerson });
@@ -535,6 +539,19 @@
     if (!snapshot) return false;
     let target = snapshot.id ? document.getElementById(snapshot.id) : null;
     if (snapshot.viewport) target = mount?.querySelector?.(".spacetime-scroll");
+    if (snapshot.overflowPersonId) {
+      const personId = snapshot.overflowPersonId;
+      const heading = mount?.querySelector?.("[data-spacetime-inspector-name]");
+      if (selectedPersonId === personId && heading?.dataset?.spacetimeInspectorName === personId) {
+        // A chosen Person usually leaves the deferred-name list. Move focus
+        // to that same Person's Inspector, never to a different Person.
+        target = heading;
+      } else {
+        target = Array.from(mount?.querySelectorAll?.("[data-spacetime-overflow-person]") || []).find(
+          (button) => button.dataset.spacetimeOverflowPerson === personId
+        );
+      }
+    }
     if (snapshot.activityId) {
       target = Array.from(mount?.querySelectorAll?.("[data-spacetime-inspector-activity]") || []).find(
         (button) => button.dataset.spacetimeInspectorActivity === snapshot.activityId
@@ -1299,7 +1316,7 @@
     return `<aside class="spacetime-sticky-inspector card" id="spacetimeInspector" aria-label="${escapeHtml(track.display_name)} 인물 활동 정보">
       <header class="spacetime-inspector-person">
         <small>인물 정보</small>
-        <strong>${escapeHtml(koName)}</strong>
+        <strong tabindex="-1" data-spacetime-inspector-name="${escapeHtml(track.person_id)}">${escapeHtml(koName)}</strong>
         ${secondaryName ? `<span>${escapeHtml(secondaryName)}</span>` : ""}
         <p>${escapeHtml(extent ? ordinalRangeLabel(extent.start_ordinal, extent.end_ordinal) : "활동 기간 미상")}</p>
         ${selectedActivity && Number.isInteger(selectedTimeOrdinal) ? `<output>선택 Activity 중간 시점 · ${escapeHtml(ordinalLabel(selectedTimeOrdinal))}</output>` : ""}
@@ -2057,6 +2074,7 @@
   function renderInto(mount) {
     mount.dataset.spacetimeTools = "instrument-v7";
     const renderFocus = captureRenderFocus(mount);
+    const overflowDisclosureWasOpen = mount.querySelector("#spacetimeNameOverflow")?.open === true;
     const { timeProjection, spaceAxis, semanticAxis, spatialCompile, exploration, lod, presentationLayout } = runtime();
     const timeline = timelineRange();
     const viewportWidth = Number(mount.clientWidth) || window.innerWidth || 1280;
@@ -2177,7 +2195,7 @@
     </section>
     <aside class="spacetime-sidecar">
       ${renderMinimap()}
-      <details id="spacetimeNameOverflow" class="spacetime-name-overflow" hidden>
+      <details id="spacetimeNameOverflow" class="spacetime-name-overflow"${overflowDisclosureWasOpen ? " open" : ""} hidden>
         <summary>표에 다 담지 못한 인물 <b id="spacetimeNameOverflowCount">0</b>명 · 전체 이름 보기</summary>
         <p>활동선은 지도에 있습니다. 이름을 선택하면 현재 화면의 해당 활동선과 인물 상세 정보가 강조됩니다.</p>
         <ul id="spacetimeNameOverflowList" class="spacetime-name-overflow-list"></ul>
@@ -2219,7 +2237,11 @@
       const button = event.target.closest?.("[data-spacetime-overflow-person]");
       if (!button || !event.currentTarget.contains(button)) return;
       const personId = text(button.dataset.spacetimeOverflowPerson);
-      if (personId) selectPerson(mount, personId, { focus:false }).catch((error) =>
+      if (!personId) return;
+      // Touch and synthetic clicks do not always focus the source button;
+      // capture its Person identity before the async Inspector module loads.
+      button.focus({ preventScroll:true });
+      selectPerson(mount, personId, { focus:false }).catch((error) =>
         console.error("ATLAS dense Person navigation failed", error));
     });
 

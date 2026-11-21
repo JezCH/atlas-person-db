@@ -391,6 +391,10 @@ async function captureDenseWindows(client, zoom) {
     const button=document.querySelector("#spacetimeNameOverflowList [data-spacetime-overflow-person]");
     if(!button) return null;
     const personId=button.dataset.spacetimeOverflowPerson;
+    const disclosure=document.querySelector("#spacetimeNameOverflow");
+    if(disclosure) disclosure.open=true;
+    button.focus({preventScroll:true});
+    if(document.activeElement!==button) throw new Error("Dense Person overflow item must be keyboard-focusable");
     button.click();
     return personId;
   })()`);
@@ -400,7 +404,24 @@ async function captureDenseWindows(client, zoom) {
     const selected=await waitFor(client,
       "Array.from(document.querySelectorAll('.spacetime-track-label.is-selected')).some(el=>el.dataset.spacetimePerson==="+JSON.stringify(chosen)+")",
       10000);
-    overflowNavigation={person_id:chosen,inspector_open:true,selected_person_name_visible:Boolean(selected)};
+    const focusEvidence=await evaluate(client,`(() => {
+      const active=document.activeElement;
+      const inspectorName=document.querySelector("#spacetimeInspector [data-spacetime-inspector-name]");
+      const disclosure=document.querySelector("#spacetimeNameOverflow");
+      return {
+        inspector_person_id:inspectorName?.dataset?.spacetimeInspectorName || null,
+        focus_is_inspector_name:Boolean(active && inspectorName && active===inspectorName),
+        disclosure_still_open:Boolean(disclosure?.open),
+        active_element:active?.outerHTML?.slice(0,160) || null
+      };
+    })()`);
+    assert(focusEvidence.inspector_person_id===chosen && focusEvidence.focus_is_inspector_name,
+      "Dense overflow Person selection lost the keyboard focus destination",focusEvidence);
+    assert(focusEvidence.disclosure_still_open,
+      "Dense overflow disclosure unexpectedly collapsed when its Person was selected",focusEvidence);
+    overflowNavigation={person_id:chosen,inspector_open:true,selected_person_name_visible:Boolean(selected),
+      keyboard_focus_restored:focusEvidence.focus_is_inspector_name,
+      disclosure_still_open:focusEvidence.disclosure_still_open};
     await evaluate(client,"document.querySelector('#spacetimeClearPerson')?.click()");
     await waitFor(client,"Boolean(document.querySelector('#spacetimeInspector.is-empty'))",10000);
   }

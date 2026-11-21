@@ -1475,3 +1475,10 @@
     font-size:14px;
   }
 }
+/* Dedicated programmatic keyboard destination after dense Person selection. */
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"]
+  .spacetime-inspector-person > strong[data-spacetime-inspector-name]:focus {
+  outline:2px solid #d4b878;
+  outline-offset:3px;
+  border-radius:1px;
+}
