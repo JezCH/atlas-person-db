@@ -191,8 +191,9 @@ test('Person profile editor markup and writes are delegated to the extracted fea
 });
 
 test('Main renders BCE/CE and unknown chronology without changing historicity', () => {
-  assert.match(main, /return `BC \$\{Math\.abs\(value\)\}`/);
-  assert.match(main, /return `AD \$\{value\}`/);
+  assert.match(main, /function validHistoricalYear\(value\)/);
+  assert.match(main, /value < 0 \? `BC \$\{Math\.abs\(value\)\}` : `AD \$\{value\}`/);
+  assert.doesNotMatch(main, /return "연도 0"/);
   assert.match(main, /연도 미상/);
   assert.match(main, /역사성 분류는 별도 값으로 유지됩니다/);
 });
