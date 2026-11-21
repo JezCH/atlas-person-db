@@ -214,3 +214,13 @@ test('malformed canonical URL values cannot silently remove Sources from shared-
   delete absent.raw.sources[4].canonical_url;
   assert.equal(auditSharedSourceUrls(absent).summary.shared_url_groups, 2);
 });
+
+test('rejects malformed locators rather than coercing evidence to strings', () => {
+  const data = fixtureWithRuntimeProvenance();
+  const citation = data.raw.runtime_activities[0].activity.provenance_snapshot.normalized_sources[0];
+  citation.source_locator_key = [data.raw.activity_sources[0].source_locator_key];
+  assert.throws(() => auditSharedSourceUrls(data), /SOURCE_URL_AUDIT_INVALID_REFERENCE_LOCATOR/);
+  const offline = fixture();
+  offline.raw.designation_sources[0].source_locator_key = { section: 5 };
+  assert.throws(() => auditSharedSourceUrls(offline), /SOURCE_URL_AUDIT_INVALID_REFERENCE_LOCATOR/);
+});
