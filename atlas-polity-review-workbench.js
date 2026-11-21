@@ -26,27 +26,29 @@
 
   const dossierRenderer = DOSSIER.createRenderer({ escapeHtml });
 
+  function validHistoricalYear(value) {
+    return Number.isSafeInteger(value) && value !== 0;
+  }
+
   function formatYear(value) {
-    if (!Number.isInteger(value)) return "미상";
-    if (value < 0) return "기원전 " + Math.abs(value);
-    if (value > 0) return String(value);
-    return "0";
+    if (!validHistoricalYear(value)) return "미상";
+    return value < 0 ? "기원전 " + Math.abs(value) : String(value);
   }
 
   function observedSpan(polity) {
     if (!polity || polity.activity_count === 0) return "연결 활동 없음";
-    const start = Number.isInteger(polity.first_activity_year) ? formatYear(polity.first_activity_year) : "시작 미상";
+    const start = validHistoricalYear(polity.first_activity_year) ? formatYear(polity.first_activity_year) : "시작 미상";
     const end = polity.has_ongoing_activity
       ? "현재"
-      : Number.isInteger(polity.last_activity_year) ? formatYear(polity.last_activity_year) : "종료 미상";
+      : validHistoricalYear(polity.last_activity_year) ? formatYear(polity.last_activity_year) : "종료 미상";
     return start + "–" + end;
   }
 
   function activitySpan(activity) {
-    const start = Number.isInteger(activity?.activity_start) ? formatYear(activity.activity_start) : "시작 미상";
+    const start = validHistoricalYear(activity?.activity_start) ? formatYear(activity.activity_start) : "시작 미상";
     const end = activity?.chronology_status === "ongoing"
       ? "현재"
-      : Number.isInteger(activity?.activity_end) ? formatYear(activity.activity_end) : "종료 미상";
+      : validHistoricalYear(activity?.activity_end) ? formatYear(activity.activity_end) : "종료 미상";
     return start + "–" + end;
   }
 
