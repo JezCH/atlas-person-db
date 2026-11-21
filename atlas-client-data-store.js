@@ -143,6 +143,11 @@
     nextRows.sort((a, b) => a.person_id.localeCompare(b.person_id));
     const byPersonId = {};
     for (const row of nextRows) if (row.representative_domain) byPersonId[row.person_id] = row.representative_domain;
+    // A previously started force refresh may contain pre-edit server data.
+    // Preserve the confirmed patch instead of letting that stale response
+    // overwrite the updated canonical domain in this shared client snapshot.
+    generation.set("personDomains", (generation.get("personDomains") || 0) + 1);
+    inFlight.delete("personDomains");
     cache.set("personDomains", Object.freeze({
       ...current,
       rows:Object.freeze(nextRows),
