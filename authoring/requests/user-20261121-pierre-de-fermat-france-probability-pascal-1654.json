@@ -47,12 +47,6 @@
     },
     {
       "source_type": "academic_reference",
-      "title": "Fermat, Pierre de — Encyclopedia of Mathematics",
-      "canonical_url": "https://encyclopediaofmath.org/wiki/Fermat%2C_Pierre_de",
-      "citation_text": "Research reference describes July–October 1654 correspondence with Pascal as laying the foundations of the mathematical theory of probability."
-    },
-    {
-      "source_type": "academic_reference",
       "title": "FERMAT AND PASCAL ON PROBABILITY — University of York",
       "canonical_url": "https://www.york.ac.uk/depts/maths/histstat/pascal.htm",
       "citation_text": "Academic transcription and mathematical history of the contemporaneous Pascal-Fermat probability correspondence."
@@ -82,6 +76,7 @@
     "namuwiki_evidence": "External indexed independent historical-person page exact Korean title found via namu.moe mirror; not a film/fictional/athlete homonym.",
     "preflight_required": true,
     "production_screen": "Bounded GitHub file/issue search found no existing Person Authoring manifest by this name. A direct public Production SCREEN was not accessible; protected OIDC Authoring preflight_batch MUST check existing identities, reviewed NamuWiki state and semantic duplicate Activities prior to any authoritative write. Do not create duplicate Persons from the two milestones.",
-    "polity_review": "Kingdom of Hanover is a reviewed surviving same-state identity (existing UUID 15236151-3a4c-4e08-acab-bbf0f51f96eb). Kingdom of France was retired after same-identity consolidation; use canonical France identity and preserve monarchy period in notes. Neither source Polity should be minted as a new one."
+    "polity_review": "Kingdom of Hanover is a reviewed surviving same-state identity (existing UUID 15236151-3a4c-4e08-acab-bbf0f51f96eb). Kingdom of France was retired after same-identity consolidation; use canonical France identity and preserve monarchy period in notes. Neither source Polity should be minted as a new one.",
+    "source_reuse_resolution": "2026-11-21 original batch partially committed first 3 manifests; 1654 request failed with HUMAN_AUTHORING_SOURCE_CANONICAL_URL_ASSERTION_COLLISION:2 on a URL already asserted by the 1640 Fermat request. Removed redundant Encyclopedia of Mathematics source assertion from the unapplied 1654 manifest only; retained two independent inspected sources (APS and University of York). Preserve original request_id and historical claims, and replay through protected preflight before write."
   }
 }
