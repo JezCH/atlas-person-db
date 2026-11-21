@@ -252,8 +252,9 @@
       (result.confirmed.length||result.candidates.length
         ? renderOverlapList([...result.confirmed,...result.candidates],persons)
         : '<p class="atlas-compare-overlap-empty">' +
-          (result.inconclusive ? '확인 가능한 교차가 없습니다. 일부 기간은 근거 부족으로 판별할 수 없습니다.' :
-            '확인된 활동기간 교차가 없습니다.') + '</p>') +
+          (result.total === 0 ? '한쪽 또는 양쪽 인물에 등록된 활동이 없어 활동기간을 비교할 수 없습니다.' :
+            result.inconclusive ? '확인 가능한 교차가 없습니다. 일부 기간은 근거 부족으로 판별할 수 없습니다.' :
+              '확인된 활동기간 교차가 없습니다.') + '</p>') +
       '</section>';
   }
 
