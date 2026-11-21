@@ -114,28 +114,44 @@
     }
   }
 
+  function validHistoricalYear(value) {
+    return Number.isInteger(value) && value !== 0;
+  }
+
   function yearLabel(value) {
-    if (!Number.isInteger(value)) return "연도 미상";
+    if (!validHistoricalYear(value)) return "연도 미상";
     if (value < 0) return `BC ${Math.abs(value)}`;
-    if (value > 0) return `AD ${value}`;
-    return "연도 0";
+    return `AD ${value}`;
   }
 
   function rangeLabel(person) {
     const start = person?.first_activity_year;
     const end = person?.last_activity_year;
-    if (person?.activity_summaries?.some(a => a.end?.status === "ongoing")) return `${yearLabel(start)} – 현재`;
-    if (!Number.isInteger(start) && !Number.isInteger(end)) return "주요 활동연도 미상";
-    if (Number.isInteger(start) && Number.isInteger(end)) return `${yearLabel(start)} – ${yearLabel(end)}`;
-    return Number.isInteger(start) ? `${yearLabel(start)} – 종료 미상` : `시작 미상 – ${yearLabel(end)}`;
+    // The compact register has activity_summaries; a direct Person detail
+    // read instead has activities. Both must label an ongoing Activity as
+    // "현재" without inventing a closing year.
+    const isOngoing = [person?.activity_summaries, person?.activities].some(
+      items => Array.isArray(items) && items.some(a => a?.end?.status === "ongoing")
+    );
+    if (isOngoing) return `${yearLabel(start)} – 현재`;
+    if (!validHistoricalYear(start) && !validHistoricalYear(end)) return "주요 활동연도 미상";
+    if (validHistoricalYear(start) && validHistoricalYear(end)) return `${yearLabel(start)} – ${yearLabel(end)}`;
+    return validHistoricalYear(start) ? `${yearLabel(start)} – 종료 미상` : `시작 미상 – ${yearLabel(end)}`;
   }
 
   function boundaryLabel(boundary) {
     if (boundary?.status === "ongoing") return `현재 (${boundary.as_of || "확인일 미상"} 확인)`;
-    if (!boundary || !Number.isInteger(boundary.year)) return "연도 미상";
+    if (!validHistoricalYear(boundary?.year)) return "연도 미상";
     let label = yearLabel(boundary.year);
-    if (Number.isInteger(boundary.month)) label += ` ${boundary.month}월`;
-    if (Number.isInteger(boundary.day)) label += ` ${boundary.day}일`;
+    // The boundary's declared temporal granularity is authoritative.
+    // Year precision must never be shown as a day/month merely because
+    // residual date components are present. Null legacy precision remains
+    // compatible with the existing chronological display.
+    const granularity = String(boundary.granularity || "").trim();
+    const showMonth = !granularity || granularity === "month" || granularity === "day";
+    const showDay = !granularity || granularity === "day";
+    if (showMonth && Number.isInteger(boundary.month)) label += ` ${boundary.month}월`;
+    if (showDay && Number.isInteger(boundary.month) && Number.isInteger(boundary.day)) label += ` ${boundary.day}일`;
     if (boundary.certainty === "approximate") return `약 ${label}`;
     if (boundary.certainty === "uncertain") return `${label}?`;
     return label;
