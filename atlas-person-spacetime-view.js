@@ -515,7 +515,8 @@
     }
     const canvasKind = active.classList?.contains?.("spacetime-track-label") ? "label"
       : active.classList?.contains?.("spacetime-track-rail") ? "rail"
-      : active.classList?.contains?.("spacetime-activity-glyph") ? "glyph" : null;
+      : active.classList?.contains?.("spacetime-activity-glyph") ? "glyph"
+      : active.classList?.contains?.("spacetime-spatial-uncertainty") ? "uncertainty" : null;
     const canvasActivityId = active.dataset?.spacetimeActivity;
     if (canvasKind && spacetimePerson && (canvasKind === "label" || canvasActivityId)) {
       // These buttons have no DOM id, and the canvas is rebuilt after a
@@ -543,7 +544,8 @@
     if (snapshot.canvasKind) {
       const selector = snapshot.canvasKind === "label" ? ".spacetime-track-label"
         : snapshot.canvasKind === "rail" ? ".spacetime-track-rail"
-        : snapshot.canvasKind === "glyph" ? ".spacetime-activity-glyph" : null;
+        : snapshot.canvasKind === "glyph" ? ".spacetime-activity-glyph"
+        : snapshot.canvasKind === "uncertainty" ? ".spacetime-spatial-uncertainty" : null;
       target = selector ? Array.from(mount?.querySelectorAll?.(selector) || []).find(
         (button) => button.dataset.spacetimePerson === snapshot.canvasPersonId
           && (snapshot.canvasKind === "label"
@@ -1655,6 +1657,12 @@
       const signature = `${personIds.join(",")}|${segmentIds.join(",")}|${selectedPersonId || ""}|${selectedActivityId || ""}|${state.meanwhileOrdinal ?? ""}|${state.needle}|${state.lodWeights.labels}|${state.lodWeights.rails}|${state.lodWeights.activities}|${Math.round(cullRect.visible_left)}|${Math.round(cullRect.visible_top)}`;
 
       if (signature !== lastSignature) {
+        // Scroll/resize virtualizes these canvas buttons independently from
+        // renderInto(). Capture only canvas focus before replacing innerHTML,
+        // then restore by immutable Person+Activity identity; never move focus
+        // to a different Person or offscreen Activity to mask culling.
+        const snapshot = captureRenderFocus(mount);
+        const canvasFocus = snapshot?.canvasKind ? snapshot : null;
         const emptyHint = mount.querySelector("#spacetimeViewportEmptyHint");
         if (emptyHint) emptyHint.hidden = Boolean(state.needle) || personItems.length > 0;
         const labelPack = packTrackLabels(personItems, state.timelineHeight, state.contentWidth, Boolean(state.needle), cullRect);
@@ -1670,6 +1678,7 @@
         updateCount("spacetimeDomSegmentCount", segmentIds.length);
         updateCount("spacetimeDomLabelCount", labelPack.placed.length);
         updateCount("spacetimeDeferredLabelCount", labelPack.deferred.length);
+        if (canvasFocus) restoreRenderFocus(mount, canvasFocus);
         lastSignature = signature;
       }
     };
