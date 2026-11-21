@@ -174,7 +174,7 @@ test("dense Person overflow does not counterfeit on-map coverage or alter histor
   assert.match(view,/labelPack\.deferred/);
   assert.match(view,/spacetimeNameOverflowCount/);
   assert.match(view,/data-spacetime-overflow-person/);
-  assert.match(view,/selectPerson\(mount, personId, \{ focus:true \}\)/);
+  assert.match(view,/selectPerson\(mount, personId, \{ focus:false \}\)/);
   assert.match(view,/originalPerson\?\.focus\(\{ preventScroll:true \}\)/);
   assert.match(css,/\.spacetime-overflow-person strong \{/);
   assert.match(css,/white-space:normal/);
