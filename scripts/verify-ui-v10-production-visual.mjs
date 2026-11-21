@@ -571,6 +571,52 @@ async function verifyMobileTwoPersonComparison(client) {
   return {selected,completedFocus,view,closePassed:closed};
 }
 
+
+async function verifyDirectPersonDetailRoute(client, personId) {
+  assert(/^[0-9a-f-]{36}$/i.test(String(personId || "")),
+    "Deep-link acceptance requires a real Person UUID from the existing comparison journey", {personId});
+  const directHash=await evaluate(client,
+    "window.ATLAS_ENTITY_ROUTE?.entityHash('persons','person',"+JSON.stringify(personId)+")");
+  assert(/^#/.test(String(directHash||"")),"Person routing did not return a canonical hash",{personId,directHash});
+
+  // This must be a fresh entry, not a roster-row click or SPA-only transition.
+  // Verify the dossier is visible without requesting a full roster.
+  await client.call("Page.navigate",{url:"about:blank"});
+  await waitFor(client,"document.readyState === 'complete'",10000);
+  await client.call("Page.navigate",{url:PRODUCTION_ORIGIN+"/"+directHash});
+  await waitFor(client,"document.readyState === 'complete'",45000);
+  await waitFor(client,
+    "window.ATLAS_PERSON_MAIN?.getSelectedPersonId?.()==="+JSON.stringify(personId)
+    +" && Boolean(document.querySelector('#personMainDetail:not([hidden]) .person-chronicle-hero'))",45000);
+  const opened=await evaluate(client,"(() => ({"
+    +"personId:window.ATLAS_PERSON_MAIN?.getSelectedPersonId?.()||null,"
+    +"urlHash:location.hash,"
+    +"detailVisible:document.querySelector('#personMainDetail')?.hidden===false,"
+    +"backdropVisible:document.querySelector('#personMainDetailBackdrop')?.hidden===false,"
+    +"bodyOpen:document.body.classList.contains('person-detail-overlay-open'),"
+    +"portraitCount:document.querySelectorAll('#personMainDetail .person-detail-portrait').length,"
+    +"registerEntries:document.querySelectorAll('.person-register-entry').length"
+    +"}))()");
+  assert(opened.personId===personId&&opened.detailVisible&&opened.backdropVisible
+    &&opened.bodyOpen&&opened.portraitCount===1,
+    "Direct Person URL did not display an actual visible dossier overlay",opened);
+  await screenshot(client,"person-direct-link-overlay-390x844.png");
+  await evaluate(client,"window.location.hash=window.ATLAS_ENTITY_ROUTE.domainHash('persons')");
+  await waitFor(client,"(() => {"
+    +"const panel=document.querySelector('#personMainDetail');"
+    +"const backdrop=document.querySelector('#personMainDetailBackdrop');"
+    +"return !location.hash.includes('/person/')"
+    +" && panel?.hidden===true && backdrop?.hidden===true"
+    +" && !document.body.classList.contains('person-detail-overlay-open');"
+    +"})()",30000);
+  const listRoute=await evaluate(client,"(() => ({"
+    +"route:location.hash,"
+    +"detailHidden:document.querySelector('#personMainDetail')?.hidden===true,"
+    +"backdropHidden:document.querySelector('#personMainDetailBackdrop')?.hidden===true"
+    +"}))()");
+  return {opened,listRoute};
+}
+
 async function main(){
   assert(/^[0-9a-f]{40}$/i.test(EXPECTED_RUNTIME_SHA),"ATLAS_EXPECTED_RUNTIME_SHA_REQUIRED",{expected_runtime_sha:EXPECTED_RUNTIME_SHA||null});
   const pages=await jsonFetch(`${DEBUG_URL}/json/list`);
@@ -785,6 +831,8 @@ async function main(){
     await screenshot(client,"person-detail-390x844.png");
     const mobileComparison=await verifyMobileTwoPersonComparison(client);
     console.log("ATLAS_UI07_PRODUCTION_MOBILE_COMPARISON_PASS");
+    const directPersonRoute=await verifyDirectPersonDetailRoute(client,mobileComparison.selected[0].id);
+    console.log("ATLAS_PERSON_DIRECT_LINK_OVERLAY_PASS");
 
     const report={
       schema:"atlas-ui-v10-production-visual-acceptance/v1",
@@ -799,7 +847,7 @@ async function main(){
         multiActivity:desktopMultiActivity,
         detail:desktopDetail
       },
-      mobile:{main:mobileMain,multiActivity:mobileMultiActivity,detail:mobileDetail,comparison:mobileComparison},
+      mobile:{main:mobileMain,multiActivity:mobileMultiActivity,detail:mobileDetail,comparison:mobileComparison,directLink:directPersonRoute},
       screenshots:[
         "person-main-1600x1000.png",
         "person-detail-1600x1000.png",
@@ -807,7 +855,8 @@ async function main(){
         "mobile-drawer-open-390x844.png",
         "mobile-drawer-closed-390x844.png",
         "person-detail-390x844.png",
-        "ui07-person-comparison-mobile-390x844.png"
+        "ui07-person-comparison-mobile-390x844.png",
+        "person-direct-link-overlay-390x844.png"
       ],
       status:"PASS"
     };

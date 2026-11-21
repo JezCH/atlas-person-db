@@ -413,7 +413,7 @@
     setTopbar(next);
 
     if (updateHash) writeHash(routeModel.domainHash(next));
-    window.dispatchEvent(new CustomEvent("atlas-authority-domain-changed", { detail: { domain: next } }));
+    window.dispatchEvent(new CustomEvent("atlas-authority-domain-changed", { detail: { domain: next, route: resolvedRoute } }));
 
     if (next === "persons") {
       // Each Person history entry owns its own bounded comparison selection.
