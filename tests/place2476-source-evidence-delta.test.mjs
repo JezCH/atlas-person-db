@@ -9,23 +9,23 @@ test('Place evidence delta retains the original immutable fact and Source identi
   assert.equal(handoff.original_review.pr, 2617);
   assert.match(handoff.original_review.head_sha, /^[a-f0-9]{40}$/);
   const expected = new Map([
-    [18, '9ed98162-dc7d-5a2f-89da-db4aac4694ae'],
-    [4, 'c3af4db8-6c27-51da-af04-5f562cbd5cc2'],
-    [17, '69e4362a-3589-52b4-9a32-5b8e83710552'],
-    [1, '044aaa9d-e264-5449-bbe4-e380c3f02220'],
-    [15, '0a3dc36b-9eb9-5536-ac23-5fe71cb9467b'],
-    [11, '25dfe37e-1389-52de-a203-3231e5a9f106'],
-    [22, 'e91f57ec-9c46-594b-859b-4a14c2af99ba'],
+    [18, { sourceId: '9ed98162-dc7d-5a2f-89da-db4aac4694ae', startYear: 656, endYear: 661 }],
+    [4, { sourceId: 'c3af4db8-6c27-51da-af04-5f562cbd5cc2', startYear: 1923, endYear: null }],
+    [17, { sourceId: '69e4362a-3589-52b4-9a32-5b8e83710552', startYear: 1326, endYear: 1364 }],
+    [1, { sourceId: '044aaa9d-e264-5449-bbe4-e380c3f02220', startYear: 1204, endYear: 1260 }],
+    [15, { sourceId: '0a3dc36b-9eb9-5536-ac23-5fe71cb9467b', startYear: 1365, endYear: 1452 }],
+    [11, { sourceId: '25dfe37e-1389-52de-a203-3231e5a9f106', startYear: 1370, endYear: 1405 }],
+    [22, { sourceId: 'e91f57ec-9c46-594b-859b-4a14c2af99ba', startYear: 1250, endYear: 1517 }],
   ]);
   assert.equal(handoff.cases.length, expected.size);
   for (const entry of handoff.cases) {
-    assert.equal(entry.source_id, expected.get(entry.fact_index));
+    const original = expected.get(entry.fact_index);
+    assert.ok(original, `unexpected or repeated fact ${entry.fact_index}`);
+    assert.equal(entry.source_id, original.sourceId);
     expected.delete(entry.fact_index);
     assert.ok(entry.historical_claim.function_type === 'capital');
-    assert.ok(Number.isInteger(entry.historical_claim.start_year));
-    const { start_year: startYear, end_year: endYear } = entry.historical_claim;
-    assert.ok(endYear === null || (Number.isInteger(endYear) && endYear >= startYear),
-      `fact ${entry.fact_index}: end_year must be null or an integer at or after start_year`);
+    assert.equal(entry.historical_claim.start_year, original.startYear, `fact ${entry.fact_index}: original start year`);
+    assert.equal(entry.historical_claim.end_year, original.endYear, `fact ${entry.fact_index}: original end year`);
     assert.match(entry.review_state, /^HOLD_/);
     assert.ok(entry.finding.length > 50);
     assert.ok(entry.next_action.length > 15);
