@@ -1,0 +1,88 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261121-riemann-fermat:bernhard-riemann-kingdom-hanover-prime-paper-1859:v1",
+  "person": {
+    "canonical_name_en": "Bernhard Riemann",
+    "display_name_ko": "베른하르트 리만",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-21",
+    "life_status_basis": "documented_death",
+    "representative_domain": "science",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Hanover",
+    "display_name_ko": "하노버 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "15236151-3a4c-4e08-acab-bbf0f51f96eb"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Mathematician",
+    "role_display_name_ko": "수학자",
+    "start_year": 1859,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1859,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Bernhard Riemann published 'Ueber die Anzahl der Primzahlen unter einer gegebenen Grösse' (On the Number of Primes Less Than a Given Magnitude) in November 1859, outlining the connection between zeros of the zeta function and the distribution of prime numbers and stating the hypothesis now known as the Riemann hypothesis. This is an independently sourced publication-year scholarly milestone distinct from his 1854 geometry lecture; the hypothesis is not claimed as proven. Göttingen remained within the Kingdom of Hanover until 1866."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Riemann’s 1859 Manuscript — Clay Mathematics Institute",
+      "canonical_url": "https://www.claymath.org/collections/riemanns-1859-manuscript/",
+      "citation_text": "Clay Mathematics Institute dates the published 1859 article to November 1859 and describes its mathematical significance."
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "Riemann Hypothesis — Clay Mathematics Institute",
+      "canonical_url": "https://www.claymath.org/millennium/Riemann-Hypothesis/",
+      "citation_text": "Clay mathematics prize description identifies the formulation of the Riemann hypothesis in Riemann's 1859 paper and its relevance to prime distribution."
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "Riemann, Bernhard — Deutsche Biographie",
+      "canonical_url": "https://www.deutsche-biographie.de/gnd118600869.html",
+      "citation_text": "Scholarly reference identifies Riemann's 1859 memoir to the Berlin Academy, work on zeta functions and primes, and Göttingen professorship."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-21",
+      "document_title": "베른하르트 리만",
+      "url": "https://namu.wiki/w/%EB%B2%A0%EB%A5%B8%ED%95%98%EB%A5%B4%ED%8A%B8%20%EB%A6%AC%EB%A7%8C"
+    }
+  },
+  "spatial_disposition": {
+    "state": "existing_disposition",
+    "evidence": "Reuse the established Kingdom of Hanover Polity and its reviewed spatial lifecycle disposition; scholarly activity was at Göttingen, not sovereign rule. No new geometry or Place inferred."
+  },
+  "review_context": {
+    "selection": "explicit_user_approved_joint_registration_2026-11-21",
+    "batch": "user-20261121-riemann-fermat",
+    "identity_aliases": [
+      "Georg Friedrich Bernhard Riemann",
+      "Bernhard Riemann",
+      "리만",
+      "베른하르트 리만"
+    ],
+    "namuwiki_evidence": "External indexed independent historical-person page exact Korean title found via namu.moe mirror; not a film/fictional/athlete homonym.",
+    "preflight_required": true,
+    "production_screen": "Bounded GitHub file/issue search found no existing Person Authoring manifest by this name. A direct public Production SCREEN was not accessible; protected OIDC Authoring preflight_batch MUST check existing identities, reviewed NamuWiki state and semantic duplicate Activities prior to any authoritative write. Do not create duplicate Persons from the two milestones.",
+    "polity_review": "Kingdom of Hanover is a reviewed surviving same-state identity (existing UUID 15236151-3a4c-4e08-acab-bbf0f51f96eb). Kingdom of France was retired after same-identity consolidation; use canonical France identity and preserve monarchy period in notes. Neither source Polity should be minted as a new one."
+  }
+}

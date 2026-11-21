@@ -1,0 +1,87 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261121-riemann-fermat:pierre-de-fermat-france-probability-pascal-1654:v1",
+  "person": {
+    "canonical_name_en": "Pierre de Fermat",
+    "display_name_ko": "피에르 드 페르마",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-21",
+    "life_status_basis": "documented_death",
+    "representative_domain": "science",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "France",
+    "display_name_ko": "프랑스",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Mathematician",
+    "role_display_name_ko": "수학자",
+    "start_year": 1654,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1654,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Pierre de Fermat corresponded with Blaise Pascal in 1654 about division-of-stakes and other problems of chance. Their contributions are widely regarded as foundational to mathematical probability. This is a separate, precisely year-attested intellectual activity. The mathematical exchange is not a court appointment, a continuous 1640–1654 work interval, or a claim that Fermat alone founded probability theory. His position as a French magistrate remains distinct from the Activity's subject."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "July 1654: Pascal’s Letters to Fermat on the Problem of Points — American Physical Society",
+      "canonical_url": "https://www.aps.org/apsnews/2009/07/pascal-letters-fermat-points",
+      "citation_text": "The American Physical Society recounts the Pascal-Fermat letters in summer 1654 and their role in founding mathematical probability."
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "Fermat, Pierre de — Encyclopedia of Mathematics",
+      "canonical_url": "https://encyclopediaofmath.org/wiki/Fermat%2C_Pierre_de",
+      "citation_text": "Research reference describes July–October 1654 correspondence with Pascal as laying the foundations of the mathematical theory of probability."
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "FERMAT AND PASCAL ON PROBABILITY — University of York",
+      "canonical_url": "https://www.york.ac.uk/depts/maths/histstat/pascal.htm",
+      "citation_text": "Academic transcription and mathematical history of the contemporaneous Pascal-Fermat probability correspondence."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-21",
+      "document_title": "피에르 드 페르마",
+      "url": "https://namu.wiki/w/%ED%94%BC%EC%97%90%EB%A5%B4%20%EB%93%9C%20%ED%8E%98%EB%A5%B4%EB%A7%88"
+    }
+  },
+  "spatial_disposition": {
+    "state": "existing_disposition",
+    "evidence": "Reuse the established historical France Polity and its reviewed spatial lifecycle disposition. Fermat lived and worked at Toulouse in the monarchy era; Kingdom of France is a temporal state form, not a separate Polity. No new geometry inferred."
+  },
+  "review_context": {
+    "selection": "explicit_user_approved_joint_registration_2026-11-21",
+    "batch": "user-20261121-riemann-fermat",
+    "identity_aliases": [
+      "Pierre Fermat",
+      "Pierre de Fermat",
+      "페르마",
+      "피에르 드 페르마"
+    ],
+    "namuwiki_evidence": "External indexed independent historical-person page exact Korean title found via namu.moe mirror; not a film/fictional/athlete homonym.",
+    "preflight_required": true,
+    "production_screen": "Bounded GitHub file/issue search found no existing Person Authoring manifest by this name. A direct public Production SCREEN was not accessible; protected OIDC Authoring preflight_batch MUST check existing identities, reviewed NamuWiki state and semantic duplicate Activities prior to any authoritative write. Do not create duplicate Persons from the two milestones.",
+    "polity_review": "Kingdom of Hanover is a reviewed surviving same-state identity (existing UUID 15236151-3a4c-4e08-acab-bbf0f51f96eb). Kingdom of France was retired after same-identity consolidation; use canonical France identity and preserve monarchy period in notes. Neither source Polity should be minted as a new one."
+  }
+}

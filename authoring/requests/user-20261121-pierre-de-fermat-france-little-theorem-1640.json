@@ -1,0 +1,87 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261121-riemann-fermat:pierre-de-fermat-france-little-theorem-1640:v1",
+  "person": {
+    "canonical_name_en": "Pierre de Fermat",
+    "display_name_ko": "피에르 드 페르마",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-21",
+    "life_status_basis": "documented_death",
+    "representative_domain": "science",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "France",
+    "display_name_ko": "프랑스",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Mathematician",
+    "role_display_name_ko": "수학자",
+    "start_year": 1640,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1640,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Pierre de Fermat (c.1607–1665) conducted mathematical investigations while employed as a French magistrate at Toulouse. A 1640 correspondence with Bernard Frénicle de Bessy states the result later known as Fermat's little theorem. This is a representative mathematical research/communication milestone in 1640, not an assertion that Fermat served as a royal mathematician or proved Fermat's Last Theorem. His historical legal office is separate from the representative science Activity. France is the canonical ATLAS historical polity; Kingdom of France is a period designation, not a new polity identity."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Pierre de Fermat — MacTutor History of Mathematics, University of St Andrews",
+      "canonical_url": "https://mathshistory.st-andrews.ac.uk/Biographies/Fermat/",
+      "citation_text": "Historical mathematician's biographical profile documents his role as Toulouse magistrate, number-theoretic correspondence with Frénicle and major mathematics work."
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "Fermat, Pierre de — Encyclopedia of Mathematics",
+      "canonical_url": "https://encyclopediaofmath.org/wiki/Fermat%2C_Pierre_de",
+      "citation_text": "Reference on Fermat's life and mathematical letters; supports the historical scholarly career and the importance of his number theory."
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "Chronology for 1625–1650 — MacTutor History of Mathematics",
+      "canonical_url": "https://mathshistory.st-andrews.ac.uk/Chronology/10/",
+      "citation_text": "Independent chronology anchors Fermat's mathematical work and theorem correspondence to 1640."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-21",
+      "document_title": "피에르 드 페르마",
+      "url": "https://namu.wiki/w/%ED%94%BC%EC%97%90%EB%A5%B4%20%EB%93%9C%20%ED%8E%98%EB%A5%B4%EB%A7%88"
+    }
+  },
+  "spatial_disposition": {
+    "state": "existing_disposition",
+    "evidence": "Reuse the established historical France Polity and its reviewed spatial lifecycle disposition. Fermat lived and worked at Toulouse in the monarchy era; Kingdom of France is a temporal state form, not a separate Polity. No new geometry inferred."
+  },
+  "review_context": {
+    "selection": "explicit_user_approved_joint_registration_2026-11-21",
+    "batch": "user-20261121-riemann-fermat",
+    "identity_aliases": [
+      "Pierre Fermat",
+      "Pierre de Fermat",
+      "페르마",
+      "피에르 드 페르마"
+    ],
+    "namuwiki_evidence": "External indexed independent historical-person page exact Korean title found via namu.moe mirror; not a film/fictional/athlete homonym.",
+    "preflight_required": true,
+    "production_screen": "Bounded GitHub file/issue search found no existing Person Authoring manifest by this name. A direct public Production SCREEN was not accessible; protected OIDC Authoring preflight_batch MUST check existing identities, reviewed NamuWiki state and semantic duplicate Activities prior to any authoritative write. Do not create duplicate Persons from the two milestones.",
+    "polity_review": "Kingdom of Hanover is a reviewed surviving same-state identity (existing UUID 15236151-3a4c-4e08-acab-bbf0f51f96eb). Kingdom of France was retired after same-identity consolidation; use canonical France identity and preserve monarchy period in notes. Neither source Polity should be minted as a new one."
+  }
+}
