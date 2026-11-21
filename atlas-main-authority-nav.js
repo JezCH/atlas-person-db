@@ -257,7 +257,7 @@
     if (window.ATLAS_REGISTRATION_REVIEW) return Promise.resolve(window.ATLAS_REGISTRATION_REVIEW);
     if (registrationReviewAssetsPromise) return registrationReviewAssetsPromise;
     appendStylesheetOnce("./atlas-registration-review.css?v=20261023-registration-only-v1&vis05=readable-mobile-review-v1");
-    registrationReviewAssetsPromise = loadScriptOnce("./atlas-registration-review.js?v=20261023-registration-only-v1&vis05=queue-search-feedback-v1", () => Boolean(window.ATLAS_REGISTRATION_REVIEW))
+    registrationReviewAssetsPromise = loadScriptOnce("./atlas-registration-review.js?v=20261023-registration-only-v1&vis05=queue-search-feedback-v1&rosterPoll=20261121-cadence-v1", () => Boolean(window.ATLAS_REGISTRATION_REVIEW))
       .then(() => window.ATLAS_REGISTRATION_REVIEW)
       .catch((error) => {
         registrationReviewAssetsPromise = null;
