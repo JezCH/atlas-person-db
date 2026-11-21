@@ -324,6 +324,12 @@ async function captureDenseWindows(client, zoom) {
           .filter(el=>Number(getComputedStyle(el).opacity)>0.02)
           .map(el=>el.dataset.spacetimePerson).filter(Boolean))].sort();
         const rails=ids(".spacetime-track-rail"),names=ids(".spacetime-track-label");
+        const overflowButtons=qa(".spacetime-overflow-person[data-spacetime-overflow-person]");
+        const overflowIds=overflowButtons.map(el=>el.dataset.spacetimeOverflowPerson).filter(Boolean);
+        const overflowUnique=[...new Set(overflowIds)];
+        const overflowDetails=q("#spacetimeNameOverflow");
+        const overflowSummaryVisible=Boolean(overflowDetails && !overflowDetails.hidden
+          && getComputedStyle(overflowDetails).display!=="none");
         const overlap=(${overlapCode})(qa(".spacetime-track-label"));
         const labelAssociation=(${labelAssociationCode})(
           qa(".spacetime-track-label"),qa(".spacetime-label-home-anchor"),qa(".spacetime-track-rail"));
@@ -331,9 +337,14 @@ async function captureDenseWindows(client, zoom) {
           person_count:Number(q("#spacetimeDomPersonCount")?.textContent||0),
           label_count:Number(q("#spacetimeDomLabelCount")?.textContent||0),
           deferred_count:Number(q("#spacetimeDeferredLabelCount")?.textContent||0),
+          overflow_item_count:overflowButtons.length,
+          overflow_unique_count:overflowUnique.length,
+          overflow_summary_visible:overflowSummaryVisible,
           visible_rail_count:rails.length, visible_label_count:names.length,
           missingVisibleLabelPersonIds:rails.filter(id=>!names.includes(id)),
           extraVisibleLabelPersonIds:names.filter(id=>!rails.includes(id)),
+          unaccountedVisiblePersonIds:rails.filter(id=>!names.includes(id)&&!overflowUnique.includes(id)),
+          duplicateCanvasOverflowIds:names.filter(id=>overflowUnique.includes(id)),
           overlap_count:overlap.count,overlap_pairs:overlap.overlaps.slice(0,3),
           labelAssociation:{
             borrowed_count:labelAssociation.borrowed_count,
@@ -346,11 +357,20 @@ async function captureDenseWindows(client, zoom) {
         };
       })()`);
       const issues=[];
-      if(observed.label_count!==observed.person_count) issues.push("person/label count mismatch");
-      if(observed.deferred_count!==0) issues.push("deferred full Person names");
+      // The dense overflow count is never falsified. Full names still fit
+      // directly on the canvas whenever geometry permits; otherwise every
+      // deferred Person must remain individually discoverable/selectable.
+      if(observed.label_count+observed.overflow_item_count!==observed.person_count)
+        issues.push("unaccounted Person in canvas or full-name index");
+      if(observed.overflow_item_count!==observed.deferred_count
+         ||observed.overflow_unique_count!==observed.overflow_item_count)
+        issues.push("deferred name/overflow identity mismatch");
+      if(observed.deferred_count>0&&!observed.overflow_summary_visible)
+        issues.push("dense overflow index is hidden");
       if(observed.overlap_count!==0) issues.push("overlapping Person names");
-      if(observed.missingVisibleLabelPersonIds.length||observed.extraVisibleLabelPersonIds.length)
-        issues.push("visible rail/label Person identity mismatch");
+      if(observed.unaccountedVisiblePersonIds.length||observed.duplicateCanvasOverflowIds.length
+         ||observed.extraVisibleLabelPersonIds.length)
+        issues.push("Person visible rail/label/overflow identity mismatch");
       if(observed.labelAssociation.violation_count!==0) issues.push("Person origin marker/rail association");
       if(observed.label_count>0 && observed.min_font_px<13.5)
         issues.push("desktop name font silently shrunk");
@@ -365,6 +385,25 @@ async function captureDenseWindows(client, zoom) {
       }
     }
   }
+  // End-to-end accessible Person selection from a crowded viewport.
+  // This is a user-driven selection (not a silent zoom/recenter).
+  const chosen=await evaluate(client,`(() => {
+    const button=document.querySelector("#spacetimeNameOverflowList [data-spacetime-overflow-person]");
+    if(!button) return null;
+    const personId=button.dataset.spacetimeOverflowPerson;
+    button.click();
+    return personId;
+  })()`);
+  let overflowNavigation=null;
+  if(chosen){
+    await waitFor(client,"Boolean(document.querySelector('#spacetimeInspector:not(.is-empty)'))",10000);
+    const selected=await waitFor(client,
+      "Array.from(document.querySelectorAll('.spacetime-track-label.is-selected')).some(el=>el.dataset.spacetimePerson==="+JSON.stringify(chosen)+")",
+      10000);
+    overflowNavigation={person_id:chosen,inspector_open:true,selected_person_name_visible:Boolean(selected)};
+    await evaluate(client,"document.querySelector('#spacetimeClearPerson')?.click()");
+    await waitFor(client,"Boolean(document.querySelector('#spacetimeInspector.is-empty'))",10000);
+  }
   await evaluate(client,`(() => {
     const s=document.querySelector(".spacetime-scroll");
     s.scrollLeft=${before.left};
@@ -373,7 +412,7 @@ async function captureDenseWindows(client, zoom) {
     return true;
   })()`);
   await sleep(400);
-  return {zoom,windows:samples,screenshots,
+  return {zoom,windows:samples,screenshots,overflow_navigation:overflowNavigation,
     observed_areas:[...new Set(samples.filter(s=>s.person_count>0).map(s=>s.area))],
     failures:samples.filter(s=>s.issues.length).map(s=>({
       subregion:s.subregion,year:s.year,zoom:s.zoom,issues:s.issues,
@@ -990,7 +1029,9 @@ async function main() {
       assert(record.windows.length === 16,"Dense acceptance must sample 16 bounded windows at "+zoom,record);
       assert(record.observed_areas.includes("europe-1800-1950") && record.observed_areas.includes("east-asia-500-1900"),
         "Historical dense windows did not expose any reviewed Person for both regions at "+zoom,record);
-      assert(record.failures.length === 0,"Dense historical Person label acceptance failed at "+zoom,record.failures);
+      assert(record.failures.length === 0,"Dense historical Person accessibility acceptance failed at "+zoom,record.failures);
+      if(zoom==="500") assert(record.overflow_navigation?.selected_person_name_visible,
+        "Dense overflow Person could not be selected into the original historical canvas",record.overflow_navigation);
     }
     assert(exceptions.length === 0, "Runtime exceptions detected during visual acceptance", exceptions);
     assert(nonIgnorableResourceErrors.length === 0, "Non-ignorable resource failures detected during visual acceptance", nonIgnorableResourceErrors);
