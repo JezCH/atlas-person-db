@@ -23,7 +23,9 @@ test('Place evidence delta retains the original immutable fact and Source identi
     expected.delete(entry.fact_index);
     assert.ok(entry.historical_claim.function_type === 'capital');
     assert.ok(Number.isInteger(entry.historical_claim.start_year));
-    assert.ok(entry.historical_claim.end_year == null || entry.historical_claim.end_year >= entry.historical_claim.start_year);
+    const { start_year: startYear, end_year: endYear } = entry.historical_claim;
+    assert.ok(endYear === null || (Number.isInteger(endYear) && endYear >= startYear),
+      `fact ${entry.fact_index}: end_year must be null or an integer at or after start_year`);
     assert.match(entry.review_state, /^HOLD_/);
     assert.ok(entry.finding.length > 50);
     assert.ok(entry.next_action.length > 15);
@@ -90,4 +92,5 @@ test('Cairo evidence corroborates capital at year granularity without authorizin
   assert.equal(handoff.production_mutation_authorized,false);
   assert.deepEqual(handoff.operations,[]);
 });
+
 
