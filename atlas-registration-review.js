@@ -105,8 +105,15 @@
           row?.review_state,queueReviewStateLabel(row?.review_state),row?.origin,queueOriginLabel(row?.origin),row?.candidate_id
         ].some((value)=>String(value || "").toLocaleLowerCase("ko").includes(needle)))
       : queueRows;
+    const resultCount=activeRoot?.querySelector("#registrationQueueMatchCount");
+    const resultLabel=needle
+      ? `검색 결과 ${rows.length.toLocaleString("ko-KR")}건 · 전체 ${queueRows.length.toLocaleString("ko-KR")}건`
+      : `등록대기열 ${rows.length.toLocaleString("ko-KR")}건`;
+    // Do not repeat live-region announcements on unchanged ten-second refreshes.
+    if (resultCount && resultCount.textContent !== resultLabel) resultCount.textContent=resultLabel;
     if (!rows.length) {
-      body.innerHTML='<tr><td colspan="6" class="registration-review-empty">표시할 등록대기 후보가 없습니다.</td></tr>';
+      const emptyText=needle ? "검색 조건과 일치하는 등록대기 후보가 없습니다." : "현재 등록대기 후보가 없습니다.";
+      body.innerHTML=`<tr><td colspan="6" class="registration-review-empty">${emptyText}</td></tr>`;
       return;
     }
     body.innerHTML=rows.map((row)=>`<tr>
@@ -164,7 +171,7 @@
       <section class="registration-review-section">
         <div class="registration-review-section-head registration-review-queue-head">
           <div><small>등록 대기열</small><h3>등록대기열</h3></div>
-          <label>검색<input id="registrationQueueSearch" type="search" placeholder="이름 · 분야 · 상태" /></label>
+          <label>검색<input id="registrationQueueSearch" type="search" placeholder="이름 · 분야 · 상태" /><span id="registrationQueueMatchCount" class="registration-review-match-count" role="status" aria-live="polite" aria-atomic="true">결과 불러오는 중</span></label>
         </div>
         <div class="registration-review-table-wrap registration-review-queue-wrap">
           <table class="registration-review-table registration-review-queue-table">
