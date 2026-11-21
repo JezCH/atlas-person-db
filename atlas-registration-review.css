@@ -2,31 +2,41 @@
 .registration-review{display:grid;gap:12px;color:var(--atlas-text);min-width:0}
 .registration-review-section{min-width:0;padding:16px 18px;border:1px solid var(--atlas-material-hairline);background:var(--atlas-surface-1);border-radius:var(--atlas-radius-panel)}
 .registration-review-section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:12px}
-.registration-review-section-head small{display:block;margin-bottom:4px;color:var(--atlas-honor-metal);font-size:9px;font-weight:800;letter-spacing:.11em}
-.registration-review-section-head h3{font-size:16px;margin:0;color:var(--atlas-text-strong)}
+.registration-review-section-head small{display:block;margin-bottom:4px;color:var(--atlas-honor-metal);font-size:11px;font-weight:800;letter-spacing:.11em}
+.registration-review-section-head h3{font-size:19px;margin:0;color:var(--atlas-text-strong)}
 .registration-review-head-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.registration-review-head-actions>span{font-size:10px;color:var(--atlas-text-muted)}
+.registration-review-head-actions>span{font-size:12px;color:var(--atlas-text-secondary)}
 .registration-review-head-actions>span[data-state="ready"]{color:var(--atlas-success)}
 .registration-review-head-actions>span[data-state="error"]{color:var(--atlas-danger)}
 .registration-review-stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1px;border:1px solid var(--atlas-material-hairline-soft);background:var(--atlas-material-hairline-soft)}
 .registration-review-stat{min-width:0;display:grid;gap:3px;padding:13px 14px;background:var(--atlas-surface-1)}
 .registration-review-stat strong{font:600 24px/1 Georgia,"Times New Roman",serif;color:var(--atlas-text-strong);font-variant-numeric:tabular-nums}
-.registration-review-stat span{font-size:10px;color:var(--atlas-text-secondary)}
-.registration-review-stat small{font-size:9px;color:var(--atlas-text-muted)}
+.registration-review-stat span{font-size:12px;color:var(--atlas-text-secondary)}
+.registration-review-stat small{font-size:11.5px;color:var(--atlas-text-secondary)}
 .registration-review-queue-head{align-items:end}
-.registration-review-queue-head label{display:grid;gap:4px;color:var(--atlas-text-muted);font-size:9px}
-.registration-review-queue-head input{width:220px;min-height:32px;padding:5px 8px}
+.registration-review-queue-head label{display:grid;gap:4px;color:var(--atlas-text-secondary);font-size:12px}
+.registration-review-queue-head input{box-sizing:border-box;width:220px;min-height:44px;padding:8px 10px;font-size:16px}
 .registration-review-queue-head input:focus{border-color:var(--atlas-material-hairline-strong);outline:1px solid var(--atlas-focus-ring);outline-offset:2px;box-shadow:none}
 .registration-review-table-wrap{max-width:100%;overflow:auto;border:1px solid var(--atlas-material-hairline-soft)}
-.registration-review-table{width:100%;border-collapse:collapse;min-width:620px;background:var(--atlas-surface-1);font-size:11px}
-.registration-review-table th{position:sticky;top:0;z-index:1;padding:9px 10px;border-bottom:1px solid var(--atlas-material-hairline);background:#171b1f;color:var(--atlas-text-muted);text-align:left;font-size:9px;font-weight:800;white-space:nowrap}
+.registration-review-table{width:100%;border-collapse:collapse;min-width:620px;background:var(--atlas-surface-1);font-size:12.5px}
+.registration-review-table th{position:sticky;top:0;z-index:1;padding:9px 10px;border-bottom:1px solid var(--atlas-material-hairline);background:#171b1f;color:var(--atlas-text-secondary);text-align:left;font-size:11px;font-weight:800;white-space:nowrap}
 .registration-review-table td{padding:9px 10px;border-bottom:1px solid var(--atlas-material-hairline-soft);color:var(--atlas-text-secondary);vertical-align:middle}
 .registration-review-table tbody tr:last-child td{border-bottom:0}
 .registration-review-table tbody tr:hover td{background:var(--atlas-material-wash-hover)}
 .registration-review-table .registration-review-name{color:var(--atlas-text-strong);font-weight:700}
-.registration-review-table time{white-space:nowrap;color:var(--atlas-text-muted);font-size:9px}
+.registration-review-table time{white-space:normal;overflow-wrap:anywhere;color:var(--atlas-text-secondary);font-size:11.5px}
 .registration-review-empty{text-align:center!important;color:var(--atlas-text-muted)!important;padding:26px!important}
 @media(max-width:900px){.registration-review-stats{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:700px){.registration-review-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:600px){.registration-review{gap:7px}.registration-review-section{padding:11px;border-radius:4px}.registration-review-section-head{flex-direction:column}.registration-review-head-actions{width:100%;justify-content:space-between}.registration-review-queue-head label,.registration-review-queue-head input{width:100%}.registration-review-stat{padding:10px}.registration-review-stat strong{font-size:20px}.registration-review-queue-table{min-width:0}.registration-review-queue-table thead{display:none}.registration-review-queue-table tbody{display:grid;gap:7px}.registration-review-queue-table tbody tr{display:grid;padding:10px;border:1px solid var(--atlas-material-hairline-soft)}.registration-review-queue-table td{display:grid;grid-template-columns:minmax(82px,30%) minmax(0,1fr);gap:8px;padding:6px 0;word-break:break-word}.registration-review-queue-table td::before{content:attr(data-label);color:var(--atlas-text-muted);font-size:9px}.registration-review-queue-table .registration-review-empty::before{display:none}}
-@media(max-width:420px){.registration-review-stats{grid-template-columns:1fr}}
+@media(max-width:600px){.registration-review{gap:7px}.registration-review-section{padding:11px;border-radius:4px}.registration-review-section-head{flex-direction:column}.registration-review-head-actions{width:100%;justify-content:space-between}.registration-review-queue-head label,.registration-review-queue-head input{width:100%}.registration-review-stat{padding:10px}.registration-review-stat strong{font-size:20px}.registration-review-queue-table{min-width:0}.registration-review-queue-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}.registration-review-queue-table tbody{display:grid;gap:7px}.registration-review-queue-table tbody tr{display:grid;padding:10px;border:1px solid var(--atlas-material-hairline-soft)}.registration-review-queue-table td{display:grid;grid-template-columns:minmax(82px,30%) minmax(0,1fr);gap:8px;padding:6px 0;word-break:break-word}.registration-review-queue-table td::before{content:attr(data-label);color:var(--atlas-text-secondary);font-size:12px;font-weight:700;line-height:1.4}.registration-review-queue-table .registration-review-empty::before{display:none}}
+@media(max-width:420px){.registration-review-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.registration-review-stat:last-child{grid-column:1/-1}}
+
+/* VIS-05: Admin review controls must remain operable on touch screens. 
+ * All original Person/queue records and columns remain visible; the table
+ * headers are visually clipped rather than removed from the accessibility tree. */
+@media(max-width:600px){
+  .registration-review-head-actions .btn{min-height:44px}
+  .registration-review-queue-table tbody tr{min-width:0}
+  .registration-review-queue-table td{min-width:0;line-height:1.5}
+  .registration-review-queue-table td::before{min-width:0;overflow-wrap:anywhere}
+}
