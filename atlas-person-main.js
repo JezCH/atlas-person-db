@@ -42,7 +42,7 @@
   const comparisonCache = new Map();
   let initialLoadPromise = null;
   const PERSON_PORTRAIT_IMAGE_SCRIPT_URL = "./atlas-person-portrait-image.js?v=20260924-upload-standard-v3";
-  const PERSON_EXCEL_EXPORT_SCRIPT_URL = "./atlas-person-excel-export.js?v=20260922-feature-split-v1";
+  const PERSON_EXCEL_EXPORT_SCRIPT_URL = "./atlas-person-excel-export.js?v=20261121-local-export-date-v1";
   let personPortraitImageModulePromise = null;
   let personExcelExportModulePromise = null;
   let excelExportInFlight = false;
