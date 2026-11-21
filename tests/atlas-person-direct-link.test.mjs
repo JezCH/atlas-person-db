@@ -320,3 +320,34 @@ test('Person card markup is reused for repeated filters and refreshed only for s
   h.window.ATLAS_PERSON_MAIN.renderGroups();
   assert.equal(activityReads,selectedReads,'returning to normal variant must reuse cached card');
 });
+
+
+test('large Person register defers offscreen Activity DOM without losing full Person identity or search results',async()=>{
+  const rows=Array.from({length:125},(_,index)=>({
+    ...person,
+    id:'11111111-2222-4333-8444-'+String(index+1).padStart(12,'0'),
+    display_name:'Person '+index,
+    canonical_name_en:'Person '+index,
+    first_activity_year:index<60?-900:1900,
+    activity_count:2,
+    activity_summaries:[{id:'activity-'+index,polity:{display_name:'Test Polity'},relation:{code:'rules'},start:{year:1900},end:{year:1901}}]
+  }));
+  const h=harness('#atlas-persons',person,{listPersons:rows});
+  await settle();
+  const list=h.state.groupMarkup.at(-1);
+  assert.ok(list,'list must render');
+  const deferred=(list.match(/data-person-deferred="true"/g)||[]).length;
+  const full=(list.match(/class="person-card-top"/g)||[]).length;
+  assert.equal(full,48,'first screen retains fully rendered Persons');
+  assert.equal(deferred,77,'every remaining Person still has a lightweight row');
+  assert.match(list,/Person 124/,'end of the register must remain navigable');
+  assert.match(list,/data-person-range="AD 1900/,'deferred era classification preserves exact chronology');
+  const lastId=rows[124].id;
+  const hydrated=h.window.ATLAS_PERSON_MAIN.personCardMarkup(lastId);
+  assert.match(hydrated,/Person 124/);
+  assert.match(hydrated,/person-card-activity/,'the full Activity subtree can be restored without a new read');
+  assert.equal(h.state.listCalls,1);
+  h.window.ATLAS_PERSON_MAIN.setSearchQuery('Test');
+  assert.equal(h.state.listCalls,1,'search never fetches a separate Person snapshot');
+  assert.equal(h.window.ATLAS_PERSON_MAIN.personCardMarkup('not-a-uuid'),null);
+});

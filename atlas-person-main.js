@@ -22,6 +22,7 @@
   }
 
   let persons = [];
+  let personsById = new Map();
   let personListLoaded = false;
   let facetCatalog = Object.freeze({ polities: [], relations: [], roles: [], period_bases: [] });
   let selectedPersonId = null;
@@ -235,10 +236,41 @@
     return markup;
   }
 
+  // On first render only the first visible stretch needs fully expanded
+  // Activities. Every other Person remains present, searchable and navigable
+  // as a lightweight row; the table view upgrades it near the viewport.
+  const INITIAL_EXPANDED_ROWS = 48;
+
+  function deferredPersonCard(person) {
+    const name = escapeHtml(person.display_name || person.canonical_name_en || "이름 미상");
+    const range = escapeHtml(rangeLabel(person));
+    const count = Math.max(0, Number(person.activity_count) || 0);
+    const estimatedHeight = Math.min(180, 56 + Math.min(count, 4) * 25);
+    const domain = String(personDomainsById?.[person?.id] || "").trim();
+    const domainAttribute = domain ? ` data-representative-domain="${escapeHtml(domain)}"` : "";
+    const selectedClass = selectedPersonId === person.id ? " is-selected" : "";
+    return `<button class="person-card person-register-entry person-table-deferred${selectedClass}" type="button"
+      data-person-id="${escapeHtml(person.id)}" data-person-deferred="true"
+      data-person-range="${range}"${domainAttribute} style="min-height:${estimatedHeight}px"
+      aria-label="${name} · ${range} · 활동 ${count}건">
+      <strong class="person-table-deferred-name">${name}</strong>
+      <span class="person-table-deferred-range">${range}</span>
+      <span class="person-table-deferred-activities" aria-hidden="true">활동 내역은 접근 시 표시</span>
+      <span class="person-table-deferred-count">${count}건</span>
+    </button>`;
+  }
+
+  function personCardMarkup(personId) {
+    const person = personsById.get(String(personId || ""));
+    return person ? personCard(person) : null;
+  }
+
   function groupSection({ title, description, rows }) {
     return `<section class="person-group person-group-historical" aria-labelledby="person-group-historical-title">
       <header class="person-group-head"><div><p class="eyebrow">인물 목록</p><h2 id="person-group-historical-title">${escapeHtml(title)}</h2><p>${escapeHtml(description)}</p></div></header>
-      <div class="person-card-grid">${rows.length ? rows.map(personCard).join("") : '<p class="person-empty-state">현재 조건에 해당하는 인물이 없습니다.</p>'}</div>
+      <div class="person-card-grid">${rows.length ? rows.map((person, index) =>
+        index < INITIAL_EXPANDED_ROWS ? personCard(person) : deferredPersonCard(person)
+      ).join("") : '<p class="person-empty-state">현재 조건에 해당하는 인물이 없습니다.</p>'}</div>
     </section>`;
   }
 
@@ -879,6 +911,7 @@
         dataStore.loadPersonDomains({ force }).catch(() => null)
       ]);
       persons = result.persons.slice();
+      personsById = new Map(persons.map((person) => [String(person.id), person]));
       personListLoaded = true;
       personDomainsById = Object.freeze({ ...(domainResult?.by_person_id || {}) });
       facetCatalog = result.facet_catalog || reader.facetCatalog(persons);
@@ -1304,6 +1337,7 @@
     clearSelection,
     getSelectedPersonId:() => selectedPersonId,
     renderGroups,
+    personCardMarkup,
     setSearchQuery,
     getSearchQuery: () => query,
     setPolityFilter,
