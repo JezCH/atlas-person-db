@@ -62,6 +62,7 @@
         source?.publisher ? "출판: " + source.publisher : null,
         source?.publication_date ? "발행: " + source.publication_date :
           source?.publication_year != null ? "발행: " + source.publication_year : null,
+        source?.external_identifier ? "식별자: " + source.external_identifier : null,
         source?.locator ? "위치: " + source.locator : null
       ].filter(Boolean).join(" · ");
       const link = url ? '<a href="' + escapeHtml(url) + '" target="_blank" rel="noopener noreferrer">' +
