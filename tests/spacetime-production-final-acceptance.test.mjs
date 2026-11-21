@@ -440,3 +440,111 @@ test("Production Chrome activates the Person label by Space and checks stable fo
   assert.match(loader, /homeband=20261121-centered-rail-origin-v1&canvasfocus=20261121-a11y-v1/);
   assert.match(shell, /inspector=20261121-activity-focus-v1&canvasfocus=20261121-a11y-v1/);
 });
+
+
+test("spatial uncertainty buttons restore only the same Person and Activity after rerender", () => {
+  const source = read("atlas-person-spacetime-view.js");
+  const start = source.indexOf("  function captureRenderFocus(");
+  const end = source.indexOf("  function horizontalCameraGeometry(", start);
+  assert.ok(start > 0 && end > start);
+  const calls = [];
+  const make = (person, activity) => ({
+    id:"",
+    dataset:{spacetimePerson:person,spacetimeActivity:activity},
+    classList:{contains:(cls)=>cls==="spacetime-spatial-uncertainty"},
+    focus:(options)=>calls.push({person,activity,preventScroll:options?.preventScroll})
+  });
+  const first = make("p1","a1"), replacement = make("p1","a1");
+  const wrongPerson = make("p2","a1"), wrongActivity = make("p1","a2");
+  let available = [first];
+  const mount = {
+    contains:el=>available.includes(el),
+    querySelectorAll:()=>available
+  };
+  const context = vm.createContext({document:{activeElement:first,getElementById:()=>null}});
+  vm.runInContext(source.slice(start,end),context);
+  const snapshot = context.captureRenderFocus(mount);
+  assert.equal(snapshot.canvasKind,"uncertainty");
+  assert.equal(snapshot.canvasPersonId,"p1");
+  assert.equal(snapshot.canvasActivityId,"a1");
+  available = [wrongPerson,wrongActivity,replacement];
+  assert.equal(context.restoreRenderFocus(mount,snapshot),true);
+  assert.deepEqual(calls,[{person:"p1",activity:"a1",preventScroll:true}]);
+  available = [wrongPerson,wrongActivity];
+  assert.equal(context.restoreRenderFocus(mount,snapshot),false);
+  assert.equal(calls.length,1);
+});
+
+test("actual virtualized canvas refresh preserves keyboard focus when a focused label is replaced", () => {
+  const source = read("atlas-person-spacetime-view.js");
+  const helperStart = source.indexOf("  function captureRenderFocus(");
+  const helperEnd = source.indexOf("  function horizontalCameraGeometry(", helperStart);
+  const virtualStart = source.indexOf("  function bindVirtualizedLayers(");
+  const virtualEnd = source.indexOf("  function bindPinchCameraZoom(", virtualStart);
+  assert.ok(helperStart > 0 && helperEnd > helperStart && virtualStart > 0 && virtualEnd > virtualStart);
+  let nodes = [];
+  const focused = [];
+  let scrollHandler = null, queuedFrame = null, replacementCount = 0;
+  const newLabel = () => ({
+    id:"",
+    dataset:{spacetimePerson:"p1"},
+    classList:{contains:(cls)=>cls==="spacetime-track-label"},
+    focus:(options)=>focused.push({person:"p1",preventScroll:options?.preventScroll})
+  });
+  const layers = {
+    "#spacetimeRailLayer":{},
+    "#spacetimeUncertaintyLayer":{},
+    "#spacetimeActivityLayer":{},
+    "#spacetimeLabelLayer":{}
+  };
+  Object.defineProperty(layers["#spacetimeLabelLayer"],"innerHTML",{
+    set:()=>{replacementCount++;nodes = [newLabel()];}
+  });
+  const canvas={contains:()=>false,addEventListener:()=>{},getBoundingClientRect:()=>({left:0,top:0})};
+  const hint={hidden:false};
+  const mount={
+    contains:el=>nodes.includes(el),
+    querySelector:(selector)=>layers[selector]|| (selector===".spacetime-canvas"?canvas:selector==="#spacetimeViewportEmptyHint"?hint:null)
+  };
+  const scroll={
+    scrollLeft:0,scrollTop:0,clientWidth:600,clientHeight:500,
+    addEventListener:(name,callback)=>{if(name==="scroll")scrollHandler=callback;}
+  };
+  const document={activeElement:null,getElementById:()=>null};
+  const context=vm.createContext({
+    document,
+    runtime:()=>({performance:{
+      viewportWorldRect:()=>({visible_left:scroll.scrollLeft,visible_top:scroll.scrollTop,visible_width:600,visible_height:500}),
+      cullTrackSegments:()=>[]
+    }}),
+    selectedPersonId:null, selectedActivityId:null,
+    visibleRailLabelItems:()=>[{person_id:"p1"}],
+    packTrackLabels:()=>({placed:[],deferred:[]}),
+    renderRails:()=>"",renderSpatialUncertainty:()=>"",renderLabels:()=>"",renderActivityGlyphs:()=>"",
+    cameraInsets:()=>({}),
+    requestAnimationFrame:(fn)=>{queuedFrame=fn;return 1;}
+  });
+  vm.runInContext(source.slice(helperStart,helperEnd),context);
+  vm.runInContext(source.slice(virtualStart,virtualEnd),context);
+  const state={
+    visibleTracks:[],projectedTracks:[],projection:{},presentation:{},
+    contentWidth:600,timelineHeight:500,needle:"",
+    lodWeights:{labels:1,rails:1,activities:1},
+    meanwhileOrdinal:null,meanwhilePersonIds:new Set()
+  };
+  context.bindVirtualizedLayers(mount,scroll,state);
+  assert.equal(replacementCount,1);
+  assert.equal(nodes.length,1);
+  assert.equal(typeof scrollHandler,"function");
+  document.activeElement=nodes[0];
+  scroll.scrollLeft=11;
+  scrollHandler();
+  assert.equal(typeof queuedFrame,"function");
+  queuedFrame();
+  assert.equal(replacementCount,2,"changed viewport causes actual DOM label replacement");
+  assert.deepEqual(focused,[{person:"p1",preventScroll:true}]);
+  const loader=read("atlas-main-authority-nav.js");
+  const shell=read("index.html");
+  assert.match(loader,/canvasfocus=20261121-a11y-v1&virtualfocus=20261121-uncertainty-v1/);
+  assert.match(shell,/canvasfocus=20261121-a11y-v1&virtualfocus=20261121-uncertainty-v1/);
+});
