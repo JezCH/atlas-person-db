@@ -114,28 +114,41 @@
     }
   }
 
+  function validHistoricalYear(value) {
+    // The historical chronology has no year zero. Guard even derived
+    // activity summaries so an invalid boundary cannot become a false date.
+    return Number.isSafeInteger(value) && value !== 0;
+  }
+
   function yearLabel(value) {
-    if (!Number.isInteger(value)) return "연도 미상";
-    if (value < 0) return `BC ${Math.abs(value)}`;
-    if (value > 0) return `AD ${value}`;
-    return "연도 0";
+    if (!validHistoricalYear(value)) return "연도 미상";
+    return value < 0 ? `BC ${Math.abs(value)}` : `AD ${value}`;
   }
 
   function rangeLabel(person) {
     const start = person?.first_activity_year;
     const end = person?.last_activity_year;
-    if (person?.activity_summaries?.some(a => a.end?.status === "ongoing")) return `${yearLabel(start)} – 현재`;
-    if (!Number.isInteger(start) && !Number.isInteger(end)) return "주요 활동연도 미상";
-    if (Number.isInteger(start) && Number.isInteger(end)) return `${yearLabel(start)} – ${yearLabel(end)}`;
-    return Number.isInteger(start) ? `${yearLabel(start)} – 종료 미상` : `시작 미상 – ${yearLabel(end)}`;
+    const hasStart = validHistoricalYear(start);
+    const hasEnd = validHistoricalYear(end);
+    if (person?.activity_summaries?.some(a => a.end?.status === "ongoing")) {
+      return hasStart ? `${yearLabel(start)} – 현재` : "시작 미상 – 현재";
+    }
+    if (!hasStart && !hasEnd) return "주요 활동연도 미상";
+    if (hasStart && hasEnd) return `${yearLabel(start)} – ${yearLabel(end)}`;
+    return hasStart ? `${yearLabel(start)} – 종료 미상` : `시작 미상 – ${yearLabel(end)}`;
   }
 
   function boundaryLabel(boundary) {
     if (boundary?.status === "ongoing") return `현재 (${boundary.as_of || "확인일 미상"} 확인)`;
-    if (!boundary || !Number.isInteger(boundary.year)) return "연도 미상";
+    if (!validHistoricalYear(boundary?.year)) return "연도 미상";
     let label = yearLabel(boundary.year);
-    if (Number.isInteger(boundary.month)) label += ` ${boundary.month}월`;
-    if (Number.isInteger(boundary.day)) label += ` ${boundary.day}일`;
+    // Reviewed historical precision takes priority over any residual month
+    // or day values. Null/empty legacy precision keeps prior presentation.
+    const precision = String(boundary.granularity || "").trim();
+    const showMonth = !precision || precision === "month" || precision === "day";
+    const showDay = !precision || precision === "day";
+    if (showMonth && Number.isInteger(boundary.month)) label += ` ${boundary.month}월`;
+    if (showDay && Number.isInteger(boundary.month) && Number.isInteger(boundary.day)) label += ` ${boundary.day}일`;
     if (boundary.certainty === "approximate") return `약 ${label}`;
     if (boundary.certainty === "uncertain") return `${label}?`;
     return label;
