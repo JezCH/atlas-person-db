@@ -513,6 +513,19 @@
     if (spacetimeInspectorActivity && spacetimePerson) {
       return Object.freeze({ activityId: spacetimeInspectorActivity, personId: spacetimePerson });
     }
+    const canvasKind = active.classList?.contains?.("spacetime-track-label") ? "label"
+      : active.classList?.contains?.("spacetime-track-rail") ? "rail"
+      : active.classList?.contains?.("spacetime-activity-glyph") ? "glyph" : null;
+    const canvasActivityId = active.dataset?.spacetimeActivity;
+    if (canvasKind && spacetimePerson && (canvasKind === "label" || canvasActivityId)) {
+      // These buttons have no DOM id, and the canvas is rebuilt after a
+      // keyboard click. Preserve the actual Person+Activity identity, not a
+      // recycled list position or a spatial/geographic label.
+      return Object.freeze({
+        canvasKind, canvasPersonId: spacetimePerson,
+        canvasActivityId: canvasKind === "label" ? null : canvasActivityId
+      });
+    }
     if (active.classList?.contains?.("spacetime-scroll")) return Object.freeze({ id: null, viewport: true });
     return null;
   }
@@ -526,6 +539,16 @@
         (button) => button.dataset.spacetimeInspectorActivity === snapshot.activityId
           && button.dataset.spacetimePerson === snapshot.personId
       );
+    }
+    if (snapshot.canvasKind) {
+      const selector = snapshot.canvasKind === "label" ? ".spacetime-track-label"
+        : snapshot.canvasKind === "rail" ? ".spacetime-track-rail"
+        : snapshot.canvasKind === "glyph" ? ".spacetime-activity-glyph" : null;
+      target = selector ? Array.from(mount?.querySelectorAll?.(selector) || []).find(
+        (button) => button.dataset.spacetimePerson === snapshot.canvasPersonId
+          && (snapshot.canvasKind === "label"
+            || button.dataset.spacetimeActivity === snapshot.canvasActivityId)
+      ) : null;
     }
     if (!target || !mount?.contains?.(target) || typeof target.focus !== "function") return false;
     try { target.focus({ preventScroll: true }); }
