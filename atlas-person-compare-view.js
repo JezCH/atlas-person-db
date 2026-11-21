@@ -20,8 +20,15 @@
     if (boundary?.status === "ongoing") return "현재 (" + text(boundary.as_of || "확인일 미상") + " 확인)";
     if (!Number.isInteger(boundary?.year) || boundary.year === 0) return "연도 미상";
     let label = yearLabel(boundary.year);
-    if (Number.isInteger(boundary.month)) label += " " + boundary.month + "월";
-    if (Number.isInteger(boundary.day)) label += " " + boundary.day + "일";
+    // Explicit historical precision overrides residual date components.
+    // Legacy null precision keeps the existing boundary presentation policy.
+    const precision = text(boundary.granularity);
+    const showMonth = !precision || precision === "month" || precision === "day";
+    const showDay = !precision || precision === "day";
+    if (showMonth && Number.isInteger(boundary.month)) label += " " + boundary.month + "월";
+    if (showDay && Number.isInteger(boundary.month) && Number.isInteger(boundary.day)) {
+      label += " " + boundary.day + "일";
+    }
     if (boundary.certainty === "approximate") return "약 " + label;
     if (boundary.certainty === "uncertain") return label + "?";
     return label;
