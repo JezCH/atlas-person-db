@@ -1621,6 +1621,24 @@
     surface.addEventListener("pointercancel", stopDragging);
   }
 
+  // One complete-name entry per genuinely deferred Person. This is an
+  // honest overflow index, not a shorter/hidden canvas label or new history.
+  function renderOverflowNameList(personItems, deferred) {
+    const byPerson = new Map((Array.isArray(personItems) ? personItems : []).map((item) =>
+      [text(item?.track?.person_id || item?.person_id), item]));
+    const ids = [...new Set((Array.isArray(deferred) ? deferred : [])
+      .map((entry) => text(entry?.person_id)).filter(Boolean))];
+    const html = ids.map((personId) => {
+      const track = byPerson.get(personId)?.track;
+      const name = text(track?.display_name) || personId;
+      const segment = Array.isArray(track?.primary_segments) ? track.primary_segments[0] : null;
+      const period = segment && Number.isInteger(segment.start_ordinal) && Number.isInteger(segment.end_ordinal)
+        ? ordinalRangeLabel(segment.start_ordinal, segment.end_ordinal) : "활동 기간 미상";
+      return `<li><button type="button" class="spacetime-overflow-person" data-spacetime-overflow-person="${escapeHtml(personId)}" title="${escapeHtml(name)} · 활동선으로 이동" aria-label="${escapeHtml(name)} · 활동선으로 이동"><strong>${escapeHtml(name)}</strong><small>${escapeHtml(period)}</small></button></li>`;
+    }).join("");
+    return Object.freeze({ count:ids.length, person_ids:Object.freeze(ids), html });
+  }
+
   function bindVirtualizedLayers(mount, scroll, state) {
     if (!scroll) return;
     const { performance } = runtime();
@@ -1666,6 +1684,7 @@
         const emptyHint = mount.querySelector("#spacetimeViewportEmptyHint");
         if (emptyHint) emptyHint.hidden = Boolean(state.needle) || personItems.length > 0;
         const labelPack = packTrackLabels(personItems, state.timelineHeight, state.contentWidth, Boolean(state.needle), cullRect);
+        const overflowNames = renderOverflowNameList(personItems, labelPack.deferred);
         const railLayer = mount.querySelector("#spacetimeRailLayer");
         const uncertaintyLayer = mount.querySelector("#spacetimeUncertaintyLayer");
         const labelLayer = mount.querySelector("#spacetimeLabelLayer");
@@ -1678,6 +1697,27 @@
         updateCount("spacetimeDomSegmentCount", segmentIds.length);
         updateCount("spacetimeDomLabelCount", labelPack.placed.length);
         updateCount("spacetimeDeferredLabelCount", labelPack.deferred.length);
+        const overflowDetails = mount.querySelector("#spacetimeNameOverflow");
+        const overflowList = mount.querySelector("#spacetimeNameOverflowList");
+        if (overflowDetails) {
+          overflowDetails.hidden = overflowNames.count === 0;
+          mount.querySelector(".spacetime-sidecar")?.classList.toggle("has-name-overflow",overflowNames.count > 0);
+          updateCount("spacetimeNameOverflowCount",overflowNames.count);
+        }
+        if (overflowList) {
+          const fingerprint = overflowNames.person_ids.join("|");
+          if (overflowList.dataset.spacetimeOverflowSignature !== fingerprint) {
+            const activeId = overflowList.contains(document.activeElement)
+              ? text(document.activeElement?.dataset?.spacetimeOverflowPerson) : "";
+            overflowList.innerHTML = overflowNames.html;
+            overflowList.dataset.spacetimeOverflowSignature = fingerprint;
+            if (activeId) {
+              const originalPerson = [...overflowList.querySelectorAll("[data-spacetime-overflow-person]")]
+                .find(button => button.dataset.spacetimeOverflowPerson === activeId);
+              originalPerson?.focus({ preventScroll:true });
+            }
+          }
+        }
         if (canvasFocus) restoreRenderFocus(mount, canvasFocus);
         lastSignature = signature;
       }
@@ -2130,6 +2170,11 @@
     </section>
     <aside class="spacetime-sidecar">
       ${renderMinimap()}
+      <details id="spacetimeNameOverflow" class="spacetime-name-overflow" hidden>
+        <summary>표에 다 담지 못한 인물 <b id="spacetimeNameOverflowCount">0</b>명 · 전체 이름 보기</summary>
+        <p>활동선은 지도에 있습니다. 이름을 선택하면 해당 인물의 활동 위치와 상세 정보를 볼 수 있습니다.</p>
+        <ul id="spacetimeNameOverflowList" class="spacetime-name-overflow-list"></ul>
+      </details>
       ${renderStickyInspector(selectedTrack, navigationItems.length)}
     </aside>
     </div>
@@ -2162,6 +2207,14 @@
       bindMinimap(mount, scroll, projection, allProjectedTracks, activePersonIds, regions, eras, contentWidth, timelineHeight);
     });
     if (!selectedTrack) scheduleOptionalRuntimePrefetch("inspector");
+
+    mount.querySelector("#spacetimeNameOverflow")?.addEventListener("click", (event) => {
+      const button = event.target.closest?.("[data-spacetime-overflow-person]");
+      if (!button || !event.currentTarget.contains(button)) return;
+      const personId = text(button.dataset.spacetimeOverflowPerson);
+      if (personId) selectPerson(mount, personId, { focus:true }).catch((error) =>
+        console.error("ATLAS dense Person navigation failed", error));
+    });
 
     mount.querySelector("#spacetimeEmptySearch")?.addEventListener("click", () => {
       mount.querySelector("#spacetimeSearch")?.focus();

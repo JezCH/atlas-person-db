@@ -54,6 +54,13 @@ The browser-only guard, `atlas-person-spacetime-label-overlap-guard.js`, follows
 
 The completion rule for the default-and-above camera range is: at both 500% and 1500%, browser-visible Person label overlap must be zero, the deferred Person-label count must be zero, and the actual visible rail Person ID set must exactly equal the actual visible Person-label ID set.
 
+
+### Capacity-exceeded dense-window presentation (2026-11-21, real Chrome evidence)
+
+The fixed reference 500% and 1500% acceptance windows above **still require zero deferred names**. A separate real-Chrome survey of Europe AD 1800–1950 and East Asia AD 500–1900 found physical collisions when the visible Person rails exceed full-name display capacity: for example, 204 rails / 130 rendered full names / 74 deferred at 500% in western Europe AD 1850. No coordinate, time-axis, name or font-size transformation may disguise this failure.
+
+For these documented capacity-exceeded **dense** windows only, the canonical complete-name access fallback is a collapsible full-name list beside the map. The real deferred count must remain visible and nonzero; **every deferred Person ID** must be present once in the list with its full stored display name and verified Activity period, a keyboard-operable button to focus its original historical rail and Inspector, and no overlap with the set of labels currently shown on the canvas. The canvas-visible full names still require zero overlap, the 14px desktop typography and historical rail Y/X remain unchanged, and the union of displayed canvas names and full-name overflow entries must equal the actual Person rails offered by viewport culling. A failure of this bijection or of list navigation fails closed. It is prohibited to mark a dense window as \"deferred 0\" merely because the names were placed in a list: the deferral metric remains honest and reported. This fallback cannot be called equivalent to all full names fitting directly on the map, and user visual acceptance remains separate.
+
 ## Final exact-SHA Production gate
 
 Closure requires a manual run of `ATLAS Spacetime Production Visual Acceptance` with the exact merged Production GitHub SHA supplied as `expected_runtime_sha`.
