@@ -33,7 +33,9 @@ export function auditSharedSourceUrls(snapshot) {
     byId.set(source.id, source);
     references.set(source.id, []);
     const url = source.canonical_url;
-    if (typeof url !== 'string' || !url.trim()) continue;
+    if (url == null) continue;
+    if (typeof url !== 'string') throw new Error('SOURCE_URL_AUDIT_INVALID_CANONICAL_URL');
+    if (!url.trim()) continue;
     if (!byUrl.has(url)) byUrl.set(url, []);
     byUrl.get(url).push(source);
   }
