@@ -20,6 +20,9 @@
   const cache = new Map();
   const inFlight = new Map();
   const sourceState = new Map();
+  // An invalidated in-flight response may still settle for its original caller,
+  // but must never resurrect stale data or stale status in the shared cache.
+  const generation = new Map();
 
   function emit(key) {
     if (typeof window.CustomEvent !== "function") return;
@@ -61,16 +64,21 @@
     if (!force && cache.has(key)) return cache.get(key);
     if (inFlight.has(key)) return inFlight.get(key);
 
+    const requestGeneration = generation.get(key) || 0;
     setState(key, { status:"loading", error:null });
     const promise = Promise.resolve()
       .then(loader)
       .then((value) => {
-        cache.set(key, value);
-        setState(key, { status:"ready", loaded_at:new Date().toISOString(), error:null });
+        if ((generation.get(key) || 0) === requestGeneration) {
+          cache.set(key, value);
+          setState(key, { status:"ready", loaded_at:new Date().toISOString(), error:null });
+        }
         return value;
       })
       .catch((error) => {
-        setState(key, { status:"error", error:String(error?.message || error), loaded_at:null });
+        if ((generation.get(key) || 0) === requestGeneration) {
+          setState(key, { status:"error", error:String(error?.message || error), loaded_at:null });
+        }
         throw error;
       })
       .finally(() => {
@@ -406,17 +414,14 @@
   }
 
   function invalidate(key) {
-    if (key) {
-      cache.delete(key);
-      inFlight.delete(key);
-      setState(key, { status:"idle", loaded_at:null, error:null });
-      return;
-    }
-    for (const sourceKey of Object.keys(SOURCES)) {
+    const clear = (sourceKey) => {
+      generation.set(sourceKey, (generation.get(sourceKey) || 0) + 1);
       cache.delete(sourceKey);
       inFlight.delete(sourceKey);
       setState(sourceKey, { status:"idle", loaded_at:null, error:null });
-    }
+    };
+    if (key) { clear(key); return; }
+    for (const sourceKey of Object.keys(SOURCES)) clear(sourceKey);
   }
 
   window.ATLAS_CLIENT_DATA_STORE = Object.freeze({
