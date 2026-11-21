@@ -105,6 +105,49 @@ async function screenshot(client,name){
   fs.writeFileSync(path.join(OUT_DIR,name),Buffer.from(result.data,"base64"));
 }
 
+async function verifyDirectPersonDeepLink(client){
+  // The direct-detail route must not eagerly download the entire register.
+  // Use one stable registered Person and observe only browser resource names.
+  const personId="da0303c2-1faf-40b8-9dc2-1325b77488d7";
+  await client.call("Emulation.setDeviceMetricsOverride",DESKTOP);
+  await client.call("Page.navigate",{url:"about:blank"});
+  await waitFor(client,"document.readyState === 'complete'",10000);
+  const target=(PRODUCTION_ORIGIN.endsWith("/")?PRODUCTION_ORIGIN.slice(0,-1):PRODUCTION_ORIGIN)+"/#atlas-persons/person/"+personId;
+  await client.call("Page.navigate",{url:target});
+  await waitFor(client,"document.readyState === 'complete'",45000);
+  await waitFor(client,`window.ATLAS_PERSON_MAIN?.getSelectedPersonId?.() === "${personId}" && Boolean(document.querySelector("#personMainDetail .person-chronicle-hero"))`,45000);
+  await sleep(600);
+  const details=await evaluate(client,`(() => {
+    const names=performance.getEntriesByType("resource")
+      .filter((entry)=>entry?.name)
+      .map((entry)=>{try{return new URL(entry.name,location.href);}catch{return null;}})
+      .filter(Boolean)
+      .filter((url)=>url.pathname==="/api/atlas-person-read");
+    const roster=names.filter((url)=>!url.searchParams.has("person_id"));
+    const single=names.filter((url)=>url.searchParams.get("person_id")==="${personId}");
+    return {
+      tested_person_id:"${personId}",
+      route:location.hash,
+      selected_person_id:window.ATLAS_PERSON_MAIN?.getSelectedPersonId?.()||null,
+      detail_heading_visible:Boolean(document.querySelector("#personMainDetail .person-chronicle-hero")),
+      detail_request_count:single.length,
+      full_register_request_count:roster.length,
+      relevant_request_count:names.length
+    };
+  })()`);
+  fs.writeFileSync(path.join(OUT_DIR,"person-direct-deeplink-network.json"),
+    JSON.stringify({schema:"atlas-person-direct-deeplink-network/v1",...details},null,2)+String.fromCharCode(10));
+  assert(details.selected_person_id===personId && details.detail_heading_visible,
+    "Direct Person detail did not resolve its registered Person",details);
+  assert(details.detail_request_count>=1,
+    "Direct Person detail bypassed its expected bounded detail request",details);
+  assert(details.full_register_request_count===0,
+    "Direct Person detail unexpectedly fetched the entire Person register",details);
+  await screenshot(client,"person-direct-deeplink-1600x1000.png");
+  console.log("ATLAS_UI05_DIRECT_PERSON_NO_FULL_REGISTER_PASS");
+  return details;
+}
+
 async function navigatePerson(client,viewport){
   await client.call("Emulation.setDeviceMetricsOverride",viewport);
   await client.call("Page.navigate",{url:"about:blank"});
@@ -630,6 +673,7 @@ async function main(){
   await client.call("Emulation.setEmulatedMedia",{features:[{name:"prefers-reduced-motion",value:"reduce"}]});
 
   try{
+    const directDeepLink=await verifyDirectPersonDeepLink(client);
     await navigatePerson(client,DESKTOP);
     const desktopMain=await collectMain(client);
     await screenshot(client,"person-main-pre-assert-1600x1000.png");
@@ -840,6 +884,7 @@ async function main(){
       expected_runtime_sha:EXPECTED_RUNTIME_SHA,
       checked_at:new Date().toISOString(),
       p6_register_regression:"PASS",
+      direct_person_detail:directDeepLink,
       desktop:{
         main:desktopMain,
         interaction:{...desktopInteraction,nameContrast:Number(desktopNameContrast.toFixed(2))},
@@ -849,6 +894,7 @@ async function main(){
       },
       mobile:{main:mobileMain,multiActivity:mobileMultiActivity,detail:mobileDetail,comparison:mobileComparison,directLink:directPersonRoute},
       screenshots:[
+        "person-direct-deeplink-1600x1000.png",
         "person-main-1600x1000.png",
         "person-detail-1600x1000.png",
         "person-main-390x844.png",
