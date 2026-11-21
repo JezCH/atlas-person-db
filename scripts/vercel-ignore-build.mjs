@@ -32,7 +32,10 @@ const AGENT_NON_RUNTIME = new Set([
   "config/atlas-autonomous-loop.v1.json",
   "scripts/atlas-codex-task-runner.mjs",
   // GitHub-only Production browser verifier; not imported by any deployed endpoint.
-  "scripts/verify-dashboard-production-acceptance.mjs"
+  "scripts/verify-dashboard-production-acceptance.mjs",
+  "scripts/verify-spacetime-production-exact-sha.mjs",
+  // Offline manifest admission in GitHub Integrity.
+  "scripts/validate-authoring-request-files.mjs"
 ]);
 const AGENT_SKIP_GATE = "scripts/vercel-ignore-build.mjs";
 
