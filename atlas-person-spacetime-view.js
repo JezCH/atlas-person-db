@@ -1382,7 +1382,7 @@
       const personSelected = selectedPersonId === item.track.person_id;
       const forced = Boolean(needle) || personSelected;
       const opacity = forced ? 1 : lodWeights.labels;
-      const connector = label.connector ? `<i class="spacetime-label-connector${personSelected ? " is-selected" : ""}" aria-hidden="true" style="left:${label.region_left + Math.min(label.connector.x1, label.connector.x2)}px;top:${label.connector.y1}px;width:${label.connector.length}px"></i>` : "";
+      const connector = label.connector ? `<i class="spacetime-label-connector${personSelected ? " is-selected" : ""}" data-spacetime-person="${escapeHtml(item.track.person_id)}" aria-hidden="true" style="left:${label.region_left + Math.min(label.connector.x1, label.connector.x2)}px;top:${label.connector.y1}px;width:${label.connector.length}px"></i>` : "";
       const homeAnchor = label.borrowed_from_home_band
         ? `<i class="spacetime-label-home-anchor${personSelected ? " is-selected" : ""}" aria-hidden="true" style="left:${label.anchor_x}px;top:${label.label_y + 11}px" data-spacetime-person="${escapeHtml(item.track.person_id)}"></i>`
         : "";
@@ -1390,7 +1390,7 @@
       const tooltip = label.borrowed_from_home_band
         ? `${item.track.display_name} · 이름표는 인접 지역 칸을 빌려 표시됩니다. 하단 표식이 원래 활동선의 위치입니다.`
         : item.track.display_name;
-      return `${connector}${homeAnchor}<button type="button" class="spacetime-track-label${personSelected ? " is-selected" : ""}${meanwhileActive ? " is-meanwhile-active" : ""}" data-spacetime-person="${escapeHtml(item.track.person_id)}" data-spacetime-band="${escapeHtml(label.region_code)}" data-spacetime-label-borrowed="${label.borrowed_from_home_band ? "true" : "false"}" style="left:${label.label_x}px;top:${label.label_y}px;width:${label.width}px;opacity:${opacity}" title="${escapeHtml(tooltip)}">${escapeHtml(item.track.display_name)}</button>`;
+      return `${connector}${homeAnchor}<button type="button" class="spacetime-track-label${personSelected ? " is-selected" : ""}${meanwhileActive ? " is-meanwhile-active" : ""}" data-spacetime-person="${escapeHtml(item.track.person_id)}" data-spacetime-band="${escapeHtml(label.region_code)}" data-spacetime-label-borrowed="${label.borrowed_from_home_band ? "true" : "false"}" data-spacetime-anchor-x="${label.anchor_x}" data-spacetime-anchor-y="${label.label_y}" data-spacetime-home-left="${label.home_left_world}" data-spacetime-home-right="${label.home_right_world}" style="left:${label.label_x}px;top:${label.label_y}px;width:${label.width}px;opacity:${opacity}" title="${escapeHtml(tooltip)}">${escapeHtml(item.track.display_name)}</button>`;
     }).join("");
   }
 

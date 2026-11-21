@@ -209,7 +209,9 @@ test("final acceptance documentation keeps established stable-world invariants",
 test("the selected Person label and its connector share selection state", () => {
   const view = read("atlas-person-spacetime-view.js");
   const css = read("atlas-person-spacetime-monumental-canvas.css");
-  assert.ok(view.includes('spacetime-label-connector${personSelected ? " is-selected" : ""}" aria-hidden="true"'));
+  assert.ok(view.includes('spacetime-label-connector${personSelected ? " is-selected" : ""}" data-spacetime-person="'));
+  assert.ok(view.includes('data-spacetime-anchor-x='));
+  assert.ok(view.includes('data-spacetime-home-left='));
   assert.ok(view.includes('spacetime-track-label${personSelected ? " is-selected" : ""}'));
   assert.match(css, /\.spacetime-label-connector\.is-selected\s*\{[^}]*--spacetime-selection-metal-strong/);
 });
@@ -228,7 +230,7 @@ test("changing the selected Person moves the connector accent without moving eit
     label_x: 122 + i * 50, label_y: 30, width: 50
   })) };
   const render = () => context.renderLabels(tracks, labels, { labels: 0.7 }, "");
-  const lines = (html) => Array.from(html.matchAll(/<i class="spacetime-label-connector( is-selected)?" aria-hidden="true" style="([^"]+)"/g),
+  const lines = (html) => Array.from(html.matchAll(/<i class="spacetime-label-connector( is-selected)?" data-spacetime-person="[^"]+" aria-hidden="true" style="([^"]+)"/g),
     ([, selected, style]) => [Boolean(selected), style]);
   assert.deepEqual(lines(render()), [[true, "left:105px;top:35px;width:17px"], [false, "left:155px;top:35px;width:17px"]]);
   context.selectedPersonId = "two";
