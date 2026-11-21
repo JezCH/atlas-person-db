@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { DENSE_WINDOWS, interpolateYearTickY, centeredWorldScrollTarget } from "./spacetime-dense-viewport-plan.mjs";
 import { activityLinkedMeanwhileIsConsistent } from "./spacetime-visual-interaction-contract.mjs";
 import { verifyUi07DesktopJourney, verifyUi07MobileJourney } from "./verify-ui07-production-journey.mjs";
 
@@ -263,6 +264,124 @@ const labelAssociationCode = `
     violation_count:violations.length,violations:violations.slice(0,30)};
 }
 `;
+
+
+/* Exactly bounded existing-session Chrome sampling: 16 targeted windows per
+ * zoom, 4 screenshots total. The historical X/Y axes are read-only. */
+async function captureDenseWindows(client, zoom) {
+  const before = await evaluate(client, `(() => {
+    const s=document.querySelector(".spacetime-scroll");
+    const canvas=s?.querySelector(".spacetime-canvas");
+    if(!s||!canvas) return null;
+    const ticks=[...document.querySelectorAll(".spacetime-year-axis span[data-spacetime-year]")].map(el=>({
+      year:Number(el.dataset.spacetimeYear), y:parseFloat(el.style.top)
+    }));
+    const bands=[...document.querySelectorAll(".spacetime-region-head-layer.is-subregion .spacetime-region-head-band[data-spacetime-band]")].map(el=>({
+      code:el.dataset.spacetimeBand,left:parseFloat(el.style.left),width:parseFloat(el.style.width)
+    }));
+    return {left:s.scrollLeft,top:s.scrollTop,ticks,bands,
+      canvasLeft:canvas.offsetLeft,canvasTop:canvas.offsetTop,
+      clientWidth:s.clientWidth,clientHeight:s.clientHeight,
+      scrollWidth:s.scrollWidth,scrollHeight:s.scrollHeight};
+  })()`);
+  assert(before && before.ticks.length >= 2, "Dense historical probe could not read the real uniform time axis", before);
+  const samples=[];
+  const screenshots=[];
+  for(const window of DENSE_WINDOWS){
+    const band=before.bands.find(item=>item.code===window.subregion);
+    assert(band && band.width>0,"Dense historical probe is missing reviewed subregion "+window.subregion,band);
+    for(const year of window.years){
+      const y=interpolateYearTickY(before.ticks,year);
+      const target=centeredWorldScrollTarget({
+        worldX:band.left+band.width/2,worldY:y,
+        canvasLeft:before.canvasLeft,canvasTop:before.canvasTop,
+        clientWidth:before.clientWidth,clientHeight:before.clientHeight,
+        scrollWidth:before.scrollWidth,scrollHeight:before.scrollHeight
+      });
+      const actual=await evaluate(client,`(() => {
+        const s=document.querySelector(".spacetime-scroll");
+        s.scrollLeft=${target.left};
+        s.scrollTop=${target.top};
+        s.dispatchEvent(new Event("scroll"));
+        return {left:s.scrollLeft,top:s.scrollTop};
+      })()`);
+      await sleep(210);
+      const observed=await evaluate(client,`(() => {
+        const q=s=>document.querySelector(s);
+        const qa=s=>[...document.querySelectorAll(s)];
+        const scroll=q(".spacetime-scroll"),canvas=q(".spacetime-canvas");
+        const sr=scroll.getBoundingClientRect();
+        const axis=Number(canvas?.offsetLeft)||0, header=Number(canvas?.offsetTop)||0;
+        const viewport={left:sr.left+scroll.clientLeft+axis,top:sr.top+scroll.clientTop+header,
+          right:sr.left+scroll.clientLeft+scroll.clientWidth,
+          bottom:sr.top+scroll.clientTop+scroll.clientHeight};
+        const intersects=el=>{
+          const r=el.getBoundingClientRect();
+          return Math.min(r.right,viewport.right)-Math.max(r.left,viewport.left)>0.5
+            && Math.min(r.bottom,viewport.bottom)-Math.max(r.top,viewport.top)>0.5;
+        };
+        const ids=selector=>[...new Set(qa(selector).filter(intersects)
+          .filter(el=>Number(getComputedStyle(el).opacity)>0.02)
+          .map(el=>el.dataset.spacetimePerson).filter(Boolean))].sort();
+        const rails=ids(".spacetime-track-rail"),names=ids(".spacetime-track-label");
+        const overlap=(${overlapCode})(qa(".spacetime-track-label"));
+        const labelAssociation=(${labelAssociationCode})(
+          qa(".spacetime-track-label"),qa(".spacetime-label-home-anchor"),qa(".spacetime-track-rail"));
+        return {
+          person_count:Number(q("#spacetimeDomPersonCount")?.textContent||0),
+          label_count:Number(q("#spacetimeDomLabelCount")?.textContent||0),
+          deferred_count:Number(q("#spacetimeDeferredLabelCount")?.textContent||0),
+          visible_rail_count:rails.length, visible_label_count:names.length,
+          missingVisibleLabelPersonIds:rails.filter(id=>!names.includes(id)),
+          extraVisibleLabelPersonIds:names.filter(id=>!rails.includes(id)),
+          overlap_count:overlap.count,overlap_pairs:overlap.overlaps.slice(0,3),
+          labelAssociation:{
+            borrowed_count:labelAssociation.borrowed_count,
+            linked_count:labelAssociation.linked_count,
+            violation_count:labelAssociation.violation_count,
+            violations:labelAssociation.violations.slice(0,4)
+          },
+          min_font_px:qa(".spacetime-track-label").reduce((min,el)=>
+            Math.min(min,parseFloat(getComputedStyle(el).fontSize)||Infinity),Infinity)
+        };
+      })()`);
+      const issues=[];
+      if(observed.label_count!==observed.person_count) issues.push("person/label count mismatch");
+      if(observed.deferred_count!==0) issues.push("deferred full Person names");
+      if(observed.overlap_count!==0) issues.push("overlapping Person names");
+      if(observed.missingVisibleLabelPersonIds.length||observed.extraVisibleLabelPersonIds.length)
+        issues.push("visible rail/label Person identity mismatch");
+      if(observed.labelAssociation.violation_count!==0) issues.push("Person origin marker/rail association");
+      if(observed.label_count>0 && observed.min_font_px<13.5)
+        issues.push("desktop name font silently shrunk");
+      const sample={zoom,area:window.area,subregion:window.subregion,year,
+        target,actual, ...observed,issues};
+      samples.push(sample);
+      if((window.subregion==="western-europe"&&year===1900)
+        ||(window.subregion==="china"&&year===1700)){
+        const filename=`spacetime-dense-${zoom}-${window.subregion}-${year}.png`;
+        await screenshot(client,filename);
+        screenshots.push(filename);
+      }
+    }
+  }
+  await evaluate(client,`(() => {
+    const s=document.querySelector(".spacetime-scroll");
+    s.scrollLeft=${before.left};
+    s.scrollTop=${before.top};
+    s.dispatchEvent(new Event("scroll"));
+    return true;
+  })()`);
+  await sleep(400);
+  return {zoom,windows:samples,screenshots,
+    observed_areas:[...new Set(samples.filter(s=>s.person_count>0).map(s=>s.area))],
+    failures:samples.filter(s=>s.issues.length).map(s=>({
+      subregion:s.subregion,year:s.year,zoom:s.zoom,issues:s.issues,
+      person_count:s.person_count,label_count:s.label_count,
+      deferred_count:s.deferred_count,overlap_count:s.overlap_count,
+      association_violations:s.labelAssociation.violations
+    }))};
+}
 
 async function collect500(client) {
   return evaluate(client, `(() => {
@@ -600,6 +719,8 @@ async function main() {
     assert(at500.bandContainment.rail_violation_count === 0, "Presentation rails drift back toward band centers at 500%", at500.bandContainment);
     assert(at500.labelAssociation.violation_count === 0, "Borrowed 500% Person labels lost their own historical rail anchor", at500.labelAssociation);
     await screenshot(client, "spacetime-500.png");
+    const dense500 = await captureDenseWindows(client, "500");
+    fs.writeFileSync(path.join(OUT_DIR,"dense-windows.json"), JSON.stringify({at_500_percent:dense500},null,2)+"\n");
 
     for (let i=0;i<5;i++) {
       await evaluate(client, "document.querySelector('#spacetimeCameraZoomIn')?.click()");
@@ -642,6 +763,9 @@ async function main() {
     assertNormalizedGeometryInvariant(at500.sub, at1500.sub, "Subregion");
     assert(at1500.uncertaintyCount > 0, "No C6 spatial uncertainty evidence was rendered in the inspected 1500% viewport", at1500);
     await screenshot(client, "spacetime-1500.png");
+    const dense1500 = await captureDenseWindows(client, "1500");
+    const denseWindowAcceptance = {at_500_percent:dense500,at_1500_percent:dense1500};
+    fs.writeFileSync(path.join(OUT_DIR,"dense-windows.json"),JSON.stringify(denseWindowAcceptance,null,2)+"\n");
 
     await waitFor(client, "document.querySelectorAll('.spacetime-track-label').length > 0", 10000);
     const personSelected = await evaluate(client, `(() => {
@@ -862,6 +986,12 @@ async function main() {
       if (genericNetworkConsoleError(msg) && nonIgnorableResourceErrors.length === 0) return false;
       return true;
     });
+    for(const [zoom,record] of [["500",dense500],["1500",dense1500]]) {
+      assert(record.windows.length === 16,"Dense acceptance must sample 16 bounded windows at "+zoom,record);
+      assert(record.observed_areas.includes("europe-1800-1950") && record.observed_areas.includes("east-asia-500-1900"),
+        "Historical dense windows did not expose any reviewed Person for both regions at "+zoom,record);
+      assert(record.failures.length === 0,"Dense historical Person label acceptance failed at "+zoom,record.failures);
+    }
     assert(exceptions.length === 0, "Runtime exceptions detected during visual acceptance", exceptions);
     assert(nonIgnorableResourceErrors.length === 0, "Non-ignorable resource failures detected during visual acceptance", nonIgnorableResourceErrors);
     assert(filteredConsoleErrors.length === 0, "Console errors detected during visual acceptance", { console_errors:filteredConsoleErrors, resource_errors:resourceErrors });
@@ -875,6 +1005,7 @@ async function main() {
       live,
       at_500_percent:at500,
       at_1500_percent:at1500,
+      dense_window_acceptance:denseWindowAcceptance,
       interaction,
       ui06b_roundtrip:ui06bRoundtrip,
       ui07_desktop_roundtrip:ui07Desktop,
@@ -883,7 +1014,7 @@ async function main() {
       console_errors:filteredConsoleErrors,
       resource_errors:resourceErrors,
       runtime_exceptions:exceptions,
-      screenshots:["spacetime-500.png","spacetime-1500.png","spacetime-activity-meanwhile.png","ui06b-activity-origin-return.png","spacetime-mobile-390.png","ui07-desktop-compare.png","ui07-desktop-return.png","ui07-mobile-390-compare.png","ui07-mobile-390-return.png"],
+      screenshots:["spacetime-500.png","spacetime-1500.png",...dense500.screenshots,...dense1500.screenshots,"spacetime-activity-meanwhile.png","ui06b-activity-origin-return.png","spacetime-mobile-390.png","ui07-desktop-compare.png","ui07-desktop-return.png","ui07-mobile-390-compare.png","ui07-mobile-390-return.png"],
       status:"PASS"
     };
     fs.writeFileSync(path.join(OUT_DIR,"visual-acceptance.json"), JSON.stringify(report,null,2)+"\n");

@@ -2104,7 +2104,7 @@
       </div>
       <div class="spacetime-time-axis" style="height:${timelineHeight}px">
         <div class="spacetime-era-axis" style="--spacetime-era-content-opacity:${timeAxis.era_opacity}">${eras.map((era) => `<div class="person-era-${escapeHtml(era.code)}" data-spacetime-era="${escapeHtml(era.code)}" style="top:${era.top}px;height:${era.height}px"><span>${escapeHtml(era.label)}</span></div>`).join("")}</div>
-        <div class="spacetime-year-axis" data-axis-stage="${escapeHtml(timeAxis.stage)}">${ticks.map((tick) => `<span class="${tick.major ? "is-major" : ""}" style="top:${tick.y}px">${escapeHtml(tick.label)}</span>`).join("")}</div>
+        <div class="spacetime-year-axis" data-axis-stage="${escapeHtml(timeAxis.stage)}">${ticks.map((tick) => `<span class="${tick.major ? "is-major" : ""}" data-spacetime-year="${tick.year}" style="top:${tick.y}px">${escapeHtml(tick.label)}</span>`).join("")}</div>
       </div>
       <div class="spacetime-canvas${selectedPersonId ? " has-person-selection" : ""}" style="width:${contentWidth}px;height:${timelineHeight}px">
         ${ticks.map((tick) => `<i class="spacetime-century-line${tick.major ? " is-major" : ""}" style="top:${tick.y}px"></i>`).join("")}
