@@ -7,12 +7,12 @@
   "use strict";
 
   function text(value){ return value==null?"":String(value).trim(); }
-  function yearValue(value){ return Number.isInteger(value)?value:null; }
+  // Historical chronology has no year zero; invalid boundaries are unknown.
+  function yearValue(value){ return Number.isSafeInteger(value)&&value!==0?value:null; }
   function formatYear(value){
-    if(!Number.isInteger(value)) return "미상";
+    if(yearValue(value)==null) return "미상";
     if(value<0) return "기원전 "+Math.abs(value);
-    if(value>0) return String(value);
-    return "0";
+    return String(value);
   }
   function activityBoundary(activity, prefix, fallback){
     const year=yearValue(activity?.["activity_"+prefix]);
