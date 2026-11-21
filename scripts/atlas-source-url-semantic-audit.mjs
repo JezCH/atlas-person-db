@@ -65,7 +65,7 @@ export function auditSharedSourceUrls(snapshot) {
       }
     }
   }
-  const matchedRuntimeLinks = new Set();
+  const activitySourceLinks = new Set();
   for (const [table, parentKey] of ROUTES) {
     for (const row of raw[table]) {
       if (!byId.has(row?.source_id)) throw new Error('SOURCE_URL_AUDIT_DANGLING_SOURCE');
@@ -74,18 +74,18 @@ export function auditSharedSourceUrls(snapshot) {
       }
       const locator = row.source_locator_key == null ? null : String(row.source_locator_key);
       let citation = null;
-      if (hasRuntimeProvenance && table === 'activity_sources') {
+      if (table === 'activity_sources') {
         const key = row[parentKey] + '\0' + row.source_id;
-        if (matchedRuntimeLinks.has(key)) throw new Error('SOURCE_URL_AUDIT_DUPLICATE_ACTIVITY_SOURCE_LINK');
-        citation = runtimeProvenance.get(key);
-        matchedRuntimeLinks.add(key);
+        if (activitySourceLinks.has(key)) throw new Error('SOURCE_URL_AUDIT_DUPLICATE_ACTIVITY_SOURCE_LINK');
+        activitySourceLinks.add(key);
+        if (hasRuntimeProvenance) citation = runtimeProvenance.get(key);
         const source = byId.get(row.source_id);
-        if (!citation ||
+        if (hasRuntimeProvenance && (!citation ||
             citation.source_key !== source.source_key ||
             citation.title !== source.title ||
             citation.source_type !== source.source_type ||
             citation.canonical_url !== source.canonical_url ||
-            (citation.source_locator_key == null ? null : String(citation.source_locator_key)) !== locator) {
+            (citation.source_locator_key == null ? null : String(citation.source_locator_key)) !== locator)) {
           throw new Error('SOURCE_URL_AUDIT_RUNTIME_LINK_PROVENANCE_MISMATCH');
         }
       }
@@ -95,7 +95,7 @@ export function auditSharedSourceUrls(snapshot) {
       });
     }
   }
-  if (hasRuntimeProvenance && matchedRuntimeLinks.size !== runtimeProvenance.size) {
+  if (hasRuntimeProvenance && activitySourceLinks.size !== runtimeProvenance.size) {
     throw new Error('SOURCE_URL_AUDIT_UNMATCHED_RUNTIME_CITATION');
   }
   const cases = [...byUrl].filter(([, sources]) => sources.length > 1)

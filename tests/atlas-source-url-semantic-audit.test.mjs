@@ -198,3 +198,8 @@ test('rejects incomplete canonical bibliography before classifying shared URLs',
   }
 });
 
+test('rejects duplicated canonical Activity–Source links without optional Runtime citations', () => {
+  const data = fixture();
+  data.raw.activity_sources.push({ ...data.raw.activity_sources[0], source_locator_key: 'conflicting locator' });
+  assert.throws(() => auditSharedSourceUrls(data), /DUPLICATE_ACTIVITY_SOURCE_LINK/);
+});
