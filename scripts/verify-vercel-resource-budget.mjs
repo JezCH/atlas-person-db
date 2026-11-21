@@ -129,8 +129,7 @@ export function workflowPrProductionViolation(source, events = workflowTriggerEv
 
 // Historical full-census workflows require an explicit manual dispatch only.
 export function workflowHistoricalManualViolation(events) {
-  return !(events instanceof Set) || !events.has("workflow_dispatch") ||
-    ["push", "pull_request", "pull_request_target", "schedule"].some((event) => events.has(event));
+  return !(events instanceof Set) || events.size !== 1 || !events.has("workflow_dispatch");
 }
 
 // No PR validation may load the live Production Function or Chrome. Branch
