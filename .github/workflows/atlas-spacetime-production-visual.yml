@@ -137,11 +137,20 @@ jobs:
             about:blank >/tmp/atlas-spacetime-chrome.log 2>&1 &
           CHROME_PID=$!
           trap 'kill "$CHROME_PID" 2>/dev/null || true' EXIT
-          for _ in $(seq 1 40); do
-            if curl -fsS http://127.0.0.1:9222/json/version >/dev/null; then break; fi
+          chrome_ready=false
+          for _ in $(seq 1 80); do
+            if ! kill -0 "$CHROME_PID" 2>/dev/null; then break; fi
+            if curl -fsS --max-time 1 http://127.0.0.1:9222/json/version >/dev/null 2>&1; then
+              chrome_ready=true
+              break
+            fi
             sleep 0.25
           done
-          curl -fsS http://127.0.0.1:9222/json/version >/dev/null
+          if [[ "$chrome_ready" != true ]]; then
+            echo "Chrome DevTools endpoint did not become ready." >&2
+            tail -n 80 /tmp/atlas-spacetime-chrome.log >&2
+            exit 1
+          fi
           # Automatic main-deployment smoke only: keep user-visible Production
           # acceptance, but never replay the 19-script complete UI suite on
           # every small commit. Full run is an explicit manual release review.
