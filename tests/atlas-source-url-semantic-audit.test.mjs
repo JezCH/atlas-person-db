@@ -203,3 +203,14 @@ test('rejects duplicated canonical Activity–Source links without optional Runt
   data.raw.activity_sources.push({ ...data.raw.activity_sources[0], source_locator_key: 'conflicting locator' });
   assert.throws(() => auditSharedSourceUrls(data), /DUPLICATE_ACTIVITY_SOURCE_LINK/);
 });
+
+test('malformed canonical URL values cannot silently remove Sources from shared-URL groups', () => {
+  for (const invalid of [123, false, ['https://example.org/history'], { url: 'https://example.org/history' }]) {
+    const data = fixture();
+    data.raw.sources[1].canonical_url = invalid;
+    assert.throws(() => auditSharedSourceUrls(data), /SOURCE_URL_AUDIT_INVALID_CANONICAL_URL/);
+  }
+  const absent = fixture();
+  delete absent.raw.sources[4].canonical_url;
+  assert.equal(auditSharedSourceUrls(absent).summary.shared_url_groups, 2);
+});
