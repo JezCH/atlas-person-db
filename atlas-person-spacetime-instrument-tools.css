@@ -1362,3 +1362,116 @@
     overflow-wrap: anywhere;
   }
 }
+/* UI-03 P3 dense-window capacity: never shrink/clip 14px Person names
+ * or move historical rails to fake enough map label space. Only true
+ * overflow IDs appear in this keyboard-operable full-name index. */
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-name-overflow[hidden] { display:none !important; }
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-sidecar.has-name-overflow {
+  overflow-y:auto;
+  scrollbar-width:thin;
+  overscroll-behavior:contain;
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-name-overflow {
+  min-width:0;
+  border-top:1px solid #564b37;
+  border-bottom:1px solid #343c40;
+  padding:7px 2px 9px;
+  color:#d4d3cb;
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-name-overflow > summary {
+  cursor:pointer;
+  font-size:12px;
+  font-weight:760;
+  line-height:1.5;
+  color:#dfd0b2;
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-name-overflow > summary b {
+  color:#efcf88;
+  font-size:14px;
+  font-variant-numeric:tabular-nums;
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-name-overflow > summary:focus-visible {
+  outline:2px solid #dfc68f;
+  outline-offset:3px;
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-name-overflow > p {
+  margin:7px 0;
+  font-size:11px;
+  line-height:1.5;
+  color:#9ba4a6;
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-name-overflow-list {
+  list-style:none;
+  margin:0;
+  padding:0;
+  max-height:240px;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  scrollbar-width:thin;
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-name-overflow-list li {
+  margin:0;
+  border-bottom:1px solid #31383d;
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-overflow-person {
+  display:grid;
+  gap:3px;
+  width:100%;
+  min-height:42px;
+  padding:7px 6px;
+  border:0;
+  border-left:2px solid transparent;
+  border-radius:0;
+  background:transparent;
+  color:#e2e0d8;
+  text-align:left;
+  cursor:pointer;
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-overflow-person strong {
+  font-size:13px;
+  font-weight:720;
+  line-height:1.35;
+  white-space:normal;
+  overflow-wrap:anywhere;
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-overflow-person small {
+  font-size:11px;
+  line-height:1.3;
+  color:#9ea9aa;
+}
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-overflow-person:hover,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-overflow-person:focus-visible {
+  border-left-color:#d4b878;
+  background:rgba(192,174,136,.09);
+  outline:1px solid rgba(192,174,136,.66);
+  outline-offset:-1px;
+}
+@media(max-width:900px){
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-sidecar.has-name-overflow {
+    overflow:visible;
+    max-height:none;
+  }
+}
+@media(min-width:761px) and (max-width:1100px){
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-name-overflow {
+    grid-column:1 / -1;
+    order:3;
+  }
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-sticky-inspector {
+    order:2;
+  }
+}
+@media(max-width:760px){
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-name-overflow {
+    order:2;
+  }
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-sticky-inspector {
+    order:3;
+  }
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-name-overflow-list {
+    max-height:300px;
+  }
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-overflow-person strong {
+    font-size:14px;
+  }
+}

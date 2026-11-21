@@ -523,6 +523,7 @@ test("actual virtualized canvas refresh preserves keyboard focus when a focused 
     selectedPersonId:null, selectedActivityId:null,
     visibleRailLabelItems:()=>[{person_id:"p1"}],
     packTrackLabels:()=>({placed:[],deferred:[]}),
+    renderOverflowNameList:()=>({count:0,person_ids:[],html:""}),
     renderRails:()=>"",renderSpatialUncertainty:()=>"",renderLabels:()=>"",renderActivityGlyphs:()=>"",
     cameraInsets:()=>({}),
     requestAnimationFrame:(fn)=>{queuedFrame=fn;return 1;}

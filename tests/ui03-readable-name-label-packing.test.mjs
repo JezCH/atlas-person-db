@@ -137,3 +137,49 @@ test("UI-03 P0 ships both readable styles and matching JS metrics through curren
   assert.match(view,/borrowHorizontalSpace:true/);
   assert.doesNotMatch(view,/\.label_y\s*[+\-]=/);
 });
+
+test("UI-03 density overflow emits one complete Person name and real Activity chronology per deferred UUID", () => {
+  const view = read("atlas-person-spacetime-view.js");
+  const begin=view.indexOf("  function renderOverflowNameList(");
+  const end=view.indexOf("  function bindVirtualizedLayers(",begin);
+  assert.ok(begin>0 && end>begin,"use real renderer helper");
+  const esc=(value)=>String(value).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+  const render=new Function("text","ordinalRangeLabel","escapeHtml",
+    view.slice(begin,end)+"\nreturn renderOverflowNameList;")(
+    v=>v==null?"":String(v).trim(),(start,end)=>start+"~"+end,esc);
+  const items=[
+    {person_id:"p-a",track:{person_id:"p-a",display_name:"한국인 <A>",primary_segments:[{start_ordinal:1830,end_ordinal:1850}]}},
+    {person_id:"p-b",track:{person_id:"p-b",display_name:"Kant",primary_segments:[{start_ordinal:1750,end_ordinal:1800}]}},
+    {person_id:"p-c",track:{person_id:"p-c",display_name:"긴 실명 전체 표기",primary_segments:[{start_ordinal:1900,end_ordinal:1920}]}}
+  ];
+  const report=render(items,[{person_id:"p-c",reason:"collision_capacity"},{person_id:"p-a",reason:"collision_capacity"}]);
+  assert.equal(report.count,2);
+  assert.deepEqual([...report.person_ids],["p-c","p-a"]);
+  assert.match(report.html,/data-spacetime-overflow-person="p-c"/);
+  assert.match(report.html,/data-spacetime-overflow-person="p-a"/);
+  assert.doesNotMatch(report.html,/data-spacetime-overflow-person="p-b"/);
+  assert.match(report.html,/긴 실명 전체 표기/);
+  assert.match(report.html,/한국인 &lt;A&gt;/);
+  assert.match(report.html,/1830~1850/);
+  assert.match(report.html,/1900~1920/);
+  assert.equal(render(items,[]).count,0);
+});
+
+test("dense Person overflow does not counterfeit on-map coverage or alter historical Y", () => {
+  const view = read("atlas-person-spacetime-view.js");
+  const css = read("atlas-person-spacetime-instrument-tools.css");
+  const nav = read("atlas-main-authority-nav.js");
+  assert.match(view,/id="spacetimeNameOverflow" class="spacetime-name-overflow" hidden/);
+  assert.match(view,/id="spacetimeNameOverflowList"/);
+  assert.match(view,/labelPack\.deferred/);
+  assert.match(view,/spacetimeNameOverflowCount/);
+  assert.match(view,/data-spacetime-overflow-person/);
+  assert.match(view,/selectPerson\(mount, personId, \{ focus:false \}\)/);
+  assert.match(view,/originalPerson\?\.focus\(\{ preventScroll:true \}\)/);
+  assert.match(css,/\.spacetime-overflow-person strong \{/);
+  assert.match(css,/white-space:normal/);
+  assert.match(css,/overflow-wrap:anywhere/);
+  assert.match(css,/\.spacetime-name-overflow\[hidden\] \{ display:none !important; \}/);
+  assert.ok(nav.includes("overflow=20261121-dense-fullnames-v1"));
+  assert.match(read("index.html"),/overflow=20261121-dense-fullnames-v1/);
+});
