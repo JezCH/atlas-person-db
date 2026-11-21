@@ -1634,7 +1634,7 @@
       const segment = Array.isArray(track?.primary_segments) ? track.primary_segments[0] : null;
       const period = segment && Number.isInteger(segment.start_ordinal) && Number.isInteger(segment.end_ordinal)
         ? ordinalRangeLabel(segment.start_ordinal, segment.end_ordinal) : "활동 기간 미상";
-      return `<li><button type="button" class="spacetime-overflow-person" data-spacetime-overflow-person="${escapeHtml(personId)}" title="${escapeHtml(name)} · 활동선으로 이동" aria-label="${escapeHtml(name)} · 활동선으로 이동"><strong>${escapeHtml(name)}</strong><small>${escapeHtml(period)}</small></button></li>`;
+      return `<li><button type="button" class="spacetime-overflow-person" data-spacetime-overflow-person="${escapeHtml(personId)}" title="${escapeHtml(name)} · 현재 화면 활동선 선택" aria-label="${escapeHtml(name)} · 현재 화면 활동선 선택"><strong>${escapeHtml(name)}</strong><small>${escapeHtml(period)}</small></button></li>`;
     }).join("");
     return Object.freeze({ count:ids.length, person_ids:Object.freeze(ids), html });
   }
@@ -2172,7 +2172,7 @@
       ${renderMinimap()}
       <details id="spacetimeNameOverflow" class="spacetime-name-overflow" hidden>
         <summary>표에 다 담지 못한 인물 <b id="spacetimeNameOverflowCount">0</b>명 · 전체 이름 보기</summary>
-        <p>활동선은 지도에 있습니다. 이름을 선택하면 해당 인물의 활동 위치와 상세 정보를 볼 수 있습니다.</p>
+        <p>활동선은 지도에 있습니다. 이름을 선택하면 현재 화면의 해당 활동선과 인물 상세 정보가 강조됩니다.</p>
         <ul id="spacetimeNameOverflowList" class="spacetime-name-overflow-list"></ul>
       </details>
       ${renderStickyInspector(selectedTrack, navigationItems.length)}
@@ -2212,7 +2212,7 @@
       const button = event.target.closest?.("[data-spacetime-overflow-person]");
       if (!button || !event.currentTarget.contains(button)) return;
       const personId = text(button.dataset.spacetimeOverflowPerson);
-      if (personId) selectPerson(mount, personId, { focus:true }).catch((error) =>
+      if (personId) selectPerson(mount, personId, { focus:false }).catch((error) =>
         console.error("ATLAS dense Person navigation failed", error));
     });
 
