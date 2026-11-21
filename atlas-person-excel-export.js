@@ -90,9 +90,15 @@
     ws["!cols"] = [{wch:22},{wch:26},{wch:28},{wch:14},{wch:24},{wch:16},{wch:16},{wch:18}];
     const wb = xlsx.utils.book_new();
     xlsx.utils.book_append_sheet(wb, ws, "Persons");
-    const date = fileDate instanceof Date && !Number.isNaN(fileDate.valueOf())
-      ? fileDate.toISOString().slice(0,10)
-      : new Date().toISOString().slice(0,10);
+    // Export filenames follow the user's calendar day, not the UTC date.
+    // A local 00:30 in Seoul is still the previous date in ISO UTC.
+    const calendarDate = fileDate instanceof Date && !Number.isNaN(fileDate.valueOf())
+      ? fileDate : new Date();
+    const date = [
+      calendarDate.getFullYear(),
+      String(calendarDate.getMonth()+1).padStart(2,"0"),
+      String(calendarDate.getDate()).padStart(2,"0")
+    ].join("-");
     xlsx.writeFile(wb, `atlas-persons-${date}.xlsx`);
     return Object.freeze({ row_count:rows.length, file_date:date });
   }
