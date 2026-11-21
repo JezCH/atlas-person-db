@@ -18,7 +18,7 @@ test('Person Main remains the single visible Excel export owner', () => {
 
 test('Person Excel feature module is absent from initial HTML and loaded only on demand', () => {
   assert.doesNotMatch(html, /atlas-person-excel-export\.js/);
-  assert.match(personMain, /const PERSON_EXCEL_EXPORT_SCRIPT_URL = "\.\/atlas-person-excel-export\.js\?v=20260922-feature-split-v1"/);
+  assert.match(personMain, /const PERSON_EXCEL_EXPORT_SCRIPT_URL = "\.\/atlas-person-excel-export\.js\?v=20261121-local-export-date-v1"/);
   assert.match(personMain, /function ensurePersonExcelExportModule\(\)/);
   assert.match(personMain, /if \(personExcelExportModulePromise\) return personExcelExportModulePromise/);
   assert.match(personMain, /script\.dataset\.atlasPersonExcelExport = "true"/);
