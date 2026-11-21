@@ -102,12 +102,16 @@ export function relativeSpecifiers(source){
       if(!/\b(?:import|export)\b/.test(prefix))continue;
     }
     let j=skipTrivia(source,i+token.length);
-    if(token!=='from'){
-      if(source[j]==='(')j++;
-      else if(token==='require')continue;
-    }
+    const call=token!=='from'&&source[j]==='(';
+    if(call)j=skipTrivia(source,j+1);
+    else if(token==='require')continue;
     const found=literal(source,j);
-    if(found&&/^\.{1,2}\//.test(found))result.add(found);
+    if(!found||!/^\.{1,2}\//.test(found))continue;
+    if(call){
+      const separator=source[skipTrivia(source,j+found.length+2)];
+      if(separator!==')'&&separator!==',')continue;
+    }
+    result.add(found);
   }
   return [...result];
 }
