@@ -1,0 +1,88 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261121-riemann-fermat:bernhard-riemann-kingdom-hanover-geometry-lecture-1854:v1",
+  "person": {
+    "canonical_name_en": "Bernhard Riemann",
+    "display_name_ko": "베른하르트 리만",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-21",
+    "life_status_basis": "documented_death",
+    "representative_domain": "science",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Hanover",
+    "display_name_ko": "하노버 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "15236151-3a4c-4e08-acab-bbf0f51f96eb"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Mathematician",
+    "role_display_name_ko": "수학자",
+    "start_year": 1854,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1854,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Bernhard Riemann (1826–1866), working at the University of Göttingen in the Kingdom of Hanover, delivered the 10 June 1854 habilitation lecture 'Über die Hypothesen, welche der Geometrie zu Grunde liegen' (On the Hypotheses Which Lie at the Foundations of Geometry). The lecture introduced fundamental ideas for what became Riemannian geometry; the written exposition appeared in print posthumously in 1868, so 1854 is the presentation year, not the publication year. This Activity is academic work, not university employment tenure or governance of Hanover."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Bernhard Riemann’s original manuscript on the hypotheses underlying geometry — Springer, 2026",
+      "canonical_url": "https://link.springer.com/article/10.1007/s00591-026-00416-0",
+      "citation_text": "Academic manuscript study dates Riemann's Göttingen habilitation lecture to 1854 and identifies its topic and historical original manuscript."
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "Riemann, Bernhard — Deutsche Biographie",
+      "canonical_url": "https://www.deutsche-biographie.de/sfz76542.html?language=en",
+      "citation_text": "Scholarly German biographical entry corroborates Riemann's Göttingen mathematics career and the 1854 habilitation work."
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "Bernhard Riemann — University of Stuttgart Mathematics Online",
+      "canonical_url": "https://morw.mathematik.uni-stuttgart.de/inhalt/aussage/aussage1176/index_s.html",
+      "citation_text": "University-hosted chronology confirms Riemann's 1854 habilitation at Göttingen and later scientific career."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-21",
+      "document_title": "베른하르트 리만",
+      "url": "https://namu.wiki/w/%EB%B2%A0%EB%A5%B8%ED%95%98%EB%A5%B4%ED%8A%B8%20%EB%A6%AC%EB%A7%8C"
+    }
+  },
+  "spatial_disposition": {
+    "state": "existing_disposition",
+    "evidence": "Reuse the established Kingdom of Hanover Polity and its reviewed spatial lifecycle disposition; scholarly activity was at Göttingen, not sovereign rule. No new geometry or Place inferred."
+  },
+  "review_context": {
+    "selection": "explicit_user_approved_joint_registration_2026-11-21",
+    "batch": "user-20261121-riemann-fermat",
+    "identity_aliases": [
+      "Georg Friedrich Bernhard Riemann",
+      "Bernhard Riemann",
+      "리만",
+      "베른하르트 리만"
+    ],
+    "namuwiki_evidence": "External indexed independent historical-person page exact Korean title found via namu.moe mirror; not a film/fictional/athlete homonym.",
+    "preflight_required": true,
+    "production_screen": "Bounded GitHub file/issue search found no existing Person Authoring manifest by this name. A direct public Production SCREEN was not accessible; protected OIDC Authoring preflight_batch MUST check existing identities, reviewed NamuWiki state and semantic duplicate Activities prior to any authoritative write. Do not create duplicate Persons from the two milestones.",
+    "polity_review": "Kingdom of Hanover is a reviewed surviving same-state identity (existing UUID 15236151-3a4c-4e08-acab-bbf0f51f96eb). Kingdom of France was retired after same-identity consolidation; use canonical France identity and preserve monarchy period in notes. Neither source Polity should be minted as a new one."
+  }
+}
