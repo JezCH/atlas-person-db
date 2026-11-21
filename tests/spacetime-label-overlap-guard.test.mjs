@@ -104,3 +104,106 @@ test("surface owner loads the guard only for spacetime without modifying the cor
   assert.match(view, /const GLOBAL_EXTENT_COMPRESSION = 0\.748;/);
   assert.doesNotMatch(view, /LABEL_OVERLAP_GUARD/);
 });
+
+function associationMock(initial = {}) {
+  const children = [];
+  const parent = {
+    children,
+    insertBefore(node, before) {
+      const index = children.indexOf(before);
+      assert.ok(index >= 0);
+      if (node.parentNode) node.remove();
+      node.parentNode = parent;
+      children.splice(index, 0, node);
+    }
+  };
+  const doc = {
+    createElement() { return make("i"); }
+  };
+  function make(tag, className = "") {
+    const node = {
+      tagName:tag, className, parentNode:null, ownerDocument:doc,
+      dataset:{}, style:{}, offsetHeight:22, textContent:"",
+      setAttribute() {},
+      remove() {
+        if (!node.parentNode) return;
+        const at = children.indexOf(node);
+        if (at >= 0) children.splice(at,1);
+        node.parentNode = null;
+      },
+      get previousElementSibling() {
+        const index = children.indexOf(node);
+        return index > 0 ? children[index-1] : null;
+      },
+      get classList() {
+        return { contains:(value)=>node.className.split(" ").includes(value) };
+      }
+    };
+    return node;
+  }
+  function add(className, attributes = {}) {
+    const node = make("i",className);
+    Object.assign(node, attributes);
+    node.parentNode = parent;
+    children.push(node);
+    return node;
+  }
+  const label = add("spacetime-track-label"+(initial.selected?" is-selected":""));
+  label.dataset = {
+    spacetimePerson:"person-one",
+    spacetimeAnchorX:String(initial.anchorX ?? 40),
+    spacetimeAnchorY:"100",
+    spacetimeHomeLeft:String(initial.homeLeft ?? 30),
+    spacetimeHomeRight:String(initial.homeRight ?? 130)
+  };
+  label.style = { left:String(initial.left ?? 80)+"px", width:String(initial.width ?? 70)+"px" };
+  label.textContent = "역사 인물";
+  return {children,label,add,parent};
+}
+
+test("post-layout movement updates the correct Person connector across an intervening home marker", () => {
+  const {children,label,add} = associationMock({anchorX:40,left:80,width:70,homeLeft:30,homeRight:130});
+  const connector = add("spacetime-label-connector");
+  connector.dataset.spacetimePerson = "person-one";
+  connector.style = {left:"40px",width:"40px",top:"100px"};
+  const marker = add("spacetime-label-home-anchor");
+  marker.dataset.spacetimePerson = "person-one";
+  marker.style = {left:"40px",top:"111px"};
+  children.splice(0,children.length,connector,marker,label);
+  guard.updateConnector(label,80,140);
+  assert.equal(children.filter(x=>x.classList.contains("spacetime-label-connector")).length,1);
+  assert.equal(connector.style.left,"40px");
+  assert.equal(connector.style.width,"100px", "connector remains attached to rail after a DOM re-pack shift");
+  assert.equal(marker.style.left,"40px");
+  assert.equal(marker.style.top,"111px");
+  assert.equal(label.dataset.spacetimeLabelBorrowed,"true");
+});
+
+test("post-layout movement creates and removes a Person-owned connector/home anchor as needed", () => {
+  const {children,label} = associationMock({anchorX:130,left:110,width:80,homeLeft:110,homeRight:210,selected:true});
+  guard.updateConnector(label,110,220);
+  const connector=children.find(x=>x.classList.contains("spacetime-label-connector"));
+  const marker=children.find(x=>x.classList.contains("spacetime-label-home-anchor"));
+  assert.ok(connector);
+  assert.ok(marker);
+  assert.equal(connector.dataset.spacetimePerson,"person-one");
+  assert.equal(connector.style.left,"130px");
+  assert.equal(connector.style.width,"90px");
+  assert.equal(connector.style.top,"100px");
+  assert.equal(marker.style.left,"130px");
+  assert.equal(marker.style.top,"111px");
+  assert.equal(label.dataset.spacetimeLabelBorrowed,"true");
+  assert.ok(connector.classList.contains("is-selected"));
+  guard.updateConnector(label,220,120);
+  assert.equal(children.some(x=>x.classList.contains("spacetime-label-connector")),false);
+  assert.equal(children.some(x=>x.classList.contains("spacetime-label-home-anchor")),false);
+  assert.equal(label.dataset.spacetimeLabelBorrowed,"false");
+});
+
+test("post-layout association refuses labels without validated historical anchors", () => {
+  const {children,label} = associationMock();
+  label.dataset.spacetimeAnchorX="not-a-number";
+  guard.updateConnector(label,80,140);
+  assert.equal(children.length,1);
+  assert.equal(label.dataset.spacetimeLabelBorrowed,undefined);
+});

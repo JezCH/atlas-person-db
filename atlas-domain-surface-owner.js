@@ -113,7 +113,7 @@
       .then(() => Promise.all([
           loadScriptOnce(
             'script[data-atlas-person-spacetime-label-overlap-guard="true"]',
-            "./atlas-person-spacetime-label-overlap-guard.js?v=20260920-world-name-overlay",
+            "./atlas-person-spacetime-label-overlap-guard.js?v=20260920-world-name-overlay&associationfix=20261121-domband-v1",
             "atlasPersonSpacetimeLabelOverlapGuard",
             () => Boolean(window.ATLAS_PERSON_SPACETIME_LABEL_OVERLAP_GUARD)
           ),

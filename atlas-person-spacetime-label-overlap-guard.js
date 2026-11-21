@@ -113,22 +113,72 @@
     return map;
   }
 
-  function updateConnector(element, originalLeft, nextLeft) {
-    const connector = element?.previousElementSibling;
-    if (!connector?.classList?.contains("spacetime-label-connector")) return;
-    const width = cssNumber(element.style.width, element.offsetWidth || 0);
-    const connectorLeft = cssNumber(connector.style.left, NaN);
-    const connectorWidth = cssNumber(connector.style.width, NaN);
-    if (!Number.isFinite(connectorLeft) || !(connectorWidth >= 0)) return;
-    const connectorRight = connectorLeft + connectorWidth;
-    const originalRight = originalLeft + width;
-    const nextRight = nextLeft + width;
-    if (connectorRight <= originalLeft + 1) {
-      connector.style.width = `${Math.max(0, nextLeft - connectorLeft)}px`;
-    } else if (connectorLeft >= originalRight - 1) {
-      connector.style.left = `${nextRight}px`;
-      connector.style.width = `${Math.max(0, connectorRight - nextRight)}px`;
+  function previousAssociation(label, name) {
+    const personId = String(label?.dataset?.spacetimePerson || "");
+    let sibling = label?.previousElementSibling;
+    // A home-anchor is inserted between a connector and its label.
+    // Only look within this Person's adjacent presentation nodes.
+    while (sibling && (sibling.classList?.contains("spacetime-label-home-anchor")
+      || sibling.classList?.contains("spacetime-label-connector"))) {
+      if (sibling.classList.contains(name) && sibling.dataset?.spacetimePerson === personId) return sibling;
+      sibling = sibling.previousElementSibling;
     }
+    return null;
+  }
+
+  function associationGeometry(anchorX, labelLeft, labelWidth, homeLeft, homeRight) {
+    const right = labelLeft + labelWidth;
+    const borrowed = labelLeft < homeLeft - EPSILON || right > homeRight + EPSILON;
+    const connectorLeft = anchorX < labelLeft ? anchorX : right < anchorX ? right : null;
+    const connectorWidth = connectorLeft == null ? 0
+      : anchorX < labelLeft ? labelLeft - anchorX : anchorX - right;
+    return Object.freeze({ borrowed, connectorLeft, connectorWidth });
+  }
+
+  function updateConnector(element, originalLeft, nextLeft) {
+    const anchorX = cssNumber(element?.dataset?.spacetimeAnchorX, NaN);
+    const anchorY = cssNumber(element?.dataset?.spacetimeAnchorY, NaN);
+    const homeLeft = cssNumber(element?.dataset?.spacetimeHomeLeft, NaN);
+    const homeRight = cssNumber(element?.dataset?.spacetimeHomeRight, NaN);
+    const width = cssNumber(element?.style?.width, element?.offsetWidth || 0);
+    if (![anchorX, anchorY, homeLeft, homeRight, nextLeft, width].every(Number.isFinite)
+      || homeRight < homeLeft || width <= 0) return;
+    const geometry = associationGeometry(anchorX, nextLeft, width, homeLeft, homeRight);
+    const personId = String(element.dataset.spacetimePerson || "");
+    const selected = element.classList?.contains("is-selected");
+    const doc = element.ownerDocument;
+    const newMarker = (kind) => {
+      const node = doc.createElement("i");
+      node.className = kind + (selected ? " is-selected" : "");
+      node.dataset.spacetimePerson = personId;
+      node.setAttribute("aria-hidden", "true");
+      element.parentNode.insertBefore(node, element);
+      return node;
+    };
+    let connector = previousAssociation(element, "spacetime-label-connector");
+    // Recompute the connector from the original historical rail every time:
+    // a post-layout collision shift may flip the side or create a new gap.
+    if (geometry.connectorWidth > 10) {
+      if (!connector) connector = newMarker("spacetime-label-connector");
+      connector.style.left = `${geometry.connectorLeft}px`;
+      connector.style.top = `${anchorY}px`;
+      connector.style.width = `${geometry.connectorWidth}px`;
+    } else {
+      connector?.remove();
+    }
+    let home = previousAssociation(element, "spacetime-label-home-anchor");
+    if (geometry.borrowed) {
+      if (!home) home = newMarker("spacetime-label-home-anchor");
+      home.style.left = `${anchorX}px`;
+      home.style.top = `${anchorY + cssNumber(element.offsetHeight, 22) / 2}px`;
+    } else {
+      home?.remove();
+    }
+    element.dataset.spacetimeLabelBorrowed = geometry.borrowed ? "true" : "false";
+    const name = String(element.textContent || "").trim();
+    element.title = geometry.borrowed
+      ? `${name} · 이름표는 인접 지역 칸을 빌려 표시됩니다. 하단 표식이 원래 활동선의 위치입니다.`
+      : name;
   }
 
   function resolveDocument(documentObject) {
@@ -190,7 +240,7 @@
     });
   }
 
-  const api = Object.freeze({ finite, cssNumber, overlap, candidateLefts, resolvePositions, collectBands, resolveDocument, installBrowserIntegration });
+  const api = Object.freeze({ finite, cssNumber, overlap, candidateLefts, resolvePositions, collectBands, previousAssociation, associationGeometry, updateConnector, resolveDocument, installBrowserIntegration });
   if (typeof window !== "undefined" && window.document?.body) installBrowserIntegration(window);
   return api;
 });
