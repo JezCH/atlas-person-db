@@ -8,6 +8,7 @@
   }
   let liveReferencesByPersonId = Object.freeze({});
   let liveReferencesLoaded = false;
+  let referenceLoadSerial = 0;
 
   function safeHttpUrl(value) {
     const raw = String(value || "").trim();
@@ -71,13 +72,26 @@
     for (const row of document.querySelectorAll(".person-card[data-person-id]")) {
       const person = { id:row.dataset?.personId || "" };
       const status = statusForPerson(person, "namuwiki");
-      if (!status) continue;
-      row.dataset.namuwikiStatus = status.status;
+      if (status) row.dataset.namuwikiStatus = status.status;
+      else delete row.dataset.namuwikiStatus;
       const name = row.querySelector(".person-table-identity > strong, :scope > strong");
-      if (!name || status.status !== "linked" || name.querySelector(":scope > a.person-main-name-link")) continue;
-      const reference = linkForPerson(person, "namuwiki");
+      if (!name) continue;
+      const existing = name.querySelector(":scope > a.person-main-name-link");
+      const reference = status?.status === "linked" ? linkForPerson(person, "namuwiki") : null;
       const href = safeHttpUrl(reference?.url);
-      if (!href) continue;
+      if (!href) {
+        // A source may have been removed or corrected to reviewed absence.
+        // Do not leave a stale external URL attached to the current Person.
+        if (existing) name.textContent = String(existing.textContent || "").trim();
+        continue;
+      }
+      if (existing) {
+        existing.href = href;
+        existing.target = "_blank";
+        existing.rel = "noopener noreferrer";
+        existing.title = "나무위키에서 보기";
+        continue;
+      }
       const label = String(name.textContent || "").trim();
       if (!label) continue;
       const link = document.createElement("a");
@@ -94,8 +108,10 @@
   }
 
   async function loadLiveReferences({ force = false } = {}) {
+    const loadSerial = ++referenceLoadSerial;
     try {
       const payload = await dataStore.loadPersons({ force });
+      if (loadSerial !== referenceLoadSerial) return false;
       const next = {};
       for (const person of payload.persons || []) {
         const id = String(person?.id || "").trim().toLowerCase();
@@ -108,7 +124,7 @@
       window.dispatchEvent(new CustomEvent("atlas-person-external-references-ready"));
       return true;
     } catch (error) {
-      console.error("ATLAS Person external references could not be loaded", error);
+      if (loadSerial === referenceLoadSerial) console.error("ATLAS Person external references could not be loaded", error);
       return false;
     }
   }
