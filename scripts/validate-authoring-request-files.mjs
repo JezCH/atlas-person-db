@@ -1,8 +1,10 @@
 import ongoingActivity from "../server/atlas-ongoing-activity.js";
+import sourceService from "../server/atlas-source-service.js";
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 const { validateOngoingActivity } = ongoingActivity;
+const { normalizeBibliographicSource, assertExactSourceUrlEvidence } = sourceService;
 
 const HUMAN_SCHEMA = 'atlas-human-authoring/v1';
 const PERSON_ONLY_SCHEMA = 'atlas-human-person-authoring/v1';
@@ -216,6 +218,35 @@ function validateSources(file, manifest) {
   }
 }
 
+function validateBatchSourceUrlEvidence(file, manifest, sourceByUrl) {
+  for (const [index, source] of manifest.sources.entries()) {
+    if (source.source_id != null || !nonEmptyString(source.canonical_url)) continue;
+    const location = `${file} sources[${index}]`;
+    let normalized;
+    try {
+      normalized = normalizeBibliographicSource({
+        canonical_url:source.canonical_url,
+        source_type:source.source_type,
+        title:source.title,
+        citation_text:source.citation_text
+      });
+    } catch (error) {
+      fail(location, error.message);
+    }
+    const previous = sourceByUrl.get(normalized.canonical_url);
+    if (!previous) {
+      sourceByUrl.set(normalized.canonical_url, { location, source:normalized });
+      continue;
+    }
+    // The locator belongs to the Activity's link and may legitimately differ.
+    try {
+      assertExactSourceUrlEvidence(previous.source, normalized);
+    } catch (error) {
+      fail(location, `${error.message}: ${normalized.canonical_url} also supplied by ${previous.location}`);
+    }
+  }
+}
+
 function validatePersonOnly(file, manifest) {
   if (manifest.review_status !== 'approved') fail(file, 'review_status must be approved');
   if (!nonEmptyString(manifest?.person?.canonical_name_en)) fail(file, 'person.canonical_name_en is required');
@@ -293,6 +324,7 @@ if (files.length === 0) throw new Error('No authoring request files were supplie
 
 const requestIds = new Map();
 const semanticKeys = new Map();
+const sourceByUrl = new Map();
 for (const file of files) {
   const normalized = file.split(path.sep).join('/');
   if (!REQUEST_PATH.test(normalized)) fail(file, 'path is outside authoring/requests/*.json');
@@ -305,6 +337,10 @@ for (const file of files) {
   else if (manifest.schema === PERSON_ONLY_SCHEMA) namuwiki = validatePersonOnly(file, manifest);
   else if (manifest.schema === NATIVE_SCHEMA) validateNative(file, manifest);
   else fail(file, `unsupported schema ${String(manifest.schema || '')}`);
+
+  if (manifest.schema === HUMAN_SCHEMA || manifest.schema === PERSON_ONLY_SCHEMA) {
+    validateBatchSourceUrlEvidence(file, manifest, sourceByUrl);
+  }
 
   const requestId = resolvedRequestId(file, manifest);
   if (requestIds.has(requestId)) fail(file, `duplicate effective request_id also used by ${requestIds.get(requestId)}`);
@@ -327,3 +363,4 @@ for (const file of files) {
 }
 
 console.log(`Validated ${files.length} authoring request file${files.length === 1 ? '' : 's'}.`);
+
