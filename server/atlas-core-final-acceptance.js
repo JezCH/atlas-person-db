@@ -67,13 +67,14 @@ function validateContract(contract) {
 
 function productionGateResult({ response, expectedSha, endpoint }) {
   const sha = normalizeSha(expectedSha);
+  const observedSha = String(response?.runtime_sha || "").trim().toLowerCase();
   const failures = [];
   if (!response || typeof response !== "object" || Array.isArray(response)) failures.push("PRODUCTION_RESPONSE_OBJECT_REQUIRED");
   else {
     if (response.ok !== true) failures.push("PRODUCTION_RESPONSE_NOT_OK");
     if (response.marker !== "ATLAS_AUTHORING_TRANSPORT_V2") failures.push("PRODUCTION_MARKER_MISMATCH");
     if (Number(response.transport_version) !== 2) failures.push("PRODUCTION_TRANSPORT_VERSION_MISMATCH");
-    if (String(response.runtime_sha || "").trim().toLowerCase() !== sha) failures.push("PRODUCTION_RUNTIME_SHA_MISMATCH");
+    if (observedSha !== sha) failures.push("PRODUCTION_RUNTIME_SHA_MISMATCH");
     if (response.ready !== true) failures.push("PRODUCTION_AUTHORING_NOT_READY");
     if (response.bootstrap_ready !== true) failures.push("PRODUCTION_BOOTSTRAP_NOT_READY");
     if (response.readiness?.ready !== true) failures.push("PRODUCTION_READINESS_READBACK_NOT_READY");
@@ -85,7 +86,7 @@ function productionGateResult({ response, expectedSha, endpoint }) {
     failures,
     evidence:Object.freeze({
       endpoint:String(endpoint || ""),
-      runtime_sha:response?.runtime_sha || null,
+      runtime_sha:observedSha || null,
       ready:response?.ready === true,
       bootstrap_ready:response?.bootstrap_ready === true,
       readiness_ready:response?.readiness?.ready === true
@@ -193,3 +194,4 @@ module.exports = Object.freeze({
   sha256Text,
   stable
 });
+
