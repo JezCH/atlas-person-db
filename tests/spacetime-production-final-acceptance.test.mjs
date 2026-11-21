@@ -504,7 +504,8 @@ test("actual virtualized canvas refresh preserves keyboard focus when a focused 
   const hint={hidden:false};
   const mount={
     contains:el=>nodes.includes(el),
-    querySelector:(selector)=>layers[selector]|| (selector===".spacetime-canvas"?canvas:selector==="#spacetimeViewportEmptyHint"?hint:null)
+    querySelector:(selector)=>layers[selector]|| (selector===".spacetime-canvas"?canvas:selector==="#spacetimeViewportEmptyHint"?hint:null),
+    querySelectorAll:(selector)=>selector===".spacetime-track-label"?nodes:[]
   };
   const scroll={
     scrollLeft:0,scrollTop:0,clientWidth:600,clientHeight:500,
