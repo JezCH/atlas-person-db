@@ -125,5 +125,16 @@
     liveReferencesLoaded: () => liveReferencesLoaded
   });
 
-  loadLiveReferences();
+  // Person detail deep links and other authority routes do not need the full
+  // registry. Hydrate reference links only after another consumer requested
+  // and completed the shared Person list; that result is already cached.
+  // Explicit reload() remains available after an approved profile edit.
+  window.addEventListener("atlas-client-data-source-updated", (event) => {
+    if (event?.detail?.key === "persons" && event.detail?.state?.status === "ready") {
+      void loadLiveReferences();
+    }
+  });
+  if (dataStore.getSourceState?.("persons")?.status === "ready") {
+    void loadLiveReferences();
+  }
 })();
