@@ -646,12 +646,23 @@ async function main() {
     await waitFor(client, "document.querySelectorAll('.spacetime-track-label').length > 0", 10000);
     const personSelected = await evaluate(client, `(() => {
       const label=document.querySelector('.spacetime-track-label');
-      if (!label) return false;
-      label.click();
-      return true;
+      if (!label) return null;
+      label.focus({ preventScroll:true });
+      return document.activeElement === label ? label.dataset.spacetimePerson || null : null;
     })()`);
-    assert(personSelected, "No Person label was available for interaction acceptance");
+    assert(personSelected, "No focusable Person label was available for keyboard interaction acceptance");
+    const labelActivation = { key:" ", code:"Space", windowsVirtualKeyCode:32 };
+    await client.call("Input.dispatchKeyEvent", { ...labelActivation, type:"keyDown" });
+    await client.call("Input.dispatchKeyEvent", { ...labelActivation, type:"keyUp" });
     await waitFor(client, "Boolean(document.querySelector('#spacetimeInspector:not(.is-empty)'))", 10000);
+    const selectedLabelFocus = await evaluate(client, `(() => {
+      const active=document.activeElement;
+      return active?.classList?.contains('spacetime-track-label')
+        ? active.dataset.spacetimePerson || null : null;
+    })()`);
+    assert(selectedLabelFocus === personSelected,
+      "Keyboard-selected Person label lost focus or jumped to a different Person after rerender",
+      {personSelected,selectedLabelFocus});
     await waitFor(client, "document.querySelectorAll('[data-spacetime-inspector-activity]').length > 0", 10000);
 
     const activityFocus = await evaluate(client, `(() => {
