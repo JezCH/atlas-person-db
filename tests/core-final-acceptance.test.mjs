@@ -248,3 +248,16 @@ test("runner writes evidence logs beside a configured output and records their h
   assert.equal(gate.log_sha256,sha256Text(log));
 });
 
+
+test("generated Production evidence uses the same normalized SHA as readiness validation",()=>{
+  const report=evaluateAcceptance({
+    contract,
+    commitSha:SHA,
+    gateResults:passingCommandResults(),
+    productionResponse:productionResponse(`  ${SHA.toUpperCase()}  `)
+  });
+  assert.equal(report.status,"PASS");
+  assert.equal(report.production.runtime_sha,SHA);
+  assert.equal(assertGeneratedPass(report),true);
+});
+
