@@ -107,6 +107,12 @@ jobs:
             if node scripts/verify-spacetime-production-exact-sha.mjs; then
               matched=true
               break
+            else
+              status=$?
+              if [[ "$status" == "42" ]]; then
+                echo "DEPLOYMENT_DISABLED_OR_PAYMENT_REQUIRED: Stop Production asset retries." >&2
+                exit 1
+              fi
             fi
             echo "Production exact-SHA parity pending: expected=$ATLAS_EXPECTED_RUNTIME_SHA attempt=$attempt/12"
             sleep 10
@@ -203,4 +209,5 @@ jobs:
           path: artifacts/spacetime-visual-acceptance
           if-no-files-found: error
           retention-days: 30
+
 

@@ -47,8 +47,13 @@ function digest(buffer) {
   return crypto.createHash("sha256").update(buffer).digest("hex");
 }
 
-async function fetchBytes(url) {
-  const response = await fetch(url, { cache: "no-store", headers: { "cache-control": "no-cache" } });
+async function fetchBytes(url, { production = false } = {}) {
+  const response = await fetch(url, { cache: "no-store", headers: { "cache-control": "no-cache" }, signal: AbortSignal.timeout(8000) });
+  if (production && response.status === 402) {
+    const error = new Error(`DEPLOYMENT_DISABLED_OR_PAYMENT_REQUIRED: HTTP 402 for ${url}`);
+    error.code = "PRODUCTION_PAYMENT_REQUIRED";
+    throw error;
+  }
   assert(response.ok, `HTTP ${response.status} for ${url}`);
   return Buffer.from(await response.arrayBuffer());
 }
@@ -63,10 +68,15 @@ async function main() {
     const productionAsset = new URL(`/${asset}`, productionOrigin);
     productionAsset.searchParams.set("atlas_acceptance_sha", EXPECTED_RUNTIME_SHA);
     const githubAsset = `https://raw.githubusercontent.com/${REPO}/${EXPECTED_RUNTIME_SHA}/${asset}`;
-    const [productionBytes, githubBytes] = await Promise.all([
-      fetchBytes(productionAsset.href),
+    const [productionResult, githubResult] = await Promise.allSettled([
+      fetchBytes(productionAsset.href, { production: true }),
       fetchBytes(githubAsset)
     ]);
+    // A fast GitHub failure must not hide a terminal Production quota response.
+    if (productionResult.status === "rejected") throw productionResult.reason;
+    if (githubResult.status === "rejected") throw githubResult.reason;
+    const productionBytes = productionResult.value;
+    const githubBytes = githubResult.value;
     const productionSha256 = digest(productionBytes);
     const githubSha256 = digest(githubBytes);
     const equal = productionBytes.equals(githubBytes);
@@ -107,5 +117,6 @@ main().catch((error) => {
   };
   fs.writeFileSync(path.join(OUT_DIR, "exact-sha-parity.json"), JSON.stringify(failure, null, 2));
   console.error(JSON.stringify(failure, null, 2));
-  process.exitCode = 1;
+  process.exitCode = error?.code === "PRODUCTION_PAYMENT_REQUIRED" ? 42 : 1;
 });
+
