@@ -424,3 +424,16 @@ test("canvas Person name, rail and Activity keyboard focus survives rerender by 
   context.document.activeElement = inactive;
   assert.equal(context.captureRenderFocus(mount),null);
 });
+
+
+test("Production Chrome activates the Person label by Space and checks stable focus identity", () => {
+  const verifier = read("scripts/verify-spacetime-production-visual.mjs");
+  assert.match(verifier, /const labelActivation = \{ key:" ", code:"Space", windowsVirtualKeyCode:32 \}/);
+  assert.match(verifier, /Input\.dispatchKeyEvent", \{ \.\.\.labelActivation, type:"keyDown" \}/);
+  assert.match(verifier, /Input\.dispatchKeyEvent", \{ \.\.\.labelActivation, type:"keyUp" \}/);
+  assert.match(verifier, /selectedLabelFocus === personSelected/);
+  const loader = read("atlas-main-authority-nav.js");
+  const shell = read("index.html");
+  assert.match(loader, /homeband=20261121-centered-rail-origin-v1&canvasfocus=20261121-a11y-v1/);
+  assert.match(shell, /inspector=20261121-activity-focus-v1&canvasfocus=20261121-a11y-v1/);
+});
