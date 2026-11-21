@@ -200,7 +200,7 @@
 
   function decorateRow(row) {
     row = normalizeInteractiveRow(row);
-    if (!row || row.dataset.personTableDecorated === "true") return;
+    if (!row || row.dataset.personTableDecorated === "true") return row;
     row.dataset.personTableDecorated = "true";
     row.classList.add("person-table-row", "person-register-entry");
     const identity = wrapIdentity(row);
@@ -229,6 +229,7 @@
     }
     configureActivityHierarchy(row, count, activityRows);
     for (const cell of [identity, range, activities, count]) if (cell) row.append(cell);
+    return row;
   }
 
   function chronologyYearFromRange(rangeText) {
@@ -241,7 +242,7 @@
 
   function eraForRow(row) {
     const range = row?.querySelector?.(":scope > .person-table-range, :scope > .person-card-range");
-    const year = chronologyYearFromRange(range?.dataset?.chronologyRaw || range?.textContent || "");
+    const year = chronologyYearFromRange(row?.dataset?.personRange || range?.dataset?.chronologyRaw || range?.textContent || "");
     return eraModel.eraForYear(year);
   }
 
@@ -293,17 +294,69 @@
     if (summary) summary.textContent = String(summary.textContent || "").replace("historicity 값", "역사성 분류").replace("semantic filter", "적용된 필터");
   }
 
+  let deferredObserver = null;
+
+  function hydrateDeferredRow(row) {
+    if (!row || row.dataset?.personDeferred !== "true" || !row.isConnected) return false;
+    const markup = window.ATLAS_PERSON_MAIN?.personCardMarkup?.(row.dataset.personId);
+    if (!markup) return false;
+    const template = document.createElement("template");
+    template.innerHTML = markup;
+    const element = template.content?.firstElementChild;
+    if (!element) return false;
+    const hydrated = decorateRow(element);
+    if (!hydrated) return false;
+    hydrated.dataset.atlasEra = row.dataset.atlasEra || "";
+    const wasFocused = document.activeElement === row;
+    row.replaceWith(hydrated);
+    if (wasFocused) hydrated.focus?.({ preventScroll: true });
+    return true;
+  }
+
+  function registerDeferredRows(grid) {
+    // A changed search/filter tears down the previous register. Disconnect its
+    // observer so old callbacks cannot hydrate rows from a stale snapshot.
+    deferredObserver?.disconnect();
+    deferredObserver = null;
+    const rows = [...grid.querySelectorAll('[data-person-deferred="true"]')];
+    if (!rows.length) return;
+    grid.addEventListener("focusin", (event) => {
+      const row = event.target?.closest?.('[data-person-deferred="true"]');
+      if (row) {
+        deferredObserver?.unobserve(row);
+        hydrateDeferredRow(row);
+      }
+    });
+    if (typeof window.IntersectionObserver !== "function") {
+      // Unsupported browsers retain the full historical register.
+      rows.forEach(hydrateDeferredRow);
+      return;
+    }
+    const observer = new window.IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        observer.unobserve(entry.target);
+        hydrateDeferredRow(entry.target);
+      }
+    }, { rootMargin:"900px 0px", threshold:0 });
+    deferredObserver = observer;
+    rows.forEach((row) => observer.observe(row));
+  }
+
   function decorateGrid(grid) {
     if (!grid) return;
     grid.classList.add("person-table-grid", "person-monumental-register");
     if (!grid.querySelector(":scope > .person-table-head")) grid.prepend(makeHeader());
     const directRows = [...grid.querySelectorAll(":scope > .person-card")];
-    directRows.forEach(decorateRow);
+    // Deferred rows still count for every era and remain clickable; processing
+    // their activity subtrees before they approach the viewport is unnecessary.
+    directRows.filter((row) => row.dataset.personDeferred !== "true").forEach(decorateRow);
     groupRowsByEra(grid);
+    registerDeferredRows(grid);
   }
   function decorateAll() { document.querySelectorAll(".person-card-grid").forEach(decorateGrid); humanizePageCopy(); }
   window.addEventListener("atlas-person-main-rendered", decorateAll);
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", decorateAll, { once: true });
   else queueMicrotask(decorateAll);
-  window.ATLAS_PERSON_TABLE_VIEW = Object.freeze({ decorateAll });
+  window.ATLAS_PERSON_TABLE_VIEW = Object.freeze({ decorateAll, hydrateDeferredRow });
 })();
