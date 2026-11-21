@@ -16,6 +16,7 @@
 .registration-review-queue-head{align-items:end}
 .registration-review-queue-head label{display:grid;gap:4px;color:var(--atlas-text-secondary);font-size:12px}
 .registration-review-queue-head input{box-sizing:border-box;width:220px;min-height:44px;padding:8px 10px;font-size:16px}
+.registration-review-match-count{display:block;color:var(--atlas-text-secondary);font-size:12px;font-weight:650;line-height:1.35}
 .registration-review-queue-head input:focus{border-color:var(--atlas-material-hairline-strong);outline:1px solid var(--atlas-focus-ring);outline-offset:2px;box-shadow:none}
 .registration-review-table-wrap{max-width:100%;overflow:auto;border:1px solid var(--atlas-material-hairline-soft)}
 .registration-review-table{width:100%;border-collapse:collapse;min-width:620px;background:var(--atlas-surface-1);font-size:12.5px}
