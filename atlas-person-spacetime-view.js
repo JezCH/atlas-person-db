@@ -45,7 +45,7 @@
     ["./atlas-person-spacetime-spatial-compile.js?v=20260903-taxonomy-r2", "ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE"]
   ]);
   const RUNTIME_MEANWHILE_ASSET = Object.freeze([
-    "./atlas-person-spacetime-meanwhile.js?v=20260902-active-activity",
+    "./atlas-person-spacetime-meanwhile.js?v=20260902-active-activity&guard=20261121-valid-ordinal-v1",
     "ATLAS_PERSON_SPACETIME_MEANWHILE"
   ]);
 
