@@ -13,6 +13,12 @@ const ROUTES = Object.freeze([
   ['governance_sources', 'governance_id']
 ]);
 
+function referenceLocator(value) {
+  if (value == null) return null;
+  if (typeof value !== 'string') throw new Error('SOURCE_URL_AUDIT_INVALID_REFERENCE_LOCATOR');
+  return value;
+}
+
 export function auditSharedSourceUrls(snapshot) {
   const raw = snapshot?.raw || snapshot;
   if (!raw || typeof raw !== 'object' || !Array.isArray(raw.sources) ||
@@ -74,7 +80,7 @@ export function auditSharedSourceUrls(snapshot) {
       if (typeof row[parentKey] !== 'string' || !row[parentKey]) {
         throw new Error('SOURCE_URL_AUDIT_INCOMPLETE_REFERENCE');
       }
-      const locator = row.source_locator_key == null ? null : String(row.source_locator_key);
+      const locator = referenceLocator(row.source_locator_key);
       let citation = null;
       if (table === 'activity_sources') {
         const key = row[parentKey] + '\0' + row.source_id;
@@ -87,7 +93,7 @@ export function auditSharedSourceUrls(snapshot) {
             citation.title !== source.title ||
             citation.source_type !== source.source_type ||
             citation.canonical_url !== source.canonical_url ||
-            (citation.source_locator_key == null ? null : String(citation.source_locator_key)) !== locator)) {
+            referenceLocator(citation.source_locator_key) !== locator)) {
           throw new Error('SOURCE_URL_AUDIT_RUNTIME_LINK_PROVENANCE_MISMATCH');
         }
       }
