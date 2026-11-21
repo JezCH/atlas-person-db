@@ -409,7 +409,10 @@ test("canvas Person name, rail and Activity keyboard focus survives rerender by 
     const snapshot = context.captureRenderFocus(mount);
     assert.equal(snapshot.canvasKind,kind);
     assert.equal(snapshot.canvasPersonId,"person-a");
-    nodes = [sameActivityWrongPerson,samePersonWrongActivity,replacement];
+    // A Person label has no Activity identity; rails and glyphs do.
+    // Do not fabricate two DOM labels for one Person in the fixture.
+    nodes = kind === "label" ? [sameActivityWrongPerson,replacement]
+      : [sameActivityWrongPerson,samePersonWrongActivity,replacement];
     assert.equal(context.restoreRenderFocus(mount,snapshot),true);
     assert.deepEqual(calls.at(-1),{kind,personId:"person-a",activityId:"activity-a",preventScroll:true});
     const priorCalls = calls.length;
