@@ -8,16 +8,23 @@
 
   function text(value) { return value == null ? "" : String(value).trim(); }
 
+  // Year ordinals are canonical integers (AD 1 = 0). Number(null) = 0
+  // would otherwise turn a missing date into a fictitious AD 1 Activity.
+  function reviewedOrdinal(value) {
+    return Number.isSafeInteger(value) ? value : null;
+  }
+
   function activeAtOrdinal(segment, ordinal) {
-    const point = Number(ordinal);
-    const start = Number(segment?.start_ordinal);
-    const end = Number(segment?.end_ordinal);
-    return Number.isFinite(point) && Number.isFinite(start) && Number.isFinite(end) && start <= point && point <= end;
+    const point = reviewedOrdinal(ordinal);
+    const start = reviewedOrdinal(segment?.start_ordinal);
+    const end = reviewedOrdinal(segment?.end_ordinal);
+    return point !== null && start !== null && end !== null
+      && start <= point && point <= end;
   }
 
   function activeActivityEntries(tracks, ordinal) {
-    const point = Number(ordinal);
-    if (!Number.isFinite(point)) return Object.freeze([]);
+    const point = reviewedOrdinal(ordinal);
+    if (point === null) return Object.freeze([]);
     const entries = [];
     const seen = new Set();
     for (const track of Array.isArray(tracks) ? tracks : []) {
@@ -33,8 +40,8 @@
           display_name: text(track?.display_name) || personId,
           activity_id: activityId,
           macroregion_code: text(segment?.macroregion_code) || null,
-          start_ordinal: Number(segment.start_ordinal),
-          end_ordinal: Number(segment.end_ordinal),
+          start_ordinal: segment.start_ordinal,
+          end_ordinal: segment.end_ordinal,
           activity: segment.activity || null,
           segment
         }));
@@ -60,7 +67,7 @@
     }
     const regionCounts = [...regionSets.entries()].map(([code, ids]) => Object.freeze({ code, unique_person_count: ids.size }));
     return Object.freeze({
-      ordinal: Number(ordinal),
+      ordinal: reviewedOrdinal(ordinal),
       activity_count: entries.length,
       unique_person_count: personIds.size,
       person_ids: Object.freeze([...personIds].sort()),
