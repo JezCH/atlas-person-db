@@ -1,0 +1,76 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Francisco I. Madero",
+    "display_name_ko": "프란시스코 I. 마데로",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-21",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Mexico",
+    "display_name_ko": "멕시코",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "678683e3-4a02-46be-9095-d639147b0fc8"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-21",
+      "document_title": "프란시스코 마데로",
+      "url": "https://namu.wiki/w/%ED%94%84%EB%9E%80%EC%8B%9C%EC%8A%A4%EC%BD%94%20%EB%A7%88%EB%8D%B0%EB%A1%9C"
+    }
+  },
+  "request_id": "authoring:user-madero:mexico-revolutionary-leader:1910-1911:20261121:v1",
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Revolutionary leader",
+    "role_display_name_ko": "혁명 지도자",
+    "start_year": 1910,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1911,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Madero issued the Plan de San Luis dated 5 October 1910, calling for armed uprising from 20 November 1910; this 1910–1911 year-granularity Activity represents his leadership of the anti-Díaz revolutionary movement leading to the 1911 overthrow. It is activity IN Mexico, not presidential governance and not a claim to have controlled all of Mexico during the uprising. Boundaries are years only; no exact personal leadership start/end days are asserted."
+  },
+  "sources": [
+    {
+      "title": "Secretaría de la Defensa Nacional — Proclamación del Plan de San Luis",
+      "canonical_url": "https://www.gob.mx/defensa/documentos/5-de-octubre-de-1910-proclamacion-del-plan-de-san-luis?state=published",
+      "citation_text": "Official historical account identifies Madero's Plan de San Luis and 20 November 1910 call to arms against Porfirio Díaz.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Archivo General de la Nación — El maderismo y la convergencia con otras tendencias revolucionarias",
+      "canonical_url": "https://www.gob.mx/agn/es/articulos/el-maderismo-y-la-convergencia-con-otras-tendencias-revolucionarias-en-el-alba-de-la-lucha-armada-una-mirada-a-traves-de-sus-documentos?idiom=esDe",
+      "citation_text": "Mexico National Archives examines the Plan de San Luis and the Madero-led revolutionary movement from 1910.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Secretaría de la Defensa Nacional — 6 de noviembre de 1911, Francisco I. Madero asume la Presidencia",
+      "canonical_url": "https://www.gob.mx/defensa/documentos/6-de-noviembre-de-1911-francisco-i-madero-asume-la-presidencia-de-la-republica",
+      "citation_text": "Confirms Madero entered Mexico City as victorious revolutionary leader and was subsequently elected and inaugurated as president in November 1911.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-madero-20261121",
+    "prior_queue_handoff": "USER-AGITATORS-74-20261007",
+    "user_selected_for_registration": true,
+    "relationship_to_presidency": "distinct 1910-1911 anti-Diaz movement activity, separate from 1911-1913 presidential term"
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Francisco I. Madero",
+    "display_name_ko": "프란시스코 I. 마데로",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-21",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Mexico",
+    "display_name_ko": "멕시코",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "678683e3-4a02-46be-9095-d639147b0fc8"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-21",
+      "document_title": "프란시스코 마데로",
+      "url": "https://namu.wiki/w/%ED%94%84%EB%9E%80%EC%8B%9C%EC%8A%A4%EC%BD%94%20%EB%A7%88%EB%8D%B0%EB%A1%9C"
+    }
+  },
+  "request_id": "authoring:user-madero:mexico-president:1911-11-06:1913-02-19:20261121:v1",
+  "registration_candidate_id": "agitators-20261007-francisco-i-madero",
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1911,
+    "start_month": 11,
+    "start_day": 6,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1913,
+    "end_month": 2,
+    "end_day": 19,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Francisco Ignacio Madero González (1873-10-30 to 1913-02-22) was the elected constitutional president of Mexico from 6 November 1911 until his forced resignation on 19 February 1913. Link to the existing Mexico polity, not a separate 'Mexico under Madero' polity. His later murder on 22 February is not the end date of his presidential term."
+  },
+  "sources": [
+    {
+      "title": "INEHRM historical photographic archive — Francisco Madero",
+      "canonical_url": "https://repositorio-inehrm.cultura.gob.mx/fototeca/francisco-madero/",
+      "citation_text": "Mexican National Institute of Historical Studies of the Revolutions identifies Francisco I. Madero González and records his presidency from 6 November 1911 to 19 February 1913.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Secretaría de Gobernación — Francisco I. Madero",
+      "canonical_url": "https://sitios.segob.gob.mx/es/FomentoCivico/Madero",
+      "citation_text": "Mexican Government biographical record confirms the 1911 election, inauguration on 6 November 1911, and forced resignation on 19 February 1913.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Secretaría de la Defensa Nacional — 30 de octubre de 1873, natalicio de Francisco I. Madero",
+      "canonical_url": "https://www.gob.mx/defensa/documentos/30-de-octubre-de-1913-natalicio-de-francisco-i-madero",
+      "citation_text": "Official biographical review documents Madero's birth and death, revolutionary leadership, and presidential office.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-madero-20261121",
+    "queue_candidate_id": "agitators-20261007-francisco-i-madero",
+    "prior_queue_handoff": "USER-AGITATORS-74-20261007",
+    "user_selected_for_registration": true,
+    "namuwiki_index_evidence": "External indexed independent NamuWiki-derived page '프란시스코 마데로', with matching Francisco Ignacio Madero González and exact presidency 1911-11-06 to 1913-02-19; https://dark.namu.moe/w/프란시스코%20마데로; canonical target is https://namu.wiki/w/프란시스코%20마데로"
+  }
+}
