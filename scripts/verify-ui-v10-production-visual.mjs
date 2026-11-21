@@ -572,6 +572,16 @@ async function verifyMobileTwoPersonComparison(client) {
 }
 
 
+// A direct Person deep link must not cause a compact or full roster read.
+// Keep only the kind of request in browser evidence; never log URL queries.
+function personReadRequestKind(rawUrl) {
+  try {
+    const url=new URL(rawUrl);
+    if(url.origin!==new URL(PRODUCTION_ORIGIN).origin || url.pathname!=="/api/atlas-person-read") return null;
+    return url.searchParams.has("person_id") ? "detail" : "roster";
+  } catch { return null; }
+}
+
 async function verifyDirectPersonDetailRoute(client, personId) {
   assert(/^[0-9a-f-]{36}$/i.test(String(personId || "")),
     "Deep-link acceptance requires a real Person UUID from the existing comparison journey", {personId});
@@ -579,24 +589,49 @@ async function verifyDirectPersonDetailRoute(client, personId) {
     "window.ATLAS_ENTITY_ROUTE?.entityHash('persons','person',"+JSON.stringify(personId)+")");
   assert(/^#/.test(String(directHash||"")),"Person routing did not return a canonical hash",{personId,directHash});
 
-  // This must be a fresh entry, not a roster-row click or SPA-only transition.
-  // Verify the dossier is visible without requesting a full roster.
-  await client.call("Page.navigate",{url:"about:blank"});
-  await waitFor(client,"document.readyState === 'complete'",10000);
-  await client.call("Page.navigate",{url:PRODUCTION_ORIGIN+"/"+directHash});
-  await waitFor(client,"document.readyState === 'complete'",45000);
-  await waitFor(client,
-    "window.ATLAS_PERSON_MAIN?.getSelectedPersonId?.()==="+JSON.stringify(personId)
-    +" && Boolean(document.querySelector('#personMainDetail:not([hidden]) .person-chronicle-hero'))",45000);
-  const opened=await evaluate(client,"(() => ({"
-    +"personId:window.ATLAS_PERSON_MAIN?.getSelectedPersonId?.()||null,"
-    +"urlHash:location.hash,"
-    +"detailVisible:document.querySelector('#personMainDetail')?.hidden===false,"
-    +"backdropVisible:document.querySelector('#personMainDetailBackdrop')?.hidden===false,"
-    +"bodyOpen:document.body.classList.contains('person-detail-overlay-open'),"
-    +"portraitCount:document.querySelectorAll('#personMainDetail .person-detail-portrait').length,"
-    +"registerEntries:document.querySelectorAll('.person-register-entry').length"
-    +"}))()");
+  // This must be a fresh URL, not a roster-row click or SPA-only transition.
+  // Browser Network events prove that neither compact nor full roster data
+  // is requested while the exact Person dossier is opened.
+  const requestKinds=[];
+  const onNetworkEvent=(event)=>{
+    try {
+      const message=JSON.parse(String(event.data));
+      if(message.method!=="Network.requestWillBeSent" || message.params?.request?.method!=="GET") return;
+      const kind=personReadRequestKind(message.params?.request?.url||"");
+      if(kind&&requestKinds.length<64) requestKinds.push(kind);
+    } catch { /* unrelated CDP notifications must not break acceptance */ }
+  };
+  await client.call("Network.enable");
+  client.ws.addEventListener("message",onNetworkEvent);
+  let opened;
+  try {
+    await client.call("Page.navigate",{url:"about:blank"});
+    await waitFor(client,"document.readyState === 'complete'",10000);
+    await client.call("Page.navigate",{url:PRODUCTION_ORIGIN+"/"+directHash});
+    await waitFor(client,"document.readyState === 'complete'",45000);
+    await waitFor(client,
+      "window.ATLAS_PERSON_MAIN?.getSelectedPersonId?.()==="+JSON.stringify(personId)
+      +" && Boolean(document.querySelector('#personMainDetail:not([hidden]) .person-chronicle-hero'))",45000);
+    opened=await evaluate(client,"(() => ({"
+      +"personId:window.ATLAS_PERSON_MAIN?.getSelectedPersonId?.()||null,"
+      +"urlHash:location.hash,"
+      +"detailVisible:document.querySelector('#personMainDetail')?.hidden===false,"
+      +"backdropVisible:document.querySelector('#personMainDetailBackdrop')?.hidden===false,"
+      +"bodyOpen:document.body.classList.contains('person-detail-overlay-open'),"
+      +"portraitCount:document.querySelectorAll('#personMainDetail .person-detail-portrait').length,"
+      +"registerEntries:document.querySelectorAll('.person-register-entry').length"
+      +"}))()");
+    await sleep(350); // include delayed initialization requests before closing the tap
+  } finally {
+    client.ws.removeEventListener("message",onNetworkEvent);
+    await client.call("Network.disable");
+  }
+  const network={
+    boundedDetailRequests:requestKinds.filter((kind)=>kind==="detail").length,
+    rosterRequests:requestKinds.filter((kind)=>kind==="roster").length
+  };
+  assert(network.boundedDetailRequests>=1 && network.rosterRequests===0,
+    "A canonical direct Person URL must fetch exact Person data, never the full roster",network);
   assert(opened.personId===personId&&opened.detailVisible&&opened.backdropVisible
     &&opened.bodyOpen&&opened.portraitCount===1,
     "Direct Person URL did not display an actual visible dossier overlay",opened);
@@ -614,7 +649,7 @@ async function verifyDirectPersonDetailRoute(client, personId) {
     +"detailHidden:document.querySelector('#personMainDetail')?.hidden===true,"
     +"backdropHidden:document.querySelector('#personMainDetailBackdrop')?.hidden===true"
     +"}))()");
-  return {opened,listRoute};
+  return {opened,listRoute,network};
 }
 
 async function main(){
