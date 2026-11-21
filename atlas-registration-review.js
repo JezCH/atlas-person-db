@@ -26,9 +26,12 @@
 
   const QUEUE_URL="/api/atlas-read?__atlas_read_surface=registration-queue";
   const REFRESH_INTERVAL_MS=10000;
+  // Poll the small registration queue frequently, not the full Person roster.
+  const PERSON_ROSTER_REFRESH_INTERVAL_MS=120000;
   let activeRoot=null;
   let refreshTimer=null;
   let requestSerial=0;
+  let lastForcedPersonsAt=0;
   let focusListenerRegistered=false;
   let queueRows=[];
   function escapeHtml(value) {
@@ -140,16 +143,20 @@
     const refreshButton=root.querySelector("#registrationReviewRefresh");
     if (refreshButton) refreshButton.disabled=true;
     setStatus("등록 현황을 불러오는 중","loading");
+    const now=Date.now();
+    const forceRoster = forcePersons || !lastForcedPersonsAt
+      || now-lastForcedPersonsAt >= PERSON_ROSTER_REFRESH_INTERVAL_MS;
+    if (forceRoster) lastForcedPersonsAt=now;
     try {
       if (!dataStore?.loadPersons) throw new Error("인물 조회 기능을 사용할 수 없습니다");
       const [persons,queue]=await Promise.all([
-        dataStore.loadPersons({force:forcePersons}),
+        dataStore.loadPersons({force:forceRoster}),
         getJson(QUEUE_URL)
       ]);
       if (serial !== requestSerial || root !== activeRoot) return;
       renderRegistered(persons,queue);
       renderQueue(queue);
-      setStatus(`DB 최신 스냅샷 조회 · ${new Date().toLocaleTimeString("ko-KR")}`,"ready");
+      setStatus(`${forceRoster ? "인물·대기열 최신 조회" : "대기열 최신 조회 · 인물 명부 재사용"} · ${new Date().toLocaleTimeString("ko-KR")}`,"ready");
     } catch(error) {
       if (serial !== requestSerial || root !== activeRoot) return;
       console.error("ATLAS registration review refresh failed",error);
@@ -202,7 +209,7 @@
         return;
       }
       if (activeRoot.querySelector("#registrationReviewStatus")?.dataset.state==="loading") return;
-      refresh({forcePersons:true});
+      refresh({forcePersons:false});
     },REFRESH_INTERVAL_MS);
   }
 
