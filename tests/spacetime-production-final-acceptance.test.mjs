@@ -552,3 +552,49 @@ test("actual virtualized canvas refresh preserves keyboard focus when a focused 
   assert.match(loader,/canvasfocus=20261121-a11y-v1&virtualfocus=20261121-uncertainty-v1/);
   assert.match(shell,/canvasfocus=20261121-a11y-v1&virtualfocus=20261121-uncertainty-v1/);
 });
+
+test("dense overflow keyboard focus follows the identical Person across Inspector rerender",()=>{
+  const source=read("atlas-person-spacetime-view.js");
+  const start=source.indexOf("  function captureRenderFocus(");
+  const end=source.indexOf("  function horizontalCameraGeometry(",start);
+  assert.ok(start>0&&end>start);
+  const calls=[];
+  const original={id:"",dataset:{spacetimeOverflowPerson:"person-a"}};
+  const matching={id:"",dataset:{spacetimeOverflowPerson:"person-a"},focus:options=>calls.push({who:"list-a",preventScroll:options?.preventScroll})};
+  const other={id:"",dataset:{spacetimeOverflowPerson:"person-b"},focus:()=>calls.push({who:"wrong"})};
+  const heading={id:"",dataset:{spacetimeInspectorName:"person-a"},focus:options=>calls.push({who:"inspector-a",preventScroll:options?.preventScroll})};
+  const wrongHeading={id:"",dataset:{spacetimeInspectorName:"person-b"},focus:()=>calls.push({who:"wrong-heading"})};
+  let nodes=[original],currentHeading=null;
+  const mount={contains:node=>nodes.includes(node),
+    querySelector:selector=>selector==="[data-spacetime-inspector-name]"?currentHeading:null,
+    querySelectorAll:selector=>selector==="[data-spacetime-overflow-person]"?nodes:[]};
+  const context=vm.createContext({document:{activeElement:original,getElementById:()=>null},selectedPersonId:null});
+  vm.runInContext(source.slice(start,end),context);
+  const snapshot=context.captureRenderFocus(mount);
+  assert.equal(snapshot.overflowPersonId,"person-a");
+  nodes=[other,matching];currentHeading=wrongHeading;
+  assert.equal(context.restoreRenderFocus(mount,snapshot),true);
+  assert.deepEqual(calls.at(-1),{who:"list-a",preventScroll:true});
+  nodes=[other,heading];currentHeading=heading;context.selectedPersonId="person-a";
+  assert.equal(context.restoreRenderFocus(mount,snapshot),true);
+  assert.deepEqual(calls.at(-1),{who:"inspector-a",preventScroll:true});
+  nodes=[other,wrongHeading];currentHeading=wrongHeading;
+  const count=calls.length;
+  assert.equal(context.restoreRenderFocus(mount,snapshot),false);
+  assert.equal(calls.length,count);
+});
+
+test("expanded dense disclosure persists and live Chrome checks Inspector keyboard focus",()=>{
+  const view=read("atlas-person-spacetime-view.js");
+  const css=read("atlas-person-spacetime-instrument-tools.css");
+  const chrome=read("scripts/verify-spacetime-production-visual.mjs");
+  const nav=read("atlas-main-authority-nav.js"),html=read("index.html");
+  assert.match(view,/overflowDisclosureWasOpen = mount\.querySelector\("#spacetimeNameOverflow"\)\?\.open === true/);
+  assert.match(view,/overflowDisclosureWasOpen \? " open" : ""/);
+  assert.match(view,/tabindex="-1" data-spacetime-inspector-name/);
+  assert.match(css,/data-spacetime-inspector-name\]:focus/);
+  assert.match(chrome,/Dense overflow Person selection lost the keyboard focus destination/);
+  assert.match(chrome,/Dense overflow disclosure unexpectedly collapsed/);
+  assert.ok(nav.includes("overflowfocus=20261121-identity-v1"));
+  assert.ok(html.includes("overflowfocus=20261121-identity-v1"));
+});

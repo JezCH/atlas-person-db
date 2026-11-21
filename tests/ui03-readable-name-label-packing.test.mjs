@@ -169,7 +169,8 @@ test("dense Person overflow does not counterfeit on-map coverage or alter histor
   const view = read("atlas-person-spacetime-view.js");
   const css = read("atlas-person-spacetime-instrument-tools.css");
   const nav = read("atlas-main-authority-nav.js");
-  assert.match(view,/id="spacetimeNameOverflow" class="spacetime-name-overflow" hidden/);
+  assert.match(view,/id="spacetimeNameOverflow" class="spacetime-name-overflow"/);
+  assert.match(view,/overflowDisclosureWasOpen \? " open" : ""\} hidden>/);
   assert.match(view,/id="spacetimeNameOverflowList"/);
   assert.match(view,/labelPack\.deferred/);
   assert.match(view,/spacetimeNameOverflowCount/);
