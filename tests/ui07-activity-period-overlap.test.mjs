@@ -145,3 +145,23 @@ test("UI-07B is an additive, accessible two-Person visual on the existing compar
   assert.match(html,/atlas-person-compare-view\.css\?v=20261120-ui07-comparison-v1/);
   assert.match(html,/ui07b=20261120-evidence-period-v1/);
 });
+
+test("UI-07 comparison does not promote residual months/days above reviewed precision",()=>{
+  const fixture=(granularity)=>({
+    year:1592,month:4,day:13,granularity,certainty:"exact",calendar:"julian"
+  });
+  assert.equal(compare.boundaryLabel(fixture("year")),"AD 1592");
+  assert.equal(compare.boundaryLabel(fixture("month")),"AD 1592 4월");
+  assert.equal(compare.boundaryLabel(fixture("day")),"AD 1592 4월 13일");
+  assert.equal(compare.boundaryLabel(fixture(null)),"AD 1592 4월 13일");
+  assert.equal(compare.boundaryLabel(fixture("unknown")),"AD 1592");
+  assert.equal(compare.boundaryLabel({year:1592,day:13,granularity:"day"}),"AD 1592");
+  assert.equal(compare.boundaryLabel({...fixture("year"),certainty:"approximate"}),"약 AD 1592");
+  const base=detail("a",1592,1593),other=detail("b",1592,1593);
+  base.start=fixture("year");
+  other.start=fixture("month");
+  const output=compare.render(people([base],[other]));
+  assert.match(output,/>AD 1592 — AD 1593</);
+  assert.match(output,/>AD 1592 4월 — AD 1593</);
+  assert.doesNotMatch(output,/AD 1592 4월 13일/);
+});
