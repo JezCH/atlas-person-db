@@ -1,0 +1,64 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Kiyosi Itô",
+    "display_name_ko": "이토 기요시",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-22",
+    "life_status_basis": "documented_death",
+    "representative_domain": "science",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Japan",
+    "display_name_ko": "일본",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "e029b047-544a-52c7-8897-4e494ac72af4"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-22",
+      "document_title": "이토 기요시",
+      "url": "https://namu.wiki/w/%EC%9D%B4%ED%86%A0%20%EA%B8%B0%EC%9A%94%EC%8B%9C"
+    }
+  },
+  "request_id": "authoring:user-math-non-europe-two-20261122:kiyosi-ito-kyoto:1952-1979:v1",
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Mathematician",
+    "role_display_name_ko": "수학자",
+    "start_year": 1952,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1979,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Itô was Professor of Mathematics at Kyoto University from 1952 to 1979, served as Director of the Research Institute for Mathematical Sciences in 1976–1979, and developed and transmitted stochastic analysis in Japan and internationally. This activity is his documented Kyoto university period in post-war Japan; 1954–1956 Princeton and several later overseas affiliations do not redefine the primary Kyoto appointment. His 1942 foundational research is represented separately."
+  },
+  "sources": [
+    {
+      "title": "Kyoto Prize — Kiyosi Itô",
+      "canonical_url": "https://www.kyotoprize.org/en/laureates/kiyosi_ito/",
+      "citation_text": "Awarding institution describes Itô calculus and his major contributions to stochastic analysis across physics, engineering, life sciences, and economic applications.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-non-europe-giants-20261122",
+    "user_selected_for_registration": true,
+    "representation_note": "Year-level, research-backed representative scholarly activity, not political rule or complete lifetime activity.",
+    "namuwiki_index_evidence": "Same independently verified exact NamuWiki Person document title '이토 기요시' as the companion 1942–1945 scholarly Activity. Person is reused across two activities; canonical name Kiyosi Itô."
+  }
+}
