@@ -1,0 +1,70 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "William Rowan Hamilton",
+    "display_name_ko": "윌리엄 로원 해밀턴",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-22",
+    "life_status_basis": "documented_death",
+    "representative_domain": "science",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "08c06b79-58de-508a-9ace-2948baa9e9e6"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-22",
+      "document_title": "윌리엄 로원 해밀턴",
+      "url": "https://namu.wiki/w/%EC%9C%8C%EB%A6%AC%EC%97%84%20%EB%A1%9C%EC%9B%90%20%ED%95%B4%EB%B0%80%ED%84%B4"
+    }
+  },
+  "request_id": "authoring:user-math-top-six-20261122:william-rowan-hamilton:1832-1843:v1",
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Mathematician",
+    "role_display_name_ko": "수학자",
+    "start_year": 1832,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1843,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Hamilton's 1832 theory of rays, 1833 work on complex numbers, 1834–1835 papers on dynamics, and 1843 discovery of quaternions were developed in Ireland, then part of the United Kingdom of Great Britain and Ireland. The existing umbrella United Kingdom Polity is reused for historical scholarly affiliation, not nationality erasure or political rule."
+  },
+  "sources": [
+    {
+      "title": "MacTutor: William Rowan Hamilton",
+      "canonical_url": "https://mathshistory.st-andrews.ac.uk/Biographies/Hamilton/",
+      "citation_text": "Documents Hamilton's 1805–1865 life, research in optics in 1832, dynamics in 1834–1835 and discovery of quaternions in October 1843.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "MacTutor: Historical biography of Hamilton",
+      "canonical_url": "https://mathshistory.st-andrews.ac.uk/Strick/Hamilton.pdf",
+      "citation_text": "Detailed biographical article concerning Hamilton's mathematical physics and the quaternion discovery.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-math-top-six-20261122",
+    "user_selected_for_registration": true,
+    "historical_activity_scope": "Representative independently documented scholarship, not full lifetime; political community association is scholarly activity only.",
+    "namuwiki_index_evidence": "Exact Person page '윌리엄 로원 해밀턴' is linked from the indexed NamuWiki '해밀턴' disambiguation and '수학자/목록' pages; independent historical copy https://seore.org/raw/문서:윌리엄%20로원%20해밀턴 identifies William Rowan Hamilton (1805–1865). This is not the biologist William D. Hamilton or entertainers. The exact canonical target title is evidenced by the link on https://seore.org/raw/문서:해밀턴의%20원리."
+  }
+}
