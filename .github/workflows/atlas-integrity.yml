@@ -92,7 +92,7 @@ jobs:
           head_sha='${{ steps.range.outputs.head_sha }}'
 
           if [[ -n "$base_sha" && -n "$head_sha" ]]; then
-            git diff --no-renames --name-only --diff-filter=ACDMRTUXB "$base_sha" "$head_sha" -- > /tmp/atlas-changed.txt
+            git -c core.quotepath=false diff --no-renames --name-only --diff-filter=ACDMRTUXB "$base_sha" "$head_sha" -- > /tmp/atlas-changed.txt
           fi
 
           cat /tmp/atlas-changed.txt

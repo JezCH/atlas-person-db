@@ -91,3 +91,20 @@ test("Activity deep links name one verified Person and Activity UUID without cha
     assert.equal(parsed.canonical_hash,route.domainHash(parsed.domain),candidate);
   }
 });
+
+test("deep links preserve trailing separators without collapsing missing interior segments",()=>{
+  const activityId="AA000001-BB02-CC03-DD04-EE0000000005";
+  const canonical=route.activityHash(PERSON_ID,activityId);
+  assert.equal(route.parseHash(canonical+"/").canonical_hash,canonical);
+  for(const hash of [
+    `#atlas-persons//person/${PERSON_ID}`,
+    `#atlas-persons/person//${PERSON_ID}`,
+    `#atlas-spacetime/person/${PERSON_ID}//activity/${activityId}`,
+    `#atlas-spacetime/person/${PERSON_ID}/activity//${activityId}`
+  ]){
+    const parsed=route.parseHash(hash);
+    assert.equal(parsed.entity_id,null,hash);
+    assert.equal(parsed.activity_id,undefined,hash);
+    assert.equal(parsed.canonical_hash,route.domainHash(parsed.domain),hash);
+  }
+});

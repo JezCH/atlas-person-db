@@ -49,3 +49,10 @@ test('matches are stable and capped at three entries',t => {
   assert.deepEqual(selectTaskLessons({id:'atlas',paths:['scripts/example.mjs'],
     instructions:'x'},{root}).map(x=>x.id),['lesson-0','lesson-1','lesson-2']);
 });
+
+test('repeated case variants cannot satisfy the independent keyword threshold',t => {
+  const root=fixture(t,[lesson('single-signal','scripts/unrelated.mjs',['boolean','BOOLEAN','Boolean']),
+    lesson('two-signals','scripts/unrelated.mjs',['boolean','year'])]);
+  const task={id:'atlas-new',paths:['scripts/new.mjs'],instructions:'Reject Boolean year boundaries.'};
+  assert.deepEqual(selectTaskLessons(task,{root}).map(x=>x.id),['two-signals']);
+});

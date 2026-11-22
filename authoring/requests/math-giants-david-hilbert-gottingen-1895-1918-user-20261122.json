@@ -1,0 +1,65 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "David Hilbert",
+    "display_name_ko": "다비트 힐베르트",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-22",
+    "life_status_basis": "documented_death",
+    "representative_domain": "science",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "German Empire",
+    "display_name_ko": "독일 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "4203b03f-524f-5466-b718-37b72ae61e38"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-22",
+      "document_title": "다비트 힐베르트",
+      "url": "https://namu.wiki/w/%EB%8B%A4%EB%B9%84%ED%8A%B8%20%ED%9E%90%EB%B2%A0%EB%A5%B4%ED%8A%B8"
+    }
+  },
+  "request_id": "authoring:user-math-giants-20261122:david-hilbert:gottingen:1895-1918:v1",
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Mathematician",
+    "role_display_name_ko": "수학자",
+    "start_year": 1895,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1918,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Hilbert held the Göttingen chair from 1895, developed axiomatic geometry and articulated his 23 problems in 1900. This segment is restricted to the German Empire years; his post-1918 academic activity is not claimed to have ceased in 1918."
+  },
+  "sources": [
+    {
+      "title": "MacTutor / Stanford Encyclopedia of Philosophy — David Hilbert biographical record",
+      "canonical_url": "https://mathshistory.st-andrews.ac.uk/Biographies/Hilbert/",
+      "citation_text": "Authoritative historical biography corroborates David Hilbert's documented lifespan (1862-01-23–1943-02-14) and primary mathematics career associated with the stated polity and interval; see activity notes for scope.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-eight-math-giants-20261122",
+    "user_selected_for_registration": true,
+    "person_registration_value": "Historical top-tier mathematics comparand to Euler, Gauss, Newton, Riemann",
+    "historical_activity_scope": "A researched representative segment, not a claim of full lifetime activity coverage",
+    "namuwiki_index_evidence": "Externally indexed independent NamuWiki-derived Person document headed '다비트 힐베르트' identifies David Hilbert; reviewed on 2026-11-22 via namu.moe/dark.namu.moe indexed mirror. Canonical target title '다비트 힐베르트'."
+  }
+}

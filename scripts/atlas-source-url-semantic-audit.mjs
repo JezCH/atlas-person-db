@@ -120,6 +120,8 @@ export function auditSharedSourceUrls(snapshot) {
       })).sort((a, b) => a.id.localeCompare(b.id));
       const titles = [...new Set(sources.map(x => x.title))].sort();
       const types = [...new Set(sources.map(x => x.source_type))].sort();
+      const identifiers = new Set(sources.map(x => x.external_identifier)
+        .filter(value => typeof value === 'string' && value.trim()).map(value => value.trim()));
       const byActivity = new Map();
       for (const s of sources) for (const ref of s.references) {
         if (ref.table !== 'activity_sources') continue;
@@ -145,7 +147,7 @@ export function auditSharedSourceUrls(snapshot) {
         title_variants: titles, type_variants: types,
         review_priority: same_activity_source_collisions.length
           ? 'SAME_ACTIVITY_MULTIPLE_SOURCE_UUIDS'
-          : titles.length > 1 || types.length > 1
+          : titles.length > 1 || types.length > 1 || identifiers.size > 1
             ? 'BIBLIOGRAPHIC_METADATA_VARIATION'
             : 'ACTIVITY_SCOPED_REUSE',
         same_activity_source_collisions,

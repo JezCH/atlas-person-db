@@ -1,0 +1,65 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Henri Poincaré",
+    "display_name_ko": "앙리 푸앵카레",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-22",
+    "life_status_basis": "documented_death",
+    "representative_domain": "science",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "French Third Republic",
+    "display_name_ko": "프랑스 제3공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "3d72277f-c92e-476c-8174-804f700d10cc"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-22",
+      "document_title": "앙리 푸앵카레",
+      "url": "https://namu.wiki/w/%EC%95%99%EB%A6%AC%20%ED%91%B8%EC%95%B5%EC%B9%B4%EB%A0%88"
+    }
+  },
+  "request_id": "authoring:user-math-giants-20261122:henri-poincare:paris:1881-1912:v1",
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Mathematician",
+    "role_display_name_ko": "수학자",
+    "start_year": 1881,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1912,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Poincaré took a Paris Faculty of Science chair in 1881 and worked on topology, celestial mechanics, dynamical systems, and mathematical physics while active in France. End year is year-level, grounded by his 1912 death."
+  },
+  "sources": [
+    {
+      "title": "MacTutor / Stanford Encyclopedia of Philosophy — Henri Poincaré biographical record",
+      "canonical_url": "https://mathshistory.st-andrews.ac.uk/Biographies/Poincare/",
+      "citation_text": "Authoritative historical biography corroborates Henri Poincaré's documented lifespan (1854-04-29–1912-07-17) and primary mathematics career associated with the stated polity and interval; see activity notes for scope.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-eight-math-giants-20261122",
+    "user_selected_for_registration": true,
+    "person_registration_value": "Historical top-tier mathematics comparand to Euler, Gauss, Newton, Riemann",
+    "historical_activity_scope": "A researched representative segment, not a claim of full lifetime activity coverage",
+    "namuwiki_index_evidence": "Externally indexed independent NamuWiki-derived Person document headed '앙리 푸앵카레' identifies Henri Poincaré; reviewed on 2026-11-22 via namu.moe/dark.namu.moe indexed mirror. Canonical target title '앙리 푸앵카레'."
+  }
+}

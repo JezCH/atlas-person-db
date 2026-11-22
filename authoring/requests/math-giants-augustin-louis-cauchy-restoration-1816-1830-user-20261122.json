@@ -1,0 +1,65 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Augustin-Louis Cauchy",
+    "display_name_ko": "오귀스탱루이 코시",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-22",
+    "life_status_basis": "documented_death",
+    "representative_domain": "science",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of France",
+    "display_name_ko": "프랑스 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "7e090994-f196-4957-8295-dcfa08c53fba"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-22",
+      "document_title": "오귀스탱루이 코시",
+      "url": "https://namu.wiki/w/%EC%98%A4%EA%B7%80%EC%8A%A4%ED%83%B1%EB%A3%A8%EC%9D%B4%20%EC%BD%94%EC%8B%9C"
+    }
+  },
+  "request_id": "authoring:user-math-giants-20261122:augustin-louis-cauchy:restoration:1816-1830:v1",
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Mathematician",
+    "role_display_name_ko": "수학자",
+    "start_year": 1816,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1830,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Cauchy developed rigorous analysis and complex function theory as a French mathematician after joining the Academy of Sciences in 1816. This is the restored Bourbon Kingdom interval, ending at the July Revolution; it does not encompass his subsequent research or exile."
+  },
+  "sources": [
+    {
+      "title": "MacTutor / Stanford Encyclopedia of Philosophy — Augustin-Louis Cauchy biographical record",
+      "canonical_url": "https://mathshistory.st-andrews.ac.uk/Biographies/Cauchy/",
+      "citation_text": "Authoritative historical biography corroborates Augustin-Louis Cauchy's documented lifespan (1789-08-21–1857-05-23) and primary mathematics career associated with the stated polity and interval; see activity notes for scope.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-eight-math-giants-20261122",
+    "user_selected_for_registration": true,
+    "person_registration_value": "Historical top-tier mathematics comparand to Euler, Gauss, Newton, Riemann",
+    "historical_activity_scope": "A researched representative segment, not a claim of full lifetime activity coverage",
+    "namuwiki_index_evidence": "Externally indexed independent NamuWiki-derived Person document headed '오귀스탱루이 코시' identifies Augustin-Louis Cauchy; reviewed on 2026-11-22 via namu.moe/dark.namu.moe indexed mirror. Canonical target title '오귀스탱루이 코시'."
+  }
+}

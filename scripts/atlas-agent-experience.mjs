@@ -33,11 +33,13 @@ export function selectTaskLessons(task, {root = process.cwd(), limit = 3} = {}) 
       /[\r\n\x00-\x1f]/.test(entry.lesson) ||
       typeof entry.evidence !== 'string' || !EVIDENCE.test(entry.evidence) ||
       !Array.isArray(entry.keywords) || entry.keywords.length > 12) continue;
-    const relevant = entry.keywords.filter(k => typeof k === 'string' && k.length >= 3 && k.length <= 48 &&
-      !EXCLUDED.has(k.toLowerCase()) && matched(k.toLowerCase(), words));
+    const relevant = new Set(entry.keywords
+      .filter(k => typeof k === 'string' && k.length >= 3 && k.length <= 48)
+      .map(k => k.toLowerCase())
+      .filter(k => !EXCLUDED.has(k) && matched(k, words)));
     const scoped = task.paths.includes(entry.scope);
-    if (!scoped && relevant.length < 2) continue;
-    selected.push({score:(scoped ? 100 : 0) + relevant.length, id:entry.id,
+    if (!scoped && relevant.size < 2) continue;
+    selected.push({score:(scoped ? 100 : 0) + relevant.size, id:entry.id,
       scope:entry.scope, lesson:entry.lesson, evidence:entry.evidence});
   }
   selected.sort((a,b) => b.score - a.score || a.id.localeCompare(b.id));
