@@ -1,0 +1,65 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Leonhard Euler",
+    "display_name_ko": "레온하르트 오일러",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-22",
+    "life_status_basis": "documented_death",
+    "representative_domain": "science",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Prussia",
+    "display_name_ko": "프로이센 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "a5982b52-4f13-53c3-93f6-3cfe5075d630"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-22",
+      "document_title": "레온하르트 오일러",
+      "url": "https://namu.wiki/w/%EB%A0%88%EC%98%A8%ED%95%98%EB%A5%B4%ED%8A%B8%20%EC%98%A4%EC%9D%BC%EB%9F%AC"
+    }
+  },
+  "request_id": "authoring:user-math-giants-20261122:leonhard-euler:berlin:1741-1766:v1",
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Mathematician",
+    "role_display_name_ko": "수학자",
+    "start_year": 1741,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1766,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Euler conducted foundational research in Berlin after moving from Saint Petersburg in July 1741, working with the Prussian Academy until his return to Russia in 1766. This research affiliation denotes scholarly activity, not rule of Prussia."
+  },
+  "sources": [
+    {
+      "title": "MacTutor / Stanford Encyclopedia of Philosophy — Leonhard Euler biographical record",
+      "canonical_url": "https://mathshistory.st-andrews.ac.uk/Biographies/Euler/",
+      "citation_text": "Authoritative historical biography corroborates Leonhard Euler's documented lifespan (1707-04-15–1783-09-18) and primary mathematics career associated with the stated polity and interval; see activity notes for scope.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-eight-math-giants-20261122",
+    "user_selected_for_registration": true,
+    "person_registration_value": "Historical top-tier mathematics comparand to Euler, Gauss, Newton, Riemann",
+    "historical_activity_scope": "A researched representative segment, not a claim of full lifetime activity coverage",
+    "namuwiki_index_evidence": "Externally indexed independent NamuWiki-derived Person document headed '레온하르트 오일러' identifies Leonhard Euler; reviewed on 2026-11-22 via namu.moe/dark.namu.moe indexed mirror. Canonical target title '레온하르트 오일러'."
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Emmy Noether",
+    "display_name_ko": "에미 뇌터",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-22",
+    "life_status_basis": "documented_death",
+    "representative_domain": "science",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Weimar Republic",
+    "display_name_ko": "바이마르 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "7594c57e-0b32-49d6-84d0-f65cd46f759e"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-22",
+      "document_title": "에미 뇌터",
+      "url": "https://namu.wiki/w/%EC%97%90%EB%AF%B8%20%EB%87%8C%ED%84%B0"
+    }
+  },
+  "request_id": "authoring:user-math-giants-20261122:emmy-noether:gottingen:1919-1933:v1",
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Mathematician",
+    "role_display_name_ko": "수학자",
+    "start_year": 1919,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1933,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After obtaining the Göttingen Privatdozent title in 1919, Noether developed structural abstract algebra and ring and ideal theory, including her 1921 work. This activity segment is within the Weimar Republic, until her forced emigration in 1933; prior 1915–1918 mathematical physics research is not denied."
+  },
+  "sources": [
+    {
+      "title": "MacTutor / Stanford Encyclopedia of Philosophy — Emmy Noether biographical record",
+      "canonical_url": "https://mathshistory.st-andrews.ac.uk/Biographies/Noether_Emmy/",
+      "citation_text": "Authoritative historical biography corroborates Emmy Noether's documented lifespan (1882-03-23–1935-04-14) and primary mathematics career associated with the stated polity and interval; see activity notes for scope.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-eight-math-giants-20261122",
+    "user_selected_for_registration": true,
+    "person_registration_value": "Historical top-tier mathematics comparand to Euler, Gauss, Newton, Riemann",
+    "historical_activity_scope": "A researched representative segment, not a claim of full lifetime activity coverage",
+    "namuwiki_index_evidence": "Externally indexed independent NamuWiki-derived Person document headed '에미 뇌터' identifies Emmy Noether; reviewed on 2026-11-22 via namu.moe/dark.namu.moe indexed mirror. Canonical target title '에미 뇌터'."
+  }
+}
