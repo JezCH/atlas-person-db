@@ -1,0 +1,72 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-australia-two-20261122:sir-douglas-nicholls:south-australia-governor-1976-1977:v1",
+  "person": {
+    "canonical_name_en": "Sir Douglas Nicholls",
+    "display_name_ko": "더글러스 니컬스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-22",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "State of South Australia",
+    "display_name_ko": "남호주주",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "South Australia as a constituent Australian state and the actual jurisdiction of its 1976–1977 Governor is established by official Government House Adelaide lists and Australian National Archives records cited in this request. This narrowly scoped Person registration has not reviewed an exact existing first-class ATLAS Place UUID, area boundary, coordinate, PolityPlaceFunction or verified display binding for the State of South Australia. Spatial mapping is explicitly held rather than asserting that a modern federal state's exact polygon, sovereign independence or precise point coordinates have been resolved; separately review before spatial placement."
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-11-22",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "Governor of South Australia",
+    "role_display_name_ko": "남호주 주총독",
+    "start_year": 1976,
+    "start_month": 12,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1977,
+    "end_month": 4,
+    "end_day": 30,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sir Douglas Ralph Nicholls held the constitutional office of Governor of South Australia from 1 December 1976 to 30 April 1977, the first Indigenous Australian to hold a vice-regal office. He stepped down in 1977 following serious illness. This was a constitutional, ceremonial and community-representative state office, NOT the elected South Australian Premier's cabinet policy-executing office; `serves` prevents conflating his vice-regal role with day-to-day executive control. The State of South Australia is an Australian constituent state, not a newly independent sovereign kingdom."
+  },
+  "sources": [
+    {
+      "title": "Government House Adelaide — Previous Governors",
+      "canonical_url": "https://www.governor.sa.gov.au/governor-of-south-australia/previous-governors",
+      "citation_text": "The office's official chronological register explicitly lists Sir Douglas Ralph Nicholls KCVO OBE as Governor 1 December 1976 – 30 April 1977.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "National Archives of Australia — Signing in of first Indigenous Governor",
+      "canonical_url": "https://www.naa.gov.au/students-and-teachers/student-research-portal/learning-resource-themes/first-australians/history/signing-first-indigenous-governor-sir-douglas-nicholls-south-australia",
+      "citation_text": "Official Commonwealth archival teaching resource directly dates the Governor swearing-in to 1 December 1976 and identifies the Indigenous leader Sir Douglas Nicholls.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "australia-two-historical-persons-20261122",
+    "user_selected_for_registration": true,
+    "namuwiki_index_evidence": "Same previously reviewed explicit NamuWiki no_exact_document status for new Sir Douglas Nicholls Person. No exact indexed NamuWiki page, do not infer from unrelated persons or honors.",
+    "polity_review": "New State of South Australia is a verified constitutional subnational polity associated with Nicholls' office. Existing federal Commonwealth of Australia is not incorrectly substituted as the state governor's jurisdiction; requires explicit spatial hold until audited location binding."
+  }
+}

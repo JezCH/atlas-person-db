@@ -1,0 +1,69 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-australia-two-20261122:sir-douglas-nicholls:aal-foundation-1957:v1",
+  "person": {
+    "canonical_name_en": "Sir Douglas Nicholls",
+    "display_name_ko": "더글러스 니컬스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-22",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Commonwealth of Australia",
+    "display_name_ko": "오스트레일리아 연방",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "f8a00e62-8a19-5a92-be07-b012ad9325ac"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-11-22",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Aboriginal Rights Advocate",
+    "role_display_name_ko": "호주 원주민 권익운동가",
+    "start_year": 1957,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1957,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sir Douglas Ralph ('Doug') Nicholls (1906–1988), a Yorta Yorta Australian Aboriginal minister and rights advocate, co-founded the Victorian Aborigines Advancement League in May 1957 with Doris Blackburn, Stan Davey and Gordon Bryant. This year-level Activity represents the specifically documented League founding, not an invented start or end for all his Indigenous rights campaigning. He also participated in the 1938 Day of Mourning and was later appointed Governor of South Australia; his separate vice-regal term is recorded in the companion request. `active_in` records public campaigning, not elected governmental office."
+  },
+  "sources": [
+    {
+      "title": "Australian Dictionary of Biography — Sir Douglas Ralph (Doug) Nicholls",
+      "canonical_url": "https://adb.anu.edu.au/biography/nicholls-sir-douglas-ralph-doug-14920",
+      "citation_text": "Authoritative scholarly biography records Nicholls' lifetime (1906–1988), Indigenous advocacy and formation of the Victorian Aborigines Advancement League with named colleagues in May 1957.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Victoria First Peoples — Sir Douglas Nicholls",
+      "canonical_url": "https://www.firstpeoplesrelations.vic.gov.au/sir-douglas-nicholls-kcvo-obe-jp",
+      "citation_text": "State Government Indigenous history documents 1938 Day of Mourning participation and 1957 co-founding of the Aboriginal Advancement League.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "australia-two-historical-persons-20261122",
+    "user_selected_for_registration": true,
+    "namuwiki_index_evidence": "Bounded indexed search for independent NamuWiki Person entries '더글러스 니컬스', '더글러스 니콜스', '더그 니컬스', 'Sir Douglas Nicholls' plus title variants did not identify an exact person page; do not invent a link. Historical naming includes Douglas Ralph Nicholls, Sir Douglas Nicholls and Doug Nicholls.",
+    "historical_scope": "1957-founded civil-rights League recorded independently of 1976–1977 vice-regal office. Existing Australian Commonwealth polity is geographic political context only."
+  }
+}
