@@ -1,0 +1,82 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-historical-three-20261122:monica-ataguttaaluk:igloolik-famine-1905:v1",
+  "person": {
+    "canonical_name_en": "Monica Ataguttaaluk",
+    "display_name_ko": "모니카 아타구타알루크",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-22",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Iglulingmiut (Igloolik Inuit)",
+    "display_name_ko": "이글룰릭 이누이트",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-11-22",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Inuit Community Figure",
+    "role_display_name_ko": "이누이트 공동체 인물",
+    "start_year": 1905,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1905,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Monica Ataguttaaluk (circa 1875–1948), an Iglulingmiut historical woman, survived the well-attested spring 1905 famine near Igloolik. Oral histories document that after her rescue and later remarriage she became a respected non-sovereign community leader, arranging food sharing and trade of fox furs for supplies between Igloolik and Pond Inlet. The 1905 point specifically dates the famine event, NOT an invented start of a continuous ruling term or the undated start of her later trading and community leadership. The nickname 'Queen of Igloolik' was an informal external appellation, not an official monarchy or reign. Iglulingmiut refers to a historically real Inuit community, not a fabricated kingdom or Canadian office."
+  },
+  "sources": [
+    {
+      "title": "Qikiqtani Truth Commission — Igloolik Community History",
+      "canonical_url": "https://www.qtcommission.ca/en/file-download/download/public/60",
+      "citation_text": "Indigenous community historical commission account recounts Ataguttaaluk's survival and her importance to Igloolik community oral history.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Government of Canada — Inuit oral history testimony (Apphia section)",
+      "canonical_url": "https://publications.gc.ca/collections/collection_2017/bcp-pco/Z1-1991-1-41-140-eng.pdf",
+      "citation_text": "Collected first-person oral testimony by an Inuit relative documents Ataguttaaluk's later redistribution of food, trading trips between Igloolik and Pond Inlet and her informal community leadership, explicitly not a constitutional reign.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Lakehead University Archives — Ataguttaaluk, Monica (c. 1875–1948)",
+      "canonical_url": "https://archives.lakeheadu.ca/index.php/ataguttaaluk-monica-c-1875-1948",
+      "citation_text": "University archival finding aid records circa 1875–1948 biographical dates and multiple oral-history and historical accounts of Monica Ataguttaaluk.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Nunatsiaq News — The Passing of Ataguttaaluk, Part 2",
+      "canonical_url": "https://nunatsiaq.com/stories/article/taissumani_july_16_1948_-_the_passing_of_ataguttaaluk_queen_of_igloolik_par/",
+      "citation_text": "Regional Arctic history column independently locates the famine event in spring 1905 and the July 1948 death commemoration.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "user_selected_for_registration": true,
+    "request_batch": "user-historical-three-20261122",
+    "registration_scope": "Person and real named Iglulingmiut community: event record, not queen/ruler/governs relationship.",
+    "polity_review": "Iglulingmiut is a documented indigenous community identity associated with Igloolik, distinguished from Inughuit of northwest Greenland and distinct from the Dominion of Canada as a territorial administration; relation is active_in only.",
+    "domain_review": "Representative domain governance reflects oral-history documented non-sovereign community leadership and local food coordination; it does not imply state rule or a hereditary throne.",
+    "namuwiki_index_evidence": "Bounded external-index searches for Ataguttaaluk, Monica Ataguttaaluk, Attagutaaluk, 아타구타알루크, 모니카 아타구타알루크 and likely Korean variants found no independent exact NamuWiki Person entry or relevant NamuWiki derivative. Korean-language cultural sources mention Ataguttaaluk School but are not NamuWiki. Reviewed not_found/no_exact_document."
+  }
+}
