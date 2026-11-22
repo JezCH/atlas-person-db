@@ -1,0 +1,70 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Kiyosi Itô",
+    "display_name_ko": "이토 기요시",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-22",
+    "life_status_basis": "documented_death",
+    "representative_domain": "science",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Empire of Japan",
+    "display_name_ko": "대일본제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "7f146e58-c3e9-5af7-8cb8-346f03cd7cf6"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-22",
+      "document_title": "이토 기요시",
+      "url": "https://namu.wiki/w/%EC%9D%B4%ED%86%A0%20%EA%B8%B0%EC%9A%94%EC%8B%9C"
+    }
+  },
+  "request_id": "authoring:user-math-non-europe-two-20261122:kiyosi-ito-stochastic-origin:1942-1945:v1",
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Mathematician",
+    "role_display_name_ko": "수학자",
+    "start_year": 1942,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1945,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Kiyosi Itô (1915-09-07 to 2008-11-10) initiated his stochastic-process work in 1942, and pursued research during his Japanese Statistics Bureau/Nagoya Imperial University period (1943 appointment) through his 1945 doctorate. The first foundational paper was published in 1942. This is an academic/research contribution in then-Empire of Japan, not governance or military service. Later Kyoto University professorship is a distinct Activity."
+  },
+  "sources": [
+    {
+      "title": "Mathematical Society of Japan — The Career of Kiyosi Itô",
+      "canonical_url": "https://math.or.jp/activity/anniversary/ito100/en/bio.html",
+      "citation_text": "Official career chronology records the 1939–1943 Statistics Bureau service, 1943–1952 Nagoya Imperial University faculty appointment, 1945 doctorate, and death in 2008.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "MacTutor — Kiyosi Ito",
+      "canonical_url": "https://mathshistory.st-andrews.ac.uk/Biographies/Ito/",
+      "citation_text": "Historical biography documents 1942 foundational work and 1940s stochastic integral and stochastic differential equation theory.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-non-europe-giants-20261122",
+    "user_selected_for_registration": true,
+    "representation_note": "Year-level, research-backed representative scholarly activity, not political rule or complete lifetime activity.",
+    "namuwiki_index_evidence": "Externally indexed independent namu.moe/w/이토%20기요시 titled '이토 기요시'; article identifies mathematician 伊藤清, born 1915-09-07 and deceased 2008-11-10. Canonical namu.wiki path uses exact indexed title. Historical full name can be transliterated Kiyosi Itô / Kiyoshi Ito / Itō Kiyoshi."
+  }
+}
