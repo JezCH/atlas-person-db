@@ -1,0 +1,70 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Gottlob Frege",
+    "display_name_ko": "고틀로프 프레게",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-22",
+    "life_status_basis": "documented_death",
+    "representative_domain": "science",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "German Empire",
+    "display_name_ko": "독일 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "4203b03f-524f-5466-b718-37b72ae61e38"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-22",
+      "document_title": "고틀로프 프레게",
+      "url": "https://namu.wiki/w/%EA%B3%A0%ED%8B%80%EB%A1%9C%ED%94%84%20%ED%94%84%EB%A0%88%EA%B2%8C"
+    }
+  },
+  "request_id": "authoring:user-math-top-six-20261122:gottlob-frege:1879-1903:v1",
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Mathematician",
+    "role_display_name_ko": "수학자",
+    "start_year": 1879,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1903,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Frege published Begriffsschrift in 1879 introducing modern quantificational logic and later developed foundational logic and philosophy of mathematics in Grundgesetze der Arithmetik (volumes 1893 and 1903) while teaching at Jena in the German Empire. This year-level interval covers his formative logic publications rather than all of his Jena appointment through retirement in 1917."
+  },
+  "sources": [
+    {
+      "title": "Stanford Encyclopedia of Philosophy: Gottlob Frege",
+      "canonical_url": "https://plato.stanford.edu/entries/frege/",
+      "citation_text": "Reliable reference for Frege's life (1848–1925), Jena academic activity, 1879 Begriffsschrift and 1893/1903 Grundgesetze.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Stanford Encyclopedia of Philosophy: Frege's Logic",
+      "canonical_url": "https://plato.stanford.edu/entries/frege-logic/",
+      "citation_text": "Reference account of Frege's modern quantificational logic innovations and their substantial impact on mathematical logic.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-math-top-six-20261122",
+    "user_selected_for_registration": true,
+    "historical_activity_scope": "Representative independently documented scholarship, not full lifetime; political community association is scholarly activity only.",
+    "namuwiki_index_evidence": "Indexed independent NamuWiki-derived Person document headed '고틀로프 프레게' at https://namu.moe/w/고틀로프%20프레게, identifying mathematician and philosopher Frege (1848–1925)."
+  }
+}
