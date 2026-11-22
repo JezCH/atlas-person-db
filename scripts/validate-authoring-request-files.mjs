@@ -185,6 +185,9 @@ function validateNativeBoundary(file, activity, prefix) {
   }
 
   if (!historicalYear(year)) fail(file, `${prefix} must be a non-zero integer historical year`);
+  if (!optionalMonth(month)) fail(file, `${prefix}_month must be null or 1..12`);
+  if (!optionalDay(day)) fail(file, `${prefix}_day must be null or 1..31`);
+  if (day != null && month == null) fail(file, `${prefix}_day requires ${prefix}_month`);
   if (!nonEmptyString(granularity)) fail(file, `${prefix}_granularity is required`);
   if (!nonEmptyString(certainty)) fail(file, `${prefix}_certainty is required`);
   if (!nonEmptyString(calendar)) fail(file, `${prefix}_calendar is required`);
