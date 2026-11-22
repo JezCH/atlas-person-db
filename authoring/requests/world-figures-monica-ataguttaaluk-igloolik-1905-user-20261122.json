@@ -78,5 +78,9 @@
     "polity_review": "Iglulingmiut is a documented indigenous community identity associated with Igloolik, distinguished from Inughuit of northwest Greenland and distinct from the Dominion of Canada as a territorial administration; relation is active_in only.",
     "domain_review": "Representative domain governance reflects oral-history documented non-sovereign community leadership and local food coordination; it does not imply state rule or a hereditary throne.",
     "namuwiki_index_evidence": "Bounded external-index searches for Ataguttaaluk, Monica Ataguttaaluk, Attagutaaluk, 아타구타알루크, 모니카 아타구타알루크 and likely Korean variants found no independent exact NamuWiki Person entry or relevant NamuWiki derivative. Korean-language cultural sources mention Ataguttaaluk School but are not NamuWiki. Reviewed not_found/no_exact_document."
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "The historically real Iglulingmiut (Igloolik Inuit) community is directly documented by the Qikiqtani Truth Commission Igloolik community history and Government of Canada Inuit oral testimony included in this request. However no reviewed first-class ATLAS Place UUID, PolityPlaceFunction, or precise spatial/display binding for this newly registered Indigenous community has been established in this request. Do not derive a polygon, point, coordinates, territorial state boundary or country sovereignty from the 1905 famine event. Hold spatial placement pending separate source-backed Place/disposition review. This is a terminal reviewed spatial registration disposition, not an unresolved Person historical identity or absence of the Igloolik community."
   }
 }
