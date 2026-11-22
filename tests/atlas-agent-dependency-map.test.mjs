@@ -60,3 +60,15 @@ test('does not treat object require/import methods as module dependencies',()=>{
   const source="loader.require('./fake.js');\nloader /*comment*/ . require('./fake2.js');\nservice?.import('./fake3.js');\nrequire('./real.cjs');\nconst lazy=import('./live.js');";
   assert.deepEqual(relativeSpecifiers(source).sort(),['./real.cjs','./live.js'].sort());
 });
+
+test('distinguishes literal call arguments from computed paths with literal prefixes',()=>{
+  const source=[
+    "import('./prefix.js' + extension);",
+    "require('./computed.cjs' /* marker */ + extension);",
+    "import('./dynamic.js'.replace('x','y'));",
+    "import('./literal.js' /* marker */);",
+    "import('./with-options.js', options);",
+    "require('./trailing.cjs',);",
+  ].join('\n');
+  assert.deepEqual(relativeSpecifiers(source).sort(),['./literal.js','./trailing.cjs','./with-options.js']);
+});
