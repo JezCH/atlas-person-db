@@ -178,14 +178,17 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          mapfile -d '' tests_to_run < <(find tests -maxdepth 1 -type f \( \
+          test_paths="$(mktemp)"
+          trap 'rm -f -- "$test_paths"' EXIT
+          find tests -maxdepth 1 -type f \( \
             -name '*ui*.test.mjs' -o \
             -name '*spacetime*.test.mjs' -o \
             -name '*browser*.test.mjs' -o \
             -name '*presentation*.test.mjs' -o \
             -name '*table*.test.mjs' -o \
             -name '*era*.test.mjs' \
-          \) -print0)
+          \) -print0 > "$test_paths"
+          mapfile -d '' -t tests_to_run < "$test_paths"
           if [[ "${#tests_to_run[@]}" -gt 0 ]]; then
             node --test "${tests_to_run[@]}"
           else
