@@ -1,0 +1,75 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-australia-two-20261122:lachlan-macquarie:nsw-governor-1810-1821:v1",
+  "person": {
+    "canonical_name_en": "Lachlan Macquarie",
+    "display_name_ko": "라클런 맥쿼리",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-22",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Colony of New South Wales",
+    "display_name_ko": "뉴사우스웨일스 식민지",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "454a0abe-8160-4ba0-b88b-b5e4674414e4"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-11-22",
+      "review_reason": "related_or_derivative_only"
+    }
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Governor of New South Wales",
+    "role_display_name_ko": "뉴사우스웨일스 식민지 총독",
+    "start_year": 1810,
+    "start_month": 1,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1821,
+    "end_month": 12,
+    "end_day": 1,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Lachlan Macquarie (1762–1824) assumed office as British Governor of the Colony of New South Wales on 1 January 1810 after the 1808 Rum Rebellion and handed the governorship to Thomas Brisbane on 1 December 1821. He oversaw a program of roads, civic buildings, social administration and changes to the treatment and integration of former convicts within settler society. His colonial record also includes military punitive expeditions that he directed against Aboriginal peoples: state primary archival material identifies his orders, and the Appin massacre occurred on 17 April 1816. These settler-state developments and harms to Indigenous communities must both be retained in historical interpretation; this Activity is the governor's actual office, not an independent 'Macquarie' polity."
+  },
+  "sources": [
+    {
+      "title": "Parliament of New South Wales — 1810 to 1821 Governor Lachlan Macquarie",
+      "canonical_url": "https://www.parliament.nsw.gov.au/about-parliament/heritage-history/history-democracy-nsw/1810-to-1821-governor-lachlan-macquarie",
+      "citation_text": "NSW Parliament's official historical overview documents Macquarie's 1810–1821 administration after the Rum Rebellion and his administrative, building and infrastructure programs.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Australian National University — Obituary of Lachlan Macquarie",
+      "canonical_url": "https://oa.anu.edu.au/obituary/macquarie-lachlan-2419",
+      "citation_text": "Contemporary obituary archived by ANU identifies Macquarie (1762–1824), the 1 January 1810 assumption of government and formal handover on 1 December 1821.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Museums of History NSW — Massacre at Appin 17 April 1816",
+      "canonical_url": "https://mhnsw.au/stories/first-nations/massacre-appin-17-april-1816/",
+      "citation_text": "NSW public historical institution identifies archival orders issued by Governor Macquarie for punitive expeditions and the 17 April 1816 Appin massacre.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "australia-two-historical-persons-20261122",
+    "user_selected_for_registration": true,
+    "namuwiki_index_evidence": "Indexed Korean NamuWiki-related articles including '맥쿼리 대학교' and '바운티호 선상반란 사건' mention variants 라클란 맥쿼리 or 래클런 매쿼리, but no independently indexed exact Person document for Lachlan Macquarie was established. Review as related_or_derivative_only, not a guessed profile link.",
+    "polity_review": "Exact preexisting Colony of New South Wales UUID reused. Macquarie's colonial governor's relation `governs` is distinct from the ceremonial state-governor service later held by Sir Douglas Nicholls; neither creates a new 'under leader' regime."
+  }
+}
