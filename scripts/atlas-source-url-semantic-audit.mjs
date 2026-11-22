@@ -75,6 +75,7 @@ export function auditSharedSourceUrls(snapshot) {
   }
   const activitySourceLinks = new Set();
   for (const [table, parentKey] of ROUTES) {
+    const nonActivityReferences = new Set();
     for (const row of raw[table]) {
       if (!byId.has(row?.source_id)) throw new Error('SOURCE_URL_AUDIT_DANGLING_SOURCE');
       if (typeof row[parentKey] !== 'string' || !row[parentKey]) {
@@ -96,6 +97,11 @@ export function auditSharedSourceUrls(snapshot) {
             referenceLocator(citation.source_locator_key) !== locator)) {
           throw new Error('SOURCE_URL_AUDIT_RUNTIME_LINK_PROVENANCE_MISMATCH');
         }
+      }
+      if (table !== 'activity_sources') {
+        const referenceKey = JSON.stringify([row[parentKey], row.source_id, locator]);
+        if (nonActivityReferences.has(referenceKey)) throw new Error('SOURCE_URL_AUDIT_DUPLICATE_REFERENCE');
+        nonActivityReferences.add(referenceKey);
       }
       references.get(row.source_id).push({
         table, parent_id: row[parentKey], source_locator_key: locator,
