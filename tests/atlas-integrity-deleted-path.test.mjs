@@ -18,7 +18,7 @@ test('Integrity classifies deleted runtime paths even when another file changes'
   git('add', '-A');
 
   const workflow = readFileSync(new URL('../.github/workflows/atlas-integrity.yml', import.meta.url), 'utf8');
-  const args = /git (diff [^"\n]+) "\$base_sha" "\$head_sha" -- > \/tmp\/atlas-changed\.txt/.exec(workflow)?.[1].trim().split(' ');
+  const args = /git ((?:-c core\.quotepath=false )?diff [^"\n]+) "\$base_sha" "\$head_sha" -- > \/tmp\/atlas-changed\.txt/.exec(workflow)?.[1].trim().split(' ');
   assert.ok(args, 'locate the classifier diff command');
   const paths = git(...args, '--cached', 'HEAD', '--').trim().split('\n');
   assert.deepEqual(paths, ['archive.md', 'runtime.js']);
