@@ -224,3 +224,17 @@ test('rejects malformed locators rather than coercing evidence to strings', () =
   offline.raw.designation_sources[0].source_locator_key = { section: 5 };
   assert.throws(() => auditSharedSourceUrls(offline), /SOURCE_URL_AUDIT_INVALID_REFERENCE_LOCATOR/);
 });
+
+
+test('shared URL with distinct documented identifiers is a bibliographic review priority', () => {
+  const data = fixture();
+  data.raw.activity_sources[1].activity_id = 'separate-activity';
+  data.raw.sources[0].external_identifier = 'ID-1';
+  const history = auditSharedSourceUrls(data).cases.find(c => c.canonical_url === 'https://example.org/history');
+  assert.equal(history.review_priority, 'BIBLIOGRAPHIC_METADATA_VARIATION');
+  assert.equal(history.safe_to_merge, false);
+
+  data.raw.sources[0].external_identifier = null;
+  const incomplete = auditSharedSourceUrls(data).cases.find(c => c.canonical_url === 'https://example.org/history');
+  assert.equal(incomplete.review_priority, 'ACTIVITY_SCOPED_REUSE');
+});
