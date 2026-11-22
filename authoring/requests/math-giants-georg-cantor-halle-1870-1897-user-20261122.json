@@ -1,0 +1,65 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Georg Cantor",
+    "display_name_ko": "게오르크 칸토어",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-22",
+    "life_status_basis": "documented_death",
+    "representative_domain": "science",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "German Empire",
+    "display_name_ko": "독일 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "4203b03f-524f-5466-b718-37b72ae61e38"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-22",
+      "document_title": "게오르크 칸토어",
+      "url": "https://namu.wiki/w/%EA%B2%8C%EC%98%A4%EB%A5%B4%ED%81%AC%20%EC%B9%B8%ED%86%A0%EC%96%B4"
+    }
+  },
+  "request_id": "authoring:user-math-giants-20261122:georg-cantor:halle:1870-1897:v1",
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Mathematician",
+    "role_display_name_ko": "수학자",
+    "start_year": 1870,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1897,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "At Halle, Cantor solved a uniqueness problem on trigonometric series in 1870, developed set theory and infinite cardinality in the 1870s and 1880s, and continued major set-theoretic publications during the 1890s. The 1897 end is a representative major-contribution boundary, not a claim of retirement or lifetime endpoint."
+  },
+  "sources": [
+    {
+      "title": "MacTutor / Stanford Encyclopedia of Philosophy — Georg Cantor biographical record",
+      "canonical_url": "https://mathshistory.st-andrews.ac.uk/Biographies/Cantor/",
+      "citation_text": "Authoritative historical biography corroborates Georg Cantor's documented lifespan (1845-03-03–1918-01-06) and primary mathematics career associated with the stated polity and interval; see activity notes for scope.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-eight-math-giants-20261122",
+    "user_selected_for_registration": true,
+    "person_registration_value": "Historical top-tier mathematics comparand to Euler, Gauss, Newton, Riemann",
+    "historical_activity_scope": "A researched representative segment, not a claim of full lifetime activity coverage",
+    "namuwiki_index_evidence": "Externally indexed independent NamuWiki-derived Person document headed '게오르크 칸토어' identifies Georg Cantor; reviewed on 2026-11-22 via namu.moe/dark.namu.moe indexed mirror. Canonical target title '게오르크 칸토어'."
+  }
+}

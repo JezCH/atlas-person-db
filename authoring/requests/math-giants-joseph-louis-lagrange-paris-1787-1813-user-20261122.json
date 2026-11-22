@@ -1,0 +1,65 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Joseph-Louis Lagrange",
+    "display_name_ko": "조제프루이 라그랑주",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-22",
+    "life_status_basis": "documented_death",
+    "representative_domain": "science",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "France",
+    "display_name_ko": "프랑스",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-22",
+      "document_title": "조제프루이 라그랑주",
+      "url": "https://namu.wiki/w/%EC%A1%B0%EC%A0%9C%ED%94%84%EB%A3%A8%EC%9D%B4%20%EB%9D%BC%EA%B7%B8%EB%9E%91%EC%A3%BC"
+    }
+  },
+  "request_id": "authoring:user-math-giants-20261122:joseph-louis-lagrange:paris:1787-1813:v1",
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Mathematician",
+    "role_display_name_ko": "수학자",
+    "start_year": 1787,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1813,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After moving to Paris in 1787 Lagrange continued his analytical and mathematical-physics scholarship, including the publication of Mécanique analytique (1788). The established broad France polity is used across subsequent French regime transitions without implying sovereign office."
+  },
+  "sources": [
+    {
+      "title": "MacTutor / Stanford Encyclopedia of Philosophy — Joseph-Louis Lagrange biographical record",
+      "canonical_url": "https://mathshistory.st-andrews.ac.uk/Biographies/Lagrange/",
+      "citation_text": "Authoritative historical biography corroborates Joseph-Louis Lagrange's documented lifespan (1736-01-25–1813-04-10) and primary mathematics career associated with the stated polity and interval; see activity notes for scope.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-eight-math-giants-20261122",
+    "user_selected_for_registration": true,
+    "person_registration_value": "Historical top-tier mathematics comparand to Euler, Gauss, Newton, Riemann",
+    "historical_activity_scope": "A researched representative segment, not a claim of full lifetime activity coverage",
+    "namuwiki_index_evidence": "Externally indexed independent NamuWiki-derived Person document headed '조제프루이 라그랑주' identifies Joseph-Louis Lagrange; reviewed on 2026-11-22 via namu.moe/dark.namu.moe indexed mirror. Canonical target title '조제프루이 라그랑주'."
+  }
+}

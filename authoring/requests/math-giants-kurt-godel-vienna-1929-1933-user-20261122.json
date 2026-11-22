@@ -1,0 +1,65 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Kurt Gödel",
+    "display_name_ko": "쿠르트 괴델",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-22",
+    "life_status_basis": "documented_death",
+    "representative_domain": "science",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Austria",
+    "display_name_ko": "오스트리아",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "ebee3963-6246-4b8e-9730-574001ec247d"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-22",
+      "document_title": "쿠르트 괴델",
+      "url": "https://namu.wiki/w/%EC%BF%A0%EB%A5%B4%ED%8A%B8%20%EA%B4%B4%EB%8D%B8"
+    }
+  },
+  "request_id": "authoring:user-math-giants-20261122:kurt-godel:vienna:1929-1933:v1",
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Mathematical logician",
+    "role_display_name_ko": "수리논리학자",
+    "start_year": 1929,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1933,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Gödel completed his 1929 Vienna doctorate on logical completeness, published the 1931 incompleteness theorems, received his Habilitation in 1932, and became Privatdozent in Vienna in 1933. The Austria affiliation is scholarly residence, not political rule."
+  },
+  "sources": [
+    {
+      "title": "MacTutor / Stanford Encyclopedia of Philosophy — Kurt Gödel biographical record",
+      "canonical_url": "https://plato.stanford.edu/entries/goedel/",
+      "citation_text": "Authoritative historical biography corroborates Kurt Gödel's documented lifespan (1906-04-28–1978-01-14) and primary mathematics career associated with the stated polity and interval; see activity notes for scope.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-eight-math-giants-20261122",
+    "user_selected_for_registration": true,
+    "person_registration_value": "Historical top-tier mathematics comparand to Euler, Gauss, Newton, Riemann",
+    "historical_activity_scope": "A researched representative segment, not a claim of full lifetime activity coverage",
+    "namuwiki_index_evidence": "Externally indexed independent NamuWiki-derived Person document headed '쿠르트 괴델' identifies Kurt Gödel; reviewed on 2026-11-22 via namu.moe/dark.namu.moe indexed mirror. Canonical target title '쿠르트 괴델'."
+  }
+}
