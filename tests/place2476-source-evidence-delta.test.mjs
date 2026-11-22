@@ -7,7 +7,11 @@ const handoff = JSON.parse(readFileSync(new URL('../docs/places/PLACE2476_SOURCE
 test('Place evidence delta retains the original immutable fact and Source identities', () => {
   assert.equal(handoff.schema, 'atlas-place-source-evidence-delta/v1');
   assert.equal(handoff.original_review.pr, 2617);
-  assert.match(handoff.original_review.head_sha, /^[a-f0-9]{40}$/);
+  const reviewedHead = 'ba6ad96783a51a2b712756951b7464e2c11d7d69';
+  const reviewedPath = `https://github.com/JezCH/atlas-person-db/blob/${reviewedHead}/docs/handoffs/20261026-work-to-codex/checkpoint/place2476`;
+  assert.equal(handoff.original_review.head_sha, reviewedHead);
+  assert.equal(handoff.original_review.source_review_url, `${reviewedPath}/source-review.json`);
+  assert.equal(handoff.original_review.fact_handoff_url, `${reviewedPath}/fact-evidence-handoff.json`);
   const expected = new Map([
     [18, { sourceId: '9ed98162-dc7d-5a2f-89da-db4aac4694ae', startYear: 656, endYear: 661 }],
     [4, { sourceId: 'c3af4db8-6c27-51da-af04-5f562cbd5cc2', startYear: 1923, endYear: null }],
