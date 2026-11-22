@@ -277,3 +277,18 @@ test('COMPLETE is derived only after every unresolved cell is resolved with clos
   assert.match(output, /UNRESOLVED 0\nSTATUS COMPLETE\n/);
   assert.equal(validatePersonFactCountOutput(output).ok, true);
 });
+
+
+test('factual state cells reject array coercion and sparse positions', () => {
+  const coercible = baseProfile();
+  coercible.E[0] = ['1'];
+  assert.throws(() => derivePersonFactCounts(coercible), /E1 must be 1, 0, or \?/);
+
+  const sparse = baseProfile();
+  delete sparse.E[0];
+  assert.throws(() => derivePersonFactCounts(sparse), /E1 must be 1, 0, or \?/);
+
+  const numeric = baseProfile();
+  numeric.E[0] = 1;
+  assert.equal(derivePersonFactCounts(numeric).verifiedCount, 22);
+});
