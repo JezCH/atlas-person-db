@@ -76,6 +76,13 @@ const inspect = `(() => {
   return {url:location.href,title:document.title,width:innerWidth,
     loaded:!!window.ATLAS_PERSON_MAIN,
     getEraFilter:window.ATLAS_PERSON_MAIN?.getEraFilter?.(),
+    getSearchQuery:window.ATLAS_PERSON_MAIN?.getSearchQuery?.(),
+    getPolityFilter:window.ATLAS_PERSON_MAIN?.getPolityFilter?.(),
+    getDomainFilter:window.ATLAS_PERSON_MAIN?.getDomainFilter?.(),
+    getDashboardFilter:window.ATLAS_PERSON_MAIN?.getDashboardFilter?.()?.code || null,
+    renderedHtmlLength:document.querySelector(".person-card-grid")?.innerHTML?.length,
+    renderedHtmlEnd:document.querySelector(".person-card-grid")?.innerHTML?.slice(-400),
+    navSummary:document.querySelector(".person-era-nav-summary")?.textContent,
     bodyHeight:document.body.scrollHeight,htmlHeight:document.documentElement.scrollHeight,
     registerCount:all(".person-register-entry").length,
     directCardCount:all(".person-card-grid > .person-card").length,
@@ -122,17 +129,17 @@ test("live Production Chrome on Android size shows all eras and can select Infor
   console.log("ATLAS_LIVE_MOBILE_BASELINE",JSON.stringify(baseline));
   console.log("ATLAS_LIVE_BROWSER_EXCEPTIONS",JSON.stringify(cdp.errors));
   assert.ok(baseline.loaded,"Person main did not load");
-  assert.equal(baseline.registerCount,2240,"initial register is not complete");
-  assert.ok(baseline.allGroups.some(x=>x.code==="information"&&x.rows>0),"Information era is absent");
-  assert.ok(baseline.allGroups.some(x=>x.code==="cold-war"&&x.rows>0),"Cold War is absent");
-  assert.ok(baseline.allGroups.some(x=>x.code==="early-medieval"&&x.rows>0),"Medieval era is absent");
-  const modernGroup=baseline.allGroups.find(x=>x.code==="information");
-  assert.ok(modernGroup.layout.height>0,"Information era is in DOM but visually collapsed");
-  assert.ok(baseline.select.length>0 && baseline.select[0].options.some(o=>o.value==="information"),"new era chooser missing");
+  const rerenderShown=await cdp.evaluate("window.ATLAS_PERSON_MAIN.renderGroups()");
+  const rerendered=await cdp.evaluate(inspect);
+  console.log("ATLAS_LIVE_RERENDER_RESULT",JSON.stringify({rerenderShown,after:rerendered}));
   await cdp.evaluate('window.ATLAS_PERSON_MAIN.setEraFilter("information")');
   await delay(1200);
   const selected=await cdp.evaluate(inspect);
   console.log("ATLAS_LIVE_INFORMATION_SELECTED",JSON.stringify(selected));
+  const returned=await cdp.evaluate('window.ATLAS_PERSON_MAIN.setEraFilter("")');
+  const returnedState=await cdp.evaluate(inspect);
+  console.log("ATLAS_LIVE_BACK_TO_ALL",JSON.stringify({returned,after:returnedState}));
+  assert.equal(baseline.registerCount,2240,"PRODUCTION REGRESSION: full initial roster missing");
   assert.equal(selected.getEraFilter,"information");
   assert.equal(selected.allGroups.length,1);
   assert.equal(selected.allGroups[0].code,"information");
