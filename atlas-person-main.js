@@ -266,10 +266,15 @@
     const estimatedHeight = Math.min(180, 56 + Math.min(count, 4) * 25);
     const domain = String(personDomainsById?.[person?.id] || "").trim();
     const domainAttribute = domain ? ` data-representative-domain="${escapeHtml(domain)}"` : "";
+    // A lightweight row must retain the first activity's polity sort key.
+    // Otherwise the chronological view is correct but Polity sort is not.
+    const primaryPolity = person?.activity_summaries?.[0]?.polity;
+    const primaryPolityName = primaryPolity?.display_name || primaryPolity?.canonical_name_en || "";
+    const polityAttribute = primaryPolityName ? ` data-person-primary-polity="${escapeHtml(primaryPolityName)}"` : "";
     const selectedClass = selectedPersonId === person.id ? " is-selected" : "";
     return `<button class="person-card person-register-entry person-table-deferred${selectedClass}" type="button"
       data-person-id="${escapeHtml(person.id)}" data-person-deferred="true"
-      data-person-range="${range}"${domainAttribute} style="min-height:${estimatedHeight}px"
+      data-person-range="${range}"${domainAttribute}${polityAttribute} style="min-height:${estimatedHeight}px"
       aria-label="${name} · ${range} · 활동 ${count}건">
       <strong class="person-table-deferred-name">${name}</strong>
       <span class="person-table-deferred-range">${range}</span>
