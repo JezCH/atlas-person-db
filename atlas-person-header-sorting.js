@@ -83,12 +83,12 @@
   }
 
   function rowPrimaryPolity(row) {
-    return String(row?.querySelector?.(".person-table-activities .person-card-activity:first-child .person-card-activity-head b")?.textContent || "").trim();
+    return String(row?.querySelector?.(".person-table-activities .person-card-activity:first-child .person-card-activity-head b")?.textContent || row?.dataset?.personPrimaryPolity || "").trim();
   }
 
   function chronologyYearsFromRow(row) {
     const element = row?.querySelector?.(".person-table-range");
-    const raw = String(element?.dataset?.chronologyRaw || element?.textContent || "").trim();
+    const raw = String(row?.dataset?.personRange || element?.dataset?.chronologyRaw || element?.textContent || "").trim();
     if (!raw || /^주요 활동연도 미상/i.test(raw) || /^시작 미상/i.test(raw)) return { start: null, end: null };
     const matches = [...raw.toUpperCase().matchAll(/\b(BC|AD)\s*(\d+)\b/g)];
     const value = (match) => {
@@ -139,7 +139,11 @@
   }
 
   function allRows(grid) {
-    return [...grid.querySelectorAll(".person-era-group .person-card.person-table-row")];
+    // Deferred Person rows remain real members of the chronological register.
+    // Do not filter for .person-table-row: only expanded rows have that class.
+    // Removing era groups after collecting expanded rows alone deleted every
+    // deferred Person from the browser even though the full API returned them.
+    return [...grid.querySelectorAll(".person-era-group .person-era-rows > .person-card")];
   }
 
   function eraBandTemplates(grid) {
