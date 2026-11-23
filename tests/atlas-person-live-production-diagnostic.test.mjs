@@ -151,20 +151,34 @@ test("live Production Chrome on Android size shows all eras and can select Infor
   console.log("ATLAS_LIVE_MOBILE_BASELINE",JSON.stringify(baseline));
   console.log("ATLAS_LIVE_BROWSER_EXCEPTIONS",JSON.stringify(cdp.errors));
   assert.ok(baseline.loaded,"Person main did not load");
-  const rerenderShown=await cdp.evaluate("window.ATLAS_PERSON_MAIN.renderGroups()");
-  const rerendered=await cdp.evaluate(inspect);
-  console.log("ATLAS_LIVE_RERENDER_RESULT",JSON.stringify({rerenderShown,after:rerendered}));
-  await cdp.evaluate('window.ATLAS_PERSON_MAIN.setEraFilter("information")');
-  await delay(1200);
-  const selected=await cdp.evaluate(inspect);
-  console.log("ATLAS_LIVE_INFORMATION_SELECTED",JSON.stringify(selected));
-  const returned=await cdp.evaluate('window.ATLAS_PERSON_MAIN.setEraFilter("")');
-  const returnedState=await cdp.evaluate(inspect);
-  console.log("ATLAS_LIVE_BACK_TO_ALL",JSON.stringify({returned,after:returnedState}));
-  assert.equal(baseline.registerCount,2240,"PRODUCTION REGRESSION: full initial roster missing");
-  assert.equal(selected.getEraFilter,"information");
-  assert.equal(selected.allGroups.length,1);
-  assert.equal(selected.allGroups[0].code,"information");
-  assert.ok(selected.registerCount>0);
-  assert.ok(selected.allGroups[0].layout.height>0);
+  assert.equal(baseline.registerCount,2240,"all 2240 Persons must remain visible in real Production Chrome");
+  assert.equal(baseline.allGroups.length,11,"the complete 11-era historical register must survive sorting");
+  assert.ok(baseline.deferredCount>2100,"deferred Persons must remain in DOM, not be removed by header sorting");
+  assert.equal(baseline.select.length,0,"original horizontal era navigation must be restored; no top period dropdown");
+  for(const code of [
+    "early-civilization","ancient","classical","early-medieval","late-medieval",
+    "early-modern","industrial-imperial","world-wars","cold-war","information","unknown"
+  ]) {
+    const group=baseline.allGroups.find(row=>row.code===code);
+    assert.ok(group&&group.rows>0&&group.layout.height>0,`missing or invisible era: ${code}`);
+  }
+  const liveTabs=await cdp.evaluate('[...document.querySelectorAll(".person-era-jump")].map(x=>x.dataset.era)');
+  console.log("ATLAS_LIVE_RESTORED_HORIZONTAL_ERA_TABS",JSON.stringify(liveTabs));
+  assert.equal(liveTabs.length,11,"horizontal era track must show every era");
+  const after=await cdp.evaluate('window.ATLAS_PERSON_HEADER_SORTING.setSortOrder("person-asc")');
+  await delay(900);
+  const personSorted=await cdp.evaluate(inspect);
+  console.log("ATLAS_LIVE_PERSON_NAME_SORT",JSON.stringify({
+    sort:after,count:personSorted.registerCount,eras:personSorted.allGroups.length
+  }));
+  assert.equal(personSorted.registerCount,2240,"clicking Person name sort must preserve full roster");
+  const back=await cdp.evaluate('window.ATLAS_PERSON_HEADER_SORTING.setSortOrder("start-asc")');
+  await delay(900);
+  const chronology=await cdp.evaluate(inspect);
+  console.log("ATLAS_LIVE_CHRONOLOGY_RESTORE",JSON.stringify({
+    sort:back,count:chronology.registerCount,eras:chronology.allGroups.map(x=>x.code)
+  }));
+  assert.equal(chronology.registerCount,2240);
+  assert.ok(chronology.allGroups.some(x=>x.code==="information"));
+  assert.equal(cdp.errors.length,0,"Production Chrome must not report uncaught exceptions");
 });
