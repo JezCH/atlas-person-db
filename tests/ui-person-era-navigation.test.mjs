@@ -24,7 +24,7 @@ test('era navigation owns Person search, persistent Polity/Relation filters, dom
   assert.match(navSource, /person-era-search/);
   assert.match(navSource, /search\.id = "personMainSearch"/);
   assert.match(navSource, /intro\.append\(title, status, summary\)/);
-  assert.match(navSource, /controls\.append\(search, select, relation\)/);
+  assert.match(navSource, /controls\.append\(eraSelect, search, select, relation\)/);
   assert.match(navSource, /atlas-person-search-change/);
   assert.match(navSource, /person-era-polity-filter/);
   assert.match(navSource, /모든 정치체/);
