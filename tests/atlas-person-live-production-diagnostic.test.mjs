@@ -80,6 +80,7 @@ const inspect = `(() => {
     getPolityFilter:window.ATLAS_PERSON_MAIN?.getPolityFilter?.(),
     getDomainFilter:window.ATLAS_PERSON_MAIN?.getDomainFilter?.(),
     getDashboardFilter:window.ATLAS_PERSON_MAIN?.getDashboardFilter?.()?.code || null,
+    insertionTrace:window.__atlasInsert || [],
     renderedHtmlLength:document.querySelector(".person-card-grid")?.innerHTML?.length,
     renderedHtmlEnd:document.querySelector(".person-card-grid")?.innerHTML?.slice(-400),
     navSummary:document.querySelector(".person-era-nav-summary")?.textContent,
@@ -114,6 +115,25 @@ test("live Production Chrome on Android size shows all eras and can select Infor
   await cdp.connect();
   await cdp.call("Runtime.enable");
   await cdp.call("Page.enable");
+  await cdp.call("Page.addScriptToEvaluateOnNewDocument", {source:`(() => {
+    window.__atlasInsert = [];
+    const insert = Element.prototype.insertAdjacentHTML;
+    Element.prototype.insertAdjacentHTML = function(position, html) {
+      const source = String(html);
+      const isRoster = source.includes('class="person-group person-group-historical"');
+      const deferredMarkup = isRoster ? (source.match(/data-person-deferred="true"/g)||[]).length : 0;
+      const result = insert.call(this, position, html);
+      if (isRoster) {
+        window.__atlasInsert.push({
+          htmlLength:source.length, deferredMarkup, completeMarkupCount:(source.match(/class="person-card[^"]*"/g)||[]).length,
+          parsedCardCount:document.querySelectorAll(".person-register-entry").length,
+          parsedDeferredCount:document.querySelectorAll('[data-person-deferred="true"]').length,
+          parentId:this.id, parentChildren:this.children.length
+        });
+      }
+      return result;
+    };
+  })();`});
   await cdp.call("Emulation.setDeviceMetricsOverride",{width:390,height:844,deviceScaleFactor:1,mobile:true});
   await cdp.call("Emulation.setTouchEmulationEnabled",{enabled:true});
   await cdp.call("Page.navigate",{url:origin+"/#atlas-persons"});
