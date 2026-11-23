@@ -8,6 +8,8 @@
   const POLITY_EVENT = "atlas-person-polity-filter-change";
   const RELATION_EVENT = "atlas-person-relation-filter-change";
   const DOMAIN_EVENT = "atlas-person-domain-filter-change";
+  const ERA_FILTER_EVENT = "atlas-person-era-filter-change";
+  const eraModel = window.ATLAS_PERSON_ERA_MODEL;
   const domainRegistry = window.ATLAS_PERSON_DOMAIN_REGISTRY;
   const state = {
     nav: null,
@@ -26,6 +28,8 @@
     relationOptions: [],
     selectedDomain: "",
     domainCounts: {},
+    selectedEraCode: "",
+    eraCounts: {},
     resizeObserver: null
   };
 
@@ -120,6 +124,10 @@
 
     const controls = document.createElement("div");
     controls.className = "person-era-nav-controls";
+    const eraSelect = document.createElement("select");
+    eraSelect.className = "person-era-period-filter";
+    eraSelect.dataset.eraPeriodFilter = "true";
+    eraSelect.setAttribute("aria-label", "전체 역사 시대 선택");
     const search = document.createElement("input");
     search.id = "personMainSearch";
     search.type = "search";
@@ -144,7 +152,7 @@
     allRelations.value = "";
     allRelations.textContent = "모든 관계";
     relation.append(allRelations);
-    controls.append(search, select, relation);
+    controls.append(eraSelect, search, select, relation);
     top.append(intro, controls);
 
     const track = document.createElement("div");
@@ -235,6 +243,8 @@
     if (Array.isArray(detail.relationOptions)) state.relationOptions = normalizePolityOptions(detail.relationOptions);
     state.selectedDomain = String(detail.selectedDomain || "").trim();
     if (detail.domainCounts && typeof detail.domainCounts === "object") state.domainCounts = { ...detail.domainCounts };
+    if (Object.prototype.hasOwnProperty.call(detail, "selectedEraCode")) state.selectedEraCode = String(detail.selectedEraCode || "");
+    if (detail.eraCounts && typeof detail.eraCounts === "object") state.eraCounts = { ...detail.eraCounts };
   }
 
   function renderDomainControls(nav) {
@@ -259,6 +269,23 @@
   }
 
   function renderPolityControls(nav) {
+    const eraSelect = nav.querySelector(".person-era-period-filter");
+    if (eraSelect) {
+      const eraOptions = [
+        { code:"", label:"전체 시대" },
+        ...(eraModel?.ERAS || []),
+        ...(eraModel?.UNKNOWN_ERA ? [eraModel.UNKNOWN_ERA] : [])
+      ];
+      eraSelect.replaceChildren();
+      for (const era of eraOptions) {
+        const option = document.createElement("option");
+        option.value = era.code;
+        const count = Number(state.eraCounts?.[era.code || "all"] || 0);
+        option.textContent = `${era.label} · ${count.toLocaleString("ko-KR")}명`;
+        eraSelect.append(option);
+      }
+      eraSelect.value = state.selectedEraCode;
+    }
     const search = nav.querySelector(".person-era-search");
     const select = nav.querySelector(".person-era-polity-filter");
     const relation = nav.querySelector(".person-era-relation-filter");
@@ -417,6 +444,11 @@
   }
 
   function onNavigatorChange(event) {
+    const eraSelect = event.target?.closest?.("select[data-era-period-filter]");
+    if (eraSelect) {
+      window.dispatchEvent(new CustomEvent(ERA_FILTER_EVENT, { detail: { eraCode:String(eraSelect.value || "") } }));
+      return;
+    }
     const select = event.target?.closest?.("select[data-era-polity-filter]");
     if (select) {
       window.dispatchEvent(new CustomEvent(POLITY_EVENT, { detail: { polityId: String(select.value || "") } }));
