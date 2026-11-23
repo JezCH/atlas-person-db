@@ -128,6 +128,8 @@ test("live Production Chrome on Android size shows all eras and can select Infor
           htmlLength:source.length, deferredMarkup, completeMarkupCount:(source.match(/class="person-card[^"]*"/g)||[]).length,
           parsedCardCount:document.querySelectorAll(".person-register-entry").length,
           parsedDeferredCount:document.querySelectorAll('[data-person-deferred="true"]').length,
+          directRows:[...document.querySelectorAll(".person-card-grid")].map(g=>({children:g.children.length,direct:g.querySelectorAll(":scope > .person-card").length})),
+          deferredParents:(()=>{const first=document.querySelector('[data-person-deferred="true"]');let chain=[];for(let p=first,i=0;p&&i<8;p=p.parentElement,i++)chain.push(p.tagName+"."+p.className);return chain;})(),
           parentId:this.id, parentChildren:this.children.length
         });
       }
