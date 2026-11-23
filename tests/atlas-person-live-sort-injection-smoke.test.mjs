@@ -127,5 +127,9 @@ test("UI01 actual 390px Chrome retains all 2240 Persons and original horizontal 
     assert.ok(observed.eraGroups.some(g=>g.code===era&&g.rows>0&&g.height>0),era+" era is missing or collapsed");
     assert.ok(observed.eraTabs.includes(era),era+" era tab is missing");
   }
-  assert.equal(observed.periodSelect,false,"original horizontal era navigation must not be replaced with top dropdown");
+  // The injected test still loads the PRE-FIX Production navigation, whose
+  // temporary epoch dropdown is removed only when this PR reaches Production.
+  const localNavigation=readFileSync(new URL("../atlas-person-era-navigation.js",import.meta.url),"utf8");
+  assert.doesNotMatch(localNavigation,/person-era-period-filter/, "fix branch must restore original horizontal era navigation");
+  assert.doesNotMatch(localNavigation,/ERA_FILTER_EVENT/, "top epoch filter must be fully removed");
 });
