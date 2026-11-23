@@ -1,6 +1,6 @@
 {
   "schema": "atlas-polity-spatial-index/v2",
-  "generated_at": "2026-09-30T15:12:00.000Z",
+  "generated_at": "2026-11-23T05:14:20.560Z",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
@@ -1221,7 +1221,14 @@
     "d6a72e99-f1f2-42c0-bba3-b8d3207a5f35": "europe",
     "2d3c9101-f215-4eb7-b1d0-1a110d63f8a9": "europe",
     "47b5f0d3-992a-4e25-a1df-1dd8140cbcef": "west-asia",
-    "59ca6fbe-507c-4d97-8edc-a8fbb9d236c4": "africa"
+    "59ca6fbe-507c-4d97-8edc-a8fbb9d236c4": "africa",
+    "02c0a6e8-a3f6-4522-94e8-602890e6b5d3": "americas",
+    "11d10872-353c-46da-8f1d-dde229937355": "south-asia",
+    "2ab00854-f6fa-458b-8482-e9d1379036ba": "east-asia",
+    "444e2e50-9736-4bdb-a62f-cb4c2243d00f": "central-asia",
+    "5b721fcc-c736-48bf-97bc-23f5608dcebe": "europe",
+    "9dd3cc18-bc25-48b5-bf82-54d6df7f28d8": "oceania",
+    "ba97250b-84be-41d8-a5d9-3890e83996a8": "europe"
   },
   "place_function_records": [
     {
@@ -2854,6 +2861,13 @@
     "2d3c9101-f215-4eb7-b1d0-1a110d63f8a9": "iberia",
     "47b5f0d3-992a-4e25-a1df-1dd8140cbcef": "mesopotamia",
     "59ca6fbe-507c-4d97-8edc-a8fbb9d236c4": "maghreb-north-africa",
+    "02c0a6e8-a3f6-4522-94e8-602890e6b5d3": "north-america",
+    "11d10872-353c-46da-8f1d-dde229937355": "deccan-south-india",
+    "2ab00854-f6fa-458b-8482-e9d1379036ba": "china",
+    "444e2e50-9736-4bdb-a62f-cb4c2243d00f": "western-siberia",
+    "5b721fcc-c736-48bf-97bc-23f5608dcebe": "italy",
+    "9dd3cc18-bc25-48b5-bf82-54d6df7f28d8": "australasia",
+    "ba97250b-84be-41d8-a5d9-3890e83996a8": "italy",
     "00ec4b0c-6002-5791-825c-43465632102d": "north-india-ganges",
     "4c3e50cb-d76c-4b7c-b611-222849404142": "eastern-central-asia-steppe",
     "5247c9c0-ca50-452b-9e5a-d7e5585f096d": "western-europe",
