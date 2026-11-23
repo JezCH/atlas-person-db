@@ -1,0 +1,71 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261123:carranza:first-chief-executive:1914-08-20:1917-04-30:v1",
+  "person": {
+    "canonical_name_en": "Venustiano Carranza",
+    "display_name_ko": "베누스티아노 카란사",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-23",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Mexico",
+    "display_name_ko": "멕시코",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "678683e3-4a02-46be-9095-d639147b0fc8"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-23",
+      "document_title": "베누스티아노 카란사",
+      "url": "https://namu.wiki/w/%EB%B2%A0%EB%88%84%EC%8A%A4%ED%8B%B0%EC%95%84%EB%85%B8%20%EC%B9%B4%EB%9E%80%EC%82%AC"
+    }
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "First Chief in Charge of Executive Power",
+    "role_code": "first_chief_in_charge_of_executive_power",
+    "role_display_name_ko": "헌정주의군 제1수반·행정권 행사",
+    "start_year": 1914,
+    "start_month": 8,
+    "start_day": 20,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1917,
+    "end_month": 4,
+    "end_day": 30,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After the Constitutionalist Army defeated Huerta, Carranza entered Mexico City on 20 August 1914 as Primer Jefe encargado del Poder Ejecutivo rather than as constitutional president. His de facto executive authority was contested by rival revolutionary governments and factions; `governs` marks his exercised Constitutionalist executive office, not undisputed rule over every part of Mexico. The 30 April 1917 boundary is the day before his documented constitutional presidency began; it is an approximate periodization of the transition, not an independently attested executive resignation. Uses existing Mexico polity."
+  },
+  "sources": [
+    {
+      "title": "Secretaría de Gobernación — Conoce más acerca de Venustiano Carranza",
+      "canonical_url": "https://www.gob.mx/segob/articulos/conoce-mas-acerca-de-venustiano-carranza?idiom=es",
+      "citation_text": "The Mexican Interior Ministry identifies Carranza as First Chief in charge of executive authority, entering Mexico City on 20 August 1914, and his assassination on 21 May 1920.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "UNAM Museo de las Constituciones — Tema 3 Constitución de 1917",
+      "canonical_url": "https://museodelasconstituciones.unam.mx/tema-constitucion/",
+      "citation_text": "UNAM describes Carranza's 1913 anti-Huerta Plan of Guadalupe, Constitutionalist victory in 1914, the subsequent organization of government, and his inauguration as president on 1 May 1917.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-gajapati-carranza-20261123",
+    "user_selected_for_registration": true,
+    "polity_review": "Reuse existing Mexico UUID 678683e3-4a02-46be-9095-d639147b0fc8; no separate Mexico-under-Carranza sovereign identity.",
+    "namuwiki_index_evidence": "Indexed NamuWiki-derived exact Person page titled 베누스티아노 카란사 (namu.moe and d.namu.moe), matching José Venustiano Carranza de la Garza (1859–1920) and 1917 constitutional presidency. Canonical URL linked."
+  }
+}

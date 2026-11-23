@@ -1,0 +1,75 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261123:carranza:president:1917-05-01:1920-05-21:v1",
+  "person": {
+    "canonical_name_en": "Venustiano Carranza",
+    "display_name_ko": "베누스티아노 카란사",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-23",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Mexico",
+    "display_name_ko": "멕시코",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "678683e3-4a02-46be-9095-d639147b0fc8"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-23",
+      "document_title": "베누스티아노 카란사",
+      "url": "https://namu.wiki/w/%EB%B2%A0%EB%88%84%EC%8A%A4%ED%8B%B0%EC%95%84%EB%85%B8%20%EC%B9%B4%EB%9E%80%EC%82%AC"
+    }
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1917,
+    "start_month": 5,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1920,
+    "end_month": 5,
+    "end_day": 21,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Venustiano Carranza Garza entered constitutional presidential office on 1 May 1917 after Mexico's 1917 Constitution and remained incumbent until assassinated at Tlaxcalantongo on 21 May 1920. This is distinct from his preceding 1914–1917 Constitutionalist First Chief/executive authority activity. It refers to existing Mexico, not a separate sovereign Carranza polity."
+  },
+  "sources": [
+    {
+      "title": "Museo Casa de Carranza (INAH) — Venustiano Carranza",
+      "canonical_url": "https://museocasacarranza.inah.gob.mx/public/carranza.php",
+      "citation_text": "Mexico's National Institute of Anthropology and History identifies Carranza's constitutional presidency in 1917–1920 and records his assassination on 21 May 1920.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Secretaría de Gobernación — Conoce más acerca de Venustiano Carranza",
+      "canonical_url": "https://www.gob.mx/segob/articulos/conoce-mas-acerca-de-venustiano-carranza?idiom=es",
+      "citation_text": "The Mexican Government biographical article records his leadership of the constitutionalist movement, constitutional executive authority, and the date of his death, 21 May 1920.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Archivo General de la Nación — AGN recuerda a Venustiano Carranza",
+      "canonical_url": "https://www.gob.mx/agn/articulos/agnrecuerda-a-venustiano-carranza",
+      "citation_text": "The Mexican National Archives confirms Carranza became president on 1 May 1917 and was assassinated on 21 May 1920.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-gajapati-carranza-20261123",
+    "user_selected_for_registration": true,
+    "namuwiki_index_evidence": "Independent indexed Korean NamuWiki-derived Person page '베누스티아노 카란사' matches Venustiano Carranza Garza; exact target URL as linked."
+  }
+}
