@@ -62,3 +62,16 @@ test('sorting enhancement loads after table decoration and before era navigation
   assert.ok(html.indexOf(navJs) < html.indexOf(mainJs));
   assert.ok(html.indexOf(geometryCss) < html.indexOf(sortingCss));
 });
+
+test('header sorting must preserve every deferred Person, not only the first 48 expanded rows', () => {
+  const main = fs.readFileSync(new URL('../atlas-person-main.js', import.meta.url), 'utf8');
+  assert.match(main, /const INITIAL_EXPANDED_ROWS = 48;/);
+  assert.match(main, /data-person-deferred="true"/);
+  assert.ok(source.includes('return [...grid.querySelectorAll(".person-era-group .person-era-rows > .person-card")];'));
+  assert.ok(!source.includes('return [...grid.querySelectorAll(".person-era-group .person-card.person-table-row")];'));
+  assert.ok(source.includes('row?.dataset?.personRange'));
+  assert.ok(source.includes('row?.dataset?.personPrimaryPolity'));
+  const navigator = fs.readFileSync(new URL('../atlas-person-era-navigation.js', import.meta.url), 'utf8');
+  assert.doesNotMatch(navigator, /person-era-period-filter|ERA_FILTER_EVENT/);
+  assert.match(navigator, /person-era-jump-list/);
+});

@@ -77,7 +77,7 @@ test('Person Main owns visible Polity, Relation, and domain filter state and del
 test('Person search is rendered with visible Polity and Relation controls while status sits beside era status', () => {
   assert.match(nav, /search\.id = "personMainSearch"/);
   assert.match(nav, /intro\.append\(title, status, summary\)/);
-  assert.match(nav, /controls\.append\(eraSelect, search, select, relation\)/);
+  assert.match(nav, /controls\.append\(search, select, relation\)/);
   assert.match(nav, /atlas-person-search-change/);
   assert.match(main, /function setSearchQuery/);
   assert.match(main, /window\.addEventListener\("atlas-person-search-change"/);

@@ -2,7 +2,6 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import fs from 'node:fs';
 import vm from 'node:vm';
-import eraModel from '../atlas-person-era-model.js';
 
 const source=fs.readFileSync(new URL('../atlas-person-main.js',import.meta.url),'utf8');
 const id='11111111-2222-4333-8444-555555555555';
@@ -69,7 +68,7 @@ function harness(initialHash,detailPerson=person,options={}) {
     readPortrait:async()=>{state.portraitCalls++;return options.portraitPromise || {portrait:null};},
     personMatchesQuery:()=>true,
     personMatchesFacets:()=>true,
-    preparePersonGroups:(persons,{secondaryPredicate=()=>true}={})=>({historical:persons.filter(secondaryPredicate),other_or_uncertain:[]}),
+    preparePersonGroups:(persons)=>({historical:persons,other_or_uncertain:[]}),
     comparePersons:()=>0,facetCatalog:()=>emptyFacets()
   };
   const dataStore={
@@ -81,7 +80,6 @@ function harness(initialHash,detailPerson=person,options={}) {
     location:{hash:initialHash,href:'https://example.org/index.html'+initialHash},
     ATLAS_ENTITY_ROUTE:routeModel,
     ATLAS_PERSON_BROWSER_READER:reader,
-    ATLAS_PERSON_ERA_MODEL:eraModel,
     ATLAS_CLIENT_DATA_STORE:dataStore,
     ATLAS_PERSON_DOMAIN_REGISTRY:{LABELS:{},CODES:[],DEFINITIONS:[]},
     ATLAS_UI_I18N:{enumLabel:(_kind,_value,{fallback})=>fallback},
@@ -352,53 +350,4 @@ test('large Person register defers offscreen Activity DOM without losing full Pe
   h.window.ATLAS_PERSON_MAIN.setSearchQuery('Test');
   assert.equal(h.state.listCalls,1,'search never fetches a separate Person snapshot');
   assert.equal(h.window.ATLAS_PERSON_MAIN.personCardMarkup('not-a-uuid'),null);
-});
-
-test('all epochs remain directly selectable from one full Person snapshot, not just the first ancient rows',async()=>{
-  const create=(year,name,index)=>({
-    ...person,
-    id:'11111111-2222-4333-8444-'+String(index).padStart(12,'0'),
-    display_name:name,
-    canonical_name_en:name,
-    first_activity_year:year,
-    last_activity_year:year
-  });
-  const people=[
-    create(-850,'Ancient Witness',1),
-    create(850,'Medieval Witness',2),
-    create(1650,'Early Modern Witness',3),
-    create(1965,'Cold War Witness',4),
-    create(2005,'Information Witness',5)
-  ];
-  const h=harness('#atlas-dashboard',person,{listPersons:people});
-  const loaded=await h.window.ATLAS_PERSON_MAIN.loadPersons();
-  assert.equal(loaded.ok,true);
-  assert.equal(loaded.count,5);
-  const renderEvents=()=>h.state.emitted.filter(event=>event.type==='atlas-person-main-rendered');
-  let lastEvent=renderEvents().at(-1);
-  assert.equal(lastEvent.detail.eraCounts.all,5);
-  assert.equal(lastEvent.detail.eraCounts.ancient,1);
-  assert.equal(lastEvent.detail.eraCounts['early-medieval'],1);
-  assert.equal(lastEvent.detail.eraCounts['early-modern'],1);
-  assert.equal(lastEvent.detail.eraCounts['cold-war'],1);
-  assert.equal(lastEvent.detail.eraCounts.information,1);
-  assert.match(h.state.groupMarkup.at(-1),/Information Witness/);
-
-  assert.equal(h.window.ATLAS_PERSON_MAIN.setEraFilter('information'),true);
-  assert.equal(h.window.ATLAS_PERSON_MAIN.getEraFilter(),'information');
-  const modern=h.state.groupMarkup.at(-1);
-  assert.match(modern,/Information Witness/);
-  assert.doesNotMatch(modern,/Ancient Witness|Medieval Witness|Early Modern Witness|Cold War Witness/);
-  lastEvent=renderEvents().at(-1);
-  assert.equal(lastEvent.detail.visibleCount,1);
-  assert.equal(lastEvent.detail.eraCounts.all,5,'all chronological choices remain reachable in an era-filtered view');
-  assert.equal(lastEvent.detail.eraCounts.ancient,1);
-
-  assert.equal(h.window.ATLAS_PERSON_MAIN.setEraFilter('cold-war'),true);
-  assert.match(h.state.groupMarkup.at(-1),/Cold War Witness/);
-  assert.equal(h.window.ATLAS_PERSON_MAIN.setEraFilter('nonexistent-epoch'),true);
-  assert.equal(h.window.ATLAS_PERSON_MAIN.getEraFilter(),'');
-  assert.match(h.state.groupMarkup.at(-1),/Ancient Witness/);
-  assert.match(h.state.groupMarkup.at(-1),/Information Witness/);
-  assert.equal(h.state.listCalls,1,'switching eras never refetches the canonical Person roster');
 });
