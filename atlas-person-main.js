@@ -2,6 +2,7 @@
   "use strict";
 
   const reader = window.ATLAS_PERSON_BROWSER_READER;
+  const eraModel = window.ATLAS_PERSON_ERA_MODEL;
   const dataStore = window.ATLAS_CLIENT_DATA_STORE;
   const domainRegistry = window.ATLAS_PERSON_DOMAIN_REGISTRY;
   const i18n = window.ATLAS_UI_I18N;
@@ -33,6 +34,7 @@
   const personCardMarkupCache = new WeakMap();
   let sortOrder = "start-asc";
   let facetFilters = { polity_id: "", relation_type_id: "", domain: "" };
+  let selectedEraCode = "";
   let personDomainsById = Object.freeze({});
   let dashboardFilter = null;
   let requestSerial = 0;
@@ -326,8 +328,38 @@
     return String(personDomainsById?.[person?.id] || "") === selected;
   }
 
+  function personEraCode(person) {
+    // The same first known historical boundary used by the register.
+    const start = person?.first_activity_year;
+    const end = person?.last_activity_year;
+    const year = Number.isInteger(start) && start !== 0 ? start
+      : Number.isInteger(end) && end !== 0 ? end : null;
+    return eraModel?.eraForYear?.(year)?.code || "unknown";
+  }
+
   function secondaryMatches(person) {
-    return dashboardMatches(person) && domainMatches(person);
+    return dashboardMatches(person) && domainMatches(person)
+      && (!selectedEraCode || personEraCode(person) === selectedEraCode);
+  }
+
+  function eraFilterCounts() {
+    // Exclude only the selected era from the counts. A hidden later era must
+    // remain selectable directly from the complete canonical Person snapshot.
+    const counts = { all:0 };
+    for (const era of [...(eraModel?.ERAS || []), eraModel?.UNKNOWN_ERA].filter(Boolean)) {
+      counts[era.code] = 0;
+    }
+    for (const person of persons) {
+      if (!reader.personMatchesQuery(person, query)
+        || !reader.personMatchesFacets(person, {
+          polity_id:facetFilters.polity_id,
+          relation_type_id:facetFilters.relation_type_id
+        }) || !dashboardMatches(person) || !domainMatches(person)) continue;
+      counts.all += 1;
+      const code = personEraCode(person);
+      counts[code] = (counts[code] || 0) + 1;
+    }
+    return counts;
   }
 
   function domainFilterCounts() {
@@ -378,7 +410,9 @@
         selectedRelationId: facetFilters.relation_type_id,
         relationOptions: relationOptions(),
         selectedDomain: facetFilters.domain,
-        domainCounts: domainFilterCounts()
+        domainCounts: domainFilterCounts(),
+        selectedEraCode,
+        eraCounts: eraFilterCounts()
       }
     }));
   }
@@ -477,6 +511,18 @@
     return true;
   }
 
+  function setEraFilter(value) {
+    const requested = String(value || "").trim();
+    const valid = !requested || [...(eraModel?.ERAS || []), eraModel?.UNKNOWN_ERA]
+      .some((era) => era?.code === requested);
+    const next = valid ? requested : "";
+    if (selectedEraCode === next) return false;
+    selectedEraCode = next;
+    if (!personListLoaded) { void ensurePersonsLoaded(); return true; }
+    renderGroups();
+    return true;
+  }
+
   function setDomainFilter(value) {
     const requested = String(value || "").trim();
     const validCodes = Array.isArray(domainRegistry?.CODES) ? domainRegistry.CODES : [];
@@ -498,6 +544,7 @@
     });
     query = "";
     facetFilters = { polity_id:"", relation_type_id:"", domain:"" };
+    selectedEraCode = "";
     renderGroups();
     return true;
   }
@@ -1329,6 +1376,11 @@
     window.addEventListener("atlas-person-domain-filter-change", (event) => {
       setDomainFilter(event?.detail?.domain);
     });
+    window.addEventListener("atlas-person-era-filter-change", (event) => {
+      if (setEraFilter(event?.detail?.eraCode)) {
+        window.scrollTo?.({ top:0, left:0, behavior:"auto" });
+      }
+    });
   }
 
   installShell();
@@ -1364,6 +1416,8 @@
     getRelationOptions: relationOptions,
     setDomainFilter,
     getDomainFilter: () => facetFilters.domain,
+    setEraFilter,
+    getEraFilter: () => selectedEraCode,
     setDashboardFilter,
     clearDashboardFilter,
     getDashboardFilter: () => dashboardFilter ? Object.freeze({ code:dashboardFilter.code, label:dashboardFilter.label, person_ids:Object.freeze([...dashboardFilter.ids]) }) : null,
