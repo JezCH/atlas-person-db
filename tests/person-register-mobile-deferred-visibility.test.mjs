@@ -20,7 +20,8 @@ test("mobile deferred Person rows cannot create a clipped fourth grid track", ()
   assert.match(mobile, /\.person-era-rows > \.person-table-deferred\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\) auto;/);
   assert.match(mobile, /grid-template-areas:\s*"name range" "activities activities";/);
   for (const [child, area] of [["name", "name"], ["range", "range"], ["activities", "activities"]]) {
-    assert.match(mobile, new RegExp("person-table-deferred-" + child + "\\\\s*\\\\{[^}]*grid-area:\\\\s*" + area));
+    const rule = mobile.split(".person-table-deferred-" + child + " {")[1]?.split("}")[0] || "";
+    assert.ok(rule.includes("grid-area: " + area + ";"), child + " must have an explicit mobile grid area");
   }
   assert.match(mobile, /min-height:\s*56px !important;/);
   assert.match(mobile, /\.person-table-deferred-count\s*\{\s*display:\s*none;/);
