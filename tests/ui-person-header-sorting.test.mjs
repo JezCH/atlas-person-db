@@ -62,3 +62,17 @@ test('sorting enhancement loads after table decoration and before era navigation
   assert.ok(html.indexOf(navJs) < html.indexOf(mainJs));
   assert.ok(html.indexOf(geometryCss) < html.indexOf(sortingCss));
 });
+
+test('header sorting must preserve every deferred Person, not only the first 48 fully expanded rows', () => {
+  const main = fs.readFileSync(new URL('../atlas-person-main.js', import.meta.url), 'utf8');
+  assert.match(main, /const INITIAL_EXPANDED_ROWS = 48;/);
+  assert.match(main, /data-person-deferred="true"/);
+  assert.match(source, /return \\[\\.\\.\\.grid\\.querySelectorAll\\("\\.person-era-group \\.person-era-rows > \\.person-card"\\)\\];/);
+  assert.doesNotMatch(source, /return \\[\\.\\.\\.grid\\.querySelectorAll\\("\\.person-era-group \\.person-card\\.person-table-row"/);
+  assert.match(source, /row\\?\\.dataset\\?\\.personRange/);
+  assert.match(source, /row\\?\\.dataset\\?\\.personPrimaryPolity/);
+  // The original sticky horizontal chronology is the preferred Person UI.
+  const navigator = fs.readFileSync(new URL('../atlas-person-era-navigation.js', import.meta.url), 'utf8');
+  assert.doesNotMatch(navigator, /person-era-period-filter|ERA_FILTER_EVENT/);
+  assert.match(navigator, /person-era-jump-list/);
+});
