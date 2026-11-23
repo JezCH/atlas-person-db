@@ -1,0 +1,79 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261123:kapilendra-deva:gajapati-reign:1435-1467:v1",
+  "person": {
+    "canonical_name_en": "Kapilendra Deva",
+    "display_name_ko": "카필렌드라 데바",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-23",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Gajapati Empire",
+    "display_name_ko": "가자파티 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Odisha government reference (https://puri.odisha.gov.in/sites/default/files/2023-08/CHAPTER-II_23.pdf) establishes Gajapati rule from the Odisha/Cuttack region. No existing canonical first-class Place link, historical PolityPlaceFunction, verified spatial extent or reviewed static display binding has been established for this new polity. Hold spatial placement, rather than inventing coordinates or imperial territorial extents."
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-11-23",
+      "review_reason": "related_or_derivative_only"
+    }
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King (Gajapati)",
+    "role_code": "king_gajapati",
+    "role_display_name_ko": "왕(가자파티)",
+    "start_year": 1435,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1467,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Kapilendra Deva (also Kapilesvara/Pratapa Kapilesvara) founded the Suryavamsi Gajapati dynasty after the Eastern Ganga rule of Odisha ended c.1434/35. Official Odisha historical chronologies variously give 1435–1467 and 1435–1466; both boundaries are approximate year-granularity, not exact death or accession days. Military reach in 1464 is not encoded as permanent territorial control. Gajapati Empire is a separate successor polity, not an alias of Eastern Ganga Kingdom (Odisha)."
+  },
+  "sources": [
+    {
+      "title": "Odisha Government — Chronological Accounts of Odisha History (Odisha Annual Reference 2017)",
+      "canonical_url": "https://magazines.odisha.gov.in/orissaannualreference/ORA-2017/pdf/Entire_ORA_2017.pdf",
+      "citation_text": "Official Odisha historical chronology identifies Kapilendra Dev as founder of the Orissan empire with a 1435–1467 reign and documents his imperial expansions by 1464.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Government of Odisha, Puri District Gazetteer — Chapter II",
+      "canonical_url": "https://puri.odisha.gov.in/sites/default/files/2023-08/CHAPTER-II_23.pdf",
+      "citation_text": "The Odisha district gazetteer places the end of the Eastern Ganga succession in 1435 and attributes far-reaching southern conquests by 1464 to Kapilendra Deva.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Government of Odisha — Martial Tradition of Orissa",
+      "canonical_url": "https://magazines.odisha.gov.in/orissaannualreference/ORA-2004/pdf/martial_tradition_of_orissa.pdf",
+      "citation_text": "Government publication identifies Kapilendra Dev as a Suryavamsi Gajapati ruler, dates his reign 1435–1466, and discusses his military expansion; regnal endpoint discrepancies are preserved in the Activity notes.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-gajapati-carranza-20261123",
+    "user_selected_for_registration": true,
+    "polity_review": "New Gajapati/Suryavamsi political dynasty distinct from registered Eastern Ganga Kingdom (Odisha) UUID 86e4798b-85fa-4a69-838f-7b75f87bc997; no merge, relink, or retirement.",
+    "namuwiki_index_evidence": "Indexed NamuWiki-derived '가자파티 왕조' document discusses Kapilendra Deva but targeted searches under '카필렌드라 데바', '카필렌드라', and 'Kapilendra Deva' returned no independent Person page; classified related_or_derivative_only, not linked to the dynasty page."
+  }
+}
