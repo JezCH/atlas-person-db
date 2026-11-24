@@ -6,7 +6,12 @@
     "canonical_name_en": "Taejo of Joseon",
     "display_name_ko": "이성계",
     "person_type": "historical",
-    "historicity": "historical"
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-24",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
   },
   "polity": {
     "canonical_name_en": "Goryeo",
