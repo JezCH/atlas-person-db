@@ -1,0 +1,79 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261124:theagenes-thasos:olympic-boxing-pankration:480-476bce:v1",
+  "person": {
+    "canonical_name_en": "Theagenes of Thasos",
+    "display_name_ko": "타소스의 테아게네스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-24",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Thasos",
+    "display_name_ko": "타소스 도시국가",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "The French School at Athens documents classical Thasos as a Greek city-state (https://www.efa.gr/thasos-histoire-de-la-cite-2/?lang=en). This authoring manifest does not establish normalized first-class Place ID, stable polity territorial boundaries or display placement for the 5th-century-BCE polis. Hold the spatial representation; do not conflate today's Thasos island geography with ancient polity extent."
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-24",
+      "document_title": "테오게네스",
+      "url": "https://namu.wiki/w/%ED%85%8C%EC%98%A4%EA%B2%8C%EB%84%A4%EC%8A%A4"
+    }
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Olympic boxer and pankration champion",
+    "role_display_name_ko": "올림픽 복싱·판크라티온 우승 선수",
+    "start_year": -480,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -476,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Theagenes (also Theogenes) of Thasos was an attested ancient Greek combat-sport athlete. He won Olympic boxing at the 75th Olympiad (480 BCE) and pankration at the 76th Olympiad (476 BCE); these two events define the documented dated Activity, not his birth/death. Traditional attributions of over 1,300 or 1,400 festival victories and miracle tales about a statue belong to ancient testimony/reception, not independently verified modern sporting statistics. Distinct from Theagenes of Megara, the archaic tyrant already registered in ATLAS. Thasos was a Greek city-state, not a polity governed by Theagenes."
+  },
+  "sources": [
+    {
+      "title": "International Olympic Committee — Pankration and Theagenes of Thasos",
+      "canonical_url": "https://www.olympics.com/ioc/ancient-olympic-games/pankration?displayAsWebViewlight=true",
+      "citation_text": "Official IOC historical account places Theagenes' boxing victory in the 75th Olympiad (480 BCE) and pankration in the 76th (476 BCE).",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Byron J. Nakamura — Boxing in the Ancient World, Cambridge Companion to Boxing",
+      "canonical_url": "https://www.cambridge.org/core/books/cambridge-companion-to-boxing/boxing-in-the-ancient-world/42C9A4CFC2DF7BF6B4423A1230768B51",
+      "citation_text": "Academic account discusses Theagenes of Thasos, Pausanias, ancient Olympic victories and later hero-cult traditions.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "French School at Athens — Thasos: History of the City-State",
+      "canonical_url": "https://www.efa.gr/thasos-histoire-de-la-cite-2/?lang=en",
+      "citation_text": "Archaeological institution's political history confirms a Thasian Greek city-state and its fifth-century-BCE Delian League position.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-nine-combat-icons-20261124",
+    "user_selected_for_registration": true,
+    "namuwiki_index_evidence": "Independent indexed Korean NamuWiki-derived Person page '테오게네스' (https://namu.moe/w/테오게네스) explicitly identifies Theogenes/Theagenes from Thasos, combat sports and classical Greek period. The page's amplified feat/tournament claims are not used as source authority; NamuWiki is identification link only.",
+    "disambiguation": "Never reuse existing Theagenes of Megara UUID 451c531e-86f0-4678-b377-4b6432aef6bf; distinct century, provenance and profession."
+  }
+}
