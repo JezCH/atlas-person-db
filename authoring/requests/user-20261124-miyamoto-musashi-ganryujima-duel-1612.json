@@ -1,0 +1,71 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261124:miyamoto-musashi:ganryujima-duel:1612:v1",
+  "person": {
+    "canonical_name_en": "Miyamoto Musashi",
+    "display_name_ko": "미야모토 무사시",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-24",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "military",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Tokugawa Shogunate",
+    "display_name_ko": "도쿠가와 막부",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "46534f7e-9247-5644-b5ad-9525c3d4f5d6"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-27",
+      "document_title": "미야모토 무사시",
+      "url": "https://namu.wiki/w/%EB%AF%B8%EC%95%BC%EB%AA%A8%ED%86%A0%20%EB%AC%B4%EC%82%AC%EC%8B%9C"
+    }
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Swordsman at Ganryujima duel",
+    "role_display_name_ko": "간류지마 결투 검객",
+    "start_year": 1612,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1612,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Miyamoto Musashi's famous duel against Sasaki Kojiro at Funashima (Ganryujima) is traditionally dated to Keicho 17 (1612). Official Shimonoseki City/Kitakyushu City tourism interpretive records commemorate the duel, while the 1654 Kokura memorial and later narratives differ on particulars. The year-only interval avoids converting the Japanese traditional fourth-month date into an unverified Gregorian day, or asserting disputed duel details and the legend of 60 undefeated bouts as verifiable statistics. The relation active_in Tokugawa-period Japan implies neither service to the central shogunate nor sovereign authority; existing 1640–1645 late-life Activity is unchanged."
+  },
+  "sources": [
+    {
+      "title": "Shimonoseki City Official Tourism — Ganryujima",
+      "canonical_url": "https://shimonoseki.travel/shimonosekistory/ganryujima/",
+      "citation_text": "Shimonoseki City records the received account of Musashi's duel with Sasaki Kojiro on the island in 1612.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Japan Tourism Agency — Miyamoto Musashi biographical guide",
+      "canonical_url": "https://www.mlit.go.jp/tagengo-db/en/R5-00224.html",
+      "citation_text": "Japanese national tourism institution identifies Musashi as a historical swordsman and reviews his lifetime and documentary sources.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-nine-combat-corrections-20261124",
+    "user_selected_for_registration": true,
+    "person_reuse_id": "352b4b15-b074-43cd-a532-5a5f87c3741f",
+    "namuwiki_review": "Reused exact existing Production linked NamuWiki state (checked 2026-08-27).",
+    "historical_uncertainty": "The most famous duel date and narratives are not equal in evidentiary certainty; year approximate despite local tradition assigning precise Japanese-calendar date."
+  }
+}

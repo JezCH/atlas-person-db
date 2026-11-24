@@ -1,0 +1,71 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261124:cheok-jun-gyeong:yi-jagyeom-crisis:1126:v1",
+  "person": {
+    "canonical_name_en": "Cheok Jun-gyeong",
+    "display_name_ko": "척준경",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-24",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "military",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Goryeo",
+    "display_name_ko": "고려",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "e255bac5-3edd-5ad4-9467-5866f59a1a08"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-15",
+      "document_title": "척준경",
+      "url": "https://namu.wiki/w/%EC%B2%99%EC%A4%80%EA%B2%BD"
+    }
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Military actor in Yi Ja-gyeom crisis",
+    "role_display_name_ko": "이자겸의 난 군사·정치 활동",
+    "start_year": 1126,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1126,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Cheok Jun-gyeong participated with Yi Ja-gyeom in the February 1126 armed court uprising that burned the palace and killed royal loyalists. Later, after persuasion by Choe Sa-jeon and the king's intervention, he turned against and captured Yi Ja-gyeom in May 1126. This entry preserves both his initial rebel involvement and subsequent switch to the royal side; neither is collapsed into the simplistic claim that he always defended royal legitimacy. It is distinct from his existing military service and Jurchen campaign Activity 1104–1119, and is an activity within the existing Goryeo polity, not a sovereign state founded by Cheok."
+  },
+  "sources": [
+    {
+      "title": "한국민족문화대백과사전 — 척준경",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0055748",
+      "citation_text": "AKS details Cheok's role in Yi Ja-gyeom's 1126 coup and the subsequent reversal against Yi, distinct from his earlier Jurchen campaigns.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "국사편찬위원회 고려사절요 — 왕이 척준경을 시켜 이자겸의 난을 진압하게 하다",
+      "canonical_url": "https://db.history.go.kr/id/kj_009r_0010_0050_0040_0020",
+      "citation_text": "Original Goryeosa Jeolyo records the May 1126 royal persuasion of Cheok Jun-gyeong and the removal of Yi Ja-gyeom.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-nine-combat-corrections-20261124",
+    "user_selected_for_registration": true,
+    "person_reuse_id": "fa374536-7763-4259-b52b-c2a718387bab",
+    "namuwiki_review": "Existing exact linked NamuWiki state retained from Production 2026-09-15.",
+    "relationship_to_original": "1126 political-military crisis is chronologically and functionally distinct from 1104–1119 Jurchen campaign service."
+  }
+}

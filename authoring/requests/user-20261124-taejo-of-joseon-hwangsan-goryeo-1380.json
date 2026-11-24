@@ -1,0 +1,71 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261124:taejo-of-joseon:hwangsan-goryeo:1380:v1",
+  "person": {
+    "canonical_name_en": "Taejo of Joseon",
+    "display_name_ko": "이성계",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-24",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Goryeo",
+    "display_name_ko": "고려",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "e255bac5-3edd-5ad4-9467-5866f59a1a08"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-22",
+      "document_title": "태조(조선)",
+      "url": "https://namu.wiki/w/%ED%83%9C%EC%A1%B0(%EC%A1%B0%EC%84%A0)"
+    }
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "military_activity",
+    "role": "Goryeo commander at the Battle of Hwangsan",
+    "role_display_name_ko": "고려 황산대첩 지휘관",
+    "start_year": 1380,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1380,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Yi Seong-gye, later Taejo of Joseon, commanded Goryeo forces against Japanese pirates at the Battle of Hwangsan in September 1380, before he established Joseon in 1392. The Activity links to existing Goryeo (not Joseon), representing only the documented 1380 campaign, without inventing a full continuous military-service interval."
+  },
+  "sources": [
+    {
+      "title": "한국민족문화대백과사전 — 황산대첩",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0065178",
+      "citation_text": "AKS historical encyclopedia identifies the September 1380 Hwangsan battle and Yi Seong-gye's significant command against waegu forces.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "한국민족문화대백과사전 — 남원 황산대첩비지",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0065180",
+      "citation_text": "AKS describes the campaign led by Goryeo general Yi Seong-gye in 1380 and the later memorial inscription.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-nine-combat-corrections-20261124",
+    "user_selected_for_registration": true,
+    "person_reuse_id": "8308bf45-0b35-4215-9a91-012958cd4637",
+    "namuwiki_review": "Production exact previously reviewed linked state reused; no new NamuWiki search required.",
+    "relationship_to_original": "Separate 1380 Goryeo military action; existing 1392-1398 Joseon reign remains unchanged."
+  }
+}
