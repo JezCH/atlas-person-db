@@ -1,0 +1,91 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "guan_yu_pre_shu_eastern_han_backprojection_20261124_v1",
+  "as_of": "2026-11-24",
+  "status": "REVIEWED_PRE_SHU_POLITY_BACKPROJECTION_CORRECTION",
+  "release_order": 590,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "User-requested correction on 2026-11-24. Existing Guan Yu 211-220 Activity retrospectively binds Shu Han, which was not founded until Liu Bei's imperial accession in 221. Update the same original Activity to its contemporaneous Eastern Han political order; preserve explicit direct service to Liu Bei's regional warlord faction in reviewed notes rather than misrepresenting Guan Yu as a court officer of Cao Cao. Preserve exact Activity UUID, roles, service relation, historical-year span, provenance and normalized source links. Avoid inventing Gregorian death day or 219/220 calendar conversion.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "semantic_identity_change_forbidden": false,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "person_name": "Guan Yu",
+    "person_id": "81fe4b36-88f4-5c9c-b8f8-8860ab728701",
+    "activity_id": "df6cc626-135e-5abc-ae54-6dc1f64ac2aa",
+    "original_polity": "Shu Han",
+    "original_polity_id": "7d896087-e1ff-5c01-8e2f-ad984098135e",
+    "new_polity": "Eastern Han",
+    "new_polity_id": "3a29a08a-d111-50d5-916f-f5c11b5eabaf",
+    "protected_baseline": "ATLAS Correction Apply run 44470456865 (2026-11-19) Baseline A target row and exact legacy key compared with 2026-11-24 Production Person detail. Writer must require current live exact-before tuple.",
+    "source_1": "https://en.wikisource.org/wiki/Translation:Records_of_the_Three_Kingdoms/Volume_36/Guan_Yu",
+    "source_2": "https://api.pageplace.de/preview/DT0400.9780192525420_A35502593/preview-9780192525420_A35502593.pdf",
+    "reason": "Shu Han's formal foundation in 221 postdates Guan Yu. Western year 220 is retained since Chinese regnal year Jian'an 24 (219) final lunar month may overlap early 220 in the Western calendar; this plan corrects polity, not an unverified year convention."
+  },
+  "operations": [
+    {
+      "case_id": "guan_yu_remove_pre_221_shu_han_polity_projection",
+      "type": "rewrite_activity",
+      "activity_id": "df6cc626-135e-5abc-ae54-6dc1f64ac2aa",
+      "baseline_before": {
+        "person_id": "81fe4b36-88f4-5c9c-b8f8-8860ab728701",
+        "polity_id": "7d896087-e1ff-5c01-8e2f-ad984098135e",
+        "role_id": "88662a04-81bc-5d5e-8185-7cfeb40f978b",
+        "period_basis_id": "3194b4d0-0d2f-57ed-a5fb-d7f008015fa2",
+        "activity_start": 211,
+        "activity_end": 220,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-5.json:3:d050ad43819d4575",
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "df6cc626-135e-5abc-ae54-6dc1f64ac2aa",
+        "person_id": "81fe4b36-88f4-5c9c-b8f8-8860ab728701",
+        "polity_id": "3a29a08a-d111-50d5-916f-f5c11b5eabaf",
+        "relation_type_id": "0fc4827f-8543-52f7-9e9a-3173b0c698a7",
+        "role_id": "88662a04-81bc-5d5e-8185-7cfeb40f978b",
+        "period_basis_id": "3194b4d0-0d2f-57ed-a5fb-d7f008015fa2",
+        "activity_start": 211,
+        "activity_end": 220,
+        "activity_start_detail": {
+          "year": 211,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 220,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-5.json:3:d050ad43819d4575",
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Guan Yu served Liu Bei's autonomous regional military command during the late Eastern Han period, including command of Jing Province territories held by Liu Bei and campaigning against Cao Cao's forces. The Eastern Han polity association places this warlord service in its contemporaneous Han political era; it does NOT imply Guan Yu served Cao Cao's Han imperial court. Shu Han was only proclaimed in 221 after Guan Yu's death, so earlier association with Shu Han was a backward projection. The original 211–220 year-level rail and legacy source identity are preserved; the 219 Chinese regnal year (Jian'an 24) and early-220 Western dating of his demise should not be silently conflated. Reviewed reference: Chen Shou, Sanguozhi, Shu 6, Guan Yu biography; modern historical study Guan Yu: The Religious Afterlife of a Failed Hero.",
+        "add_source_links": []
+      }
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 1,
+    "activity_uuid_preserved": true,
+    "source_count_preserved": 1,
+    "pre_221_shu_han_backprojection_removed": true,
+    "production_mutation_authorized": false
+  }
+}
