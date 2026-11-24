@@ -49,12 +49,6 @@
   },
   "sources": [
     {
-      "title": "한국민족문화대백과사전 — 척준경",
-      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0055748",
-      "citation_text": "AKS details Cheok's role in Yi Ja-gyeom's 1126 coup and the subsequent reversal against Yi, distinct from his earlier Jurchen campaigns.",
-      "source_type": "web_bibliographic_reference"
-    },
-    {
       "title": "국사편찬위원회 고려사절요 — 왕이 척준경을 시켜 이자겸의 난을 진압하게 하다",
       "canonical_url": "https://db.history.go.kr/id/kj_009r_0010_0050_0040_0020",
       "citation_text": "Original Goryeosa Jeolyo records the May 1126 royal persuasion of Cheok Jun-gyeong and the removal of Yi Ja-gyeom.",
@@ -66,6 +60,7 @@
     "user_selected_for_registration": true,
     "person_reuse_id": "fa374536-7763-4259-b52b-c2a718387bab",
     "namuwiki_review": "Existing exact linked NamuWiki state retained from Production 2026-09-15.",
-    "relationship_to_original": "1126 political-military crisis is chronologically and functionally distinct from 1104–1119 Jurchen campaign service."
+    "relationship_to_original": "1126 political-military crisis is chronologically and functionally distinct from 1104–1119 Jurchen campaign service.",
+    "source_collision_resolution": "Previously registered AKS Source URL https://encykorea.aks.ac.kr/Article/E0055748 has a different canonical citation_text. This corrected request retains direct 1126 primary Goryeosa Jeolyo evidence from the National Institute of Korean History, without duplicating or changing the existing AKS Source."
   }
 }
