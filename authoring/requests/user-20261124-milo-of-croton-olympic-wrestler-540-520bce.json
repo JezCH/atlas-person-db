@@ -1,0 +1,75 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261124:milo-croton:olympic-wrestler:540-520bce:v1",
+  "person": {
+    "canonical_name_en": "Milo of Croton",
+    "display_name_ko": "크로톤의 밀론",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-24",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Croton",
+    "display_name_ko": "크로톤",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "421e7b76-882c-4f7b-8fd4-3949a1f4acf3"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-11-24",
+      "review_reason": "related_or_derivative_only"
+    }
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Olympic wrestler",
+    "role_display_name_ko": "고대 올림픽 레슬링 선수",
+    "start_year": -540,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -520,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Historical athlete Milo/Milon of Kroton (Croton), celebrated winner of six Olympic wrestling crowns, the first in the boys' class traditionally dated 540 BCE and the subsequent five in adult competition. The circa 540–520 BCE bounds approximate the recorded festival career rather than personal birth/death dates; ancient evidence disagrees on details of the later chronology and is not turned into invented exact dates. The Croton polis is an existing entity; an athlete active in/representing it was not its sovereign or military ruler. Stories of lifting a bull and other strength feats are treated as later traditions."
+  },
+  "sources": [
+    {
+      "title": "Hellenic Republic — Ancient Olympic Games, History",
+      "canonical_url": "https://olympicgames.culture.gov.gr/en/istories.html",
+      "citation_text": "Official Greek cultural history identifies Milo of Croton's six Olympic victories and first win in 540 BCE.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "International Olympic Committee — Ancient Olympic Wrestling",
+      "canonical_url": "https://www.olympics.com/ioc/ancient-olympic-games/wrestling?displayAsWebViewlight=true",
+      "citation_text": "Olympic source identifies Milon of Croton as a six-time ancient Olympic wrestling champion and distinguishes traditional stories about his strength.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "David C. Young — A Brief History of the Olympic Games (Wiley-Blackwell)",
+      "canonical_url": "https://bpb-us-w2.wpmucdn.com/u.osu.edu/dist/b/125508/files/2024/09/David-C.-Young-A-Brief-History-of-the-Olympic-Games-2004-Wiley-Blackwell.pdf",
+      "citation_text": "Academic historical synthesis describes the Olympic career of Milo of Croton and the ancient victor-record tradition.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-nine-combat-icons-20261124",
+    "user_selected_for_registration": true,
+    "namuwiki_index_evidence": "Public indexed Korean NamuWiki page '문명 6/모드 위인' mentions 크로토나의 밀론 only within a mod list (https://www.namu.moe/w/문명%206/모드%20위인); no independently indexed biography page under 밀론, 밀로, 크로톤의 밀론, Milo of Croton found. Mark related_or_derivative_only, not link mod page.",
+    "polity_review": "Reuse current Croton polity UUID 421e7b76-882c-4f7b-8fd4-3949a1f4acf3; do not invent a new regime 'Croton under Milo'."
+  }
+}
