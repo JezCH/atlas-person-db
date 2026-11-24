@@ -1,0 +1,80 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261124:chwa-ii-kabalega:bunyoro-kitara-reign:1870-1899:v1",
+  "person": {
+    "canonical_name_en": "Chwa II Kabalega",
+    "display_name_ko": "차와 2세 카발레가",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-24",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Bunyoro-Kitara",
+    "display_name_ko": "부뇨로-키타라 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "The Hoima City official account (https://hoimacity.go.ug/page/omukama-kabalega) situates Kabalega's Omukama office in Bunyoro, western Uganda. Historical Bunyoro-Kitara political control changed across the nineteenth century. No reviewed canonical first-class Place/PolityPlaceFunction or precise valid historical spatial geometry is asserted by this request. Hold display placement until evidence-backed spatial authoring is completed."
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-11-24",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Omukama (King)",
+    "role_code": "omukama_king",
+    "role_display_name_ko": "오무카마(국왕)",
+    "start_year": 1870,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1899,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Chwa II Kabalega (also Kabarega, Kabaleega; 1853–1923) became Omukama of Bunyoro-Kitara during the 1869–1870 succession contest and consolidated rule by 1870. The Hoima City government site and Bunyoro history list 1870–1899, while a scholarly reference treats ruling authority to 1898; historical transition in 1898 and Kabalega's military capture/exile in 1899 must not be conflated. Kabalega reformed Bunyoro's military organisation, reduced chiefly autonomy and opposed British colonial conquest. The recorded 1870–1899 interval has approximate year certainty at both boundaries and does not assert uninterrupted control over all claimed territories. The Kingdom of Bunyoro-Kitara is an independent historic polity, not a new state created specifically 'under Kabalega'."
+  },
+  "sources": [
+    {
+      "title": "Hoima City Government — Omukama Kabalega",
+      "canonical_url": "https://hoimacity.go.ug/page/omukama-kabalega",
+      "citation_text": "Hoima City official historical account records Chwa II Kabalega's life dates (1853–1923), succession in 1869, Omukama rule dated 1870–1899 and anti-colonial resistance.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Richard J. Reid — Kabalega (Kabarega) of Bunyoro (ca. 1853–1923), Wiley Encyclopedia",
+      "canonical_url": "https://onlinelibrary.wiley.com/doi/abs/10.1002/9781444338232.wbeow329",
+      "citation_text": "Academic encyclopedia entry describes Kabalega's victory in the 1870 civil war, reforms and resistance to British conquest, and uses 1870–1898 for governing power; differences from 1899 capture are retained as approximate activity boundaries.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Cambridge University Press — Mobilising the past, claiming the future: the Bunyoro Kitara Kingdom",
+      "canonical_url": "https://www.cambridge.org/core/journals/journal-of-modern-african-studies/article/mobilising-the-past-claiming-the-future-the-bunyoro-kitara-kingdom-and-its-popular-resources-in-uganda/719AABD25D7AE2E2EC4A280873EAECE3",
+      "citation_text": "Scholarly study identifies Kabalega's military and trade reorganisation and resistance to colonial forces until capture and exile to Seychelles in 1899; distinguishes historical Bunyoro political community from later identity claims.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-chwa-ii-kabalega-20261124",
+    "user_selected_for_registration": true,
+    "screen": "Live Production exact-name and important alias searches Kabalega/Kabarega/Yohana Chwa: no Person; Bunyoro/Bunyoro-Kitara/Unyoro: no Polity at time of screen.",
+    "namuwiki_index_evidence": "External public-index searches for 카발레가, 차와 2세, Kabalega and Namuwiki/d.namu.moe returned no indexed independently titled exact Person document. No guessed URL or related-only link was used.",
+    "historical_date_review": "1870–1899 broadly used for Omukama reign, with scholarly 1870–1898 governing period and official government note of 1869 accession; both Activity boundaries are approximate, not purported exact accession/deposition days."
+  }
+}
