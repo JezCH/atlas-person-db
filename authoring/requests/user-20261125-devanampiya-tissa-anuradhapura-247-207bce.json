@@ -1,0 +1,78 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261125:devanampiya-tissa:anuradhapura-king:247-207bce:v1",
+  "person": {
+    "canonical_name_en": "Devanampiya Tissa",
+    "display_name_ko": "데바남피야 티사",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-25",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Anuradhapura Kingdom",
+    "display_name_ko": "아누라다푸라 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "d1dfc200-36a5-4dfe-a898-6635d8e40d0c"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-11-25",
+      "review_reason": "related_or_derivative_only"
+    }
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King of Anuradhapura",
+    "role_code": "king_anuradhapura",
+    "role_display_name_ko": "아누라다푸라 국왕",
+    "start_year": -247,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -207,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Devanampiya Tissa (also Devānampiyatissa, Devānaṃpiyatissa, Tissa, 'beloved of the gods' Tissa) was an early Anuradhapura-period king in ancient Sri Lanka. The 247–207 BCE reign is a modern synchronised/corrected chronology for the Aśoka era, not independently attested accession and death dates. Traditional Sri Lankan chronicle chronology places his 40-year reign about 307–267 BCE; both year boundaries here are approximate. Dīpavaṃsa/Mahāvaṃsa tradition associates him with Mahinda (traditionally a son of Aśoka), reception and royal sponsorship of Buddhist monastic institutions including the Anuradhapura Mahāvihāra, and the Bodhi tree from India. Accounts of the king's conversion at Mihintale and the precise extent of his role are later Buddhist chronicle narratives, not all verified by contemporary epigraphy or archaeology. His reign is attached to the existing Anuradhapura Kingdom, rather than a new 'Sri Lanka under Devanampiya Tissa' state; no whole-island territorial sovereignty is implied."
+  },
+  "sources": [
+    {
+      "title": "H. W. Codrington — A Short History of Ceylon, Chapter I",
+      "canonical_url": "https://books.lakdiva.org.lk/codrington/chap01.html",
+      "citation_text": "H. W. Codrington's historical survey dates Devānampiya Tissa approximately 247–207 BCE, describes links to Aśoka, Mahinda and the founding of Buddhist institutions, and distinguishes historical claims from legendary elements of early chronicles.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "EBSCO Research Starters — Buddhism Established in Sri Lanka",
+      "canonical_url": "https://www.ebsco.com/research-starters/history/buddhism-established-sri-lanka/",
+      "citation_text": "Historical reference overview places Devanampiya Tissa as a third-century-BCE king (c. 247–207 BCE) and describes the Buddhist mission and royal support, with chronicle-derived aspects stated as traditional accounts.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Dīpavaṃsa, The Chronicle of the Island — Chapter XI, Devanampiyatissa",
+      "canonical_url": "https://ancient-buddhist-texts.net/English-Texts/Chronicle-of-the-Island/11-Devanampiyatissa.htm",
+      "citation_text": "English translation of the early Buddhist chronicle recounts Tissa's accession and relationship with Aśoka, providing explicit primary-text evidence for the later Buddhist literary tradition rather than contemporary proof of every depicted event.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-devanampiya-tissa-20261125",
+    "user_selected_for_registration": true,
+    "person_identity_review": "Pan-historical Production query for Devanampiya Tissa, Devanampiyatissa, Devanampiya and Korean name variants returned no Person; reuse preexisting Anuradhapura Kingdom UUID d1dfc200-36a5-4dfe-a898-6635d8e40d0c. No polity created.",
+    "chronology_review": "Corrected scholarly chronology ~247–207 BCE (Aśoka synchronization) selected with approximate certainty; older Sri Lankan chronicle chronology 307–267 BCE preserved in notes rather than mixed into the authoritative Activity. No fictitious day/month or calendrical certainty.",
+    "namuwiki_index_evidence": "An indexed NamuWiki-related country-history document '스리랑카/역사' at https://m.namu.moe/w/스리랑카/역사 mentions '데와남피야 티사' and the traditional c.307–267 BCE reign, but targeted independent-title searches (데바남피야 티사, 데와남피야 티사, Devanampiya Tissa) did not surface an exact independently titled Person document. This is related-only, not an exact biography link. Do not link the unrelated country-history page.",
+    "person_alias_review": "Devanampiya / Devānampiya is an honorific and not by itself a distinctive Person identity. Do not conflate with Mauryan emperor Aśoka's epithet Devanampiyadassi."
+  }
+}
