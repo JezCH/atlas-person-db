@@ -105,4 +105,12 @@ test('Cairo evidence corroborates capital at year granularity without authorizin
   assert.deepEqual(handoff.operations,[]);
 });
 
-
+test('Ankara constitutional corroboration preserves the original Source and HOLD', () => {
+  const entry = handoff.cases.find(e => e.fact_index === 4);
+  const authority = entry.additional_evidence.find(e => new URL(e.url).hostname === 'aym.gov.tr');
+  assert.match(authority.locator, /Articles 3 and 4/);
+  assert.match(authority.supports, /current capital/);
+  assert.equal(entry.original_url_existing, "https://ataturkansiklopedisi.gov.tr/detay/868/Ankara%E2%80%99n%C4%B1n_Ba%C5%9Fkent_Olu%C5%9Fu");
+  assert.match(entry.original_access, /direct original open failed/);
+  assert.match(entry.review_state, /^HOLD_/);
+});
