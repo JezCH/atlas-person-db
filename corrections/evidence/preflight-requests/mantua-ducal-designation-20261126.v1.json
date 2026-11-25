@@ -27,5 +27,11 @@
     "designation_sources": 2,
     "identity_relations": 0,
     "identity_relation_sources": 0
+  },
+  "trigger_recovery": {
+    "prior_merge_sha": "761a47a3aa601b7c1b1ef0650e36b266b1fd0d78",
+    "prior_pr": 2894,
+    "reason": "No push workflow run or check suite visible for prior integration SHA; retry identical rollback-only request; no change to candidate or count contract.",
+    "mode": "dry_run_only"
   }
 }
