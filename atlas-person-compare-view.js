@@ -54,9 +54,11 @@
   function renderSources(sources) {
     if (!Array.isArray(sources) || !sources.length) return '<p class="atlas-compare-empty">연결된 출처 없음</p>';
     return '<ul class="atlas-compare-sources">' + sources.map((source) => {
-      const title = text(source?.display_reference || source?.citation_text || source?.title || source?.canonical_url) || "출처";
+      const title = text(source?.title) || text(source?.display_reference) || text(source?.citation_text) || text(source?.canonical_url) || "출처";
+      const citation = text(source?.citation_text) || text(source?.display_reference);
       const url = safeSourceUrl(source?.canonical_url);
       const bibliography = [
+        source?.source_type ? "유형: " + source.source_type : null,
         source?.author_creator ? "저자: " + source.author_creator : null,
         source?.institution ? "기관: " + source.institution : null,
         source?.publisher ? "출판: " + source.publisher : null,
@@ -67,7 +69,9 @@
       ].filter(Boolean).join(" · ");
       const link = url ? '<a href="' + escapeHtml(url) + '" target="_blank" rel="noopener noreferrer">' +
         escapeHtml(title) + "</a>" : "<span>" + escapeHtml(title) + "</span>";
-      return "<li>" + link + (bibliography ? "<small>" + escapeHtml(bibliography) + "</small>" : "") + "</li>";
+      return "<li>" + link +
+        (citation && citation !== title ? "<small>인용: " + escapeHtml(citation) + "</small>" : "") +
+        (bibliography ? "<small>" + escapeHtml(bibliography) + "</small>" : "") + "</li>";
     }).join("") + "</ul>";
   }
 
