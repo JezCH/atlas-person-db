@@ -98,3 +98,25 @@ test('consolidated atlas read recognizes the catalog surface', () => {
   assert.equal(atlasRead.selectReadSurface({ query: { __atlas_read_surface: 'catalog' } }), 'catalog');
   assert.equal(atlasRead.selectReadSurface({ url: '/api/atlas-read?__atlas_read_surface=catalog&kind=polity&q=Chola' }), 'catalog');
 });
+
+
+test('polity catalogue includes temporal designation matches without replacing stable identity', async () => {
+  assert.match(POLITY_LOOKUP_SQL, /left join lateral\s*\(/i);
+  assert.match(POLITY_LOOKUP_SQL, /from atlas_v2\.polity_designations pd/i);
+  assert.match(POLITY_LOOKUP_SQL, /join atlas_v2\.polity_designation_names pdn on pdn\.polity_designation_id=pd\.id/i);
+  assert.match(POLITY_LOOKUP_SQL, /pd\.polity_id=p\.id and pdn\.name ilike \$1/i);
+  assert.match(POLITY_LOOKUP_SQL, /where dm\.matches is not null\s+or exists/i);
+  assert.match(POLITY_LOOKUP_SQL, /dm\.exact_match then 0/i);
+  assert.match(POLITY_LOOKUP_SQL, /coalesce\(dm\.matches, '\[\]'::jsonb\) as matched_designations/i);
+  assert.match(POLITY_LOOKUP_SQL, /en\.name as canonical_name_en/i);
+  assert.match(POLITY_LOOKUP_SQL, /ko\.name as display_name_ko/i);
+  const result = {id:'stable-polity', canonical_name_en:'Stable Polity', display_name_ko:'기본 국호',matched_designations:[{designation_id:'period-id',locale:'en',name:'Period Name',valid_from_year:100,valid_to_year:200}]};
+  for (const q of ['Period Name','시대 국호','Stable Polity']) {
+    const rows = await searchCatalog({kind:'polity',query:q,client:{async query(sql,params) {
+      assert.equal(sql,POLITY_LOOKUP_SQL);
+      assert.deepEqual(params,[`%${q}%`,q,MAX_RESULTS]);
+      return {rows:[result]};
+    }}});
+    assert.deepEqual(rows,[result]);
+  }
+});

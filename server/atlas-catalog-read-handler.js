@@ -12,21 +12,38 @@ select p.id::text,
        p.polity_type,
        p.historicity,
        en.name as canonical_name_en,
-       ko.name as display_name_ko
+       ko.name as display_name_ko,
+       coalesce(dm.matches, '[]'::jsonb) as matched_designations
   from atlas_v2.polities p
   left join atlas_v2.polity_names en
     on en.polity_id=p.id and en.locale='en' and en.is_preferred=true
   left join atlas_v2.polity_names ko
     on ko.polity_id=p.id and ko.locale='ko' and ko.is_preferred=true
- where exists (
+  left join lateral (
+    select jsonb_agg(
+             jsonb_build_object(
+               'designation_id',pd.id::text,'designation_type',pd.designation_type,
+               'locale',pdn.locale,'name',pdn.name,
+               'valid_from_year',pd.valid_from_year,'valid_from_month',pd.valid_from_month,'valid_from_day',pd.valid_from_day,
+               'valid_to_year',pd.valid_to_year,'valid_to_month',pd.valid_to_month,'valid_to_day',pd.valid_to_day
+             ) order by pd.id,pdn.locale,pdn.name
+           ) as matches,
+           bool_or(pdn.name ilike $2) as exact_match
+      from atlas_v2.polity_designations pd
+      join atlas_v2.polity_designation_names pdn on pdn.polity_designation_id=pd.id
+     where pd.polity_id=p.id and pdn.name ilike $1
+  ) dm on true
+ where dm.matches is not null
+    or exists (
        select 1
          from atlas_v2.polity_names pn
         where pn.polity_id=p.id
           and pn.name ilike $1
       )
- order by case when en.name ilike $2 or ko.name ilike $2 then 0 else 1 end,
+ order by case when en.name ilike $2 or ko.name ilike $2 or dm.exact_match then 0 else 1 end,
           en.name nulls last,
-          ko.name nulls last
+          ko.name nulls last,
+          p.id
  limit $3`;
 
 const ROLE_LOOKUP_SQL = `

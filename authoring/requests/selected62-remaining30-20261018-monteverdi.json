@@ -14,10 +14,11 @@
     "representative_domain_reviewed": true
   },
   "polity": {
-    "canonical_name_en": "Duchy of Mantua",
-    "display_name_ko": "만토바 공국",
+    "canonical_name_en": "Marquisate of Mantua",
+    "display_name_ko": "만토바 후국",
     "polity_type": "historical_polity",
-    "historicity": "historical"
+    "historicity": "historical",
+    "existing_id": "1a97dec2-dc1c-4e44-8546-e19bc6117ad5"
   },
   "activity": {
     "relation_type": "active_in",
@@ -60,13 +61,16 @@
   },
   "review_context": {
     "task": "#2545 approved 62, remaining 30 after #2543/#2544/#2546",
-    "registration_state": "NEEDS_PREFLIGHT",
-    "draft_only": true,
-    "production_screen": "NOT_PERFORMED_USER_PROHIBITED",
+    "registration_state": "FRESH_PROTECTED_PREFLIGHT_REQUIRED",
+    "draft_only": false,
+    "production_screen": "MANTUA_DESIGNATION_COMMITTED_45650077388",
     "identity_review": "Historical composer; not the fictional opera character. Later Venice chapel service remains contextual.",
     "namuwiki_evidence_method": "external-index independent Person mirror/title review; direct origin fetch not claimed",
     "namuwiki_evidence_url": "https://namu.moe/w/%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%94%94%EC%98%A4%20%EB%AA%AC%ED%85%8C%EB%B2%A0%EB%A5%B4%EB%94%94",
     "domain_review": "Explicit v2 taxonomy review; architecture=technology, social thought/philosophy=culture, mathematics/medicine=science. Not inferred from office.",
-    "apply_gate": "DRAFT / DO NOT MERGE OR APPLY. Fresh semantic duplicate and exact historical Polity preflight required; source review is not proof of DB absence. No PHFC /36 factual coverage score claimed."
+    "apply_gate": "Read-only preflight only. Exact existing Mantua UUID and stable preferred names confirmed from live polity read; 1607 falls within committed Gonzaga ducal designation 1530–1707 (Duchy of Mantua / 만토바 공국). Preserve original approved activity, notes, sources and request ID. No new polity, no auto continuation, no apply before protected READY.",
+    "existing_polity_identity_checked_at": "2026-11-26",
+    "temporal_designation_id": "37ca6e9e-d21c-5dd9-a714-d5d045e6fc6a",
+    "prior_correction_run": 45650077388
   }
 }
