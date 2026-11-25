@@ -1,0 +1,28 @@
+{
+  "schema": "atlas-reviewed-spatial-bindings/v1",
+  "shard_id": "zzzzzzzzzzzzzz-20261125-runtime-four-residuals",
+  "baseline": "2026-11-25 Production compact Runtime Person read HTTP 200; four exact Activity/Polity identities; source-backed broad display regions only. See authoring requests for Theagenes of Thasos, Xiang Yu Julu, Chwa II Kabalega and Pancho Villa Chihuahua.",
+  "reviewed_at": "2026-11-25T07:01:00.000Z",
+  "bindings": [
+    {
+      "polity_id": "19f3323f-b5aa-497f-8d39-985d2a0578f9",
+      "region_code": "americas",
+      "subregion_code": "north-america"
+    },
+    {
+      "polity_id": "2d8b9f4b-b738-4641-9241-29553605cdcb",
+      "region_code": "africa",
+      "subregion_code": "east-africa"
+    },
+    {
+      "polity_id": "c9ed5e1f-525f-454b-ae63-a51a607d49aa",
+      "region_code": "europe",
+      "subregion_code": "balkans"
+    },
+    {
+      "polity_id": "ca7411ae-7b36-4c74-9cc5-751fbaf26386",
+      "region_code": "east-asia",
+      "subregion_code": "china"
+    }
+  ]
+}

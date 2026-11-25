@@ -1,6 +1,6 @@
 {
   "schema": "atlas-polity-spatial-index/v2",
-  "generated_at": "2026-11-23T08:19:21.829Z",
+  "generated_at": "2026-11-25T07:01:00.000Z",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
@@ -1241,7 +1241,11 @@
     "da156604-c3e7-4646-93eb-8f93d53c2c5b": "west-asia",
     "de01162c-ace4-4829-8cfc-3773d0e742d7": "west-asia",
     "e075b2d1-be65-42fa-9933-0d49edcaf129": "oceania",
-    "efc2941b-948d-4e3b-8a6e-ab58c766a729": "europe"
+    "efc2941b-948d-4e3b-8a6e-ab58c766a729": "europe",
+    "19f3323f-b5aa-497f-8d39-985d2a0578f9": "americas",
+    "2d8b9f4b-b738-4641-9241-29553605cdcb": "africa",
+    "c9ed5e1f-525f-454b-ae63-a51a607d49aa": "europe",
+    "ca7411ae-7b36-4c74-9cc5-751fbaf26386": "east-asia"
   },
   "place_function_records": [
     {
@@ -2894,6 +2898,10 @@
     "de01162c-ace4-4829-8cfc-3773d0e742d7": "anatolia",
     "e075b2d1-be65-42fa-9933-0d49edcaf129": "pacific-islands",
     "efc2941b-948d-4e3b-8a6e-ab58c766a729": "britain-ireland",
+    "19f3323f-b5aa-497f-8d39-985d2a0578f9": "north-america",
+    "2d8b9f4b-b738-4641-9241-29553605cdcb": "east-africa",
+    "c9ed5e1f-525f-454b-ae63-a51a607d49aa": "balkans",
+    "ca7411ae-7b36-4c74-9cc5-751fbaf26386": "china",
     "00ec4b0c-6002-5791-825c-43465632102d": "north-india-ganges",
     "4c3e50cb-d76c-4b7c-b611-222849404142": "eastern-central-asia-steppe",
     "5247c9c0-ca50-452b-9e5a-d7e5585f096d": "western-europe",
