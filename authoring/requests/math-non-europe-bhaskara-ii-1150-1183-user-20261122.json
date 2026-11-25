@@ -1,0 +1,69 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Bhaskara II",
+    "display_name_ko": "바스카라 2세",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-22",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "science",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "India",
+    "display_name_ko": "인도",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "00ec4b0c-6002-5791-825c-43465632102d"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-11-22",
+      "review_reason": "related_or_derivative_only"
+    }
+  },
+  "request_id": "authoring:user-math-non-europe-two-20261122:bhaskara-ii-siddhanta-karanakutuhala:1150-1183:v1",
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Mathematician",
+    "role_display_name_ko": "수학자",
+    "start_year": 1150,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1183,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Bhāskara II (Bhāskarācārya), a historical 12th-century Indian scholar, completed Siddhāntaśiromaṇi around 1150 (age 36) and produced Karaṇakutūhala dated to 1183. His mathematics spans arithmetic, algebra, quadratic indeterminate equations, and mathematical astronomy, and his works supported long-running Indian mathematics education. The existing India entity is only a broad geographic/civilizational affiliation for scholarship in medieval South Asia; it does NOT assert allegiance to or governance by the modern Indian Republic, or identify an undocumented medieval sovereign dynasty. His association with an astronomical observatory in Ujjain is documented, but the precise political ruler of his scholarly activity is not inferred here. End year 1183 marks a datable work, not an exact death or retirement date."
+  },
+  "sources": [
+    {
+      "title": "MacTutor — Bhaskara II (1114–1185)",
+      "canonical_url": "https://mathshistory.st-andrews.ac.uk/Biographies/Bhaskara_II/",
+      "citation_text": "Confirms individual historicity, 1114–1185 biographical interval, Siddhāntaśiromaṇi, mathematical results and Ujjain scholarly association.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Biographical Encyclopedia of Astronomers — Bhāskara II",
+      "canonical_url": "https://mathshistory.st-andrews.ac.uk/BEA/bhaskara_ii_bea.pdf",
+      "citation_text": "Scholarly reference identifies Siddhāntaśiromaṇi (1150), Karaṇakutūhala (1183), and Bhāskara's mathematically significant treatises.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-non-europe-giants-20261122",
+    "user_selected_for_registration": true,
+    "representation_note": "Year-level, research-backed representative scholarly activity, not political rule or complete lifetime activity.",
+    "namuwiki_index_evidence": "Bounded external index reviews for '바스카라 2세', '바스카라차리야', 'Bhaskara II' and namu.wiki/namu.moe exact pages found only a related '수학자/목록' NamuWiki article listing 바스카라 2세 as plain list text, with no independent verified exact-person article; do not invent a canonical link or treat Korean Wikipedia/AI wiki as NamuWiki. Set reviewed `not_found` reason `related_or_derivative_only`."
+  }
+}

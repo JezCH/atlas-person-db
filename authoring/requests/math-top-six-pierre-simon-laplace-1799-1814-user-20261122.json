@@ -1,0 +1,70 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Pierre-Simon Laplace",
+    "display_name_ko": "피에르시몽 라플라스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-22",
+    "life_status_basis": "documented_death",
+    "representative_domain": "science",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "France",
+    "display_name_ko": "프랑스",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-22",
+      "document_title": "피에르시몽 라플라스",
+      "url": "https://namu.wiki/w/%ED%94%BC%EC%97%90%EB%A5%B4%EC%8B%9C%EB%AA%BD%20%EB%9D%BC%ED%94%8C%EB%9D%BC%EC%8A%A4"
+    }
+  },
+  "request_id": "authoring:user-math-top-six-20261122:pierre-simon-laplace:1799-1814:v1",
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Mathematician",
+    "role_display_name_ko": "수학자",
+    "start_year": 1799,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1814,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Laplace published the first volumes of Traité de Mécanique Céleste in 1799 and his Théorie analytique des probabilités in 1812, with a substantial second edition in 1814. The 1799–1814 year-level span represents major publications in celestial mechanics and probability; it does not imply the end of his mathematical career."
+  },
+  "sources": [
+    {
+      "title": "MacTutor: Pierre-Simon Laplace",
+      "canonical_url": "https://mathshistory.st-andrews.ac.uk/Biographies/Laplace/",
+      "citation_text": "Documents the five-volume celestial mechanics project, first two volumes in 1799, and analytical probability work published in 1812 and 1814.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "French Senate: Pierre-Simon de Laplace",
+      "canonical_url": "https://www.senat.fr/connaitre-le-senat/lhistoire-du-senat/dossiers-dhistoire/sous-le-senat-de-lempire/pierre-simon-de-laplace-comte-dempire-1749-1827.html",
+      "citation_text": "Institutional biography establishing Laplace's life (1749–1827), academic work, and his role in French science.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-math-top-six-20261122",
+    "user_selected_for_registration": true,
+    "historical_activity_scope": "Representative independently documented scholarship, not full lifetime; political community association is scholarly activity only.",
+    "namuwiki_index_evidence": "Indexed independent NamuWiki-derived '피에르시몽 라플라스' document at https://namu.moe/w/피에르시몽%20라플라스, identifies French mathematician and physicist."
+  }
+}

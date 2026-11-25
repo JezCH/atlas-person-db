@@ -1,0 +1,71 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-historical-three-20261122:qitdlarssuaq:inughuit-arrival-c1862:v1",
+  "person": {
+    "canonical_name_en": "Qitdlarssuaq",
+    "display_name_ko": "키틀라르수아크",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-22",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "exploration",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Inughuit (Polar Inuit)",
+    "display_name_ko": "이누흐이트(극지 이누이트)",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "d0487ba3-b605-4193-a8d9-9ceeb2fb526f"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-22",
+      "document_title": "키틀라르수아크",
+      "url": "https://namu.wiki/w/%ED%82%A4%ED%8B%80%EB%9D%BC%EB%A5%B4%EC%88%98%EC%95%84%ED%81%AC"
+    }
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Inuit Migration Leader",
+    "role_display_name_ko": "이누이트 이주 지도자",
+    "start_year": 1862,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1862,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Qitdlarssuaq, also known as Qillarsuaq or Qillaq, was an Inuit migration leader and shaman. He led a party from the eastern Canadian Arctic beginning in spring 1859; scholarship reconstructs the surviving migrants joining the Inughuit in northwestern Greenland around 1862, while other oral-historical reconstructions put first encounter in approximately 1863. This single representative approximate year marks contact and integration with the existing Inughuit community, not formal rule over the Inughuit, not the full 1859–1862 migration duration, and not a fabricated exact arrival day. His historically attested death around the 1870s is sufficient for deceased status but is not used as an Activity boundary."
+  },
+  "sources": [
+    {
+      "title": "The Thule Migration: A Culture in a Hurry?",
+      "canonical_url": "https://www.degruyterbrill.com/document/doi/10.1515/opar-2022-0326/html",
+      "citation_text": "Peer-reviewed archaeology article reconstructs the spring 1859 Qitdlarssuaq-led Inuit journey and arrival of the remaining 18 with the Inughuit in approximately 1862.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Living in an oasis: Rapid transformations, resilience, and resistance in the North Water Area societies and ecosystems",
+      "canonical_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5963568/",
+      "citation_text": "Peer-reviewed article establishes Qillarsuaq's early-1860s arrival and influential transmission of technology and knowledge among the Inughuit, while documenting source disagreement and oral-history uncertainty.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "user_selected_for_registration": true,
+    "request_batch": "user-historical-three-20261122",
+    "registration_scope": "Documented Inuit migration and destination-community contact, not political or monarchical authority.",
+    "chronology_review": "1859 departure is distinct from approx 1862 Inughuit contact; scholarly date reconstructions differ; single approximate year avoids false precision.",
+    "namuwiki_index_evidence": "Indexed independent NamuWiki document headed '키틀라르수아크' explicitly identifies Qitdlarssuaq / Qillarsuaq / Qillaq and describes the 19th-century Inuit journey, confirmed in namu.moe/d.namu.moe indexed documents."
+  }
+}

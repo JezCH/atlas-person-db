@@ -1,0 +1,117 @@
+{
+  "schema": "atlas-reviewed-spatial-bindings/v1",
+  "shard_id": "zzzzzzzzzzzzz-20261123-runtime-sixteen-residuals",
+  "baseline": "Production compact Runtime Person read 2026-11-23; exact main@ad3c9f07af02c5994da11954219bf82593fd5d80; sixteen visible spatial_unresolved Activities",
+  "reviewed_at": "2026-11-23T08:19:21.829Z",
+  "bindings": [
+    {
+      "polity_id": "4ba0e22e-d01d-4dcc-96f4-66fe495854b0",
+      "region_code": "south-asia",
+      "subregion_code": "deccan-south-india"
+    },
+    {
+      "polity_id": "5ca89ee9-78a5-4a93-b882-284b7b05cf84",
+      "region_code": "americas",
+      "subregion_code": "north-america"
+    },
+    {
+      "polity_id": "61379d50-b857-476d-a977-218f806876e6",
+      "region_code": "south-asia",
+      "subregion_code": "deccan-south-india"
+    },
+    {
+      "polity_id": "83292f3d-caad-43bb-86e6-05259b90eac9",
+      "region_code": "europe",
+      "subregion_code": "central-europe"
+    },
+    {
+      "polity_id": "a22bbe38-4024-4b20-8907-37f0780fc44e",
+      "region_code": "west-asia",
+      "subregion_code": "levant"
+    },
+    {
+      "polity_id": "aafb708a-0217-4d81-8227-7cc3d3367b3c",
+      "region_code": "south-asia",
+      "subregion_code": "deccan-south-india"
+    },
+    {
+      "polity_id": "b06c95ef-06f9-4051-afea-02023a4ed013",
+      "region_code": "europe",
+      "subregion_code": "italy"
+    },
+    {
+      "polity_id": "d1dfc200-36a5-4dfe-a898-6635d8e40d0c",
+      "region_code": "south-asia",
+      "subregion_code": "sri-lanka"
+    },
+    {
+      "polity_id": "d8c61c7c-16ff-4aed-ba79-f17040ccd50b",
+      "region_code": "south-asia",
+      "subregion_code": "north-india-ganges"
+    },
+    {
+      "polity_id": "da156604-c3e7-4646-93eb-8f93d53c2c5b",
+      "region_code": "west-asia",
+      "subregion_code": "anatolia"
+    },
+    {
+      "polity_id": "de01162c-ace4-4829-8cfc-3773d0e742d7",
+      "region_code": "west-asia",
+      "subregion_code": "anatolia"
+    },
+    {
+      "polity_id": "e075b2d1-be65-42fa-9933-0d49edcaf129",
+      "region_code": "oceania",
+      "subregion_code": "pacific-islands"
+    },
+    {
+      "polity_id": "efc2941b-948d-4e3b-8a6e-ab58c766a729",
+      "region_code": "europe",
+      "subregion_code": "britain-ireland"
+    }
+  ],
+  "activity_overrides": [
+    {
+      "activity_id": "37ce669c-a43c-4cd2-a1f5-a764f43ff83d",
+      "expected_polity_id": "a1c6b0b4-ca71-420d-8d9f-502dc7914dd7",
+      "expected_start_year": -281,
+      "expected_end_year": -281,
+      "reason": "Berossus's authored c. 281 BCE Babyloniaca-era activity is linked to his Babylonian priestly and historiographic work, before the later and date-uncertain move to Cos. This is an Activity-only Mesopotamia anchor, not a fixed capital or geography for the transregional Seleucid Empire.",
+      "source_refs": [
+        "https://www.iranicaonline.org/articles/berossus-babylonian-4th-3rd-century-priest-chronicler-whose-work-has-some-bearing-on-iranian-history/",
+        "https://academic.oup.com/edited-volume/61673/chapter-abstract/548510466"
+      ],
+      "region_code": "west-asia",
+      "subregion_code": "mesopotamia",
+      "location_label": "Babylon (Berossus's Babylonian priestly and historiographic work)"
+    },
+    {
+      "activity_id": "589e014a-77a4-4f1a-96a1-1d62d22f32a0",
+      "expected_polity_id": "01f4ce7b-aaa3-473a-a6fd-9c95c4a85ff7",
+      "expected_start_year": 1135,
+      "expected_end_year": 1136,
+      "reason": "Anvari's c. 1135–1136 first surviving court-poetry attestation belongs to Sultan Sanjar's court, whose courtly seat was at Marv/Merv in western Central Asia. The existing Great Seljuk place-function is only for 1063–1072 and must not be extended without review.",
+      "source_refs": [
+        "https://www.iranicaonline.org/articles/anwari/",
+        "https://www.iranicaonline.org/articles/saljuqs/v-literature/"
+      ],
+      "region_code": "central-asia",
+      "subregion_code": "western-central-asia",
+      "location_label": "Merv / Marv (Sultan Sanjar's court, representative)"
+    },
+    {
+      "activity_id": "99034ac4-c573-45f3-bf41-a3f3b6a8f920",
+      "expected_polity_id": "6539c314-ec29-42e0-a0c2-90991fb9ffd8",
+      "expected_start_year": 1487,
+      "expected_end_year": 1487,
+      "reason": "Jami's 1487 Baharestan-period scholarly and court activity is centered in Herat under the later Timurids. The polity's reviewed Samarkand center covers only 1370–1405; follow the existing Shah Rukh Herat Activity precision precedent without turning the entire Timurid Empire into a fixed polity geography.",
+      "source_refs": [
+        "https://www.iranicaonline.org/articles/jami-i/",
+        "https://www.iranicaonline.org/articles/majd-al-din-%E1%B8%B5%E1%B5%9Bafi/"
+      ],
+      "region_code": "south-asia",
+      "subregion_code": "northwest-south-asia",
+      "location_label": "Herat (Jami and the later Timurid court)"
+    }
+  ]
+}

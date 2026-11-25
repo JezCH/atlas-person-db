@@ -27,6 +27,9 @@ test('Place evidence delta retains the original immutable fact and Source identi
     assert.ok(original, `unexpected or repeated fact ${entry.fact_index}`);
     assert.equal(entry.source_id, original.sourceId);
     expected.delete(entry.fact_index);
+    if (entry.fact_index !== 11 && entry.fact_index !== 22) {
+      assert.equal(entry.canonical_identity ?? null, null, `fact ${entry.fact_index}: unresolved canonical identity`);
+    }
     assert.ok(entry.historical_claim.function_type === 'capital');
     assert.equal(entry.historical_claim.start_year, original.startYear, `fact ${entry.fact_index}: original start year`);
     assert.equal(entry.historical_claim.end_year, original.endYear, `fact ${entry.fact_index}: original end year`);
@@ -89,8 +92,13 @@ test('Samarkand evidence is corroborated for Timur personal reign, not authorize
 test('Cairo evidence corroborates capital at year granularity without authorizing restoration', () => {
   const entry=handoff.cases.find(e=>e.fact_index===22);
   assert.deepEqual(entry.historical_claim,{function_type:'capital',start_year:1250,end_year:1517});
-  assert.equal(entry.canonical_identity.place_id,'53708ee8-020e-5efa-89f6-85d97d26cd82');
-  assert.equal(entry.canonical_identity.polity_id,'e3da3007-529a-40ec-9934-7b70dfd11cb7');
+  assert.deepEqual(entry.canonical_identity, {
+    polity_id: 'e3da3007-529a-40ec-9934-7b70dfd11cb7',
+    polity: 'Mamluk Sultanate',
+    place_id: '53708ee8-020e-5efa-89f6-85d97d26cd82',
+    place: 'Cairo',
+    place_key: 'cairo'
+  });
   assert.deepEqual(entry.additional_evidence.map(e=>new URL(e.url).hostname).sort(),['whc.unesco.org','www.metmuseum.org']);
   assert.match(entry.review_state,/^HOLD_OWNER_APPROVAL/);
   assert.equal(handoff.production_mutation_authorized,false);

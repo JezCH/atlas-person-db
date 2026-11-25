@@ -1,0 +1,70 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Joseph Fourier",
+    "display_name_ko": "조제프 푸리에",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-22",
+    "life_status_basis": "documented_death",
+    "representative_domain": "science",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "France",
+    "display_name_ko": "프랑스",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-22",
+      "document_title": "조제프 푸리에",
+      "url": "https://namu.wiki/w/%EC%A1%B0%EC%A0%9C%ED%94%84%20%ED%91%B8%EB%A6%AC%EC%97%90"
+    }
+  },
+  "request_id": "authoring:user-math-top-six-20261122:joseph-fourier:1807-1822:v1",
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Mathematician",
+    "role_display_name_ko": "수학자",
+    "start_year": 1807,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1822,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Fourier presented his key 1807 memoir on propagation of heat and later developed and published Théorie analytique de la chaleur in 1822. The bounded 1807–1822 representative scholarly interval captures the founding publications of Fourier heat analysis, not his separate prefectural administrative office."
+  },
+  "sources": [
+    {
+      "title": "MacTutor: Joseph Fourier",
+      "canonical_url": "https://mathshistory.st-andrews.ac.uk/Biographies/Fourier/",
+      "citation_text": "Documents 1807 memoir on heat conduction, Fourier series and 1822 analytical theory of heat publication.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "MIT Press: Joseph Fourier, 1768–1830",
+      "canonical_url": "https://mitpress.mit.edu/9780262571784/joseph-fourier-17681830/",
+      "citation_text": "Scholarly publishing record identifying Fourier's original 1807 memoir and subsequent 1822 book.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-math-top-six-20261122",
+    "user_selected_for_registration": true,
+    "historical_activity_scope": "Representative independently documented scholarship, not full lifetime; political community association is scholarly activity only.",
+    "namuwiki_index_evidence": "Indexed independent NamuWiki-derived Person article '조제프 푸리에' at https://namu.moe/w/조제프%20푸리에, whose biographical introduction identifies Jean-Baptiste Joseph Fourier."
+  }
+}

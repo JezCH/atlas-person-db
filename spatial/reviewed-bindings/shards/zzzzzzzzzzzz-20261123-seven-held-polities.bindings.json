@@ -1,0 +1,43 @@
+{
+  "schema": "atlas-reviewed-spatial-bindings/v1",
+  "shard_id": "zzzzzzzzzzzz-20261123-seven-held-polities",
+  "baseline": "main@1e32bb65d37eb9cf0191537e9e08d93000a584da; canonical protected Authoring Apply committed IDs / registered reviewed_hold",
+  "reviewed_at": "2026-11-23T05:14:20.560Z",
+  "bindings": [
+    {
+      "polity_id": "02c0a6e8-a3f6-4522-94e8-602890e6b5d3",
+      "region_code": "americas",
+      "subregion_code": "north-america"
+    },
+    {
+      "polity_id": "11d10872-353c-46da-8f1d-dde229937355",
+      "region_code": "south-asia",
+      "subregion_code": "deccan-south-india"
+    },
+    {
+      "polity_id": "2ab00854-f6fa-458b-8482-e9d1379036ba",
+      "region_code": "east-asia",
+      "subregion_code": "china"
+    },
+    {
+      "polity_id": "444e2e50-9736-4bdb-a62f-cb4c2243d00f",
+      "region_code": "central-asia",
+      "subregion_code": "western-siberia"
+    },
+    {
+      "polity_id": "5b721fcc-c736-48bf-97bc-23f5608dcebe",
+      "region_code": "europe",
+      "subregion_code": "italy"
+    },
+    {
+      "polity_id": "9dd3cc18-bc25-48b5-bf82-54d6df7f28d8",
+      "region_code": "oceania",
+      "subregion_code": "australasia"
+    },
+    {
+      "polity_id": "ba97250b-84be-41d8-a5d9-3890e83996a8",
+      "region_code": "europe",
+      "subregion_code": "italy"
+    }
+  ]
+}

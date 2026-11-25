@@ -1,6 +1,6 @@
 {
   "schema": "atlas-polity-spatial-index/v2",
-  "generated_at": "2026-09-30T15:12:00.000Z",
+  "generated_at": "2026-11-25T07:01:00.000Z",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
@@ -1221,7 +1221,31 @@
     "d6a72e99-f1f2-42c0-bba3-b8d3207a5f35": "europe",
     "2d3c9101-f215-4eb7-b1d0-1a110d63f8a9": "europe",
     "47b5f0d3-992a-4e25-a1df-1dd8140cbcef": "west-asia",
-    "59ca6fbe-507c-4d97-8edc-a8fbb9d236c4": "africa"
+    "59ca6fbe-507c-4d97-8edc-a8fbb9d236c4": "africa",
+    "02c0a6e8-a3f6-4522-94e8-602890e6b5d3": "americas",
+    "11d10872-353c-46da-8f1d-dde229937355": "south-asia",
+    "2ab00854-f6fa-458b-8482-e9d1379036ba": "east-asia",
+    "444e2e50-9736-4bdb-a62f-cb4c2243d00f": "central-asia",
+    "5b721fcc-c736-48bf-97bc-23f5608dcebe": "europe",
+    "9dd3cc18-bc25-48b5-bf82-54d6df7f28d8": "oceania",
+    "ba97250b-84be-41d8-a5d9-3890e83996a8": "europe",
+    "4ba0e22e-d01d-4dcc-96f4-66fe495854b0": "south-asia",
+    "5ca89ee9-78a5-4a93-b882-284b7b05cf84": "americas",
+    "61379d50-b857-476d-a977-218f806876e6": "south-asia",
+    "83292f3d-caad-43bb-86e6-05259b90eac9": "europe",
+    "a22bbe38-4024-4b20-8907-37f0780fc44e": "west-asia",
+    "aafb708a-0217-4d81-8227-7cc3d3367b3c": "south-asia",
+    "b06c95ef-06f9-4051-afea-02023a4ed013": "europe",
+    "d1dfc200-36a5-4dfe-a898-6635d8e40d0c": "south-asia",
+    "d8c61c7c-16ff-4aed-ba79-f17040ccd50b": "south-asia",
+    "da156604-c3e7-4646-93eb-8f93d53c2c5b": "west-asia",
+    "de01162c-ace4-4829-8cfc-3773d0e742d7": "west-asia",
+    "e075b2d1-be65-42fa-9933-0d49edcaf129": "oceania",
+    "efc2941b-948d-4e3b-8a6e-ab58c766a729": "europe",
+    "19f3323f-b5aa-497f-8d39-985d2a0578f9": "americas",
+    "2d8b9f4b-b738-4641-9241-29553605cdcb": "africa",
+    "c9ed5e1f-525f-454b-ae63-a51a607d49aa": "europe",
+    "ca7411ae-7b36-4c74-9cc5-751fbaf26386": "east-asia"
   },
   "place_function_records": [
     {
@@ -2854,6 +2878,30 @@
     "2d3c9101-f215-4eb7-b1d0-1a110d63f8a9": "iberia",
     "47b5f0d3-992a-4e25-a1df-1dd8140cbcef": "mesopotamia",
     "59ca6fbe-507c-4d97-8edc-a8fbb9d236c4": "maghreb-north-africa",
+    "02c0a6e8-a3f6-4522-94e8-602890e6b5d3": "north-america",
+    "11d10872-353c-46da-8f1d-dde229937355": "deccan-south-india",
+    "2ab00854-f6fa-458b-8482-e9d1379036ba": "china",
+    "444e2e50-9736-4bdb-a62f-cb4c2243d00f": "western-siberia",
+    "5b721fcc-c736-48bf-97bc-23f5608dcebe": "italy",
+    "9dd3cc18-bc25-48b5-bf82-54d6df7f28d8": "australasia",
+    "ba97250b-84be-41d8-a5d9-3890e83996a8": "italy",
+    "4ba0e22e-d01d-4dcc-96f4-66fe495854b0": "deccan-south-india",
+    "5ca89ee9-78a5-4a93-b882-284b7b05cf84": "north-america",
+    "61379d50-b857-476d-a977-218f806876e6": "deccan-south-india",
+    "83292f3d-caad-43bb-86e6-05259b90eac9": "central-europe",
+    "a22bbe38-4024-4b20-8907-37f0780fc44e": "levant",
+    "aafb708a-0217-4d81-8227-7cc3d3367b3c": "deccan-south-india",
+    "b06c95ef-06f9-4051-afea-02023a4ed013": "italy",
+    "d1dfc200-36a5-4dfe-a898-6635d8e40d0c": "sri-lanka",
+    "d8c61c7c-16ff-4aed-ba79-f17040ccd50b": "north-india-ganges",
+    "da156604-c3e7-4646-93eb-8f93d53c2c5b": "anatolia",
+    "de01162c-ace4-4829-8cfc-3773d0e742d7": "anatolia",
+    "e075b2d1-be65-42fa-9933-0d49edcaf129": "pacific-islands",
+    "efc2941b-948d-4e3b-8a6e-ab58c766a729": "britain-ireland",
+    "19f3323f-b5aa-497f-8d39-985d2a0578f9": "north-america",
+    "2d8b9f4b-b738-4641-9241-29553605cdcb": "east-africa",
+    "c9ed5e1f-525f-454b-ae63-a51a607d49aa": "balkans",
+    "ca7411ae-7b36-4c74-9cc5-751fbaf26386": "china",
     "00ec4b0c-6002-5791-825c-43465632102d": "north-india-ganges",
     "4c3e50cb-d76c-4b7c-b611-222849404142": "eastern-central-asia-steppe",
     "5247c9c0-ca50-452b-9e5a-d7e5585f096d": "western-europe",
@@ -3795,6 +3843,48 @@
       "region_code": "africa",
       "subregion_code": "nile-valley",
       "location_label": "Egypt"
+    },
+    {
+      "activity_id": "37ce669c-a43c-4cd2-a1f5-a764f43ff83d",
+      "expected_polity_id": "a1c6b0b4-ca71-420d-8d9f-502dc7914dd7",
+      "expected_start_year": -281,
+      "expected_end_year": -281,
+      "reason": "Berossus's authored c. 281 BCE Babyloniaca-era activity is linked to his Babylonian priestly and historiographic work, before the later and date-uncertain move to Cos. This is an Activity-only Mesopotamia anchor, not a fixed capital or geography for the transregional Seleucid Empire.",
+      "source_refs": [
+        "https://academic.oup.com/edited-volume/61673/chapter-abstract/548510466",
+        "https://www.iranicaonline.org/articles/berossus-babylonian-4th-3rd-century-priest-chronicler-whose-work-has-some-bearing-on-iranian-history/"
+      ],
+      "region_code": "west-asia",
+      "subregion_code": "mesopotamia",
+      "location_label": "Babylon (Berossus's Babylonian priestly and historiographic work)"
+    },
+    {
+      "activity_id": "589e014a-77a4-4f1a-96a1-1d62d22f32a0",
+      "expected_polity_id": "01f4ce7b-aaa3-473a-a6fd-9c95c4a85ff7",
+      "expected_start_year": 1135,
+      "expected_end_year": 1136,
+      "reason": "Anvari's c. 1135–1136 first surviving court-poetry attestation belongs to Sultan Sanjar's court, whose courtly seat was at Marv/Merv in western Central Asia. The existing Great Seljuk place-function is only for 1063–1072 and must not be extended without review.",
+      "source_refs": [
+        "https://www.iranicaonline.org/articles/anwari/",
+        "https://www.iranicaonline.org/articles/saljuqs/v-literature/"
+      ],
+      "region_code": "central-asia",
+      "subregion_code": "western-central-asia",
+      "location_label": "Merv / Marv (Sultan Sanjar's court, representative)"
+    },
+    {
+      "activity_id": "99034ac4-c573-45f3-bf41-a3f3b6a8f920",
+      "expected_polity_id": "6539c314-ec29-42e0-a0c2-90991fb9ffd8",
+      "expected_start_year": 1487,
+      "expected_end_year": 1487,
+      "reason": "Jami's 1487 Baharestan-period scholarly and court activity is centered in Herat under the later Timurids. The polity's reviewed Samarkand center covers only 1370–1405; follow the existing Shah Rukh Herat Activity precision precedent without turning the entire Timurid Empire into a fixed polity geography.",
+      "source_refs": [
+        "https://www.iranicaonline.org/articles/jami-i/",
+        "https://www.iranicaonline.org/articles/majd-al-din-%E1%B8%B5%E1%B5%9Bafi/"
+      ],
+      "region_code": "south-asia",
+      "subregion_code": "northwest-south-asia",
+      "location_label": "Herat (Jami and the later Timurid court)"
     }
   ]
 }

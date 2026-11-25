@@ -1,0 +1,81 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261125:mikhail-diterikhs:priamur-zemsky-krai-supreme-ruler:1922-08-08:1922-10-25:v1",
+  "person": {
+    "canonical_name_en": "Mikhail Diterikhs",
+    "display_name_ko": "미하일 디테리흐스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-25",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Priamur Zemsky Krai",
+    "display_name_ko": "프리아무르 젬스키 지방",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "The Russian State Archives official guides to the office of the Ruler of Priamur Zemsky Krai (https://guides.rusarchives.ru/terms/7/897/pravitel-priamurskogo-zemskogo-kraya-mk-diterihs-g-vladivostok) locate its headquarters in Vladivostok in 1922. The entity was an anti-Bolshevik Far Eastern remnant regime with shifting contested control during the Japanese withdrawal, not the contemporaneous Far Eastern Republic. No verified first-class Place ID, stable 1922 historical border geometry, or authorized spatial display binding is asserted. Keep spatial registration reviewed_hold instead of fabricating territorial ownership."
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-25",
+      "document_title": "미하일 디테리흐스",
+      "url": "https://namu.wiki/w/%EB%AF%B8%ED%95%98%EC%9D%BC%20%EB%94%94%ED%85%8C%EB%A6%AC%ED%9D%90%EC%8A%A4"
+    }
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "term",
+    "role": "Supreme Ruler of Priamur Zemsky Krai",
+    "role_code": "supreme_ruler_priamur_zemsky_krai",
+    "role_display_name_ko": "프리아무르 젬스키 지방 최고 통치자",
+    "start_year": 1922,
+    "start_month": 8,
+    "start_day": 8,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1922,
+    "end_month": 10,
+    "end_day": 25,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Mikhail Konstantinovich Diterikhs (1874–1937) assumed supreme political authority over the anti-Bolshevik Priamur Zemsky Krai at Vladivostok on 8 August 1922, under a Zemsky Sobor settlement, and served as the commander/voevoda of the Zemskaya Rat. Russian state archival guides distinguish the former Provisional Priamur Government (founded 1921, ruled by the Merkulov circle) from its 1922 Zemsky Krai reorganization under Diterikhs. This polity is not the Far Eastern Republic, an opposing state whose forces took Vladivostok on 25 October 1922. The 25 October end records the approximate collapse of the regime, not an independently attested resignation hour or claim that Diterikhs personally controlled Vladivostok up to that exact instant. The 1922 regime's monarchist political programme, military defeat and Japanese troop withdrawal are noted; earlier provisional rule from 1921 must not be incorrectly assigned to his reign."
+  },
+  "sources": [
+    {
+      "title": "Russian State Archives — Ruler of Priamur Zemsky Krai (M. K. Diterikhs), Vladivostok",
+      "canonical_url": "https://guides.rusarchives.ru/terms/7/897/pravitel-priamurskogo-zemskogo-kraya-mk-diterihs-g-vladivostok",
+      "citation_text": "Russian Federation archival guide describes the office of M. K. Diterikhs as ruler of Priamur Zemsky Krai in Vladivostok, with decrees and orders beginning 8 August 1922 and continuing into October.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Russian State Archives — Headquarters of Zemskaya Rat, Priamur Zemsky Krai",
+      "canonical_url": "https://guides.rusarchives.ru/terms/21/6947/shtab-zemskoy-rati-priamurskogo-zemskogo-kraya",
+      "citation_text": "Archival fonds identify Diterikhs as voevoda/commander of the reorganized Zemskaya Rat in Order No. 138 of 8 August 1922, separating military authority from formal ruler office.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Nationalist mobilisation in the Russian Far East during the closing phase of the Civil War — SPbU History",
+      "canonical_url": "https://publications.hse.ru/en/articles/204708786",
+      "citation_text": "Peer-reviewed historical study describes Diterikhs' ultra-monarchist 1922 leadership of the Provisional Priamur Government and political reorganization in Vladivostok, distinct from rival Soviet-aligned Far Eastern Republic.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-priamurye-morelos-registration-20261125",
+    "user_selected_for_registration": true,
+    "precheck": "Production searches for Mikhail Diterikhs, Mikhail Dieterichs, Diterikhs, Priamurye, Priamur Zemsky Krai returned zero; registered Far Eastern Republic UUID e8a494af-a962-49e2-8b8c-236569c327df is not synonymous with Priamur Zemsky Krai.",
+    "namuwiki_index_evidence": "Independent exact Korean Person document indexed at m.namu.moe/w/미하일 디테리흐스. Name and Russian historical identity match; canonical NamuWiki URL reviewed. This is an identity hyperlink, not primary historical authority.",
+    "historical_identity_review": "The 1921 Provisional Priamur Government was reorganised/renamed as Priamur Zemsky Krai in August 1922 under Diterikhs. This manifest registers his specifically attested August-October 1922 polity phase; no separate duplicate 1921 polity is created. No military victory or permanent border claims."
+  }
+}

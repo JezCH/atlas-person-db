@@ -1,0 +1,70 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-historical-three-20261122:victoriano-huerta:president-1913-1914:v1",
+  "person": {
+    "canonical_name_en": "Victoriano Huerta",
+    "display_name_ko": "빅토리아노 우에르타",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-22",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Mexico",
+    "display_name_ko": "멕시코",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "678683e3-4a02-46be-9095-d639147b0fc8"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-22",
+      "document_title": "빅토리아노 우에르타",
+      "url": "https://namu.wiki/w/%EB%B9%85%ED%86%A0%EB%A6%AC%EC%95%84%EB%85%B8%20%EC%9A%B0%EC%97%90%EB%A5%B4%ED%83%80"
+    }
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1913,
+    "start_month": 2,
+    "start_day": 19,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1914,
+    "end_month": 7,
+    "end_day": 15,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Victoriano Huerta held the presidency of Mexico from 19 February 1913 following his coup against President Francisco I. Madero until his resignation accepted by the Chamber of Deputies on 15 July 1914. This is his historical presidency, not a sovereign new polity 'Mexico under Huerta'; the existing Mexico polity is reused. His seizure of power, coercion and repression do not imply legitimate popular election or moral endorsement."
+  },
+  "sources": [
+    {
+      "title": "Library of Congress — Victoriano Huerta as President",
+      "canonical_url": "https://loc.gov/exhibits/mexican-revolution-and-the-united-states/huerta-as-president.html",
+      "citation_text": "Official U.S. Library of Congress Mexican Revolution exhibition records Huerta becoming president on 19 February 1913 and submitting his resignation on 15 July 1914.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Archontology — Biography of Victoriano Huerta",
+      "canonical_url": "https://www.archontology.org/nations/mex/mex_1855_1914/huerta.php",
+      "citation_text": "Dated heads-of-state chronology establishes 19 Feb 1913 to 15 Jul 1914 presidency and death on 13 Jan 1916.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "user_selected_for_registration": true,
+    "request_batch": "user-historical-three-20261122",
+    "registration_scope": "Historical officeholder linked to existing Mexico; no new state identity.",
+    "namuwiki_index_evidence": "Independent indexed Korean NamuWiki Person document title '빅토리아노 우에르타' confirmed by namu.moe/w/빅토리아노%20우에르타, with exact 1913-02-19–1914-07-15 presidential term. NamuWiki birth-year differs from Library of Congress; no speculative date of birth is written."
+  }
+}

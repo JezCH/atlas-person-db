@@ -1,0 +1,70 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261124:william-marshal:lincoln-command:1217:v1",
+  "person": {
+    "canonical_name_en": "William Marshal",
+    "display_name_ko": "윌리엄 마셜",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-24",
+    "life_status_basis": "documented_death",
+    "representative_domain": "military",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of England",
+    "display_name_ko": "잉글랜드 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "d3131d3e-ff4b-5d4d-b5d2-ddfd5e9bda1d"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-24",
+      "document_title": "윌리엄 마셜",
+      "url": "https://namu.wiki/w/%EC%9C%8C%EB%A6%AC%EC%97%84%20%EB%A7%88%EC%85%9C"
+    }
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "general_activity",
+    "role": "Royalist army commander at Lincoln",
+    "role_display_name_ko": "링컨 전투 왕당군 지휘관",
+    "start_year": 1217,
+    "start_month": 5,
+    "start_day": 20,
+    "start_certainty": "exact",
+    "start_calendar": "julian",
+    "end_year": 1217,
+    "end_month": 5,
+    "end_day": 20,
+    "end_certainty": "exact",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "William Marshal personally commanded the royalist relief force for Henry III against French and rebel forces at the Second Battle of Lincoln on 20 May 1217. This is a military command Activity distinct from his ongoing constitutional regency. The battle should not be reinterpreted as Marshal ruling a new state. Julian calendar corresponds to the historical English contemporary dating convention."
+  },
+  "sources": [
+    {
+      "title": "Historic England — The Second Battle of Lincoln (1217), Historic Environment Record",
+      "canonical_url": "https://historicengland.org.uk/listing/heritage-gateway/results/record/17f08a91-7b22-4f3c-8093-93784a5ce26b/MLI89084",
+      "citation_text": "Historic England heritage record dates the Second Battle of Lincoln to 20 May 1217 and explicitly identifies William Marshal as commander of the king's relief force.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "University of Lincoln — Battle of Lincoln 1217: William Marshal Saves England?",
+      "canonical_url": "https://history.lincoln.ac.uk/2018/07/30/the-battle-of-lincoln-1217-the-greatest-knight-saves-england/",
+      "citation_text": "University historians discuss the Lincoln campaign and Marshal's role commanding the relief force supporting Henry III.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-nine-combat-icons-20261124",
+    "user_selected_for_registration": true,
+    "relationship_to_regency": "Same William Marshal identity and Kingdom of England; separate documented military activity, not duplicate of 1216–1219 regency.",
+    "namuwiki_index_evidence": "Existing independent NamuWiki-derived Person page titled 윌리엄 마셜; reuses exact reviewed registration link of William Marshal regent manifest."
+  }
+}

@@ -1342,3 +1342,53 @@
     column-gap: 6px;
   }
 }
+
+
+/* Mobile progressive Person rows: show the complete register beyond row 48. */
+@media (max-width:760px) {
+  /* The deferred row has four children, but the normal mobile register only
+     has three columns. Give placeholders their own explicit two-column map;
+     otherwise the fourth child creates an offscreen implicit grid track. */
+  .person-monumental-register .person-era-rows > .person-table-deferred {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "name range" "activities activities";
+    align-items: center;
+    column-gap: 8px;
+    row-gap: 3px;
+    /* Desktop's inline estimate includes full Activity rows. Keeping that
+       100–180px estimate for a two-line mobile placeholder makes the list
+       look almost empty and pushes later Persons unnecessarily far away. */
+    min-height: 56px !important;
+    padding: 7px 0;
+  }
+  .person-monumental-register .person-era-rows > .person-table-deferred .person-table-deferred-name {
+    grid-area: name;
+    grid-column: auto;
+    padding: 0 2px 0 11px;
+    font-size: 15px;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+    color: var(--atlas-text);
+  }
+  .person-monumental-register .person-era-rows > .person-table-deferred .person-table-deferred-range {
+    grid-area: range;
+    grid-column: auto;
+    padding: 0;
+    font-size: 10px;
+    line-height: 1.25;
+    text-align: right;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .person-monumental-register .person-era-rows > .person-table-deferred .person-table-deferred-activities {
+    grid-area: activities;
+    grid-column: auto;
+    padding: 0 2px 0 11px;
+    font-size: 11px;
+    line-height: 1.3;
+    opacity: .8;
+  }
+  .person-monumental-register .person-era-rows > .person-table-deferred .person-table-deferred-count {
+    display: none;
+  }
+}

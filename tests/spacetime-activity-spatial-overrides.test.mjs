@@ -305,20 +305,38 @@ function activity(activityId, polityId, startYear, endYear) {
 test("canonical Activity overrides are exact reviewed UUID/interval facts", () => {
   const validation = model.validateSpatialIndex(index);
   assert.equal(validation.valid, true, validation.errors.join("\n"));
-  // Keep legacy single-leaf overrides distinct from the five reviewed complex Activity overrides.
+  // Preserve exact historical regression expectations without freezing the number of
+  // future reviewed Activity overrides. Validate every additional single-leaf override
+  // with the same canonical resolver and fail-closed UUID/interval contract.
   const simpleRows = index.activity_spatial_overrides.filter((row) => !Array.isArray(row.segments) || row.segments.length === 0);
-  assert.equal(simpleRows.length, EXPECTED.size);
-  assert.deepEqual(new Set(simpleRows.map((row) => row.activity_id)), new Set(EXPECTED.keys()));
+  const simpleById = new Map(simpleRows.map((row) => [row.activity_id, row]));
+  assert.equal(simpleById.size, simpleRows.length, "duplicate Activity overrides");
 
-  for (const row of simpleRows) {
-    const expected = EXPECTED.get(row.activity_id);
-    assert.ok(expected, row.activity_id);
+  for (const [activityId, expected] of EXPECTED) {
+    const row = simpleById.get(activityId);
+    assert.ok(row, "missing historically reviewed Activity override: " + activityId);
     assert.deepEqual(
       [row.expected_polity_id, row.expected_start_year, row.expected_end_year, row.region_code, row.subregion_code, row.location_label],
-      expected
+      expected,
+      activityId
     );
-    assert.ok(row.reason);
-    assert.ok(Array.isArray(row.source_refs) && row.source_refs.length > 0);
+  }
+
+  const lookup = model.createSpatialLookup(index);
+  for (const row of simpleRows) {
+    assert.ok(row.reason, row.activity_id);
+    assert.ok(Array.isArray(row.source_refs) && row.source_refs.length > 0, row.activity_id);
+    const resolved = model.resolveActivityPlacement(
+      activity(row.activity_id, row.expected_polity_id, row.expected_start_year, row.expected_end_year),
+      lookup
+    );
+    assert.equal(resolved.status, "placed", row.activity_id);
+    assert.equal(resolved.segments.length, 1, row.activity_id);
+    assert.equal(resolved.segments[0].placement_basis, "activity_override", row.activity_id);
+    assert.equal(resolved.segments[0].region_code, row.region_code, row.activity_id);
+    assert.equal(resolved.segments[0].subregion_code, row.subregion_code, row.activity_id);
+    assert.equal(resolved.segments[0].location_label, row.location_label, row.activity_id);
+    assert.ok(resolved.segments[0].source_refs.length > 0, row.activity_id);
   }
 });
 

@@ -72,3 +72,15 @@ test('distinguishes literal call arguments from computed paths with literal pref
   ].join('\n');
   assert.deepEqual(relativeSpecifiers(source).sort(),['./literal.js','./trailing.cjs','./with-options.js']);
 });
+
+test('keyword suffixes inside JavaScript identifiers are not module dependencies',()=>{
+  const source=[
+    "$require('./dollar-prefix.js');",
+    "require$('./dollar-suffix.js');",
+    "한require('./unicode-prefix.js');",
+    "require한('./unicode-suffix.js');",
+    "class Test { #require() {} run() { this.#require('./private.js'); } }",
+    "require('./real.cjs');",
+  ].join('\n');
+  assert.deepEqual(relativeSpecifiers(source),['./real.cjs']);
+});

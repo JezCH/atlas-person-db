@@ -1,0 +1,74 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261124:xiang-yu:julu-restored-chu:207bce:v1",
+  "person": {
+    "canonical_name_en": "Xiang Yu",
+    "display_name_ko": "항우",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-24",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Restored Chu (Qin Rebellion)",
+    "display_name_ko": "초나라 부흥 정권(진말)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Scholarly summaries (including https://ctext.org/datawiki.pl?if=en&remap=gb&res=603665 and Brill Dictionary of Qin/Han) establish the revived Chu anti-Qin court under King Huai II around 208–206 BCE, distinct from Warring States Chu and Xiang Yu's later Western Chu. No reviewed first-class Place, political extent or static display authority is established in this request; spatial disposition must remain on hold."
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-21",
+      "document_title": "항우",
+      "url": "https://namu.wiki/w/%ED%95%AD%EC%9A%B0"
+    }
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "military_activity",
+    "role": "Chu anti-Qin military commander at Julu",
+    "role_display_name_ko": "거록대전 초나라 반진군 지휘관",
+    "start_year": -207,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -207,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Xiang Yu led the revived Chu anti-Qin army at the Battle of Julu in 207 BCE, defeating major Qin forces and becoming predominant among rebel commanders. In 207 BCE the restored Chu royal authority of King Huai II, not Western Chu (established by Xiang Yu in 206 BCE), was the contemporaneous political affiliation. This military Activity is distinct from existing Western Chu hegemon-king reign 206–202 BCE. Later legends about individual prowess and casualty figures are not treated as independently verified facts."
+  },
+  "sources": [
+    {
+      "title": "Chinese Text Project — Xiang Yu historical dossier",
+      "canonical_url": "https://ctext.org/datawiki.pl?if=en&remap=gb&res=603665",
+      "citation_text": "Chinese historical dossier discusses Xiang Yu as a Chu military leader under King Huai II and his 207 BCE campaign at Julu.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "A Study of Chu and Han Transition — restored Kingdom of Chu",
+      "canonical_url": "https://kirj.ee/public/trames_pdf/2012/issue_3/Trames-2012-3-237-285.pdf",
+      "citation_text": "Academic history describes the Chu kingdom restored in 208 BCE and allied military victory against Qin in 207 BCE, separating it from Xiang Yu's later polity.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-nine-combat-corrections-20261124",
+    "user_selected_for_registration": true,
+    "person_reuse_id": "94d3df64-8a91-5993-a15a-b45d927b8abb",
+    "namuwiki_review": "Reuse linked exact NamuWiki Person state already stored in Production on 2026-08-21",
+    "polity_review": "Restored Chu c.208-206 BCE distinct from pre-Qin Chu and Xiang Yu's Western Chu 206-202 BCE."
+  }
+}
