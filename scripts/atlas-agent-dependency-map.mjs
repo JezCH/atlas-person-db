@@ -91,7 +91,7 @@ function literal(source,start){
 }
 export function relativeSpecifiers(source){
   const mask=codeMask(source),result=new Set();
-  for(const match of mask.matchAll(/\b(?:import|require|from)\b/g)){
+  for(const match of mask.matchAll(/(?<![\p{ID_Continue}$#\u200c\u200d])(?:import|require|from)(?![\p{ID_Continue}$\u200c\u200d])/gu)){
     const token=match[0],i=match.index;
     // Member helpers (including optional chaining) are not module imports.
     let previous=i-1;
