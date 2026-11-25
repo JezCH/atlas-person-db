@@ -17,7 +17,8 @@
     "canonical_name_en": "Holy Roman Empire",
     "display_name_ko": "신성 로마 제국",
     "polity_type": "historical_polity",
-    "historicity": "historical"
+    "historicity": "historical",
+    "existing_id": "aefaece0-759c-5bde-b653-6eed173f98f8"
   },
   "activity": {
     "relation_type": "active_in",
@@ -60,13 +61,17 @@
   },
   "review_context": {
     "task": "#2545 approved 62, remaining 30 after #2543/#2544/#2546",
-    "registration_state": "NEEDS_PREFLIGHT",
-    "draft_only": true,
-    "production_screen": "NOT_PERFORMED_USER_PROHIBITED",
+    "registration_state": "READY_FOR_PROTECTED_APPLY",
+    "draft_only": false,
+    "production_screen": "PROTECTED_PREFLIGHT_READY_45630299886",
     "identity_review": "Albrecht Dürer the Younger; not his goldsmith father or the modern art-material brand.",
     "namuwiki_evidence_method": "external-index independent Person mirror/title review; direct origin fetch not claimed",
     "namuwiki_evidence_url": "https://namu.moe/w/%EC%95%8C%EB%B8%8C%EB%A0%88%ED%9E%88%ED%8A%B8%20%EB%92%A4%EB%9F%AC",
     "domain_review": "Explicit v2 taxonomy review; architecture=technology, social thought/philosophy=culture, mathematics/medicine=science. Not inferred from office.",
-    "apply_gate": "DRAFT / DO NOT MERGE OR APPLY. Fresh semantic duplicate and exact historical Polity preflight required; source review is not proof of DB absence. No PHFC /36 factual coverage score claimed."
+    "apply_gate": "Single explicitly selected #2545 request only. Existing Polity pinned to live exact EN/KO/type/historicity match; fresh canonical writer checks and protected CI required. No automatic continuation opt-in or polity creation.",
+    "prior_protected_preflight_run": 45630299886,
+    "prior_protected_preflight_status": "READY",
+    "source_draft_pr": 2549,
+    "existing_polity_identity_checked_at": "2026-11-25"
   }
 }

@@ -1,5 +1,1 @@
-preflight authoring/requests/selected62-remaining30-20261018-durer.json
-preflight authoring/requests/selected62-remaining30-20261018-hitchcock.json
-preflight authoring/requests/selected62-remaining30-20261018-kurosawa.json
-preflight authoring/requests/selected62-remaining30-20261018-mahler.json
-preflight authoring/requests/selected62-remaining30-20261018-monteverdi.json
+apply authoring/requests/selected62-remaining30-20261018-durer.json
