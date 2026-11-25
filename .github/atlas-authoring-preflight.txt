@@ -1,5 +1,5 @@
-preflight authoring/requests/cultural20-20261019-schubert-1827.json
-preflight authoring/requests/cultural20-20261019-spinoza-1670.json
-preflight authoring/requests/cultural20-20261019-stravinsky-1913.json
-preflight authoring/requests/cultural20-20261019-tchaikovsky-1892.json
-preflight authoring/requests/cultural20-20261019-velazquez-1656.json
+preflight authoring/requests/cultural20-20261019-verdi-1874.json
+preflight authoring/requests/user-core40-20261019-cervantes-don-quixote-1605-1615.json
+preflight authoring/requests/user-core40-20261019-dostoevsky-major-literary-phase-1864-1880.json
+preflight authoring/requests/user-core40-20261019-picasso-france-paris-1904-1973.json
+preflight authoring/requests/user-core40-20261019-tolstoy-russian-major-novels-1863-1877.json
