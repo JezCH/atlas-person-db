@@ -340,36 +340,64 @@ async function verifyDrilldowns(client, modelState) {
   assert(kpi.code === "persons" || kpiFilter, "KPI click did not produce expected Person drill-down state", results.kpi);
 
   await showDashboard(client);
-  const attention = await evaluate(client, `(() => {
-    const button=[...document.querySelectorAll("[data-dashboard-attention]:not(:disabled)")][0];
-    if (!button) return null;
-    const code=button.dataset.dashboardAttention;
-    const label=(button.querySelector("span")?.textContent||"").trim();
-    button.click();
-    return {code,label};
-  })()`);
-  assert(attention, "No actionable Needs Attention drill-down button found");
-  await waitFor(client, "window.ATLAS_MAIN_AUTHORITY_NAV.getDomain() === 'persons'", 15000);
-  const attentionFilter = await evaluate(client, "window.ATLAS_PERSON_MAIN?.getDashboardFilter?.() || null");
-  results.attention = { ...attention, filter:attentionFilter };
-  assert(attentionFilter && attentionFilter.person_ids?.length > 0, "Needs Attention click did not set a Person filter", results.attention);
+  const attentionItems=(modelState.attention?.items || []).filter(item=>item.unit === "person");
+  assert(attentionItems.length > 0, "Canonical Person Attention categories missing");
+  const attentionControls=await evaluate(client, `(() => [...document.querySelectorAll("[data-dashboard-attention],[data-dashboard-attention-diagnostic]")].map(el=>({
+    code:el.dataset.dashboardAttention || el.dataset.dashboardAttentionDiagnostic,
+    disabled:el.disabled === true,
+    diagnostic:el.hasAttribute("data-dashboard-attention-diagnostic"),
+    href:el.getAttribute("href")
+  })))()`);
+  for(const item of attentionItems){
+    const controls=attentionControls.filter(control=>control.code===item.code);
+    assert(controls.length===1, "Person Attention control missing or duplicated", {item,controls});
+    const control=controls[0];
+    if(!item.available && item.action_href){
+      assert(control.diagnostic && control.href===item.action_href, "Attention diagnostic link differs from canonical source", {item,control});
+    }else{
+      assert(!control.diagnostic && control.disabled===(!item.available || Number(item.count || 0)<=0), "Person Attention actionability differs from canonical state", {item,control});
+    }
+  }
+  const expectedAttention=attentionItems.find(item=>item.available && Number(item.count)>0);
+  if(expectedAttention){
+    assert(Array.isArray(expectedAttention.person_ids) && expectedAttention.person_ids.length>0, "Canonical Attention target IDs missing", expectedAttention);
+    const attention=await evaluate(client, `(() => {
+      const button=[...document.querySelectorAll("[data-dashboard-attention]:not(:disabled)")].find(b=>b.dataset.dashboardAttention===${JSON.stringify(expectedAttention.code)});
+      if(!button) return null;
+      button.click();
+      return {code:button.dataset.dashboardAttention};
+    })()`);
+    assert(attention, "No actionable Needs Attention drill-down button found", expectedAttention);
+    await waitFor(client, "window.ATLAS_MAIN_AUTHORITY_NAV.getDomain() === 'persons'", 15000);
+    const attentionFilter=await evaluate(client, "window.ATLAS_PERSON_MAIN?.getDashboardFilter?.() || null");
+    assert(JSON.stringify(attentionFilter?.person_ids || [])===JSON.stringify(expectedAttention.person_ids), "Needs Attention Person filter differs from canonical exact targets", {attentionFilter,expectedAttention});
+    results.attention={...attention,filter:attentionFilter};
+  }else{
+    results.attention={disabled:true,count:0,unavailable_codes:attentionItems.filter(item=>!item.available).map(item=>item.code)};
+  }
 
   await showDashboard(client);
-  const completeness = await evaluate(client, `(() => {
-    const button=document.querySelector("[data-dashboard-completeness]");
-    if (!button) return null;
-    const code=button.dataset.dashboardCompleteness;
-    const row=button.closest("tr");
-    const unit=row?.dataset.completenessUnit || null;
-    button.click();
-    return {code,unit};
-  })()`);
-  assert(completeness, "No actionable Completeness Matrix Person drill-down button found");
-  assert(completeness.unit === "person", "Completeness drill-down was not a Person-unit row", completeness);
-  await waitFor(client, "window.ATLAS_MAIN_AUTHORITY_NAV.getDomain() === 'persons'", 15000);
-  const completenessFilter = await evaluate(client, "window.ATLAS_PERSON_MAIN?.getDashboardFilter?.() || null");
-  results.completeness = { ...completeness, filter:completenessFilter };
-  assert(completenessFilter && completenessFilter.person_ids?.length > 0, "Completeness Person click did not set a Person filter", results.completeness);
+  const personCompletenessRows=(modelState.completeness?.rows || []).filter(row=>row.unit==="person");
+  assert(personCompletenessRows.length>0, "Canonical Person completeness rows missing");
+  const expectedCompleteness=personCompletenessRows.filter(row=>row.drilldown_available===true && Array.isArray(row.person_ids) && row.person_ids.length>0);
+  const completenessCodes=await evaluate(client, `[...document.querySelectorAll('[data-completeness-unit="person"] [data-dashboard-completeness]:not(:disabled)')].map(button=>button.dataset.dashboardCompleteness)`);
+  assert(JSON.stringify([...completenessCodes].sort())===JSON.stringify(expectedCompleteness.map(row=>row.code).sort()), "Person completeness controls differ from canonical target sets", {completenessCodes,expectedCompleteness});
+  if(expectedCompleteness.length){
+    const expected=expectedCompleteness[0];
+    const completeness=await evaluate(client, `(() => {
+      const button=[...document.querySelectorAll('[data-completeness-unit="person"] [data-dashboard-completeness]:not(:disabled)')].find(b=>b.dataset.dashboardCompleteness===${JSON.stringify(expected.code)});
+      if(!button) return null;
+      button.click();
+      return {code:button.dataset.dashboardCompleteness,unit:"person"};
+    })()`);
+    assert(completeness, "No actionable Completeness Matrix Person drill-down button found", expected);
+    await waitFor(client, "window.ATLAS_MAIN_AUTHORITY_NAV.getDomain() === 'persons'", 15000);
+    const completenessFilter=await evaluate(client, "window.ATLAS_PERSON_MAIN?.getDashboardFilter?.() || null");
+    assert(JSON.stringify(completenessFilter?.person_ids || [])===JSON.stringify(expected.person_ids), "Completeness Person filter differs from canonical exact targets", {completenessFilter,expected});
+    results.completeness={...completeness,filter:completenessFilter};
+  }else{
+    results.completeness={disabled:true,count:0};
+  }
 
   await showDashboard(client);
   const actionableActivityRows=(modelState.completeness?.rows || []).filter((row)=>row.unit === "activity" && row.drilldown_available === true);
