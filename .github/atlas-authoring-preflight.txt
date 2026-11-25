@@ -1,1 +1,1 @@
-apply authoring/requests/selected62-remaining30-20261018-kurosawa.json
+apply authoring/requests/selected62-remaining30-20261018-mahler.json
