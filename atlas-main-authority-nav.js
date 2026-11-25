@@ -288,7 +288,7 @@
     appendVis211FinishLast("./atlas-vis2-11-polity-dashboard-archive.css?v=20261009-vis2-11-v1");
     polityAssetsPromise = loadScriptOnce("./atlas-polity-browser-reader.js?v=20260925-polity-frontier-v3", () => Boolean(window.ATLAS_POLITY_BROWSER_READER))
       .then(() => loadScriptOnce("./atlas-polity-dossier-view.js?v=20261118-polity-direct-sources-v1&polityYear=20261121-valid-historical-year-v1", () => Boolean(window.ATLAS_POLITY_DOSSIER_VIEW)))
-      .then(() => loadScriptOnce("./atlas-polity-review-registry.js?v=20261005-polity-registry-v3", () => Boolean(window.ATLAS_POLITY_REVIEW_REGISTRY)))
+      .then(() => loadScriptOnce("./atlas-polity-review-registry.js?v=20261005-polity-registry-v3&rocReview=20261125-v1", () => Boolean(window.ATLAS_POLITY_REVIEW_REGISTRY)))
       .then(() => loadScriptOnce("./atlas-polity-review-workbench.js?v=20260926-polity-atlas-v1&vis03=polity-search-first-v1&year=20261121-no-zero-v1", () => Boolean(window.ATLAS_POLITY_BROWSER_VIEW)))
       .then(() => loadScriptOnce("./atlas-polity-review-panel.js?v=20260925-polity-frontier-v3", () => Boolean(window.ATLAS_POLITY_REVIEW_PANEL)))
       .then(() => Object.freeze({ browser: window.ATLAS_POLITY_BROWSER_VIEW, review: window.ATLAS_POLITY_REVIEW_PANEL }))

@@ -42,7 +42,7 @@
   }
   function parseHash(hash){
     const raw=text(hash).replace(/^#/,"").replace(/^atlas-/,"");
-    const segments=raw.split("/").filter(Boolean);
+    const segments=raw.replace(/\/+$/,"").split("/");
     const domain=normalizeDomain(segments[0]||"persons");
     const expectedType=ENTITY_BY_DOMAIN[domain]||null;
     const requestedType=text(segments[1]);

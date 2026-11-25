@@ -28,14 +28,14 @@ function exactObject(value, keys, label) {
 }
 
 function state(value, label) {
-  const v = String(value);
+  const v = typeof value === 'number' ? String(value) : value;
   if (!VALID.has(v)) throw new TypeError(label + ' must be 1, 0, or ?');
   return v;
 }
 
 function fixed(value, group) {
   if (!Array.isArray(value) || value.length !== 6) throw new TypeError(group + ' must contain exactly 6 states');
-  return value.map((v, i) => state(v, group + (i + 1)));
+  return Array.from(value, (v, i) => state(v, group + (i + 1)));
 }
 
 function strings(value, label) {
