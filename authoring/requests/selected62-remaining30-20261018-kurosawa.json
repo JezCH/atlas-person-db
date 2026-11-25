@@ -17,7 +17,8 @@
     "canonical_name_en": "Japan",
     "display_name_ko": "일본",
     "polity_type": "historical_polity",
-    "historicity": "historical"
+    "historicity": "historical",
+    "existing_id": "e029b047-544a-52c7-8897-4e494ac72af4"
   },
   "activity": {
     "relation_type": "active_in",
@@ -66,13 +67,17 @@
   },
   "review_context": {
     "task": "#2545 approved 62, remaining 30 after #2543/#2544/#2546",
-    "registration_state": "NEEDS_PREFLIGHT",
-    "draft_only": true,
-    "production_screen": "NOT_PERFORMED_USER_PROHIBITED",
+    "registration_state": "READY_FOR_PROTECTED_APPLY",
+    "draft_only": false,
+    "production_screen": "PROTECTED_PREFLIGHT_READY_45630299886",
     "identity_review": "Director Akira Kurosawa (1910–1998); not director Kiyoshi Kurosawa or the film Akira.",
     "namuwiki_evidence_method": "external-index independent Person mirror/title review; direct origin fetch not claimed",
     "namuwiki_evidence_url": "https://namu.moe/w/%EA%B5%AC%EB%A1%9C%EC%82%AC%EC%99%80%20%EC%95%84%ED%82%A4%EB%9D%BC",
     "domain_review": "Explicit v2 taxonomy review; architecture=technology, social thought/philosophy=culture, mathematics/medicine=science. Not inferred from office.",
-    "apply_gate": "DRAFT / DO NOT MERGE OR APPLY. Fresh semantic duplicate and exact historical Polity preflight required; source review is not proof of DB absence. No PHFC /36 factual coverage score claimed."
+    "apply_gate": "Single explicitly selected #2545 request only. Existing Japan polity pinned to live exact EN/KO/type/historicity match for 1954, not Empire of Japan. Fresh canonical writer checks and protected CI required. No automatic continuation opt-in or polity creation.",
+    "prior_protected_preflight_run": 45630299886,
+    "prior_protected_preflight_status": "READY",
+    "source_draft_pr": 2549,
+    "existing_polity_identity_checked_at": "2026-11-25"
   }
 }
