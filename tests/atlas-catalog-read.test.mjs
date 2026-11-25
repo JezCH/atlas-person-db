@@ -120,3 +120,50 @@ test('polity catalogue includes temporal designation matches without replacing s
     assert.deepEqual(rows,[result]);
   }
 });
+
+
+test('PostgreSQL ranks an exact alias above 21 partial matches and returns dated designations', async (t) => {
+  const url = process.env.DATABASE_URL;
+  if (!url || !/^postgres(?:ql)?:\/\/[^/]*@127\.0\.0\.1:\d+\/atlas_ci$/.test(url)) {
+    t.skip('isolated Integrity PostgreSQL fixture unavailable');
+    return;
+  }
+  const { Client } = require('pg');
+  const db = new Client({ connectionString: url });
+  await db.connect();
+  t.after(() => db.end());
+  await db.query(`
+    create temporary table polities (id text, canonical_key text, polity_type text, historicity text);
+    create temporary table polity_names (polity_id text, locale text, name text, is_preferred boolean);
+    create temporary table polity_designations (
+      id text, polity_id text, designation_type text,
+      valid_from_year int, valid_from_month int, valid_from_day int,
+      valid_to_year int, valid_to_month int, valid_to_day int
+    );
+    create temporary table polity_designation_names (polity_designation_id text, locale text, name text);
+    insert into polities select 'partial-' || i, 'p-' || i, 'historical_polity', 'historical'
+      from generate_series(1, 21) i;
+    insert into polity_names select 'partial-' || i, 'en', 'A partial Mantua State ' || i, true
+      from generate_series(1, 21) i;
+    insert into polities values ('stable-id', 'mantua', 'historical_polity', 'historical');
+    insert into polity_names values
+      ('stable-id', 'en', 'Marquisate of Mantua', true),
+      ('stable-id', 'ko', '만토바 후국', true),
+      ('stable-id', 'en', 'Mantua State', false);
+    insert into polity_designations values ('period-id', 'stable-id', 'official_name', 1530, null, null, 1707, null, null);
+    insert into polity_designation_names values ('period-id', 'en', 'Duchy of Mantua');
+  `);
+  const client = { query: (sql, values) => db.query(sql.replaceAll('atlas_v2.', 'pg_temp.'), values) };
+  const alias = await searchCatalog({ client, kind: 'polity', query: 'Mantua State' });
+  assert.equal(alias.length, MAX_RESULTS);
+  assert.equal(alias[0].id, 'stable-id');
+  const designation = await searchCatalog({ client, kind: 'polity', query: 'Duchy of Mantua' });
+  assert.equal(designation.length, 1);
+  assert.equal(designation[0].id, 'stable-id');
+  assert.equal(designation[0].canonical_name_en, 'Marquisate of Mantua');
+  assert.equal(designation[0].matched_designations[0].designation_id, 'period-id');
+  assert.deepEqual(
+    [designation[0].matched_designations[0].valid_from_year, designation[0].matched_designations[0].valid_to_year],
+    [1530, 1707],
+  );
+});
