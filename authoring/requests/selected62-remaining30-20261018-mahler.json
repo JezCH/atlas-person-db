@@ -17,7 +17,8 @@
     "canonical_name_en": "German Empire",
     "display_name_ko": "독일 제국",
     "polity_type": "historical_polity",
-    "historicity": "historical"
+    "historicity": "historical",
+    "existing_id": "4203b03f-524f-5466-b718-37b72ae61e38"
   },
   "activity": {
     "relation_type": "active_in",
@@ -60,13 +61,17 @@
   },
   "review_context": {
     "task": "#2545 approved 62, remaining 30 after #2543/#2544/#2546",
-    "registration_state": "NEEDS_PREFLIGHT",
-    "draft_only": true,
-    "production_screen": "NOT_PERFORMED_USER_PROHIBITED",
+    "registration_state": "READY_FOR_PROTECTED_APPLY",
+    "draft_only": false,
+    "production_screen": "PROTECTED_PREFLIGHT_READY_45630299886",
     "identity_review": "Gustav Mahler (1860–1911); not Alma Mahler. Later posthumous premieres are not personal live conducting activities.",
     "namuwiki_evidence_method": "external-index independent Person mirror/title review; direct origin fetch not claimed",
     "namuwiki_evidence_url": "https://namu.moe/w/%EA%B5%AC%EC%8A%A4%ED%83%80%ED%94%84%20%EB%A7%90%EB%9F%AC",
     "domain_review": "Explicit v2 taxonomy review; architecture=technology, social thought/philosophy=culture, mathematics/medicine=science. Not inferred from office.",
-    "apply_gate": "DRAFT / DO NOT MERGE OR APPLY. Fresh semantic duplicate and exact historical Polity preflight required; source review is not proof of DB absence. No PHFC /36 factual coverage score claimed."
+    "apply_gate": "Single explicitly selected #2545 request only. Existing German Empire polity pinned to live exact EN/KO/type/historicity match for Munich 1910, with existing central-europe spatial binding. Fresh canonical writer checks and protected CI required. No automatic continuation opt-in or polity creation.",
+    "prior_protected_preflight_run": 45630299886,
+    "prior_protected_preflight_status": "READY",
+    "source_draft_pr": 2549,
+    "existing_polity_identity_checked_at": "2026-11-25"
   }
 }
