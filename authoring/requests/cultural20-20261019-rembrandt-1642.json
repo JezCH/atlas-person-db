@@ -17,7 +17,8 @@
     "canonical_name_en": "Dutch Republic",
     "display_name_ko": "네덜란드 공화국",
     "polity_type": "historical_polity",
-    "historicity": "historical"
+    "historicity": "historical",
+    "existing_id": "ca23bccc-7651-4ced-8f1a-8cb0d3fc629f"
   },
   "activity": {
     "relation_type": "active_in",
@@ -57,5 +58,11 @@
   "spatial_disposition": {
     "state": "reviewed_hold",
     "evidence": "Historical cultural/science activity period and source reviewed. Exact current Production Person, alias, Polity and Person→PlaceFunction IDs UNKNOWN due user-confirmed Vercel 402 pause; must reuse current exact matching canonical IDs on writer preflight, not create any substitute modern state, duplicate entity or fabricated coordinate. Existing reviewed user CORE40 queue id user-core40-20261004-rembrandt is reused; no duplicate queue entry."
+  },
+  "review_context": {
+    "source_draft_pr": 2549,
+    "preflight_required": true,
+    "existing_polity_identity_checked_at": "2026-11-25",
+    "auto_continue_after_preflight": true
   }
 }
