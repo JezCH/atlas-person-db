@@ -238,3 +238,17 @@ test('shared URL with distinct documented identifiers is a bibliographic review 
   const incomplete = auditSharedSourceUrls(data).cases.find(c => c.canonical_url === 'https://example.org/history');
   assert.equal(incomplete.review_priority, 'ACTIVITY_SCOPED_REUSE');
 });
+
+
+test('rejects repeated non-activity references without collapsing distinct locators', () => {
+  for (const [table, parent] of [['polity_sources', 'polity_id'], ['designation_sources', 'designation_id'], ['governance_sources', 'governance_id']]) {
+    const data = fixture();
+    const reference = {[parent]: 'new-parent', source_id: 's1', source_locator_key: 'page 1'};
+    data.raw[table].push(reference, {...reference});
+    assert.throws(() => auditSharedSourceUrls(data), /SOURCE_URL_AUDIT_DUPLICATE_REFERENCE/);
+    data.raw[table].pop();
+    data.raw[table].push({...reference, source_locator_key: 'page 2'});
+    const source = auditSharedSourceUrls(data).cases[0].sources.find(item => item.id === 's1');
+    assert.deepEqual(source.references.filter(link => link.parent_id === 'new-parent').map(link => link.source_locator_key), ['page 1', 'page 2']);
+  }
+});
