@@ -1,0 +1,151 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_mantua_ducal_designation_20261126_v1",
+  "as_of": "2026-11-26",
+  "status": "DRAFT_REVIEW_REQUIRED_NO_PRODUCTION_AUTHORIZATION",
+  "release_order": 5001,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#2545 Monteverdi approved manifest; 2026-11-26 bounded current Production Mantua catalogue and detail; proposed continuity of Gonzaga government across rank elevation, not yet authorized for Production. Independent owner approval required.",
+  "evidence": {
+    "existing_polity_id": "1a97dec2-dc1c-4e44-8546-e19bc6117ad5",
+    "existing_canonical_name": "Marquisate of Mantua",
+    "existing_activity_id": "fa9deedd-e2a6-47bf-8a32-af5f7cdf5a39",
+    "existing_activity": "Isabella d'Este regency 1509–1510",
+    "public_catalog": "Only existing Marquisate name matched Mantua. Public detail is not proof of complete designation absence; protected exact-state guard required.",
+    "historical_scope": "1530 elevation to duchy; operational Gonzaga phase ends in 1707 when Austrian direct governance began; formal forfeiture followed in 1708. Year granularity only; no day-level precision or adjudication of later Habsburg duchy identity.",
+    "additional_reference": "https://www.lombardiabeniculturali.it/istituzioni/storia/?unita=03.02",
+    "source_screen": "Bounded source searches for Chiave=101238 and mantovaducale.cultura.gov.it/storia/la-corte/ returned zero; not a substitute for canonical uniqueness preflight."
+  },
+  "execution_rules": {
+    "production_executable": false,
+    "production_mutation_authorized": false,
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "no_polity_create_merge_relink_delete": true,
+    "no_person_activity_or_source_link_rewrite": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true
+  },
+  "operations": [],
+  "stage2_assertions": [
+    {
+      "type": "assert_source",
+      "decision_id": "mantua-source-1",
+      "exact_before": {
+        "source_absent_id": "e34b55b9-f056-5f40-8970-eb100a0b1c17"
+      },
+      "exact_after": {
+        "source": {
+          "id": "e34b55b9-f056-5f40-8970-eb100a0b1c17",
+          "source_key": "polity:mantua:gonzaga-state-archives:v1",
+          "source_type": "government_reference",
+          "title": "Gonzaga — Archivio di Stato di Mantova (SIAS)",
+          "canonical_url": "https://sias-archivi.cultura.gov.it/cgi-bin/pagina.pl?Chiave=101238&RicProgetto=as-mantova&TipoPag=prodfamiglia",
+          "citation_text": "The archival family description records Federico's ducal title in 1530, succession through Gonzaga-Nevers, and Ferdinando Carlo's reign ending in 1708.",
+          "sha256": null,
+          "bytes": null
+        }
+      }
+    },
+    {
+      "type": "assert_source",
+      "decision_id": "mantua-source-2",
+      "exact_before": {
+        "source_absent_id": "7df681a8-e329-5244-869b-b2596dff08f5"
+      },
+      "exact_after": {
+        "source": {
+          "id": "7df681a8-e329-5244-869b-b2596dff08f5",
+          "source_key": "polity:mantua:palazzo-ducale-court:v1",
+          "source_type": "government_reference",
+          "title": "La Corte — Palazzo Ducale Mantova, Ministero della Cultura",
+          "canonical_url": "https://mantovaducale.cultura.gov.it/storia/la-corte/",
+          "citation_text": "The museum distinguishes the Gonzaga residence through 1707 from Austrian direct rule claimed on 2 April 1707, initiating Habsburg governance.",
+          "sha256": null,
+          "bytes": null
+        }
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "mantua-duchy-gonzaga-operational-phase",
+      "exact_before": {
+        "designation_absent_id": "37ca6e9e-d21c-5dd9-a714-d5d045e6fc6a"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "37ca6e9e-d21c-5dd9-a714-d5d045e6fc6a",
+          "polity_id": "1a97dec2-dc1c-4e44-8546-e19bc6117ad5",
+          "designation_type": "state_form",
+          "valid_from_year": 1530,
+          "valid_from_month": null,
+          "valid_from_day": null,
+          "valid_from_granularity": "year",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "unspecified_historical",
+          "valid_to_year": 1707,
+          "valid_to_month": null,
+          "valid_to_day": null,
+          "valid_to_granularity": "year",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "unspecified_historical",
+          "confidence": "reviewed",
+          "notes": "Duchy of Mantua / 만토바 공국 / Ducato di Mantova for the Gonzaga-led ducal phase from 1530 elevation to 1707 direct Austrian governance. Formal forfeiture in 1708 and later Habsburg duchy remain distinct questions. Year precision only, not a claim of full-year independent rule or a new polity. Retain existing canonical preferred names and all prior Activities."
+        },
+        "names": [
+          {
+            "id": "7e841026-a625-50a8-b1a1-ef896558d1e8",
+            "locale": "en",
+            "name": "Duchy of Mantua",
+            "polity_designation_id": "37ca6e9e-d21c-5dd9-a714-d5d045e6fc6a",
+            "is_preferred": true
+          },
+          {
+            "id": "70e1f1ee-310b-58e8-a4b9-d5a964494599",
+            "locale": "ko",
+            "name": "만토바 공국",
+            "polity_designation_id": "37ca6e9e-d21c-5dd9-a714-d5d045e6fc6a",
+            "is_preferred": true
+          },
+          {
+            "id": "66769565-1d9c-5af9-94bb-e3a125c992a4",
+            "locale": "it",
+            "name": "Ducato di Mantova",
+            "polity_designation_id": "37ca6e9e-d21c-5dd9-a714-d5d045e6fc6a",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "37ca6e9e-d21c-5dd9-a714-d5d045e6fc6a",
+            "source_id": "e34b55b9-f056-5f40-8970-eb100a0b1c17",
+            "source_locator_key": "https://sias-archivi.cultura.gov.it/cgi-bin/pagina.pl?Chiave=101238&RicProgetto=as-mantova&TipoPag=prodfamiglia"
+          },
+          {
+            "polity_designation_id": "37ca6e9e-d21c-5dd9-a714-d5d045e6fc6a",
+            "source_id": "7df681a8-e329-5244-869b-b2596dff08f5",
+            "source_locator_key": "https://mantovaducale.cultura.gov.it/storia/la-corte/"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "expected_canonical_delta": {
+    "sources": 2,
+    "polity_designations": 1,
+    "polity_designation_names": 3,
+    "polity_designation_sources": 2,
+    "persons": 0,
+    "polities": 0,
+    "activities": 0,
+    "activity_source_links": 0,
+    "retirements": 0
+  },
+  "acceptance_requirements": [
+    "Owner approval of same polity continuity and temporal display; no new identity.",
+    "Protected exact-before rollback-only dry-run; check existing designation overlap, source uniqueness, same UUID and complete count deltas; never add an artificial activity rewrite solely to satisfy preflight validator.",
+    "Preserve Isabella d'Este activity and pre-1530 label; after approved apply verify existing canonical identity and 1607 designation resolution.",
+    "Only then adapt Monteverdi original manifest to existing polity UUID and preferred names, preserve approved historical fields/request ID, separately preflight then apply and verify Runtime."
+  ]
+}
