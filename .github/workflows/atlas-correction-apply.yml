@@ -278,6 +278,12 @@ jobs:
           REQUEST_PATH: ${{ steps.selection.outputs.request }}
         run: |
           set -euo pipefail
+          # v1 remains the existing four-claim repair contract. v2 has its own
+          # bounded, non-destructive plan and response validator.
+          schema="$(jq -er '.schema' "$REQUEST_PATH")"
+          if [[ "$schema" == "atlas-protected-correction-preflight/v2" ]]; then
+            node scripts/validate-protected-correction-preflight.mjs request "$REQUEST_PATH"
+          else
           jq -e '
             .schema == "atlas-protected-correction-preflight/v1" and
             .mode == "dry_run" and
@@ -287,6 +293,7 @@ jobs:
             (.batch_id|type=="string" and length>0) and
             (.activity_ids|type=="array" and length==4 and (unique|length)==4)
           ' "$REQUEST_PATH" >/dev/null
+          fi
           pr="$(jq -r .pr_number "$REQUEST_PATH")"
           sha="$(jq -r .head_sha "$REQUEST_PATH")"
           path="$(jq -r .plan_path "$REQUEST_PATH")"
@@ -294,6 +301,9 @@ jobs:
           [[ "$sha" == "$current" ]] || { echo PREFLIGHT_CANDIDATE_HEAD_MOVED >&2; exit 1; }
           gh api "repos/JezCH/atlas-person-db/contents/$path?ref=$sha" --jq .content |
             tr -d '\n' | base64 --decode > preflight-candidate.json
+          if [[ "$schema" == "atlas-protected-correction-preflight/v2" ]]; then
+            node scripts/validate-protected-correction-preflight.mjs candidate "$REQUEST_PATH" preflight-candidate.json
+          else
           jq -e --slurpfile request "$REQUEST_PATH" '
             .schema=="atlas-stage2-correction-v2-execution-plan/v1" and
             .batch_id==$request[0].batch_id and
@@ -303,6 +313,7 @@ jobs:
             ([.operations[].activity_id]|sort)==($request[0].activity_ids|sort) and
             ([.stage2_assertions[]|select(.type=="assert_source")]|length)==4
           ' preflight-candidate.json >/dev/null
+          fi
           oidc="$(curl --fail-with-body --silent --show-error \
             -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
             "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${ATLAS_CORRECTION_AUDIENCE}" | jq -er .value)"
@@ -326,6 +337,9 @@ jobs:
             cat preflight-response.json >&2; exit 1
           done
           [[ "$status" == "200" ]] || exit 1
+          if [[ "$schema" == "atlas-protected-correction-preflight/v2" ]]; then
+            node scripts/validate-protected-correction-preflight.mjs response "$REQUEST_PATH" preflight-candidate.json preflight-response.json > preflight-summary.json
+          else
           jq -e '
             .ok==true and .marker=="ATLAS_CORRECTION_MANIFEST_V2" and
             .schema=="atlas-correction-manifest/v2" and
@@ -351,6 +365,7 @@ jobs:
                old_links:.exact_before.normalized_source_links,
                new_links:.exact_after.normalized_source_links}]
           }' preflight-response.json > preflight-summary.json
+          fi
           echo ATLAS_PROTECTED_DRY_RUN_ONLY_SUCCESS
           cat preflight-summary.json
       - name: Preserve preflight evidence without mutation
