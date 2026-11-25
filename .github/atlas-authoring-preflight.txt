@@ -1,2 +1,5 @@
-preflight authoring/requests/user-writers-sss-20261119-ferdowsi-shahnameh-1010.json
-preflight authoring/requests/user-writers-sss-20261119-solzhenitsyn-one-day-1962.json
+preflight authoring/requests/cultural20-20261019-brahms-1876.json
+preflight authoring/requests/cultural20-20261019-cezanne-1895.json
+preflight authoring/requests/cultural20-20261019-chopin-1832.json
+preflight authoring/requests/cultural20-20261019-debussy-1894.json
+preflight authoring/requests/cultural20-20261019-goya-1799.json
