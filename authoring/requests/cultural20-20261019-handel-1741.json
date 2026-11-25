@@ -17,7 +17,8 @@
     "canonical_name_en": "Kingdom of Great Britain",
     "display_name_ko": "그레이트브리튼 왕국",
     "polity_type": "historical_polity",
-    "historicity": "historical"
+    "historicity": "historical",
+    "existing_id": "fde52da0-f39b-43f0-a75a-96ba69243e20"
   },
   "activity": {
     "relation_type": "active_in",
@@ -57,5 +58,11 @@
   "spatial_disposition": {
     "state": "reviewed_hold",
     "evidence": "Historical cultural/science activity period and source reviewed. Exact current Production Person, alias, Polity and Person→PlaceFunction IDs UNKNOWN due user-confirmed Vercel 402 pause; must reuse current exact matching canonical IDs on writer preflight, not create any substitute modern state, duplicate entity or fabricated coordinate. Existing reviewed user CORE40 queue id user-core40-20261004-handel is reused; no duplicate queue entry."
+  },
+  "review_context": {
+    "source_draft_pr": 2549,
+    "preflight_required": true,
+    "existing_polity_identity_checked_at": "2026-11-25",
+    "auto_continue_after_preflight": true
   }
 }

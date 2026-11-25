@@ -17,7 +17,8 @@
     "canonical_name_en": "France",
     "display_name_ko": "프랑스",
     "polity_type": "historical_polity",
-    "historicity": "historical"
+    "historicity": "historical",
+    "existing_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf"
   },
   "activity": {
     "relation_type": "active_in",
@@ -57,5 +58,11 @@
   "spatial_disposition": {
     "state": "reviewed_hold",
     "evidence": "Historical cultural/science activity period and source reviewed. Exact current Production Person, alias, Polity and Person→PlaceFunction IDs UNKNOWN due user-confirmed Vercel 402 pause; must reuse current exact matching canonical IDs on writer preflight, not create any substitute modern state, duplicate entity or fabricated coordinate. Existing reviewed user CORE40 queue id user-core40-20261004-monet is reused; no duplicate queue entry."
+  },
+  "review_context": {
+    "source_draft_pr": 2549,
+    "preflight_required": true,
+    "existing_polity_identity_checked_at": "2026-11-25",
+    "auto_continue_after_preflight": true
   }
 }

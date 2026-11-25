@@ -17,7 +17,8 @@
     "canonical_name_en": "Habsburg Monarchy",
     "display_name_ko": "합스부르크 군주국",
     "polity_type": "historical_polity",
-    "historicity": "historical"
+    "historicity": "historical",
+    "existing_id": "f75ab5c8-b947-56f9-9344-ae46fb589d43"
   },
   "activity": {
     "relation_type": "active_in",
@@ -57,5 +58,11 @@
   "spatial_disposition": {
     "state": "reviewed_hold",
     "evidence": "Historical cultural/science activity period and source reviewed. Exact current Production Person, alias, Polity and Person→PlaceFunction IDs UNKNOWN due user-confirmed Vercel 402 pause; must reuse current exact matching canonical IDs on writer preflight, not create any substitute modern state, duplicate entity or fabricated coordinate. New candidate not previously found in queue; exact live Person/alias negative check required before write."
+  },
+  "review_context": {
+    "source_draft_pr": 2549,
+    "preflight_required": true,
+    "existing_polity_identity_checked_at": "2026-11-25",
+    "auto_continue_after_preflight": true
   }
 }
