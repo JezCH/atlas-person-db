@@ -1,5 +1,5 @@
-preflight authoring/requests/cultural20-20261019-handel-1741.json
-preflight authoring/requests/cultural20-20261019-haydn-1798.json
-preflight authoring/requests/cultural20-20261019-hokusai-1831.json
-preflight authoring/requests/cultural20-20261019-monet-1874.json
-preflight authoring/requests/cultural20-20261019-rembrandt-1642.json
+preflight authoring/requests/cultural20-20261019-schubert-1827.json
+preflight authoring/requests/cultural20-20261019-spinoza-1670.json
+preflight authoring/requests/cultural20-20261019-stravinsky-1913.json
+preflight authoring/requests/cultural20-20261019-tchaikovsky-1892.json
+preflight authoring/requests/cultural20-20261019-velazquez-1656.json
