@@ -1,0 +1,11 @@
+{
+  "counts": {
+    "sources": 27,
+    "places": 20,
+    "facts": 23
+  },
+  "errors": [],
+  "production_conflicts": "NOT_QUERIED",
+  "fact_uuid": "Original facts have no id field; do not invent preserved function UUIDs",
+  "source_blob": "0931a02956d332e4afa239f1ab3b1418c87f7e31"
+}

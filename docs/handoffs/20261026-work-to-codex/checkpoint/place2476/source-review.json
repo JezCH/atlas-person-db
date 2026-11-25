@@ -1,0 +1,202 @@
+[
+  {
+    "source_id": "01bff9e2-4a89-5056-a9e5-9e2b0574367c",
+    "title": "Hellenic Ministry of Culture and Sports, Odysseus: Pella",
+    "status": "HOLD_NOT_REVIEWED",
+    "missing": "Original publication text and precise page/section/URL locator have not yet been retrieved or compared; title is not evidence verification."
+  },
+  {
+    "source_id": "02e15cce-9ea1-5b3c-a3e1-c11842dfd8c9",
+    "title": "Cambridge Modern Asian Studies: The cosmopolitanism of Karakorum, capital of the Mongol empire in Mongolia",
+    "status": "ORIGINAL_REVIEWED_HOLD_SCOPE",
+    "missing": "Explicit reviewed evidence synthesis for composite Place and full time interval",
+    "url": "https://www.cambridge.org/core/journals/modern-asian-studies/article/cosmopolitanism-of-karakorum-capital-of-the-mongol-empire-in-mongolia/E562432CD03349E4D8A761D25592DBD6",
+    "locator": "Article body: archaeology/cosmopolitanism discussion; religious pluralism paragraph",
+    "finding": "Original article retrieved; establishes Karakorum court context. Reviewed passage does not resolve full composite geography or exact 1206–1259 interval."
+  },
+  {
+    "source_id": "044aaa9d-e264-5449-bbe4-e380c3f02220",
+    "title": "1911 Encyclopaedia Britannica: Nicaea",
+    "status": "ORIGINAL_TEXT_TRANSCRIPTION_REVIEWED_HOLD_DATES",
+    "missing": "Resolve stated interval/scope gaps before approving related facts; preserve original source identity. Wikisource entries are transcriptions, not scan-collated editions.",
+    "url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Nicaea",
+    "locator": "Nicaea, second paragraph",
+    "finding": "Text transcription confirms temporary Byzantine imperial seat after Crusader conquest; exact 1204–1260 bounds absent."
+  },
+  {
+    "source_id": "0a3dc36b-9eb9-5536-ac23-5fe71cb9467b",
+    "title": "Türkiye Culture Portal: Edirne - Genel Bilgiler",
+    "status": "ORIGINAL_REVIEWED_HOLD_TEMPORAL_SCOPE",
+    "missing": "Resolve interval semantics and full period support before clearing related fact HOLD",
+    "url": "https://kulturportali.gov.tr/turkiye/edirne/genelbilgiler",
+    "locator": "Genel Bilgiler, paragraph on Murat and second capital",
+    "finding": "Explicit 1365 capital and 1453 transfer; original end_year 1452 requires documented inclusive-year convention rather than treating 1453 as unsupported."
+  },
+  {
+    "source_id": "25cfc76c-7993-5d82-987c-7d46352fb048",
+    "title": "Publications Division, Government of India: Builders of Modern India — Subhas Chandra Bose",
+    "status": "HOLD_NOT_REVIEWED",
+    "missing": "Original publication text and precise page/section/URL locator have not yet been retrieved or compared; title is not evidence verification."
+  },
+  {
+    "source_id": "25dfe37e-1389-52de-a203-3231e5a9f106",
+    "title": "The Metropolitan Museum of Art: The Art of the Timurid Period (ca. 1370–1507)",
+    "status": "ORIGINAL_REVIEWED_PARTIAL_SUPPORT",
+    "missing": "Corroborate end boundary and uninterrupted tenure before approving whole fact.",
+    "url": "https://www.metmuseum.org/essays/the-art-of-the-timurid-period-ca-1370-1507",
+    "locator": "Main essay paragraphs 1–2 (retrieval lines 109–110)",
+    "finding": "Explicitly supports establishment of Samarqand as capital in 1370 and Timur death in 1405. Does not explicitly state uninterrupted capital tenure through 1405."
+  },
+  {
+    "source_id": "2781d1ec-bf75-5045-bf99-3f7cdc919d0d",
+    "title": "1911 Encyclopaedia Britannica: Constantinople",
+    "status": "ORIGINAL_TEXT_TRANSCRIPTION_REVIEWED_HOLD_ENDPOINTS",
+    "missing": "Resolve stated interval/scope gaps before approving related facts; preserve original source identity. Wikisource entries are transcriptions, not scan-collated editions.",
+    "url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Constantinople",
+    "locator": "History, Architecture and Antiquities; paragraphs on inauguration and capture",
+    "finding": "Supports 330 seat, Latin interval 1204–1261, and Ottoman transition 1453. Cannot support 1922 endpoint from a 1911 text; 395 polity boundary requires separate evidence."
+  },
+  {
+    "source_id": "305858ea-e93f-56ec-a353-343eda963c51",
+    "title": "British Museum Collections Online: Seljuq dynasty (x41057)",
+    "status": "HOLD_NOT_REVIEWED",
+    "missing": "Original publication text and precise page/section/URL locator have not yet been retrieved or compared; title is not evidence verification."
+  },
+  {
+    "source_id": "37f50f8f-b242-5dfe-aeeb-4230d9c31670",
+    "title": "Metropolitan Museum of Art: China, 1000–1400 A.D. chronology",
+    "status": "ORIGINAL_REVIEWED_HOLD_TEMPORAL_SCOPE",
+    "missing": "Resolve interval semantics and full period support before clearing related fact HOLD",
+    "url": "https://www.metmuseum.org/fr/toah/ht/07/eac.html",
+    "locator": "Chronology entry 1260",
+    "finding": "Explicit 1264 move from Karakorum to Beijing. Does not support full 1260–1271 Shangdu–Dadu composite interval; compare UNESCO 1263–1273 first-capital account."
+  },
+  {
+    "source_id": "38e7f5dc-b0d9-5a54-acd3-5159075e1c6b",
+    "title": "Governo do Brasil: Linha do Tempo da Independência",
+    "status": "HOLD_NOT_REVIEWED",
+    "missing": "Original publication text and precise page/section/URL locator have not yet been retrieved or compared; title is not evidence verification."
+  },
+  {
+    "source_id": "47fc9701-c079-5a5a-9360-90e059d4ca97",
+    "title": "Hellenic Ministry of Culture, Cultural Egnatia: Pella",
+    "status": "HOLD_NOT_REVIEWED",
+    "missing": "Original publication text and precise page/section/URL locator have not yet been retrieved or compared; title is not evidence verification."
+  },
+  {
+    "source_id": "51851bcf-6c36-56b8-bf2b-808c9aaf4c7d",
+    "title": "National Museum of Oman: Architectural Heritage — Muscat",
+    "status": "HOLD_NOT_REVIEWED",
+    "missing": "Original publication text and precise page/section/URL locator have not yet been retrieved or compared; title is not evidence verification."
+  },
+  {
+    "source_id": "51e16f5a-ff7f-5d3c-b03e-034f9a1ef04d",
+    "title": "Cambridge Antiquity: Mapping Karakorum, the capital of the Mongol Empire",
+    "status": "ORIGINAL_REVIEWED_HOLD_SCOPE",
+    "missing": "Explicit reviewed evidence synthesis for composite Place and full time interval",
+    "url": "https://www.cambridge.org/core/journals/antiquity/article/mapping-karakorum-the-capital-of-the-mongol-empire/6E86EC9807E3354074D101D1AA15056F",
+    "locator": "Historical background, first four paragraphs",
+    "finding": "Supports 1220 camp selection, construction under Ogodei, imperial itinerary under Ogodei and Mongke, and shift after 1260. Does not establish Karakorum presence since 1206; composite Avarga–Karakorum period needs explicit synthesis."
+  },
+  {
+    "source_id": "677c16aa-8a6b-52a7-ab98-27ef7a3190d4",
+    "title": "Press Information Bureau, Government of India: Anniversary of the formation of Azad Hind Government (21 Oct 1943)",
+    "status": "ORIGINAL_REVIEWED_HOLD_TEMPORAL_SCOPE",
+    "missing": "Resolve interval semantics and full period support before clearing related fact HOLD",
+    "url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=1765729&lang=2&reg=48",
+    "locator": "SINGAPORE section",
+    "finding": "Confirms government began functioning in Singapore on 21 October 1943; does not establish end of Singapore activity during 1943."
+  },
+  {
+    "source_id": "69e4362a-3589-52b4-9a32-5b8e83710552",
+    "title": "Republic of Türkiye Bursa Governorship: Tarihçe",
+    "status": "HOLD_NOT_REVIEWED",
+    "missing": "Original publication text and precise page/section/URL locator have not yet been retrieved or compared; title is not evidence verification."
+  },
+  {
+    "source_id": "7a0280a6-71d0-5ae9-809c-9d0db9e1d181",
+    "title": "Republic of Türkiye Ministry of National Education, Söğüt District: İlçemiz - Söğüt",
+    "status": "HOLD_NOT_REVIEWED",
+    "missing": "Original publication text and precise page/section/URL locator have not yet been retrieved or compared; title is not evidence verification."
+  },
+  {
+    "source_id": "82565127-eb9c-5da2-a1c4-8fcd738ecf87",
+    "title": "Cambridge University Press: Rituals of Islamic Monarchy — the conquest society c. 628–c. 660",
+    "status": "HOLD_NOT_REVIEWED",
+    "missing": "Original publication text and precise page/section/URL locator have not yet been retrieved or compared; title is not evidence verification."
+  },
+  {
+    "source_id": "82cfad27-e6e5-57ed-97c7-28ae56bb5072",
+    "title": "UNESCO World Heritage Centre: Archaeological Site at Khuduu Aral and Surrounding Cultural Landscape",
+    "status": "ORIGINAL_REVIEWED_HOLD_SCOPE",
+    "missing": "Separate Karakorum evidence and reviewed temporal synthesis",
+    "url": "https://whc.unesco.org/en/tentativelists/5952/",
+    "locator": "Description paragraphs 5–8; Comparison with other similar properties",
+    "finding": "State Party tentative-list submission supports Avarga palace and early imperial political centre; does not establish full Avarga–Karakorum composite or continuous 1206–1259 interval"
+  },
+  {
+    "source_id": "89243eda-1366-50cc-8b72-546766cf5b33",
+    "title": "1911 Encyclopaedia Britannica: Constantine (emperors)",
+    "status": "ORIGINAL_TEXT_TRANSCRIPTION_REVIEWED_HOLD_SCOPE",
+    "missing": "Resolve stated interval/scope gaps before approving related facts; preserve original source identity. Wikisource entries are transcriptions, not scan-collated editions.",
+    "url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Constantine_(emperors)",
+    "locator": "Constantine I, paragraphs on 326 relocation decision and 330 inauguration",
+    "finding": "Supports relocation and 330 inauguration. Does not establish Rome capital interval beginning 27 BCE or its uninterrupted character."
+  },
+  {
+    "source_id": "91d307b2-a4e3-5795-9f37-c0a2fabee2c7",
+    "title": "UNESCO World Heritage Centre: Site of Xanadu",
+    "status": "ORIGINAL_REVIEWED_HOLD_SCOPE",
+    "missing": "Independent evidence for Dadu component and 1260–1262 court presence; review composite Place semantics.",
+    "url": "https://whc.unesco.org/en/list/1389",
+    "locator": "Outstanding Universal Value / Brief synthesis, first paragraph",
+    "finding": "First capital 1263–1273; summer capital 1274–1364. Supports Xanadu identity but not entire composite Shangdu–Dadu court region in 1260–1271."
+  },
+  {
+    "source_id": "9ed98162-dc7d-5a2f-89da-db4aac4694ae",
+    "title": "Encyclopaedia Iranica: Kufa — Ali (r. 656–61) chose Kufa as his capital",
+    "status": "HOLD_RETRIEVAL_TIMEOUT",
+    "missing": "Original page fetch timed out; index results also expose conflicting 656 vs 657 capital start; resolve using original text before approval",
+    "attempted_url": "https://www.iranicaonline.org/articles/kufa/"
+  },
+  {
+    "source_id": "b8a51ecc-5091-51e2-97b6-cb24b4cd7d48",
+    "title": "Oman Ministry of Foreign Affairs: History",
+    "status": "ORIGINAL_REVIEWED_HOLD_DATES",
+    "missing": "Resolve stated interval/scope gaps before approving related facts; preserve original source identity. Wikisource entries are transcriptions, not scan-collated editions.",
+    "url": "https://www.fm.gov.om/en/about-oman/state/history/",
+    "locator": "History, paragraph beginning Thus in the 16th century",
+    "finding": "Government text confirms Zanzibar as capital for a period and Sultan palace there; no 1840–1856 bounds or Stone Town specificity."
+  },
+  {
+    "source_id": "c3af4db8-6c27-51da-af04-5f562cbd5cc2",
+    "title": "Atatürk Ansiklopedisi: Ankara’nın Başkent Oluşu",
+    "status": "URL_RESOLVED_ORIGINAL_FETCH_FAILED",
+    "missing": "Publisher URL resolved by index; original open returned Internal Error; original text not verified",
+    "url": "https://ataturkansiklopedisi.gov.tr/detay/868/Ankara%E2%80%99n%C4%B1n-Ba%C5%9Fkent-Olu%C5%9Fu"
+  },
+  {
+    "source_id": "c88cdd70-16eb-5c3c-881b-425a880029f9",
+    "title": "Government of India / IGNCA chronology: Bose civil and military headquarters moved to Burma in January 1944",
+    "status": "HOLD_NOT_REVIEWED",
+    "missing": "Original publication text and precise page/section/URL locator have not yet been retrieved or compared; title is not evidence verification."
+  },
+  {
+    "source_id": "d0516347-22db-5919-80aa-ca80fe33574f",
+    "title": "Odisha Review: headquarters of the Provisional Government, Indian Independence League and Supreme Command shifted from Singapore to Rangoon",
+    "status": "HOLD_NOT_REVIEWED",
+    "missing": "Original publication text and precise page/section/URL locator have not yet been retrieved or compared; title is not evidence verification."
+  },
+  {
+    "source_id": "e91f57ec-9c46-594b-859b-4a14c2af99ba",
+    "title": "Getty Thesaurus of Geographic Names: Mamluk Sultanate (TGN 6003667)",
+    "status": "HOLD_NOT_REVIEWED",
+    "missing": "Original publication text and precise page/section/URL locator have not yet been retrieved or compared; title is not evidence verification."
+  },
+  {
+    "source_id": "ea373bc1-66af-5950-a4c8-c31188c0f320",
+    "title": "Cambridge History of the Mongol Empire: Mongolia in the Mongol Empire",
+    "status": "HOLD_NOT_REVIEWED",
+    "missing": "Original publication text and precise page/section/URL locator have not yet been retrieved or compared; title is not evidence verification."
+  }
+]

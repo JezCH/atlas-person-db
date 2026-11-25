@@ -1,0 +1,574 @@
+{
+  "production_executable": false,
+  "production_mutation_authorized": false,
+  "warning": "Not an approved execution plan; exact_before absence remains an unverified proposed precondition",
+  "results": [
+    {
+      "source_id": "01bff9e2-4a89-5056-a9e5-9e2b0574367c",
+      "status": "HOLD_MISSING_CANONICAL_URL",
+      "error": "CORRECTION_V2_OP0_SOURCE_SOURCE_BIBLIOGRAPHIC_EVIDENCE_REQUIRED",
+      "operation": {
+        "type": "assert_source",
+        "decision_id": "place2476-source-1",
+        "exact_before": {
+          "source_absent_id": "01bff9e2-4a89-5056-a9e5-9e2b0574367c"
+        },
+        "exact_after": {
+          "source": {
+            "id": "01bff9e2-4a89-5056-a9e5-9e2b0574367c",
+            "source_key": "spatial-reviewed:01bff9e2-4a89-5056-a9e5-9e2b0574367c",
+            "source_type": "bibliographic_reference",
+            "title": "Hellenic Ministry of Culture and Sports, Odysseus: Pella",
+            "citation_text": "Hellenic Ministry of Culture and Sports, Odysseus: Pella"
+          }
+        }
+      }
+    },
+    {
+      "source_id": "02e15cce-9ea1-5b3c-a3e1-c11842dfd8c9",
+      "status": "STRUCTURALLY_VALID_EVIDENCE_HOLD",
+      "operation": {
+        "type": "assert_source",
+        "decision_id": "place2476-source-2",
+        "exact_before": {
+          "source_absent_id": "02e15cce-9ea1-5b3c-a3e1-c11842dfd8c9"
+        },
+        "exact_after": {
+          "source": {
+            "id": "02e15cce-9ea1-5b3c-a3e1-c11842dfd8c9",
+            "source_key": "spatial-reviewed:02e15cce-9ea1-5b3c-a3e1-c11842dfd8c9",
+            "source_type": "bibliographic_reference",
+            "title": "Cambridge Modern Asian Studies: The cosmopolitanism of Karakorum, capital of the Mongol empire in Mongolia",
+            "citation_text": "Cambridge Modern Asian Studies: The cosmopolitanism of Karakorum, capital of the Mongol empire in Mongolia",
+            "canonical_url": "https://www.cambridge.org/core/journals/modern-asian-studies/article/cosmopolitanism-of-karakorum-capital-of-the-mongol-empire-in-mongolia/E562432CD03349E4D8A761D25592DBD6"
+          }
+        }
+      }
+    },
+    {
+      "source_id": "044aaa9d-e264-5449-bbe4-e380c3f02220",
+      "status": "STRUCTURALLY_VALID_EVIDENCE_HOLD",
+      "operation": {
+        "type": "assert_source",
+        "decision_id": "place2476-source-3",
+        "exact_before": {
+          "source_absent_id": "044aaa9d-e264-5449-bbe4-e380c3f02220"
+        },
+        "exact_after": {
+          "source": {
+            "id": "044aaa9d-e264-5449-bbe4-e380c3f02220",
+            "source_key": "spatial-reviewed:044aaa9d-e264-5449-bbe4-e380c3f02220",
+            "source_type": "bibliographic_reference",
+            "title": "1911 Encyclopaedia Britannica: Nicaea",
+            "citation_text": "1911 Encyclopaedia Britannica: Nicaea",
+            "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Nicaea"
+          }
+        }
+      }
+    },
+    {
+      "source_id": "0a3dc36b-9eb9-5536-ac23-5fe71cb9467b",
+      "status": "STRUCTURALLY_VALID_EVIDENCE_HOLD",
+      "operation": {
+        "type": "assert_source",
+        "decision_id": "place2476-source-4",
+        "exact_before": {
+          "source_absent_id": "0a3dc36b-9eb9-5536-ac23-5fe71cb9467b"
+        },
+        "exact_after": {
+          "source": {
+            "id": "0a3dc36b-9eb9-5536-ac23-5fe71cb9467b",
+            "source_key": "spatial-reviewed:0a3dc36b-9eb9-5536-ac23-5fe71cb9467b",
+            "source_type": "bibliographic_reference",
+            "title": "Türkiye Culture Portal: Edirne - Genel Bilgiler",
+            "citation_text": "Türkiye Culture Portal: Edirne - Genel Bilgiler",
+            "canonical_url": "https://kulturportali.gov.tr/turkiye/edirne/genelbilgiler"
+          }
+        }
+      }
+    },
+    {
+      "source_id": "25cfc76c-7993-5d82-987c-7d46352fb048",
+      "status": "HOLD_MISSING_CANONICAL_URL",
+      "error": "CORRECTION_V2_OP4_SOURCE_SOURCE_BIBLIOGRAPHIC_EVIDENCE_REQUIRED",
+      "operation": {
+        "type": "assert_source",
+        "decision_id": "place2476-source-5",
+        "exact_before": {
+          "source_absent_id": "25cfc76c-7993-5d82-987c-7d46352fb048"
+        },
+        "exact_after": {
+          "source": {
+            "id": "25cfc76c-7993-5d82-987c-7d46352fb048",
+            "source_key": "spatial-reviewed:25cfc76c-7993-5d82-987c-7d46352fb048",
+            "source_type": "bibliographic_reference",
+            "title": "Publications Division, Government of India: Builders of Modern India — Subhas Chandra Bose",
+            "citation_text": "Publications Division, Government of India: Builders of Modern India — Subhas Chandra Bose"
+          }
+        }
+      }
+    },
+    {
+      "source_id": "25dfe37e-1389-52de-a203-3231e5a9f106",
+      "status": "STRUCTURALLY_VALID_EVIDENCE_HOLD",
+      "operation": {
+        "type": "assert_source",
+        "decision_id": "place2476-source-6",
+        "exact_before": {
+          "source_absent_id": "25dfe37e-1389-52de-a203-3231e5a9f106"
+        },
+        "exact_after": {
+          "source": {
+            "id": "25dfe37e-1389-52de-a203-3231e5a9f106",
+            "source_key": "spatial-reviewed:25dfe37e-1389-52de-a203-3231e5a9f106",
+            "source_type": "bibliographic_reference",
+            "title": "The Metropolitan Museum of Art: The Art of the Timurid Period (ca. 1370–1507)",
+            "citation_text": "The Metropolitan Museum of Art: The Art of the Timurid Period (ca. 1370–1507)",
+            "canonical_url": "https://www.metmuseum.org/essays/the-art-of-the-timurid-period-ca-1370-1507"
+          }
+        }
+      }
+    },
+    {
+      "source_id": "2781d1ec-bf75-5045-bf99-3f7cdc919d0d",
+      "status": "STRUCTURALLY_VALID_EVIDENCE_HOLD",
+      "operation": {
+        "type": "assert_source",
+        "decision_id": "place2476-source-7",
+        "exact_before": {
+          "source_absent_id": "2781d1ec-bf75-5045-bf99-3f7cdc919d0d"
+        },
+        "exact_after": {
+          "source": {
+            "id": "2781d1ec-bf75-5045-bf99-3f7cdc919d0d",
+            "source_key": "spatial-reviewed:2781d1ec-bf75-5045-bf99-3f7cdc919d0d",
+            "source_type": "bibliographic_reference",
+            "title": "1911 Encyclopaedia Britannica: Constantinople",
+            "citation_text": "1911 Encyclopaedia Britannica: Constantinople",
+            "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Constantinople"
+          }
+        }
+      }
+    },
+    {
+      "source_id": "305858ea-e93f-56ec-a353-343eda963c51",
+      "status": "HOLD_MISSING_CANONICAL_URL",
+      "error": "CORRECTION_V2_OP7_SOURCE_SOURCE_BIBLIOGRAPHIC_EVIDENCE_REQUIRED",
+      "operation": {
+        "type": "assert_source",
+        "decision_id": "place2476-source-8",
+        "exact_before": {
+          "source_absent_id": "305858ea-e93f-56ec-a353-343eda963c51"
+        },
+        "exact_after": {
+          "source": {
+            "id": "305858ea-e93f-56ec-a353-343eda963c51",
+            "source_key": "spatial-reviewed:305858ea-e93f-56ec-a353-343eda963c51",
+            "source_type": "bibliographic_reference",
+            "title": "British Museum Collections Online: Seljuq dynasty (x41057)",
+            "citation_text": "British Museum Collections Online: Seljuq dynasty (x41057)"
+          }
+        }
+      }
+    },
+    {
+      "source_id": "37f50f8f-b242-5dfe-aeeb-4230d9c31670",
+      "status": "STRUCTURALLY_VALID_EVIDENCE_HOLD",
+      "operation": {
+        "type": "assert_source",
+        "decision_id": "place2476-source-9",
+        "exact_before": {
+          "source_absent_id": "37f50f8f-b242-5dfe-aeeb-4230d9c31670"
+        },
+        "exact_after": {
+          "source": {
+            "id": "37f50f8f-b242-5dfe-aeeb-4230d9c31670",
+            "source_key": "spatial-reviewed:37f50f8f-b242-5dfe-aeeb-4230d9c31670",
+            "source_type": "bibliographic_reference",
+            "title": "Metropolitan Museum of Art: China, 1000–1400 A.D. chronology",
+            "citation_text": "Metropolitan Museum of Art: China, 1000–1400 A.D. chronology",
+            "canonical_url": "https://www.metmuseum.org/fr/toah/ht/07/eac.html"
+          }
+        }
+      }
+    },
+    {
+      "source_id": "38e7f5dc-b0d9-5a54-acd3-5159075e1c6b",
+      "status": "HOLD_MISSING_CANONICAL_URL",
+      "error": "CORRECTION_V2_OP9_SOURCE_SOURCE_BIBLIOGRAPHIC_EVIDENCE_REQUIRED",
+      "operation": {
+        "type": "assert_source",
+        "decision_id": "place2476-source-10",
+        "exact_before": {
+          "source_absent_id": "38e7f5dc-b0d9-5a54-acd3-5159075e1c6b"
+        },
+        "exact_after": {
+          "source": {
+            "id": "38e7f5dc-b0d9-5a54-acd3-5159075e1c6b",
+            "source_key": "spatial-reviewed:38e7f5dc-b0d9-5a54-acd3-5159075e1c6b",
+            "source_type": "bibliographic_reference",
+            "title": "Governo do Brasil: Linha do Tempo da Independência",
+            "citation_text": "Governo do Brasil: Linha do Tempo da Independência"
+          }
+        }
+      }
+    },
+    {
+      "source_id": "47fc9701-c079-5a5a-9360-90e059d4ca97",
+      "status": "HOLD_MISSING_CANONICAL_URL",
+      "error": "CORRECTION_V2_OP10_SOURCE_SOURCE_BIBLIOGRAPHIC_EVIDENCE_REQUIRED",
+      "operation": {
+        "type": "assert_source",
+        "decision_id": "place2476-source-11",
+        "exact_before": {
+          "source_absent_id": "47fc9701-c079-5a5a-9360-90e059d4ca97"
+        },
+        "exact_after": {
+          "source": {
+            "id": "47fc9701-c079-5a5a-9360-90e059d4ca97",
+            "source_key": "spatial-reviewed:47fc9701-c079-5a5a-9360-90e059d4ca97",
+            "source_type": "bibliographic_reference",
+            "title": "Hellenic Ministry of Culture, Cultural Egnatia: Pella",
+            "citation_text": "Hellenic Ministry of Culture, Cultural Egnatia: Pella"
+          }
+        }
+      }
+    },
+    {
+      "source_id": "51851bcf-6c36-56b8-bf2b-808c9aaf4c7d",
+      "status": "HOLD_MISSING_CANONICAL_URL",
+      "error": "CORRECTION_V2_OP11_SOURCE_SOURCE_BIBLIOGRAPHIC_EVIDENCE_REQUIRED",
+      "operation": {
+        "type": "assert_source",
+        "decision_id": "place2476-source-12",
+        "exact_before": {
+          "source_absent_id": "51851bcf-6c36-56b8-bf2b-808c9aaf4c7d"
+        },
+        "exact_after": {
+          "source": {
+            "id": "51851bcf-6c36-56b8-bf2b-808c9aaf4c7d",
+            "source_key": "spatial-reviewed:51851bcf-6c36-56b8-bf2b-808c9aaf4c7d",
+            "source_type": "bibliographic_reference",
+            "title": "National Museum of Oman: Architectural Heritage — Muscat",
+            "citation_text": "National Museum of Oman: Architectural Heritage — Muscat"
+          }
+        }
+      }
+    },
+    {
+      "source_id": "51e16f5a-ff7f-5d3c-b03e-034f9a1ef04d",
+      "status": "STRUCTURALLY_VALID_EVIDENCE_HOLD",
+      "operation": {
+        "type": "assert_source",
+        "decision_id": "place2476-source-13",
+        "exact_before": {
+          "source_absent_id": "51e16f5a-ff7f-5d3c-b03e-034f9a1ef04d"
+        },
+        "exact_after": {
+          "source": {
+            "id": "51e16f5a-ff7f-5d3c-b03e-034f9a1ef04d",
+            "source_key": "spatial-reviewed:51e16f5a-ff7f-5d3c-b03e-034f9a1ef04d",
+            "source_type": "bibliographic_reference",
+            "title": "Cambridge Antiquity: Mapping Karakorum, the capital of the Mongol Empire",
+            "citation_text": "Cambridge Antiquity: Mapping Karakorum, the capital of the Mongol Empire",
+            "canonical_url": "https://www.cambridge.org/core/journals/antiquity/article/mapping-karakorum-the-capital-of-the-mongol-empire/6E86EC9807E3354074D101D1AA15056F"
+          }
+        }
+      }
+    },
+    {
+      "source_id": "677c16aa-8a6b-52a7-ab98-27ef7a3190d4",
+      "status": "STRUCTURALLY_VALID_EVIDENCE_HOLD",
+      "operation": {
+        "type": "assert_source",
+        "decision_id": "place2476-source-14",
+        "exact_before": {
+          "source_absent_id": "677c16aa-8a6b-52a7-ab98-27ef7a3190d4"
+        },
+        "exact_after": {
+          "source": {
+            "id": "677c16aa-8a6b-52a7-ab98-27ef7a3190d4",
+            "source_key": "spatial-reviewed:677c16aa-8a6b-52a7-ab98-27ef7a3190d4",
+            "source_type": "bibliographic_reference",
+            "title": "Press Information Bureau, Government of India: Anniversary of the formation of Azad Hind Government (21 Oct 1943)",
+            "citation_text": "Press Information Bureau, Government of India: Anniversary of the formation of Azad Hind Government (21 Oct 1943)",
+            "canonical_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=1765729&lang=2&reg=48"
+          }
+        }
+      }
+    },
+    {
+      "source_id": "69e4362a-3589-52b4-9a32-5b8e83710552",
+      "status": "HOLD_MISSING_CANONICAL_URL",
+      "error": "CORRECTION_V2_OP14_SOURCE_SOURCE_BIBLIOGRAPHIC_EVIDENCE_REQUIRED",
+      "operation": {
+        "type": "assert_source",
+        "decision_id": "place2476-source-15",
+        "exact_before": {
+          "source_absent_id": "69e4362a-3589-52b4-9a32-5b8e83710552"
+        },
+        "exact_after": {
+          "source": {
+            "id": "69e4362a-3589-52b4-9a32-5b8e83710552",
+            "source_key": "spatial-reviewed:69e4362a-3589-52b4-9a32-5b8e83710552",
+            "source_type": "bibliographic_reference",
+            "title": "Republic of Türkiye Bursa Governorship: Tarihçe",
+            "citation_text": "Republic of Türkiye Bursa Governorship: Tarihçe"
+          }
+        }
+      }
+    },
+    {
+      "source_id": "7a0280a6-71d0-5ae9-809c-9d0db9e1d181",
+      "status": "HOLD_MISSING_CANONICAL_URL",
+      "error": "CORRECTION_V2_OP15_SOURCE_SOURCE_BIBLIOGRAPHIC_EVIDENCE_REQUIRED",
+      "operation": {
+        "type": "assert_source",
+        "decision_id": "place2476-source-16",
+        "exact_before": {
+          "source_absent_id": "7a0280a6-71d0-5ae9-809c-9d0db9e1d181"
+        },
+        "exact_after": {
+          "source": {
+            "id": "7a0280a6-71d0-5ae9-809c-9d0db9e1d181",
+            "source_key": "spatial-reviewed:7a0280a6-71d0-5ae9-809c-9d0db9e1d181",
+            "source_type": "bibliographic_reference",
+            "title": "Republic of Türkiye Ministry of National Education, Söğüt District: İlçemiz - Söğüt",
+            "citation_text": "Republic of Türkiye Ministry of National Education, Söğüt District: İlçemiz - Söğüt"
+          }
+        }
+      }
+    },
+    {
+      "source_id": "82565127-eb9c-5da2-a1c4-8fcd738ecf87",
+      "status": "HOLD_MISSING_CANONICAL_URL",
+      "error": "CORRECTION_V2_OP16_SOURCE_SOURCE_BIBLIOGRAPHIC_EVIDENCE_REQUIRED",
+      "operation": {
+        "type": "assert_source",
+        "decision_id": "place2476-source-17",
+        "exact_before": {
+          "source_absent_id": "82565127-eb9c-5da2-a1c4-8fcd738ecf87"
+        },
+        "exact_after": {
+          "source": {
+            "id": "82565127-eb9c-5da2-a1c4-8fcd738ecf87",
+            "source_key": "spatial-reviewed:82565127-eb9c-5da2-a1c4-8fcd738ecf87",
+            "source_type": "bibliographic_reference",
+            "title": "Cambridge University Press: Rituals of Islamic Monarchy — the conquest society c. 628–c. 660",
+            "citation_text": "Cambridge University Press: Rituals of Islamic Monarchy — the conquest society c. 628–c. 660"
+          }
+        }
+      }
+    },
+    {
+      "source_id": "82cfad27-e6e5-57ed-97c7-28ae56bb5072",
+      "status": "STRUCTURALLY_VALID_EVIDENCE_HOLD",
+      "operation": {
+        "type": "assert_source",
+        "decision_id": "place2476-source-18",
+        "exact_before": {
+          "source_absent_id": "82cfad27-e6e5-57ed-97c7-28ae56bb5072"
+        },
+        "exact_after": {
+          "source": {
+            "id": "82cfad27-e6e5-57ed-97c7-28ae56bb5072",
+            "source_key": "spatial-reviewed:82cfad27-e6e5-57ed-97c7-28ae56bb5072",
+            "source_type": "bibliographic_reference",
+            "title": "UNESCO World Heritage Centre: Archaeological Site at Khuduu Aral and Surrounding Cultural Landscape",
+            "citation_text": "UNESCO World Heritage Centre: Archaeological Site at Khuduu Aral and Surrounding Cultural Landscape",
+            "canonical_url": "https://whc.unesco.org/en/tentativelists/5952/"
+          }
+        }
+      }
+    },
+    {
+      "source_id": "89243eda-1366-50cc-8b72-546766cf5b33",
+      "status": "STRUCTURALLY_VALID_EVIDENCE_HOLD",
+      "operation": {
+        "type": "assert_source",
+        "decision_id": "place2476-source-19",
+        "exact_before": {
+          "source_absent_id": "89243eda-1366-50cc-8b72-546766cf5b33"
+        },
+        "exact_after": {
+          "source": {
+            "id": "89243eda-1366-50cc-8b72-546766cf5b33",
+            "source_key": "spatial-reviewed:89243eda-1366-50cc-8b72-546766cf5b33",
+            "source_type": "bibliographic_reference",
+            "title": "1911 Encyclopaedia Britannica: Constantine (emperors)",
+            "citation_text": "1911 Encyclopaedia Britannica: Constantine (emperors)",
+            "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Constantine_(emperors)"
+          }
+        }
+      }
+    },
+    {
+      "source_id": "91d307b2-a4e3-5795-9f37-c0a2fabee2c7",
+      "status": "STRUCTURALLY_VALID_EVIDENCE_HOLD",
+      "operation": {
+        "type": "assert_source",
+        "decision_id": "place2476-source-20",
+        "exact_before": {
+          "source_absent_id": "91d307b2-a4e3-5795-9f37-c0a2fabee2c7"
+        },
+        "exact_after": {
+          "source": {
+            "id": "91d307b2-a4e3-5795-9f37-c0a2fabee2c7",
+            "source_key": "spatial-reviewed:91d307b2-a4e3-5795-9f37-c0a2fabee2c7",
+            "source_type": "bibliographic_reference",
+            "title": "UNESCO World Heritage Centre: Site of Xanadu",
+            "citation_text": "UNESCO World Heritage Centre: Site of Xanadu",
+            "canonical_url": "https://whc.unesco.org/en/list/1389"
+          }
+        }
+      }
+    },
+    {
+      "source_id": "9ed98162-dc7d-5a2f-89da-db4aac4694ae",
+      "status": "HOLD_MISSING_CANONICAL_URL",
+      "error": "CORRECTION_V2_OP20_SOURCE_SOURCE_BIBLIOGRAPHIC_EVIDENCE_REQUIRED",
+      "operation": {
+        "type": "assert_source",
+        "decision_id": "place2476-source-21",
+        "exact_before": {
+          "source_absent_id": "9ed98162-dc7d-5a2f-89da-db4aac4694ae"
+        },
+        "exact_after": {
+          "source": {
+            "id": "9ed98162-dc7d-5a2f-89da-db4aac4694ae",
+            "source_key": "spatial-reviewed:9ed98162-dc7d-5a2f-89da-db4aac4694ae",
+            "source_type": "bibliographic_reference",
+            "title": "Encyclopaedia Iranica: Kufa — Ali (r. 656–61) chose Kufa as his capital",
+            "citation_text": "Encyclopaedia Iranica: Kufa — Ali (r. 656–61) chose Kufa as his capital"
+          }
+        }
+      }
+    },
+    {
+      "source_id": "b8a51ecc-5091-51e2-97b6-cb24b4cd7d48",
+      "status": "STRUCTURALLY_VALID_EVIDENCE_HOLD",
+      "operation": {
+        "type": "assert_source",
+        "decision_id": "place2476-source-22",
+        "exact_before": {
+          "source_absent_id": "b8a51ecc-5091-51e2-97b6-cb24b4cd7d48"
+        },
+        "exact_after": {
+          "source": {
+            "id": "b8a51ecc-5091-51e2-97b6-cb24b4cd7d48",
+            "source_key": "spatial-reviewed:b8a51ecc-5091-51e2-97b6-cb24b4cd7d48",
+            "source_type": "bibliographic_reference",
+            "title": "Oman Ministry of Foreign Affairs: History",
+            "citation_text": "Oman Ministry of Foreign Affairs: History",
+            "canonical_url": "https://www.fm.gov.om/en/about-oman/state/history/"
+          }
+        }
+      }
+    },
+    {
+      "source_id": "c3af4db8-6c27-51da-af04-5f562cbd5cc2",
+      "status": "STRUCTURALLY_VALID_EVIDENCE_HOLD",
+      "operation": {
+        "type": "assert_source",
+        "decision_id": "place2476-source-23",
+        "exact_before": {
+          "source_absent_id": "c3af4db8-6c27-51da-af04-5f562cbd5cc2"
+        },
+        "exact_after": {
+          "source": {
+            "id": "c3af4db8-6c27-51da-af04-5f562cbd5cc2",
+            "source_key": "spatial-reviewed:c3af4db8-6c27-51da-af04-5f562cbd5cc2",
+            "source_type": "bibliographic_reference",
+            "title": "Atatürk Ansiklopedisi: Ankara’nın Başkent Oluşu",
+            "citation_text": "Atatürk Ansiklopedisi: Ankara’nın Başkent Oluşu",
+            "canonical_url": "https://ataturkansiklopedisi.gov.tr/detay/868/Ankara%E2%80%99n%C4%B1n-Ba%C5%9Fkent-Olu%C5%9Fu"
+          }
+        }
+      }
+    },
+    {
+      "source_id": "c88cdd70-16eb-5c3c-881b-425a880029f9",
+      "status": "HOLD_MISSING_CANONICAL_URL",
+      "error": "CORRECTION_V2_OP23_SOURCE_SOURCE_BIBLIOGRAPHIC_EVIDENCE_REQUIRED",
+      "operation": {
+        "type": "assert_source",
+        "decision_id": "place2476-source-24",
+        "exact_before": {
+          "source_absent_id": "c88cdd70-16eb-5c3c-881b-425a880029f9"
+        },
+        "exact_after": {
+          "source": {
+            "id": "c88cdd70-16eb-5c3c-881b-425a880029f9",
+            "source_key": "spatial-reviewed:c88cdd70-16eb-5c3c-881b-425a880029f9",
+            "source_type": "bibliographic_reference",
+            "title": "Government of India / IGNCA chronology: Bose civil and military headquarters moved to Burma in January 1944",
+            "citation_text": "Government of India / IGNCA chronology: Bose civil and military headquarters moved to Burma in January 1944"
+          }
+        }
+      }
+    },
+    {
+      "source_id": "d0516347-22db-5919-80aa-ca80fe33574f",
+      "status": "HOLD_MISSING_CANONICAL_URL",
+      "error": "CORRECTION_V2_OP24_SOURCE_SOURCE_BIBLIOGRAPHIC_EVIDENCE_REQUIRED",
+      "operation": {
+        "type": "assert_source",
+        "decision_id": "place2476-source-25",
+        "exact_before": {
+          "source_absent_id": "d0516347-22db-5919-80aa-ca80fe33574f"
+        },
+        "exact_after": {
+          "source": {
+            "id": "d0516347-22db-5919-80aa-ca80fe33574f",
+            "source_key": "spatial-reviewed:d0516347-22db-5919-80aa-ca80fe33574f",
+            "source_type": "bibliographic_reference",
+            "title": "Odisha Review: headquarters of the Provisional Government, Indian Independence League and Supreme Command shifted from Singapore to Rangoon",
+            "citation_text": "Odisha Review: headquarters of the Provisional Government, Indian Independence League and Supreme Command shifted from Singapore to Rangoon"
+          }
+        }
+      }
+    },
+    {
+      "source_id": "e91f57ec-9c46-594b-859b-4a14c2af99ba",
+      "status": "HOLD_MISSING_CANONICAL_URL",
+      "error": "CORRECTION_V2_OP25_SOURCE_SOURCE_BIBLIOGRAPHIC_EVIDENCE_REQUIRED",
+      "operation": {
+        "type": "assert_source",
+        "decision_id": "place2476-source-26",
+        "exact_before": {
+          "source_absent_id": "e91f57ec-9c46-594b-859b-4a14c2af99ba"
+        },
+        "exact_after": {
+          "source": {
+            "id": "e91f57ec-9c46-594b-859b-4a14c2af99ba",
+            "source_key": "spatial-reviewed:e91f57ec-9c46-594b-859b-4a14c2af99ba",
+            "source_type": "bibliographic_reference",
+            "title": "Getty Thesaurus of Geographic Names: Mamluk Sultanate (TGN 6003667)",
+            "citation_text": "Getty Thesaurus of Geographic Names: Mamluk Sultanate (TGN 6003667)"
+          }
+        }
+      }
+    },
+    {
+      "source_id": "ea373bc1-66af-5950-a4c8-c31188c0f320",
+      "status": "HOLD_MISSING_CANONICAL_URL",
+      "error": "CORRECTION_V2_OP26_SOURCE_SOURCE_BIBLIOGRAPHIC_EVIDENCE_REQUIRED",
+      "operation": {
+        "type": "assert_source",
+        "decision_id": "place2476-source-27",
+        "exact_before": {
+          "source_absent_id": "ea373bc1-66af-5950-a4c8-c31188c0f320"
+        },
+        "exact_after": {
+          "source": {
+            "id": "ea373bc1-66af-5950-a4c8-c31188c0f320",
+            "source_key": "spatial-reviewed:ea373bc1-66af-5950-a4c8-c31188c0f320",
+            "source_type": "bibliographic_reference",
+            "title": "Cambridge History of the Mongol Empire: Mongolia in the Mongol Empire",
+            "citation_text": "Cambridge History of the Mongol Empire: Mongolia in the Mongol Empire"
+          }
+        }
+      }
+    }
+  ]
+}
