@@ -1,0 +1,78 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:selected62-remaining30-20261018:kurosawa:representative:v1",
+  "person": {
+    "canonical_name_en": "Akira Kurosawa",
+    "display_name_ko": "구로사와 아키라",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-18",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Japan",
+    "display_name_ko": "일본",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Film director",
+    "role_display_name_ko": "영화감독",
+    "start_year": 1954,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1954,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Japanese release of Seven Samurai in 1954 as a major filmmaking event; not the sixteenth-century setting as a modern author’s Polity or Activity date. Identity review: Director Akira Kurosawa (1910–1998); not director Kiyoshi Kurosawa or the film Akira."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "British Film Institute — Seven Samurai road to classic status",
+      "canonical_url": "https://www.bfi.org.uk/features/seven-samurai-akira-kurosawa-classic-status",
+      "citation_text": "BFI dates the Japanese premiere to 26 April 1954 and identifies Kurosawa’s production."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "BFI — Akira Kurosawa, 10 essential films",
+      "canonical_url": "https://www.bfi.org.uk/lists/akira-kurosawa-10-essential-films",
+      "citation_text": "BFI biography records 23 March 1910 to 6 September 1998."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-18",
+      "document_title": "구로사와 아키라",
+      "url": "https://namu.wiki/w/%EA%B5%AC%EB%A1%9C%EC%82%AC%EC%99%80%20%EC%95%84%ED%82%A4%EB%9D%BC"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "NEEDS_PREFLIGHT. Source-reviewed historical location/context only; exact canonical Person/alias/Polity/Activity/Place state is unknown. No live requests permitted during quota suspension. Reuse exact existing identities; no invented UUIDs, coordinates or surrogate cultural Polities."
+  },
+  "review_context": {
+    "task": "#2545 approved 62, remaining 30 after #2543/#2544/#2546",
+    "registration_state": "NEEDS_PREFLIGHT",
+    "draft_only": true,
+    "production_screen": "NOT_PERFORMED_USER_PROHIBITED",
+    "identity_review": "Director Akira Kurosawa (1910–1998); not director Kiyoshi Kurosawa or the film Akira.",
+    "namuwiki_evidence_method": "external-index independent Person mirror/title review; direct origin fetch not claimed",
+    "namuwiki_evidence_url": "https://namu.moe/w/%EA%B5%AC%EB%A1%9C%EC%82%AC%EC%99%80%20%EC%95%84%ED%82%A4%EB%9D%BC",
+    "domain_review": "Explicit v2 taxonomy review; architecture=technology, social thought/philosophy=culture, mathematics/medicine=science. Not inferred from office.",
+    "apply_gate": "DRAFT / DO NOT MERGE OR APPLY. Fresh semantic duplicate and exact historical Polity preflight required; source review is not proof of DB absence. No PHFC /36 factual coverage score claimed."
+  }
+}

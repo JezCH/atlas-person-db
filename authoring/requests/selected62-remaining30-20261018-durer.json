@@ -1,0 +1,72 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:selected62-remaining30-20261018:durer:representative:v1",
+  "person": {
+    "canonical_name_en": "Albrecht Durer",
+    "display_name_ko": "알브레히트 뒤러",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-18",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Holy Roman Empire",
+    "display_name_ko": "신성 로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Printmaker",
+    "role_display_name_ko": "판화가",
+    "start_year": 1515,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1515,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Nuremberg printmaking represented by the 1515 Rhinoceros woodcut. The animal was seen in Lisbon, but Dürer did not travel there to see it; no Portuguese author residency is implied. Identity review: Albrecht Dürer the Younger; not his goldsmith father or the modern art-material brand."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "British Museum — Rhinoceros preparatory drawing",
+      "canonical_url": "https://www.britishmuseum.org/collection/object/P_SL-5218-161",
+      "citation_text": "Museum identifies Dürer’s preparatory drawing for the famous 1515 rhinoceros woodcut and explains its remote visual sources."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-18",
+      "document_title": "알브레히트 뒤러",
+      "url": "https://namu.wiki/w/%EC%95%8C%EB%B8%8C%EB%A0%88%ED%9E%88%ED%8A%B8%20%EB%92%A4%EB%9F%AC"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "NEEDS_PREFLIGHT. Source-reviewed historical location/context only; exact canonical Person/alias/Polity/Activity/Place state is unknown. No live requests permitted during quota suspension. Reuse exact existing identities; no invented UUIDs, coordinates or surrogate cultural Polities."
+  },
+  "review_context": {
+    "task": "#2545 approved 62, remaining 30 after #2543/#2544/#2546",
+    "registration_state": "NEEDS_PREFLIGHT",
+    "draft_only": true,
+    "production_screen": "NOT_PERFORMED_USER_PROHIBITED",
+    "identity_review": "Albrecht Dürer the Younger; not his goldsmith father or the modern art-material brand.",
+    "namuwiki_evidence_method": "external-index independent Person mirror/title review; direct origin fetch not claimed",
+    "namuwiki_evidence_url": "https://namu.moe/w/%EC%95%8C%EB%B8%8C%EB%A0%88%ED%9E%88%ED%8A%B8%20%EB%92%A4%EB%9F%AC",
+    "domain_review": "Explicit v2 taxonomy review; architecture=technology, social thought/philosophy=culture, mathematics/medicine=science. Not inferred from office.",
+    "apply_gate": "DRAFT / DO NOT MERGE OR APPLY. Fresh semantic duplicate and exact historical Polity preflight required; source review is not proof of DB absence. No PHFC /36 factual coverage score claimed."
+  }
+}

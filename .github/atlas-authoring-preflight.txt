@@ -1,5 +1,5 @@
-preflight authoring/requests/cultural20-20261019-verdi-1874.json
-preflight authoring/requests/user-core40-20261019-cervantes-don-quixote-1605-1615.json
-preflight authoring/requests/user-core40-20261019-dostoevsky-major-literary-phase-1864-1880.json
-preflight authoring/requests/user-core40-20261019-picasso-france-paris-1904-1973.json
-preflight authoring/requests/user-core40-20261019-tolstoy-russian-major-novels-1863-1877.json
+preflight authoring/requests/selected62-remaining30-20261018-durer.json
+preflight authoring/requests/selected62-remaining30-20261018-hitchcock.json
+preflight authoring/requests/selected62-remaining30-20261018-kurosawa.json
+preflight authoring/requests/selected62-remaining30-20261018-mahler.json
+preflight authoring/requests/selected62-remaining30-20261018-monteverdi.json
