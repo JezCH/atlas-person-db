@@ -26,3 +26,35 @@ test("workflow retains v1 exact guards, immutable head, mixed-input rejection an
  assert.match(w,/mode:"dry_run",plan:\$plan\[0\]/);
  assert.match(w,/validate-protected-correction-preflight\.mjs response/);
 });
+
+function designationOnly(){
+ const {r,p,x}=fixture();
+ const polity="1a97dec2-dc1c-4e44-8546-e19bc6117ad5";
+ r.activity_ids=[];r.polity_ids=[polity];r.expected_count_delta.activities=0;r.expected_count_delta.activity_sources=0;
+ p.operations=[];
+ p.stage2_assertions[1].exact_after.designation.polity_id=polity;
+ x.result.operations=structuredClone(p.stage2_assertions);
+ x.result.expected_count_delta={...r.expected_count_delta};
+ x.result.after_counts=Object.fromEntries(Object.keys(delta).map(k=>[k,100+r.expected_count_delta[k]]));
+ return {r,p,x};
+}
+test("assertion-only protected preflight requires explicit polity scope and zero Activity changes",()=>{
+ const {r,p,x}=designationOnly();
+ assert.equal(validateCandidate(r,p).length,2);
+ assert.equal(validateResponse(r,p,x).committed,false);
+ for(const change of [
+   a=>delete a.r.polity_ids,
+   a=>a.r.polity_ids=[],
+   a=>a.r.polity_ids=[n],
+   a=>a.r.polity_ids.push(s),
+   a=>a.p.stage2_assertions[1].exact_after.designation.polity_id=s,
+   a=>a.p.stage2_assertions.pop(),
+   a=>a.p.stage2_assertions[1].exact_after.source_links=[link(old)],
+   a=>a.x.result.operations[1].exact_after.designation.polity_id=s,
+   a=>a.x.result.after_counts.activities++,
+   a=>a.r.activity_ids=[n],
+   a=>a.p.operations.push(fixture().p.operations[0])
+ ]){
+  const a=designationOnly();change(a);assert.throws(()=>validateResponse(a.r,a.p,a.x),/PREFLIGHT_V2_/);
+ }
+});

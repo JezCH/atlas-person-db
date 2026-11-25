@@ -22,7 +22,10 @@ function exactKeys(a,b){return obj(a)&&same(Object.keys(a),b);}
 export function validateRequest(r){
   ensure(obj(r)&&r.schema==="atlas-protected-correction-preflight/v2"&&r.mode==="dry_run","REQUEST");
   ensure(Number.isSafeInteger(r.pr_number)&&r.pr_number>0&&/^[0-9a-f]{40}$/.test(r.head_sha)&&/^corrections\/plans\/[A-Za-z0-9._-]+\.json$/.test(r.plan_path)&&typeof r.batch_id==="string"&&r.batch_id.length>0,"IDENTITY");
-  ensure(Array.isArray(r.activity_ids)&&r.activity_ids.length>=1&&r.activity_ids.length<=10&&unique(r.activity_ids)&&r.activity_ids.every(id=>uuid.test(id)),"TARGETS");
+  ensure(Array.isArray(r.activity_ids)&&r.activity_ids.length<=10&&unique(r.activity_ids)&&r.activity_ids.every(id=>typeof id==="string"&&uuid.test(id)),"TARGETS");
+  if(r.activity_ids.length===0){
+    ensure(Array.isArray(r.polity_ids)&&r.polity_ids.length>=1&&r.polity_ids.length<=10&&unique(r.polity_ids)&&r.polity_ids.every(id=>typeof id==="string"&&uuid.test(id)),"DESIGNATION_TARGETS");
+  }else ensure(!Object.hasOwn(r,"polity_ids"),"MIXED_TARGET_PROFILE");
   ensure(exactKeys(r.expected_count_delta,keys)&&keys.every(k=>Number.isSafeInteger(r.expected_count_delta[k])&&r.expected_count_delta[k]>=0&&r.expected_count_delta[k]<=100),"COUNT_CONTRACT");
   return r;
 }
@@ -32,6 +35,14 @@ export function validateCandidate(r,p){
   ensure(Array.isArray(p.operations)&&p.operations.length===r.activity_ids.length&&same(p.operations.map(o=>o.activity_id),r.activity_ids),"PLAN_TARGETS");
   ensure(Array.isArray(p.stage2_assertions)&&p.stage2_assertions.length<=10&&arr(p.polity_relation_assertions).length===0&&arr(p.companion_assertions).length===0,"ASSERTION_SCOPE");
   const ops=[...p.operations,...p.stage2_assertions];
+  if(r.activity_ids.length===0){
+    const designations=p.stage2_assertions.filter(o=>o.type==="assert_polity_designation");
+    ensure(designations.length>0&&same([...new Set(designations.map(o=>o.exact_after?.designation?.polity_id))],r.polity_ids),"PLAN_DESIGNATION_TARGETS");
+    const ids=designations.map(o=>o.exact_after?.designation?.id);
+    ensure(unique(ids),"DESIGNATION_DUPLICATE");
+    const referenced=new Set(designations.flatMap(o=>arr(o.exact_after?.source_links).map(l=>l.source_id)));
+    ensure(p.stage2_assertions.filter(o=>o.type==="assert_source").every(o=>referenced.has(o.exact_after?.source?.id)),"UNRELATED_SOURCE");
+  }
   ensure(ops.every(o=>allowed.has(o.type))&&p.operations.every(o=>["rewrite_activity","split_activity"].includes(o.type))&&p.stage2_assertions.every(o=>["assert_source","assert_polity_designation"].includes(o.type))&&unique(ops.map(signature)),"OPERATION_SCOPE");
   const delta=zero(), newIds=[];
   const add=t=>{ensure(!arr(t?.replace_source_links).length,"SOURCE_REPLACEMENT");const a=arr(t?.add_source_links);ensure(a.every(l=>uuid.test(l.source_id)&&typeof l.source_locator_key==="string"&&l.source_locator_key.length>0)&&unique(a.map(l=>l.source_id)),"ADDITIONS");return a.length;};
@@ -73,7 +84,7 @@ export function validateResponse(r,p,x){
     else if(o.type==="split_activity"){
       ensure(o.exact_before?.activity?.id===o.activity_id&&o.survivor_fragment?.activity?.id===o.activity_id&&same(arr(o.new_fragments).map(f=>f.activity?.id),candidate.fragments.filter(f=>!f.survivor).map(f=>f.activity_id)),"RESPONSE_FRAGMENTS");
       preserve(o.exact_before,o.survivor_fragment);for(const f of o.new_fragments)preserve(o.exact_before,f);
-    }else{const field=o.type==="assert_source"?"source":"designation";ensure(o.exact_after?.[field]?.id===candidate.exact_after[field].id,"RESPONSE_ASSERTION_ID");}
+    }else{const field=o.type==="assert_source"?"source":"designation";ensure(o.exact_after?.[field]?.id===candidate.exact_after[field].id,"RESPONSE_ASSERTION_ID");if(r.activity_ids.length===0&&field==="designation"){ensure(o.exact_after.designation.polity_id===candidate.exact_after.designation.polity_id,"RESPONSE_DESIGNATION_TARGET");}}
   }
   return {marker:x.marker,dry_run:true,committed:false,replay:false,deployment_sha:x.deployment_sha,exact_live_snapshot_digest:x.exact_live_snapshot_digest,manifest_sha256:x.manifest_sha256,candidate_head:r.head_sha,candidate_path:r.plan_path,before_counts:result.before_counts,after_counts:result.after_counts,expected_count_delta:r.expected_count_delta,targets:result.operations};
 }
