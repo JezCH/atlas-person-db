@@ -182,13 +182,7 @@
           }
         ],
         "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
-      },
-      "add_source_links": [
-        {
-          "source_id": "65637ed7-437f-52d5-904e-3c385f9dfb0f",
-          "source_locator_key": "https://history.state.gov/countries/syria"
-        }
-      ]
+      }
     }
   ],
   "stage2_assertions": [
@@ -258,6 +252,11 @@
             "polity_designation_id": "c0333dfb-0a60-5277-8bfc-3d7652c936e0",
             "source_id": "65637ed7-437f-52d5-904e-3c385f9dfb0f",
             "source_locator_key": "https://history.state.gov/countries/syria"
+          },
+          {
+            "polity_designation_id": "c0333dfb-0a60-5277-8bfc-3d7652c936e0",
+            "source_id": "ada1dd54-29eb-4d43-ac83-5c6fbc665b13",
+            "source_locator_key": "https://www.un.org/en/node/122868"
           }
         ]
       }
@@ -276,7 +275,7 @@
   "review_requirements": [
     "Explicit approval of Egypt survivor identity scope and exact proposed split/relink/designation.",
     "Protected exact-before snapshot of both activities, source links and child rows; public DTO cannot establish legacy_source_key or all private dependency state.",
-    "Verify designation absence and source key/UUID absence, add exact existing UN name-change source UUID and locator to designation after protected confirmation; no public UUID guess.",
+    "Verify designation absence and new source key/UUID absence. Existing UN name-change Source ada1dd54-29eb-4d43-ac83-5c6fbc665b13 confirmed by bounded current catalog; exact original locator https://www.un.org/en/node/122868 confirmed in both Sadat public Activity projections. Preserve existing Source and its links; protected verification still required.",
     "Confirm canonical synthesizer and transaction order support additive source links in same batch; verify actual temporal display and no source loss.",
     "Keep 1971–1981 Sadat Activity cb057be7-43fe-4c0f-921d-1ab41bdcb634 unchanged; no retire or coalescing in this draft."
   ]
