@@ -67,16 +67,16 @@
   },
   "review_context": {
     "task": "#2545 approved 62, remaining 30 after #2543/#2544/#2546",
-    "registration_state": "COLLISION_REVIEWED_FRESH_PROTECTED_PREFLIGHT_REQUIRED",
+    "registration_state": "READY_FOR_PROTECTED_APPLY",
     "draft_only": false,
-    "production_screen": "PROTECTED_PREFLIGHT_BLOCKED_45630299886_POLITY_DISPLAY_NAME_COLLISION_REVIEW_REQUIRED",
+    "production_screen": "PROTECTED_PREFLIGHT_READY_45634109040",
     "identity_review": "Alfred Joseph Hitchcock (1899–1980); not the actor portraying him in the 2012 biopic or a fictional character.",
     "namuwiki_evidence_method": "external-index independent Person mirror/title review; direct origin fetch not claimed",
     "namuwiki_evidence_url": "https://namu.moe/w/%EC%95%A8%ED%94%84%EB%A6%AC%EB%93%9C%20%ED%9E%88%EC%B9%98%EC%BD%95",
     "domain_review": "Explicit v2 taxonomy review; architecture=technology, social thought/philosophy=culture, mathematics/medicine=science. Not inferred from office.",
-    "apply_gate": "Read-only preflight only. Existing live United States / 미국 exact UUID 7d09bc56-1ea0-515e-a3e7-9863361b6f15 (not a3e8), historical_polity/historical; existing spatial binding americas/north-america. Align request EN label to exact canonical existing identity; preserve approved 1960 Activity and all historical fields. No polity creation, no auto continuation. Apply remains separate until fresh preflight READY.",
-    "prior_protected_preflight_run": 45630299886,
-    "prior_protected_preflight_status": "BLOCKED",
+    "apply_gate": "Single explicitly selected #2545 request; existing United States exact canonical identity and spatial mapping confirmed. Corrected manifest passed protected read-only preflight #45634109040, READY=1, BLOCKED=0, committed=false. Preserve original historical fields, sources and request ID. Protected writer must repeat canonical checks before commit. No automatic continuation opt-in or new polity.",
+    "prior_protected_preflight_run": 45634109040,
+    "prior_protected_preflight_status": "READY",
     "source_draft_pr": 2549,
     "existing_polity_identity_checked_at": "2026-11-25"
   }
