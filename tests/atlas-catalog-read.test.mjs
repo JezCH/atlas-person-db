@@ -106,7 +106,7 @@ test('polity catalogue includes temporal designation matches without replacing s
   assert.match(POLITY_LOOKUP_SQL, /join atlas_v2\.polity_designation_names pdn on pdn\.polity_designation_id=pd\.id/i);
   assert.match(POLITY_LOOKUP_SQL, /pd\.polity_id=p\.id and pdn\.name ilike \$1/i);
   assert.match(POLITY_LOOKUP_SQL, /where dm\.matches is not null\s+or exists/i);
-  assert.match(POLITY_LOOKUP_SQL, /dm\.exact_match then 0/i);
+  assert.match(POLITY_LOOKUP_SQL, /order by case when \(\s*exists \(\s*select 1 from atlas_v2\.polity_names pn_exact\s*where pn_exact\.polity_id=p\.id and pn_exact\.name ilike \$2\s*\) or dm\.exact_match\s*\) then 0/i);
   assert.match(POLITY_LOOKUP_SQL, /coalesce\(dm\.matches, '\[\]'::jsonb\) as matched_designations/i);
   assert.match(POLITY_LOOKUP_SQL, /en\.name as canonical_name_en/i);
   assert.match(POLITY_LOOKUP_SQL, /ko\.name as display_name_ko/i);

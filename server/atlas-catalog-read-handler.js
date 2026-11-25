@@ -40,7 +40,12 @@ select p.id::text,
         where pn.polity_id=p.id
           and pn.name ilike $1
       )
- order by case when en.name ilike $2 or ko.name ilike $2 or dm.exact_match then 0 else 1 end,
+ order by case when (
+            exists (
+              select 1 from atlas_v2.polity_names pn_exact
+               where pn_exact.polity_id=p.id and pn_exact.name ilike $2
+            ) or dm.exact_match
+          ) then 0 else 1 end,
           en.name nulls last,
           ko.name nulls last,
           p.id
