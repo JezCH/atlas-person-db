@@ -63,6 +63,9 @@
     "source_draft_pr": 2549,
     "preflight_required": true,
     "existing_polity_identity_checked_at": "2026-11-25",
-    "auto_continue_after_preflight": true
+    "auto_continue_after_preflight": true,
+    "prior_protected_preflight_run": 45626604424,
+    "prior_protected_preflight_status": "READY",
+    "retry_basis": "Zero-write prior preflight READY; entire batch handoff refused because another member was blocked. Fresh exact-SHA preflight required; approved historical fields unchanged."
   }
 }
