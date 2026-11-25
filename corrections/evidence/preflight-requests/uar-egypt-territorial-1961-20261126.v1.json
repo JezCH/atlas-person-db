@@ -1,0 +1,31 @@
+{
+  "schema": "atlas-protected-correction-preflight/v2",
+  "mode": "dry_run",
+  "pr_number": 2889,
+  "head_sha": "5f0b3267f3c8507c53397fe2835d20e432841f03",
+  "plan_path": "corrections/plans/polity-uar-egypt-territorial-1961-20261125.v1.json",
+  "batch_id": "polity_uar_egypt_territorial_1961_20261125_v1",
+  "activity_ids": [
+    "e65edaa4-645a-479f-be81-6414ff2f71ba",
+    "e100c855-4559-5431-8c72-61909a8da746"
+  ],
+  "expected_count_delta": {
+    "activities": 1,
+    "activity_sources": 5,
+    "chronology_claims": 0,
+    "relationship_descriptions": 0,
+    "polity_relations": 0,
+    "polity_relation_sources": 0,
+    "sources": 1,
+    "polity_sources": 0,
+    "governance_contexts": 0,
+    "governance_context_names": 0,
+    "governance_periods": 0,
+    "governance_sources": 0,
+    "designations": 1,
+    "designation_names": 2,
+    "designation_sources": 2,
+    "identity_relations": 0,
+    "identity_relation_sources": 0
+  }
+}
