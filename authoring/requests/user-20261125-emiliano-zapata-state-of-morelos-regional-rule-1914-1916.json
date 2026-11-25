@@ -1,0 +1,84 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261125:emiliano-zapata:state-of-morelos-de-facto-regional-rule:1914-1916:v1",
+  "person": {
+    "canonical_name_en": "Emiliano Zapata",
+    "display_name_ko": "에밀리아노 사파타",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-25",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "State of Morelos",
+    "display_name_ko": "모렐로스주",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Mexico's constituent State of Morelos is the geographic/administrative context of the Zapatista revolutionary zone documented by the US Library of Congress (https://loc.gov/exhibits/mexican-revolution-and-the-united-states/mexico-during-the-porfiriato.html) and peer-reviewed study of the Zapatista-controlled Morelos region 1914–16. This federal constituent state is NOT a new independent country, nor a uniform polygon describing Zapata-controlled territory; the front shifted and the local town and land commissions had variable jurisdiction. No first-class historical Place ID, exact border geometry or immutable display binding established. `reviewed_hold`."
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-08",
+      "document_title": "에밀리아노 사파타",
+      "url": "https://namu.wiki/w/%EC%97%90%EB%B0%80%EB%A6%AC%EC%95%84%EB%85%B8%20%EC%82%AC%ED%8C%8C%ED%83%80"
+    }
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "De facto leader of the Zapatista administration in Morelos",
+    "role_code": "zapatista_de_facto_regional_governance_morelos",
+    "role_display_name_ko": "모렐로스 사파타파 실질적 지역 통치 지도자",
+    "start_year": 1914,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1916,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Emiliano Zapata Salazar (1879–1919), leader of the Ejército Libertador del Sur, exercised considerable de facto authority through Zapatista local and regional administrations and agrarian commissions in Morelos during the well-documented 1914–1916 phase. In the summer of 1914 his forces controlled much of Morelos and neighboring regions; 1914–16 scholarship documents actual handling of land, village water rights, local officials and disputes. This is not an office of elected or officially appointed Governor of the State of Morelos and not an independent 'Republic of Zapata'. The role name expressly means a revolutionary power exercised through local councils and subordinate administrators, with non-uniform, contested and changing control. The approximate year boundaries delimit the documented major period of regional administration, not the full lifetime or entirety of the Ejército Libertador del Sur; Zapata remained active up to 1919. The existing 1911 Plan of Ayala activity linked to Mexico remains unchanged; do not conflate the two temporal roles."
+  },
+  "sources": [
+    {
+      "title": "Zapata's Justice: Land and Water Conflict Resolution in Revolutionary Mexico (1914–16) — Journal of Latin American Studies",
+      "canonical_url": "https://www.cambridge.org/core/journals/journal-of-latin-american-studies/article/abs/zapatas-justice-land-and-water-conflict-resolution-in-revolutionary-mexico-191416/7B378C8671143C2107058DDF25AF4F86",
+      "citation_text": "Peer-reviewed historical investigation documents Zapatista governance, land and water dispute resolution and village-level revolutionary administrative institutions in Morelos and neighboring controlled territories during 1914–1916.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Library of Congress — Mexico During the Porfiriato, Emiliano Zapata",
+      "canonical_url": "https://loc.gov/exhibits/mexican-revolution-and-the-united-states/mexico-during-the-porfiriato.html",
+      "citation_text": "US Library of Congress exhibition documents Emiliano Zapata's leadership and that by summer 1914 Zapatista forces commanded Morelos and areas in neighboring states, indicating de facto military-territorial authority distinct from a formal Morelos governorship.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "INAFED — Aniversario luctuoso de El Caudillo del Sur",
+      "canonical_url": "https://www.gob.mx/inafed/articulos/aniversario-luctuoso-del-el-caudillo-del-sur",
+      "citation_text": "Mexican federal institute for municipal development records Zapata's Plan of Ayala programme and his 15 September 1916 municipal freedoms decree addressing political, economic and administrative local autonomy.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-priamurye-morelos-registration-20261125",
+    "user_selected_for_registration": true,
+    "person_reuse_id": "3edd38af-2b54-4b7c-9989-5a228b65226e",
+    "prior_activity_id": "37eaca5c-a07c-420f-aca6-bbfc19915520",
+    "person_domain": "Existing Production governance representative domain retained",
+    "namuwiki_index_evidence": "Reuse existing Production exact linked NamuWiki Person decision (checked 2026-09-08) and canonical link; no new Person identity or change to existing Person names.",
+    "polity_review": "Create State of Morelos as a Mexican federal constituent subnational entity (cf. previously registered State of Chihuahua and State of South Australia), NOT an independent revolutionary state named Morelos under Zapata. Historical post-1914 region is only partially under shifting Zapatista control and no invented first-class parent relationship or border geometry is asserted by Authoring v1.",
+    "relation_review": "Use governs with explicitly de facto and contested Zapatista regional administration role; do not infer Zapata held gubernatorial office. Existing Zapata 1911 activity must remain and post-1916 revolutionary continuation is separate from this well-documented administrative phase."
+  }
+}
