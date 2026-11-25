@@ -789,11 +789,20 @@
         title: "Republic of China mainland government → Taiwan-based Republic of China",
         left: { name: "Republic of China mainland government" },
         right: { name: "Taiwan-based Republic of China" },
-        rationale: "이 사례는 이름 유사도 스캔이 놓칠 수 있는 catastrophic territorial discontinuity explicit seed입니다. 자동 분리하지 말고 핵심 영토·정치 중심·운영 주체의 급격한 단절 여부를 최신 Production과 사료 기준으로 판정합니다.",
-        suggested_action: "hold",
+        rationale: "2026-11-25 최신 Production과 대만 국가기록원·총통부 및 미국 외교문서 대조: 현재 중화민국 UUID 하나가 대륙기와 대만 이전 이후의 활동 8건을 함께 담고 있으며 대만 명칭으로 별도 정치체가 검색되지 않습니다. 1949년 12월 중앙정부의 대만 이전은 실효 지배영역·통치 중심의 급격한 변화를 수반했지만 헌정기관의 연속성을 부정하는 근거는 아닙니다. 미국 외교문서에 행정원과 외교부의 타이베이 업무 개시일 1949-12-09가 기록되어 있으나 이를 영토 전체의 단일 경계일로 간주하지 않습니다. 장제스의 1949년 1월 퇴임과 1950년 3월 총통 복귀는 별도 사건이며 1928–1975 국민당 지도자 활동은 총통 재임이 아닙니다. 현행 8개 Activity와 원 Source를 보존하고, 실효 통치의 시대별 공간·관할 표현 및 운영 정치체 분리 필요성을 기존 territorial rupture 규칙에 따라 검토합니다. 별도 UUID·법적 주권 판정·연대 정정은 이 검토만으로 확정하지 않으며 승인된 정정 및 Runtime 검증 전 REVIEW_REQUIRED를 유지합니다.",
+        suggested_action: "repair",
+        reviewed_decision: "review_operative_territorial_context_preserve_institutional_continuity",
         status: "REVIEW_REQUIRED",
         terminal_status: null,
-        evidence: ["rupture-rule explicit probe"]
+        evidence: [
+          "2026-11-25 bounded Production catalog/detail HTTP 200: Republic of China 71bb422d-a182-5615-9eec-d00d92994155, 8 Activities, Taiwan query returned zero named matches; Guangzhou Government d4101d4a-5abc-4c5a-ac77-ade74f4a9d95 and People's Republic of China 9fc24080-4380-57c1-a179-0e4440da5f5c are separately listed. Name-search absence is not full canonical absence.",
+          "Current ROC Activity IDs: Sun Yat-sen 7e78f947-04fc-4680-9cff-c5538ad077ef (1912), b2a03f4d-869d-4aa4-bbcd-195c3b7b75d1 (1912–1925); Lu Xun e7055472-ca48-4471-a8c9-0358ac4ac367 (1918); Chiang Kai-shek 97f02340-606b-4dbe-b660-a65a8758209a (1928–1931), ce1eb3b7-753f-4e3d-88e8-99811409fe1f (1928–1975), b380e081-968e-4f1e-b2db-c55d875f05bc (1943–1948), cae1557c-ac50-48a0-b88a-3c449dca8303 (1948–1949), 34dc18d1-f323-4401-9336-5ed689345b06 (1950–1975).",
+          "Original approved Chiang manifests and corrections/intents/chiang-kai-shek-retire-generalissimo-president-1928-1975-20260902.json distinguish broad Nationalist leader Activity from formal offices; obsolete compound UUID 6ec884b8-5b36-573f-afcb-968aef1e2833 is not present in current ROC detail. No replay.",
+          "ROC Presidential Office biography: central government relocated December 1949; Chiang resumed presidency in Taipei March 1950: https://english.president.gov.tw/Page/83",
+          "National Archives Administration Taiwan: government relocation and Li Tsung-jen acting presidency after January 1949 retirement: https://art.archives.gov.tw/tw/art/1501.html",
+          "US FRUS 1949 Vol VIII document 852: diplomatic notification that Executive Yuan and Foreign Ministry had operated in Taipei since December 9, 1949: https://history.state.gov/historicaldocuments/frus1949v08/d852",
+          "Next exact work: historical owner review operational jurisdiction vs legal continuity, exact current Activity/Source/temporal designation dependencies, and approved canonical correction route. Do not create new Polity, split or retire Activity or claim a particular modern sovereignty status from this evidence."
+        ]
       },
       {
         id: "yugoslavia-sfr-fr",

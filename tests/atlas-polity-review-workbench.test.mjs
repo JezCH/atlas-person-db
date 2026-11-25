@@ -476,7 +476,17 @@ test('fresh Production closes the no-write seed subset without resolving still-o
   assert.equal(byId.get('byzantine-nicaea-rupture').terminal_status, 'KEEP_SEPARATE');
   assert.equal(byId.get('byzantine-nicaea-rupture').reviewed_decision, 'keep_both');
   assert.equal(byId.get('byzantine-nicaea-rupture').locked, true);
-  assert.equal(byId.get('roc-mainland-taiwan').terminal_status, null);
+  const roc = byId.get('roc-mainland-taiwan');
+  assert.equal(roc.terminal_status, null);
+  assert.equal(roc.status, 'REVIEW_REQUIRED');
+  assert.equal(roc.suggested_action, 'repair');
+  assert.equal(roc.left.polity_id, undefined);
+  assert.equal(roc.right.polity_id, undefined);
+  assert.ok(roc.evidence.some(e => e.includes('71bb422d-a182-5615-9eec-d00d92994155') && e.includes('8 Activities')));
+  assert.ok(roc.evidence.some(e => e.includes('ce1eb3b7-753f-4e3d-88e8-99811409fe1f') && e.includes('34dc18d1-f323-4401-9336-5ed689345b06')));
+  assert.ok(roc.evidence.some(e => e.includes('https://history.state.gov/historicaldocuments/frus1949v08/d852')));
+  assert.match(nav, /atlas-polity-review-registry\.js\?[^"]*rocReview=20261125-v1/);
+  assert.match(fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8'), /atlas-main-authority-nav\.js\?[^"]*rocReview=20261125-v1/);
 });
 
 test('old 2026-09-27 candidates and Stage 2 current-named contract are explicitly demoted', () => {
