@@ -1,0 +1,283 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_uar_egypt_territorial_1961_20261125_v1",
+  "as_of": "2026-11-25",
+  "status": "DRAFT_REVIEW_REQUIRED_NO_PRODUCTION_AUTHORIZATION",
+  "release_order": 5000,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 P2-D07-A historical review; docs/POLITY_P2_D07_UAR_POST1961_EGYPT_REVIEW_20261011.md; current bounded public readback 2026-11-25; U.S. Office of the Historian, Syria (1958 union, 1961-09-28 secession, Egyptian UAR name continuing); previous approved Egypt repair #977. Proposed identity survivor and operation scope await owner approval. Not authorization to merge or dispatch.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "one_split_survivor_preserves_original_activity_uuid": true,
+    "existing_normalized_source_links_and_locators_copied_to_all_split_fragments": true,
+    "temporal_designation_must_precede_or_commit_with_activity_relink": true,
+    "no_fabricated_temporal_boundaries": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "new_activity_uuid_allocations": [
+    {
+      "case_id": "uar-nasser-1961-territorial-split",
+      "fragment_id": "nasser_egypt_1961_1970",
+      "activity_uuid": "088575ca-351b-5d7e-a448-c13ce722b71f",
+      "algorithm": "uuid5",
+      "repository_namespace": "672fd6c6-f921-5ce9-86dc-c90a8796c53a",
+      "name": "correction:activity:e65edaa4-645a-479f-be81-6414ff2f71ba:nasser_egypt_1961_1970"
+    }
+  ],
+  "operations": [
+    {
+      "case_id": "uar-nasser-1961-territorial-split",
+      "type": "split_activity",
+      "activity_id": "e65edaa4-645a-479f-be81-6414ff2f71ba",
+      "baseline_before": {
+        "person_id": "7b4de6dc-7162-4606-ab2c-2332243ee7b4",
+        "polity_id": "a602213a-dccb-4a23-96c3-e91dfc300a9f",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "activity_start": 1958,
+        "activity_end": 1970,
+        "source_count": 2
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "source_copy_policy": "COPY_ALL_EXISTING_NORMALIZED_ACTIVITY_SOURCE_LINKS_AND_LOCATORS_TO_ALL_FRAGMENTS",
+      "fragments": [
+        {
+          "survivor": true,
+          "activity_id": "e65edaa4-645a-479f-be81-6414ff2f71ba",
+          "person_id": "7b4de6dc-7162-4606-ab2c-2332243ee7b4",
+          "polity_id": "a602213a-dccb-4a23-96c3-e91dfc300a9f",
+          "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+          "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+          "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+          "confidence": "well_established",
+          "chronology_status": "reviewed",
+          "legacy_source_key": null,
+          "activity_start": 1958,
+          "activity_start_detail": {
+            "year": 1958,
+            "month": 2,
+            "day": 22,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "activity_end": 1961,
+          "activity_end_detail": {
+            "year": 1961,
+            "month": 9,
+            "day": 27,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "Nasser presided over the Egypt–Syria union from 22 February 1958. Syria seceded on 28 September 1961; this fragment ends on the preceding day. His uninterrupted presidency continued in Egypt under the UAR name.",
+          "add_source_links": [
+            {
+              "source_id": "65637ed7-437f-52d5-904e-3c385f9dfb0f",
+              "source_locator_key": "https://history.state.gov/countries/syria"
+            }
+          ]
+        },
+        {
+          "survivor": false,
+          "activity_id": "088575ca-351b-5d7e-a448-c13ce722b71f",
+          "person_id": "7b4de6dc-7162-4606-ab2c-2332243ee7b4",
+          "polity_id": "8c25246a-3d73-4df9-8e4a-b0c5ca97c241",
+          "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+          "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+          "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+          "confidence": "well_established",
+          "chronology_status": "reviewed",
+          "legacy_source_key": null,
+          "activity_start": 1961,
+          "activity_start_detail": {
+            "year": 1961,
+            "month": 9,
+            "day": 28,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "activity_end": 1970,
+          "activity_end_detail": {
+            "year": 1970,
+            "month": 9,
+            "day": 28,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "Following Syrian secession on 28 September 1961, Nasser remained president of Egypt, which retained the official United Arab Republic name, until his death on 28 September 1970. Distinguish the Egyptian government from the earlier bilateral union.",
+          "add_source_links": [
+            {
+              "source_id": "65637ed7-437f-52d5-904e-3c385f9dfb0f",
+              "source_locator_key": "https://history.state.gov/countries/syria"
+            }
+          ],
+          "source_copy_policy": "COPY_EXISTING"
+        }
+      ],
+      "gap_overlap_policy": "CONTIGUOUS_DAY_LEVEL_SPLIT; union through 1961-09-27, Egypt-only from 1961-09-28; no gap or overlap."
+    },
+    {
+      "case_id": "uar-sadat-1970-egypt-only-relink",
+      "type": "rewrite_activity",
+      "activity_id": "e100c855-4559-5431-8c72-61909a8da746",
+      "baseline_before": {
+        "person_id": "ce76881b-5167-48d8-bc43-69335a35f990",
+        "polity_id": "a602213a-dccb-4a23-96c3-e91dfc300a9f",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "activity_start": 1970,
+        "activity_end": 1971,
+        "source_count": 2
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "e100c855-4559-5431-8c72-61909a8da746",
+        "person_id": "ce76881b-5167-48d8-bc43-69335a35f990",
+        "polity_id": "8c25246a-3d73-4df9-8e4a-b0c5ca97c241",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "activity_start": 1970,
+        "activity_start_detail": {
+          "year": 1970,
+          "month": 10,
+          "day": 15,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1971,
+        "activity_end_detail": {
+          "year": 1971,
+          "month": 9,
+          "day": 1,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Sadat presided over Egypt from 15 October 1970. Egypt retained the official UAR name through 1 September 1971, but Syria had left the union in 1961. The existing adjacent Arab Republic of Egypt Activity from 2 September 1971 retains its UUID and source links.",
+        "add_source_links": [
+          {
+            "source_id": "65637ed7-437f-52d5-904e-3c385f9dfb0f",
+            "source_locator_key": "https://history.state.gov/countries/syria"
+          }
+        ],
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      },
+      "add_source_links": [
+        {
+          "source_id": "65637ed7-437f-52d5-904e-3c385f9dfb0f",
+          "source_locator_key": "https://history.state.gov/countries/syria"
+        }
+      ]
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_source",
+      "decision_id": "uar-syria-secession-official-history",
+      "exact_before": {
+        "source_absent_id": "65637ed7-437f-52d5-904e-3c385f9dfb0f"
+      },
+      "exact_after": {
+        "source": {
+          "id": "65637ed7-437f-52d5-904e-3c385f9dfb0f",
+          "source_key": "bibliographic:us-state-historian:uar-secession-1961",
+          "source_type": "government_reference",
+          "title": "Syria — Office of the Historian, U.S. Department of State",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://history.state.gov/countries/syria",
+          "citation_text": "The Office of the Historian dates the Egyptian–Syrian union to 22 February 1958 and Syria’s secession to 28 September 1961; Egypt retained its UAR designation until 1971."
+        }
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "egypt-official-uar-name-after-syrian-secession",
+      "exact_before": {
+        "designation_absent_id": "c0333dfb-0a60-5277-8bfc-3d7652c936e0"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "c0333dfb-0a60-5277-8bfc-3d7652c936e0",
+          "polity_id": "8c25246a-3d73-4df9-8e4a-b0c5ca97c241",
+          "designation_type": "official_name",
+          "valid_from_year": 1961,
+          "valid_from_month": 9,
+          "valid_from_day": 28,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1971,
+          "valid_to_month": 9,
+          "valid_to_day": 1,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Egypt-only official designation after Syrian secession; the United Arab Republic name continued through 1 September 1971. Exact 1971 boundary follows the existing approved UN-linked Sadat Activity."
+        },
+        "names": [
+          {
+            "id": "301bdd78-5b1d-5fcf-a5a1-da717bfdb853",
+            "polity_designation_id": "c0333dfb-0a60-5277-8bfc-3d7652c936e0",
+            "locale": "en",
+            "name": "United Arab Republic",
+            "is_preferred": true
+          },
+          {
+            "id": "1acdf843-6f32-55c0-bcaa-3b14013bea1d",
+            "polity_designation_id": "c0333dfb-0a60-5277-8bfc-3d7652c936e0",
+            "locale": "ko",
+            "name": "아랍 연합 공화국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "c0333dfb-0a60-5277-8bfc-3d7652c936e0",
+            "source_id": "65637ed7-437f-52d5-904e-3c385f9dfb0f",
+            "source_locator_key": "https://history.state.gov/countries/syria"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "activity_targets": 2,
+    "activity_split_count": 1,
+    "new_activity_count": 1,
+    "activity_relinks": 1,
+    "polity_designation_assertions": 1,
+    "source_assertions": 1,
+    "production_mutation_authorized": false
+  },
+  "review_requirements": [
+    "Explicit approval of Egypt survivor identity scope and exact proposed split/relink/designation.",
+    "Protected exact-before snapshot of both activities, source links and child rows; public DTO cannot establish legacy_source_key or all private dependency state.",
+    "Verify designation absence and source key/UUID absence, add exact existing UN name-change source UUID and locator to designation after protected confirmation; no public UUID guess.",
+    "Confirm canonical synthesizer and transaction order support additive source links in same batch; verify actual temporal display and no source loss.",
+    "Keep 1971–1981 Sadat Activity cb057be7-43fe-4c0f-921d-1ab41bdcb634 unchanged; no retire or coalescing in this draft."
+  ]
+}
