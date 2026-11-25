@@ -1,0 +1,31 @@
+{
+  "schema": "atlas-protected-correction-preflight/v2",
+  "mode": "dry_run",
+  "pr_number": 2892,
+  "head_sha": "10eeaf114bb50f6f70022ddf785d2666cc23ef08",
+  "plan_path": "corrections/plans/polity-mantua-ducal-designation-20261126.v1.json",
+  "batch_id": "polity_mantua_ducal_designation_20261126_v1",
+  "activity_ids": [],
+  "polity_ids": [
+    "1a97dec2-dc1c-4e44-8546-e19bc6117ad5"
+  ],
+  "expected_count_delta": {
+    "activities": 0,
+    "activity_sources": 0,
+    "chronology_claims": 0,
+    "relationship_descriptions": 0,
+    "polity_relations": 0,
+    "polity_relation_sources": 0,
+    "sources": 2,
+    "polity_sources": 0,
+    "governance_contexts": 0,
+    "governance_context_names": 0,
+    "governance_periods": 0,
+    "governance_sources": 0,
+    "designations": 1,
+    "designation_names": 3,
+    "designation_sources": 2,
+    "identity_relations": 0,
+    "identity_relation_sources": 0
+  }
+}
