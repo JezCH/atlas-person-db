@@ -1,0 +1,76 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:yevhen-konovalets:ukrainian-state-aug-nov-1918:v1",
+  "person": {
+    "canonical_name_en": "Yevhen Konovalets",
+    "display_name_ko": "예우헨 코노발레츠",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-20",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Ukrainian State",
+    "display_name_ko": "우크라이나국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "a6492720-5e09-4840-a12c-6226b865fba0"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Commander of the reconstituted Sich Riflemen detachment in the Ukrainian State; subsequently joined the anti-Hetman uprising",
+    "role_display_name_ko": "우크라이나국 시기 재편된 시치 소총병 지휘관·반헤트만 봉기 참여자",
+    "start_year": 1918,
+    "start_month": 8,
+    "start_day": 23,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1918,
+    "end_month": 11,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "notes": "On 23 August 1918 Hetman Skoropadskyi authorized Konovalets to form a separate Sich Riflemen detachment at Bila Tserkva. This period locates his military organization within the then-controlling Ukrainian State; the 'active_in' relation does NOT claim he was the Hetman's loyal political officer. In November 1918 he supported the Directory's insurrection against the Hetman and moved into the restored UNR phase.",
+    "confidence": "well_established",
+    "chronology_status": "reviewed"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Konovalets, Yevhen — Encyclopedia of Ukraine",
+      "canonical_url": "https://www.encyclopediaofukraine.com/pages/K/O/KonovaletsYevhen.htm",
+      "citation_text": "Confirms death on 23 May 1938, two Sich Riflemen command phases across the Hetmanate rupture, UVO underground leadership, and founding OUN chairmanship in 1929."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "I. Ya. Khoma (2012), Military and Political Activities of Yevhen Konovalets (November 1917–November 1918)",
+      "canonical_url": "https://asv.mil.gov.ua/en/biblioteka/virtual/book-exhibition-ukrainian-sich-riflemen-first-ukrainian-army/military-and-political-activities-yevhen-konovalets-november-1917-november-1918",
+      "citation_text": "Military scholarly bibliography explicitly covers changing state and military command contexts from November 1917 to November 1918."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Sich Riflemen — Encyclopedia of Ukraine",
+      "canonical_url": "https://www.encyclopediaofukraine.com/display.asp?linkpath=pages%2FS%2FI%2FSichRiflemen.htm",
+      "citation_text": "Records KSS refusal to recognize Hetmanate and April 1918 disarmament; renewed formation and 1918–1919 Ukrainian People's Republic military command."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Коновалець Євген — Ukrainian Institute of National Memory, UNR 1917–1921",
+      "canonical_url": "https://unr.uinp.gov.ua/figures/konovalets-evgen",
+      "citation_text": "Official Ukrainian history record dates his Galician-Bukovinian Sich Riflemen command from early December 1917, regiment command from 17 March 1918, Siege Corps from 21 November 1918, eastern-front command January 1919 and renewed corps command February 1919."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-20",
+      "document_title": "예우헨 코노발레츠",
+      "url": "https://namu.wiki/w/%EC%98%88%EC%9A%B0%ED%97%A8%20%EC%BD%94%EB%85%B8%EB%B0%9C%EB%A0%88%EC%B8%A0"
+    }
+  }
+}
