@@ -1,0 +1,80 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261125:pancho-villa:chihuahua-military-governor:1913-12-08:1914-01-07:v1",
+  "person": {
+    "canonical_name_en": "Pancho Villa",
+    "display_name_ko": "판초 비야",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-25",
+    "life_status_basis": "documented_death",
+    "representative_domain": "military",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "State of Chihuahua",
+    "display_name_ko": "치와와주",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Chihuahua State Government (https://chihuahua.gob.mx/conoce-chihuahua/personajes-ilustres) explicitly treats Chihuahua as a Mexican state and Villa as its 1913–1914 governor, and INEHRM (https://www.inehrm.gob.mx/es/inehrm/villa) dates entry and administration to 8 Dec 1913. The request does not establish a reviewed historical PolityPlaceFunction, canonical Place UUID, exact 1913–14 territorial extent, or display binding; geographic representation remains reviewed_hold. This subnational Mexican constituent state must not be presented as an independent Villa-created sovereign country."
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-25",
+      "document_title": "판초 비야",
+      "url": "https://namu.wiki/w/%ED%8C%90%EC%B4%88%20%EB%B9%84%EC%95%BC"
+    }
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Military Governor of Chihuahua",
+    "role_code": "military_governor_chihuahua",
+    "role_display_name_ko": "치와와주 군사 주지사",
+    "start_year": 1913,
+    "start_month": 12,
+    "start_day": 8,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1914,
+    "end_month": 1,
+    "end_day": 7,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Francisco 'Pancho' Villa (born José Doroteo Arango Arámbula; 1878–1923) assumed military gubernatorial powers over the Mexican federal constituent State of Chihuahua on 8 December 1913 after occupation by the División del Norte. His administration set food price controls, confiscated holdings of the anti-revolutionary oligarchy and founded the Chihuahua state bank. INEHRM dates Carranza's appointment of Manuel Chao to 7 January 1914, while Chihuahua state government's commemorative history describes Villa's handover as 8 January 1914. This approximate 7 January end is an administrative boundary convention, not an independently proven instantaneous handover; state power and later de facto control are distinct from the formal gubernatorial office. The new State of Chihuahua polity is a Mexican constituent state, not an independent sovereign polity or a new state founded by Villa."
+  },
+  "sources": [
+    {
+      "title": "INEHRM — Francisco Villa: Cronología de la Revolución",
+      "canonical_url": "https://www.inehrm.gob.mx/es/inehrm/villa",
+      "citation_text": "The Mexican National Institute for Historical Studies of the Revolutions dates Villa's assumption of Chihuahua state government to 8 December 1913 and Carranza's appointment of Manuel Chao as governor to 7 January 1914. It documents his four weeks of governor policy and the 1913 Chihuahua bank.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Gobierno del Estado de Chihuahua — Personajes ilustres: Francisco Villa",
+      "canonical_url": "https://chihuahua.gob.mx/conoce-chihuahua/personajes-ilustres",
+      "citation_text": "Chihuahua State Government records Villa's approximately one-month governorship after 1913 and describes transfer of the governorship to General Manuel Chao on 8 January 1914. It identifies land and price policies and the state bank.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-pancho-villa-registration-20261125",
+    "user_selected_for_registration": true,
+    "person_aliases_reviewed": [
+      "Francisco Villa",
+      "José Doroteo Arango Arámbula",
+      "Doroteo Arango"
+    ],
+    "namuwiki_index_evidence": "Indexed independently titled NamuWiki-derived Person page https://www.namu.moe/w/판초%20비야 exactly matches the Mexican revolutionary Pancho Villa and full original name; canonical namu.wiki Person link reviewed.",
+    "polity_review": "Production has no 'Chihuahua' or 'State of Chihuahua' polity; create Mexican federal constituent State of Chihuahua as subnational historic polity (cf. registered State of South Australia). Existing Mexico parent UUID 678683e3-4a02-46be-9095-d639147b0fc8 is factual membership context; this Authoring v1 manifest does not independently assert a first-class polity-to-polity federal membership relation.",
+    "office_boundary_review": "Official Chihuahua says Villa ceded governorship on Jan 8, INEHRM says Chao was appointed Jan 7. Approximate Jan 7 boundary and exact Dec 8 entry, no invented timestamp; not 1915 lifelong state governorship."
+  }
+}

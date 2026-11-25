@@ -1,0 +1,83 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261125:pancho-villa:division-del-norte:1913-09-29:1915-12:v1",
+  "person": {
+    "canonical_name_en": "Pancho Villa",
+    "display_name_ko": "판초 비야",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-25",
+    "life_status_basis": "documented_death",
+    "representative_domain": "military",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Mexico",
+    "display_name_ko": "멕시코",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "678683e3-4a02-46be-9095-d639147b0fc8"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-25",
+      "document_title": "판초 비야",
+      "url": "https://namu.wiki/w/%ED%8C%90%EC%B4%88%20%EB%B9%84%EC%95%BC"
+    }
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Commander-in-chief of the División del Norte",
+    "role_code": "commander_division_del_norte",
+    "role_display_name_ko": "멕시코 혁명군 북부사단 총지휘관",
+    "start_year": 1913,
+    "start_month": 9,
+    "start_day": 29,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1915,
+    "end_month": 12,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The constituent northern revolutionary commanders selected Pancho Villa as sole chief of the División del Norte on 29 September 1913. Under his command the Division defeated the Huerta federal army and took Zacatecas in June 1914, later fought Carranza/Obregón's constitutionalists and was decisively weakened in the April–June 1915 Bajío campaigns. INEHRM records Villa's December 15, 1915 farewell speech in Chihuahua and dissolution of the conventional División del Norte in the following days; the December 1915 month-level end is approximate rather than a fabricated exact demobilization day. Villa's continuing irregular anti-Carranza resistance to 1920 is not represented as uninterrupted command of the formal Division after its disbandment. Mexico is the general historical operating area, not an assertion that Villa ruled the federal Mexican presidency or legally held office in Carranza's national administration."
+  },
+  "sources": [
+    {
+      "title": "Secretaría de Cultura de México — Villa es designado jefe único de la División del Norte",
+      "canonical_url": "https://www.cultura.gob.mx/efemerides-del-dia/?numero=156",
+      "citation_text": "Mexico's federal Culture Ministry dates Villa's unanimous selection as sole commander of the División del Norte by northern brigade chiefs to 29 September 1913 and documents early operations against Huerta's troops.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "US Library of Congress — The War Against Huerta: Pancho Villa and Chihuahua",
+      "canonical_url": "https://loc.gov/exhibits/mexican-revolution-and-the-united-states/war-against-huerta.html",
+      "citation_text": "The US Library of Congress describes revolutionary northern brigades selecting Villa as head of the División del Norte and distinguishes the revolutionary army from Mexican constitutional government offices.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "INEHRM — La batalla de Celaya, División del Norte",
+      "canonical_url": "https://www.inehrm.gob.mx/es/inehrm/Revolucion_Mexicana",
+      "citation_text": "INEHRM records the April 6–15, 1915 clashes at Celaya between Villa's northern army and constitutionalist forces commanded by Álvaro Obregón, supporting its 1915 military trajectory.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "user-pancho-villa-registration-20261125",
+    "user_selected_for_registration": true,
+    "person_aliases_reviewed": [
+      "Francisco Villa",
+      "José Doroteo Arango Arámbula",
+      "Doroteo Arango"
+    ],
+    "namuwiki_index_evidence": "Same independently indexed exact NamuWiki Person page as governor manifest; exact link re-used with identical metadata.",
+    "polity_review": "Reuse existing Mexico UUID 678683e3-4a02-46be-9095-d639147b0fc8; no separate 'Mexico under Villa' sovereign state and no fictitious presidency.",
+    "command_end_review": "Mexican Culture Ministry establishes precise 1913-09-29 command start. The INEHRM Villa timeline records a farewell speech 1915-12-15 and dissolution days afterward; end is reviewed month-granularity approximate 1915-12, not exact. Villa remained active after 1915 outside the former conventional Division."
+  }
+}
