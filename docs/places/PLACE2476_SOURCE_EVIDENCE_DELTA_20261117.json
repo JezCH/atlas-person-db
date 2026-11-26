@@ -109,15 +109,25 @@
       "review_state": "HOLD_INCLUSIVE_BOUNDARY_POLICY",
       "original_publication": "1911 Encyclopaedia Britannica: Nicaea",
       "original_url_existing": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Nicaea",
-      "original_access": "Transcription previously checked, not independently scan-collated 1911 print",
+      "original_access": "Verified scan-linked transcription, 11th edition, vol. 19, printed p. 640; temporary imperial seat after the Crusader conquest, with no end date stated.",
       "additional_evidence": [
         {
           "url": "https://goturkiye.com/uk/unesco/marmara-turkiye",
           "locator": "İznik Bursa section: Empire of Nicaea capital after 1204 Fourth Crusade until 1261 Byzantine recapture of Constantinople",
           "supports": "Capital function from 1204 until transition in 1261"
+        },
+        {
+          "url": "https://en.wikisource.org/wiki/Page:EB1911_-_Volume_19.djvu/667",
+          "locator": "11th edition, vol. 19, printed p. 640, Nicaea",
+          "supports": "Temporary seat of the Byzantine emperor after the Crusader conquest of Constantinople; no end year or day stated."
+        },
+        {
+          "url": "https://www.ubnt.ni.ac.rs/legacy/images/pdf/nisivizantija/Nis%20i%20Vizantija-12-Boza-v11.12.2014/47Eleonora%20Kountoura.pdf",
+          "locator": "Eleonora Kountoura Galaki, Niš and Byzantium XII, p. 581, opening paragraph",
+          "supports": "Byzantine forces from Nicaea retook Constantinople on 25 July 1261; Michael VIII entered ceremonially on 15 August 1261."
         }
       ],
-      "finding": "Additional official tourism prose supports start 1204 and next-capital transition 1261; the asserted inclusive end=1260 needs reviewed end-exclusive 1261 → inclusive 1260 policy and original source treatment.",
+      "finding": "Additional official tourism prose supports start 1204 and next-capital transition 1261; the asserted inclusive end=1260 needs reviewed end-exclusive 1261 → inclusive 1260 policy and original source treatment. The military and ceremonial dates are distinct; the evidence does not establish either as the canonical effective boundary. The last full year and final year containing any part of the function must be distinguished.",
       "next_action": "Adjudicate year-boundary semantics for both Nicaea and Constantinople before source-reviewed authoring; do not auto-promote."
     },
     {
