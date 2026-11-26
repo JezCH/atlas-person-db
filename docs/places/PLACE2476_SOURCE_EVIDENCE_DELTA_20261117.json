@@ -51,10 +51,15 @@
           "url": "https://atam.gov.tr/ankaranin-baskent-olusunun-97-yil-donumunu-kutlu-olsun/",
           "locator": "Paragraph announcing TBMM decision on 13 October 1923 and 1924 Constitution article 2",
           "supports": "Ankara officially designated capital 13 Oct 1923; 1924 constitution later confirms status"
+        },
+        {
+          "url": "https://aym.gov.tr/media/7963/basic_legal_texts.pdf",
+          "locator": "Constitution of the Republic of Turkey, Part One, Articles 3 and 4, printed page 17",
+          "supports": "Article 3 identifies Ankara as the current capital. Article 4 prohibits amendment of Article 3."
         }
       ],
-      "finding": "Independent government primary institution corroborates start 1923, but unavailable original article and current ongoing end=null require a separate current-law/continuity check. Supplemental institution URL must not silently replace original Source URI.",
-      "next_action": "Review original publisher article and currently operative capital authority; then decide Source assertion and full interval; fresh Production preflight."
+      "finding": "The official Atatürk Research Center account corroborates Ankara's designation on 13 October 1923. The Constitutional Court's publication independently confirms Ankara's current capital status in Article 3, which Article 4 protects from amendment. These sources support the reviewed year-level start and current status. The original encyclopedia URL still lacks direct text verification; no Source URI or UUID change is proposed.",
+      "next_action": "Verify the exact original encyclopedia publication and URL, including the currently indexed same-publisher article 868 variant. Obtain historical owner approval for the original Source attribution and year-level ongoing interval, and a fresh protected exact-before check before any canonical operation."
     },
     {
       "fact_index": 17,
