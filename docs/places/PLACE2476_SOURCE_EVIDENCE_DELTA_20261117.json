@@ -76,7 +76,7 @@
       },
       "review_state": "HOLD_OFFICIAL_DATE_CONFLICT",
       "original_publication": "Republic of Türkiye Bursa Governorship: Tarihçe",
-      "original_access": "Exact title/URL not verified. Distinct government agency pages are supplemental, not the original Source.",
+      "original_access": "The current Bursa Governorship index identifies the exact named Tarihçe page. The indexed excerpt identifies the conquest on 6 April 1326 and broadly describes Bursa's capital role through the 1453 conquest of Istanbul, with an İznik 1331–1335 symbolic-capital interval and an Edirne frontier-capital exception. Direct full-page retrieval failed. This is a publisher URL candidate, not a verified original Source URL.",
       "additional_evidence": [
         {
           "url": "https://bursa.ktb.gov.tr/TR-70230/tarihce.html",
@@ -87,10 +87,16 @@
           "url": "https://goturkiye.com/uk/unesco/marmara-turkiye",
           "locator": "Bursa and Cumalıkızık paragraph, claim Bursa capital between 1335 and 1363",
           "supports": "Alternative official published 1335–1363 interval; conflicts with 1326–1364 original fact"
+        },
+        {
+          "url": "https://whc.unesco.org/archive/advisory_body_evaluation/1452.pdf",
+          "locator": "ICOMOS advisory body evaluation, Bursa and Cumalıkızık, Description, paragraph on the capital transfer to Adrianople",
+          "supports": "The evaluation characterizes 1335–1453 as an implication of the nomination dossier and independently dates the capital transfer to Edirne to 1413, a different endpoint from 1364."
         }
       ],
-      "finding": "Official Turkish cultural pages disagree on exact capital chronology. 1326–1364 is not independently established; do not use another agency's title as the existing Bursa Governorship Source.",
-      "next_action": "Resolve conflicting chronology and original Governor source identity with scholarly/publication-level evidence before any corrected date or Source attach."
+      "finding": "The exact-named Bursa Governorship page has been located by publisher and title, but its full text remains unverified. Its indexed capital account distinguishes symbolic and frontier capitals. Official cultural sources and the ICOMOS evaluation give competing chronology. The ICOMOS date for the Edirne transfer is 1413; the separate tourism interval is 1335–1363. The 1326–1364 claim is not independently established, and no replacement chronology or Source attachment is proposed.",
+      "next_action": "Retrieve the complete exact named Bursa Governorship publication and have the historical owner distinguish initial seat, symbolic capital, frontier capital and formal transfer before approving any year-level interval. Preserve the original Source UUID and protected before-state checks.",
+      "original_url_candidate": "https://bursa.gov.tr/tarihce"
     },
     {
       "fact_index": 1,
