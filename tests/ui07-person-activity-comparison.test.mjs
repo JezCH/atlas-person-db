@@ -53,7 +53,7 @@ test("UI-07 shows two canonical Persons and all Activity records, not inferred l
   assert.match(output,/국가 B/);
   assert.match(output,/지휘관/);
   assert.match(output,/기간 기준: 개별 사료/);
-  assert.match(output,/기간 기준: year_range/);
+  assert.match(output,/기간 기준: 표시 확인 필요/);
   assert.match(output,/BC 10\?/);
   assert.match(output,/약 AD 1598/);
   assert.match(output,/현재 \(2020-01-01 확인\)/);
