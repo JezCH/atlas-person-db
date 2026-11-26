@@ -42,10 +42,10 @@
         "start_year": 1923,
         "end_year": null
       },
-      "review_state": "HOLD_START_SUPPORTED_PUBLICATION_NOT_FETCHED",
+      "review_state": "HOLD_OWNER_APPROVAL_AND_PROTECTED_EXACT_BEFORE",
       "original_publication": "Atatürk Ansiklopedisi: Ankara’nın Başkent Oluşu",
       "original_url_existing": "https://ataturkansiklopedisi.gov.tr/detay/868/Ankara%E2%80%99n%C4%B1n_Ba%C5%9Fkent_Olu%C5%9Fu",
-      "original_access": "Search-index exact title/date returned; direct original open failed. Not classified as verified original text.",
+      "original_access": "The stored publisher URL currently renders a JavaScript shell in the text reader. The full article by Zafer Koylu was read in its six-page PDF republication hosted by a Turkish Ministry of National Education school. Page 6 identifies the original Atatürk Ansiklopedisi publisher PDF (pdf=3842), independently cited in footnote 71 of Ayşegül Can, Turkish Journal of History (2025). Direct original open failed. The stored publication URL and Source UUID are preserved.",
       "additional_evidence": [
         {
           "url": "https://atam.gov.tr/ankaranin-baskent-olusunun-97-yil-donumunu-kutlu-olsun/",
@@ -56,10 +56,15 @@
           "url": "https://aym.gov.tr/media/7963/basic_legal_texts.pdf",
           "locator": "Constitution of the Republic of Turkey, Part One, Articles 3 and 4, printed page 17",
           "supports": "Article 3 identifies Ankara as the current capital. Article 4 prohibits amendment of Article 3."
+        },
+        {
+          "url": "https://sevketrasithatipoglu.meb.k12.tr/meb_iys_dosyalar/06/25/972472/dosyalar/2023_10/13123008_ANKARA-NIN-BASKENT-OLUSU.pdf",
+          "locator": "Pages 4–5: TBMM Decision 27 and 20 April 1924 Constitution Article 2; page 5 author signature; page 6 publisher PDF attribution",
+          "supports": "The full encyclopedia article by Zafer Koylu records adoption of Decision 27 on 13 October 1923, designating Ankara as the capital, and later confirmation in Article 2 of the 1924 Constitution."
         }
       ],
-      "finding": "The official Atatürk Research Center account corroborates Ankara's designation on 13 October 1923. The Constitutional Court's publication independently confirms Ankara's current capital status in Article 3, which Article 4 protects from amendment. These sources support the reviewed year-level start and current status. The original encyclopedia URL still lacks direct text verification; no Source URI or UUID change is proposed.",
-      "next_action": "Verify the exact original encyclopedia publication and URL, including the currently indexed same-publisher article 868 variant. Obtain historical owner approval for the original Source attribution and year-level ongoing interval, and a fresh protected exact-before check before any canonical operation."
+      "finding": "The school-hosted PDF preserves the full Zafer Koylu encyclopedia article. It verifies the 13 October 1923 TBMM decision and the 1924 constitutional confirmation. The official Atatürk Research Center independently corroborates the designation, and current constitutional Articles 3–4 establish and protect Ankara's capital status. The sources support the reviewed year-level start and current status. No Source URI or UUID change is proposed.",
+      "next_action": "Obtain historical owner approval for attribution using the full publisher-attributed republication and for the year-level ongoing interval. Resolve the canonical Place and Polity identity and perform a fresh protected exact-before check before any canonical operation."
     },
     {
       "fact_index": 17,

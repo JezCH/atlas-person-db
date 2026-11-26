@@ -56,7 +56,7 @@ test('Place evidence never turns bibliographic search or chronology ambiguity in
   const bursa = handoff.cases.find(e => e.fact_index === 17);
   assert.match(bursa.finding, /not independently established/);
   const ankara = handoff.cases.find(e => e.fact_index === 4);
-  assert.match(ankara.original_access, /direct original open failed/);
+  assert.match(ankara.original_access, /direct original open failed/i);
   assert.ok(handoff.cases.every(e => e.next_action && e.review_state !== 'READY'));
 });
 
@@ -105,12 +105,16 @@ test('Cairo evidence corroborates capital at year granularity without authorizin
   assert.deepEqual(handoff.operations,[]);
 });
 
-test('Ankara constitutional corroboration preserves the original Source and HOLD', () => {
+test('Ankara full republication and constitutional corroboration preserve the original Source and HOLD', () => {
   const entry = handoff.cases.find(e => e.fact_index === 4);
   const authority = entry.additional_evidence.find(e => new URL(e.url).hostname === 'aym.gov.tr');
   assert.match(authority.locator, /Articles 3 and 4/);
   assert.match(authority.supports, /current capital/);
   assert.equal(entry.original_url_existing, "https://ataturkansiklopedisi.gov.tr/detay/868/Ankara%E2%80%99n%C4%B1n_Ba%C5%9Fkent_Olu%C5%9Fu");
-  assert.match(entry.original_access, /direct original open failed/);
-  assert.match(entry.review_state, /^HOLD_/);
+  assert.match(entry.original_access, /direct original open failed/i);
+  const article = entry.additional_evidence.find(e => new URL(e.url).hostname === 'sevketrasithatipoglu.meb.k12.tr');
+  assert.match(article.locator, /Decision 27.*author signature.*publisher PDF attribution/);
+  assert.match(article.supports, /Zafer Koylu.*13 October 1923/);
+  assert.match(entry.original_access, /pdf=3842/);
+  assert.equal(entry.review_state, 'HOLD_OWNER_APPROVAL_AND_PROTECTED_EXACT_BEFORE');
 });
