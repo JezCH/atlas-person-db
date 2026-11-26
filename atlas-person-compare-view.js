@@ -6,7 +6,16 @@
 })(typeof globalThis !== "undefined" ? globalThis : this, () => {
   "use strict";
 
+  const evidenceView = typeof module === "object" && module.exports
+    ? require("./atlas-person-evidence-view.js")
+    : globalThis.ATLAS_PERSON_EVIDENCE_VIEW;
   const text = (value) => String(value ?? "").trim();
+
+  function localizedEvidence(kind, value) {
+    const raw = text(value);
+    if (!raw) return "";
+    return evidenceView?.humanEvidenceValue(kind, raw) || "표시 확인 필요";
+  }
   const escapeHtml = (value) => text(value)
     .replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;").replaceAll("'", "&#039;");
@@ -37,10 +46,10 @@
   function boundaryFacts(boundary) {
     if (!boundary) return "경계 근거 미상";
     return [
-      boundary.granularity ? "정밀도: " + text(boundary.granularity) : null,
-      boundary.certainty ? "확실성: " + text(boundary.certainty) : null,
-      boundary.calendar ? "역법: " + text(boundary.calendar) : null,
-      boundary.status ? "상태: " + text(boundary.status) : null
+      boundary.granularity ? "정밀도: " + localizedEvidence("granularity", boundary.granularity) : null,
+      boundary.certainty ? "확실성: " + localizedEvidence("certainty", boundary.certainty) : null,
+      boundary.calendar ? "역법: " + localizedEvidence("calendar", boundary.calendar) : null,
+      boundary.status ? "상태: " + (boundary.status === "ongoing" ? "진행 중" : "표시 확인 필요") : null
     ].filter(Boolean).join(" · ") || "경계 근거 미상";
   }
 
@@ -79,11 +88,14 @@
     const polity = text(activity?.polity?.display_name || activity?.polity?.canonical_name_en) || "정치체 미상";
     const relation = text(activity?.relation?.display_name || activity?.relation?.source_label || activity?.relation?.code) || "관계 미상";
     const role = text(activity?.role?.display_name || activity?.role?.source_label || activity?.role?.code) || "역할 미상";
-    const basis = text(activity?.period_basis?.display_name || activity?.period_basis?.code) || "기간 기준 미상";
+    const basisLabel = text(activity?.period_basis?.display_name);
+    const basisValue = /[가-힣]/.test(basisLabel) && !/[A-Za-z]/.test(basisLabel)
+      ? basisLabel : text(activity?.period_basis?.code) || basisLabel;
+    const basis = localizedEvidence("period_basis", basisValue) || "기간 기준 미상";
     const interval = boundaryLabel(activity?.start) + " — " + boundaryLabel(activity?.end);
     const context = [
-      activity?.chronology_status ? "연대 상태: " + activity.chronology_status : null,
-      activity?.confidence ? "근거 수준: " + activity.confidence : null
+      activity?.chronology_status ? "연대 상태: " + localizedEvidence("chronology_status", activity.chronology_status) : null,
+      activity?.confidence ? "근거 수준: " + localizedEvidence("confidence", activity.confidence) : null
     ].filter(Boolean).join(" · ");
     return '<article class="atlas-compare-activity" data-compare-activity="' + escapeHtml(activity?.id || "") + '">' +
       '<header><small>활동 ' + String(index + 1).padStart(2, "0") + '</small><h5>' + escapeHtml(polity) + '</h5></header>' +

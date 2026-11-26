@@ -1,0 +1,83 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261126:alvaro-obregon:president:1920-1924:v1",
+  "person": {
+    "canonical_name_en": "Álvaro Obregón",
+    "display_name_ko": "알바로 오브레곤",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-26",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Mexico",
+    "display_name_ko": "멕시코",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "678683e3-4a02-46be-9095-d639147b0fc8"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1920,
+    "start_month": 12,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1924,
+    "end_month": 11,
+    "end_day": 30,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Constitutional president of the United Mexican States from 1 December 1920 through 30 November 1924. Álvaro Obregón Salido (1880–1928); reelected in 1928 but died before taking office, so no second presidential term is asserted. Existing Mexico polity is reused, not a new regime-specific polity."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "INEHRM — Gral. Álvaro Obregón",
+      "canonical_url": "https://repositorio-inehrm.cultura.gob.mx/fototeca/gral-alvaro-obregon/",
+      "citation_text": "Institutional archive identifies Obregón as president from 1 December 1920 to 30 November 1924."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Diario Oficial de la Federación — 5 de noviembre de 1920",
+      "canonical_url": "https://dof.gob.mx/index.php?day=5&month=11&print=true%3Fprint%3Dtrue&year=1920",
+      "citation_text": "Official decree declares Obregón elected constitutional president for the period beginning 1 December 1920 and ending 30 November 1924."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Gobierno de México — Aniversario luctuoso de Álvaro Obregón",
+      "canonical_url": "https://www.gob.mx/agricultura%7Cdgsiap/articulos/niversario-luctuoso-de-alvaro-obregon",
+      "citation_text": "Government biography confirms death on 17 July 1928 and the exact presidential term."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-26",
+      "document_title": "알바로 오브레곤",
+      "url": "https://namu.wiki/w/%EC%95%8C%EB%B0%94%EB%A1%9C%20%EC%98%A4%EB%B8%8C%EB%A0%88%EA%B3%A4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Reuse the exact existing Production Mexico polity UUID and canonical names. No new geographic or Place assertions."
+  },
+  "review_context": {
+    "task": "Explicit user selection 2026-11-26: register Álvaro Obregón",
+    "draft_only": false,
+    "production_screen": "2026-11-26 exact Production Person searches Obreg, Obregon and 오브레곤 returned zero; Mexico UUID and existing activities verified. Protected writer must perform authoritative preflight before write.",
+    "identity_review": "Álvaro Obregón Salido, Mexican revolutionary general and president, documented deceased 17 July 1928.",
+    "namuwiki_evidence_method": "External indexed independent NamuWiki mirror exact Person title and identity; canonical URL follows verified title. Mirror has incorrect end date; official institutional and primary sources control chronology.",
+    "namuwiki_evidence_url": "https://namu.moe/w/%EC%95%8C%EB%B0%94%EB%A1%9C%20%EC%98%A4%EB%B8%8C%EB%A0%88%EA%B3%A4",
+    "apply_gate": "Explicit user approval for this one Person and presidential activity only. Protected authoring preflight and runtime verification required; no new polity, identity mutation or deletion."
+  }
+}
