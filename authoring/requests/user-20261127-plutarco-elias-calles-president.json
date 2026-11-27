@@ -1,0 +1,76 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261127:plutarco-elias-calles:president:1924-1928:v1",
+  "person": {
+    "canonical_name_en": "Plutarco Elías Calles",
+    "display_name_ko": "플루타르코 엘리아스 카예스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-27",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Mexico",
+    "display_name_ko": "멕시코",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "678683e3-4a02-46be-9095-d639147b0fc8"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1924,
+    "start_month": 12,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1928,
+    "end_month": 11,
+    "end_day": 30,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Constitutional president of Mexico, 1 December 1924 through 30 November 1928. Plutarco Elías Calles (1877–1945), born Francisco Plutarco Elías Campuzano. His subsequent influence during the Maximato is not an extension of this formal presidential term."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Diario Oficial de la Federación — 9 October 1924, presidential election decree",
+      "canonical_url": "https://dof.gob.mx/index.php?day=09&month=10&year=1924",
+      "citation_text": "Official decree declares Calles elected constitutional president from 1 December 1924 to 30 November 1928."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Secretaría de la Defensa Nacional — General de División Plutarco Elías Calles",
+      "canonical_url": "https://www.gob.mx/defensa/documentos/gral-de-div-plutarco-elias-calles",
+      "citation_text": "Government biography establishes presidential term and death on 19 October 1945."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-27",
+      "document_title": "플루타르코 엘리아스 카예스",
+      "url": "https://namu.wiki/w/%ED%94%8C%EB%A3%A8%ED%83%80%EB%A5%B4%EC%BD%94%20%EC%97%98%EB%A6%AC%EC%95%84%EC%8A%A4%20%EC%B9%B4%EC%98%88%EC%8A%A4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Existing Mexico UUID reused; no new spatial assertions."
+  },
+  "review_context": {
+    "task": "Explicit user-approved registration 2026-11-27",
+    "draft_only": false,
+    "production_screen": "2026-11-27 Calles and 카예스 Production searches returned zero. Authoring preflight required.",
+    "namuwiki_evidence_method": "External indexed mirror independently verifies exact person title and identity.",
+    "namuwiki_evidence_url": "https://namu.moe/w/%ED%94%8C%EB%A3%A8%ED%83%80%EB%A5%B4%EC%BD%94%20%EC%97%98%EB%A6%AC%EC%95%84%EC%8A%A4%20%EC%B9%B4%EC%98%88%EC%8A%A4",
+    "apply_gate": "Only approved presidential term; reuse Mexico and existing President role. Protected preflight and post-commit verification."
+  }
+}
