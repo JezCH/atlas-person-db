@@ -21,7 +21,11 @@ test("compare keeps published identifiers for person and activity evidence", () 
 
 test("index serves the comparison asset at the updated version", () => {
   const html = readFileSync(new URL("../index.html", import.meta.url), "utf8");
-  assert.match(html, /atlas-person-compare-view\.js\?[^"]*[&?]sourceIdentifier=20261122-v1&sourceEvidence=20261125-v1"/);
+  const match = /atlas-person-compare-view\.js\?([^"]+)"/.exec(html);
+  assert.ok(match);
+  const params = new URLSearchParams(match[1]);
+  assert.equal(params.get("sourceIdentifier"), "20261122-v1");
+  assert.equal(params.get("sourceEvidence"), "20261125-v1");
 });
 
 test("compare preserves actual source title and distinct claim text in both evidence panels", () => {
