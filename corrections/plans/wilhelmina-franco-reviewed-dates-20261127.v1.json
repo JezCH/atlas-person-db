@@ -1,0 +1,248 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "wilhelmina_franco_reviewed_dates_20261127_v1",
+  "as_of": "2026-11-27",
+  "status": "REVIEWED_EXACT_ACTIVITY_CHRONOLOGY_CORRECTION",
+  "release_order": 2800,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "User explicitly approved both date refinements on 2026-11-27. Preserve both existing Activity, Person, Role and Polity UUIDs. Official Dutch royal and archive sources and Spanish state decree/official gazette, plus head-of-state chronology. Current Production public detail agrees with previous protected baseline.",
+  "baseline": {
+    "deployment_sha": "b4bd6cefea521245af1f86a6c17c3cb3e27b3671",
+    "baseline_digest": "sha256:3cb7980349c21f217f4cf46f0ca20d8c45bc489c78d787698b939c5fa8c672c7",
+    "artifact_id": 15038644767,
+    "workflow_run_id": 45650077388
+  },
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "semantic_identity_change_forbidden": false,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "wilhelmina-accession-abdication-exact",
+      "type": "rewrite_activity",
+      "activity_id": "e36505b4-8fdc-5f00-a90b-c4d449eb14d9",
+      "baseline_before": {
+        "person_id": "6cbf381a-d8f6-5391-8484-a9bf373edee8",
+        "polity_id": "cde8c7d2-c0bd-5e43-9d2a-ebfdcb7e9b1e",
+        "role_id": "9b3f7d6e-a39a-584e-ba72-eb946eded022",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1890,
+        "activity_end": 1948,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-3.json:14:a2394a826423e5b6",
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "e36505b4-8fdc-5f00-a90b-c4d449eb14d9",
+        "person_id": "6cbf381a-d8f6-5391-8484-a9bf373edee8",
+        "polity_id": "cde8c7d2-c0bd-5e43-9d2a-ebfdcb7e9b1e",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "9b3f7d6e-a39a-584e-ba72-eb946eded022",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1890,
+        "activity_end": 1948,
+        "activity_start_detail": {
+          "year": 1890,
+          "month": 11,
+          "day": 23,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end_detail": {
+          "year": 1948,
+          "month": 9,
+          "day": 4,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": "pending-records-supplement-3.json:14:a2394a826423e5b6",
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Wilhelmina succeeded Willem III on 23 November 1890 and abdicated on 4 September 1948. Emma exercised the royal prerogative as regent until 1898; the legal reign began in 1890. The monarchy continued through the wartime exile of the Dutch government.",
+        "add_source_links": [
+          {
+            "source_id": "9b6fcf18-99a1-544c-b19a-5af02a055472",
+            "source_locator_key": "https://www.royal-house.nl/topics/monarchy/king%E2%80%99s-day/history-of-king%E2%80%99s-day"
+          },
+          {
+            "source_id": "8b531ee0-8ac5-5308-b2b7-cdcf28975e7d",
+            "source_locator_key": "https://www.nationaalarchief.nl/beleven/onderwijs/bronnenbox/leve-de-koningin-1948"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "franco-head-of-spanish-state-exact",
+      "type": "rewrite_activity",
+      "activity_id": "5d2cdc46-9073-4949-a450-f4c971d7e4b8",
+      "baseline_before": {
+        "person_id": "097388ad-7a14-4a7c-a369-bb6a2dca61d4",
+        "polity_id": "9498cc06-a081-4179-8f2b-b60b881dab10",
+        "role_id": "b044ea64-b9e5-4ec0-bde8-e79530c948d4",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1939,
+        "activity_end": 1975,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "5d2cdc46-9073-4949-a450-f4c971d7e4b8",
+        "person_id": "097388ad-7a14-4a7c-a369-bb6a2dca61d4",
+        "polity_id": "9498cc06-a081-4179-8f2b-b60b881dab10",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "b044ea64-b9e5-4ec0-bde8-e79530c948d4",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1936,
+        "activity_end": 1975,
+        "activity_start_detail": {
+          "year": 1936,
+          "month": 10,
+          "day": 1,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end_detail": {
+          "year": 1975,
+          "month": 11,
+          "day": 20,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Franco took office as head of the Nationalist Spanish State on 1 October 1936 following Decree 138 of 29 September. The 1936–1939 interval denotes authority within Nationalist-held territory, not control of the entire country. The Congress of Deputies dates the post-Civil War regime to April 1939; the same head of state remained in office until his death on 20 November 1975. Preserve the existing Spanish State identity and role.",
+        "add_source_links": [
+          {
+            "source_id": "43e3c6b3-3cf1-526f-b67d-f78373c6b168",
+            "source_locator_key": "https://pares.cultura.gob.es/ParesBusquedas20/catalogo/autoridad/134813"
+          },
+          {
+            "source_id": "4e01b9b2-23f3-59c3-aa15-1bc11e65349b",
+            "source_locator_key": "https://www.archontology.org/nations/spain/spain_1936s/franco.php"
+          },
+          {
+            "source_id": "a4fd843e-2cc1-52d0-9791-5a4816bbdcb5",
+            "source_locator_key": "https://www.boe.es/buscar/doc.php?id=BOE-A-1975-23879"
+          }
+        ]
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_source",
+      "decision_id": "reviewed-date-correction:wilhelmina-accession",
+      "exact_before": {
+        "source_absent_id": "9b6fcf18-99a1-544c-b19a-5af02a055472"
+      },
+      "exact_after": {
+        "source": {
+          "id": "9b6fcf18-99a1-544c-b19a-5af02a055472",
+          "source_key": "source-claim:date-correction:20261127:wilhelmina-accession",
+          "source_type": "web_bibliographic_reference",
+          "title": "Royal House of the Netherlands — History of King’s Day",
+          "canonical_url": "https://www.royal-house.nl/topics/monarchy/king%E2%80%99s-day/history-of-king%E2%80%99s-day",
+          "citation_text": "Wilhelmina became queen on the death of Willem III, 23 November 1890, under her mother's regency.",
+          "sha256": null,
+          "bytes": null
+        }
+      }
+    },
+    {
+      "type": "assert_source",
+      "decision_id": "reviewed-date-correction:wilhelmina-abdication",
+      "exact_before": {
+        "source_absent_id": "8b531ee0-8ac5-5308-b2b7-cdcf28975e7d"
+      },
+      "exact_after": {
+        "source": {
+          "id": "8b531ee0-8ac5-5308-b2b7-cdcf28975e7d",
+          "source_key": "source-claim:date-correction:20261127:wilhelmina-abdication",
+          "source_type": "web_bibliographic_reference",
+          "title": "Nationaal Archief — Leve de koningin (1948)",
+          "canonical_url": "https://www.nationaalarchief.nl/beleven/onderwijs/bronnenbox/leve-de-koningin-1948",
+          "citation_text": "Wilhelmina abdicated on 4 September 1948.",
+          "sha256": null,
+          "bytes": null
+        }
+      }
+    },
+    {
+      "type": "assert_source",
+      "decision_id": "reviewed-date-correction:franco-decree",
+      "exact_before": {
+        "source_absent_id": "43e3c6b3-3cf1-526f-b67d-f78373c6b168"
+      },
+      "exact_after": {
+        "source": {
+          "id": "43e3c6b3-3cf1-526f-b67d-f78373c6b168",
+          "source_key": "source-claim:date-correction:20261127:franco-decree",
+          "source_type": "web_bibliographic_reference",
+          "title": "Spanish Ministry of Culture, PARES — Decree of 29 September 1936",
+          "canonical_url": "https://pares.cultura.gob.es/ParesBusquedas20/catalogo/autoridad/134813",
+          "citation_text": "Decree appointed Franco head of the government of the Spanish State, assuming all powers of the new state.",
+          "sha256": null,
+          "bytes": null
+        }
+      }
+    },
+    {
+      "type": "assert_source",
+      "decision_id": "reviewed-date-correction:franco-installation",
+      "exact_before": {
+        "source_absent_id": "4e01b9b2-23f3-59c3-aa15-1bc11e65349b"
+      },
+      "exact_after": {
+        "source": {
+          "id": "4e01b9b2-23f3-59c3-aa15-1bc11e65349b",
+          "source_key": "source-claim:date-correction:20261127:franco-installation",
+          "source_type": "web_bibliographic_reference",
+          "title": "Archontology — Biography of Franco, Francisco",
+          "canonical_url": "https://www.archontology.org/nations/spain/spain_1936s/franco.php",
+          "citation_text": "Franco was installed as head of state on 1 October 1936 after designation on 29 September; died on 20 November 1975. Nationalist authority did not extend over the entire country until the civil war ended in 1939.",
+          "sha256": null,
+          "bytes": null
+        }
+      }
+    },
+    {
+      "type": "assert_source",
+      "decision_id": "reviewed-date-correction:franco-death",
+      "exact_before": {
+        "source_absent_id": "a4fd843e-2cc1-52d0-9791-5a4816bbdcb5"
+      },
+      "exact_after": {
+        "source": {
+          "id": "a4fd843e-2cc1-52d0-9791-5a4816bbdcb5",
+          "source_key": "source-claim:date-correction:20261127:franco-death",
+          "source_type": "web_bibliographic_reference",
+          "title": "Boletín Oficial del Estado — Decreto 2939/1975",
+          "canonical_url": "https://www.boe.es/buscar/doc.php?id=BOE-A-1975-23879",
+          "citation_text": "Official decree of 20 November 1975 announces the death of the head of state Francisco Franco.",
+          "sha256": null,
+          "bytes": null
+        }
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 2,
+    "production_mutation_authorized": false
+  }
+}
