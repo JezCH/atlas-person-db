@@ -1,0 +1,88 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261128:lazaro-cardenas:president:1934-1940:v1",
+  "person": {
+    "canonical_name_en": "Lázaro Cárdenas",
+    "display_name_ko": "라사로 카르데나스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-28",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Mexico",
+    "display_name_ko": "멕시코",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "678683e3-4a02-46be-9095-d639147b0fc8"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1934,
+    "start_month": 12,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1940,
+    "end_month": 11,
+    "end_day": 30,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Lázaro Cárdenas del Río (21 May 1895 – 19 October 1970) served as constitutional president of Mexico from 1 December 1934 through 30 November 1940. His government implemented agrarian reform and the 1938 oil expropriation, and ended the Maximato. Reuse existing Mexico polity. Official national archival records control death date rather than the erroneous September date in the indexed NamuWiki entry."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Diario Oficial de la Federación — 31 October 1934, decree on presidential inauguration",
+      "canonical_url": "https://diariooficial.gob.mx/index.php?day=31&month=10&year=1934",
+      "citation_text": "Decree sets the elected president Lázaro Cárdenas's oath for 1 December 1934."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Secretaría de la Defensa Nacional — La Posrevolución",
+      "canonical_url": "https://www.gob.mx/defensa/documentos/la-post-revolucion",
+      "citation_text": "Official chronology explicitly records the presidential term from 1 December 1934 through 30 November 1940."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Archivo General de la Nación — La vida documental de Lázaro Cárdenas del Río",
+      "canonical_url": "https://www.gob.mx/agn/es/articulos/la-vida-documental-de-lazaro-cardenas-del-rio?idiom=es",
+      "citation_text": "National archive confirms death on 19 October 1970 and documents the 1934–1940 presidency, agrarian reform and oil expropriation."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Palacio Nacional — 130 aniversario del natalicio de Lázaro Cárdenas del Río",
+      "canonical_url": "https://www.gob.mx/palacionacional/articulos/130-aniversario-del-natalicio-de-lazaro-cardenas-del-rio?idiom=es",
+      "citation_text": "Official biography establishes birth on 21 May 1895 and death on 19 October 1970."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-11-28",
+      "document_title": "라사로 카르데나스",
+      "url": "https://namu.wiki/w/%EB%9D%BC%EC%82%AC%EB%A1%9C%20%EC%B9%B4%EB%A5%B4%EB%8D%B0%EB%82%98%EC%8A%A4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Existing Mexico polity UUID reused; no new spatial assertions."
+  },
+  "review_context": {
+    "task": "Explicit user-approved registration 2026-11-28",
+    "draft_only": false,
+    "production_screen": "Cardenas, Cárdenas and 카르데나스 searches all returned zero; exact existing Mexico polity matched.",
+    "namuwiki_evidence_method": "External indexed mirror confirms exact independent person title and presidency, distinguished from city and stations. Incorrect death month is not imported.",
+    "namuwiki_evidence_url": "https://www.namu.moe/w/%EB%9D%BC%EC%82%AC%EB%A1%9C%20%EC%B9%B4%EB%A5%B4%EB%8D%B0%EB%82%98%EC%8A%A4",
+    "apply_gate": "One approved person and presidential term; protected preflight and post-commit verification."
+  }
+}
