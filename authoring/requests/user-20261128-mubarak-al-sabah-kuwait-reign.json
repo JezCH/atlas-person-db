@@ -1,0 +1,90 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-20261128:mubarak-al-sabah:reign:1896-1915:v1",
+  "person": {
+    "canonical_name_en": "Mubarak Al-Sabah",
+    "display_name_ko": "무바라크 알사바",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-11-28",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Kuwait",
+    "display_name_ko": "쿠웨이트",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "2f1c9873-ad68-4e35-b871-99840fcbecbc"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sheikh",
+    "role_display_name_ko": "셰이크",
+    "start_year": 1896,
+    "start_month": 5,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1915,
+    "end_month": 11,
+    "end_day": 28,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Mubarak bin Sabah Al-Sabah, also called Mubarak the Great, was the seventh ruler of Kuwait from May 1896 until his death on 28 November 1915. The Ministry of State for National Assembly Affairs lists 18 May 1896; alternative chronologies give 17 May, so the reviewed start is intentionally month-precision. The 1899 British agreement and 1914 change of external status did not create a new local dynastic political identity; reuse the existing Kuwait polity. Birth year is disputed and is not asserted as an exact date."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Kuwait Ministry of State for National Assembly Affairs — About Kuwait, Kuwait Rulers",
+      "canonical_url": "https://www.mona.gov.kw/en/aboutkuwait.aspx",
+      "citation_text": "Official ruler chronology lists Sheikh Mubarak Al-Sabah, 18 May 1896 to 28 November 1915."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Kuwait Government Online — Kuwait Rulers’ History",
+      "canonical_url": "https://www.e.gov.kw/sites/kgoenglish/Pages/Visitors/AboutKuwait/GoverningBodyKuwaitGoverners.aspx",
+      "citation_text": "Official government ruler history identifies Sheikh Mubarak Bin Sabah (Mubarak Al Kabeer) as seventh ruler, 1896–1915."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Kuwait Government Online — Kuwait history",
+      "canonical_url": "https://e.gov.kw/sites/kgoenglish/Pages/Visitors/AboutKuwait/GoverningBodyOverView.aspx",
+      "citation_text": "Official historical account describes Mubarak's negotiations with Britain and the changing international status of Kuwait."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Islam Museum — Mubarak bin Sabah Al-Sabah",
+      "canonical_url": "https://www.islam.museum/en/person/mubarak-al-sabah/",
+      "citation_text": "Biographical record identifies the seventh ruler, his death on 28 November 1915 and disputed birth year."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-11-28",
+      "review_reason": "related_or_derivative_only"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Existing Kuwait UUID reused; no new spatial assertion or geometry mutation."
+  },
+  "review_context": {
+    "task": "Explicit user-approved registration 2026-11-28",
+    "draft_only": false,
+    "production_screen": "2026-11-28 Mubarak and 무바라크 searches returned zero; exact Kuwait polity matched.",
+    "namuwiki_evidence_method": "Indexed Korean aliases 무바라크 알사바, 무바라크 1세, 무바라크 대왕 and Kuwait rulers category reviewed. Only related documents surfaced; category's actual document list omits this individual.",
+    "namuwiki_evidence_urls": [
+      "https://www.namu.moe/w/%EC%BF%A0%EC%9B%A8%EC%9D%B4%ED%8A%B8/%EC%97%AD%EC%82%AC",
+      "https://namu.moe/w/%EC%82%AC%EB%B0%94%20%EA%B0%80%EB%AC%B8",
+      "https://m.namu.moe/w/%EB%B6%84%EB%A5%98%3A%EC%BF%A0%EC%9B%A8%EC%9D%B4%ED%8A%B8%20%EC%95%84%EB%AF%B8%EB%A5%B4"
+    ],
+    "apply_gate": "Approved one person and one reign; protected preflight and post-commit verification."
+  }
+}
